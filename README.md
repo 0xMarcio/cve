@@ -1,2 +1,2 @@
 # cve
-Latest CVEs with their Proof of Concept exploits.
+Latest CVEs with their Proof of Concept exploitz.
