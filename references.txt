@@ -2994,6 +2994,9 @@ CVE-2020-1913 - https://www.facebook.com/security/advisories/cve-2020-1913
 CVE-2020-19131 - http://blog.topsec.com.cn/%E5%A4%A9%E8%9E%8D%E4%BF%A1%E5%85%B3%E4%BA%8Elibtiff%E4%B8%ADinvertimage%E5%87%BD%E6%95%B0%E5%A0%86%E6%BA%A2%E5%87%BA%E6%BC%8F%E6%B4%9E%E7%9A%84%E5%88%86%E6%9E%90/
 CVE-2020-19131 - http://bugzilla.maptools.org/show_bug.cgi?id=2831
 CVE-2020-1915 - https://www.facebook.com/security/advisories/cve-2020-1915
+CVE-2020-19150 - https://www.seebug.org/vuldb/ssvid-97885
+CVE-2020-19151 - https://www.seebug.org/vuldb/ssvid-97881
+CVE-2020-19154 - https://www.seebug.org/vuldb/ssvid-97882
 CVE-2020-19165 - https://github.com/Mint60/PHP/issues/1
 CVE-2020-19185 - https://github.com/zjuchenyuan/fuzzpoc/blob/master/infotocap_poc1.md
 CVE-2020-19186 - https://github.com/zjuchenyuan/fuzzpoc/blob/master/infotocap_poc2.md
@@ -3010,6 +3013,11 @@ CVE-2020-1927 - https://www.oracle.com/security-alerts/cpuApr2021.html
 CVE-2020-1927 - https://www.oracle.com/security-alerts/cpujul2020.html
 CVE-2020-1927 - https://www.oracle.com/security-alerts/cpujul2022.html
 CVE-2020-19280 - https://github.com/zchuanzhao/jeesns/issues/9
+CVE-2020-19280 - https://www.seebug.org/vuldb/ssvid-97938
+CVE-2020-19283 - https://www.seebug.org/vuldb/ssvid-97939
+CVE-2020-19286 - https://www.seebug.org/vuldb/ssvid-97942
+CVE-2020-19290 - https://www.seebug.org/vuldb/ssvid-97949
+CVE-2020-19292 - https://www.seebug.org/vuldb/ssvid-97953
 CVE-2020-19295 - https://www.seebug.org/vuldb/ssvid-97950
 CVE-2020-19301 - https://github.com/tingyuu/vaeThink/issues/1
 CVE-2020-19302 - https://github.com/tingyuu/vaeThink/issues/2
@@ -18468,6 +18476,7 @@ CVE-2022-2291 - https://github.com/CyberThoth/CVE/blob/a203e5c7b3ac88a5a0bc72003
 CVE-2022-2291 - https://vuldb.com/?id.203165
 CVE-2022-22916 - https://github.com/wendell1224/O2OA-POC/blob/main/POC.md
 CVE-2022-2292 - https://github.com/CyberThoth/CVE/blob/a203e5c7b3ac88a5a0bc7200324f2b24716e8fc2/CVE/Hotel%20Management%20system/Cross%20Site%20Scripting(Stored)/POC.md
+CVE-2022-2292 - https://vuldb.com/?id.203166
 CVE-2022-22922 - https://github.com/emremulazimoglu/cve/blob/main/CWE330-TL-WA850RE-v6.md
 CVE-2022-2293 - https://github.com/CyberThoth/CVE/blob/a203e5c7b3ac88a5a0bc7200324f2b24716e8fc2/CVE/Simple%20Sales%20Management%20System/Cross%20Site%20Scripting(Stored)/POC.md
 CVE-2022-22934 - https://github.com/saltstack/salt/releases,
@@ -18844,6 +18853,7 @@ CVE-2022-24187 - https://www.scrawledsecurityblog.com/2022/11/automating-unsolic
 CVE-2022-24188 - https://www.scrawledsecurityblog.com/2022/11/automating-unsolicited-richard-pics.html
 CVE-2022-24189 - https://www.scrawledsecurityblog.com/2022/11/automating-unsolicited-richard-pics.html
 CVE-2022-2419 - https://github.com/joinia/webray.com.cn/blob/main/URVE/URVE%20Web%20Manager%20upload.php%20File%20upload%20vulnerability.md
+CVE-2022-2419 - https://vuldb.com/?id.203902
 CVE-2022-24190 - https://www.scrawledsecurityblog.com/2022/11/automating-unsolicited-richard-pics.html
 CVE-2022-24191 - https://github.com/michaelrsweet/htmldoc/issues/470
 CVE-2022-24196 - https://github.com/itext/itext7/pull/78
@@ -18853,6 +18863,7 @@ CVE-2022-24197 - https://github.com/itext/itext7/pull/78#issuecomment-1089282165
 CVE-2022-24198 - https://github.com/itext/itext7/pull/78
 CVE-2022-24198 - https://github.com/itext/itext7/pull/78#issuecomment-1089287808
 CVE-2022-2420 - https://github.com/joinia/webray.com.cn/blob/main/URVE/URVE%20Web%20Manager%20uploader.php%20%20File%20upload%20vulnerability.md
+CVE-2022-2420 - https://vuldb.com/?id.203903
 CVE-2022-24223 - http://packetstormsecurity.com/files/165922/Atom-CMS-2.0-SQL-Injection.html
 CVE-2022-2423 - https://wpscan.com/vulnerability/714b4f2b-3f17-4730-8c25-21d8da4cb8d2
 CVE-2022-24231 - https://github.com/nu11secur1ty/CVE-nu11secur1ty/tree/main/vendors/oretnom23/2022/Simple-Student-Information
@@ -19022,6 +19033,7 @@ CVE-2022-2489 - https://github.com/xiahao90/CVEproject/blob/main/xiahao.webray.c
 CVE-2022-2489 - https://vuldb.com/?id.204551
 CVE-2022-24891 - https://www.oracle.com/security-alerts/cpujul2022.html
 CVE-2022-2490 - https://github.com/xiahao90/CVEproject/blob/main/xiahao.webray.com.cn/Simple-E-Learning-System.md#search.php
+CVE-2022-2490 - https://vuldb.com/?id.204552
 CVE-2022-24900 - https://github.com/onlaj/Piano-LED-Visualizer/issues/350
 CVE-2022-24900 - https://github.com/onlaj/Piano-LED-Visualizer/pull/351
 CVE-2022-24900 - https://github.com/onlaj/Piano-LED-Visualizer/security/advisories/GHSA-g78x-q3x8-r6m4
@@ -19691,6 +19703,7 @@ CVE-2022-26780 - https://talosintelligence.com/vulnerability_reports/TALOS-2022-
 CVE-2022-26781 - https://talosintelligence.com/vulnerability_reports/TALOS-2022-1481
 CVE-2022-26782 - https://talosintelligence.com/vulnerability_reports/TALOS-2022-1481
 CVE-2022-2679 - https://vuldb.com/?id.205667
+CVE-2022-2681 - https://vuldb.com/?id.205669
 CVE-2022-2683 - https://github.com/anx0ing/CVE_demo/blob/main/2022/Simple%20Food%20Ordering%20System-XSS.md
 CVE-2022-2683 - https://vuldb.com/?id.205671
 CVE-2022-26833 - https://talosintelligence.com/vulnerability_reports/TALOS-2022-1513
@@ -19857,6 +19870,7 @@ CVE-2022-27432 - https://www.exploit-db.com/exploits/50831
 CVE-2022-27435 - https://github.com/D4rkP0w4r/Full-Ecommece-Website-Add_Product-Unrestricted-File-Upload-RCE-POC
 CVE-2022-27436 - https://github.com/D4rkP0w4r/Full-Ecommece-Website-Add_User-Stored-XSS-POC
 CVE-2022-27438 - https://gerr.re/posts/cve-2022-27438/
+CVE-2022-2744 - https://vuldb.com/?id.206012
 CVE-2022-27444 - https://jira.mariadb.org/browse/MDEV-28080
 CVE-2022-27445 - https://jira.mariadb.org/browse/MDEV-28081
 CVE-2022-27446 - https://jira.mariadb.org/browse/MDEV-28082
@@ -19872,6 +19886,7 @@ CVE-2022-27457 - https://jira.mariadb.org/browse/MDEV-28098
 CVE-2022-27458 - https://jira.mariadb.org/browse/MDEV-28099
 CVE-2022-2747 - https://vuldb.com/?id.206015
 CVE-2022-27474 - https://github.com/Mount4in/Mount4in.github.io/blob/master/poc.py
+CVE-2022-2748 - https://vuldb.com/?id.206016
 CVE-2022-27480 - http://packetstormsecurity.com/files/166743/Siemens-A8000-CP-8050-CP-8031-SICAM-WEB-Missing-File-Download-Missing-Authentication.html
 CVE-2022-27480 - http://seclists.org/fulldisclosure/2022/Apr/20
 CVE-2022-27481 - https://cert-portal.siemens.com/productcert/pdf/ssa-392912.pdf
@@ -20156,6 +20171,7 @@ CVE-2022-28410 - https://github.com/k0xx11/bug_report/blob/main/vendors/oretnom2
 CVE-2022-28411 - https://github.com/k0xx11/bug_report/blob/main/vendors/oretnom23/Simple-Real-Estate-Portal-System/SQLi-5.md
 CVE-2022-28412 - https://github.com/k0xx11/bug_report/blob/main/vendors/oretnom23/car-driving-school-management-system/SQLi-1.md
 CVE-2022-28413 - https://github.com/k0xx11/bug_report/blob/main/vendors/oretnom23/car-driving-school-management-system/SQLi-2.md
+CVE-2022-2842 - https://vuldb.com/?id.206451
 CVE-2022-2845 - https://huntr.dev/bounties/3e1d31ac-1cfd-4a9f-bc5c-213376b69445
 CVE-2022-28452 - https://github.com/YavuzSahbaz/Red-Planet-Laundry-Management-System-1.0-is-vulnerable-to-SQL
 CVE-2022-28452 - https://github.com/nu11secur1ty/CVE-mitre/tree/main/2022/CVE-2022-28452
@@ -31664,6 +31680,7 @@ CVE-2024-1709 - https://www.horizon3.ai/attack-research/red-team/connectwise-scr
 CVE-2024-1709 - https://www.huntress.com/blog/a-catastrophe-for-control-understanding-the-screenconnect-authentication-bypass
 CVE-2024-1709 - https://www.huntress.com/blog/detection-guidance-for-connectwise-cwe-288-2
 CVE-2024-1709 - https://www.huntress.com/blog/vulnerability-reproduced-immediately-patch-screenconnect-23-9-8
+CVE-2024-1709 - https://www.securityweek.com/connectwise-confirms-screenconnect-flaw-under-active-exploitation/
 CVE-2024-1712 - https://wpscan.com/vulnerability/23805a61-9fcd-4744-a60d-05c8cb43ee01/
 CVE-2024-1713 - https://github.com/google/security-research/security/advisories/GHSA-r7m9-grw7-vcc4
 CVE-2024-1743 - https://wpscan.com/vulnerability/3cb1f707-6093-42a7-a778-2b296bdf1735/
@@ -33067,6 +33084,8 @@ CVE-2024-2983 - https://github.com/abcdefg-png/IoT-vulnerable/blob/main/Tenda/FH
 CVE-2024-2984 - https://github.com/abcdefg-png/IoT-vulnerable/blob/main/Tenda/FH/FH1202/formSetCfm.md
 CVE-2024-2985 - https://github.com/abcdefg-png/IoT-vulnerable/blob/main/Tenda/FH/FH1202/formQuickIndex.md
 CVE-2024-29882 - https://github.com/ossrs/srs/security/advisories/GHSA-gv9r-qcjc-5hj7
+CVE-2024-29894 - https://github.com/Cacti/cacti/security/advisories/GHSA-grj5-8fcj-34gh
+CVE-2024-29894 - https://github.com/Cacti/cacti/security/advisories/GHSA-xwqc-7jc4-xm73
 CVE-2024-29895 - https://github.com/Cacti/cacti/security/advisories/GHSA-cr28-x256-xf5m
 CVE-2024-29903 - https://github.com/sigstore/cosign/security/advisories/GHSA-95pr-fxf5-86gv
 CVE-2024-29916 - https://unsaflok.com
@@ -33432,6 +33451,7 @@ CVE-2024-33383 - https://juvl1ne.github.io/2024/04/18/novel-plus-vulnerability/
 CVE-2024-33398 - https://github.com/HouqiyuA/k8s-rbac-poc
 CVE-2024-33423 - https://github.com/adiapera/xss_language_cmsimple_5.15
 CVE-2024-33424 - https://github.com/adiapera/xss_language_cmsimple_5.15
+CVE-2024-33427 - https://github.com/squid-cache/squid/pull/1763
 CVE-2024-33428 - https://github.com/Helson-S/FuzzyTesting/blob/master/phiola/heap-buffer-overflow-1/heap-buffer-overflow-1.assets/image-20240420005017430.png
 CVE-2024-33428 - https://github.com/Helson-S/FuzzyTesting/blob/master/phiola/heap-buffer-overflow-1/heap-buffer-overflow-1.md
 CVE-2024-33428 - https://github.com/Helson-S/FuzzyTesting/blob/master/phiola/heap-buffer-overflow-1/poc
@@ -33495,6 +33515,7 @@ CVE-2024-33788 - https://github.com/ymkyu/CVE/tree/main/CVE-2024-33788
 CVE-2024-33789 - https://github.com/ymkyu/CVE/tree/main/CVE-2024-33789
 CVE-2024-33792 - https://github.com/ymkyu/CVE/tree/main/CVE-2024-33792
 CVE-2024-33793 - https://github.com/ymkyu/CVE/tree/main/CVE-2024-33793
+CVE-2024-33809 - https://github.com/pingcap/tidb/issues/52159
 CVE-2024-33820 - https://gist.github.com/Swind1er/ee095fbfe13f77a5b45b39a5aa82bd17
 CVE-2024-33829 - https://github.com/xyaly163/cms/blob/main/1.md
 CVE-2024-33830 - https://github.com/xyaly163/cms/blob/main/2.md
@@ -33845,3 +33866,4 @@ CVE-2024-5135 - https://github.com/BurakSevben/CVEs/blob/main/Directory%20Manage
 CVE-2024-5136 - https://github.com/BurakSevben/CVEs/blob/main/Directory%20Management%20System/Directory%20Management%20System%20-%20Cross-Site-Scripting%20-%201.md
 CVE-2024-5137 - https://github.com/BurakSevben/CVEs/blob/main/Directory%20Management%20System/Directory%20Management%20System%20-%20Cross-Site-Scripting%20-%202.md
 CVE-2024-5145 - https://github.com/CveSecLook/cve/issues/38
+CVE-2024-5145 - https://github.com/CveSecLook/cve/issues/38CVE-2020-7009 - https://www.elastic.co/community/security/
