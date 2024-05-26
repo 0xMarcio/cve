@@ -1,6 +1,6 @@
-var searchResultFormat = '<tr><td class="cveNum"><b>$cve</b></td><td align="left">$description<hr>$poc</td></tr>';
-var totalLimit = 500;
-var replaceStrings = ['HackTheBox - ', 'VulnHub - ', 'UHC - '];
+const searchResultFormat = '<tr><td class="cveNum">$cve</td><td align="left">$description $poc</td></tr>';
+const totalLimit = 1000;
+const replaceStrings = ['HackTheBox - ', 'VulnHub - ', 'UHC - '];
 const results = document.querySelector('div.results');
 const searchValue = document.querySelector('input.search');
 const form = document.querySelector('form.searchForm');
@@ -22,52 +22,21 @@ function escapeHTML(str) {
     });
 }
 
-function convertLinksToList(content) {
-    const tempDiv = document.createElement('div');
-    tempDiv.innerHTML = content;
-
-    const links = tempDiv.querySelectorAll('a');
+function convertLinksToList(links) {
     if (links.length === 0) {
         return content;
     }
-
-    const list = document.createElement('ul');
+    let htmlOutput = `<hr><ul>`;
     links.forEach(link => {
-        const listItem = document.createElement('li');
-        listItem.appendChild(link.cloneNode(true));
-        list.appendChild(listItem);
+       htmlOutput += `<li><a target="_blank" href="${link}">${link}</a></li>`;
     });
-
-    // Remove all original links from the tempDiv
-    links.forEach(link => link.parentNode.removeChild(link));
-
-    // Append the newly created list to tempDiv
-    tempDiv.appendChild(list);
-
-    return tempDiv.innerHTML;
+    htmlOutput += `</ul>`
+    return htmlOutput;
 }
 
-function convertToList(content) {
-    // Create a temporary div to manipulate the content
-    const tempDiv = document.createElement('div');
-    // Remove all <br> tags
-    content = content.replace(/<br\s*\/?>/gi, '');
-    tempDiv.innerHTML = content;
-
-    const list = document.createElement('ul');
-    Array.from(tempDiv.childNodes).forEach(node => {
-        const listItem = document.createElement('li');
-        if (node.nodeType === Node.TEXT_NODE) {
-            listItem.textContent = node.textContent.trim();
-        } else if (node.nodeType === Node.ELEMENT_NODE && node.tagName === 'A') {
-            listItem.appendChild(node.cloneNode(true));
-        }
-        list.appendChild(listItem);
-    });
-
-    return list.outerHTML;
+function getCveLink(cveId) {
+    return `<a target="_blank" href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=${cveId}"><b>${cveId}</b></a>`
 }
-
 
 var controls = {
     oldColor: '',
@@ -86,8 +55,8 @@ var controls = {
         let negmatch = words.filter(word => word[0] === '-').map(word => word.substring(1));
 
         dataset.forEach(e => {
-            let description = replaceStrings.reduce((desc, str) => desc.replace(str, ''), e.description).toLowerCase();
-            let combinedText = (e.cve + e.poc + description).toLowerCase();
+            let description = replaceStrings.reduce((desc, str) => desc.replace(str, ''), e.desc).toLowerCase();
+            let combinedText = (e.cve + description).toLowerCase();
 
             let positiveMatch = posmatch.every(word => combinedText.includes(word));
             let negativeMatch = negmatch.some(word => combinedText.includes(word));
@@ -118,10 +87,9 @@ var controls = {
             let fragment = document.createDocumentFragment();
             results.forEach(r => {
                 let el = searchResultFormat
-                    .replace('$cve', r.cve)
-                    .replace('$description', escapeHTML(r.description) )
-                    //.replace('$poc', convertLinksToList(r.poc));
-                    .replace('$poc', convertToList(r.poc));
+                    .replace('$cve', getCveLink(r.cve))
+                    .replace('$description', escapeHTML(r.desc) )
+                    .replace('$poc', convertLinksToList(r.poc));
                 let wrapper = document.createElement('table');
                 wrapper.innerHTML = el;
                 fragment.appendChild(wrapper.querySelector('tr'));
@@ -170,7 +138,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    fetch('./pocs.json')
+    fetch('./CVE_list.json')
         .then(res => res.json())
         .then(data => {
             window.dataset = data;

@@ -17,22 +17,22 @@ years = [year for year in years if year.isdigit()]
 years.sort(reverse=True)
 
 #clean up the text blocks
-def clean_text(description):
-    
+def clean_text(description_text):
+    description = re.sub(r'\n+', '\n', description_text)
     #remove the '-' at the beginning of each line
     description_lines = description.split('\n')
     description_lines = [line.lstrip('- ') for line in description_lines]
 
     #change urls with <a> links with regular expression
-    description_lines = [re.sub(r'(https?:\/\/[^\s]+)', r'<a target="_blank" href="\1">\1</a>', line) for line in description_lines]
-    
+    #description_lines = [re.sub(r'(https?:\/\/[^\s]+)', r'<a target="_blank" href="\1">\1</a>', line) for line in description_lines]
+
     #add <br/> for each line
-    description = '<br/>'.join(description_lines)
+    description = '\n'.join(description_lines)
     return description
 
 #generate JSON for each CVE
 for year in years:
-    
+
     yearDir = os.path.join(dir, year)
     for CVE_filename in os.listdir(yearDir):
 
@@ -45,19 +45,32 @@ for year in years:
         CVE_description = CVE_file_content.split('### Description')[1].split('###')[0].strip()
         CVE_references = CVE_file_content.split('### Reference')[1].split('###')[0].strip()
         CVE_github = CVE_file_content.split('### Github')[1].split('###')[0].strip()
-        
+
         #TODO: extract imageshield label attributes
-        
+
         CVE_Name = CVE_filename.split('.')[0]
-        
+
         CVE_description = clean_text(CVE_description)
         CVE_github = clean_text(CVE_github)
         CVE_references = clean_text(CVE_references)
+        CVE_poc = []
+        if "No PoCs" not in CVE_references:
+           if '\n' in CVE_references:
+             for ref in CVE_references.split('\n'):
+               CVE_poc.append(ref)
+           else:
+             CVE_poc.append(CVE_references)
+        if "No PoCs" not in CVE_github:
+           if '\n' in CVE_github:
+             for poc in CVE_github.split('\n'):
+               CVE_poc.append(poc)
+           else:
+             CVE_poc.append(CVE_github)
 
-        thisCVE = [year,CVE_Name, CVE_description, CVE_github,CVE_references]
+        thisCVE = {"cve": CVE_Name, "desc": CVE_description, "poc": CVE_poc}
         CVE_list.append(thisCVE)
 
-CVE_output = f"dataTable_data = {json.dumps(CVE_list)}"
+CVE_output = f"{json.dumps(CVE_list)}"
 
 #save CVE list to JSON file
 with open('CVE_list.json', 'w') as outfile:
