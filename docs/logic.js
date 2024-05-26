@@ -10,66 +10,53 @@ const noResults = document.querySelector('div.noResults');
 const colorUpdate = document.body;
 
 function escapeHTML(str) {
-    return str.replace(/[&<>"']/g, function (match) {
-        const escapeChars = {
-            '&': '&amp;',
-            '<': '&lt;',
-            '>': '&gt;',
-            '"': '&quot;',
-            "'": '&#39;'
-        };
-        return escapeChars[match];
-    });
+    return str.replace(/[&<>"']/g, match => ({
+        '&': '&amp;',
+        '<': '&lt;',
+        '>': '&gt;',
+        '"': '&quot;',
+        "'": '&#39;'
+    }[match]));
 }
 
 function convertLinksToList(links) {
     if (links.length === 0) {
-        return content;
+        return '';
     }
-    let htmlOutput = `<hr><ul>`;
-    links.forEach(link => {
-       htmlOutput += `<li><a target="_blank" href="${link}">${link}</a></li>`;
-    });
-    htmlOutput += `</ul>`
-    return htmlOutput;
+    return `<hr><ul>${links.map(link => `<li><a target="_blank" href="${link}">${link}</a></li>`).join('')}</ul>`;
 }
 
 function getCveLink(cveId) {
-    return `<a target="_blank" href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=${cveId}"><b>${cveId}</b></a>`
+    return `<a target="_blank" href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=${cveId}"><b>${cveId}</b></a>`;
 }
 
-var controls = {
+const controls = {
     oldColor: '',
-    displayResults: function() {
+    displayResults() {
         results.style.display = '';
         resultsTableHideable.classList.remove('hide');
     },
-    hideResults: function() {
+    hideResults() {
         results.style.display = 'none';
         resultsTableHideable.classList.add('hide');
     },
-    doSearch: function(match, dataset) {
-        let results = [];
-        let words = match.toLowerCase().split(' ');
-        let posmatch = words.filter(word => word[0] !== '-');
-        let negmatch = words.filter(word => word[0] === '-').map(word => word.substring(1));
+    doSearch(match, dataset) {
+        const words = match.toLowerCase().split(' ');
+        const posmatch = words.filter(word => word[0] !== '-');
+        const negmatch = words.filter(word => word[0] === '-').map(word => word.substring(1));
 
-        dataset.forEach(e => {
-            let description = replaceStrings.reduce((desc, str) => desc.replace(str, ''), e.desc).toLowerCase();
-            let combinedText = (e.cve + description).toLowerCase();
+        return dataset.filter(e => {
+            const description = replaceStrings.reduce((desc, str) => desc.replace(str, ''), e.desc).toLowerCase();
+            const combinedText = (e.cve + description).toLowerCase();
 
-            let positiveMatch = posmatch.every(word => combinedText.includes(word));
-            let negativeMatch = negmatch.some(word => combinedText.includes(word));
+            const positiveMatch = posmatch.every(word => combinedText.includes(word));
+            const negativeMatch = negmatch.some(word => combinedText.includes(word));
 
-            if (positiveMatch && !negativeMatch) {
-                results.push(e);
-            }
+            return positiveMatch && !negativeMatch;
         });
-
-        return results;
     },
-    updateResults: function(loc, results) {
-        if (results.length == 0) {
+    updateResults(loc, results) {
+        if (results.length === 0) {
             noResults.style.display = '';
             noResults.textContent = 'No Results Found';
             resultsTableHideable.classList.add('hide');
@@ -84,21 +71,21 @@ var controls = {
             noResults.style.display = 'none';
             resultsTableHideable.classList.remove('hide');
 
-            let fragment = document.createDocumentFragment();
+            const fragment = document.createDocumentFragment();
             results.forEach(r => {
-                let el = searchResultFormat
+                const el = searchResultFormat
                     .replace('$cve', getCveLink(r.cve))
-                    .replace('$description', escapeHTML(r.desc) )
+                    .replace('$description', escapeHTML(r.desc))
                     .replace('$poc', convertLinksToList(r.poc));
-                let wrapper = document.createElement('table');
+                const wrapper = document.createElement('table');
                 wrapper.innerHTML = el;
                 fragment.appendChild(wrapper.querySelector('tr'));
             });
             loc.appendChild(fragment);
         }
     },
-    setColor: function(loc, indicator) {
-        if (this.oldColor == indicator) return;
+    setColor(loc, indicator) {
+        if (this.oldColor === indicator) return;
         loc.className = loc.className.replace(/\bcolor-\S+/g, '');
         loc.classList.add('color-' + indicator);
         this.oldColor = indicator;
@@ -107,23 +94,21 @@ var controls = {
 
 window.controls = controls;
 
-document.addEventListener('DOMContentLoaded', function() {
-
+document.addEventListener('DOMContentLoaded', () => {
     document.body.classList.add('fade');
 
-    var currentSet = [];
-    var debounceTimer;
+    let currentSet = [];
+    let debounceTimer;
 
     function doSearch(event) {
-        var val = searchValue.value.trim();
+        const val = searchValue.value.trim();
 
         if (val !== '') {
             controls.displayResults();
-            currentSet = window.dataset;
-            currentSet = window.controls.doSearch(val, currentSet);
+            currentSet = window.controls.doSearch(val, window.dataset);
 
             if (currentSet.length < totalLimit) {
-                window.controls.setColor(colorUpdate, currentSet.length == 0 ? 'no-results' : 'results-found');
+                window.controls.setColor(colorUpdate, currentSet.length === 0 ? 'no-results' : 'results-found');
             }
 
             window.controls.updateResults(resultsTable, currentSet);
@@ -133,7 +118,7 @@ document.addEventListener('DOMContentLoaded', function() {
             noResults.style.display = 'none';
         }
 
-        if (event.type == 'submit') {
+        if (event.type === 'submit') {
             event.preventDefault();
         }
     }
@@ -149,7 +134,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     form.addEventListener('submit', doSearch);
 
-    searchValue.addEventListener('input', function(event) {
+    searchValue.addEventListener('input', event => {
         clearTimeout(debounceTimer);
         debounceTimer = setTimeout(() => doSearch(event), 300);
     });
