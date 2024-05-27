@@ -1,3 +1,4 @@
+
 name: Generate CVE JSON
 
 on:
@@ -22,6 +23,8 @@ jobs:
 
     - name: Change directory to docs and run CVE JSON generator script
       run: |
+        git branch -m main
+        remote set-url origin git@github.com:0xMarcio/cve.git
         cd docs
         python generate_cve_list.py
 
