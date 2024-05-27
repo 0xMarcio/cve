@@ -23,8 +23,35 @@ function convertLinksToList(links) {
     if (links.length === 0) {
         return '';
     }
-    return `<hr><ul>${links.map(link => `<li><a target="_blank" href="${link}">${link}</a></li>`).join('')}</ul>`;
+    let htmlOutput = `<hr><div class="poc-container"><ul>`;
+    const displayLimit = 5;
+    links.slice(0, displayLimit).forEach(link => {
+       htmlOutput += `<li><a target="_blank" href="${link}">${link}</a></li>`;
+    });
+    htmlOutput += `</ul>`;
+    if (links.length > displayLimit) {
+        htmlOutput += `
+            <ul class="dropdown" style="display:none;">
+                ${links.slice(displayLimit).map(link => `<li><a target="_blank" href="${link}">${link}</a></li>`).join('')}
+            </ul>
+            <button class="dropdown-btn" onclick="toggleDropdown(this)">Show More</button>`;
+    }
+    htmlOutput += `</div>`;
+    return htmlOutput;
 }
+
+function toggleDropdown(button) {
+    const dropdown = button.previousElementSibling;
+    if (dropdown.style.display === "none") {
+        dropdown.style.display = "block";
+        button.textContent = "Show Less";
+    } else {
+        dropdown.style.display = "none";
+        button.textContent = "Show More";
+    }
+}
+
+
 
 function getCveLink(cveId) {
     return `<a target="_blank" href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=${cveId}"><b>${cveId}</b></a>`;

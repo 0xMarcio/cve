@@ -1,5 +1,6 @@
 @import url("https://fonts.googleapis.com/css?family=Source+Code+Pro&display=swap");
 body {
+  font-family: 'Source Code Pro', monospace;
   background: black;
   color: white;
 }
@@ -181,4 +182,22 @@ hr {
 }
 .cveNum {
     font-size: 1.25rem;
+}
+.poc-container {
+    position: relative;
+    padding-right: 100px; /* Adjust this value if needed */
+}
+
+.dropdown-btn {
+    border: none;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    outline: none;
+    overflow: hidden;
+    background-color: #222;
+    color: #fff;
+    font-weight: 700;
+    padding: .5rem;
+    cursor: pointer;
 }
