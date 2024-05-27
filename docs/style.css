@@ -189,15 +189,16 @@ hr {
 }
 
 .dropdown-btn {
-    border: none;
+    border: 2px solid #ffffff;
+    border-radius: 50px;
     position: absolute;
     right: 0;
     bottom: 0;
     outline: none;
     overflow: hidden;
-    background-color: #21690af2;
+    background-color: transparent;
     color: #fff;
-    font-weight: 700;
-    padding: .5rem;
+    font-size: .9rem;
+    padding: .3rem;
     cursor: pointer;
 }
