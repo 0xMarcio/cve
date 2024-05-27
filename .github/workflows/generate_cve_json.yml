@@ -32,6 +32,7 @@ jobs:
         cd /home/runner/work/cve/cve
         git config --global user.name '0xMarcio'
         git config --global user.email 'marc@codepwn.win'
+        git remote set-url origin https://0xMarcio:$GITHUB_TOKEN@github.com/0xMarcio/cve.git
         git add .
         git commit -m 'Update CVE list JSON'
         git push origin main 
