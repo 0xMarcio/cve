@@ -23,8 +23,7 @@ jobs:
 
     - name: Change directory to docs and run CVE JSON generator script
       run: |
-        git branch -m main
-        remote set-url origin git@github.com:0xMarcio/cve.git
+        git checkout main
         cd docs
         python generate_cve_list.py
 
@@ -33,8 +32,8 @@ jobs:
         cd ..
         git config --global user.name '0xMarcio'
         git config --global user.email 'marc@codepwn.win'
-        git add docs/CVE_list.json
+        git add .
         git commit -m 'Update CVE list JSON'
-        git push
+        git push 
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
