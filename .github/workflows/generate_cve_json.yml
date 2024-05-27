@@ -31,7 +31,7 @@ jobs:
         git config --global user.email 'marc@codepwn.win'
         git remote set-url origin https://github-actions[bot]:$GITHUB_TOKEN@github.com/0xMarcio/cve.git
         git add .
-        git commit -m "Update CVE list `date +"%Y-%m-%d %H:%M:%S"`"
+        git commit -m "Update CVE list `date +'%Y-%m-%d %H:%M'`"
         git push origin main 
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
