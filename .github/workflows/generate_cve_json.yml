@@ -1,0 +1,37 @@
+name: Generate CVE JSON
+
+on:
+  push: # This will run the workflow on every push
+    branches:
+      - main # Adjust this if you want to run on other branches as well
+  schedule:
+    - cron: '0 0 * * *' # This will run the workflow every day at midnight UTC
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.x'
+
+    - name: Change directory to docs and run CVE JSON generator script
+      run: |
+        cd docs
+        python generate_cve_json.py
+
+    - name: Commit and push changes
+      run: |
+        cd ..
+        git config --global user.name '0xMarcio'
+        git config --global user.email 'marc@codepwn.win'
+        git add docs/CVE_list.json
+        git commit -m 'Update CVE list JSON'
+        git push
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
