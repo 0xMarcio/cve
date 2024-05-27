@@ -23,7 +23,7 @@ jobs:
     - name: Change directory to docs and run CVE JSON generator script
       run: |
         cd docs
-        python generate_cve_json.py
+        python generate_cve_list.py
 
     - name: Commit and push changes
       run: |
