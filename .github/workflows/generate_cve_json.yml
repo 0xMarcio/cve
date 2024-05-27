@@ -29,11 +29,11 @@ jobs:
 
     - name: Commit and push changes
       run: |
-        cd ..
+        cd /home/runner/work/cve/cve
         git config --global user.name '0xMarcio'
         git config --global user.email 'marc@codepwn.win'
         git add .
         git commit -m 'Update CVE list JSON'
-        git push 
+        git push origin main 
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
