@@ -1,15 +1,15 @@
-
 name: Generate CVE JSON
 
 on:
-  push: # This will run the workflow on every push
+  push:
     branches:
-      - main # Adjust this if you want to run on other branches as well
+      - main
+
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
+
     - name: Checkout repository
       uses: actions/checkout@v2
 
@@ -20,18 +20,22 @@ jobs:
 
     - name: Change directory to docs and run CVE JSON generator script
       run: |
-        git checkout main
-        cd docs
+        cd /home/runner/work/cve/cve/docs
         python generate_cve_list.py
 
-    - name: Commit and push changes
+    - name: Check for changes and commit if necessary
       run: |
         cd /home/runner/work/cve/cve
         git config --global user.name '0xMarcio'
         git config --global user.email 'marc@codepwn.win'
         git remote set-url origin https://github-actions[bot]:$GITHUB_TOKEN@github.com/0xMarcio/cve.git
-        git add .
-        git commit -m "Update CVE list `date +'%Y-%m-%d %H:%M'`"
-        git push origin main 
+
+        if [ -n "$(git status --porcelain)" ]; then
+          git add .
+          git commit -m "Update CVE list $(date +'%Y-%m-%d %H:%M')"
+          git push origin main
+        else
+          echo "No changes to commit"
+        fi
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
