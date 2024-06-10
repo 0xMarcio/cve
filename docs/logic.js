@@ -1,5 +1,5 @@
 const searchResultFormat = '<tr><td class="cveNum">$cve</td><td align="left">$description $poc</td></tr>';
-const totalLimit = 1000;
+const totalLimit = 10000;
 const replaceStrings = ['HackTheBox - ', 'VulnHub - ', 'UHC - '];
 const results = document.querySelector('div.results');
 const searchValue = document.querySelector('input.search');
