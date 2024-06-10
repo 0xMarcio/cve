@@ -1,0 +1,38 @@
+name: Hot CVEs List
+
+on:
+  schedule:
+      - cron: '30 */2 * * *'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.x'
+
+    - name: Change directory to docs and run CVE JSON generator script
+      run: |
+        cd /home/runner/work/cve/cve
+        python .github/getTrending.py
+    - name: Check for changes and commit if necessary
+      run: |
+        cd /home/runner/work/cve/cve
+        git config --global user.name '0xMarcio'
+        git config --global user.email 'marc@codepwn.win'
+        git remote set-url origin https://github-actions[bot]:$GITHUB_TOKEN@github.com/0xMarcio/cve.git
+        if [ -n "$(git status --porcelain)" ]; then
+          git add .
+          git commit -m "Trending CVEs update $(date +'%Y-%m-%d %H:%M') :robot:"
+          git push origin main
+        else
+          echo "No changes to commit"
+        fi
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
