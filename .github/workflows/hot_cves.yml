@@ -1,28 +1,34 @@
 name: Hot CVEs List
 
 on:
+  workflow_dispatch:
   schedule:
       - cron: '30 */2 * * *'
 
 jobs:
-  build:
+  ScheduledRun:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["pypy3.9", "pypy3.10", "3.9", "3.10", "3.11", "3.12"]
+        
     steps:
-
+    
     - name: Checkout repository
       uses: actions/checkout@v4
 
     - name: Set up Python
       uses: actions/setup-python@v5
       with:
-        python-version: '3.11'
-        cache: 'pip' # caching pip dependencies
-        run: pip install requests
+        python-version: ${{ matrix.python-version }}
+        cache: 'pip'
     
     - name: Running the HOT CVEs generator script
       run: |
         cd /home/runner/work/cve/cve
+        pip install requests
         python .github/getTrending.py
+        
     - name: Check for changes and commit if necessary
       run: |
         cd /home/runner/work/cve/cve
