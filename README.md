@@ -7,21 +7,21 @@
 
 | Stars | Updated | Name | Description |
 | --- | --- | --- | --- |
-| 2138⭐ | 22 hours ago | [CVE-2024-1086](https://github.com/Notselwyn/CVE-2024-1086) | Universal local privilege escalation Proof-of-Concept exploit for CVE-2024-1086, working on most Linux kernels between v5.14 and v6.6, including Debian, Ubuntu, and KernelCTF. The success rate is 99.4% in KernelCTF images. |
+| 2138⭐ | 1 day ago | [CVE-2024-1086](https://github.com/Notselwyn/CVE-2024-1086) | Universal local privilege escalation Proof-of-Concept exploit for CVE-2024-1086, working on most Linux kernels between v5.14 and v6.6, including Debian, Ubuntu, and KernelCTF. The success rate is 99.4% in KernelCTF images. |
 | 238⭐ | 2 days ago | [CVE-2024-21338](https://github.com/hakaioffsec/CVE-2024-21338) | Local Privilege Escalation from Admin to Kernel vulnerability on Windows 10 and Windows 11 operating systems with HVCI enabled. |
-| 241⭐ | 5 hours ago | [CVE-2024-26229](https://github.com/varwara/CVE-2024-26229) | CWE-781: Improper Address Validation in IOCTL with METHOD_NEITHER I/O Control Code |
-| 635⭐ | 1 day ago | [CVE-2024-21413-Microsoft-Outlook-Remote-Code-Execution-Vulnerability](https://github.com/xaitax/CVE-2024-21413-Microsoft-Outlook-Remote-Code-Execution-Vulnerability) | Microsoft-Outlook-Remote-Code-Execution-Vulnerability |
+| 242⭐ | 1 hour ago | [CVE-2024-26229](https://github.com/varwara/CVE-2024-26229) | CWE-781: Improper Address Validation in IOCTL with METHOD_NEITHER I/O Control Code |
+| 636⭐ | 19 minutes ago | [CVE-2024-21413-Microsoft-Outlook-Remote-Code-Execution-Vulnerability](https://github.com/xaitax/CVE-2024-21413-Microsoft-Outlook-Remote-Code-Execution-Vulnerability) | Microsoft-Outlook-Remote-Code-Execution-Vulnerability |
 | 180⭐ | 1 day ago | [CVE-2024-23897](https://github.com/h4x0r-dz/CVE-2024-23897) | CVE-2024-23897 |
-| 142⭐ | 1 hour ago | [CVE-2024-4577](https://github.com/watchtowrlabs/CVE-2024-4577) | PHP CGI Argument Injection (CVE-2024-4577) Remote Code Execution PoC |
+| 142⭐ | 3 hours ago | [CVE-2024-4577](https://github.com/watchtowrlabs/CVE-2024-4577) | PHP CGI Argument Injection (CVE-2024-4577) Remote Code Execution PoC |
 | 149⭐ | 13 days ago | [CVE-2024-21413](https://github.com/duy-31/CVE-2024-21413) | Microsoft Outlook Information Disclosure Vulnerability (leak password hash) - Expect Script POC |
-| 132⭐ | 12 hours ago | [CVE-2024-25600](https://github.com/Chocapikk/CVE-2024-25600) | Unauthenticated Remote Code Execution – Bricks <= 1.9.6 |
-| 116⭐ | 3 hours ago | [CVE_2024_30078_POC_WIFI](https://github.com/blkph0x/CVE_2024_30078_POC_WIFI) | basic concept for the latest windows wifi driver CVE |
+| 132⭐ | 14 hours ago | [CVE-2024-25600](https://github.com/Chocapikk/CVE-2024-25600) | Unauthenticated Remote Code Execution – Bricks <= 1.9.6 |
+| 117⭐ | 1 hour ago | [CVE_2024_30078_POC_WIFI](https://github.com/blkph0x/CVE_2024_30078_POC_WIFI) | basic concept for the latest windows wifi driver CVE |
 | 127⭐ | 2 days ago | [CVE-2024-27198-RCE](https://github.com/W01fh4cker/CVE-2024-27198-RCE) | CVE-2024-27198 & CVE-2024-27199 Authentication Bypass --> RCE in JetBrains TeamCity Pre-2023.11.4 |
 | 110⭐ | 1 day ago | [CVE-2024-21683-RCE](https://github.com/W01fh4cker/CVE-2024-21683-RCE) | CVE-2024-21683 Confluence Post Auth RCE |
-| 200⭐ | 5 hours ago | [CVE-2024-26229-BOF](https://github.com/NVISOsecurity/CVE-2024-26229-BOF) | BOF implementations of CVE-2024-26229 for Cobalt Strike and BruteRatel |
-| 90⭐ | 20 hours ago | [CVE-2024-32002](https://github.com/safebuffer/CVE-2024-32002) | CVE-2024-32002 RCE PoC |
+| 200⭐ | 7 hours ago | [CVE-2024-26229-BOF](https://github.com/NVISOsecurity/CVE-2024-26229-BOF) | BOF implementations of CVE-2024-26229 for Cobalt Strike and BruteRatel |
+| 90⭐ | 22 hours ago | [CVE-2024-32002](https://github.com/safebuffer/CVE-2024-32002) | CVE-2024-32002 RCE PoC |
 | 101⭐ | 2 days ago | [CVE-2024-21762](https://github.com/h4x0r-dz/CVE-2024-21762) | out-of-bounds write in Fortinet FortiOS  CVE-2024-21762 vulnerability  |
-| 66⭐ | 19 hours ago | [CVE-2024-21345](https://github.com/exploits-forsale/CVE-2024-21345) | Proof-of-Concept for CVE-2024-21345 |
+| 66⭐ | 21 hours ago | [CVE-2024-21345](https://github.com/exploits-forsale/CVE-2024-21345) | Proof-of-Concept for CVE-2024-21345 |
 | 49⭐ | 8 days ago | [CVE-2024-3400](https://github.com/0x0d3ad/CVE-2024-3400) | CVE-2024-3400 |
 | 97⭐ | 7 days ago | [CVE-2024-22120-RCE](https://github.com/W01fh4cker/CVE-2024-22120-RCE) | Time Based SQL Injection in Zabbix Server Audit Log --> RCE |
 | 54⭐ | 13 days ago | [CVE-2024-23897](https://github.com/xaitax/CVE-2024-23897) | CVE-2024-23897 | Jenkins <= 2.441 & <= LTS 2.426.2 PoC and scanner.  |
@@ -35,7 +35,7 @@
 
 | Stars | Updated | Name | Description |
 | --- | --- | --- | --- |
-| 774⭐ | 22 hours ago | [CVE-2023-38831-winrar-exploit](https://github.com/b1tg/CVE-2023-38831-winrar-exploit) | CVE-2023-38831 winrar exploit generator |
+| 774⭐ | 1 day ago | [CVE-2023-38831-winrar-exploit](https://github.com/b1tg/CVE-2023-38831-winrar-exploit) | CVE-2023-38831 winrar exploit generator |
 | 365⭐ | 15 days ago | [CVE-2023-32233](https://github.com/Liuk3r/CVE-2023-32233) | CVE-2023-32233: Linux内核中的安全漏洞 |
 | 468⭐ | 2 days ago | [Windows_LPE_AFD_CVE-2023-21768](https://github.com/chompie1337/Windows_LPE_AFD_CVE-2023-21768) | LPE exploit for CVE-2023-21768 |
 | 376⭐ | 1 day ago | [CVE-2023-0386](https://github.com/xkaneiki/CVE-2023-0386) | CVE-2023-0386在ubuntu22.04上的提权 |
@@ -92,7 +92,7 @@
 | Stars | Updated | Name | Description |
 | --- | --- | --- | --- |
 | 1931⭐ | 1 day ago | [CVE-2021-4034](https://github.com/berdav/CVE-2021-4034) | CVE-2021-4034 1day |
-| 1033⭐ | 20 hours ago | [CVE-2021-4034](https://github.com/arthepsy/CVE-2021-4034) | PoC for PwnKit: Local Privilege Escalation Vulnerability in polkit’s pkexec (CVE-2021-4034) |
+| 1033⭐ | 22 hours ago | [CVE-2021-4034](https://github.com/arthepsy/CVE-2021-4034) | PoC for PwnKit: Local Privilege Escalation Vulnerability in polkit’s pkexec (CVE-2021-4034) |
 | 978⭐ | 9 days ago | [CVE-2021-1675](https://github.com/calebstewart/CVE-2021-1675) | Pure PowerShell implementation of CVE-2021-1675 Print Spooler Local Privilege Escalation (PrintNightmare) |
 | 929⭐ | 5 days ago | [CVE-2021-3156](https://github.com/blasty/CVE-2021-3156) |  |
 | 715⭐ | 1 day ago | [CVE-2021-3156](https://github.com/worawit/CVE-2021-3156) | Sudo Baron Samedit Exploit |
@@ -106,11 +106,11 @@
 | 344⭐ | 28 days ago | [CVE-2021-44228_scanner](https://github.com/CERTCC/CVE-2021-44228_scanner) | Scanners for Jar files that may be vulnerable to CVE-2021-44228 |
 | 350⭐ | 7 days ago | [Grafana-CVE-2021-43798](https://github.com/jas502n/Grafana-CVE-2021-43798) | Grafana Unauthorized arbitrary file reading vulnerability |
 | 235⭐ | 1 day ago | [CVE-2021-36260](https://github.com/Aiminsun/CVE-2021-36260) | command injection vulnerability in the web server of some Hikvision product. Due to the insufficient input validation, attacker can exploit the vulnerability to launch a command injection attack by sending some messages with malicious commands. |
-| 329⭐ | 15 days ago | [CVE-2021-1675-LPE](https://github.com/hlldz/CVE-2021-1675-LPE) | Local Privilege Escalation Edition for CVE-2021-1675/CVE-2021-34527 |
+| 329⭐ | 16 days ago | [CVE-2021-1675-LPE](https://github.com/hlldz/CVE-2021-1675-LPE) | Local Privilege Escalation Edition for CVE-2021-1675/CVE-2021-34527 |
 | 306⭐ | 5 days ago | [CVE-2021-26084_Confluence](https://github.com/hev0x/CVE-2021-26084_Confluence) | Confluence Server Webwork OGNL injection |
 | 241⭐ | 2 days ago | [CVE-2021-34527](https://github.com/JohnHammond/CVE-2021-34527) |  |
 | 236⭐ | 16 days ago | [CVE-2021-38647](https://github.com/horizon3ai/CVE-2021-38647) | Proof on Concept Exploit for CVE-2021-38647 (OMIGOD) |
-| 140⭐ | 22 hours ago | [CVE-2021-3129](https://github.com/zhzyker/CVE-2021-3129) | Laravel <= v8.4.2 debug mode: Remote code execution (CVE-2021-3129) |
+| 140⭐ | 1 day ago | [CVE-2021-3129](https://github.com/zhzyker/CVE-2021-3129) | Laravel <= v8.4.2 debug mode: Remote code execution (CVE-2021-3129) |
 
 
 ## 2020
@@ -119,9 +119,9 @@
 
 | Stars | Updated | Name | Description |
 | --- | --- | --- | --- |
-| 1705⭐ | 1 day ago | [CVE-2020-1472](https://github.com/SecuraBV/CVE-2020-1472) | Test tool for CVE-2020-1472 |
+| 1705⭐ | 2 days ago | [CVE-2020-1472](https://github.com/SecuraBV/CVE-2020-1472) | Test tool for CVE-2020-1472 |
 | 1290⭐ | 18 days ago | [CVE-2020-0796](https://github.com/danigargu/CVE-2020-0796) | CVE-2020-0796 - Windows SMBv3 LPE exploit #SMBGhost |
-| 1154⭐ | 2 days ago | [CVE-2020-1472](https://github.com/dirkjanm/CVE-2020-1472) | PoC for Zerologon - all research credits go to Tom Tervoort of Secura |
+| 1154⭐ | 3 days ago | [CVE-2020-1472](https://github.com/dirkjanm/CVE-2020-1472) | PoC for Zerologon - all research credits go to Tom Tervoort of Secura |
 | 335⭐ | 9 days ago | [CVEAC-2020](https://github.com/thesecretclub/CVEAC-2020) | EasyAntiCheat Integrity check bypass by mimicking memory changes |
 | 372⭐ | 19 days ago | [CVE-2020-5902](https://github.com/jas502n/CVE-2020-5902) | CVE-2020-5902 BIG-IP |
 | 517⭐ | 4 days ago | [CVE-2020-0796-RCE-POC](https://github.com/jamf/CVE-2020-0796-RCE-POC) | CVE-2020-0796 Remote Code Execution POC |
@@ -134,7 +134,7 @@
 | 181⭐ | 162 days ago | [CVE-2020-2555](https://github.com/Y4er/CVE-2020-2555) | Weblogic com.tangosol.util.extractor.ReflectionExtractor RCE |
 | 213⭐ | 60 days ago | [CVE-2020-2551](https://github.com/hktalent/CVE-2020-2551) | how detect CVE-2020-2551 poc exploit python Weblogic RCE with IIOP |
 | 162⭐ | 39 days ago | [cve-2020-0688](https://github.com/random-robbie/cve-2020-0688) | cve-2020-0688 |
-| 144⭐ | 205 days ago | [CVE-2020-0688_EXP](https://github.com/Yt1g3r/CVE-2020-0688_EXP) | CVE-2020-0688_EXP Auto trigger payload & encrypt method |
+| 144⭐ | 206 days ago | [CVE-2020-0688_EXP](https://github.com/Yt1g3r/CVE-2020-0688_EXP) | CVE-2020-0688_EXP Auto trigger payload & encrypt method |
 | 272⭐ | 109 days ago | [vmware_vcenter_cve_2020_3952](https://github.com/guardicore/vmware_vcenter_cve_2020_3952) | Exploit for CVE-2020-3952 in vCenter 6.7 |
 | 180⭐ | 195 days ago | [CVE-2020-2883](https://github.com/Y4er/CVE-2020-2883) | Weblogic coherence.jar RCE |
 | 281⭐ | 2 days ago | [CVE-2020-1350_HoneyPoC](https://github.com/ZephrFish/CVE-2020-1350_HoneyPoC) | HoneyPoC: Proof-of-Concept (PoC) script to exploit SIGRed (CVE-2020-1350). Achieves Domain Admin on Domain Controllers running Windows Server 2000 up to Windows Server 2019. |
