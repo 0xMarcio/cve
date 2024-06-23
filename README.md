@@ -9,23 +9,23 @@
 | --- | --- | --- | --- |
 | 2138⭐ | 1 day ago | [CVE-2024-1086](https://github.com/Notselwyn/CVE-2024-1086) | Universal local privilege escalation Proof-of-Concept exploit for CVE-2024-1086, working on most Linux kernels between v5.14 and v6.6, including Debian, Ubuntu, and KernelCTF. The success rate is 99.4% in KernelCTF images. |
 | 238⭐ | 2 days ago | [CVE-2024-21338](https://github.com/hakaioffsec/CVE-2024-21338) | Local Privilege Escalation from Admin to Kernel vulnerability on Windows 10 and Windows 11 operating systems with HVCI enabled. |
-| 242⭐ | 3 hours ago | [CVE-2024-26229](https://github.com/varwara/CVE-2024-26229) | CWE-781: Improper Address Validation in IOCTL with METHOD_NEITHER I/O Control Code |
-| 636⭐ | 2 hours ago | [CVE-2024-21413-Microsoft-Outlook-Remote-Code-Execution-Vulnerability](https://github.com/xaitax/CVE-2024-21413-Microsoft-Outlook-Remote-Code-Execution-Vulnerability) | Microsoft-Outlook-Remote-Code-Execution-Vulnerability |
+| 242⭐ | 5 hours ago | [CVE-2024-26229](https://github.com/varwara/CVE-2024-26229) | CWE-781: Improper Address Validation in IOCTL with METHOD_NEITHER I/O Control Code |
+| 636⭐ | 4 hours ago | [CVE-2024-21413-Microsoft-Outlook-Remote-Code-Execution-Vulnerability](https://github.com/xaitax/CVE-2024-21413-Microsoft-Outlook-Remote-Code-Execution-Vulnerability) | Microsoft-Outlook-Remote-Code-Execution-Vulnerability |
 | 180⭐ | 2 days ago | [CVE-2024-23897](https://github.com/h4x0r-dz/CVE-2024-23897) | CVE-2024-23897 |
-| 142⭐ | 5 hours ago | [CVE-2024-4577](https://github.com/watchtowrlabs/CVE-2024-4577) | PHP CGI Argument Injection (CVE-2024-4577) Remote Code Execution PoC |
+| 142⭐ | 7 hours ago | [CVE-2024-4577](https://github.com/watchtowrlabs/CVE-2024-4577) | PHP CGI Argument Injection (CVE-2024-4577) Remote Code Execution PoC |
 | 149⭐ | 13 days ago | [CVE-2024-21413](https://github.com/duy-31/CVE-2024-21413) | Microsoft Outlook Information Disclosure Vulnerability (leak password hash) - Expect Script POC |
-| 132⭐ | 16 hours ago | [CVE-2024-25600](https://github.com/Chocapikk/CVE-2024-25600) | Unauthenticated Remote Code Execution – Bricks <= 1.9.6 |
-| 119⭐ | 1 hour ago | [CVE_2024_30078_POC_WIFI](https://github.com/blkph0x/CVE_2024_30078_POC_WIFI) | basic concept for the latest windows wifi driver CVE |
+| 132⭐ | 18 hours ago | [CVE-2024-25600](https://github.com/Chocapikk/CVE-2024-25600) | Unauthenticated Remote Code Execution – Bricks <= 1.9.6 |
+| 121⭐ | 20 minutes ago | [CVE_2024_30078_POC_WIFI](https://github.com/blkph0x/CVE_2024_30078_POC_WIFI) | basic concept for the latest windows wifi driver CVE |
 | 127⭐ | 2 days ago | [CVE-2024-27198-RCE](https://github.com/W01fh4cker/CVE-2024-27198-RCE) | CVE-2024-27198 & CVE-2024-27199 Authentication Bypass --> RCE in JetBrains TeamCity Pre-2023.11.4 |
 | 110⭐ | 2 days ago | [CVE-2024-21683-RCE](https://github.com/W01fh4cker/CVE-2024-21683-RCE) | CVE-2024-21683 Confluence Post Auth RCE |
-| 201⭐ | 1 hour ago | [CVE-2024-26229-BOF](https://github.com/NVISOsecurity/CVE-2024-26229-BOF) | BOF implementations of CVE-2024-26229 for Cobalt Strike and BruteRatel |
+| 201⭐ | 3 hours ago | [CVE-2024-26229-BOF](https://github.com/NVISOsecurity/CVE-2024-26229-BOF) | BOF implementations of CVE-2024-26229 for Cobalt Strike and BruteRatel |
 | 90⭐ | 1 day ago | [CVE-2024-32002](https://github.com/safebuffer/CVE-2024-32002) | CVE-2024-32002 RCE PoC |
 | 101⭐ | 2 days ago | [CVE-2024-21762](https://github.com/h4x0r-dz/CVE-2024-21762) | out-of-bounds write in Fortinet FortiOS  CVE-2024-21762 vulnerability  |
-| 66⭐ | 23 hours ago | [CVE-2024-21345](https://github.com/exploits-forsale/CVE-2024-21345) | Proof-of-Concept for CVE-2024-21345 |
+| 66⭐ | 1 day ago | [CVE-2024-21345](https://github.com/exploits-forsale/CVE-2024-21345) | Proof-of-Concept for CVE-2024-21345 |
 | 49⭐ | 8 days ago | [CVE-2024-3400](https://github.com/0x0d3ad/CVE-2024-3400) | CVE-2024-3400 |
 | 97⭐ | 7 days ago | [CVE-2024-22120-RCE](https://github.com/W01fh4cker/CVE-2024-22120-RCE) | Time Based SQL Injection in Zabbix Server Audit Log --> RCE |
-| 54⭐ | 13 days ago | [CVE-2024-23897](https://github.com/xaitax/CVE-2024-23897) | CVE-2024-23897 | Jenkins <= 2.441 & <= LTS 2.426.2 PoC and scanner.  |
 | 69⭐ | 4 days ago | [CVE-2024-4577](https://github.com/TAM-K592/CVE-2024-4577) | CVE-2024-4577 is a critical vulnerability in PHP affecting CGI configurations, allowing attackers to execute arbitrary commands via crafted URL parameters. |
+| 54⭐ | 13 days ago | [CVE-2024-23897](https://github.com/xaitax/CVE-2024-23897) | CVE-2024-23897 | Jenkins <= 2.441 & <= LTS 2.426.2 PoC and scanner.  |
 | 73⭐ | 26 days ago | [CVE-2024-3273](https://github.com/Chocapikk/CVE-2024-3273) | D-Link NAS CVE-2024-3273 Exploit Tool |
 
 
@@ -122,7 +122,7 @@
 | 1705⭐ | 2 days ago | [CVE-2020-1472](https://github.com/SecuraBV/CVE-2020-1472) | Test tool for CVE-2020-1472 |
 | 1290⭐ | 18 days ago | [CVE-2020-0796](https://github.com/danigargu/CVE-2020-0796) | CVE-2020-0796 - Windows SMBv3 LPE exploit #SMBGhost |
 | 1154⭐ | 3 days ago | [CVE-2020-1472](https://github.com/dirkjanm/CVE-2020-1472) | PoC for Zerologon - all research credits go to Tom Tervoort of Secura |
-| 335⭐ | 9 days ago | [CVEAC-2020](https://github.com/thesecretclub/CVEAC-2020) | EasyAntiCheat Integrity check bypass by mimicking memory changes |
+| 335⭐ | 10 days ago | [CVEAC-2020](https://github.com/thesecretclub/CVEAC-2020) | EasyAntiCheat Integrity check bypass by mimicking memory changes |
 | 372⭐ | 19 days ago | [CVE-2020-5902](https://github.com/jas502n/CVE-2020-5902) | CVE-2020-5902 BIG-IP |
 | 517⭐ | 4 days ago | [CVE-2020-0796-RCE-POC](https://github.com/jamf/CVE-2020-0796-RCE-POC) | CVE-2020-0796 Remote Code Execution POC |
 | 322⭐ | 52 days ago | [cve-2020-0688](https://github.com/Ridter/cve-2020-0688) | cve-2020-0688 |
