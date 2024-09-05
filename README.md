@@ -7,26 +7,26 @@
 
 | Stars | Updated | Name | Description |
 | --- | --- | --- | --- |
-| 2235⭐ | 9 minutes ago | [CVE-2024-1086](https://github.com/Notselwyn/CVE-2024-1086) | Universal local privilege escalation Proof-of-Concept exploit for CVE-2024-1086, working on most Linux kernels between v5.14 and v6.6, including Debian, Ubuntu, and KernelCTF. The success rate is 99.4% in KernelCTF images. |
+| 2235⭐ | 2 hours ago | [CVE-2024-1086](https://github.com/Notselwyn/CVE-2024-1086) | Universal local privilege escalation Proof-of-Concept exploit for CVE-2024-1086, working on most Linux kernels between v5.14 and v6.6, including Debian, Ubuntu, and KernelCTF. The success rate is 99.4% in KernelCTF images. |
 | 457⭐ | 2 days ago | [cve-2024-6387-poc](https://github.com/zgzhang/cve-2024-6387-poc) | a signal handler race condition in OpenSSH's server (sshd) |
-| 509⭐ | 4 hours ago | [CVE-2024-38063](https://github.com/ynwarcs/CVE-2024-38063) | poc for CVE-2024-38063 (RCE in tcpip.sys) |
+| 509⭐ | 6 hours ago | [CVE-2024-38063](https://github.com/ynwarcs/CVE-2024-38063) | poc for CVE-2024-38063 (RCE in tcpip.sys) |
 | 383⭐ | 5 days ago | [cve-2024-6387-poc](https://github.com/acrono/cve-2024-6387-poc) | 32-bit PoC for CVE-2024-6387 — mirror of the original 7etsuo/cve-2024-6387-poc |
 | 435⭐ | 2 days ago | [CVE-2024-6387_Check](https://github.com/xaitax/CVE-2024-6387_Check) | CVE-2024-6387_Check is a lightweight, efficient tool designed to identify servers running vulnerable versions of OpenSSH |
-| 191⭐ | 21 hours ago | [CVE-2024-38077](https://github.com/qi4L/CVE-2024-38077) | RDL的堆溢出导致的RCE |
-| 306⭐ | 2 days ago | [CVE-2024-26229](https://github.com/varwara/CVE-2024-26229) | CWE-781: Improper Address Validation in IOCTL with METHOD_NEITHER I/O Control Code |
-| 272⭐ | 9 hours ago | [CVE-2024-21338](https://github.com/hakaioffsec/CVE-2024-21338) | Local Privilege Escalation from Admin to Kernel vulnerability on Windows 10 and Windows 11 operating systems with HVCI enabled. |
+| 191⭐ | 23 hours ago | [CVE-2024-38077](https://github.com/qi4L/CVE-2024-38077) | RDL的堆溢出导致的RCE |
+| 306⭐ | 3 days ago | [CVE-2024-26229](https://github.com/varwara/CVE-2024-26229) | CWE-781: Improper Address Validation in IOCTL with METHOD_NEITHER I/O Control Code |
+| 272⭐ | 11 hours ago | [CVE-2024-21338](https://github.com/hakaioffsec/CVE-2024-21338) | Local Privilege Escalation from Admin to Kernel vulnerability on Windows 10 and Windows 11 operating systems with HVCI enabled. |
 | 669⭐ | 1 day ago | [CVE-2024-21413-Microsoft-Outlook-Remote-Code-Execution-Vulnerability](https://github.com/xaitax/CVE-2024-21413-Microsoft-Outlook-Remote-Code-Execution-Vulnerability) | Microsoft-Outlook-Remote-Code-Execution-Vulnerability |
-| 210⭐ | 6 hours ago | [cve_2024_0044](https://github.com/pl4int3xt/cve_2024_0044) | CVE-2024-0044:  a "run-as any app" high-severity vulnerability affecting Android versions 12 and 13 |
-| 199⭐ | 1 day ago | [CVE-2024-4577](https://github.com/watchtowrlabs/CVE-2024-4577) | PHP CGI Argument Injection (CVE-2024-4577) Remote Code Execution PoC |
+| 210⭐ | 8 hours ago | [cve_2024_0044](https://github.com/pl4int3xt/cve_2024_0044) | CVE-2024-0044:  a "run-as any app" high-severity vulnerability affecting Android versions 12 and 13 |
+| 199⭐ | 2 days ago | [CVE-2024-4577](https://github.com/watchtowrlabs/CVE-2024-4577) | PHP CGI Argument Injection (CVE-2024-4577) Remote Code Execution PoC |
 | 230⭐ | 2 days ago | [CVE_2024_30078_POC_WIFI](https://github.com/blkph0x/CVE_2024_30078_POC_WIFI) | basic concept for the latest windows wifi driver CVE |
-| 188⭐ | 5 days ago | [CVE-2024-23897](https://github.com/h4x0r-dz/CVE-2024-23897) | CVE-2024-23897 |
-| 150⭐ | 3 days ago | [CVE-2024-21413](https://github.com/duy-31/CVE-2024-21413) | Microsoft Outlook Information Disclosure Vulnerability (leak password hash) - Expect Script POC |
+| 188⭐ | 6 days ago | [CVE-2024-23897](https://github.com/h4x0r-dz/CVE-2024-23897) | CVE-2024-23897 |
 | 144⭐ | 10 days ago | [CVE-2024-25600](https://github.com/Chocapikk/CVE-2024-25600) | Unauthenticated Remote Code Execution – Bricks <= 1.9.6 |
+| 150⭐ | 3 days ago | [CVE-2024-21413](https://github.com/duy-31/CVE-2024-21413) | Microsoft Outlook Information Disclosure Vulnerability (leak password hash) - Expect Script POC |
 | 105⭐ | 5 days ago | [cve-2024-6387-poc](https://github.com/lflare/cve-2024-6387-poc) | MIRROR of the original 32-bit PoC for CVE-2024-6387 "regreSSHion" by 7etsuo/cve-2024-6387-poc |
 | 133⭐ | 8 days ago | [CVE-2024-27198-RCE](https://github.com/W01fh4cker/CVE-2024-27198-RCE) | CVE-2024-27198 & CVE-2024-27199 Authentication Bypass --> RCE in JetBrains TeamCity Pre-2023.11.4 |
 | 123⭐ | 10 days ago | [CVE-2024-21683-RCE](https://github.com/W01fh4cker/CVE-2024-21683-RCE) | CVE-2024-21683 Confluence Post Auth RCE |
 | 97⭐ | 22 days ago | [CVE-2024-32002](https://github.com/safebuffer/CVE-2024-32002) | CVE-2024-32002 RCE PoC |
-| 110⭐ | 16 hours ago | [CVE-2024-4577-PHP-RCE](https://github.com/xcanwin/CVE-2024-4577-PHP-RCE) | [漏洞复现] 全球首款利用PHP默认环境（XAMPP）的CVE-2024-4577 PHP-CGI RCE 漏洞 EXP。 |
+| 110⭐ | 18 hours ago | [CVE-2024-4577-PHP-RCE](https://github.com/xcanwin/CVE-2024-4577-PHP-RCE) | [漏洞复现] 全球首款利用PHP默认环境（XAMPP）的CVE-2024-4577 PHP-CGI RCE 漏洞 EXP。 |
 
 
 ## 2023
@@ -42,9 +42,9 @@
 | 377⭐ | 21 days ago | [CVE-2023-4911](https://github.com/leesh3288/CVE-2023-4911) | PoC for CVE-2023-4911 |
 | 263⭐ | 21 days ago | [CVE-2023-21608](https://github.com/hacksysteam/CVE-2023-21608) | Adobe Acrobat Reader - CVE-2023-21608 - Remote Code Execution Exploit |
 | 312⭐ | 5 days ago | [CVE-2023-4863](https://github.com/mistymntncop/CVE-2023-4863) |  |
-| 47⭐ | 6 days ago | [CVE-2023-21839](https://github.com/ASkyeye/CVE-2023-21839) | Weblogic CVE-2023-21839 RCE (无需Java依赖一键RCE) |
-| 219⭐ | 12 days ago | [CVE-2023-44487](https://github.com/bcdannyboy/CVE-2023-44487) | Basic vulnerability scanning to see if web servers may be vulnerable to CVE-2023-44487 |
+| 47⭐ | 7 days ago | [CVE-2023-21839](https://github.com/ASkyeye/CVE-2023-21839) | Weblogic CVE-2023-21839 RCE (无需Java依赖一键RCE) |
 | 163⭐ | 43 days ago | [CVE-2023-36745](https://github.com/N1k0la-T/CVE-2023-36745) |  |
+| 219⭐ | 12 days ago | [CVE-2023-44487](https://github.com/bcdannyboy/CVE-2023-44487) | Basic vulnerability scanning to see if web servers may be vulnerable to CVE-2023-44487 |
 | 230⭐ | 23 days ago | [CVE-2023-20887](https://github.com/sinsinology/CVE-2023-20887) | VMWare vRealize Network Insight Pre-Authenticated RCE (CVE-2023-20887) |
 | 338⭐ | 23 days ago | [CVE-2023-23397-POC-Powershell](https://github.com/api0cradle/CVE-2023-23397-POC-Powershell) |  |
 | 236⭐ | 14 days ago | [CVE-2023-7028](https://github.com/Vozec/CVE-2023-7028) | This repository presents a proof-of-concept of CVE-2023-7028 |
@@ -63,7 +63,7 @@
 
 | Stars | Updated | Name | Description |
 | --- | --- | --- | --- |
-| 1084⭐ | 6 days ago | [CVE-2022-0847-DirtyPipe-Exploit](https://github.com/Arinerron/CVE-2022-0847-DirtyPipe-Exploit) | A root exploit for CVE-2022-0847 (Dirty Pipe) |
+| 1084⭐ | 7 days ago | [CVE-2022-0847-DirtyPipe-Exploit](https://github.com/Arinerron/CVE-2022-0847-DirtyPipe-Exploit) | A root exploit for CVE-2022-0847 (Dirty Pipe) |
 | 557⭐ | 8 days ago | [CVE-2022-23222](https://github.com/tr3ee/CVE-2022-23222) | CVE-2022-23222: Linux Kernel eBPF Local Privilege Escalation |
 | 362⭐ | 2 days ago | [CVE-2022-21907](https://github.com/ZZ-SOCMAP/CVE-2022-21907) | HTTP Protocol Stack Remote Code Execution Vulnerability CVE-2022-21907 |
 | 366⭐ | 22 days ago | [CVE-2022-29464](https://github.com/hakivvi/CVE-2022-29464) | WSO2 RCE (CVE-2022-29464) exploit and writeup. |
@@ -103,8 +103,8 @@
 | 430⭐ | 18 days ago | [CVE-2021-3156](https://github.com/stong/CVE-2021-3156) | PoC for CVE-2021-3156 (sudo heap overflow) |
 | 261⭐ | 6 days ago | [CVE-2021-22205](https://github.com/Al1ex/CVE-2021-22205) | CVE-2021-22205& GitLab CE/EE RCE |
 | 248⭐ | 18 days ago | [CVE-2021-21972](https://github.com/horizon3ai/CVE-2021-21972) | Proof of Concept Exploit for vCenter CVE-2021-21972 |
-| 343⭐ | 13 days ago | [CVE-2021-44228_scanner](https://github.com/CERTCC/CVE-2021-44228_scanner) | Scanners for Jar files that may be vulnerable to CVE-2021-44228 |
 | 349⭐ | 14 days ago | [Grafana-CVE-2021-43798](https://github.com/jas502n/Grafana-CVE-2021-43798) | Grafana Unauthorized arbitrary file reading vulnerability |
+| 343⭐ | 13 days ago | [CVE-2021-44228_scanner](https://github.com/CERTCC/CVE-2021-44228_scanner) | Scanners for Jar files that may be vulnerable to CVE-2021-44228 |
 | 244⭐ | 10 days ago | [CVE-2021-36260](https://github.com/Aiminsun/CVE-2021-36260) | command injection vulnerability in the web server of some Hikvision product. Due to the insufficient input validation, attacker can exploit the vulnerability to launch a command injection attack by sending some messages with malicious commands. |
 | 329⭐ | 23 days ago | [CVE-2021-1675-LPE](https://github.com/hlldz/CVE-2021-1675-LPE) | Local Privilege Escalation Edition for CVE-2021-1675/CVE-2021-34527 |
 | 305⭐ | 16 days ago | [CVE-2021-26084_Confluence](https://github.com/hev0x/CVE-2021-26084_Confluence) | Confluence Server Webwork OGNL injection |
@@ -119,14 +119,14 @@
 
 | Stars | Updated | Name | Description |
 | --- | --- | --- | --- |
-| 1719⭐ | 17 hours ago | [CVE-2020-1472](https://github.com/SecuraBV/CVE-2020-1472) | Test tool for CVE-2020-1472 |
+| 1719⭐ | 19 hours ago | [CVE-2020-1472](https://github.com/SecuraBV/CVE-2020-1472) | Test tool for CVE-2020-1472 |
 | 1294⭐ | 2 days ago | [CVE-2020-0796](https://github.com/danigargu/CVE-2020-0796) | CVE-2020-0796 - Windows SMBv3 LPE exploit #SMBGhost |
 | 1173⭐ | 2 days ago | [CVE-2020-1472](https://github.com/dirkjanm/CVE-2020-1472) | PoC for Zerologon - all research credits go to Tom Tervoort of Secura |
 | 334⭐ | 13 days ago | [CVEAC-2020](https://github.com/thesecretclub/CVEAC-2020) | EasyAntiCheat Integrity check bypass by mimicking memory changes |
 | 372⭐ | 23 days ago | [CVE-2020-5902](https://github.com/jas502n/CVE-2020-5902) | CVE-2020-5902 BIG-IP |
 | 528⭐ | 3 days ago | [CVE-2020-0796-RCE-POC](https://github.com/jamf/CVE-2020-0796-RCE-POC) | CVE-2020-0796 Remote Code Execution POC |
 | 322⭐ | 23 days ago | [cve-2020-0688](https://github.com/Ridter/cve-2020-0688) | cve-2020-0688 |
-| 333⭐ | 12 days ago | [CVE-2020-2551](https://github.com/Y4er/CVE-2020-2551) | Weblogic IIOP CVE-2020-2551 |
+| 333⭐ | 13 days ago | [CVE-2020-2551](https://github.com/Y4er/CVE-2020-2551) | Weblogic IIOP CVE-2020-2551 |
 | 375⭐ | 9 days ago | [CVE-2020-1472](https://github.com/VoidSec/CVE-2020-1472) | Exploit Code for CVE-2020-1472 aka Zerologon |
 | 322⭐ | 23 days ago | [CVE-2020-0796-PoC](https://github.com/eerykitty/CVE-2020-0796-PoC) | PoC for triggering buffer overflow via CVE-2020-0796 |
 | 216⭐ | 23 days ago | [CVE-2020-0041](https://github.com/bluefrostsecurity/CVE-2020-0041) | Exploits for Android Binder bug CVE-2020-0041 |
