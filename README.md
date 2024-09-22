@@ -7,7 +7,7 @@
 
 | Stars | Updated | Name | Description |
 | --- | --- | --- | --- |
-| 2240⭐ | 14 hours ago | [CVE-2024-1086](https://github.com/Notselwyn/CVE-2024-1086) | Universal local privilege escalation Proof-of-Concept exploit for CVE-2024-1086, working on most Linux kernels between v5.14 and v6.6, including Debian, Ubuntu, and KernelCTF. The success rate is 99.4% in KernelCTF images. |
+| 2240⭐ | 16 hours ago | [CVE-2024-1086](https://github.com/Notselwyn/CVE-2024-1086) | Universal local privilege escalation Proof-of-Concept exploit for CVE-2024-1086, working on most Linux kernels between v5.14 and v6.6, including Debian, Ubuntu, and KernelCTF. The success rate is 99.4% in KernelCTF images. |
 | 457⭐ | 1 day ago | [cve-2024-6387-poc](https://github.com/zgzhang/cve-2024-6387-poc) | a signal handler race condition in OpenSSH's server (sshd) |
 | 582⭐ | 1 day ago | [CVE-2024-38063](https://github.com/ynwarcs/CVE-2024-38063) | poc for CVE-2024-38063 (RCE in tcpip.sys) |
 | 382⭐ | 8 days ago | [cve-2024-6387-poc](https://github.com/acrono/cve-2024-6387-poc) | 32-bit PoC for CVE-2024-6387 — mirror of the original 7etsuo/cve-2024-6387-poc |
@@ -16,8 +16,8 @@
 | 309⭐ | 3 days ago | [CVE-2024-26229](https://github.com/varwara/CVE-2024-26229) | CWE-781: Improper Address Validation in IOCTL with METHOD_NEITHER I/O Control Code |
 | 276⭐ | 4 days ago | [CVE-2024-21338](https://github.com/hakaioffsec/CVE-2024-21338) | Local Privilege Escalation from Admin to Kernel vulnerability on Windows 10 and Windows 11 operating systems with HVCI enabled. |
 | 221⭐ | 1 day ago | [cve_2024_0044](https://github.com/pl4int3xt/cve_2024_0044) | CVE-2024-0044:  a "run-as any app" high-severity vulnerability affecting Android versions 12 and 13 |
-| 672⭐ | 18 hours ago | [CVE-2024-21413-Microsoft-Outlook-Remote-Code-Execution-Vulnerability](https://github.com/xaitax/CVE-2024-21413-Microsoft-Outlook-Remote-Code-Execution-Vulnerability) | Microsoft-Outlook-Remote-Code-Execution-Vulnerability |
-| 207⭐ | 9 hours ago | [CVE-2024-4577](https://github.com/watchtowrlabs/CVE-2024-4577) | PHP CGI Argument Injection (CVE-2024-4577) Remote Code Execution PoC |
+| 672⭐ | 20 hours ago | [CVE-2024-21413-Microsoft-Outlook-Remote-Code-Execution-Vulnerability](https://github.com/xaitax/CVE-2024-21413-Microsoft-Outlook-Remote-Code-Execution-Vulnerability) | Microsoft-Outlook-Remote-Code-Execution-Vulnerability |
+| 207⭐ | 11 hours ago | [CVE-2024-4577](https://github.com/watchtowrlabs/CVE-2024-4577) | PHP CGI Argument Injection (CVE-2024-4577) Remote Code Execution PoC |
 | 234⭐ | 4 days ago | [CVE_2024_30078_POC_WIFI](https://github.com/blkph0x/CVE_2024_30078_POC_WIFI) | basic concept for the latest windows wifi driver CVE |
 | 189⭐ | 15 days ago | [CVE-2024-23897](https://github.com/h4x0r-dz/CVE-2024-23897) | CVE-2024-23897 |
 | 4⭐ | 3 days ago | [CVE-2024-38077-POC](https://github.com/SecStarBot/CVE-2024-38077-POC) |  |
@@ -39,7 +39,7 @@
 | 367⭐ | 36 days ago | [CVE-2023-32233](https://github.com/Liuk3r/CVE-2023-32233) | CVE-2023-32233: Linux内核中的安全漏洞 |
 | 473⭐ | 7 days ago | [Windows_LPE_AFD_CVE-2023-21768](https://github.com/chompie1337/Windows_LPE_AFD_CVE-2023-21768) | LPE exploit for CVE-2023-21768 |
 | 382⭐ | 1 day ago | [CVE-2023-0386](https://github.com/xkaneiki/CVE-2023-0386) | CVE-2023-0386在ubuntu22.04上的提权 |
-| 378⭐ | 14 hours ago | [CVE-2023-4911](https://github.com/leesh3288/CVE-2023-4911) | PoC for CVE-2023-4911 |
+| 378⭐ | 16 hours ago | [CVE-2023-4911](https://github.com/leesh3288/CVE-2023-4911) | PoC for CVE-2023-4911 |
 | 264⭐ | 9 days ago | [CVE-2023-21608](https://github.com/hacksysteam/CVE-2023-21608) | Adobe Acrobat Reader - CVE-2023-21608 - Remote Code Execution Exploit |
 | 312⭐ | 22 days ago | [CVE-2023-4863](https://github.com/mistymntncop/CVE-2023-4863) |  |
 | 48⭐ | 3 days ago | [CVE-2023-21839](https://github.com/ASkyeye/CVE-2023-21839) | Weblogic CVE-2023-21839 RCE (无需Java依赖一键RCE) |
@@ -68,7 +68,7 @@
 | 362⭐ | 20 days ago | [CVE-2022-21907](https://github.com/ZZ-SOCMAP/CVE-2022-21907) | HTTP Protocol Stack Remote Code Execution Vulnerability CVE-2022-21907 |
 | 365⭐ | 16 days ago | [CVE-2022-29464](https://github.com/hakivvi/CVE-2022-29464) | WSO2 RCE (CVE-2022-29464) exploit and writeup. |
 | 424⭐ | 22 days ago | [CVE-2022-25636](https://github.com/Bonfee/CVE-2022-25636) | CVE-2022-25636 |
-| 339⭐ | 12 days ago | [CVE-2022-40684](https://github.com/horizon3ai/CVE-2022-40684) | A proof of concept exploit for CVE-2022-40684 affecting Fortinet FortiOS, FortiProxy, and FortiSwitchManager |
+| 339⭐ | 13 days ago | [CVE-2022-40684](https://github.com/horizon3ai/CVE-2022-40684) | A proof of concept exploit for CVE-2022-40684 affecting Fortinet FortiOS, FortiProxy, and FortiSwitchManager |
 | 492⭐ | 11 days ago | [CVE-2022-0995](https://github.com/Bonfee/CVE-2022-0995) | CVE-2022-0995 exploit |
 | 464⭐ | 11 days ago | [CVE-2022-2588](https://github.com/Markakd/CVE-2022-2588) | exploit for CVE-2022-2588 |
 | 375⭐ | 21 days ago | [CVE-2022-39197](https://github.com/its-arun/CVE-2022-39197) | CobaltStrike <= 4.7.1 RCE |
@@ -92,13 +92,13 @@
 | Stars | Updated | Name | Description |
 | --- | --- | --- | --- |
 | 1951⭐ | 2 days ago | [CVE-2021-4034](https://github.com/berdav/CVE-2021-4034) | CVE-2021-4034 1day |
-| 1048⭐ | 10 hours ago | [CVE-2021-4034](https://github.com/arthepsy/CVE-2021-4034) | PoC for PwnKit: Local Privilege Escalation Vulnerability in polkit’s pkexec (CVE-2021-4034) |
-| 943⭐ | 10 days ago | [CVE-2021-3156](https://github.com/blasty/CVE-2021-3156) |  |
+| 1048⭐ | 12 hours ago | [CVE-2021-4034](https://github.com/arthepsy/CVE-2021-4034) | PoC for PwnKit: Local Privilege Escalation Vulnerability in polkit’s pkexec (CVE-2021-4034) |
 | 1001⭐ | 5 days ago | [CVE-2021-1675](https://github.com/calebstewart/CVE-2021-1675) | Pure PowerShell implementation of CVE-2021-1675 Print Spooler Local Privilege Escalation (PrintNightmare) |
+| 943⭐ | 10 days ago | [CVE-2021-3156](https://github.com/blasty/CVE-2021-3156) |  |
 | 733⭐ | 3 days ago | [CVE-2021-3156](https://github.com/worawit/CVE-2021-3156) | Sudo Baron Samedit Exploit |
 | 824⭐ | 1 day ago | [CVE-2021-31166](https://github.com/0vercl0k/CVE-2021-31166) | Proof of concept for CVE-2021-31166, a remote HTTP.sys use-after-free triggered remotely. |
 | 854⭐ | 5 days ago | [CVE-2021-44228-Scanner](https://github.com/logpresso/CVE-2021-44228-Scanner) | Vulnerability scanner and mitigation patch for Log4j2 CVE-2021-44228 |
-| 480⭐ | 18 days ago | [CVE-2021-21972](https://github.com/NS-Sp4ce/CVE-2021-21972) | CVE-2021-21972 Exploit |
+| 480⭐ | 19 days ago | [CVE-2021-21972](https://github.com/NS-Sp4ce/CVE-2021-21972) | CVE-2021-21972 Exploit |
 | 403⭐ | 10 days ago | [CVE-2021-3493](https://github.com/briskets/CVE-2021-3493) | Ubuntu OverlayFS Local Privesc |
 | 430⭐ | 35 days ago | [CVE-2021-3156](https://github.com/stong/CVE-2021-3156) | PoC for CVE-2021-3156 (sudo heap overflow) |
 | 262⭐ | 13 days ago | [CVE-2021-22205](https://github.com/Al1ex/CVE-2021-22205) | CVE-2021-22205& GitLab CE/EE RCE |
@@ -107,9 +107,9 @@
 | 351⭐ | 3 days ago | [Grafana-CVE-2021-43798](https://github.com/jas502n/Grafana-CVE-2021-43798) | Grafana Unauthorized arbitrary file reading vulnerability |
 | 246⭐ | 2 days ago | [CVE-2021-36260](https://github.com/Aiminsun/CVE-2021-36260) | command injection vulnerability in the web server of some Hikvision product. Due to the insufficient input validation, attacker can exploit the vulnerability to launch a command injection attack by sending some messages with malicious commands. |
 | 330⭐ | 2 days ago | [CVE-2021-1675-LPE](https://github.com/hlldz/CVE-2021-1675-LPE) | Local Privilege Escalation Edition for CVE-2021-1675/CVE-2021-34527 |
-| 305⭐ | 33 days ago | [CVE-2021-26084_Confluence](https://github.com/hev0x/CVE-2021-26084_Confluence) | Confluence Server Webwork OGNL injection |
+| 305⭐ | 34 days ago | [CVE-2021-26084_Confluence](https://github.com/hev0x/CVE-2021-26084_Confluence) | Confluence Server Webwork OGNL injection |
 | 247⭐ | 11 days ago | [CVE-2021-34527](https://github.com/JohnHammond/CVE-2021-34527) |  |
-| 234⭐ | 33 days ago | [CVE-2021-38647](https://github.com/horizon3ai/CVE-2021-38647) | Proof on Concept Exploit for CVE-2021-38647 (OMIGOD) |
+| 234⭐ | 34 days ago | [CVE-2021-38647](https://github.com/horizon3ai/CVE-2021-38647) | Proof on Concept Exploit for CVE-2021-38647 (OMIGOD) |
 | 145⭐ | 3 days ago | [CVE-2021-3129](https://github.com/zhzyker/CVE-2021-3129) | Laravel <= v8.4.2 debug mode: Remote code execution (CVE-2021-3129) |
 
 
@@ -120,7 +120,7 @@
 | Stars | Updated | Name | Description |
 | --- | --- | --- | --- |
 | 1723⭐ | 1 day ago | [CVE-2020-1472](https://github.com/SecuraBV/CVE-2020-1472) | Test tool for CVE-2020-1472 |
-| 1296⭐ | 2 hours ago | [CVE-2020-0796](https://github.com/danigargu/CVE-2020-0796) | CVE-2020-0796 - Windows SMBv3 LPE exploit #SMBGhost |
+| 1296⭐ | 4 hours ago | [CVE-2020-0796](https://github.com/danigargu/CVE-2020-0796) | CVE-2020-0796 - Windows SMBv3 LPE exploit #SMBGhost |
 | 1174⭐ | 5 days ago | [CVE-2020-1472](https://github.com/dirkjanm/CVE-2020-1472) | PoC for Zerologon - all research credits go to Tom Tervoort of Secura |
 | 336⭐ | 7 days ago | [CVEAC-2020](https://github.com/thesecretclub/CVEAC-2020) | EasyAntiCheat Integrity check bypass by mimicking memory changes |
 | 372⭐ | 40 days ago | [CVE-2020-5902](https://github.com/jas502n/CVE-2020-5902) | CVE-2020-5902 BIG-IP |
