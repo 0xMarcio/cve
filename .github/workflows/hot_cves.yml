@@ -3,7 +3,7 @@ name: Hot CVEs List
 on:
   workflow_dispatch:
   schedule:
-      - cron: '30 */2 * * *'
+      - cron: '30 */12 * * *'
 
 jobs:
   ScheduledRun:
