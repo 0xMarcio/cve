@@ -28,8 +28,8 @@ jobs:
     - name: Check for changes and commit if necessary
       run: |
         cd /home/runner/work/cve/cve
-        git config --global user.name '0xMarcio'
-        git config --global user.email 'marc@codepwn.win'
+        git config --global user.name 'CVE-BOT'
+        git config --global user.email 'cve@codepwn.win'
         git remote set-url origin https://github-actions[bot]:$GITHUB_TOKEN@github.com/0xMarcio/cve.git
         if [ -n "$(git status --porcelain)" ]; then
           git add .
