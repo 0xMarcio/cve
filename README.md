@@ -7,82 +7,82 @@
 
 | Stars | Updated | Name | Description |
 | --- | --- | --- | --- |
-| 489⭐ | 16 days ago | [CVE-2018-20250](https://github.com/WyAtu/CVE-2018-20250) | exp for https://research.checkpoint.com/extracting-code-execution-from-winrar |
-| 232⭐ | 23 hours ago | [CVE-2025-24071_PoC](https://github.com/0x6rss/CVE-2025-24071_PoC) | CVE-2025-24071: NTLM Hash Leak via RAR/ZIP Extraction and .library-ms File |
-| 170⭐ | 5 hours ago | [CVE-2025-30208-EXP](https://github.com/ThumpBo/CVE-2025-30208-EXP) | CVE-2025-30208-EXP |
-| 104⭐ | 5 hours ago | [POC-CVE-2025-24813](https://github.com/absholi7ly/POC-CVE-2025-24813) | his repository contains an automated Proof of Concept (PoC) script for exploiting **CVE-2025-24813**, a Remote Code Execution (RCE) vulnerability in Apache Tomcat. The vulnerability allows an attacker to upload a malicious serialized payload to the server, leading to arbitrary code execution via deserialization when specific conditions are met. |
-| 127⭐ | 6 days ago | [CVE-2025-26125](https://github.com/ZeroMemoryEx/CVE-2025-26125) | (0day) Local Privilege Escalation in IObit Malware Fighter |
-| 78⭐ | 5 hours ago | [CVE-2025-24813-PoC](https://github.com/iSee857/CVE-2025-24813-PoC) | Apache Tomcat 远程代码执行漏洞批量检测脚本(CVE-2025-24813) |
-| 25⭐ | 1413 days ago | [CVE-2018-20250](https://github.com/QAX-A-Team/CVE-2018-20250) | 010 Editor template for ACE archive format & CVE-2018-2025[0-3] |
-| 36⭐ | 12 days ago | [CVE-2025-0282](https://github.com/sfewer-r7/CVE-2025-0282) | PoC for CVE-2025-0282: A remote unauthenticated stack based buffer overflow affecting Ivanti Connect Secure, Ivanti Policy Secure, and Ivanti Neurons for ZTA gateways |
-| 26⭐ | 10 days ago | [CVE-2025-0108-PoC](https://github.com/iSee857/CVE-2025-0108-PoC) | Palo Alto Networks PAN-OS 身份验证绕过漏洞批量检测脚本(CVE-2025-0108) |
-| 45⭐ | 1 day ago | [CVE-2025-1974](https://github.com/yoshino-s/CVE-2025-1974) |  |
-| 44⭐ | 26 days ago | [CVE-2025-0282-Ivanti-exploit](https://github.com/absholi7ly/CVE-2025-0282-Ivanti-exploit) | CVE-2025-0282 is a critical vulnerability found in Ivanti Connect Secure, allowing Remote Command Execution (RCE) through a buffer overflow exploit. |
-| 64⭐ | 1 day ago | [ingressNightmare-CVE-2025-1974-exps](https://github.com/Esonhugh/ingressNightmare-CVE-2025-1974-exps) | IngressNightmare POC. world first remote exploitation and with multi-advanced exploitation methods. allow on disk exploitation. CVE-2025-24514 - auth-url injection, CVE-2025-1097 - auth-tls-match-cn injection, CVE-2025-1098 – mirror UID injection -- all available |
-| 31⭐ | 3 days ago | [CVE-2025-0401](https://github.com/CyberSecurityUP/CVE-2025-0401) | Privilege Escalation using Passwd - April Fools prank |
-| 24⭐ | 5 days ago | [CVE-2025-0282](https://github.com/watchtowrlabs/CVE-2025-0282) | Ivanti Connect Secure IFT TLS Stack Overflow pre-auth RCE (CVE-2025-0282) |
-| 36⭐ | 3 hours ago | [CVE-2025-24016](https://github.com/0xjessie21/CVE-2025-24016) | CVE-2025-24016: Wazuh Unsafe Deserialization Remote Code Execution (RCE) |
-| 41⭐ | 44 days ago | [CVE-2025-24118](https://github.com/jprx/CVE-2025-24118) | An XNU kernel race condition bug |
-| 29⭐ | 4 days ago | [CVE-2025-27636-Apache-Camel-PoC](https://github.com/akamai/CVE-2025-27636-Apache-Camel-PoC) |  |
-| 37⭐ | 1 hour ago | [CVE-2025-22457](https://github.com/sfewer-r7/CVE-2025-22457) | PoC for CVE-2025-22457 |
-| 22⭐ | 1 day ago | [CVE-2025-24799](https://github.com/MuhammadWaseem29/CVE-2025-24799) |  |
-| 23⭐ | 26 days ago | [CVE-2025-1094-Exploit](https://github.com/soltanali0/CVE-2025-1094-Exploit) | WebSocket and SQL Injection Exploit Script |
+| 489⭐ | 17 days ago | [CVE-2018-20250](https://github.com/WyAtu/CVE-2018-20250) | exp for https://research.checkpoint.com/extracting-code-execution-from-winrar |
+| 234⭐ | 7 hours ago | [CVE-2025-24071_PoC](https://github.com/0x6rss/CVE-2025-24071_PoC) | CVE-2025-24071: NTLM Hash Leak via RAR/ZIP Extraction and .library-ms File |
+| 170⭐ | 1 day ago | [CVE-2025-30208-EXP](https://github.com/ThumpBo/CVE-2025-30208-EXP) | CVE-2025-30208-EXP |
+| 105⭐ | 9 hours ago | [POC-CVE-2025-24813](https://github.com/absholi7ly/POC-CVE-2025-24813) | his repository contains an automated Proof of Concept (PoC) script for exploiting **CVE-2025-24813**, a Remote Code Execution (RCE) vulnerability in Apache Tomcat. The vulnerability allows an attacker to upload a malicious serialized payload to the server, leading to arbitrary code execution via deserialization when specific conditions are met. |
+| 127⭐ | 7 days ago | [CVE-2025-26125](https://github.com/ZeroMemoryEx/CVE-2025-26125) | (0day) Local Privilege Escalation in IObit Malware Fighter |
+| 79⭐ | 4 hours ago | [CVE-2025-24813-PoC](https://github.com/iSee857/CVE-2025-24813-PoC) | Apache Tomcat 远程代码执行漏洞批量检测脚本(CVE-2025-24813) |
+| 25⭐ | 1414 days ago | [CVE-2018-20250](https://github.com/QAX-A-Team/CVE-2018-20250) | 010 Editor template for ACE archive format & CVE-2018-2025[0-3] |
+| 36⭐ | 13 days ago | [CVE-2025-0282](https://github.com/sfewer-r7/CVE-2025-0282) | PoC for CVE-2025-0282: A remote unauthenticated stack based buffer overflow affecting Ivanti Connect Secure, Ivanti Policy Secure, and Ivanti Neurons for ZTA gateways |
+| 26⭐ | 11 days ago | [CVE-2025-0108-PoC](https://github.com/iSee857/CVE-2025-0108-PoC) | Palo Alto Networks PAN-OS 身份验证绕过漏洞批量检测脚本(CVE-2025-0108) |
+| 45⭐ | 2 days ago | [CVE-2025-1974](https://github.com/yoshino-s/CVE-2025-1974) |  |
+| 44⭐ | 27 days ago | [CVE-2025-0282-Ivanti-exploit](https://github.com/absholi7ly/CVE-2025-0282-Ivanti-exploit) | CVE-2025-0282 is a critical vulnerability found in Ivanti Connect Secure, allowing Remote Command Execution (RCE) through a buffer overflow exploit. |
+| 67⭐ | 8 hours ago | [ingressNightmare-CVE-2025-1974-exps](https://github.com/Esonhugh/ingressNightmare-CVE-2025-1974-exps) | IngressNightmare POC. world first remote exploitation and with multi-advanced exploitation methods. allow on disk exploitation. CVE-2025-24514 - auth-url injection, CVE-2025-1097 - auth-tls-match-cn injection, CVE-2025-1098 – mirror UID injection -- all available |
+| 24⭐ | 6 days ago | [CVE-2025-0282](https://github.com/watchtowrlabs/CVE-2025-0282) | Ivanti Connect Secure IFT TLS Stack Overflow pre-auth RCE (CVE-2025-0282) |
+| 32⭐ | 23 hours ago | [CVE-2025-0401](https://github.com/CyberSecurityUP/CVE-2025-0401) | Privilege Escalation using Passwd - April Fools prank |
+| 37⭐ | 17 hours ago | [CVE-2025-22457](https://github.com/sfewer-r7/CVE-2025-22457) | PoC for CVE-2025-22457 |
+| 36⭐ | 1 day ago | [CVE-2025-24016](https://github.com/0xjessie21/CVE-2025-24016) | CVE-2025-24016: Wazuh Unsafe Deserialization Remote Code Execution (RCE) |
+| 41⭐ | 45 days ago | [CVE-2025-24118](https://github.com/jprx/CVE-2025-24118) | An XNU kernel race condition bug |
+| 29⭐ | 5 days ago | [CVE-2025-27636-Apache-Camel-PoC](https://github.com/akamai/CVE-2025-27636-Apache-Camel-PoC) |  |
+| 22⭐ | 2 days ago | [CVE-2025-24799](https://github.com/MuhammadWaseem29/CVE-2025-24799) |  |
+| 23⭐ | 27 days ago | [CVE-2025-1094-Exploit](https://github.com/soltanali0/CVE-2025-1094-Exploit) | WebSocket and SQL Injection Exploit Script |
 
 
 ## 2024
 
-### Latest 20 of 561 Repositories
+### Latest 20 of 564 Repositories
 
 | Stars | Updated | Name | Description |
 | --- | --- | --- | --- |
-| 2357⭐ | 15 hours ago | [CVE-2024-1086](https://github.com/Notselwyn/CVE-2024-1086) | Universal local privilege escalation Proof-of-Concept exploit for CVE-2024-1086, working on most Linux kernels between v5.14 and v6.6, including Debian, Ubuntu, and KernelCTF. The success rate is 99.4% in KernelCTF images. |
-| 657⭐ | 4 days ago | [CVE-2024-38063](https://github.com/ynwarcs/CVE-2024-38063) | poc for CVE-2024-38063 (RCE in tcpip.sys) |
-| 475⭐ | 24 days ago | [cve-2024-6387-poc](https://github.com/zgzhang/cve-2024-6387-poc) | a signal handler race condition in OpenSSH's server (sshd) |
-| 486⭐ | 1 day ago | [CVE-2024-49113](https://github.com/SafeBreach-Labs/CVE-2024-49113) | LdapNightmare is a PoC tool that tests a vulnerable Windows Server against CVE-2024-49113 |
-| 481⭐ | 1 day ago | [CVE-2024-6387_Check](https://github.com/xaitax/CVE-2024-6387_Check) | CVE-2024-6387_Check is a lightweight, efficient tool designed to identify servers running vulnerable versions of OpenSSH |
-| 378⭐ | 9 days ago | [cve-2024-6387-poc](https://github.com/acrono/cve-2024-6387-poc) | 32-bit PoC for CVE-2024-6387 — mirror of the original 7etsuo/cve-2024-6387-poc |
-| 214⭐ | 16 days ago | [CVE-2024-38077](https://github.com/qi4L/CVE-2024-38077) | RDL的堆溢出导致的RCE |
-| 340⭐ | 8 hours ago | [CVE-2024-26229](https://github.com/varwara/CVE-2024-26229) | CWE-781: Improper Address Validation in IOCTL with METHOD_NEITHER I/O Control Code |
-| 293⭐ | 15 hours ago | [CVE-2024-0044](https://github.com/0xbinder/CVE-2024-0044) | CVE-2024-0044:  a "run-as any app" high-severity vulnerability affecting Android versions 12 and 13 |
-| 275⭐ | 19 days ago | [CVE-2024-4577](https://github.com/watchtowrlabs/CVE-2024-4577) | PHP CGI Argument Injection (CVE-2024-4577) Remote Code Execution PoC |
-| 291⭐ | 11 days ago | [CVE-2024-21338](https://github.com/hakaioffsec/CVE-2024-21338) | Local Privilege Escalation from Admin to Kernel vulnerability on Windows 10 and Windows 11 operating systems with HVCI enabled. |
-| 278⭐ | 1 day ago | [CVE-2024-35250](https://github.com/varwara/CVE-2024-35250) | PoC for the Untrusted Pointer Dereference in the ks.sys driver |
-| 725⭐ | 15 hours ago | [CVE-2024-21413-Microsoft-Outlook-Remote-Code-Execution-Vulnerability](https://github.com/xaitax/CVE-2024-21413-Microsoft-Outlook-Remote-Code-Execution-Vulnerability) | Microsoft-Outlook-Remote-Code-Execution-Vulnerability |
-| 9⭐ | 12 days ago | [CVE-2024-38077-POC](https://github.com/SecStarBot/CVE-2024-38077-POC) |  |
-| 235⭐ | 15 hours ago | [CVE_2024_30078_POC_WIFI](https://github.com/blkph0x/CVE_2024_30078_POC_WIFI) | basic concept for the latest windows wifi driver CVE |
-| 198⭐ | 4 days ago | [CVE-2024-23897](https://github.com/h4x0r-dz/CVE-2024-23897) | CVE-2024-23897 |
-| 166⭐ | 3 days ago | [CVE-2024-25600](https://github.com/Chocapikk/CVE-2024-25600) | Unauthenticated Remote Code Execution – Bricks <= 1.9.6 |
-| 156⭐ | 15 hours ago | [CVE-2024-21413](https://github.com/duy-31/CVE-2024-21413) | Microsoft Outlook Information Disclosure Vulnerability (leak password hash) - Expect Script POC |
-| 137⭐ | 15 hours ago | [cve-2024-20017](https://github.com/mellow-hype/cve-2024-20017) | exploits for CVE-2024-20017 |
-| 121⭐ | 14 days ago | [cve-2024-6387-poc](https://github.com/lflare/cve-2024-6387-poc) | MIRROR of the original 32-bit PoC for CVE-2024-6387 "regreSSHion" by 7etsuo/cve-2024-6387-poc |
+| 2357⭐ | 1 day ago | [CVE-2024-1086](https://github.com/Notselwyn/CVE-2024-1086) | Universal local privilege escalation Proof-of-Concept exploit for CVE-2024-1086, working on most Linux kernels between v5.14 and v6.6, including Debian, Ubuntu, and KernelCTF. The success rate is 99.4% in KernelCTF images. |
+| 656⭐ | 19 hours ago | [CVE-2024-38063](https://github.com/ynwarcs/CVE-2024-38063) | poc for CVE-2024-38063 (RCE in tcpip.sys) |
+| 475⭐ | 25 days ago | [cve-2024-6387-poc](https://github.com/zgzhang/cve-2024-6387-poc) | a signal handler race condition in OpenSSH's server (sshd) |
+| 486⭐ | 2 days ago | [CVE-2024-49113](https://github.com/SafeBreach-Labs/CVE-2024-49113) | LdapNightmare is a PoC tool that tests a vulnerable Windows Server against CVE-2024-49113 |
+| 481⭐ | 2 days ago | [CVE-2024-6387_Check](https://github.com/xaitax/CVE-2024-6387_Check) | CVE-2024-6387_Check is a lightweight, efficient tool designed to identify servers running vulnerable versions of OpenSSH |
+| 378⭐ | 10 days ago | [cve-2024-6387-poc](https://github.com/acrono/cve-2024-6387-poc) | 32-bit PoC for CVE-2024-6387 — mirror of the original 7etsuo/cve-2024-6387-poc |
+| 214⭐ | 17 days ago | [CVE-2024-38077](https://github.com/qi4L/CVE-2024-38077) | RDL的堆溢出导致的RCE |
+| 340⭐ | 1 day ago | [CVE-2024-26229](https://github.com/varwara/CVE-2024-26229) | CWE-781: Improper Address Validation in IOCTL with METHOD_NEITHER I/O Control Code |
+| 293⭐ | 1 day ago | [CVE-2024-0044](https://github.com/0xbinder/CVE-2024-0044) | CVE-2024-0044:  a "run-as any app" high-severity vulnerability affecting Android versions 12 and 13 |
+| 291⭐ | 12 days ago | [CVE-2024-21338](https://github.com/hakaioffsec/CVE-2024-21338) | Local Privilege Escalation from Admin to Kernel vulnerability on Windows 10 and Windows 11 operating systems with HVCI enabled. |
+| 275⭐ | 20 days ago | [CVE-2024-4577](https://github.com/watchtowrlabs/CVE-2024-4577) | PHP CGI Argument Injection (CVE-2024-4577) Remote Code Execution PoC |
+| 278⭐ | 2 days ago | [CVE-2024-35250](https://github.com/varwara/CVE-2024-35250) | PoC for the Untrusted Pointer Dereference in the ks.sys driver |
+| 723⭐ | 19 hours ago | [CVE-2024-21413-Microsoft-Outlook-Remote-Code-Execution-Vulnerability](https://github.com/xaitax/CVE-2024-21413-Microsoft-Outlook-Remote-Code-Execution-Vulnerability) | Microsoft-Outlook-Remote-Code-Execution-Vulnerability |
+| 9⭐ | 13 days ago | [CVE-2024-38077-POC](https://github.com/SecStarBot/CVE-2024-38077-POC) |  |
+| 235⭐ | 1 day ago | [CVE_2024_30078_POC_WIFI](https://github.com/blkph0x/CVE_2024_30078_POC_WIFI) | basic concept for the latest windows wifi driver CVE |
+| 198⭐ | 5 days ago | [CVE-2024-23897](https://github.com/h4x0r-dz/CVE-2024-23897) | CVE-2024-23897 |
+| 166⭐ | 4 days ago | [CVE-2024-25600](https://github.com/Chocapikk/CVE-2024-25600) | Unauthenticated Remote Code Execution – Bricks <= 1.9.6 |
+| 156⭐ | 1 day ago | [CVE-2024-21413](https://github.com/duy-31/CVE-2024-21413) | Microsoft Outlook Information Disclosure Vulnerability (leak password hash) - Expect Script POC |
+| 137⭐ | 1 day ago | [cve-2024-20017](https://github.com/mellow-hype/cve-2024-20017) | exploits for CVE-2024-20017 |
+| 121⭐ | 15 days ago | [cve-2024-6387-poc](https://github.com/lflare/cve-2024-6387-poc) | MIRROR of the original 32-bit PoC for CVE-2024-6387 "regreSSHion" by 7etsuo/cve-2024-6387-poc |
 
 
 ## 2023
 
-### Latest 20 of 474 Repositories
+### Latest 20 of 476 Repositories
 
 | Stars | Updated | Name | Description |
 | --- | --- | --- | --- |
-| 788⭐ | 7 days ago | [CVE-2023-38831-winrar-exploit](https://github.com/b1tg/CVE-2023-38831-winrar-exploit) | CVE-2023-38831 winrar exploit generator |
-| 486⭐ | 16 days ago | [Windows_LPE_AFD_CVE-2023-21768](https://github.com/chompie1337/Windows_LPE_AFD_CVE-2023-21768) | LPE exploit for CVE-2023-21768 |
-| 370⭐ | 6 hours ago | [CVE-2023-32233](https://github.com/Liuk3r/CVE-2023-32233) | CVE-2023-32233: Linux内核中的安全漏洞 |
-| 390⭐ | 10 days ago | [CVE-2023-0386](https://github.com/xkaneiki/CVE-2023-0386) | CVE-2023-0386在ubuntu22.04上的提权 |
-| 384⭐ | 56 days ago | [CVE-2023-4911](https://github.com/leesh3288/CVE-2023-4911) | PoC for CVE-2023-4911 |
-| 84⭐ | 5 days ago | [CVE-2023-21839](https://github.com/ASkyeye/CVE-2023-21839) | Weblogic CVE-2023-21839 RCE (无需Java依赖一键RCE) |
-| 271⭐ | 3 days ago | [CVE-2023-21608](https://github.com/hacksysteam/CVE-2023-21608) | Adobe Acrobat Reader - CVE-2023-21608 - Remote Code Execution Exploit |
-| 314⭐ | 4 days ago | [CVE-2023-4863](https://github.com/mistymntncop/CVE-2023-4863) |  |
-| 230⭐ | 23 days ago | [CVE-2023-44487](https://github.com/bcdannyboy/CVE-2023-44487) | Basic vulnerability scanning to see if web servers may be vulnerable to CVE-2023-44487 |
-| 163⭐ | 11 days ago | [CVE-2023-36745](https://github.com/N1k0la-T/CVE-2023-36745) |  |
-| 231⭐ | 16 days ago | [CVE-2023-20887](https://github.com/sinsinology/CVE-2023-20887) | VMWare vRealize Network Insight Pre-Authenticated RCE (CVE-2023-20887) |
-| 344⭐ | 8 days ago | [CVE-2023-23397-POC-Powershell](https://github.com/api0cradle/CVE-2023-23397-POC-Powershell) |  |
-| 223⭐ | 4 days ago | [CVE-2023-3519](https://github.com/BishopFox/CVE-2023-3519) | RCE exploit for CVE-2023-3519 |
-| 239⭐ | 15 days ago | [CVE-2023-7028](https://github.com/Vozec/CVE-2023-7028) | This repository presents a proof-of-concept of CVE-2023-7028 |
-| 177⭐ | 16 days ago | [CVE-2023-28252](https://github.com/fortra/CVE-2023-28252) |  |
-| 234⭐ | 48 days ago | [Weblogic-CVE-2023-21839](https://github.com/DXask88MA/Weblogic-CVE-2023-21839) |  |
-| 203⭐ | 1 day ago | [CVE-2023-46747-RCE](https://github.com/W01fh4cker/CVE-2023-46747-RCE) | exploit for f5-big-ip RCE cve-2023-46747 |
-| 230⭐ | 4 days ago | [CVE-2023-29357](https://github.com/Chocapikk/CVE-2023-29357) | Microsoft SharePoint Server Elevation of Privilege Vulnerability |
-| 166⭐ | 4 days ago | [CVE-2023-25157](https://github.com/win3zz/CVE-2023-25157) | CVE-2023-25157 - GeoServer SQL Injection - PoC |
-| 124⭐ | 22 days ago | [CVE-2023-2640-CVE-2023-32629](https://github.com/g1vi/CVE-2023-2640-CVE-2023-32629) | GameOver(lay) Ubuntu Privilege Escalation |
+| 788⭐ | 8 days ago | [CVE-2023-38831-winrar-exploit](https://github.com/b1tg/CVE-2023-38831-winrar-exploit) | CVE-2023-38831 winrar exploit generator |
+| 486⭐ | 17 days ago | [Windows_LPE_AFD_CVE-2023-21768](https://github.com/chompie1337/Windows_LPE_AFD_CVE-2023-21768) | LPE exploit for CVE-2023-21768 |
+| 370⭐ | 1 day ago | [CVE-2023-32233](https://github.com/Liuk3r/CVE-2023-32233) | CVE-2023-32233: Linux内核中的安全漏洞 |
+| 390⭐ | 11 days ago | [CVE-2023-0386](https://github.com/xkaneiki/CVE-2023-0386) | CVE-2023-0386在ubuntu22.04上的提权 |
+| 384⭐ | 57 days ago | [CVE-2023-4911](https://github.com/leesh3288/CVE-2023-4911) | PoC for CVE-2023-4911 |
+| 84⭐ | 6 days ago | [CVE-2023-21839](https://github.com/ASkyeye/CVE-2023-21839) | Weblogic CVE-2023-21839 RCE (无需Java依赖一键RCE) |
+| 271⭐ | 4 days ago | [CVE-2023-21608](https://github.com/hacksysteam/CVE-2023-21608) | Adobe Acrobat Reader - CVE-2023-21608 - Remote Code Execution Exploit |
+| 314⭐ | 5 days ago | [CVE-2023-4863](https://github.com/mistymntncop/CVE-2023-4863) |  |
+| 230⭐ | 24 days ago | [CVE-2023-44487](https://github.com/bcdannyboy/CVE-2023-44487) | Basic vulnerability scanning to see if web servers may be vulnerable to CVE-2023-44487 |
+| 163⭐ | 12 days ago | [CVE-2023-36745](https://github.com/N1k0la-T/CVE-2023-36745) |  |
+| 344⭐ | 9 days ago | [CVE-2023-23397-POC-Powershell](https://github.com/api0cradle/CVE-2023-23397-POC-Powershell) |  |
+| 231⭐ | 17 days ago | [CVE-2023-20887](https://github.com/sinsinology/CVE-2023-20887) | VMWare vRealize Network Insight Pre-Authenticated RCE (CVE-2023-20887) |
+| 223⭐ | 5 days ago | [CVE-2023-3519](https://github.com/BishopFox/CVE-2023-3519) | RCE exploit for CVE-2023-3519 |
+| 239⭐ | 16 days ago | [CVE-2023-7028](https://github.com/Vozec/CVE-2023-7028) | This repository presents a proof-of-concept of CVE-2023-7028 |
+| 177⭐ | 17 days ago | [CVE-2023-28252](https://github.com/fortra/CVE-2023-28252) |  |
+| 234⭐ | 49 days ago | [Weblogic-CVE-2023-21839](https://github.com/DXask88MA/Weblogic-CVE-2023-21839) |  |
+| 203⭐ | 2 days ago | [CVE-2023-46747-RCE](https://github.com/W01fh4cker/CVE-2023-46747-RCE) | exploit for f5-big-ip RCE cve-2023-46747 |
+| 166⭐ | 5 days ago | [CVE-2023-25157](https://github.com/win3zz/CVE-2023-25157) | CVE-2023-25157 - GeoServer SQL Injection - PoC |
+| 230⭐ | 5 days ago | [CVE-2023-29357](https://github.com/Chocapikk/CVE-2023-29357) | Microsoft SharePoint Server Elevation of Privilege Vulnerability |
+| 124⭐ | 23 days ago | [CVE-2023-2640-CVE-2023-32629](https://github.com/g1vi/CVE-2023-2640-CVE-2023-32629) | GameOver(lay) Ubuntu Privilege Escalation |
 
 
 ## 2022
@@ -91,26 +91,26 @@
 
 | Stars | Updated | Name | Description |
 | --- | --- | --- | --- |
-| 1095⭐ | 6 hours ago | [CVE-2022-0847-DirtyPipe-Exploit](https://github.com/Arinerron/CVE-2022-0847-DirtyPipe-Exploit) | A root exploit for CVE-2022-0847 (Dirty Pipe) |
-| 566⭐ | 1 hour ago | [CVE-2022-23222](https://github.com/tr3ee/CVE-2022-23222) | CVE-2022-23222: Linux Kernel eBPF Local Privilege Escalation |
-| 361⭐ | 80 days ago | [CVE-2022-21907](https://github.com/ZZ-SOCMAP/CVE-2022-21907) | HTTP Protocol Stack Remote Code Execution Vulnerability CVE-2022-21907 |
-| 371⭐ | 3 days ago | [CVE-2022-29464](https://github.com/hakivvi/CVE-2022-29464) | WSO2 RCE (CVE-2022-29464) exploit and writeup. |
-| 349⭐ | 4 days ago | [CVE-2022-40684](https://github.com/horizon3ai/CVE-2022-40684) | A proof of concept exploit for CVE-2022-40684 affecting Fortinet FortiOS, FortiProxy, and FortiSwitchManager |
-| 427⭐ | 6 hours ago | [CVE-2022-25636](https://github.com/Bonfee/CVE-2022-25636) | CVE-2022-25636 |
-| 483⭐ | 25 days ago | [CVE-2022-2588](https://github.com/Markakd/CVE-2022-2588) | exploit for CVE-2022-2588 |
-| 591⭐ | 6 hours ago | [CVE-2022-0847-DirtyPipe-Exploits](https://github.com/AlexisAhmed/CVE-2022-0847-DirtyPipe-Exploits) | A collection of exploits and documentation that can be used to exploit the Linux Dirty Pipe vulnerability. |
-| 497⭐ | 12 days ago | [CVE-2022-0995](https://github.com/Bonfee/CVE-2022-0995) | CVE-2022-0995 exploit |
-| 381⭐ | 6 days ago | [CVE-2022-39197](https://github.com/its-arun/CVE-2022-39197) | CobaltStrike <= 4.7.1 RCE |
-| 403⭐ | 15 hours ago | [CVE-2022-33679](https://github.com/Bdenneu/CVE-2022-33679) | One day based on https://googleprojectzero.blogspot.com/2022/10/rc4-is-still-considered-harmful.html |
-| 280⭐ | 15 days ago | [CVE-2022-0847](https://github.com/r1is/CVE-2022-0847) | CVE-2022-0847-DirtyPipe-Exploit   CVE-2022-0847 是存在于 Linux内核 5.8 及之后版本中的本地提权漏洞。攻击者通过利用此漏洞，可覆盖重写任意可读文件中的数据，从而可将普通权限的用户提升到特权 root。    CVE-2022-0847 的漏洞原理类似于 CVE-2016-5195 脏牛漏洞（Dirty Cow），但它更容易被利用。漏洞作者将此漏洞命名为“Dirty Pipe” |
-| 320⭐ | 2 days ago | [CVE-2022-21894](https://github.com/Wack0/CVE-2022-21894) | baton drop (CVE-2022-21894): Secure Boot Security Feature Bypass Vulnerability |
-| 368⭐ | 45 days ago | [CVE-2022-0185](https://github.com/Crusaders-of-Rust/CVE-2022-0185) | CVE-2022-0185 |
-| 267⭐ | 4 days ago | [CVE-2022-39952](https://github.com/horizon3ai/CVE-2022-39952) | POC for CVE-2022-39952 |
-| 275⭐ | 56 days ago | [cve-2022-27255](https://github.com/infobyte/cve-2022-27255) |  |
-| 218⭐ | 15 days ago | [CVE-2022-30075](https://github.com/aaronsvk/CVE-2022-30075) | Tp-Link Archer AX50 Authenticated RCE (CVE-2022-30075) |
-| 239⭐ | 62 days ago | [CVE-2022-20699](https://github.com/Audiobahn/CVE-2022-20699) | Cisco Anyconnect VPN unauth RCE (rwx stack) |
-| 219⭐ | 3 days ago | [CVE-2022-34918](https://github.com/veritas501/CVE-2022-34918) | CVE-2022-34918 netfilter nf_tables 本地提权 POC |
-| 231⭐ | 4 days ago | [CVE-2022-1388](https://github.com/horizon3ai/CVE-2022-1388) | POC for CVE-2022-1388 |
+| 1096⭐ | 3 hours ago | [CVE-2022-0847-DirtyPipe-Exploit](https://github.com/Arinerron/CVE-2022-0847-DirtyPipe-Exploit) | A root exploit for CVE-2022-0847 (Dirty Pipe) |
+| 566⭐ | 1 day ago | [CVE-2022-23222](https://github.com/tr3ee/CVE-2022-23222) | CVE-2022-23222: Linux Kernel eBPF Local Privilege Escalation |
+| 361⭐ | 81 days ago | [CVE-2022-21907](https://github.com/ZZ-SOCMAP/CVE-2022-21907) | HTTP Protocol Stack Remote Code Execution Vulnerability CVE-2022-21907 |
+| 371⭐ | 4 days ago | [CVE-2022-29464](https://github.com/hakivvi/CVE-2022-29464) | WSO2 RCE (CVE-2022-29464) exploit and writeup. |
+| 349⭐ | 5 days ago | [CVE-2022-40684](https://github.com/horizon3ai/CVE-2022-40684) | A proof of concept exploit for CVE-2022-40684 affecting Fortinet FortiOS, FortiProxy, and FortiSwitchManager |
+| 427⭐ | 1 day ago | [CVE-2022-25636](https://github.com/Bonfee/CVE-2022-25636) | CVE-2022-25636 |
+| 483⭐ | 26 days ago | [CVE-2022-2588](https://github.com/Markakd/CVE-2022-2588) | exploit for CVE-2022-2588 |
+| 497⭐ | 13 days ago | [CVE-2022-0995](https://github.com/Bonfee/CVE-2022-0995) | CVE-2022-0995 exploit |
+| 591⭐ | 1 day ago | [CVE-2022-0847-DirtyPipe-Exploits](https://github.com/AlexisAhmed/CVE-2022-0847-DirtyPipe-Exploits) | A collection of exploits and documentation that can be used to exploit the Linux Dirty Pipe vulnerability. |
+| 381⭐ | 7 days ago | [CVE-2022-39197](https://github.com/its-arun/CVE-2022-39197) | CobaltStrike <= 4.7.1 RCE |
+| 403⭐ | 1 day ago | [CVE-2022-33679](https://github.com/Bdenneu/CVE-2022-33679) | One day based on https://googleprojectzero.blogspot.com/2022/10/rc4-is-still-considered-harmful.html |
+| 280⭐ | 16 days ago | [CVE-2022-0847](https://github.com/r1is/CVE-2022-0847) | CVE-2022-0847-DirtyPipe-Exploit   CVE-2022-0847 是存在于 Linux内核 5.8 及之后版本中的本地提权漏洞。攻击者通过利用此漏洞，可覆盖重写任意可读文件中的数据，从而可将普通权限的用户提升到特权 root。    CVE-2022-0847 的漏洞原理类似于 CVE-2016-5195 脏牛漏洞（Dirty Cow），但它更容易被利用。漏洞作者将此漏洞命名为“Dirty Pipe” |
+| 320⭐ | 3 days ago | [CVE-2022-21894](https://github.com/Wack0/CVE-2022-21894) | baton drop (CVE-2022-21894): Secure Boot Security Feature Bypass Vulnerability |
+| 368⭐ | 46 days ago | [CVE-2022-0185](https://github.com/Crusaders-of-Rust/CVE-2022-0185) | CVE-2022-0185 |
+| 267⭐ | 5 days ago | [CVE-2022-39952](https://github.com/horizon3ai/CVE-2022-39952) | POC for CVE-2022-39952 |
+| 275⭐ | 57 days ago | [cve-2022-27255](https://github.com/infobyte/cve-2022-27255) |  |
+| 239⭐ | 63 days ago | [CVE-2022-20699](https://github.com/Audiobahn/CVE-2022-20699) | Cisco Anyconnect VPN unauth RCE (rwx stack) |
+| 219⭐ | 4 days ago | [CVE-2022-34918](https://github.com/veritas501/CVE-2022-34918) | CVE-2022-34918 netfilter nf_tables 本地提权 POC |
+| 219⭐ | 15 minutes ago | [CVE-2022-30075](https://github.com/aaronsvk/CVE-2022-30075) | Tp-Link Archer AX50 Authenticated RCE (CVE-2022-30075) |
+| 231⭐ | 5 days ago | [CVE-2022-1388](https://github.com/horizon3ai/CVE-2022-1388) | POC for CVE-2022-1388 |
 
 
 ## 2021
@@ -119,23 +119,23 @@
 
 | Stars | Updated | Name | Description |
 | --- | --- | --- | --- |
-| 1985⭐ | 9 days ago | [CVE-2021-4034](https://github.com/berdav/CVE-2021-4034) | CVE-2021-4034 1day |
-| 1075⭐ | 6 hours ago | [CVE-2021-4034](https://github.com/arthepsy/CVE-2021-4034) | PoC for PwnKit: Local Privilege Escalation Vulnerability in polkit’s pkexec (CVE-2021-4034) |
-| 972⭐ | 6 hours ago | [CVE-2021-3156](https://github.com/blasty/CVE-2021-3156) |  |
-| 1046⭐ | 6 hours ago | [CVE-2021-1675](https://github.com/calebstewart/CVE-2021-1675) | Pure PowerShell implementation of CVE-2021-1675 Print Spooler Local Privilege Escalation (PrintNightmare) |
-| 744⭐ | 11 days ago | [CVE-2021-3156](https://github.com/worawit/CVE-2021-3156) | Sudo Baron Samedit Exploit |
-| 823⭐ | 2 days ago | [CVE-2021-31166](https://github.com/0vercl0k/CVE-2021-31166) | Proof of concept for CVE-2021-31166, a remote HTTP.sys use-after-free triggered remotely. |
-| 857⭐ | 23 days ago | [CVE-2021-44228-Scanner](https://github.com/logpresso/CVE-2021-44228-Scanner) | Vulnerability scanner and mitigation patch for Log4j2 CVE-2021-44228 |
-| 491⭐ | 2 days ago | [CVE-2021-21972](https://github.com/NS-Sp4ce/CVE-2021-21972) | CVE-2021-21972 Exploit |
-| 418⭐ | 10 days ago | [CVE-2021-3493](https://github.com/briskets/CVE-2021-3493) | Ubuntu OverlayFS Local Privesc |
-| 435⭐ | 12 days ago | [CVE-2021-3156](https://github.com/stong/CVE-2021-3156) | PoC for CVE-2021-3156 (sudo heap overflow) |
-| 272⭐ | 5 days ago | [CVE-2021-22205](https://github.com/Al1ex/CVE-2021-22205) | CVE-2021-22205& GitLab CE/EE RCE |
-| 260⭐ | 24 days ago | [CVE-2021-21972](https://github.com/horizon3ai/CVE-2021-21972) | Proof of Concept Exploit for vCenter CVE-2021-21972 |
-| 264⭐ | 3 days ago | [CVE-2021-36260](https://github.com/Aiminsun/CVE-2021-36260) | command injection vulnerability in the web server of some Hikvision product. Due to the insufficient input validation, attacker can exploit the vulnerability to launch a command injection attack by sending some messages with malicious commands. |
-| 356⭐ | 10 days ago | [Grafana-CVE-2021-43798](https://github.com/jas502n/Grafana-CVE-2021-43798) | Grafana Unauthorized arbitrary file reading vulnerability |
-| 345⭐ | 28 days ago | [CVE-2021-44228_scanner](https://github.com/CERTCC/CVE-2021-44228_scanner) | Scanners for Jar files that may be vulnerable to CVE-2021-44228 |
-| 275⭐ | 4 days ago | [CVE-2021-34527](https://github.com/JohnHammond/CVE-2021-34527) |  |
-| 333⭐ | 24 days ago | [CVE-2021-1675-LPE](https://github.com/hlldz/CVE-2021-1675-LPE) | Local Privilege Escalation Edition for CVE-2021-1675/CVE-2021-34527 |
-| 308⭐ | 24 days ago | [CVE-2021-26084_Confluence](https://github.com/hev0x/CVE-2021-26084_Confluence) | Confluence Server Webwork OGNL injection |
-| 233⭐ | 4 days ago | [CVE-2021-38647](https://github.com/horizon3ai/CVE-2021-38647) | Proof on Concept Exploit for CVE-2021-38647 (OMIGOD) |
-| 344⭐ | 3 days ago | [CVE-2021-4034](https://github.com/PwnFunction/CVE-2021-4034) | Proof of concept for pwnkit vulnerability |
+| 1986⭐ | 1 hour ago | [CVE-2021-4034](https://github.com/berdav/CVE-2021-4034) | CVE-2021-4034 1day |
+| 1075⭐ | 1 day ago | [CVE-2021-4034](https://github.com/arthepsy/CVE-2021-4034) | PoC for PwnKit: Local Privilege Escalation Vulnerability in polkit’s pkexec (CVE-2021-4034) |
+| 973⭐ | 16 hours ago | [CVE-2021-3156](https://github.com/blasty/CVE-2021-3156) |  |
+| 1047⭐ | 4 hours ago | [CVE-2021-1675](https://github.com/calebstewart/CVE-2021-1675) | Pure PowerShell implementation of CVE-2021-1675 Print Spooler Local Privilege Escalation (PrintNightmare) |
+| 744⭐ | 12 days ago | [CVE-2021-3156](https://github.com/worawit/CVE-2021-3156) | Sudo Baron Samedit Exploit |
+| 823⭐ | 3 days ago | [CVE-2021-31166](https://github.com/0vercl0k/CVE-2021-31166) | Proof of concept for CVE-2021-31166, a remote HTTP.sys use-after-free triggered remotely. |
+| 857⭐ | 24 days ago | [CVE-2021-44228-Scanner](https://github.com/logpresso/CVE-2021-44228-Scanner) | Vulnerability scanner and mitigation patch for Log4j2 CVE-2021-44228 |
+| 491⭐ | 3 days ago | [CVE-2021-21972](https://github.com/NS-Sp4ce/CVE-2021-21972) | CVE-2021-21972 Exploit |
+| 418⭐ | 11 days ago | [CVE-2021-3493](https://github.com/briskets/CVE-2021-3493) | Ubuntu OverlayFS Local Privesc |
+| 435⭐ | 13 days ago | [CVE-2021-3156](https://github.com/stong/CVE-2021-3156) | PoC for CVE-2021-3156 (sudo heap overflow) |
+| 272⭐ | 6 days ago | [CVE-2021-22205](https://github.com/Al1ex/CVE-2021-22205) | CVE-2021-22205& GitLab CE/EE RCE |
+| 260⭐ | 25 days ago | [CVE-2021-21972](https://github.com/horizon3ai/CVE-2021-21972) | Proof of Concept Exploit for vCenter CVE-2021-21972 |
+| 264⭐ | 4 days ago | [CVE-2021-36260](https://github.com/Aiminsun/CVE-2021-36260) | command injection vulnerability in the web server of some Hikvision product. Due to the insufficient input validation, attacker can exploit the vulnerability to launch a command injection attack by sending some messages with malicious commands. |
+| 357⭐ | 3 hours ago | [Grafana-CVE-2021-43798](https://github.com/jas502n/Grafana-CVE-2021-43798) | Grafana Unauthorized arbitrary file reading vulnerability |
+| 345⭐ | 29 days ago | [CVE-2021-44228_scanner](https://github.com/CERTCC/CVE-2021-44228_scanner) | Scanners for Jar files that may be vulnerable to CVE-2021-44228 |
+| 275⭐ | 5 days ago | [CVE-2021-34527](https://github.com/JohnHammond/CVE-2021-34527) |  |
+| 333⭐ | 25 days ago | [CVE-2021-1675-LPE](https://github.com/hlldz/CVE-2021-1675-LPE) | Local Privilege Escalation Edition for CVE-2021-1675/CVE-2021-34527 |
+| 308⭐ | 25 days ago | [CVE-2021-26084_Confluence](https://github.com/hev0x/CVE-2021-26084_Confluence) | Confluence Server Webwork OGNL injection |
+| 233⭐ | 5 days ago | [CVE-2021-38647](https://github.com/horizon3ai/CVE-2021-38647) | Proof on Concept Exploit for CVE-2021-38647 (OMIGOD) |
+| 344⭐ | 4 days ago | [CVE-2021-4034](https://github.com/PwnFunction/CVE-2021-4034) | Proof of concept for pwnkit vulnerability |
