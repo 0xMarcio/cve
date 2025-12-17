@@ -86,7 +86,7 @@ def _is_current_year_name(name: str, year: int) -> bool:
 
 
 def select_trending(readme_rows: list[dict]) -> list[dict]:
-    """Pick up to 20 entries from the newest year table, filtered to last 4 days and matching the current year."""
+    """Pick up to 20 entries from the newest year table, filtered to last 4 days, with descriptions, matching the current year."""
     if not readme_rows:
         return []
 
@@ -100,6 +100,8 @@ def select_trending(readme_rows: list[dict]) -> list[dict]:
         if _parse_year(row) != latest_year:
             continue
         if not _is_current_year_name(row.get("name", ""), latest_year):
+            continue
+        if not (row.get("desc") or "").strip():
             continue
         age = _age_from_label(row.get("updated", ""))
         if age is None or age > TRENDING_WINDOW:
