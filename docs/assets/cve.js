@@ -6,14 +6,12 @@
   const titleEl = document.getElementById("cve-title");
   const summaryEl = document.getElementById("cve-summary");
   const metaEl = document.getElementById("cve-meta");
-  const descEl = document.getElementById("cve-description");
   const factsEl = document.getElementById("cve-facts");
   const pocRowsEl = document.getElementById("cve-poc-rows");
   const kevRowsEl = document.getElementById("kev-rows");
 
   const detailSection = document.getElementById("cve-details");
   const notFoundSection = document.getElementById("not-found");
-  const descriptionBlock = document.getElementById("cve-description-block");
 
   function setLoading(message) {
     titleEl.textContent = cveId || "CVE details";
@@ -133,14 +131,6 @@
       titleEl.textContent = data.cve || cveId;
       const desc = getDescriptionText(data);
       summaryEl.textContent = desc;
-      const hasDescContent = desc && desc !== "No description available.";
-      if (hasDescContent) {
-        descEl.textContent = desc;
-        descriptionBlock.style.display = "";
-      } else {
-        descEl.textContent = "";
-        descriptionBlock.style.display = "none";
-      }
       renderFacts(data);
       renderPocs(data.poc_links || data.poc || []);
       renderKev(data.kev);
@@ -157,14 +147,6 @@
       titleEl.textContent = fallback.cve;
       const desc = getDescriptionText(fallback);
       summaryEl.textContent = desc;
-      const hasDescContent = desc && desc !== "No description available.";
-      if (hasDescContent) {
-        descEl.textContent = desc;
-        descriptionBlock.style.display = "";
-      } else {
-        descEl.textContent = "";
-        descriptionBlock.style.display = "none";
-      }
       renderFacts(fallback);
       renderPocs(fallback.poc_links || fallback.poc || []);
       renderKev(null);
@@ -176,7 +158,6 @@
       notFoundSection.style.display = "";
       detailSection.style.display = "none";
       metaEl.innerHTML = "";
-      descriptionBlock.style.display = "none";
       titleEl.textContent = cveId;
       summaryEl.textContent = "No data found for this CVE.";
     }
