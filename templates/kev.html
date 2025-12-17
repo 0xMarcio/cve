@@ -1,25 +1,28 @@
 {% extends "base.html" %}
 {% block content %}
-<h1>Known Exploited Vulnerabilities</h1>
-<input type="search" placeholder="Filter CVE, vendor, product" data-filter-table="kev-table" class="filter" />
-<div class="table-responsive">
-  <table class="list" id="kev-table">
-    <thead>
-      <tr><th>CVE</th><th>Vendor</th><th>Product</th><th>EPSS</th><th>Percentile</th><th>Date Added</th><th>Due</th></tr>
-    </thead>
-    <tbody>
-      {% for row in kev %}
-      <tr>
-        <td><a href="/cve/{{ row.cve }}.html">{{ row.cve }}</a></td>
-        <td>{{ row.vendor }}</td>
-        <td>{{ row.product }}</td>
-        <td>{{ '%.3f'|format(row.epss or 0) }}</td>
-        <td>{{ '%2.0f'|format((row.percentile or 0)*100) }}th</td>
-        <td>{{ row.date_added }}</td>
-        <td>{{ row.due_date or '—' }}</td>
-      </tr>
-      {% endfor %}
-    </tbody>
-  </table>
-</div>
+<section class="section">
+  <h1>Known Exploited Vulnerabilities</h1>
+  <p class="muted">Filter by CVE, vendor, or product. Rows include EPSS so you can quickly prioritize remediation.</p>
+  <input type="search" placeholder="Filter CVE, vendor, product" data-filter-table="kev-table" class="filter" />
+  <div class="table-responsive">
+    <table class="list" id="kev-table">
+      <thead>
+        <tr><th>CVE</th><th>Vendor</th><th>Product</th><th>EPSS</th><th>Percentile</th><th>Date Added</th><th>Due</th></tr>
+      </thead>
+      <tbody>
+        {% for row in kev %}
+        <tr>
+          <td><a href="/cve/{{ row.cve }}.html">{{ row.cve }}</a></td>
+          <td>{{ row.vendor }}</td>
+          <td>{{ row.product }}</td>
+          <td>{{ '%.3f'|format(row.epss or 0) }}</td>
+          <td>{{ '%2.0f'|format((row.percentile or 0)*100) }}th</td>
+          <td>{{ row.date_added }}</td>
+          <td>{{ row.due_date or '—' }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</section>
 {% endblock %}

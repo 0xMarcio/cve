@@ -4,13 +4,13 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta name="description" content="Search utility for CVE PoCs">
-	<link rel="stylesheet" href="../style.css">
-	<title>PoC Search - CVE Radar</title>
+	<link rel="stylesheet" href="/style.css">
+	<title>CVE PoC Hub - Search</title>
 </head>
 <body class="color-no-search">
 	<header class="site-header">
 		<div class="wrap">
-			<div class="brand"><a href="/">CVE PoC Hub</a></div>
+			<div class="brand"><a href="/">CVE PoC Hub</a><span>daily</span></div>
 			<nav>
 				<a href="/search/">PoC Search</a>
 				<a href="/kev/">KEV</a>
@@ -19,31 +19,39 @@
 			</nav>
 		</div>
 	</header>
-	<div class="container">
-		<div class="search">
-			<div class="header">
-				<h1>CVE PoC Search</h1>
+	<main class="wrap">
+		<section class="hero" data-search-root>
+			<p class="eyebrow">CVE PoC search</p>
+			<h1>Find exploit writeups and PoCs instantly</h1>
+			<p class="lede">Search by CVE id, vendor, product, or keyword. Results are powered by the nightly CVE_list.json feed and link directly to PoC references.</p>
+			<div class="pill-row tight">
+				<span class="pill">Linked PoCs</span>
+				<span class="pill">MITRE CVE pages</span>
+				<span class="pill">Vendor / product filters</span>
+				<span class="pill">Supports negative terms (e.g. <strong>-windows</strong>)</span>
 			</div>
-			<div class="query">
-				<form class="searchForm" action="#">
-					<input type="text" class="search" placeholder="ENTER SEARCH TERM" autocomplete="false">
-				</form>
+			<form class="searchForm" action="#">
+				<input type="text" class="search" placeholder="Search CVE, vendor, product, or keyword" autocomplete="off">
+			</form>
+			<div class="search-meta">
+				<span>Loads from <code>CVE_list.json</code></span>
+				<span>Updated daily via GitHub Actions</span>
 			</div>
-			<div class="results" style="display:none">
-				<br>
-				<div class="noResults">
-					<h2>No Results Found</h2>
+			<div class="search-results" data-results style="display:none">
+				<div class="header">
+					<h2>Results</h2>
+					<span class="muted">Up to 10k rows</span>
 				</div>
-				<div class="results-table">
-
+				<div class="noResults">No results yet.</div>
+				<div class="results-table hide">
 					<table class="results">
 						<thead>
 							<tr>
-								<td width="15%">
+								<td width="18%">
 								    CVE
 								</td>
 								<td>
-								    Description / POC
+								    Description / PoC links
 								</td>
 							</tr>
 						</thead>
@@ -51,13 +59,14 @@
 					</table>
 				</div>
 			</div>
+		</section>
+	</main>
+	<footer class="site-footer">
+		<div class="wrap">
+			<span>© 0xMarcio 2025</span>
+			<span>Found a bug? <a href="https://github.com/0xMarcio/cve/issues" target="_blank">File it on GitHub</a></span>
 		</div>
-		<div class="footer">
-			&copy; 0xMarcio 2025
-			<br>
-			Found a bug? File it or fix it <a href="https://github.com/0xMarcio/cve/issues">here</a>
-		</div>
-	</div>
-	<script src="../logic.js"></script>
+	</footer>
+	<script src="/logic.js"></script>
 </body>
 </html>

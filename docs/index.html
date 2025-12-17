@@ -7,10 +7,10 @@
   <link rel="stylesheet" href="/style.css" />
   <script defer src="/assets/site.js"></script>
 </head>
-<body>
+<body class="color-no-search">
   <header class="site-header">
     <div class="wrap">
-      <div class="brand"><a href="/">CVE PoC Hub</a></div>
+      <div class="brand"><a href="/">CVE PoC Hub</a><span>daily</span></div>
       <nav>
         <a href="/search/">PoC Search</a>
         <a href="/kev/">KEV</a>
@@ -20,8 +20,51 @@
     </div>
   </header>
   <main class="wrap">
-<section>
-<h1>KEV with high EPSS</h1>
+<section class="hero" data-search-root>
+  <p class="eyebrow">CVE PoC search &amp; intel</p>
+  <h1>Search PoCs, KEV, and EPSS in one place</h1>
+  <p class="lede">Pulls PoC references from <code>github.txt</code>, daily CVE descriptions, CISA KEV, and FIRST EPSS so you can quickly find relevant exploits or risk data.</p>
+  <div class="pill-row tight">
+    <span class="pill"><strong>Search</strong> CVE, vendor, product, or keyword</span>
+    <span class="pill">Negative terms supported (<strong>-windows</strong>)</span>
+    <span class="pill">Links out to MITRE + PoC repos</span>
+    <span class="pill">Nightly GitHub Action refresh</span>
+  </div>
+  <form class="searchForm" action="#">
+    <input type="text" class="search" placeholder="Search CVE, vendor, product, or keyword" autocomplete="off">
+  </form>
+  <div class="search-meta">
+    <span>Loads from <code>CVE_list.json</code></span>
+    <span>Updated daily</span>
+    <span>Max 10k results for performance</span>
+  </div>
+  <div class="search-results" data-results style="display:none">
+    <div class="header">
+      <h2>Results</h2>
+      <span class="muted">Fast monospace table for quick scanning</span>
+    </div>
+    <div class="noResults">No results yet.</div>
+    <div class="results-table hide">
+      <table class="results">
+        <thead>
+          <tr>
+            <td width="18%">
+                CVE
+            </td>
+            <td>
+                Description / PoC links
+            </td>
+          </tr>
+        </thead>
+        <tbody class="results"></tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <h1>KEV with high EPSS</h1>
+  <p class="muted">KEV items that also carry high EPSS probability.</p>
   <div class="card-grid">
     <article class="card">
       <div class="card-title"><a href="/cve/CVE-2025-9242.html">CVE-2025-9242</a></div>
@@ -131,8 +174,9 @@
   </div>
 </section>
 
-<section>
+<section class="section">
   <h1>EPSS picks not in KEV</h1>
+  <p class="muted">High-probability EPSS items that are not yet in the KEV list.</p>
   <div class="card-grid">
     <article class="card">
       <div class="card-title"><a href="/cve/CVE-2025-9316.html">CVE-2025-9316</a></div>
@@ -147,8 +191,9 @@
   </div>
 </section>
 
-<section>
+<section class="section">
   <h1>Trending PoCs</h1>
+  <p class="muted">Fresh GitHub PoCs by stars and recency.</p>
   <div class="table-responsive">
     <table class="list">
       <thead><tr><th>Stars</th><th>Updated</th><th>Name</th><th>Description</th></tr></thead>
@@ -278,8 +323,9 @@
   </div>
 </section>
 
-<section>
+<section class="section">
   <h1>Changes since yesterday</h1>
+  <p class="muted">Quick snapshot of the latest diffs in the feeds.</p>
   <div class="table-responsive">
     <table class="list">
       <thead><tr><th>Type</th><th>Count</th><th>Examples</th></tr></thead>
@@ -314,5 +360,6 @@ None          </td>
       <span><a href="https://github.com/0xMarcio/cve">GitHub repo</a></span>
     </div>
   </footer>
+<script src="/logic.js"></script>
 </body>
 </html>

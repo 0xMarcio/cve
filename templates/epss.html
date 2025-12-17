@@ -1,21 +1,23 @@
 {% extends "base.html" %}
 {% block content %}
-<h1>EPSS highlights</h1>
-<p class="muted">This list focuses on CVEs not present in KEV.</p>
-<input type="search" placeholder="Filter CVE" data-filter-table="epss-table" class="filter" />
-<div class="table-responsive">
-  <table class="list" id="epss-table">
-    <thead><tr><th>CVE</th><th>EPSS</th><th>Percentile</th><th>PoCs</th></tr></thead>
-    <tbody>
-      {% for row in epss %}
-      <tr>
-        <td><a href="/cve/{{ row.cve }}.html">{{ row.cve }}</a></td>
-        <td>{{ '%.3f'|format(row.epss or 0) }}</td>
-        <td>{{ '%2.0f'|format((row.percentile or 0)*100) }}th</td>
-        <td>{{ row.poc_count }}</td>
-      </tr>
-      {% endfor %}
-    </tbody>
-  </table>
-</div>
+<section class="section">
+  <h1>EPSS highlights</h1>
+  <p class="muted">High-probability EPSS picks that are not already in KEV. Use the filter to zero in on vendors or products.</p>
+  <input type="search" placeholder="Filter CVE" data-filter-table="epss-table" class="filter" />
+  <div class="table-responsive">
+    <table class="list" id="epss-table">
+      <thead><tr><th>CVE</th><th>EPSS</th><th>Percentile</th><th>PoCs</th></tr></thead>
+      <tbody>
+        {% for row in epss %}
+        <tr>
+          <td><a href="/cve/{{ row.cve }}.html">{{ row.cve }}</a></td>
+          <td>{{ '%.3f'|format(row.epss or 0) }}</td>
+          <td>{{ '%2.0f'|format((row.percentile or 0)*100) }}th</td>
+          <td>{{ row.poc_count }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</section>
 {% endblock %}

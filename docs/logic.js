@@ -1,13 +1,11 @@
-const searchResultFormat = '<tr><td class="cveNum">$cve</td><td align="left">$description $poc</td></tr>';
+const searchResultFormat = '<tr><td class="cveNum">$cve</td><td class="desc">$description $poc</td></tr>';
 const totalLimit = 10000;
 const replaceStrings = ['HackTheBox - ', 'VulnHub - ', 'UHC - '];
-const results = document.querySelector('div.results');
-const searchValue = document.querySelector('input.search');
-const form = document.querySelector('form.searchForm');
-const resultsTableHideable = document.querySelector('.results-table');
-const resultsTable = document.querySelector('tbody.results');
-const noResults = document.querySelector('div.noResults');
 const colorUpdate = document.body;
+
+function getSearchRoot() {
+    return document.querySelector('[data-search-root]');
+}
 
 function escapeHTML(str) {
     return str.replace(/[&<>"']/g, match => ({
@@ -23,10 +21,10 @@ function convertLinksToList(links) {
     if (links.length === 0) {
         return '';
     }
-    let htmlOutput = `<hr><div class="poc-container"><ul>`;
+    let htmlOutput = `<div class="poc-container"><ul>`;
     const displayLimit = 5;
     links.slice(0, displayLimit).forEach(link => {
-       htmlOutput += `<li><a target="_blank" href="${link}">${link}</a></li>`;
+        htmlOutput += `<li><a target="_blank" href="${link}">${link}</a></li>`;
     });
     htmlOutput += `</ul>`;
     if (links.length > displayLimit) {
@@ -50,8 +48,7 @@ function toggleDropdown(button) {
         button.textContent = "Show More";
     }
 }
-
-
+window.toggleDropdown = toggleDropdown;
 
 function getCveLink(cveId) {
     return `<a target="_blank" href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=${cveId}"><b>${cveId}</b></a>`;
@@ -59,16 +56,16 @@ function getCveLink(cveId) {
 
 const controls = {
     oldColor: '',
-    displayResults() {
+    displayResults(results, resultsTableHideable) {
         results.style.display = '';
         resultsTableHideable.classList.remove('hide');
     },
-    hideResults() {
+    hideResults(results, resultsTableHideable) {
         results.style.display = 'none';
         resultsTableHideable.classList.add('hide');
     },
     doSearch(match, dataset) {
-        const words = match.toLowerCase().split(' ');
+        const words = match.toLowerCase().split(' ').filter(Boolean);
         const posmatch = words.filter(word => word[0] !== '-');
         const negmatch = words.filter(word => word[0] === '-').map(word => word.substring(1));
 
@@ -82,10 +79,10 @@ const controls = {
             return positiveMatch && !negativeMatch;
         });
     },
-    updateResults(loc, results) {
+    updateResults(loc, results, noResults, resultsTableHideable) {
         if (results.length === 0) {
             noResults.style.display = '';
-            noResults.textContent = 'No Results Found';
+            noResults.textContent = 'No results found — try another vendor, product, or CVE id.';
             resultsTableHideable.classList.add('hide');
         } else if (results.length > totalLimit) {
             noResults.style.display = '';
@@ -93,7 +90,7 @@ const controls = {
             noResults.textContent = 'Error: ' + results.length + ' results were found, try being more specific';
             this.setColor(colorUpdate, 'too-many-results');
         } else {
-            loc.innerHTML = ''; // Clear existing rows
+            loc.innerHTML = '';
 
             noResults.style.display = 'none';
             resultsTableHideable.classList.remove('hide');
@@ -122,7 +119,22 @@ const controls = {
 window.controls = controls;
 
 document.addEventListener('DOMContentLoaded', () => {
+    const root = getSearchRoot();
+    if (!root) return;
+
+    const results = root.querySelector('[data-results]');
+    const searchValue = root.querySelector('input.search');
+    const form = root.querySelector('form.searchForm');
+    const resultsTableHideable = root.querySelector('.results-table');
+    const resultsTable = root.querySelector('tbody.results');
+    const noResults = root.querySelector('div.noResults');
+
     document.body.classList.add('fade');
+
+    if (!results || !searchValue || !form || !resultsTableHideable || !resultsTable || !noResults) {
+        console.warn('Search container missing expected elements');
+        return;
+    }
 
     let currentSet = [];
     let debounceTimer;
@@ -131,16 +143,16 @@ document.addEventListener('DOMContentLoaded', () => {
         const val = searchValue.value.trim();
 
         if (val !== '') {
-            controls.displayResults();
+            controls.displayResults(results, resultsTableHideable);
             currentSet = window.controls.doSearch(val, window.dataset || []);
 
             if (currentSet.length < totalLimit) {
                 window.controls.setColor(colorUpdate, currentSet.length === 0 ? 'no-results' : 'results-found');
             }
 
-            window.controls.updateResults(resultsTable, currentSet);
+            window.controls.updateResults(resultsTable, currentSet, noResults, resultsTableHideable);
         } else {
-            controls.hideResults();
+            controls.hideResults(results, resultsTableHideable);
             window.controls.setColor(colorUpdate, 'no-search');
             noResults.style.display = 'none';
         }
@@ -150,30 +162,40 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    fetch('/CVE_list.json')
-        .then(res => {
-            if (!res.ok) {
-                throw new Error(`Failed to load CVE list (${res.status})`);
+    const cveListCandidates = [
+        new URL('/CVE_list.json', window.location.origin).href,
+        new URL('CVE_list.json', window.location.href).href,
+        new URL('../CVE_list.json', window.location.href).href
+    ];
+
+    (async () => {
+        for (const url of cveListCandidates) {
+            try {
+                const res = await fetch(url, { cache: 'no-store' });
+                if (!res.ok) {
+                    throw new Error(`Failed to load ${url} (${res.status})`);
+                }
+                const data = await res.json();
+                window.dataset = Array.isArray(data) ? data : [];
+                currentSet = window.dataset;
+                controls.hideResults(results, resultsTableHideable);
+                noResults.style.display = 'none';
+                window.controls.setColor(colorUpdate, 'no-search');
+                return;
+            } catch (err) {
+                console.warn(err.message);
             }
-            return res.json();
-        })
-        .then(data => {
-            window.dataset = Array.isArray(data) ? data : [];
-            currentSet = window.dataset;
-            window.controls.updateResults(resultsTable, window.dataset);
-            doSearch({ type: 'none' });
-        })
-        .catch(err => {
-            console.error(err);
-            window.dataset = [];
-            noResults.textContent = 'Unable to load CVE list';
-            noResults.style.display = '';
-        });
+        }
+        window.dataset = [];
+        noResults.textContent = 'Unable to load CVE list';
+        noResults.style.display = '';
+        controls.setColor(colorUpdate, 'no-results');
+    })();
 
     form.addEventListener('submit', doSearch);
 
     searchValue.addEventListener('input', event => {
         clearTimeout(debounceTimer);
-        debounceTimer = setTimeout(() => doSearch(event), 300);
+        debounceTimer = setTimeout(() => doSearch(event), 200);
     });
 });
