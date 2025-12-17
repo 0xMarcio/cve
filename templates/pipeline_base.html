@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}CVE PoC Radar{% endblock %}</title>
+  <link rel="stylesheet" href="/assets/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="wrap">
+      <div class="brand">
+        <a href="/"><span class="dot">●</span> CVE PoC Radar</a>
+        <div class="muted small">Generated {{ generated or summary.generated }}</div>
+      </div>
+      <nav>
+        <a href="/">Dashboard</a>
+        <a href="/pocs/">PoC Explorer</a>
+        <a href="/diffs/">Diffs</a>
+        <a href="https://github.com/0xMarcio/cve" target="_blank" rel="noreferrer">GitHub</a>
+      </nav>
+    </div>
+  </header>
+  <main class="wrap">
+    {% block content %}{% endblock %}
+  </main>
+  <footer class="footer">
+    <div class="wrap footer-inner">
+      <div>Built daily from GitHub search with scoring + evidence.</div>
+      <div class="muted">API: <code>/api/v1/</code> · Pages under <code>/docs/</code></div>
+    </div>
+  </footer>
+  <script src="/assets/app.js"></script>
+</body>
+</html>

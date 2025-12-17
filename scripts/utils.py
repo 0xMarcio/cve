@@ -13,8 +13,13 @@ DATA_DIR = ROOT / "data"
 DOCS_DIR = ROOT / "docs"
 API_DIR = DOCS_DIR / "api" / "v1"
 SNAPSHOT_DIR = API_DIR / "snapshots"
+DIFFS_DIR = API_DIR / "diffs"
+TOP_DIR = API_DIR / "top"
 TEMPLATES_DIR = ROOT / "templates"
 ASSETS_DIR = DOCS_DIR / "assets"
+CACHE_DIR = DATA_DIR / "cache"
+STATE_DIR = DATA_DIR / "state"
+EVIDENCE_DIR = DATA_DIR / "evidence"
 
 
 def ensure_dirs(*paths: Path) -> None:
@@ -43,6 +48,21 @@ def fetch_json(url: str, *, timeout: int = 30, headers: Optional[Dict[str, str]]
 
 def today_str() -> str:
     return datetime.now(timezone.utc).date().isoformat()
+
+
+def now_utc() -> datetime:
+    return datetime.now(timezone.utc)
+
+
+def isoformat(dt: datetime | None = None) -> str:
+    return (dt or now_utc()).isoformat()
+
+
+def parse_date(value: str) -> datetime | None:
+    try:
+        return datetime.fromisoformat(value.replace("Z", "+00:00"))
+    except ValueError:
+        return None
 
 
 def slugify(text: str) -> str:
@@ -79,6 +99,7 @@ CVE_SECTION_RE = re.compile(r"^CVE-\d{4}-\d{4,}$", re.IGNORECASE)
 def load_poc_index() -> Dict[str, Dict[str, object]]:
     """Load CVE → {desc, poc} mapping from docs/CVE_list.json or markdown files."""
     cve_json = DOCS_DIR / "CVE_list.json"
+    blacklist = load_blacklist()
     if cve_json.exists():
         data = load_json(cve_json, default=[]) or []
         mapping = {}
@@ -86,32 +107,35 @@ def load_poc_index() -> Dict[str, Dict[str, object]]:
             cve = str(entry.get("cve", "")).upper()
             if not is_valid_cve(cve):
                 continue
+            poc_links = stable_unique(entry.get("poc", []) or [])
+            poc_links = filter_links_by_blacklist(poc_links, blacklist)
             mapping[cve] = {
                 "desc": entry.get("desc", ""),
-                "poc": stable_unique(entry.get("poc", []) or []),
+                "poc": poc_links,
             }
         return mapping
 
-    return build_poc_index_from_markdown()
+    return build_poc_index_from_markdown(blacklist=blacklist)
 
 
-def build_poc_index_from_markdown() -> Dict[str, Dict[str, object]]:
+def build_poc_index_from_markdown(*, blacklist: Optional[List[str]] = None) -> Dict[str, Dict[str, object]]:
     mapping: Dict[str, Dict[str, object]] = {}
     for md_path in sorted(ROOT.glob("[12][0-9][0-9][0-9]/CVE-*.md")):
         cve = md_path.stem.upper()
         if not is_valid_cve(cve):
             continue
-        desc, poc_links = parse_cve_markdown(md_path)
+        desc, poc_links = parse_cve_markdown(md_path, blacklist=blacklist)
         mapping[cve] = {"desc": desc, "poc": poc_links}
     return mapping
 
 
-def parse_cve_markdown(path: Path) -> Tuple[str, List[str]]:
+def parse_cve_markdown(path: Path, *, blacklist: Optional[List[str]] = None) -> Tuple[str, List[str]]:
     text = path.read_text(encoding="utf-8")
     sections = parse_sections(text)
     description = normalise_block(sections.get("### Description", ""))
-    references = collect_links(sections.get("#### Reference", ""))
-    github_links = collect_links(sections.get("#### Github", ""))
+    blacklist = blacklist or []
+    references = collect_links(sections.get("#### Reference", ""), blacklist=blacklist)
+    github_links = collect_links(sections.get("#### Github", ""), blacklist=blacklist)
     poc_links = stable_unique([*references, *github_links])
     return description, poc_links
 
@@ -144,7 +168,7 @@ def parse_sections(content: str) -> Dict[str, str]:
     return sections
 
 
-def collect_links(block: str) -> List[str]:
+def collect_links(block: str, *, blacklist: Optional[List[str]] = None) -> List[str]:
     links: List[str] = []
     for raw in block.splitlines():
         entry = raw.strip()
@@ -154,7 +178,7 @@ def collect_links(block: str) -> List[str]:
             entry = entry[2:].strip()
         if entry and entry not in links:
             links.append(entry)
-    return links
+    return filter_links_by_blacklist(links, blacklist or [])
 
 
 def is_valid_cve(cve_id: str) -> bool:
@@ -163,6 +187,15 @@ def is_valid_cve(cve_id: str) -> bool:
         return False
     year = parts[1]
     return year.isdigit() and parts[2].isdigit()
+
+
+def cve_year(cve_id: str) -> int | None:
+    if not is_valid_cve(cve_id):
+        return None
+    try:
+        return int(cve_id.split("-")[1])
+    except (TypeError, ValueError):
+        return None
 
 
 # --- Trending PoCs -------------------------------------------------------
@@ -199,3 +232,87 @@ def read_text(path: Path) -> str:
 def write_text(path: Path, content: str) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(content, encoding="utf-8")
+
+
+# --- New helpers for PoC discovery -------------------------------------------------
+
+
+def clamp(value: float, minimum: float = 0, maximum: float = 100) -> float:
+    return max(minimum, min(maximum, value))
+
+
+def chunked(iterable: Iterable, size: int) -> Iterable[List]:
+    chunk: List = []
+    for item in iterable:
+        chunk.append(item)
+        if len(chunk) >= size:
+            yield chunk
+            chunk = []
+    if chunk:
+        yield chunk
+
+
+def hash_key(text: str) -> str:
+    import hashlib
+
+    return hashlib.sha256(text.encode("utf-8")).hexdigest()
+
+
+def load_blacklist(path: Path | None = None) -> List[str]:
+    target = path or ROOT / "blacklist.txt"
+    if not target.exists():
+        return []
+    entries: List[str] = []
+    for raw in target.read_text(encoding="utf-8").splitlines():
+        line = raw.strip()
+        if line and not line.startswith("#"):
+            entries.append(line)
+    return entries
+
+
+def extract_repo_from_url(url: str) -> str:
+    """Return repository name segment from a URL (best effort)."""
+    try:
+        from urllib.parse import urlparse
+
+        parsed = urlparse(url)
+        host = (parsed.netloc or "").lower()
+        if host and "github" not in host:
+            return ""
+        path = parsed.path or url
+    except Exception:
+        path = url
+    parts = path.strip("/").split("/")
+    if len(parts) >= 2:
+        return parts[1].lower()
+    if parts:
+        return parts[-1].lower()
+    return ""
+
+
+def is_blacklisted_repo(url: str, blacklist: List[str]) -> bool:
+    repo = extract_repo_from_url(url)
+    if not repo:
+        return False
+    for entry in blacklist:
+        slug = entry.strip().lower()
+        if not slug:
+            continue
+        if slug.endswith("*"):
+            prefix = slug[:-1]
+            if prefix and repo.startswith(prefix):
+                return True
+        elif repo == slug:
+            return True
+    return False
+
+
+def filter_links_by_blacklist(links: List[str], blacklist: List[str]) -> List[str]:
+    if not blacklist:
+        return links
+    filtered: List[str] = []
+    for link in links:
+        if is_blacklisted_repo(link, blacklist):
+            continue
+        filtered.append(link)
+    return filtered

@@ -1,0 +1,47 @@
+{% extends "pipeline_base.html" %}
+{% block title %}PoC Explorer{% endblock %}
+{% block content %}
+  <section>
+    <div class="section-header">
+      <h1>PoC Explorer</h1>
+      <div class="muted">Search across the pre-built index JSON. Client-side results stay small and fast.</div>
+    </div>
+    <input class="input" type="search" placeholder="Search CVE id, language, tier…" data-index-search data-index-url="/api/v1/index.json" data-target="#search-results">
+    <div id="search-results" class="card-grid" data-search-results>
+      <p class="muted small">Type to search recent CVEs. Results stream in from <code>/api/v1/index.json</code>.</p>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-header">
+      <h2>Latest high + medium</h2>
+      <div class="muted small">Server-side snapshot</div>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>CVE</th>
+            <th>High</th>
+            <th>Medium</th>
+            <th>Languages</th>
+            <th>Max score</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for item in index %}
+            <tr>
+              <td><a href="/cve/{{ item.cve_id }}.html">{{ item.cve_id }}</a></td>
+              <td>{{ item.high_confidence }}</td>
+              <td>{{ item.medium_confidence }}</td>
+              <td>{% for lang in item.top_languages %}<span class="pill">{{ lang }}</span>{% else %}<span class="muted">—</span>{% endfor %}</td>
+              <td>{{ item.max_score|round(1) }}</td>
+            </tr>
+          {% else %}
+            <tr><td colspan="5" class="muted">No entries available.</td></tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </section>
+{% endblock %}
