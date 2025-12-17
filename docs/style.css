@@ -356,6 +356,16 @@ main { padding-top: 1.5rem; }
 .stat strong { display: block; color: #fff; font-size: 1.2rem; }
 .stat span { color: var(--muted); font-size: 0.9rem; }
 
+.detail-card {
+  margin-top: 0.4rem;
+  padding: 1rem 1.1rem;
+  border-radius: 14px;
+  border: 1px solid var(--border);
+  background: linear-gradient(160deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
+  box-shadow: 0 18px 40px rgba(0,0,0,0.35);
+}
+.detail-card p { margin: 0; color: var(--text); }
+
 .pill-row.tight { gap: 0.25rem; }
 
 .topbar {

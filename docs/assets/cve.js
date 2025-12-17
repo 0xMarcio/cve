@@ -19,6 +19,14 @@
     summaryEl.textContent = message;
   }
 
+  function getDescriptionText(data) {
+    const desc = (data?.description || "").trim();
+    if (desc) return desc;
+    const kevDesc = (data?.kev?.short_description || "").trim();
+    if (kevDesc) return kevDesc;
+    return "No description available.";
+  }
+
   function renderFacts(data) {
     const items = [];
     if (data.vendor) items.push({ label: "Vendor", value: data.vendor });
@@ -26,6 +34,7 @@
     if (data.epss !== undefined && data.epss !== null) items.push({ label: "EPSS", value: data.epss.toFixed(3) });
     if (data.percentile !== undefined && data.percentile !== null) items.push({ label: "Percentile", value: `${Math.round(data.percentile * 100)}th` });
     if (data.poc_count !== undefined) items.push({ label: "PoCs", value: data.poc_count });
+    if (data.kev) items.push({ label: "KEV status", value: data.kev.date_added ? `Added ${data.kev.date_added}` : "Listed" });
 
     factsEl.innerHTML = items
       .map((item) => `<div class="stat"><strong>${item.value}</strong><span>${item.label}</span></div>`)
@@ -41,6 +50,15 @@
     pocRowsEl.innerHTML = links
       .map((link) => `<tr><td><a href="${link}" target="_blank" rel="noreferrer">${link}</a></td></tr>`)
       .join("");
+  }
+
+  function renderMeta(data) {
+    const pills = [];
+    if (data.vendor) pills.push(`Vendor: ${data.vendor}`);
+    if (data.product) pills.push(`Product: ${data.product}`);
+    if (data.kev) pills.push("On KEV list");
+
+    metaEl.innerHTML = pills.map((text) => `<span class="pill">${text}</span>`).join("");
   }
 
   function renderKev(kev) {
@@ -89,13 +107,15 @@
     try {
       const data = await fetchCveFromApi(cveId);
       titleEl.textContent = data.cve || cveId;
-      summaryEl.textContent = data.description || "No description available.";
+      const desc = getDescriptionText(data);
+      summaryEl.textContent = desc;
+      descEl.textContent = desc;
       renderFacts(data);
       renderPocs(data.poc_links || data.poc || []);
       renderKev(data.kev);
+      renderMeta(data);
       detailSection.style.display = "";
       notFoundSection.style.display = "none";
-      metaEl.innerHTML = `<span class="pill">Vendor: ${data.vendor || "n/a"}</span><span class="pill">Product: ${data.product || "n/a"}</span><span class="pill">PoCs: ${data.poc_count ?? (data.poc_links || []).length}</span>`;
       return;
     } catch (err) {
       console.warn("API lookup failed, trying CVE_list.json", err);
@@ -104,13 +124,15 @@
     try {
       const fallback = await fetchFromList(cveId);
       titleEl.textContent = fallback.cve;
-      summaryEl.textContent = fallback.description || "No description available.";
+      const desc = getDescriptionText(fallback);
+      summaryEl.textContent = desc;
+      descEl.textContent = desc;
       renderFacts(fallback);
       renderPocs(fallback.poc_links || fallback.poc || []);
       renderKev(null);
+      renderMeta(fallback);
       detailSection.style.display = "";
       notFoundSection.style.display = "none";
-      metaEl.innerHTML = `<span class="pill">PoCs: ${fallback.poc_count || 0}</span>`;
     } catch (err) {
       console.warn("CVE_list lookup failed", err);
       notFoundSection.style.display = "";
