@@ -3,25 +3,25 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>CVE Intelligence</title>
+  <title>CVE PoC Hub</title>
   <link rel="stylesheet" href="/style.css" />
   <script defer src="/assets/site.js"></script>
 </head>
 <body>
   <header class="site-header">
     <div class="wrap">
-      <div class="brand"><a href="/">CVE Radar</a></div>
+      <div class="brand"><a href="/">CVE PoC Hub</a></div>
       <nav>
+        <a href="/search/">PoC Search</a>
         <a href="/kev/">KEV</a>
         <a href="/epss/">EPSS</a>
         <a href="/diffs/">Diffs</a>
-        <a href="/search/">Search</a>
       </nav>
     </div>
   </header>
   <main class="wrap">
 <section>
-  <h1>Top KEV by EPSS percentile</h1>
+<h1>KEV with high EPSS</h1>
   <div class="card-grid">
     <article class="card">
       <div class="card-title"><a href="/cve/CVE-2025-9242.html">CVE-2025-9242</a></div>
@@ -132,7 +132,7 @@
 </section>
 
 <section>
-  <h1>High EPSS not in KEV</h1>
+  <h1>EPSS standouts (outside KEV)</h1>
   <div class="card-grid">
     <article class="card">
       <div class="card-title"><a href="/cve/CVE-2025-9316.html">CVE-2025-9316</a></div>

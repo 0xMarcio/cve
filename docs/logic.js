@@ -132,7 +132,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (val !== '') {
             controls.displayResults();
-            currentSet = window.controls.doSearch(val, window.dataset);
+            currentSet = window.controls.doSearch(val, window.dataset || []);
 
             if (currentSet.length < totalLimit) {
                 window.controls.setColor(colorUpdate, currentSet.length === 0 ? 'no-results' : 'results-found');
@@ -150,13 +150,24 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    fetch('../CVE_list.json')
-        .then(res => res.json())
+    fetch('/CVE_list.json')
+        .then(res => {
+            if (!res.ok) {
+                throw new Error(`Failed to load CVE list (${res.status})`);
+            }
+            return res.json();
+        })
         .then(data => {
-            window.dataset = data;
+            window.dataset = Array.isArray(data) ? data : [];
             currentSet = window.dataset;
             window.controls.updateResults(resultsTable, window.dataset);
             doSearch({ type: 'none' });
+        })
+        .catch(err => {
+            console.error(err);
+            window.dataset = [];
+            noResults.textContent = 'Unable to load CVE list';
+            noResults.style.display = '';
         });
 
     form.addEventListener('submit', doSearch);

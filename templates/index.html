@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
 <section>
-  <h1>Top KEV by EPSS percentile</h1>
+<h1>KEV with high EPSS</h1>
   <div class="card-grid">
     {% for item in data.kev_top[:15] %}
     <article class="card">
@@ -16,7 +16,7 @@
 </section>
 
 <section>
-  <h1>High EPSS not in KEV</h1>
+  <h1>EPSS standouts (outside KEV)</h1>
   <div class="card-grid">
     {% for item in data.high_epss[:15] %}
     <article class="card">

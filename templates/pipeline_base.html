@@ -3,20 +3,22 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>{% block title %}CVE PoC Radar{% endblock %}</title>
+  <title>{% block title %}CVE PoC Hub{% endblock %}</title>
   <link rel="stylesheet" href="/style.css">
 </head>
 <body>
   <header class="topbar">
     <div class="wrap">
       <div class="brand">
-        <a href="/"><span class="dot">●</span> CVE PoC Radar</a>
-        <div class="muted small">Generated {{ generated or summary.generated }}</div>
+        <a href="/"><span class="dot">●</span> CVE PoC Hub</a>
+        <div class="muted small">Updated {{ generated or summary.generated }}</div>
       </div>
       <nav>
-        <a href="/">Dashboard</a>
-        <a href="/pocs/">PoC Explorer</a>
+        <a href="/search/">PoC Search</a>
+        <a href="/pocs/">Explorer</a>
         <a href="/diffs/">Diffs</a>
+        <a href="/epss/">EPSS</a>
+        <a href="/kev/">KEV</a>
         <a href="https://github.com/0xMarcio/cve" target="_blank" rel="noreferrer">GitHub</a>
       </nav>
     </div>
