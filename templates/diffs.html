@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Daily Diff</h1>
+<p>Comparing the latest snapshot to the previous one.</p>
+
+<h2>New KEV Entries</h2>
+<div class="table-responsive">
+  <table class="list">
+    <thead><tr><th>CVE</th><th>Vendor</th><th>Product</th><th>Date Added</th></tr></thead>
+    <tbody>
+      {% for row in diff.new_kev_entries or [] %}
+      <tr>
+        <td><a href="/cve/{{ row.cve }}.html">{{ row.cve }}</a></td>
+        <td>{{ row.vendor }}</td>
+        <td>{{ row.product }}</td>
+        <td>{{ row.date_added }}</td>
+      </tr>
+      {% else %}<tr><td colspan="4">No new KEV entries.</td></tr>{% endfor %}
+    </tbody>
+  </table>
+</div>
+
+<h2>New High EPSS</h2>
+<div class="table-responsive">
+  <table class="list">
+    <thead><tr><th>CVE</th><th>EPSS</th><th>Percentile</th></tr></thead>
+    <tbody>
+      {% for row in diff.new_high_epss or [] %}
+      <tr>
+        <td><a href="/cve/{{ row.cve }}.html">{{ row.cve }}</a></td>
+        <td>{{ '%.3f'|format(row.epss or 0) }}</td>
+        <td>{{ '%2.0f'|format((row.percentile or 0)*100) }}th</td>
+      </tr>
+      {% else %}<tr><td colspan="3">No new high EPSS items.</td></tr>{% endfor %}
+    </tbody>
+  </table>
+</div>
+
+<h2>Biggest EPSS Movers</h2>
+<div class="table-responsive">
+  <table class="list">
+    <thead><tr><th>CVE</th><th>Δ EPSS</th><th>Current</th></tr></thead>
+    <tbody>
+      {% for row in diff.epss_movers or [] %}
+      <tr>
+        <td><a href="/cve/{{ row.cve }}.html">{{ row.cve }}</a></td>
+        <td>{{ '%.3f'|format(row.delta) }}</td>
+        <td>{{ '%.3f'|format(row.epss or 0) }}</td>
+      </tr>
+      {% else %}<tr><td colspan="3">No movers yet.</td></tr>{% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

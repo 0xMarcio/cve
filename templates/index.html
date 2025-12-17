@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+{% block content %}
+<section>
+  <h1>Top KEV by EPSS percentile</h1>
+  <div class="card-grid">
+    {% for item in data.kev_top[:15] %}
+    <article class="card">
+      <div class="card-title"><a href="/cve/{{ item.cve }}.html">{{ item.cve }}</a></div>
+      <div class="card-meta">EPSS {{ '%.3f'|format(item.epss or 0) }} • {{ '%2.0f'|format((item.percentile or 0)*100) }}th pct</div>
+      <p>{{ item.summary or 'No description.' }}</p>
+      <div class="badge">{{ item.vendor or 'Unknown vendor' }}</div>
+      <div class="badge">{{ item.product or 'Unknown product' }}</div>
+    </article>
+    {% endfor %}
+  </div>
+</section>
+
+<section>
+  <h1>High EPSS not in KEV</h1>
+  <div class="card-grid">
+    {% for item in data.high_epss[:15] %}
+    <article class="card">
+      <div class="card-title"><a href="/cve/{{ item.cve }}.html">{{ item.cve }}</a></div>
+      <div class="card-meta">EPSS {{ '%.3f'|format(item.epss or 0) }} • {{ '%2.0f'|format((item.percentile or 0)*100) }}th pct</div>
+      <p>{{ item.summary or 'No description.' }}</p>
+    </article>
+    {% endfor %}
+  </div>
+</section>
+
+<section>
+  <h1>Trending PoCs</h1>
+  <div class="table-responsive">
+    <table class="list">
+      <thead><tr><th>Stars</th><th>Updated</th><th>Name</th><th>Description</th></tr></thead>
+      <tbody>
+        {% for row in trending[:20] %}
+        <tr>
+          <td>{{ row.stars }}</td>
+          <td>{{ row.updated }}</td>
+          <td><a href="{{ row.url }}" target="_blank">{{ row.name }}</a></td>
+          <td>{{ row.desc }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section>
+  <h1>Changes since yesterday</h1>
+  <div class="table-responsive">
+    <table class="list">
+      <thead><tr><th>Type</th><th>Count</th><th>Examples</th></tr></thead>
+      <tbody>
+        <tr>
+          <td>New KEV entries</td>
+          <td>{{ (diff.new_kev_entries or [])|length }}</td>
+          <td>
+            {% for row in (diff.new_kev_entries or [])[:5] %}
+              <a href="/cve/{{ row.cve }}.html">{{ row.cve }}</a>{% if not loop.last %}, {% endif %}
+            {% else %}None{% endfor %}
+          </td>
+        </tr>
+        <tr>
+          <td>New high EPSS</td>
+          <td>{{ (diff.new_high_epss or [])|length }}</td>
+          <td>
+            {% for row in (diff.new_high_epss or [])[:5] %}
+              <a href="/cve/{{ row.cve }}.html">{{ row.cve }}</a>{% if not loop.last %}, {% endif %}
+            {% else %}None{% endfor %}
+          </td>
+        </tr>
+        <tr>
+          <td>Top EPSS movers</td>
+          <td>{{ (diff.epss_movers or [])|length }}</td>
+          <td>
+            {% for row in (diff.epss_movers or [])[:5] %}
+              <a href="/cve/{{ row.cve }}.html">{{ row.cve }}</a> ({{ '%.3f'|format(row.delta) }}){% if not loop.last %}, {% endif %}
+            {% else %}None{% endfor %}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+{% endblock %}

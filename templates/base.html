@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{{ title or 'CVE Intelligence' }}</title>
+  <link rel="stylesheet" href="/assets/style.css" />
+  <script defer src="/assets/site.js"></script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap">
+      <div class="brand"><a href="/">CVE Radar</a></div>
+      <nav>
+        <a href="/kev/">KEV</a>
+        <a href="/epss/">EPSS</a>
+        <a href="/diffs/">Diffs</a>
+      </nav>
+    </div>
+  </header>
+  <main class="wrap">
+    {% block content %}{% endblock %}
+  </main>
+  <footer class="site-footer">
+    <div class="wrap">
+      <span>Updated {{ generated or '' }}</span>
+      <span>Data: CISA KEV, FIRST EPSS, community PoCs</span>
+      <span><a href="https://github.com/0xMarcio/cve">GitHub repo</a></span>
+    </div>
+  </footer>
+</body>
+</html>
