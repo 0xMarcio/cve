@@ -12,6 +12,8 @@ on:
       - 'templates/**'
       - 'docs/assets/**'
       - 'README.md'
+      - '.github/getTrending.py'
+      - '.github/workflows/hot_cves.yml'
       - 'requirements.txt'
       - '.github/workflows/site.yml'
 

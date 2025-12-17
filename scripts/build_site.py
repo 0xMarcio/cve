@@ -1,7 +1,9 @@
 from __future__ import annotations
 
 import argparse
+from datetime import timedelta
 from pathlib import Path
+import re
 from typing import Dict, Tuple
 
 from jinja2 import Environment, FileSystemLoader, select_autoescape
@@ -23,6 +25,7 @@ from build_diffs import build_diff, prune_snapshots
 KEV_DATA = DOCS_DIR.parent / "data" / "kev.json"
 EPSS_DATA = DOCS_DIR.parent / "data" / "epss.json"
 README_PATH = DOCS_DIR.parent / "README.md"
+TRENDING_WINDOW = timedelta(days=4)
 
 
 def build_env() -> Environment:
@@ -55,26 +58,59 @@ def write_snapshot(joined: Dict) -> Path:
     return snapshot_path
 
 
+def _parse_year(row: dict) -> int | None:
+    try:
+        return int(row.get("year"))
+    except (TypeError, ValueError):
+        return None
+
+
+def _age_from_label(label: str) -> timedelta | None:
+    text = (label or "").strip().lower()
+    if text == "just now":
+        return timedelta()
+    match = re.match(r"(?P<value>\d+)\s+(?P<unit>minute|minutes|hour|hours|day|days)\s+ago", text)
+    if not match:
+        return None
+    value = int(match.group("value"))
+    unit = match.group("unit")
+    if unit.startswith("minute"):
+        return timedelta(minutes=value)
+    if unit.startswith("hour"):
+        return timedelta(hours=value)
+    return timedelta(days=value)
+
+
+def _is_current_year_name(name: str, year: int) -> bool:
+    return bool(re.search(rf"cve-{year}-\d+", name or "", re.IGNORECASE))
+
+
 def select_trending(readme_rows: list[dict]) -> list[dict]:
-    """Pick the first 20 entries from the newest year table in README."""
+    """Pick up to 20 entries from the newest year table, filtered to last 4 days and matching the current year."""
     if not readme_rows:
         return []
 
-    def parse_year(row: dict) -> int | None:
-        try:
-            return int(row.get("year"))
-        except (TypeError, ValueError):
-            return None
-
-    years = [yr for yr in (parse_year(row) for row in readme_rows) if yr is not None]
+    years = [yr for yr in (_parse_year(row) for row in readme_rows) if yr is not None]
     if not years:
         return []
 
     latest_year = max(years)
-    selected: list[dict] = []
+    filtered: list[tuple[dict, timedelta]] = []
     for row in readme_rows:
-        if parse_year(row) != latest_year:
+        if _parse_year(row) != latest_year:
             continue
+        if not _is_current_year_name(row.get("name", ""), latest_year):
+            continue
+        age = _age_from_label(row.get("updated", ""))
+        if age is None or age > TRENDING_WINDOW:
+            continue
+        filtered.append((row, age))
+
+    # Sort by freshness then stars
+    filtered.sort(key=lambda pair: (pair[1], -int(pair[0].get("stars") or 0)))
+
+    selected: list[dict] = []
+    for row, _age in filtered[:20]:
         try:
             stars = int(row.get("stars") or 0)
         except (TypeError, ValueError):
@@ -89,8 +125,6 @@ def select_trending(readme_rows: list[dict]) -> list[dict]:
                 "year": latest_year,
             }
         )
-        if len(selected) >= 20:
-            break
     return selected
 
 

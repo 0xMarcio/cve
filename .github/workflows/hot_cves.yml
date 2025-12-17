@@ -24,6 +24,8 @@ jobs:
         cd /home/runner/work/cve/cve
         pip install requests
         python .github/getTrending.py
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         
     - name: Check for changes and commit if necessary
       run: |
