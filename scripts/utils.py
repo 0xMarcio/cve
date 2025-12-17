@@ -107,10 +107,13 @@ def load_poc_index() -> Dict[str, Dict[str, object]]:
             cve = str(entry.get("cve", "")).upper()
             if not is_valid_cve(cve):
                 continue
+            desc = (entry.get("desc") or "").strip()
             poc_links = stable_unique(entry.get("poc", []) or [])
             poc_links = filter_links_by_blacklist(poc_links, blacklist)
+            if not desc or not poc_links:
+                continue
             mapping[cve] = {
-                "desc": entry.get("desc", ""),
+                "desc": desc,
                 "poc": poc_links,
             }
         return mapping

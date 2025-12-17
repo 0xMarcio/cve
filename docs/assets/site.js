@@ -1,6 +1,7 @@
 (function(){
   let datasetPromise = null;
   let pocSet = null;
+  let descSet = null;
 
   function fetchDataset() {
     if (datasetPromise) return datasetPromise;
@@ -25,15 +26,19 @@
     return datasetPromise;
   }
 
-  async function ensurePocSet() {
-    if (pocSet) return pocSet;
+  async function ensureSets() {
+    if (pocSet && descSet) return { pocSet, descSet };
     const dataset = await fetchDataset();
-    pocSet = new Set(
-      dataset
-        .filter(item => Array.isArray(item.poc) && item.poc.length > 0)
-        .map(item => (item.cve || '').toUpperCase())
-    );
-    return pocSet;
+    pocSet = new Set();
+    descSet = new Set();
+    dataset.forEach(item => {
+      const cve = (item.cve || '').toUpperCase();
+      const desc = (item.desc || '').trim();
+      const hasPoc = Array.isArray(item.poc) && item.poc.length > 0;
+      if (hasPoc) pocSet.add(cve);
+      if (desc) descSet.add(cve);
+    });
+    return { pocSet, descSet };
   }
 
   function bindColumnFilters() {
@@ -52,22 +57,52 @@
     });
   }
 
-  async function filterTablesByPoc() {
-    const set = await ensurePocSet();
-    document.querySelectorAll('table[data-require-poc]').forEach(table => {
+  async function filterTablesByData() {
+    const { pocSet, descSet } = await ensureSets();
+    document.querySelectorAll('table[data-require-poc], table[data-require-desc]').forEach(table => {
       for (const row of Array.from(table.querySelectorAll('tbody tr'))) {
         const link = row.querySelector('a');
         const idText = (link ? link.textContent : row.textContent || '').trim().toUpperCase();
-        if (!set.has(idText)) {
+        const needsPoc = table.hasAttribute('data-require-poc');
+        const needsDesc = table.hasAttribute('data-require-desc');
+        const hasPoc = pocSet.has(idText);
+        const hasDesc = descSet.has(idText);
+        if ((needsPoc && !hasPoc) || (needsDesc && !hasDesc)) {
           row.remove();
         }
       }
     });
   }
 
-  function truncate(text, limit = 140) {
+  function truncate(text, limit = 160) {
     if (!text) return '';
     return text.length > limit ? `${text.slice(0, limit - 1)}…` : text;
+  }
+
+  function parseRelativeDays(label) {
+    if (!label) return Infinity;
+    const lower = label.toLowerCase();
+    if (lower.includes('hour') || lower.includes('minute') || lower.includes('just')) return 0;
+    const match = lower.match(/(\d+)\s*day/);
+    return match ? parseInt(match[1], 10) : Infinity;
+  }
+
+  function parseTrendingMarkdown(text) {
+    const rows = [];
+    const regex = /^\|\s*(\d+)\s*⭐\s*\|\s*([^|]+)\|\s*\[([^\]]+)\]\(([^)]+)\)\s*\|\s*(.*?)\|$/;
+    text.split('\n').forEach(line => {
+      const trimmed = line.trim();
+      const m = regex.exec(trimmed);
+      if (!m) return;
+      const stars = parseInt(m[1], 10);
+      const updated = m[2].trim();
+      const name = m[3].trim();
+      const url = m[4].trim();
+      const desc = m[5].trim();
+      const ageDays = parseRelativeDays(updated);
+      rows.push({ stars, updated, name, url, desc, ageDays });
+    });
+    return rows;
   }
 
   async function renderTrending() {
@@ -75,36 +110,37 @@
     const tbody = document.getElementById('trending-body');
     if (!container || !tbody) return;
 
-    const data = await fetchDataset();
-    const trending = data
-      .filter(item => item && item.cve && Array.isArray(item.poc) && item.poc.length > 0)
-      .map(item => ({ cve: item.cve, desc: item.desc || 'No description available.', poc: item.poc }))
-      .sort((a, b) => {
-        const delta = (b.poc?.length || 0) - (a.poc?.length || 0);
-        if (delta !== 0) return delta;
-        return (b.cve || '').localeCompare(a.cve || '');
-      })
-      .slice(0, 12);
+    try {
+      const res = await fetch('/README.md', { cache: 'no-store' });
+      if (!res.ok) throw new Error('failed to load README');
+      const text = await res.text();
+      const entries = parseTrendingMarkdown(text)
+        .filter(item => item.ageDays <= 5)
+        .sort((a, b) => b.stars - a.stars)
+        .slice(0, 20);
 
-    if (trending.length === 0) {
-      tbody.innerHTML = '<tr><td colspan="3" class="muted">No PoCs found yet.</td></tr>';
-      return;
+      if (entries.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="4" class="muted">No recent PoCs with stars yet.</td></tr>';
+        return;
+      }
+
+      tbody.innerHTML = entries.map(item => {
+        return `<tr>
+          <td>${item.stars}⭐</td>
+          <td>${item.updated}</td>
+          <td><a href="${item.url}" target="_blank" rel="noreferrer">${item.name}</a></td>
+          <td class="mono">${truncate(item.desc)}</td>
+        </tr>`;
+      }).join('');
+    } catch (err) {
+      console.warn('Trending render failed', err);
+      tbody.innerHTML = '<tr><td colspan="4" class="muted">Unable to load trending PoCs.</td></tr>';
     }
-
-    tbody.innerHTML = trending.map(item => {
-      const pocCount = item.poc ? item.poc.length : 0;
-      const safeDesc = truncate(item.desc, 160);
-      return `<tr>
-        <td class="cve-cell"><a href="/cve/?id=${item.cve}">${item.cve}</a></td>
-        <td>${pocCount}</td>
-        <td>${safeDesc}</td>
-      </tr>`;
-    }).join('');
   }
 
   document.addEventListener('DOMContentLoaded', () => {
     bindColumnFilters();
-    filterTablesByPoc();
+    filterTablesByData();
     renderTrending();
   });
 })();

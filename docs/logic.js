@@ -60,11 +60,16 @@ function prepareDataset(raw) {
         const base = entry.desc || '';
         return replaceStrings.reduce((desc, str) => desc.replace(str, ''), base);
     };
-    return raw.map(entry => {
+    return raw
+      .filter(entry => {
+        const desc = (entry.desc || '').trim();
+        return desc && Array.isArray(entry.poc) && entry.poc.length > 0;
+      })
+      .map(entry => {
         const descCleaned = descKeyCleaned(entry);
         const searchText = `${entry.cve || ''} ${descCleaned}`.toLowerCase();
         return { ...entry, _searchText: searchText };
-    });
+      });
 }
 
 const controls = {

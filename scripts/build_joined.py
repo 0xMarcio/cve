@@ -40,7 +40,10 @@ def enrich_kev(kev_items: List[Dict], epss_lookup: Dict[str, Dict], poc_index: D
             continue
         cve = cve.upper()
         epss_info = epss_lookup.get(cve, {})
-        poc_count = len(poc_index.get(cve, {}).get("poc", []))
+        poc_info = poc_index.get(cve)
+        if not poc_info or not poc_info.get("poc"):
+            continue
+        poc_count = len(poc_info["poc"])
         enriched.append(
             {
                 "cve": cve,
@@ -92,12 +95,16 @@ def build_high_epss_not_in_kev(
             epss_score = row.get("epss") or 0.0
             if epss_score < threshold:
                 continue
-            poc_count = len(poc_index.get(cve, {}).get("poc", []))
+            poc_info = poc_index.get(cve)
+            if not poc_info or not poc_info.get("poc"):
+                continue
+            poc_count = len(poc_info["poc"])
             output.append(
                 {
                     "cve": cve,
                     "epss": row.get("epss"),
                     "percentile": row.get("percentile"),
+                    "summary": truncate_description(poc_info.get("desc", "")),
                     "poc_count": poc_count,
                 }
             )

@@ -1,8 +1,5 @@
 <h1 align="center">Recently updated Proof-of-Concepts</h1>
 
-> Live API + site: `/api/v1/index.json`, `/api/v1/top/today.json`, and Pages generated via `python scripts/build_all.py` for the new GitHub PoC discovery + scoring pipeline.
-
-
 ## 2025
 
 ### Latest 20 of 433 Repositories
