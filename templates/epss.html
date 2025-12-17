@@ -10,7 +10,7 @@
       <tbody>
         {% for row in epss %}
         <tr>
-          <td><a href="/cve/{{ row.cve }}.html">{{ row.cve }}</a></td>
+          <td><a href="/cve/?id={{ row.cve }}">{{ row.cve }}</a></td>
           <td>{{ '%.3f'|format(row.epss or 0) }}</td>
           <td>{{ '%2.0f'|format((row.percentile or 0)*100) }}th</td>
           <td>{{ row.poc_count }}</td>

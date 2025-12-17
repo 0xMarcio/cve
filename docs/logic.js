@@ -51,7 +51,7 @@ function toggleDropdown(button) {
 window.toggleDropdown = toggleDropdown;
 
 function getCveLink(cveId) {
-    return `<a target="_blank" href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=${cveId}"><b>${cveId}</b></a>`;
+    return `<a href="/cve/?id=${cveId}"><b>${cveId}</b></a>`;
 }
 
 const controls = {

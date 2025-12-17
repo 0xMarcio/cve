@@ -1,9 +1,4 @@
 data/
 .venv/
-docs/api/
-docs/cve/
-docs/epss/
-docs/kev/
-docs/diffs/
-docs/vendors/
+docs/api/v1/cve/
 scripts/__pycache__/

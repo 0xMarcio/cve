@@ -1,0 +1,19 @@
+{
+  "generated": "2025-12-17",
+  "items": [
+    {
+      "cve": "CVE-2025-9316",
+      "epss": 0.78706,
+      "percentile": 0.98995,
+      "poc_count": 0,
+      "summary": ""
+    },
+    {
+      "cve": "CVE-2025-8943",
+      "epss": 0.6583,
+      "percentile": 0.9843,
+      "poc_count": 1,
+      "summary": "The Custom MCPs feature is designed to execute OS commands, for instance, using tools like `npx` to spin up local MCP Servers. However, Flowise's inherent authentication and authorization model is minimal and lacks ro..."
+    }
+  ]
+}

@@ -55,38 +55,46 @@ def write_snapshot(joined: Dict) -> Path:
     return snapshot_path
 
 
-def build_pages(env: Environment, data: Dict, diff: Dict | None = None) -> None:
+def build_pages(env: Environment, data: Dict, diff: Dict | None = None, html_mode: str = "summary") -> None:
     joined = data["joined"]
     details = data["details"]
     vendors = data["vendors"]
     trending = parse_trending_from_readme(README_PATH)
 
-    common_ctx = {"generated": joined["generated"]}
-    render(
-        env,
-        "index.html",
-        {**common_ctx, "data": joined, "trending": trending, "diff": diff or {}},
-        DOCS_DIR / "index.html",
-    )
-    render(env, "kev.html", {**common_ctx, "kev": data["kev_enriched"]}, DOCS_DIR / "kev" / "index.html")
-    render(env, "epss.html", {**common_ctx, "epss": joined["high_epss"]}, DOCS_DIR / "epss" / "index.html")
-    render(env, "diffs.html", {**common_ctx, "diff": diff or {}}, DOCS_DIR / "diffs" / "index.html")
+    if html_mode in {"summary", "all"}:
+        common_ctx = {"generated": joined["generated"]}
+        render(
+            env,
+            "index.html",
+            {**common_ctx, "data": joined, "trending": trending, "diff": diff or {}},
+            DOCS_DIR / "index.html",
+        )
+        render(env, "kev.html", {**common_ctx, "kev": data["kev_enriched"]}, DOCS_DIR / "kev" / "index.html")
+        render(env, "epss.html", {**common_ctx, "epss": joined["high_epss"]}, DOCS_DIR / "epss" / "index.html")
+        render(env, "diffs.html", {**common_ctx, "diff": diff or {}}, DOCS_DIR / "diffs" / "index.html")
 
-    for cve, detail in details.items():
-        render(env, "cve.html", {**common_ctx, "cve": detail}, DOCS_DIR / "cve" / f"{cve}.html")
+    if html_mode == "all":
+        common_ctx = {"generated": joined["generated"]}
+        for cve, detail in details.items():
+            render(env, "cve.html", {**common_ctx, "cve": detail}, DOCS_DIR / "cve" / f"{cve}.html")
 
-    for slug, vendor in vendors.items():
-        cve_details = [details[cve] for cve in vendor["cves"] if cve in details]
-        render(env, "vendor.html", {**common_ctx, "vendor": vendor, "cves": cve_details}, DOCS_DIR / "vendors" / f"{slug}.html")
+        for slug, vendor in vendors.items():
+            cve_details = [details[cve] for cve in vendor["cves"] if cve in details]
+            render(env, "vendor.html", {**common_ctx, "vendor": vendor, "cves": cve_details}, DOCS_DIR / "vendors" / f"{slug}.html")
 
 
 def main() -> int:
     parser = argparse.ArgumentParser(description="Build static site and JSON")
+    parser.add_argument(
+        "--html-mode",
+        choices=["none", "summary", "all"],
+        default="none",
+        help="Render no HTML, summary pages only, or all pages including per-CVE.",
+    )
     args = parser.parse_args()
 
-    ensure_dirs(DOCS_DIR, DOCS_DIR / "cve", DOCS_DIR / "vendors", DOCS_DIR / "kev", DOCS_DIR / "epss", DOCS_DIR / "diffs")
+    ensure_dirs(DOCS_DIR, DOCS_DIR / "kev", DOCS_DIR / "epss", DOCS_DIR / "diffs")
 
-    env = build_env()
     data = load_joined()
     # snapshot + diff before rendering so dashboard can show it
     snapshot_path = write_snapshot(data["joined"])
@@ -94,7 +102,9 @@ def main() -> int:
     diff, target = build_diff(snapshots, threshold=0.5, max_movers=50)
     prune_snapshots(snapshots, lookback_days=14)
 
-    build_pages(env, data, diff)
+    if args.html_mode != "none":
+        env = build_env()
+        build_pages(env, data, diff, html_mode=args.html_mode)
 
     # build daily diff after snapshot is written
     print("Site generated under docs/")

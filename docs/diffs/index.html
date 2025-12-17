@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Diffs - CVE PoC Hub</title>
+  <link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap">
+      <div class="brand"><a href="/">CVE PoC Hub</a><span>daily</span></div>
+      <nav>
+        <a href="/search/">PoC Search</a>
+        <a href="/kev/">KEV</a>
+        <a href="/epss/">EPSS</a>
+        <a href="/diffs/">Diffs</a>
+      </nav>
+    </div>
+  </header>
+  <main class="wrap">
+    <section class="section">
+      <h1>Daily Diff</h1>
+      <p class="muted">Newest changes from <code>/api/v1/diff/latest.json</code>.</p>
+    </section>
+
+    <section class="section">
+      <h2>New KEV Entries</h2>
+      <div class="table-responsive">
+        <table class="list">
+          <thead><tr><th>CVE</th><th>Vendor</th><th>Product</th><th>Date Added</th></tr></thead>
+          <tbody id="diff-kev"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>New High EPSS</h2>
+      <div class="table-responsive">
+        <table class="list">
+          <thead><tr><th>CVE</th><th>EPSS</th><th>Percentile</th></tr></thead>
+          <tbody id="diff-epss"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>Biggest EPSS Movers</h2>
+      <div class="table-responsive">
+        <table class="list">
+          <thead><tr><th>CVE</th><th>Δ EPSS</th><th>Current</th></tr></thead>
+          <tbody id="diff-movers"></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+  <footer class="site-footer">
+    <div class="wrap">
+      <span>Data: CISA KEV, FIRST EPSS, community PoCs</span>
+      <span><a href="https://github.com/0xMarcio/cve">GitHub repo</a></span>
+    </div>
+  </footer>
+  <script>
+    function renderRows(target, rows, columns, emptyText) {
+      const el = document.getElementById(target);
+      if (!rows || rows.length === 0) {
+        el.innerHTML = `<tr><td colspan="${columns}" class="muted">${emptyText}</td></tr>`;
+        return;
+      }
+      el.innerHTML = rows.join("");
+    }
+
+    async function loadDiff() {
+      try {
+        const res = await fetch("/api/v1/diff/latest.json", { cache: "no-store" });
+        if (!res.ok) throw new Error("Failed to load diff");
+        const data = await res.json();
+
+        const kevRows = (data.new_kev_entries || []).map(row => `
+          <tr>
+            <td><a href="/cve/?id=${row.cve}">${row.cve}</a></td>
+            <td>${row.vendor || ""}</td>
+            <td>${row.product || ""}</td>
+            <td>${row.date_added || ""}</td>
+          </tr>
+        `);
+        renderRows("diff-kev", kevRows, 4, "No new KEV entries.");
+
+        const epssRows = (data.new_high_epss || []).map(row => `
+          <tr>
+            <td><a href="/cve/?id=${row.cve}">${row.cve}</a></td>
+            <td>${row.epss !== null && row.epss !== undefined ? row.epss.toFixed(3) : ""}</td>
+            <td>${row.percentile !== null && row.percentile !== undefined ? Math.round(row.percentile * 100) + "th" : ""}</td>
+          </tr>
+        `);
+        renderRows("diff-epss", epssRows, 3, "No new high EPSS items.");
+
+        const moverRows = (data.epss_movers || []).map(row => `
+          <tr>
+            <td><a href="/cve/?id=${row.cve}">${row.cve}</a></td>
+            <td>${row.delta !== undefined ? row.delta.toFixed(3) : ""}</td>
+            <td>${row.epss !== undefined ? row.epss.toFixed(3) : ""}</td>
+          </tr>
+        `);
+        renderRows("diff-movers", moverRows, 3, "No movers yet.");
+      } catch (err) {
+        console.error(err);
+        renderRows("diff-kev", [], 4, "Unable to load diff data.");
+        renderRows("diff-epss", [], 3, "Unable to load diff data.");
+        renderRows("diff-movers", [], 3, "Unable to load diff data.");
+      }
+    }
+    document.addEventListener("DOMContentLoaded", loadDiff);
+  </script>
+  <script defer src="/assets/site.js"></script>
+</body>
+</html>

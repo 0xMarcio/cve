@@ -12,7 +12,7 @@
       <tbody>
         {% for row in kev %}
         <tr>
-          <td><a href="/cve/{{ row.cve }}.html">{{ row.cve }}</a></td>
+          <td><a href="/cve/?id={{ row.cve }}">{{ row.cve }}</a></td>
           <td>{{ row.vendor }}</td>
           <td>{{ row.product }}</td>
           <td>{{ '%.3f'|format(row.epss or 0) }}</td>

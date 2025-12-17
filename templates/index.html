@@ -49,7 +49,7 @@
   <div class="card-grid">
     {% for item in data.kev_top[:15] %}
     <article class="card">
-      <div class="card-title"><a href="/cve/{{ item.cve }}.html">{{ item.cve }}</a></div>
+      <div class="card-title"><a href="/cve/?id={{ item.cve }}">{{ item.cve }}</a></div>
       <div class="card-meta">EPSS {{ '%.3f'|format(item.epss or 0) }} • {{ '%2.0f'|format((item.percentile or 0)*100) }}th pct</div>
       <p>{{ item.summary or 'No description.' }}</p>
       <div class="badge">{{ item.vendor or 'Unknown vendor' }}</div>
@@ -65,7 +65,7 @@
   <div class="card-grid">
     {% for item in data.high_epss[:15] %}
     <article class="card">
-      <div class="card-title"><a href="/cve/{{ item.cve }}.html">{{ item.cve }}</a></div>
+      <div class="card-title"><a href="/cve/?id={{ item.cve }}">{{ item.cve }}</a></div>
       <div class="card-meta">EPSS {{ '%.3f'|format(item.epss or 0) }} • {{ '%2.0f'|format((item.percentile or 0)*100) }}th pct</div>
       <p>{{ item.summary or 'No description.' }}</p>
     </article>
@@ -105,7 +105,7 @@
           <td>{{ (diff.new_kev_entries or [])|length }}</td>
           <td>
             {% for row in (diff.new_kev_entries or [])[:5] %}
-              <a href="/cve/{{ row.cve }}.html">{{ row.cve }}</a>{% if not loop.last %}, {% endif %}
+              <a href="/cve/?id={{ row.cve }}">{{ row.cve }}</a>{% if not loop.last %}, {% endif %}
             {% else %}None{% endfor %}
           </td>
         </tr>
@@ -114,7 +114,7 @@
           <td>{{ (diff.new_high_epss or [])|length }}</td>
           <td>
             {% for row in (diff.new_high_epss or [])[:5] %}
-              <a href="/cve/{{ row.cve }}.html">{{ row.cve }}</a>{% if not loop.last %}, {% endif %}
+              <a href="/cve/?id={{ row.cve }}">{{ row.cve }}</a>{% if not loop.last %}, {% endif %}
             {% else %}None{% endfor %}
           </td>
         </tr>
@@ -123,7 +123,7 @@
           <td>{{ (diff.epss_movers or [])|length }}</td>
           <td>
             {% for row in (diff.epss_movers or [])[:5] %}
-              <a href="/cve/{{ row.cve }}.html">{{ row.cve }}</a> ({{ '%.3f'|format(row.delta) }}){% if not loop.last %}, {% endif %}
+              <a href="/cve/?id={{ row.cve }}">{{ row.cve }}</a> ({{ '%.3f'|format(row.delta) }}){% if not loop.last %}, {% endif %}
             {% else %}None{% endfor %}
           </td>
         </tr>

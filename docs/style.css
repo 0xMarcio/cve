@@ -195,6 +195,7 @@ main { padding-top: 1.5rem; }
 .search-results table.results {
   width: 100%;
   border-collapse: collapse;
+  table-layout: auto;
 }
 .search-results table.results thead td {
   font-weight: 700;
@@ -211,15 +212,20 @@ main { padding-top: 1.5rem; }
   padding: 0.9rem 1rem;
   vertical-align: top;
   color: var(--text);
+  word-break: break-word;
+  overflow-wrap: anywhere;
 }
 .search-results table.results td.desc {
   font-family: 'JetBrains Mono', monospace;
   font-size: 0.95rem;
+  white-space: normal;
+  word-break: break-word;
+  overflow-wrap: anywhere;
 }
-.cveNum { font-weight: 700; font-size: 1.05rem; }
+.cveNum { font-weight: 700; font-size: 1.05rem; white-space: nowrap; }
 .poc-container { margin-top: 0.4rem; }
 .poc-container ul { list-style: none; padding: 0; margin: 0; display: grid; gap: 0.3rem; }
-.poc-container li a { word-break: break-all; color: var(--accent); }
+.poc-container li a { word-break: break-word; overflow-wrap: anywhere; color: var(--accent); }
 .dropdown-btn {
   margin-top: 0.4rem;
   background: transparent;

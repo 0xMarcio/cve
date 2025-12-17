@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EPSS - CVE PoC Hub</title>
+  <link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap">
+      <div class="brand"><a href="/">CVE PoC Hub</a><span>daily</span></div>
+      <nav>
+        <a href="/search/">PoC Search</a>
+        <a href="/kev/">KEV</a>
+        <a href="/epss/">EPSS</a>
+        <a href="/diffs/">Diffs</a>
+      </nav>
+    </div>
+  </header>
+  <main class="wrap">
+    <section class="section">
+      <h1>EPSS highlights</h1>
+      <p class="muted">High-probability EPSS picks that are not in KEV. Data from <code>/api/v1/epss_top.json</code>.</p>
+      <input type="search" placeholder="Filter CVE" data-filter-table="epss-table" class="filter" />
+      <div class="table-responsive">
+        <table class="list" id="epss-table">
+          <thead><tr><th>CVE</th><th>EPSS</th><th>Percentile</th><th>PoCs</th><th>Description</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+  <footer class="site-footer">
+    <div class="wrap">
+      <span>Data: CISA KEV, FIRST EPSS, community PoCs</span>
+      <span><a href="https://github.com/0xMarcio/cve">GitHub repo</a></span>
+    </div>
+  </footer>
+  <script>
+    async function loadEpss() {
+      const tbody = document.querySelector("#epss-table tbody");
+      try {
+        const res = await fetch("/api/v1/epss_top.json", { cache: "no-store" });
+        if (!res.ok) throw new Error("Failed to load EPSS");
+        const data = await res.json();
+        const items = data.items || [];
+        tbody.innerHTML = items.map(row => `
+          <tr>
+            <td><a href="/cve/?id=${row.cve}">${row.cve}</a></td>
+            <td>${row.epss !== null && row.epss !== undefined ? row.epss.toFixed(3) : ""}</td>
+            <td>${row.percentile !== null && row.percentile !== undefined ? Math.round(row.percentile * 100) + "th" : ""}</td>
+            <td>${row.poc_count || 0}</td>
+            <td>${row.summary || ""}</td>
+          </tr>
+        `).join("");
+      } catch (err) {
+        console.error(err);
+        tbody.innerHTML = '<tr><td colspan="5" class="muted">Unable to load EPSS data.</td></tr>';
+      }
+    }
+    document.addEventListener("DOMContentLoaded", loadEpss);
+  </script>
+  <script defer src="/assets/site.js"></script>
+</body>
+</html>
