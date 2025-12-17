@@ -10,12 +10,12 @@
 <body class="{{ body_class or '' }}">
   <header class="site-header">
     <div class="wrap">
-      <div class="brand"><a href="/">CVE PoC Hub</a><span>daily</span></div>
+      <div class="brand"><a href="/">CVE PoC Hub</a></div>
       <nav>
         <a href="/search/">PoC Search</a>
         <a href="/kev/">KEV</a>
         <a href="/epss/">EPSS</a>
-        <a href="/diffs/">Diffs</a>
+        <a href="/diffs/">New KEV</a>
       </nav>
     </div>
   </header>
@@ -24,8 +24,7 @@
   </main>
   <footer class="site-footer">
     <div class="wrap">
-      <span>Updated {{ generated or '' }}</span>
-      <span>Data: CISA KEV, FIRST EPSS, community PoCs</span>
+      <span>Fast CVE triage without the noise.</span>
       <span><a href="https://github.com/0xMarcio/cve">GitHub repo</a></span>
     </div>
   </footer>

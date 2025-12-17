@@ -22,8 +22,8 @@ KEV_PATH = DATA_DIR / "kev.json"
 EPSS_PATH = DATA_DIR / "epss.json"
 
 DEFAULT_TOP_KEV = 75
-DEFAULT_HIGH_EPSS_LIMIT = 250
-DEFAULT_HIGH_EPSS_THRESHOLD = 0.5
+DEFAULT_HIGH_EPSS_LIMIT = 50
+DEFAULT_HIGH_EPSS_THRESHOLD = 0.05
 
 
 def load_inputs(kev_path: Path, epss_path: Path) -> Tuple[Dict, Dict]:
@@ -72,26 +72,44 @@ def build_high_epss_not_in_kev(
     threshold: float,
     limit: int,
 ) -> List[Dict]:
-    output: List[Dict] = []
-    for row in epss_items:
-        cve = row.get("cve", "").upper()
-        if not cve or cve in kev_set:
-            continue
-        epss_score = row.get("epss") or 0.0
-        if epss_score < threshold:
-            continue
-        poc_count = len(poc_index.get(cve, {}).get("poc", []))
-        output.append(
-            {
-                "cve": cve,
-                "epss": row.get("epss"),
-                "percentile": row.get("percentile"),
-                "poc_count": poc_count,
-            }
-        )
-        if len(output) >= limit:
-            break
-    return output
+    ranked = sorted(
+        (
+            row
+            for row in epss_items
+            if row.get("cve")
+            and row.get("cve", "").upper() not in kev_set
+            and (row.get("epss") is not None)
+        ),
+        key=lambda row: (-float(row.get("epss") or 0), row.get("cve", "")),
+    )
+
+    def build_rows(source: List[Dict]) -> List[Dict]:
+        output: List[Dict] = []
+        for row in source:
+            cve = row.get("cve", "").upper()
+            if not cve:
+                continue
+            epss_score = row.get("epss") or 0.0
+            if epss_score < threshold:
+                continue
+            poc_count = len(poc_index.get(cve, {}).get("poc", []))
+            output.append(
+                {
+                    "cve": cve,
+                    "epss": row.get("epss"),
+                    "percentile": row.get("percentile"),
+                    "poc_count": poc_count,
+                }
+            )
+            if len(output) >= limit:
+                break
+        return output
+
+    rows = build_rows(ranked)
+    if not rows and threshold > 0:
+        # If the threshold is too strict for a given day, fall back to the top ranked set.
+        rows = build_rows([dict(row, epss=row.get("epss", 0) or 0) for row in ranked[:limit]])
+    return rows
 
 
 def build_cve_details(

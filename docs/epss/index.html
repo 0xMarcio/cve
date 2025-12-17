@@ -3,64 +3,113 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>EPSS - CVE PoC Hub</title>
+  <title>CVE PoC Hub</title>
   <link rel="stylesheet" href="/style.css" />
+  <script defer src="/assets/site.js"></script>
 </head>
-<body>
+<body class="">
   <header class="site-header">
     <div class="wrap">
-      <div class="brand"><a href="/">CVE PoC Hub</a><span>daily</span></div>
+      <div class="brand"><a href="/">CVE PoC Hub</a></div>
       <nav>
         <a href="/search/">PoC Search</a>
         <a href="/kev/">KEV</a>
         <a href="/epss/">EPSS</a>
-        <a href="/diffs/">Diffs</a>
+        <a href="/diffs/">New KEV</a>
       </nav>
     </div>
   </header>
   <main class="wrap">
-    <section class="section">
-      <h1>EPSS highlights</h1>
-      <p class="muted">High-probability EPSS picks that are not in KEV. Data from <code>/api/v1/epss_top.json</code>.</p>
-      <input type="search" placeholder="Filter CVE" data-filter-table="epss-table" class="filter" />
-      <div class="table-responsive">
-        <table class="list" id="epss-table">
-          <thead><tr><th>CVE</th><th>EPSS</th><th>Percentile</th><th>PoCs</th><th>Description</th></tr></thead>
-          <tbody></tbody>
-        </table>
-      </div>
-    </section>
+<section class="section">
+  <div class="section-header">
+    <h1>EPSS highlights</h1>
+    <span class="muted">High-probability CVEs that are not in KEV.</span>
+  </div>
+  <input type="search" placeholder="Filter CVE" data-filter-table="epss-table" class="filter" />
+  <div class="table-responsive">
+    <table class="list" id="epss-table">
+      <thead><tr><th>CVE</th><th>EPSS</th><th>Percentile</th><th>PoCs</th><th>Summary</th></tr></thead>
+      <tbody>
+        <tr>
+          <td class="cve-cell"><a href="/cve/?id=CVE-2025-9316">CVE-2025-9316</a></td>
+          <td>0.787</td>
+          <td>99th</td>
+          <td>0</td>
+          <td class="mono">No public description yet.</td>
+        </tr>
+        <tr>
+          <td class="cve-cell"><a href="/cve/?id=CVE-2025-8943">CVE-2025-8943</a></td>
+          <td>0.658</td>
+          <td>98th</td>
+          <td>1</td>
+          <td class="mono">The Custom MCPs feature is designed to execute OS commands, for instance, using tools like `npx` to spin up local MCP Servers. However, Flowise&#39;s inherent authentication and authorization model is minimal and lacks ro...</td>
+        </tr>
+        <tr>
+          <td class="cve-cell"><a href="/cve/?id=CVE-2025-8489">CVE-2025-8489</a></td>
+          <td>0.433</td>
+          <td>97th</td>
+          <td>0</td>
+          <td class="mono">No public description yet.</td>
+        </tr>
+        <tr>
+          <td class="cve-cell"><a href="/cve/?id=CVE-2025-8426">CVE-2025-8426</a></td>
+          <td>0.394</td>
+          <td>97th</td>
+          <td>0</td>
+          <td class="mono">No public description yet.</td>
+        </tr>
+        <tr>
+          <td class="cve-cell"><a href="/cve/?id=CVE-2025-8518">CVE-2025-8518</a></td>
+          <td>0.339</td>
+          <td>97th</td>
+          <td>1</td>
+          <td class="mono">A vulnerability was found in givanz Vvveb 1.0.5. It has been rated as critical. Affected by this issue is the function Save of the file admin/controller/editor/code.php of the component Code Editor. The manipulation l...</td>
+        </tr>
+        <tr>
+          <td class="cve-cell"><a href="/cve/?id=CVE-2025-8868">CVE-2025-8868</a></td>
+          <td>0.171</td>
+          <td>95th</td>
+          <td>0</td>
+          <td class="mono">No public description yet.</td>
+        </tr>
+        <tr>
+          <td class="cve-cell"><a href="/cve/?id=CVE-2025-8730">CVE-2025-8730</a></td>
+          <td>0.119</td>
+          <td>93th</td>
+          <td>2</td>
+          <td class="mono">A vulnerability was found in Belkin F9K1009 and F9K1010 2.00.04/2.00.09 and classified as critical. Affected by this issue is some unknown functionality of the component Web Interface. The manipulation leads to hard-c...</td>
+        </tr>
+        <tr>
+          <td class="cve-cell"><a href="/cve/?id=CVE-2025-7795">CVE-2025-7795</a></td>
+          <td>0.096</td>
+          <td>93th</td>
+          <td>3</td>
+          <td class="mono">A vulnerability, which was classified as critical, has been found in Tenda FH451 1.0.0.9. Affected by this issue is the function fromP2pListFilter of the file /goform/P2pListFilter. The manipulation of the argument pa...</td>
+        </tr>
+        <tr>
+          <td class="cve-cell"><a href="/cve/?id=CVE-2025-9090">CVE-2025-9090</a></td>
+          <td>0.083</td>
+          <td>92th</td>
+          <td>4</td>
+          <td class="mono">A vulnerability was identified in Tenda AC20 16.03.08.12. Affected is the function websFormDefine of the file /goform/telnet of the component Telnet Service. The manipulation leads to command injection. It is possible...</td>
+        </tr>
+        <tr>
+          <td class="cve-cell"><a href="/cve/?id=CVE-2025-8085">CVE-2025-8085</a></td>
+          <td>0.078</td>
+          <td>92th</td>
+          <td>1</td>
+          <td class="mono">The Ditty WordPress plugin before 3.1.58 lacks authorization and authentication for requests to its displayItems endpoint, allowing unauthenticated visitors to make requests to arbitrary URLs.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
   </main>
   <footer class="site-footer">
     <div class="wrap">
-      <span>Data: CISA KEV, FIRST EPSS, community PoCs</span>
+      <span>Fast CVE triage without the noise.</span>
       <span><a href="https://github.com/0xMarcio/cve">GitHub repo</a></span>
     </div>
   </footer>
-  <script>
-    async function loadEpss() {
-      const tbody = document.querySelector("#epss-table tbody");
-      try {
-        const res = await fetch("/api/v1/epss_top.json", { cache: "no-store" });
-        if (!res.ok) throw new Error("Failed to load EPSS");
-        const data = await res.json();
-        const items = data.items || [];
-        tbody.innerHTML = items.map(row => `
-          <tr>
-            <td><a href="/cve/?id=${row.cve}">${row.cve}</a></td>
-            <td>${row.epss !== null && row.epss !== undefined ? row.epss.toFixed(3) : ""}</td>
-            <td>${row.percentile !== null && row.percentile !== undefined ? Math.round(row.percentile * 100) + "th" : ""}</td>
-            <td>${row.poc_count || 0}</td>
-            <td>${row.summary || ""}</td>
-          </tr>
-        `).join("");
-      } catch (err) {
-        console.error(err);
-        tbody.innerHTML = '<tr><td colspan="5" class="muted">Unable to load EPSS data.</td></tr>';
-      }
-    }
-    document.addEventListener("DOMContentLoaded", loadEpss);
-  </script>
-  <script defer src="/assets/site.js"></script>
 </body>
 </html>

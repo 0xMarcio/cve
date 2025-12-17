@@ -1,8 +1,10 @@
 {% extends "base.html" %}
 {% block content %}
 <section class="section">
-  <h1>Known Exploited Vulnerabilities</h1>
-  <p class="muted">Filter by CVE, vendor, or product. Rows include EPSS so you can quickly prioritize remediation.</p>
+  <div class="section-header">
+    <h1>KEV catalog</h1>
+    <span class="muted">Filter by CVE, vendor, or product.</span>
+  </div>
   <input type="search" placeholder="Filter CVE, vendor, product" data-filter-table="kev-table" class="filter" />
   <div class="table-responsive">
     <table class="list" id="kev-table">
@@ -12,7 +14,7 @@
       <tbody>
         {% for row in kev %}
         <tr>
-          <td><a href="/cve/?id={{ row.cve }}">{{ row.cve }}</a></td>
+          <td class="cve-cell"><a href="/cve/?id={{ row.cve }}">{{ row.cve }}</a></td>
           <td>{{ row.vendor }}</td>
           <td>{{ row.product }}</td>
           <td>{{ '%.3f'|format(row.epss or 0) }}</td>

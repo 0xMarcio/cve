@@ -60,9 +60,15 @@ def build_pages(env: Environment, data: Dict, diff: Dict | None = None, html_mod
     details = data["details"]
     vendors = data["vendors"]
     trending = parse_trending_from_readme(README_PATH)
+    recent_kev = (diff or {}).get("new_kev_entries") or []
+    metrics = {
+        "kev_total": len(data["kev_enriched"]),
+        "high_epss_count": len(joined["high_epss"]),
+        "recent_kev_count": len(recent_kev),
+    }
 
     if html_mode in {"summary", "all"}:
-        common_ctx = {"generated": joined["generated"]}
+        common_ctx = {"generated": joined["generated"], "metrics": metrics, "recent_kev": recent_kev}
         render(
             env,
             "index.html",
@@ -99,7 +105,13 @@ def main() -> int:
     # snapshot + diff before rendering so dashboard can show it
     snapshot_path = write_snapshot(data["joined"])
     snapshots = sorted((API_DIR / "snapshots").glob("*.json"))
-    diff, target = build_diff(snapshots, threshold=0.5, max_movers=50)
+    diff, target = build_diff(
+        snapshots,
+        kev_full=data["kev_enriched"],
+        threshold=0.05,
+        max_movers=50,
+        recent_days=30,
+    )
     prune_snapshots(snapshots, lookback_days=14)
 
     if args.html_mode != "none":

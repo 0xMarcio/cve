@@ -6,55 +6,46 @@
   <title>CVE PoC Hub</title>
   <link rel="stylesheet" href="/style.css" />
   <script defer src="/assets/site.js"></script>
-  <script defer src="/assets/home.js"></script>
 </head>
 <body class="color-no-search">
   <header class="site-header">
     <div class="wrap">
-      <div class="brand"><a href="/">CVE PoC Hub</a><span>daily</span></div>
+      <div class="brand"><a href="/">CVE PoC Hub</a></div>
       <nav>
         <a href="/search/">PoC Search</a>
         <a href="/kev/">KEV</a>
         <a href="/epss/">EPSS</a>
-        <a href="/diffs/">Diffs</a>
+        <a href="/diffs/">New KEV</a>
       </nav>
     </div>
   </header>
   <main class="wrap">
-<section class="hero" data-search-root>
-  <p class="eyebrow">CVE PoC search &amp; intel</p>
-  <h1>Search PoCs, KEV, and EPSS in one place</h1>
-  <p class="lede">Pulls PoC references from <code>github.txt</code>, daily CVE descriptions, CISA KEV, and FIRST EPSS so you can quickly find relevant exploits or risk data.</p>
-  <div class="pill-row tight">
-    <span class="pill"><strong>Search</strong> CVE, vendor, product, or keyword</span>
-    <span class="pill">Negative terms supported (<strong>-windows</strong>)</span>
-    <span class="pill">Links out to MITRE + PoC repos</span>
-    <span class="pill">Nightly GitHub Action refresh</span>
+<section class="hero hero-signal" data-search-root>
+  <div class="hero-meta">
+    <p class="eyebrow">Signal-first</p>
+    <h1>Search PoCs, KEV, and EPSS without the clutter</h1>
+    <p class="lede">Built for fast triage. One page, no badges, no filler.</p>
   </div>
   <form class="searchForm" action="#">
     <input type="text" class="search" placeholder="Search CVE, vendor, product, or keyword" autocomplete="off">
   </form>
-  <div class="search-meta">
-    <span>Loads from <code>CVE_list.json</code></span>
-    <span>Updated daily</span>
-    <span>Max 10k results for performance</span>
+  <div class="stat-row">
+    <div class="stat"><strong>1478</strong><span>KEV entries tracked</span></div>
+    <div class="stat"><strong>10</strong><span>High-EPSS not in KEV</span></div>
+    <div class="stat"><strong>18</strong><span>New KEV in last 30 days</span></div>
   </div>
   <div class="search-results" data-results style="display:none">
     <div class="header">
       <h2>Results</h2>
-      <span class="muted">Fast monospace table for quick scanning</span>
+      <span class="muted">Filter with negative terms (e.g., -windows)</span>
     </div>
     <div class="noResults">No results yet.</div>
     <div class="results-table hide">
       <table class="results">
         <thead>
           <tr>
-            <td width="18%">
-                CVE
-            </td>
-            <td>
-                Description / PoC links
-            </td>
+            <td width="18%">CVE</td>
+            <td>Description / PoC links</td>
           </tr>
         </thead>
         <tbody class="results"></tbody>
@@ -64,260 +55,177 @@
 </section>
 
 <section class="section">
-  <h1>KEV with high EPSS</h1>
-  <p class="muted">KEV items that also carry high EPSS probability.</p>
-  <div class="card-grid" id="kev-grid">
-    <article class="card">
-      <div class="card-title"><a href="/cve/?id=CVE-2025-9242">CVE-2025-9242</a></div>
-      <div class="card-meta">EPSS 0.744 • 99th pct</div>
-      <p>No description.</p>
-      <div class="badge">WatchGuard</div>
-      <div class="badge">Firebox</div>
-    </article>
-    <article class="card">
-      <div class="card-title"><a href="/cve/?id=CVE-2025-7775">CVE-2025-7775</a></div>
-      <div class="card-meta">EPSS 0.174 • 95th pct</div>
-      <p>Memory overflow vulnerability leading to Remote Code Execution and/or Denial of Service in NetScaler ADC and NetScaler Gateway when NetScaler is configured as Gateway (VPN virtual server, ICA Proxy, CVPN, RDP Proxy) o...</p>
-      <div class="badge">Citrix</div>
-      <div class="badge">NetScaler</div>
-    </article>
-    <article class="card">
-      <div class="card-title"><a href="/cve/?id=CVE-2025-9377">CVE-2025-9377</a></div>
-      <div class="card-meta">EPSS 0.146 • 94th pct</div>
-      <p>The authenticated remote command execution (RCE) vulnerability exists in the Parental Control page on TP-Link Archer C7(EU) V2 and TL-WR841N/ND(MS) V9.This issue affects Archer C7(EU) V2: before 241108 and TL-WR841N/N...</p>
-      <div class="badge">TP-Link</div>
-      <div class="badge">Multiple Routers</div>
-    </article>
-    <article class="card">
-      <div class="card-title"><a href="/cve/?id=CVE-2025-8876">CVE-2025-8876</a></div>
-      <div class="card-meta">EPSS 0.139 • 94th pct</div>
-      <p>Improper Input Validation vulnerability in N-able N-central allows OS Command Injection.This issue affects N-central: before 2025.3.1.</p>
-      <div class="badge">N-able</div>
-      <div class="badge">N-Central</div>
-    </article>
-    <article class="card">
-      <div class="card-title"><a href="/cve/?id=CVE-2025-8875">CVE-2025-8875</a></div>
-      <div class="card-meta">EPSS 0.051 • 89th pct</div>
-      <p>Deserialization of Untrusted Data vulnerability in N-able N-central allows Local Execution of Code.This issue affects N-central: before 2025.3.1.</p>
-      <div class="badge">N-able</div>
-      <div class="badge">N-Central</div>
-    </article>
-    <article class="card">
-      <div class="card-title"><a href="/cve/?id=CVE-2025-8088">CVE-2025-8088</a></div>
-      <div class="card-meta">EPSS 0.032 • 86th pct</div>
-      <p>A path traversal vulnerability affecting the Windows version of WinRAR allows the attackers to execute arbitrary code by crafting malicious archive files. This vulnerability was exploited in the wild and was discovere...</p>
-      <div class="badge">RARLAB</div>
-      <div class="badge">WinRAR</div>
-    </article>
-    <article class="card">
-      <div class="card-title"><a href="/cve/?id=CVE-2002-0367">CVE-2002-0367</a></div>
-      <div class="card-meta">EPSS 0.000 •  0th pct</div>
-      <p>smss.exe debugging subsystem in Windows NT and Windows 2000 does not properly authenticate programs that connect to other programs, which allows local users to gain administrator or SYSTEM privileges by duplicating a...</p>
-      <div class="badge">Microsoft</div>
-      <div class="badge">Windows</div>
-    </article>
-    <article class="card">
-      <div class="card-title"><a href="/cve/?id=CVE-2004-0210">CVE-2004-0210</a></div>
-      <div class="card-meta">EPSS 0.000 •  0th pct</div>
-      <p>The POSIX component of Microsoft Windows NT and Windows 2000 allows local users to execute arbitrary code via certain parameters, possibly by modifying message length values and causing a buffer overflow.</p>
-      <div class="badge">Microsoft</div>
-      <div class="badge">Windows</div>
-    </article>
-    <article class="card">
-      <div class="card-title"><a href="/cve/?id=CVE-2004-1464">CVE-2004-1464</a></div>
-      <div class="card-meta">EPSS 0.000 •  0th pct</div>
-      <p>Cisco IOS 12.2(15) and earlier allows remote attackers to cause a denial of service (refused VTY (virtual terminal) connections), via a crafted TCP connection to the Telnet or reverse Telnet port.</p>
-      <div class="badge">Cisco</div>
-      <div class="badge">IOS</div>
-    </article>
-    <article class="card">
-      <div class="card-title"><a href="/cve/?id=CVE-2005-2773">CVE-2005-2773</a></div>
-      <div class="card-meta">EPSS 0.000 •  0th pct</div>
-      <p>HP OpenView Network Node Manager 6.2 through 7.50 allows remote attackers to execute arbitrary commands via shell metacharacters in the (1) node parameter to connectedNodes.ovpl, (2) cdpView.ovpl, (3) freeIPaddrs.ovpl...</p>
-      <div class="badge">Hewlett Packard (HP)</div>
-      <div class="badge">OpenView Network Node Manager</div>
-    </article>
-    <article class="card">
-      <div class="card-title"><a href="/cve/?id=CVE-2006-1547">CVE-2006-1547</a></div>
-      <div class="card-meta">EPSS 0.000 •  0th pct</div>
-      <p>ActionForm in Apache Software Foundation (ASF) Struts before 1.2.9 with BeanUtils 1.7 allows remote attackers to cause a denial of service via a multipart/form-data encoded form with a parameter name that references t...</p>
-      <div class="badge">Apache</div>
-      <div class="badge">Struts 1</div>
-    </article>
-    <article class="card">
-      <div class="card-title"><a href="/cve/?id=CVE-2006-2492">CVE-2006-2492</a></div>
-      <div class="card-meta">EPSS 0.000 •  0th pct</div>
-      <p>Buffer overflow in Microsoft Word in Office 2000 SP3, Office XP SP3, Office 2003 Sp1 and SP2, and Microsoft Works Suites through 2006, allows user-assisted attackers to execute arbitrary code via a malformed object po...</p>
-      <div class="badge">Microsoft</div>
-      <div class="badge">Word</div>
-    </article>
-    <article class="card">
-      <div class="card-title"><a href="/cve/?id=CVE-2007-0671">CVE-2007-0671</a></div>
-      <div class="card-meta">EPSS 0.000 •  0th pct</div>
-      <p>Unspecified vulnerability in Microsoft Excel 2000, XP, 2003, and 2004 for Mac, and possibly other Office products, allows remote user-assisted attackers to execute arbitrary code via unknown attack vectors, as demonst...</p>
-      <div class="badge">Microsoft</div>
-      <div class="badge">Office</div>
-    </article>
-    <article class="card">
-      <div class="card-title"><a href="/cve/?id=CVE-2007-3010">CVE-2007-3010</a></div>
-      <div class="card-meta">EPSS 0.000 •  0th pct</div>
-      <p>masterCGI in the Unified Maintenance Tool in Alcatel OmniPCX Enterprise Communication Server R7.1 and earlier allows remote attackers to execute arbitrary commands via shell metacharacters in the user parameter during...</p>
-      <div class="badge">Alcatel</div>
-      <div class="badge">OmniPCX Enterprise</div>
-    </article>
-    <article class="card">
-      <div class="card-title"><a href="/cve/?id=CVE-2007-5659">CVE-2007-5659</a></div>
-      <div class="card-meta">EPSS 0.000 •  0th pct</div>
-      <p>Multiple buffer overflows in Adobe Reader and Acrobat 8.1.1 and earlier allow remote attackers to execute arbitrary code via a PDF file with long arguments to unspecified JavaScript methods. NOTE: this issue might be...</p>
-      <div class="badge">Adobe</div>
-      <div class="badge">Acrobat and Reader</div>
-    </article>
+  <div class="section-header">
+    <h1>Latest KEV additions</h1>
+    <span class="muted">Last 30 days</span>
   </div>
-</section>
-
-<section class="section">
-  <h1>EPSS picks not in KEV</h1>
-  <p class="muted">High-probability EPSS items that are not yet in the KEV list.</p>
-  <div class="card-grid" id="epss-grid">
-    <article class="card">
-      <div class="card-title"><a href="/cve/?id=CVE-2025-9316">CVE-2025-9316</a></div>
-      <div class="card-meta">EPSS 0.787 • 99th pct</div>
-      <p>No description.</p>
-    </article>
-    <article class="card">
-      <div class="card-title"><a href="/cve/?id=CVE-2025-8943">CVE-2025-8943</a></div>
-      <div class="card-meta">EPSS 0.658 • 98th pct</div>
-      <p>The Custom MCPs feature is designed to execute OS commands, for instance, using tools like `npx` to spin up local MCP Servers. However, Flowise&#39;s inherent authentication and authorization model is minimal and lacks ro...</p>
-    </article>
-  </div>
-</section>
-
-<section class="section">
-  <h1>Trending PoCs</h1>
-  <p class="muted">Fresh GitHub PoCs by stars and recency.</p>
-  <div class="table-responsive">
-    <table class="list" id="trending-table">
-      <thead><tr><th>Stars</th><th>Updated</th><th>Name</th><th>Description</th></tr></thead>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>CVE</th><th>Vendor</th><th>Product</th><th>EPSS</th><th>Percentile</th><th>Date Added</th><th>Due</th></tr>
+      </thead>
       <tbody>
         <tr>
-          <td>1241</td>
-          <td>2 hours ago </td>
-          <td><a href="https://github.com/msanft/CVE-2025-55182" target="_blank">CVE-2025-55182</a></td>
-          <td>Explanation and full RCE PoC for CVE-2025-55182 </td>
+          <td class="cve-cell"><a href="/cve/?id=CVE-2025-59718">CVE-2025-59718</a></td>
+          <td>Fortinet</td>
+          <td>Multiple Products</td>
+          <td>0.000</td>
+          <td> 0th</td>
+          <td>2025-12-16</td>
+          <td>2025-12-23</td>
         </tr>
         <tr>
-          <td>775</td>
-          <td>3 hours ago </td>
-          <td><a href="https://github.com/ejpir/CVE-2025-55182-research" target="_blank">CVE-2025-55182-research</a></td>
-          <td>CVE-2025-55182 POC </td>
+          <td class="cve-cell"><a href="/cve/?id=CVE-2025-14611">CVE-2025-14611</a></td>
+          <td>Gladinet</td>
+          <td>CentreStack and Triofox</td>
+          <td>0.000</td>
+          <td> 0th</td>
+          <td>2025-12-15</td>
+          <td>2026-01-05</td>
         </tr>
         <tr>
-          <td>495</td>
-          <td>8 days ago </td>
-          <td><a href="https://github.com/WyAtu/CVE-2018-20250" target="_blank">CVE-2018-20250</a></td>
-          <td>exp for https://research.checkpoint.com/extracting-code-execution-from-winrar </td>
+          <td class="cve-cell"><a href="/cve/?id=CVE-2025-43529">CVE-2025-43529</a></td>
+          <td>Apple</td>
+          <td>Multiple Products</td>
+          <td>0.000</td>
+          <td> 0th</td>
+          <td>2025-12-15</td>
+          <td>2026-01-05</td>
         </tr>
         <tr>
-          <td>607</td>
-          <td>20 hours ago </td>
-          <td><a href="https://github.com/mverschu/CVE-2025-33073" target="_blank">CVE-2025-33073</a></td>
-          <td>PoC Exploit for the NTLM reflection SMB flaw. </td>
+          <td class="cve-cell"><a href="/cve/?id=CVE-2018-4063">CVE-2018-4063</a></td>
+          <td>Sierra Wireless</td>
+          <td>AirLink ALEOS</td>
+          <td>0.000</td>
+          <td> 0th</td>
+          <td>2025-12-12</td>
+          <td>2026-01-02</td>
         </tr>
         <tr>
-          <td>496</td>
-          <td>4 days ago </td>
-          <td><a href="https://github.com/pr0v3rbs/CVE-2025-32463_chwoot" target="_blank">CVE-2025-32463_chwoot</a></td>
-          <td>Escalation of Privilege to the root through sudo binary with chroot option. CVE-2025-32463 </td>
+          <td class="cve-cell"><a href="/cve/?id=CVE-2025-14174">CVE-2025-14174</a></td>
+          <td>Google</td>
+          <td>Chromium</td>
+          <td>0.000</td>
+          <td> 0th</td>
+          <td>2025-12-12</td>
+          <td>2026-01-02</td>
         </tr>
         <tr>
-          <td>419</td>
-          <td>5 hours ago </td>
-          <td><a href="https://github.com/kh4sh3i/CVE-2025-32463" target="_blank">CVE-2025-32463</a></td>
-          <td>Local Privilege Escalation to Root via Sudo chroot in Linux </td>
+          <td class="cve-cell"><a href="/cve/?id=CVE-2025-58360">CVE-2025-58360</a></td>
+          <td>OSGeo</td>
+          <td>GeoServer</td>
+          <td>0.000</td>
+          <td> 0th</td>
+          <td>2025-12-11</td>
+          <td>2026-01-01</td>
         </tr>
         <tr>
-          <td>305</td>
-          <td>1 day ago </td>
-          <td><a href="https://github.com/soltanali0/CVE-2025-53770-Exploit" target="_blank">CVE-2025-53770-Exploit</a></td>
-          <td>SharePoint WebPart Injection Exploit Tool </td>
+          <td class="cve-cell"><a href="/cve/?id=CVE-2025-6218">CVE-2025-6218</a></td>
+          <td>RARLAB</td>
+          <td>WinRAR</td>
+          <td>0.000</td>
+          <td> 0th</td>
+          <td>2025-12-09</td>
+          <td>2025-12-30</td>
         </tr>
         <tr>
-          <td>289</td>
-          <td>4 hours ago </td>
-          <td><a href="https://github.com/emredavut/CVE-2025-55182" target="_blank">CVE-2025-55182</a></td>
-          <td>RSC/Next.js RCE Vulnerability Detector &amp; PoC Chrome Extension – CVE-2025-55182 &amp; CVE-2025-66478 </td>
+          <td class="cve-cell"><a href="/cve/?id=CVE-2025-62221">CVE-2025-62221</a></td>
+          <td>Microsoft</td>
+          <td>Windows</td>
+          <td>0.000</td>
+          <td> 0th</td>
+          <td>2025-12-09</td>
+          <td>2025-12-30</td>
         </tr>
         <tr>
-          <td>901</td>
-          <td>1 hour ago </td>
-          <td><a href="https://github.com/lachlan2k/React2Shell-CVE-2025-55182-original-poc" target="_blank">React2Shell-CVE-2025-55182-original-poc</a></td>
-          <td>Original Proof-of-Concepts for React2Shell CVE-2025-55182 </td>
+          <td class="cve-cell"><a href="/cve/?id=CVE-2022-37055">CVE-2022-37055</a></td>
+          <td>D-Link</td>
+          <td>Routers</td>
+          <td>0.000</td>
+          <td> 0th</td>
+          <td>2025-12-08</td>
+          <td>2025-12-29</td>
         </tr>
         <tr>
-          <td>386</td>
-          <td>4 days ago </td>
-          <td><a href="https://github.com/0x6rss/CVE-2025-24071_PoC" target="_blank">CVE-2025-24071_PoC</a></td>
-          <td>CVE-2025-24071: NTLM Hash Leak via RAR/ZIP Extraction and .library-ms File </td>
+          <td class="cve-cell"><a href="/cve/?id=CVE-2025-66644">CVE-2025-66644</a></td>
+          <td>Array Networks</td>
+          <td>ArrayOS AG</td>
+          <td>0.000</td>
+          <td> 0th</td>
+          <td>2025-12-08</td>
+          <td>2025-12-29</td>
         </tr>
         <tr>
-          <td>207</td>
-          <td>1 day ago </td>
-          <td><a href="https://github.com/leesh3288/CVE-2025-32023" target="_blank">CVE-2025-32023</a></td>
-          <td>PoC &amp; Exploit for CVE-2025-32023 / PlaidCTF 2025 &#34;Zerodeo&#34; </td>
+          <td class="cve-cell"><a href="/cve/?id=CVE-2025-55182">CVE-2025-55182</a></td>
+          <td>Meta</td>
+          <td>React Server Components</td>
+          <td>0.000</td>
+          <td> 0th</td>
+          <td>2025-12-05</td>
+          <td>2025-12-12</td>
         </tr>
         <tr>
-          <td>396</td>
-          <td>6 days ago </td>
-          <td><a href="https://github.com/yuuouu/ColorOS-CVE-2025-10184" target="_blank">ColorOS-CVE-2025-10184</a></td>
-          <td>ColorOS短信漏洞，以及用户自救方案 </td>
+          <td class="cve-cell"><a href="/cve/?id=CVE-2021-26828">CVE-2021-26828</a></td>
+          <td>OpenPLC</td>
+          <td>ScadaBR</td>
+          <td>0.000</td>
+          <td> 0th</td>
+          <td>2025-12-03</td>
+          <td>2025-12-24</td>
         </tr>
         <tr>
-          <td>180</td>
-          <td>6 days ago </td>
-          <td><a href="https://github.com/absholi7ly/POC-CVE-2025-24813" target="_blank">POC-CVE-2025-24813</a></td>
-          <td>his repository contains an automated Proof of Concept (PoC) script for exploiting **CVE-2025-24813**, a Remote Code Execution (RCE) vulnerability in Apache Tomcat. The vulnerability allows an attacker to upload a malicious serialized payload to the server, leading to arbitrary code execution via deserialization when specific conditions are met. </td>
+          <td class="cve-cell"><a href="/cve/?id=CVE-2025-48572">CVE-2025-48572</a></td>
+          <td>Android</td>
+          <td>Framework</td>
+          <td>0.000</td>
+          <td> 0th</td>
+          <td>2025-12-02</td>
+          <td>2025-12-23</td>
         </tr>
         <tr>
-          <td>256</td>
-          <td>15 minutes ago </td>
-          <td><a href="https://github.com/zack0x01/CVE-2025-55182-advanced-scanner-" target="_blank">CVE-2025-55182-advanced-scanner-</a></td>
-          <td></td>
+          <td class="cve-cell"><a href="/cve/?id=CVE-2025-48633">CVE-2025-48633</a></td>
+          <td>Android</td>
+          <td>Framework</td>
+          <td>0.000</td>
+          <td> 0th</td>
+          <td>2025-12-02</td>
+          <td>2025-12-23</td>
         </tr>
         <tr>
-          <td>357</td>
-          <td>1 hour ago </td>
-          <td><a href="https://github.com/Malayke/Next.js-RSC-RCE-Scanner-CVE-2025-66478" target="_blank">Next.js-RSC-RCE-Scanner-CVE-2025-66478</a></td>
-          <td>A command-line scanner for batch detection of Next.js application versions and determining if they are affected by CVE-2025-66478 vulnerability. </td>
+          <td class="cve-cell"><a href="/cve/?id=CVE-2021-26829">CVE-2021-26829</a></td>
+          <td>OpenPLC</td>
+          <td>ScadaBR</td>
+          <td>0.000</td>
+          <td> 0th</td>
+          <td>2025-11-28</td>
+          <td>2025-12-19</td>
         </tr>
         <tr>
-          <td>198</td>
-          <td>4 days ago </td>
-          <td><a href="https://github.com/ThumpBo/CVE-2025-30208-EXP" target="_blank">CVE-2025-30208-EXP</a></td>
-          <td>CVE-2025-30208-EXP </td>
+          <td class="cve-cell"><a href="/cve/?id=CVE-2025-61757">CVE-2025-61757</a></td>
+          <td>Oracle</td>
+          <td>Fusion Middleware</td>
+          <td>0.000</td>
+          <td> 0th</td>
+          <td>2025-11-21</td>
+          <td>2025-12-12</td>
         </tr>
         <tr>
-          <td>73</td>
-          <td>6 days ago </td>
-          <td><a href="https://github.com/4daysday/cve-2025-8088" target="_blank">cve-2025-8088</a></td>
-          <td>Path traversal tool based on cve-2025-8088 </td>
+          <td class="cve-cell"><a href="/cve/?id=CVE-2025-13223">CVE-2025-13223</a></td>
+          <td>Google</td>
+          <td>Chromium V8</td>
+          <td>0.000</td>
+          <td> 0th</td>
+          <td>2025-11-19</td>
+          <td>2025-12-10</td>
         </tr>
         <tr>
-          <td>163</td>
-          <td>1 day ago </td>
-          <td><a href="https://github.com/ZeroMemoryEx/CVE-2025-26125" target="_blank">CVE-2025-26125</a></td>
-          <td>( 0day ) Local Privilege Escalation in IObit Malware Fighter </td>
-        </tr>
-        <tr>
-          <td>153</td>
-          <td>8 days ago </td>
-          <td><a href="https://github.com/hoefler02/CVE-2025-21756" target="_blank">CVE-2025-21756</a></td>
-          <td>Exploit for CVE-2025-21756 for Linux kernel 6.6.75. My first linux kernel exploit! </td>
-        </tr>
-        <tr>
-          <td>136</td>
-          <td>27 days ago </td>
-          <td><a href="https://github.com/platsecurity/CVE-2025-32433" target="_blank">CVE-2025-32433</a></td>
-          <td>CVE-2025-32433 https://github.com/erlang/otp/security/advisories/GHSA-37cp-fgq5-7wc2 </td>
+          <td class="cve-cell"><a href="/cve/?id=CVE-2025-58034">CVE-2025-58034</a></td>
+          <td>Fortinet</td>
+          <td>FortiWeb</td>
+          <td>0.000</td>
+          <td> 0th</td>
+          <td>2025-11-18</td>
+          <td>2025-11-25</td>
         </tr>
       </tbody>
     </table>
@@ -325,29 +233,217 @@
 </section>
 
 <section class="section">
-  <h1>Changes since yesterday</h1>
-  <p class="muted">Quick snapshot of the latest diffs in the feeds.</p>
-  <div class="table-responsive">
-    <table class="list">
-      <thead><tr><th>Type</th><th>Count</th><th>Examples</th></tr></thead>
-      <tbody id="diff-table-body">
+  <div class="section-header">
+    <h1>High EPSS not in KEV</h1>
+    <span class="muted">Sorted by score</span>
+  </div>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>CVE</th><th>EPSS</th><th>Percentile</th><th>PoCs</th><th>Summary</th></tr></thead>
+      <tbody>
         <tr>
-          <td>New KEV entries</td>
-          <td>75</td>
-          <td>
-              <a href="/cve/?id=CVE-2025-9242">CVE-2025-9242</a>,               <a href="/cve/?id=CVE-2025-7775">CVE-2025-7775</a>,               <a href="/cve/?id=CVE-2025-9377">CVE-2025-9377</a>,               <a href="/cve/?id=CVE-2025-8876">CVE-2025-8876</a>,               <a href="/cve/?id=CVE-2025-8875">CVE-2025-8875</a>          </td>
-        </tr>
-        <tr>
-          <td>New high EPSS</td>
-          <td>2</td>
-          <td>
-              <a href="/cve/?id=CVE-2025-9316">CVE-2025-9316</a>,               <a href="/cve/?id=CVE-2025-8943">CVE-2025-8943</a>          </td>
-        </tr>
-        <tr>
-          <td>Top EPSS movers</td>
+          <td class="cve-cell"><a href="/cve/?id=CVE-2025-9316">CVE-2025-9316</a></td>
+          <td>0.787</td>
+          <td>99th</td>
           <td>0</td>
-          <td>
-None          </td>
+          <td class="mono">No public description yet.</td>
+        </tr>
+        <tr>
+          <td class="cve-cell"><a href="/cve/?id=CVE-2025-8943">CVE-2025-8943</a></td>
+          <td>0.658</td>
+          <td>98th</td>
+          <td>1</td>
+          <td class="mono">The Custom MCPs feature is designed to execute OS commands, for instance, using tools like `npx` to spin up local MCP Servers. However, Flowise&#39;s inherent authentication and authorization model is minimal and lacks ro...</td>
+        </tr>
+        <tr>
+          <td class="cve-cell"><a href="/cve/?id=CVE-2025-8489">CVE-2025-8489</a></td>
+          <td>0.433</td>
+          <td>97th</td>
+          <td>0</td>
+          <td class="mono">No public description yet.</td>
+        </tr>
+        <tr>
+          <td class="cve-cell"><a href="/cve/?id=CVE-2025-8426">CVE-2025-8426</a></td>
+          <td>0.394</td>
+          <td>97th</td>
+          <td>0</td>
+          <td class="mono">No public description yet.</td>
+        </tr>
+        <tr>
+          <td class="cve-cell"><a href="/cve/?id=CVE-2025-8518">CVE-2025-8518</a></td>
+          <td>0.339</td>
+          <td>97th</td>
+          <td>1</td>
+          <td class="mono">A vulnerability was found in givanz Vvveb 1.0.5. It has been rated as critical. Affected by this issue is the function Save of the file admin/controller/editor/code.php of the component Code Editor. The manipulation l...</td>
+        </tr>
+        <tr>
+          <td class="cve-cell"><a href="/cve/?id=CVE-2025-8868">CVE-2025-8868</a></td>
+          <td>0.171</td>
+          <td>95th</td>
+          <td>0</td>
+          <td class="mono">No public description yet.</td>
+        </tr>
+        <tr>
+          <td class="cve-cell"><a href="/cve/?id=CVE-2025-8730">CVE-2025-8730</a></td>
+          <td>0.119</td>
+          <td>93th</td>
+          <td>2</td>
+          <td class="mono">A vulnerability was found in Belkin F9K1009 and F9K1010 2.00.04/2.00.09 and classified as critical. Affected by this issue is some unknown functionality of the component Web Interface. The manipulation leads to hard-c...</td>
+        </tr>
+        <tr>
+          <td class="cve-cell"><a href="/cve/?id=CVE-2025-7795">CVE-2025-7795</a></td>
+          <td>0.096</td>
+          <td>93th</td>
+          <td>3</td>
+          <td class="mono">A vulnerability, which was classified as critical, has been found in Tenda FH451 1.0.0.9. Affected by this issue is the function fromP2pListFilter of the file /goform/P2pListFilter. The manipulation of the argument pa...</td>
+        </tr>
+        <tr>
+          <td class="cve-cell"><a href="/cve/?id=CVE-2025-9090">CVE-2025-9090</a></td>
+          <td>0.083</td>
+          <td>92th</td>
+          <td>4</td>
+          <td class="mono">A vulnerability was identified in Tenda AC20 16.03.08.12. Affected is the function websFormDefine of the file /goform/telnet of the component Telnet Service. The manipulation leads to command injection. It is possible...</td>
+        </tr>
+        <tr>
+          <td class="cve-cell"><a href="/cve/?id=CVE-2025-8085">CVE-2025-8085</a></td>
+          <td>0.078</td>
+          <td>92th</td>
+          <td>1</td>
+          <td class="mono">The Ditty WordPress plugin before 3.1.58 lacks authorization and authentication for requests to its displayItems endpoint, allowing unauthenticated visitors to make requests to arbitrary URLs.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section class="section">
+  <div class="section-header">
+    <h1>Fresh PoCs</h1>
+    <span class="muted">Recent GitHub movement</span>
+  </div>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Stars</th><th>Updated</th><th>Name</th><th>Description</th></tr></thead>
+      <tbody>
+        <tr>
+          <td>1241</td>
+          <td>2 hours ago </td>
+          <td><a href="https://github.com/msanft/CVE-2025-55182" target="_blank">CVE-2025-55182</a></td>
+          <td class="mono">Explanation and full RCE PoC for CVE-2025-55182 </td>
+        </tr>
+        <tr>
+          <td>775</td>
+          <td>3 hours ago </td>
+          <td><a href="https://github.com/ejpir/CVE-2025-55182-research" target="_blank">CVE-2025-55182-research</a></td>
+          <td class="mono">CVE-2025-55182 POC </td>
+        </tr>
+        <tr>
+          <td>495</td>
+          <td>8 days ago </td>
+          <td><a href="https://github.com/WyAtu/CVE-2018-20250" target="_blank">CVE-2018-20250</a></td>
+          <td class="mono">exp for https://research.checkpoint.com/extracting-code-execution-from-winrar </td>
+        </tr>
+        <tr>
+          <td>607</td>
+          <td>20 hours ago </td>
+          <td><a href="https://github.com/mverschu/CVE-2025-33073" target="_blank">CVE-2025-33073</a></td>
+          <td class="mono">PoC Exploit for the NTLM reflection SMB flaw. </td>
+        </tr>
+        <tr>
+          <td>496</td>
+          <td>4 days ago </td>
+          <td><a href="https://github.com/pr0v3rbs/CVE-2025-32463_chwoot" target="_blank">CVE-2025-32463_chwoot</a></td>
+          <td class="mono">Escalation of Privilege to the root through sudo binary with chroot option. CVE-2025-32463 </td>
+        </tr>
+        <tr>
+          <td>419</td>
+          <td>5 hours ago </td>
+          <td><a href="https://github.com/kh4sh3i/CVE-2025-32463" target="_blank">CVE-2025-32463</a></td>
+          <td class="mono">Local Privilege Escalation to Root via Sudo chroot in Linux </td>
+        </tr>
+        <tr>
+          <td>305</td>
+          <td>1 day ago </td>
+          <td><a href="https://github.com/soltanali0/CVE-2025-53770-Exploit" target="_blank">CVE-2025-53770-Exploit</a></td>
+          <td class="mono">SharePoint WebPart Injection Exploit Tool </td>
+        </tr>
+        <tr>
+          <td>289</td>
+          <td>4 hours ago </td>
+          <td><a href="https://github.com/emredavut/CVE-2025-55182" target="_blank">CVE-2025-55182</a></td>
+          <td class="mono">RSC/Next.js RCE Vulnerability Detector &amp; PoC Chrome Extension – CVE-2025-55182 &amp; CVE-2025-66478 </td>
+        </tr>
+        <tr>
+          <td>901</td>
+          <td>1 hour ago </td>
+          <td><a href="https://github.com/lachlan2k/React2Shell-CVE-2025-55182-original-poc" target="_blank">React2Shell-CVE-2025-55182-original-poc</a></td>
+          <td class="mono">Original Proof-of-Concepts for React2Shell CVE-2025-55182 </td>
+        </tr>
+        <tr>
+          <td>386</td>
+          <td>4 days ago </td>
+          <td><a href="https://github.com/0x6rss/CVE-2025-24071_PoC" target="_blank">CVE-2025-24071_PoC</a></td>
+          <td class="mono">CVE-2025-24071: NTLM Hash Leak via RAR/ZIP Extraction and .library-ms File </td>
+        </tr>
+        <tr>
+          <td>207</td>
+          <td>1 day ago </td>
+          <td><a href="https://github.com/leesh3288/CVE-2025-32023" target="_blank">CVE-2025-32023</a></td>
+          <td class="mono">PoC &amp; Exploit for CVE-2025-32023 / PlaidCTF 2025 &#34;Zerodeo&#34; </td>
+        </tr>
+        <tr>
+          <td>396</td>
+          <td>6 days ago </td>
+          <td><a href="https://github.com/yuuouu/ColorOS-CVE-2025-10184" target="_blank">ColorOS-CVE-2025-10184</a></td>
+          <td class="mono">ColorOS短信漏洞，以及用户自救方案 </td>
+        </tr>
+        <tr>
+          <td>180</td>
+          <td>6 days ago </td>
+          <td><a href="https://github.com/absholi7ly/POC-CVE-2025-24813" target="_blank">POC-CVE-2025-24813</a></td>
+          <td class="mono">his repository contains an automated Proof of Concept (PoC) script for exploiting **CVE-2025-24813**, a Remote Code Execution (RCE) vulnerability in Apache Tomcat. The vulnerability allows an attacker to upload a malicious serialized payload to the server, leading to arbitrary code execution via deserialization when specific conditions are met. </td>
+        </tr>
+        <tr>
+          <td>256</td>
+          <td>15 minutes ago </td>
+          <td><a href="https://github.com/zack0x01/CVE-2025-55182-advanced-scanner-" target="_blank">CVE-2025-55182-advanced-scanner-</a></td>
+          <td class="mono"></td>
+        </tr>
+        <tr>
+          <td>357</td>
+          <td>1 hour ago </td>
+          <td><a href="https://github.com/Malayke/Next.js-RSC-RCE-Scanner-CVE-2025-66478" target="_blank">Next.js-RSC-RCE-Scanner-CVE-2025-66478</a></td>
+          <td class="mono">A command-line scanner for batch detection of Next.js application versions and determining if they are affected by CVE-2025-66478 vulnerability. </td>
+        </tr>
+        <tr>
+          <td>198</td>
+          <td>4 days ago </td>
+          <td><a href="https://github.com/ThumpBo/CVE-2025-30208-EXP" target="_blank">CVE-2025-30208-EXP</a></td>
+          <td class="mono">CVE-2025-30208-EXP </td>
+        </tr>
+        <tr>
+          <td>73</td>
+          <td>6 days ago </td>
+          <td><a href="https://github.com/4daysday/cve-2025-8088" target="_blank">cve-2025-8088</a></td>
+          <td class="mono">Path traversal tool based on cve-2025-8088 </td>
+        </tr>
+        <tr>
+          <td>163</td>
+          <td>1 day ago </td>
+          <td><a href="https://github.com/ZeroMemoryEx/CVE-2025-26125" target="_blank">CVE-2025-26125</a></td>
+          <td class="mono">( 0day ) Local Privilege Escalation in IObit Malware Fighter </td>
+        </tr>
+        <tr>
+          <td>153</td>
+          <td>8 days ago </td>
+          <td><a href="https://github.com/hoefler02/CVE-2025-21756" target="_blank">CVE-2025-21756</a></td>
+          <td class="mono">Exploit for CVE-2025-21756 for Linux kernel 6.6.75. My first linux kernel exploit! </td>
+        </tr>
+        <tr>
+          <td>136</td>
+          <td>27 days ago </td>
+          <td><a href="https://github.com/platsecurity/CVE-2025-32433" target="_blank">CVE-2025-32433</a></td>
+          <td class="mono">CVE-2025-32433 https://github.com/erlang/otp/security/advisories/GHSA-37cp-fgq5-7wc2 </td>
         </tr>
       </tbody>
     </table>
@@ -356,8 +452,7 @@ None          </td>
   </main>
   <footer class="site-footer">
     <div class="wrap">
-      <span>Updated 2025-12-17</span>
-      <span>Data: CISA KEV, FIRST EPSS, community PoCs</span>
+      <span>Fast CVE triage without the noise.</span>
       <span><a href="https://github.com/0xMarcio/cve">GitHub repo</a></span>
     </div>
   </footer>

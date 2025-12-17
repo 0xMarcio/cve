@@ -1,40 +1,32 @@
 {% extends "base.html" %}
 {% set body_class = "color-no-search" %}
 {% block content %}
-<section class="hero" data-search-root>
-  <p class="eyebrow">CVE PoC search &amp; intel</p>
-  <h1>Search PoCs, KEV, and EPSS in one place</h1>
-  <p class="lede">Pulls PoC references from <code>github.txt</code>, daily CVE descriptions, CISA KEV, and FIRST EPSS so you can quickly find relevant exploits or risk data.</p>
-  <div class="pill-row tight">
-    <span class="pill"><strong>Search</strong> CVE, vendor, product, or keyword</span>
-    <span class="pill">Negative terms supported (<strong>-windows</strong>)</span>
-    <span class="pill">Links out to MITRE + PoC repos</span>
-    <span class="pill">Nightly GitHub Action refresh</span>
+<section class="hero hero-signal" data-search-root>
+  <div class="hero-meta">
+    <p class="eyebrow">Signal-first</p>
+    <h1>Search PoCs, KEV, and EPSS without the clutter</h1>
+    <p class="lede">Built for fast triage. One page, no badges, no filler.</p>
   </div>
   <form class="searchForm" action="#">
     <input type="text" class="search" placeholder="Search CVE, vendor, product, or keyword" autocomplete="off">
   </form>
-  <div class="search-meta">
-    <span>Loads from <code>CVE_list.json</code></span>
-    <span>Updated daily</span>
-    <span>Max 10k results for performance</span>
+  <div class="stat-row">
+    <div class="stat"><strong>{{ metrics.kev_total }}</strong><span>KEV entries tracked</span></div>
+    <div class="stat"><strong>{{ metrics.high_epss_count }}</strong><span>High-EPSS not in KEV</span></div>
+    <div class="stat"><strong>{{ metrics.recent_kev_count }}</strong><span>New KEV in last 30 days</span></div>
   </div>
   <div class="search-results" data-results style="display:none">
     <div class="header">
       <h2>Results</h2>
-      <span class="muted">Fast monospace table for quick scanning</span>
+      <span class="muted">Filter with negative terms (e.g., -windows)</span>
     </div>
     <div class="noResults">No results yet.</div>
     <div class="results-table hide">
       <table class="results">
         <thead>
           <tr>
-            <td width="18%">
-                CVE
-            </td>
-            <td>
-                Description / PoC links
-            </td>
+            <td width="18%">CVE</td>
+            <td>Description / PoC links</td>
           </tr>
         </thead>
         <tbody class="results"></tbody>
@@ -44,49 +36,28 @@
 </section>
 
 <section class="section">
-  <h1>KEV with high EPSS</h1>
-  <p class="muted">KEV items that also carry high EPSS probability.</p>
-  <div class="card-grid">
-    {% for item in data.kev_top[:15] %}
-    <article class="card">
-      <div class="card-title"><a href="/cve/?id={{ item.cve }}">{{ item.cve }}</a></div>
-      <div class="card-meta">EPSS {{ '%.3f'|format(item.epss or 0) }} • {{ '%2.0f'|format((item.percentile or 0)*100) }}th pct</div>
-      <p>{{ item.summary or 'No description.' }}</p>
-      <div class="badge">{{ item.vendor or 'Unknown vendor' }}</div>
-      <div class="badge">{{ item.product or 'Unknown product' }}</div>
-    </article>
-    {% endfor %}
+  <div class="section-header">
+    <h1>Latest KEV additions</h1>
+    <span class="muted">Last 30 days</span>
   </div>
-</section>
-
-<section class="section">
-  <h1>EPSS picks not in KEV</h1>
-  <p class="muted">High-probability EPSS items that are not yet in the KEV list.</p>
-  <div class="card-grid">
-    {% for item in data.high_epss[:15] %}
-    <article class="card">
-      <div class="card-title"><a href="/cve/?id={{ item.cve }}">{{ item.cve }}</a></div>
-      <div class="card-meta">EPSS {{ '%.3f'|format(item.epss or 0) }} • {{ '%2.0f'|format((item.percentile or 0)*100) }}th pct</div>
-      <p>{{ item.summary or 'No description.' }}</p>
-    </article>
-    {% endfor %}
-  </div>
-</section>
-
-<section class="section">
-  <h1>Trending PoCs</h1>
-  <p class="muted">Fresh GitHub PoCs by stars and recency.</p>
-  <div class="table-responsive">
-    <table class="list">
-      <thead><tr><th>Stars</th><th>Updated</th><th>Name</th><th>Description</th></tr></thead>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>CVE</th><th>Vendor</th><th>Product</th><th>EPSS</th><th>Percentile</th><th>Date Added</th><th>Due</th></tr>
+      </thead>
       <tbody>
-        {% for row in trending[:20] %}
+        {% for row in recent_kev %}
         <tr>
-          <td>{{ row.stars }}</td>
-          <td>{{ row.updated }}</td>
-          <td><a href="{{ row.url }}" target="_blank">{{ row.name }}</a></td>
-          <td>{{ row.desc }}</td>
+          <td class="cve-cell"><a href="/cve/?id={{ row.cve }}">{{ row.cve }}</a></td>
+          <td>{{ row.vendor }}</td>
+          <td>{{ row.product }}</td>
+          <td>{{ '%.3f'|format(row.epss or 0) }}</td>
+          <td>{{ '%2.0f'|format((row.percentile or 0)*100) }}th</td>
+          <td>{{ row.date_added }}</td>
+          <td>{{ row.due_date or '—' }}</td>
         </tr>
+        {% else %}
+        <tr><td colspan="7">No recent KEV entries.</td></tr>
         {% endfor %}
       </tbody>
     </table>
@@ -94,39 +65,47 @@
 </section>
 
 <section class="section">
-  <h1>Changes since yesterday</h1>
-  <p class="muted">Quick snapshot of the latest diffs in the feeds.</p>
-  <div class="table-responsive">
-    <table class="list">
-      <thead><tr><th>Type</th><th>Count</th><th>Examples</th></tr></thead>
+  <div class="section-header">
+    <h1>High EPSS not in KEV</h1>
+    <span class="muted">Sorted by score</span>
+  </div>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>CVE</th><th>EPSS</th><th>Percentile</th><th>PoCs</th><th>Summary</th></tr></thead>
       <tbody>
+        {% for row in data.high_epss %}
         <tr>
-          <td>New KEV entries</td>
-          <td>{{ (diff.new_kev_entries or [])|length }}</td>
-          <td>
-            {% for row in (diff.new_kev_entries or [])[:5] %}
-              <a href="/cve/?id={{ row.cve }}">{{ row.cve }}</a>{% if not loop.last %}, {% endif %}
-            {% else %}None{% endfor %}
-          </td>
+          <td class="cve-cell"><a href="/cve/?id={{ row.cve }}">{{ row.cve }}</a></td>
+          <td>{{ '%.3f'|format(row.epss or 0) }}</td>
+          <td>{{ '%2.0f'|format((row.percentile or 0)*100) }}th</td>
+          <td>{{ row.poc_count }}</td>
+          <td class="mono">{{ row.summary or 'No public description yet.' }}</td>
         </tr>
+        {% else %}
+        <tr><td colspan="5">No high-EPSS items outside KEV today.</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section class="section">
+  <div class="section-header">
+    <h1>Fresh PoCs</h1>
+    <span class="muted">Recent GitHub movement</span>
+  </div>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Stars</th><th>Updated</th><th>Name</th><th>Description</th></tr></thead>
+      <tbody>
+        {% for row in trending[:20] %}
         <tr>
-          <td>New high EPSS</td>
-          <td>{{ (diff.new_high_epss or [])|length }}</td>
-          <td>
-            {% for row in (diff.new_high_epss or [])[:5] %}
-              <a href="/cve/?id={{ row.cve }}">{{ row.cve }}</a>{% if not loop.last %}, {% endif %}
-            {% else %}None{% endfor %}
-          </td>
+          <td>{{ row.stars }}</td>
+          <td>{{ row.updated }}</td>
+          <td><a href="{{ row.url }}" target="_blank">{{ row.name }}</a></td>
+          <td class="mono">{{ row.desc }}</td>
         </tr>
-        <tr>
-          <td>Top EPSS movers</td>
-          <td>{{ (diff.epss_movers or [])|length }}</td>
-          <td>
-            {% for row in (diff.epss_movers or [])[:5] %}
-              <a href="/cve/?id={{ row.cve }}">{{ row.cve }}</a> ({{ '%.3f'|format(row.delta) }}){% if not loop.last %}, {% endif %}
-            {% else %}None{% endfor %}
-          </td>
-        </tr>
+        {% endfor %}
       </tbody>
     </table>
   </div>

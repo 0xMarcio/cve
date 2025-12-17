@@ -10,12 +10,12 @@
 <body>
   <header class="site-header">
     <div class="wrap">
-      <div class="brand"><a href="/">CVE PoC Hub</a><span>daily</span></div>
+      <div class="brand"><a href="/">CVE PoC Hub</a></div>
       <nav>
         <a href="/search/">PoC Search</a>
         <a href="/kev/">KEV</a>
         <a href="/epss/">EPSS</a>
-        <a href="/diffs/">Diffs</a>
+        <a href="/diffs/">New KEV</a>
       </nav>
     </div>
   </header>
@@ -25,10 +25,6 @@
       <h1 id="cve-title">Loading…</h1>
       <p class="lede" id="cve-summary">Fetching CVE data.</p>
       <div class="pill-row tight" id="cve-meta"></div>
-      <div class="search-meta">
-        <span>Data source: <code>/api/v1/cve/&lt;id&gt;.json</code></span>
-        <span>Fallback: <code>CVE_list.json</code></span>
-      </div>
     </section>
 
     <section class="section" id="cve-details" style="display:none;">
@@ -62,7 +58,7 @@
   </main>
   <footer class="site-footer">
     <div class="wrap">
-      <span>Data via GitHub Actions + Trickest feed</span>
+      <span>Fast CVE triage without the noise.</span>
       <span><a href="https://github.com/0xMarcio/cve">GitHub repo</a></span>
     </div>
   </footer>

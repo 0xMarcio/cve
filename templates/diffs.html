@@ -1,60 +1,25 @@
 {% extends "base.html" %}
 {% block content %}
 <section class="section">
-  <h1>Daily Diff</h1>
-  <p class="muted">Comparing the latest snapshot to the previous one.</p>
-</section>
-
-<section class="section">
-  <h2>New KEV Entries</h2>
-  <div class="table-responsive">
-    <table class="list">
-      <thead><tr><th>CVE</th><th>Vendor</th><th>Product</th><th>Date Added</th></tr></thead>
+  <div class="section-header">
+    <h1>New KEV entries</h1>
+    <span class="muted">Only the recent additions</span>
+  </div>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>CVE</th><th>Vendor</th><th>Product</th><th>EPSS</th><th>Percentile</th><th>Date Added</th><th>Due</th></tr></thead>
       <tbody>
-        {% for row in diff.new_kev_entries or [] %}
+        {% for row in recent_kev %}
         <tr>
-          <td><a href="/cve/?id={{ row.cve }}">{{ row.cve }}</a></td>
+          <td class="cve-cell"><a href="/cve/?id={{ row.cve }}">{{ row.cve }}</a></td>
           <td>{{ row.vendor }}</td>
           <td>{{ row.product }}</td>
-          <td>{{ row.date_added }}</td>
-        </tr>
-        {% else %}<tr><td colspan="4">No new KEV entries.</td></tr>{% endfor %}
-      </tbody>
-    </table>
-  </div>
-</section>
-
-<section class="section">
-  <h2>New High EPSS</h2>
-  <div class="table-responsive">
-    <table class="list">
-      <thead><tr><th>CVE</th><th>EPSS</th><th>Percentile</th></tr></thead>
-      <tbody>
-        {% for row in diff.new_high_epss or [] %}
-        <tr>
-          <td><a href="/cve/?id={{ row.cve }}">{{ row.cve }}</a></td>
           <td>{{ '%.3f'|format(row.epss or 0) }}</td>
           <td>{{ '%2.0f'|format((row.percentile or 0)*100) }}th</td>
+          <td>{{ row.date_added }}</td>
+          <td>{{ row.due_date or '—' }}</td>
         </tr>
-        {% else %}<tr><td colspan="3">No new high EPSS items.</td></tr>{% endfor %}
-      </tbody>
-    </table>
-  </div>
-</section>
-
-<section class="section">
-  <h2>Biggest EPSS Movers</h2>
-  <div class="table-responsive">
-    <table class="list">
-      <thead><tr><th>CVE</th><th>Δ EPSS</th><th>Current</th></tr></thead>
-      <tbody>
-        {% for row in diff.epss_movers or [] %}
-        <tr>
-          <td><a href="/cve/?id={{ row.cve }}">{{ row.cve }}</a></td>
-          <td>{{ '%.3f'|format(row.delta) }}</td>
-          <td>{{ '%.3f'|format(row.epss or 0) }}</td>
-        </tr>
-        {% else %}<tr><td colspan="3">No movers yet.</td></tr>{% endfor %}
+        {% else %}<tr><td colspan="7">No fresh KEV entries in the last 30 days.</td></tr>{% endfor %}
       </tbody>
     </table>
   </div>
