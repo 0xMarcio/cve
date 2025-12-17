@@ -49,7 +49,7 @@ jobs:
           python scripts/fetch_epss.py
 
       - name: Build site
-        run: python scripts/build_site.py
+        run: python scripts/build_site.py --html-mode summary
 
       - name: Configure Pages
         uses: actions/configure-pages@v5
