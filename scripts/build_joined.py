@@ -24,6 +24,7 @@ EPSS_PATH = DATA_DIR / "epss.json"
 DEFAULT_TOP_KEV = 75
 DEFAULT_HIGH_EPSS_LIMIT = 50
 DEFAULT_HIGH_EPSS_THRESHOLD = 0.05
+RECENT_YEAR_WINDOW = 1
 
 
 def load_inputs(kev_path: Path, epss_path: Path) -> Tuple[Dict, Dict]:
@@ -34,11 +35,22 @@ def load_inputs(kev_path: Path, epss_path: Path) -> Tuple[Dict, Dict]:
 
 def enrich_kev(kev_items: List[Dict], epss_lookup: Dict[str, Dict], poc_index: Dict[str, Dict]) -> List[Dict]:
     enriched = []
+    current_year = today_str()
+    current_year_int = int(current_year.split("-")[0])
+    def is_recent(cve_id: str) -> bool:
+        try:
+            year = int(cve_id.split("-")[1])
+        except Exception:
+            return False
+        return year >= current_year_int - RECENT_YEAR_WINDOW
+
     for entry in kev_items:
         cve = entry.get("cve") or entry.get("cveID") or ""
         if not cve:
             continue
         cve = cve.upper()
+        if not is_recent(cve):
+            continue
         epss_info = epss_lookup.get(cve, {})
         poc_info = poc_index.get(cve)
         if not poc_info or not poc_info.get("poc"):
@@ -75,6 +87,14 @@ def build_high_epss_not_in_kev(
     threshold: float,
     limit: int,
 ) -> List[Dict]:
+    current_year_int = int(today_str().split("-")[0])
+    def is_recent(cve_id: str) -> bool:
+        try:
+            year = int(cve_id.split("-")[1])
+        except Exception:
+            return False
+        return year >= current_year_int - RECENT_YEAR_WINDOW
+
     ranked = sorted(
         (
             row
@@ -82,6 +102,7 @@ def build_high_epss_not_in_kev(
             if row.get("cve")
             and row.get("cve", "").upper() not in kev_set
             and (row.get("epss") is not None)
+            and is_recent(row.get("cve", ""))
         ),
         key=lambda row: (-float(row.get("epss") or 0), row.get("cve", "")),
     )

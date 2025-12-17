@@ -59,6 +59,11 @@
 
   async function filterTablesByData() {
     const { pocSet, descSet } = await ensureSets();
+    const currentYear = new Date().getUTCFullYear();
+    const isRecent = (text) => {
+      const m = /CVE-(\d{4})-/i.exec(text || '');
+      return m ? parseInt(m[1], 10) >= currentYear - 1 : false;
+    };
     document.querySelectorAll('table[data-require-poc], table[data-require-desc]').forEach(table => {
       for (const row of Array.from(table.querySelectorAll('tbody tr'))) {
         const link = row.querySelector('a');
@@ -67,7 +72,7 @@
         const needsDesc = table.hasAttribute('data-require-desc');
         const hasPoc = pocSet.has(idText);
         const hasDesc = descSet.has(idText);
-        if ((needsPoc && !hasPoc) || (needsDesc && !hasDesc)) {
+        if ((needsPoc && !hasPoc) || (needsDesc && !hasDesc) || !isRecent(idText)) {
           row.remove();
         }
       }
@@ -85,6 +90,11 @@
     if (lower.includes('hour') || lower.includes('minute') || lower.includes('just')) return 0;
     const match = lower.match(/(\d+)\s*day/);
     return match ? parseInt(match[1], 10) : Infinity;
+  }
+
+  function cveYear(text) {
+    const m = /cve-(\d{4})-/i.exec(text || '');
+    return m ? parseInt(m[1], 10) : null;
   }
 
   function parseTrendingMarkdown(text) {
@@ -115,7 +125,12 @@
       if (!res.ok) throw new Error('failed to load README');
       const text = await res.text();
       const entries = parseTrendingMarkdown(text)
-        .filter(item => item.ageDays <= 5)
+        .filter(item => item.ageDays <= 4)
+        .filter(item => {
+          const currentYear = new Date().getUTCFullYear();
+          const yr = cveYear(item.name);
+          return yr !== null && yr >= currentYear - 1;
+        })
         .sort((a, b) => b.stars - a.stars)
         .slice(0, 20);
 

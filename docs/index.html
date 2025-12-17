@@ -15,7 +15,6 @@
         <a href="/search/">PoC Search</a>
         <a href="/kev/">KEV</a>
         <a href="/epss/">EPSS</a>
-        <a href="/diffs/">New KEV</a>
       </nav>
     </div>
   </header>
@@ -57,7 +56,7 @@
 <section class="section">
   <div class="section-header">
     <h1>Trending PoCs</h1>
-    <span class="muted">Most starred PoCs in the past few days</span>
+    <span class="muted">Recent GitHub movement (last 4 days, sorted by stars)</span>
   </div>
   <div class="table-wrap" data-trending>
     <table>
@@ -71,13 +70,14 @@
   </div>
 </section>
 
+
 <section class="section">
   <div class="section-header">
     <h1>Latest KEV additions</h1>
     <span class="muted">Last 30 days</span>
   </div>
   <div class="table-wrap">
-    <table data-require-poc>
+    <table data-require-poc data-require-desc>
       <thead>
         <tr><th>CVE</th><th>Vendor</th><th>Product</th><th>EPSS</th><th>Percentile</th><th>Date Added</th><th>Due</th></tr>
       </thead>
@@ -333,139 +333,6 @@
   </div>
 </section>
 
-<section class="section">
-  <div class="section-header">
-    <h1>Fresh PoCs</h1>
-    <span class="muted">Recent GitHub movement</span>
-  </div>
-  <div class="table-wrap">
-    <table>
-      <thead><tr><th>Stars</th><th>Updated</th><th>Name</th><th>Description</th></tr></thead>
-      <tbody>
-        <tr>
-          <td>1241</td>
-          <td>2 hours ago </td>
-          <td><a href="https://github.com/msanft/CVE-2025-55182" target="_blank">CVE-2025-55182</a></td>
-          <td class="mono">Explanation and full RCE PoC for CVE-2025-55182 </td>
-        </tr>
-        <tr>
-          <td>775</td>
-          <td>3 hours ago </td>
-          <td><a href="https://github.com/ejpir/CVE-2025-55182-research" target="_blank">CVE-2025-55182-research</a></td>
-          <td class="mono">CVE-2025-55182 POC </td>
-        </tr>
-        <tr>
-          <td>495</td>
-          <td>8 days ago </td>
-          <td><a href="https://github.com/WyAtu/CVE-2018-20250" target="_blank">CVE-2018-20250</a></td>
-          <td class="mono">exp for https://research.checkpoint.com/extracting-code-execution-from-winrar </td>
-        </tr>
-        <tr>
-          <td>607</td>
-          <td>20 hours ago </td>
-          <td><a href="https://github.com/mverschu/CVE-2025-33073" target="_blank">CVE-2025-33073</a></td>
-          <td class="mono">PoC Exploit for the NTLM reflection SMB flaw. </td>
-        </tr>
-        <tr>
-          <td>496</td>
-          <td>4 days ago </td>
-          <td><a href="https://github.com/pr0v3rbs/CVE-2025-32463_chwoot" target="_blank">CVE-2025-32463_chwoot</a></td>
-          <td class="mono">Escalation of Privilege to the root through sudo binary with chroot option. CVE-2025-32463 </td>
-        </tr>
-        <tr>
-          <td>419</td>
-          <td>5 hours ago </td>
-          <td><a href="https://github.com/kh4sh3i/CVE-2025-32463" target="_blank">CVE-2025-32463</a></td>
-          <td class="mono">Local Privilege Escalation to Root via Sudo chroot in Linux </td>
-        </tr>
-        <tr>
-          <td>305</td>
-          <td>1 day ago </td>
-          <td><a href="https://github.com/soltanali0/CVE-2025-53770-Exploit" target="_blank">CVE-2025-53770-Exploit</a></td>
-          <td class="mono">SharePoint WebPart Injection Exploit Tool </td>
-        </tr>
-        <tr>
-          <td>289</td>
-          <td>4 hours ago </td>
-          <td><a href="https://github.com/emredavut/CVE-2025-55182" target="_blank">CVE-2025-55182</a></td>
-          <td class="mono">RSC/Next.js RCE Vulnerability Detector &amp; PoC Chrome Extension – CVE-2025-55182 &amp; CVE-2025-66478 </td>
-        </tr>
-        <tr>
-          <td>901</td>
-          <td>1 hour ago </td>
-          <td><a href="https://github.com/lachlan2k/React2Shell-CVE-2025-55182-original-poc" target="_blank">React2Shell-CVE-2025-55182-original-poc</a></td>
-          <td class="mono">Original Proof-of-Concepts for React2Shell CVE-2025-55182 </td>
-        </tr>
-        <tr>
-          <td>386</td>
-          <td>4 days ago </td>
-          <td><a href="https://github.com/0x6rss/CVE-2025-24071_PoC" target="_blank">CVE-2025-24071_PoC</a></td>
-          <td class="mono">CVE-2025-24071: NTLM Hash Leak via RAR/ZIP Extraction and .library-ms File </td>
-        </tr>
-        <tr>
-          <td>207</td>
-          <td>1 day ago </td>
-          <td><a href="https://github.com/leesh3288/CVE-2025-32023" target="_blank">CVE-2025-32023</a></td>
-          <td class="mono">PoC &amp; Exploit for CVE-2025-32023 / PlaidCTF 2025 &#34;Zerodeo&#34; </td>
-        </tr>
-        <tr>
-          <td>396</td>
-          <td>6 days ago </td>
-          <td><a href="https://github.com/yuuouu/ColorOS-CVE-2025-10184" target="_blank">ColorOS-CVE-2025-10184</a></td>
-          <td class="mono">ColorOS短信漏洞，以及用户自救方案 </td>
-        </tr>
-        <tr>
-          <td>180</td>
-          <td>6 days ago </td>
-          <td><a href="https://github.com/absholi7ly/POC-CVE-2025-24813" target="_blank">POC-CVE-2025-24813</a></td>
-          <td class="mono">his repository contains an automated Proof of Concept (PoC) script for exploiting **CVE-2025-24813**, a Remote Code Execution (RCE) vulnerability in Apache Tomcat. The vulnerability allows an attacker to upload a malicious serialized payload to the server, leading to arbitrary code execution via deserialization when specific conditions are met. </td>
-        </tr>
-        <tr>
-          <td>256</td>
-          <td>15 minutes ago </td>
-          <td><a href="https://github.com/zack0x01/CVE-2025-55182-advanced-scanner-" target="_blank">CVE-2025-55182-advanced-scanner-</a></td>
-          <td class="mono"></td>
-        </tr>
-        <tr>
-          <td>357</td>
-          <td>1 hour ago </td>
-          <td><a href="https://github.com/Malayke/Next.js-RSC-RCE-Scanner-CVE-2025-66478" target="_blank">Next.js-RSC-RCE-Scanner-CVE-2025-66478</a></td>
-          <td class="mono">A command-line scanner for batch detection of Next.js application versions and determining if they are affected by CVE-2025-66478 vulnerability. </td>
-        </tr>
-        <tr>
-          <td>198</td>
-          <td>4 days ago </td>
-          <td><a href="https://github.com/ThumpBo/CVE-2025-30208-EXP" target="_blank">CVE-2025-30208-EXP</a></td>
-          <td class="mono">CVE-2025-30208-EXP </td>
-        </tr>
-        <tr>
-          <td>73</td>
-          <td>6 days ago </td>
-          <td><a href="https://github.com/4daysday/cve-2025-8088" target="_blank">cve-2025-8088</a></td>
-          <td class="mono">Path traversal tool based on cve-2025-8088 </td>
-        </tr>
-        <tr>
-          <td>163</td>
-          <td>1 day ago </td>
-          <td><a href="https://github.com/ZeroMemoryEx/CVE-2025-26125" target="_blank">CVE-2025-26125</a></td>
-          <td class="mono">( 0day ) Local Privilege Escalation in IObit Malware Fighter </td>
-        </tr>
-        <tr>
-          <td>153</td>
-          <td>8 days ago </td>
-          <td><a href="https://github.com/hoefler02/CVE-2025-21756" target="_blank">CVE-2025-21756</a></td>
-          <td class="mono">Exploit for CVE-2025-21756 for Linux kernel 6.6.75. My first linux kernel exploit! </td>
-        </tr>
-        <tr>
-          <td>136</td>
-          <td>27 days ago </td>
-          <td><a href="https://github.com/platsecurity/CVE-2025-32433" target="_blank">CVE-2025-32433</a></td>
-          <td class="mono">CVE-2025-32433 https://github.com/erlang/otp/security/advisories/GHSA-37cp-fgq5-7wc2 </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-</section>
   </main>
   <footer class="site-footer">
     <div class="wrap">

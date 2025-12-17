@@ -15,7 +15,6 @@
         <a href="/search/">PoC Search</a>
         <a href="/kev/">KEV</a>
         <a href="/epss/">EPSS</a>
-        <a href="/diffs/">New KEV</a>
       </nav>
     </div>
   </header>
@@ -27,7 +26,7 @@
   </div>
   <input type="search" placeholder="Filter CVE, vendor, product" data-filter-table="kev-table" class="filter" />
   <div class="table-responsive">
-    <table class="list" id="kev-table" data-require-poc>
+    <table class="list" id="kev-table" data-require-poc data-require-desc>
       <thead>
         <tr><th>CVE</th><th>Vendor</th><th>Product</th><th>EPSS</th><th>Percentile</th><th>Date Added</th><th>Due</th></tr>
       </thead>

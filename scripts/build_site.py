@@ -1,7 +1,9 @@
 from __future__ import annotations
 
 import argparse
+from datetime import datetime, timezone
 from pathlib import Path
+import re
 from typing import Dict, Tuple
 
 from jinja2 import Environment, FileSystemLoader, select_autoescape
@@ -59,7 +61,29 @@ def build_pages(env: Environment, data: Dict, diff: Dict | None = None, html_mod
     joined = data["joined"]
     details = data["details"]
     vendors = data["vendors"]
-    trending = parse_trending_from_readme(README_PATH)
+    def is_recent_label(label: str) -> bool:
+        label = (label or "").lower()
+        if "minute" in label or "hour" in label:
+            return True
+        m = re.search(r"(\d+)\\s*day", label)
+        if not m:
+            return False
+        return int(m.group(1)) <= 4
+
+    current_year = datetime.now(timezone.utc).year
+
+    def extract_year(name: str) -> int | None:
+        m = re.search(r"cve-(\\d{4})-", name.lower())
+        return int(m.group(1)) if m else None
+
+    trending_raw = parse_trending_from_readme(README_PATH)
+    trending = [
+        row
+        for row in trending_raw
+        if is_recent_label(row.get("updated", ""))
+        and (extract_year(row.get("name", "")) or current_year) >= current_year - 1
+    ]
+    trending.sort(key=lambda r: int(r.get("stars") or 0), reverse=True)
     recent_kev = (diff or {}).get("new_kev_entries") or []
     metrics = {
         "kev_total": len(data["kev_enriched"]),
