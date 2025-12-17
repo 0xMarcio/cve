@@ -150,7 +150,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    fetch('./CVE_list.json')
+    fetch('../CVE_list.json')
         .then(res => res.json())
         .then(data => {
             window.dataset = data;
