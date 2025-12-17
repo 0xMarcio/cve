@@ -13,6 +13,7 @@
 
   const detailSection = document.getElementById("cve-details");
   const notFoundSection = document.getElementById("not-found");
+  const descriptionBlock = document.getElementById("cve-description-block");
 
   function setLoading(message) {
     titleEl.textContent = cveId || "CVE details";
@@ -27,14 +28,37 @@
     return "No description available.";
   }
 
+  function hasKevData(kev) {
+    if (!kev || typeof kev !== "object") return false;
+    return Boolean(
+      (kev.short_description && kev.short_description.trim()) ||
+      kev.date_added ||
+      kev.due_date ||
+      kev.required_action ||
+      kev.notes
+    );
+  }
+
   function renderFacts(data) {
+    const pocCount = data.poc_count ?? (Array.isArray(data.poc_links) ? data.poc_links.length : Array.isArray(data.poc) ? data.poc.length : undefined);
     const items = [];
-    if (data.vendor) items.push({ label: "Vendor", value: data.vendor });
-    if (data.product) items.push({ label: "Product", value: data.product });
-    if (data.epss !== undefined && data.epss !== null) items.push({ label: "EPSS", value: data.epss.toFixed(3) });
-    if (data.percentile !== undefined && data.percentile !== null) items.push({ label: "Percentile", value: `${Math.round(data.percentile * 100)}th` });
-    if (data.poc_count !== undefined) items.push({ label: "PoCs", value: data.poc_count });
-    if (data.kev) items.push({ label: "KEV status", value: data.kev.date_added ? `Added ${data.kev.date_added}` : "Listed" });
+    const vendorValue = data.vendor || "Unknown vendor";
+    const productValue = data.product || "Unknown product";
+    const epssValue = typeof data.epss === "number" ? data.epss.toFixed(3) : "n/a";
+    const percentileValue = typeof data.percentile === "number" ? `${Math.round(data.percentile * 100)}th` : "n/a";
+    const pocValue = pocCount ?? 0;
+
+    items.push({ label: "Vendor", value: vendorValue });
+    items.push({ label: "Product", value: productValue });
+    items.push({ label: "EPSS", value: epssValue });
+    items.push({ label: "Percentile", value: percentileValue });
+    items.push({ label: "PoCs", value: pocValue });
+    if (hasKevData(data.kev)) items.push({ label: "KEV status", value: data.kev.date_added ? `Added ${data.kev.date_added}` : "Listed" });
+
+    if (items.length === 0) {
+      factsEl.innerHTML = `<div class="stat"><strong>—</strong><span>No overview data yet.</span></div>`;
+      return;
+    }
 
     factsEl.innerHTML = items
       .map((item) => `<div class="stat"><strong>${item.value}</strong><span>${item.label}</span></div>`)
@@ -56,13 +80,13 @@
     const pills = [];
     if (data.vendor) pills.push(`Vendor: ${data.vendor}`);
     if (data.product) pills.push(`Product: ${data.product}`);
-    if (data.kev) pills.push("On KEV list");
+    if (hasKevData(data.kev)) pills.push("On KEV list");
 
     metaEl.innerHTML = pills.map((text) => `<span class="pill">${text}</span>`).join("");
   }
 
   function renderKev(kev) {
-    if (!kev) {
+    if (!hasKevData(kev)) {
       document.getElementById("kev-section").style.display = "none";
       return;
     }
@@ -109,7 +133,14 @@
       titleEl.textContent = data.cve || cveId;
       const desc = getDescriptionText(data);
       summaryEl.textContent = desc;
-      descEl.textContent = desc;
+      const hasDescContent = desc && desc !== "No description available.";
+      if (hasDescContent) {
+        descEl.textContent = desc;
+        descriptionBlock.style.display = "";
+      } else {
+        descEl.textContent = "";
+        descriptionBlock.style.display = "none";
+      }
       renderFacts(data);
       renderPocs(data.poc_links || data.poc || []);
       renderKev(data.kev);
@@ -126,7 +157,14 @@
       titleEl.textContent = fallback.cve;
       const desc = getDescriptionText(fallback);
       summaryEl.textContent = desc;
-      descEl.textContent = desc;
+      const hasDescContent = desc && desc !== "No description available.";
+      if (hasDescContent) {
+        descEl.textContent = desc;
+        descriptionBlock.style.display = "";
+      } else {
+        descEl.textContent = "";
+        descriptionBlock.style.display = "none";
+      }
       renderFacts(fallback);
       renderPocs(fallback.poc_links || fallback.poc || []);
       renderKev(null);
@@ -138,6 +176,7 @@
       notFoundSection.style.display = "";
       detailSection.style.display = "none";
       metaEl.innerHTML = "";
+      descriptionBlock.style.display = "none";
       titleEl.textContent = cveId;
       summaryEl.textContent = "No data found for this CVE.";
     }

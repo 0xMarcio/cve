@@ -54,6 +54,19 @@ function getCveLink(cveId) {
     return `<a href="/cve/?id=${cveId}"><b>${cveId}</b></a>`;
 }
 
+function prepareDataset(raw) {
+    if (!Array.isArray(raw)) return [];
+    const descKeyCleaned = (entry) => {
+        const base = entry.desc || '';
+        return replaceStrings.reduce((desc, str) => desc.replace(str, ''), base);
+    };
+    return raw.map(entry => {
+        const descCleaned = descKeyCleaned(entry);
+        const searchText = `${entry.cve || ''} ${descCleaned}`.toLowerCase();
+        return { ...entry, _searchText: searchText };
+    });
+}
+
 const controls = {
     oldColor: '',
     displayResults(results, resultsTableHideable) {
@@ -70,8 +83,7 @@ const controls = {
         const negmatch = words.filter(word => word[0] === '-').map(word => word.substring(1));
 
         return dataset.filter(e => {
-            const description = replaceStrings.reduce((desc, str) => desc.replace(str, ''), e.desc).toLowerCase();
-            const combinedText = (e.cve + description).toLowerCase();
+            const combinedText = e._searchText || '';
 
             const positiveMatch = posmatch.every(word => combinedText.includes(word));
             const negativeMatch = negmatch.some(word => combinedText.includes(word));
@@ -95,17 +107,14 @@ const controls = {
             noResults.style.display = 'none';
             resultsTableHideable.classList.remove('hide');
 
-            const fragment = document.createDocumentFragment();
-            results.forEach(r => {
-                const el = searchResultFormat
+            const html = results.map(r => {
+                const desc = r.desc || '';
+                return searchResultFormat
                     .replace('$cve', getCveLink(r.cve))
-                    .replace('$description', escapeHTML(r.desc))
-                    .replace('$poc', convertLinksToList(r.poc));
-                const wrapper = document.createElement('table');
-                wrapper.innerHTML = el;
-                fragment.appendChild(wrapper.querySelector('tr'));
-            });
-            loc.appendChild(fragment);
+                    .replace('$description', escapeHTML(desc))
+                    .replace('$poc', convertLinksToList(r.poc || []));
+            }).join('');
+            loc.innerHTML = html;
         }
     },
     setColor(loc, indicator) {
@@ -176,7 +185,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     throw new Error(`Failed to load ${url} (${res.status})`);
                 }
                 const data = await res.json();
-                window.dataset = Array.isArray(data) ? data : [];
+                window.dataset = prepareDataset(data);
                 currentSet = window.dataset;
                 controls.hideResults(results, resultsTableHideable);
                 noResults.style.display = 'none';
