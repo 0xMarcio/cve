@@ -1,9 +1,7 @@
 from __future__ import annotations
 
 import argparse
-from datetime import datetime, timezone
 from pathlib import Path
-import re
 from typing import Dict, Tuple
 
 from jinja2 import Environment, FileSystemLoader, select_autoescape
@@ -57,33 +55,52 @@ def write_snapshot(joined: Dict) -> Path:
     return snapshot_path
 
 
+def select_trending(readme_rows: list[dict]) -> list[dict]:
+    """Pick the first 20 entries from the newest year table in README."""
+    if not readme_rows:
+        return []
+
+    def parse_year(row: dict) -> int | None:
+        try:
+            return int(row.get("year"))
+        except (TypeError, ValueError):
+            return None
+
+    years = [yr for yr in (parse_year(row) for row in readme_rows) if yr is not None]
+    if not years:
+        return []
+
+    latest_year = max(years)
+    selected: list[dict] = []
+    for row in readme_rows:
+        if parse_year(row) != latest_year:
+            continue
+        try:
+            stars = int(row.get("stars") or 0)
+        except (TypeError, ValueError):
+            stars = 0
+        selected.append(
+            {
+                "stars": stars,
+                "updated": (row.get("updated") or "").strip(),
+                "name": (row.get("name") or "").strip(),
+                "url": (row.get("url") or "").strip(),
+                "desc": (row.get("desc") or "").strip(),
+                "year": latest_year,
+            }
+        )
+        if len(selected) >= 20:
+            break
+    return selected
+
+
 def build_pages(env: Environment, data: Dict, diff: Dict | None = None, html_mode: str = "summary") -> None:
     joined = data["joined"]
     details = data["details"]
     vendors = data["vendors"]
-    def is_recent_label(label: str) -> bool:
-        label = (label or "").lower()
-        if "minute" in label or "hour" in label:
-            return True
-        m = re.search(r"(\d+)\\s*day", label)
-        if not m:
-            return False
-        return int(m.group(1)) <= 4
-
-    current_year = datetime.now(timezone.utc).year
-
-    def extract_year(name: str) -> int | None:
-        m = re.search(r"cve-(\\d{4})-", name.lower())
-        return int(m.group(1)) if m else None
 
     trending_raw = parse_trending_from_readme(README_PATH)
-    trending = [
-        row
-        for row in trending_raw
-        if is_recent_label(row.get("updated", ""))
-        and (extract_year(row.get("name", "")) or current_year) >= current_year - 1
-    ]
-    trending.sort(key=lambda r: int(r.get("stars") or 0), reverse=True)
+    trending = select_trending(trending_raw)
     recent_kev = (diff or {}).get("new_kev_entries") or []
     metrics = {
         "kev_total": len(data["kev_enriched"]),

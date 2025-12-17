@@ -2,72 +2,44 @@
   "generated": "2025-12-17",
   "items": [
     {
-      "cve": "CVE-2025-9316",
-      "epss": 0.78706,
-      "percentile": 0.98995,
-      "poc_count": 0,
-      "summary": ""
-    },
-    {
       "cve": "CVE-2025-8943",
       "epss": 0.6583,
-      "percentile": 0.9843,
+      "percentile": 0.98431,
       "poc_count": 1,
       "summary": "The Custom MCPs feature is designed to execute OS commands, for instance, using tools like `npx` to spin up local MCP Servers. However, Flowise's inherent authentication and authorization model is minimal and lacks ro..."
     },
     {
-      "cve": "CVE-2025-8489",
-      "epss": 0.43315,
-      "percentile": 0.97363,
-      "poc_count": 0,
-      "summary": ""
-    },
-    {
-      "cve": "CVE-2025-8426",
-      "epss": 0.3937,
-      "percentile": 0.97134,
-      "poc_count": 0,
-      "summary": ""
-    },
-    {
       "cve": "CVE-2025-8518",
       "epss": 0.33903,
-      "percentile": 0.96792,
+      "percentile": 0.96794,
       "poc_count": 1,
       "summary": "A vulnerability was found in givanz Vvveb 1.0.5. It has been rated as critical. Affected by this issue is the function Save of the file admin/controller/editor/code.php of the component Code Editor. The manipulation l..."
     },
     {
-      "cve": "CVE-2025-8868",
-      "epss": 0.17119,
-      "percentile": 0.94767,
-      "poc_count": 0,
-      "summary": ""
-    },
-    {
       "cve": "CVE-2025-8730",
       "epss": 0.11861,
-      "percentile": 0.93477,
+      "percentile": 0.93482,
       "poc_count": 2,
       "summary": "A vulnerability was found in Belkin F9K1009 and F9K1010 2.00.04/2.00.09 and classified as critical. Affected by this issue is some unknown functionality of the component Web Interface. The manipulation leads to hard-c..."
     },
     {
       "cve": "CVE-2025-7795",
       "epss": 0.096,
-      "percentile": 0.92596,
+      "percentile": 0.926,
       "poc_count": 3,
       "summary": "A vulnerability, which was classified as critical, has been found in Tenda FH451 1.0.0.9. Affected by this issue is the function fromP2pListFilter of the file /goform/P2pListFilter. The manipulation of the argument pa..."
     },
     {
       "cve": "CVE-2025-9090",
-      "epss": 0.08297,
-      "percentile": 0.91936,
+      "epss": 0.0924,
+      "percentile": 0.92438,
       "poc_count": 4,
       "summary": "A vulnerability was identified in Tenda AC20 16.03.08.12. Affected is the function websFormDefine of the file /goform/telnet of the component Telnet Service. The manipulation leads to command injection. It is possible..."
     },
     {
       "cve": "CVE-2025-8085",
       "epss": 0.07832,
-      "percentile": 0.91659,
+      "percentile": 0.91666,
       "poc_count": 1,
       "summary": "The Ditty WordPress plugin before 3.1.58 lacks authorization and authentication for requests to its displayItems endpoint, allowing unauthenticated visitors to make requests to arbitrary URLs."
     }

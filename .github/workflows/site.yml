@@ -11,6 +11,7 @@ on:
       - 'scripts/**'
       - 'templates/**'
       - 'docs/assets/**'
+      - 'README.md'
       - 'requirements.txt'
       - '.github/workflows/site.yml'
 

@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>CVE PoC Hub</title>
+  <link rel="icon" href="/favicon.ico" />
   <link rel="stylesheet" href="/style.css" />
   <script defer src="/assets/site.js"></script>
 </head>
@@ -21,17 +22,16 @@
   <main class="wrap">
 <section class="hero hero-signal" data-search-root>
   <div class="hero-meta">
-    <p class="eyebrow">Signal-first</p>
-    <h1>Search PoCs, KEV, and EPSS without the clutter</h1>
-    <p class="lede">Built for fast triage. One page, no badges, no filler.</p>
+    <h1>CVE PoC Hub</h1>
+    <p class="lede">Search PoCs, KEV, and EPSS quickly—no filler.</p>
   </div>
   <form class="searchForm" action="#">
     <input type="text" class="search" placeholder="Search CVE, vendor, product, or keyword" autocomplete="off">
   </form>
   <div class="stat-row">
-    <div class="stat"><strong>1478</strong><span>KEV entries tracked</span></div>
-    <div class="stat"><strong>10</strong><span>High-EPSS not in KEV</span></div>
-    <div class="stat"><strong>18</strong><span>New KEV in last 30 days</span></div>
+    <div class="stat"><strong>264</strong><span>KEV entries tracked</span></div>
+    <div class="stat"><strong>6</strong><span>High-EPSS not in KEV</span></div>
+    <div class="stat"><strong>1</strong><span>New KEV in last 30 days</span></div>
   </div>
   <div class="search-results" data-results style="display:none">
     <div class="header">
@@ -56,193 +56,131 @@
 <section class="section">
   <div class="section-header">
     <h1>Trending PoCs</h1>
-    <span class="muted">Recent GitHub movement (last 4 days, sorted by stars)</span>
+    <span class="muted">Pulled from the current-year table in README.md</span>
   </div>
   <div class="table-wrap" data-trending>
     <table>
-      <thead>
-        <tr><th>Stars</th><th>Updated</th><th>Name</th><th>Description</th></tr>
-      </thead>
+      <thead><tr><th>Stars</th><th>Updated</th><th>Name</th><th>Description</th></tr></thead>
       <tbody id="trending-body">
-        <tr><td colspan="4" class="muted">Loading trending PoCs…</td></tr>
-      </tbody>
-    </table>
-  </div>
-</section>
-
-
-<section class="section">
-  <div class="section-header">
-    <h1>Latest KEV additions</h1>
-    <span class="muted">Last 30 days</span>
-  </div>
-  <div class="table-wrap">
-    <table data-require-poc data-require-desc>
-      <thead>
-        <tr><th>CVE</th><th>Vendor</th><th>Product</th><th>EPSS</th><th>Percentile</th><th>Date Added</th><th>Due</th></tr>
-      </thead>
-      <tbody>
         <tr>
-          <td class="cve-cell"><a href="/cve/?id=CVE-2025-59718">CVE-2025-59718</a></td>
-          <td>Fortinet</td>
-          <td>Multiple Products</td>
-          <td>0.000</td>
-          <td> 0th</td>
-          <td>2025-12-16</td>
-          <td>2025-12-23</td>
+          <td>1241</td>
+          <td>2 hours ago</td>
+          <td><a href="https://github.com/msanft/CVE-2025-55182" target="_blank">CVE-2025-55182</a></td>
+          <td class="mono">Explanation and full RCE PoC for CVE-2025-55182</td>
         </tr>
         <tr>
-          <td class="cve-cell"><a href="/cve/?id=CVE-2025-14611">CVE-2025-14611</a></td>
-          <td>Gladinet</td>
-          <td>CentreStack and Triofox</td>
-          <td>0.000</td>
-          <td> 0th</td>
-          <td>2025-12-15</td>
-          <td>2026-01-05</td>
+          <td>775</td>
+          <td>3 hours ago</td>
+          <td><a href="https://github.com/ejpir/CVE-2025-55182-research" target="_blank">CVE-2025-55182-research</a></td>
+          <td class="mono">CVE-2025-55182 POC</td>
         </tr>
         <tr>
-          <td class="cve-cell"><a href="/cve/?id=CVE-2025-43529">CVE-2025-43529</a></td>
-          <td>Apple</td>
-          <td>Multiple Products</td>
-          <td>0.000</td>
-          <td> 0th</td>
-          <td>2025-12-15</td>
-          <td>2026-01-05</td>
+          <td>495</td>
+          <td>8 days ago</td>
+          <td><a href="https://github.com/WyAtu/CVE-2018-20250" target="_blank">CVE-2018-20250</a></td>
+          <td class="mono">exp for https://research.checkpoint.com/extracting-code-execution-from-winrar</td>
         </tr>
         <tr>
-          <td class="cve-cell"><a href="/cve/?id=CVE-2018-4063">CVE-2018-4063</a></td>
-          <td>Sierra Wireless</td>
-          <td>AirLink ALEOS</td>
-          <td>0.000</td>
-          <td> 0th</td>
-          <td>2025-12-12</td>
-          <td>2026-01-02</td>
+          <td>607</td>
+          <td>20 hours ago</td>
+          <td><a href="https://github.com/mverschu/CVE-2025-33073" target="_blank">CVE-2025-33073</a></td>
+          <td class="mono">PoC Exploit for the NTLM reflection SMB flaw.</td>
         </tr>
         <tr>
-          <td class="cve-cell"><a href="/cve/?id=CVE-2025-14174">CVE-2025-14174</a></td>
-          <td>Google</td>
-          <td>Chromium</td>
-          <td>0.000</td>
-          <td> 0th</td>
-          <td>2025-12-12</td>
-          <td>2026-01-02</td>
+          <td>496</td>
+          <td>4 days ago</td>
+          <td><a href="https://github.com/pr0v3rbs/CVE-2025-32463_chwoot" target="_blank">CVE-2025-32463_chwoot</a></td>
+          <td class="mono">Escalation of Privilege to the root through sudo binary with chroot option. CVE-2025-32463</td>
         </tr>
         <tr>
-          <td class="cve-cell"><a href="/cve/?id=CVE-2025-58360">CVE-2025-58360</a></td>
-          <td>OSGeo</td>
-          <td>GeoServer</td>
-          <td>0.000</td>
-          <td> 0th</td>
-          <td>2025-12-11</td>
-          <td>2026-01-01</td>
+          <td>419</td>
+          <td>5 hours ago</td>
+          <td><a href="https://github.com/kh4sh3i/CVE-2025-32463" target="_blank">CVE-2025-32463</a></td>
+          <td class="mono">Local Privilege Escalation to Root via Sudo chroot in Linux</td>
         </tr>
         <tr>
-          <td class="cve-cell"><a href="/cve/?id=CVE-2025-6218">CVE-2025-6218</a></td>
-          <td>RARLAB</td>
-          <td>WinRAR</td>
-          <td>0.000</td>
-          <td> 0th</td>
-          <td>2025-12-09</td>
-          <td>2025-12-30</td>
+          <td>305</td>
+          <td>1 day ago</td>
+          <td><a href="https://github.com/soltanali0/CVE-2025-53770-Exploit" target="_blank">CVE-2025-53770-Exploit</a></td>
+          <td class="mono">SharePoint WebPart Injection Exploit Tool</td>
         </tr>
         <tr>
-          <td class="cve-cell"><a href="/cve/?id=CVE-2025-62221">CVE-2025-62221</a></td>
-          <td>Microsoft</td>
-          <td>Windows</td>
-          <td>0.000</td>
-          <td> 0th</td>
-          <td>2025-12-09</td>
-          <td>2025-12-30</td>
+          <td>289</td>
+          <td>4 hours ago</td>
+          <td><a href="https://github.com/emredavut/CVE-2025-55182" target="_blank">CVE-2025-55182</a></td>
+          <td class="mono">RSC/Next.js RCE Vulnerability Detector &amp; PoC Chrome Extension – CVE-2025-55182 &amp; CVE-2025-66478</td>
         </tr>
         <tr>
-          <td class="cve-cell"><a href="/cve/?id=CVE-2022-37055">CVE-2022-37055</a></td>
-          <td>D-Link</td>
-          <td>Routers</td>
-          <td>0.000</td>
-          <td> 0th</td>
-          <td>2025-12-08</td>
-          <td>2025-12-29</td>
+          <td>901</td>
+          <td>1 hour ago</td>
+          <td><a href="https://github.com/lachlan2k/React2Shell-CVE-2025-55182-original-poc" target="_blank">React2Shell-CVE-2025-55182-original-poc</a></td>
+          <td class="mono">Original Proof-of-Concepts for React2Shell CVE-2025-55182</td>
         </tr>
         <tr>
-          <td class="cve-cell"><a href="/cve/?id=CVE-2025-66644">CVE-2025-66644</a></td>
-          <td>Array Networks</td>
-          <td>ArrayOS AG</td>
-          <td>0.000</td>
-          <td> 0th</td>
-          <td>2025-12-08</td>
-          <td>2025-12-29</td>
+          <td>386</td>
+          <td>4 days ago</td>
+          <td><a href="https://github.com/0x6rss/CVE-2025-24071_PoC" target="_blank">CVE-2025-24071_PoC</a></td>
+          <td class="mono">CVE-2025-24071: NTLM Hash Leak via RAR/ZIP Extraction and .library-ms File</td>
         </tr>
         <tr>
-          <td class="cve-cell"><a href="/cve/?id=CVE-2025-55182">CVE-2025-55182</a></td>
-          <td>Meta</td>
-          <td>React Server Components</td>
-          <td>0.000</td>
-          <td> 0th</td>
-          <td>2025-12-05</td>
-          <td>2025-12-12</td>
+          <td>207</td>
+          <td>1 day ago</td>
+          <td><a href="https://github.com/leesh3288/CVE-2025-32023" target="_blank">CVE-2025-32023</a></td>
+          <td class="mono">PoC &amp; Exploit for CVE-2025-32023 / PlaidCTF 2025 &#34;Zerodeo&#34;</td>
         </tr>
         <tr>
-          <td class="cve-cell"><a href="/cve/?id=CVE-2021-26828">CVE-2021-26828</a></td>
-          <td>OpenPLC</td>
-          <td>ScadaBR</td>
-          <td>0.000</td>
-          <td> 0th</td>
-          <td>2025-12-03</td>
-          <td>2025-12-24</td>
+          <td>396</td>
+          <td>6 days ago</td>
+          <td><a href="https://github.com/yuuouu/ColorOS-CVE-2025-10184" target="_blank">ColorOS-CVE-2025-10184</a></td>
+          <td class="mono">ColorOS短信漏洞，以及用户自救方案</td>
         </tr>
         <tr>
-          <td class="cve-cell"><a href="/cve/?id=CVE-2025-48572">CVE-2025-48572</a></td>
-          <td>Android</td>
-          <td>Framework</td>
-          <td>0.000</td>
-          <td> 0th</td>
-          <td>2025-12-02</td>
-          <td>2025-12-23</td>
+          <td>180</td>
+          <td>6 days ago</td>
+          <td><a href="https://github.com/absholi7ly/POC-CVE-2025-24813" target="_blank">POC-CVE-2025-24813</a></td>
+          <td class="mono">his repository contains an automated Proof of Concept (PoC) script for exploiting **CVE-2025-24813**, a Remote Code Execution (RCE) vulnerability in Apache Tomcat. The vulnerability allows an attacker to upload a malicious serialized payload to the server, leading to arbitrary code execution via deserialization when specific conditions are met.</td>
         </tr>
         <tr>
-          <td class="cve-cell"><a href="/cve/?id=CVE-2025-48633">CVE-2025-48633</a></td>
-          <td>Android</td>
-          <td>Framework</td>
-          <td>0.000</td>
-          <td> 0th</td>
-          <td>2025-12-02</td>
-          <td>2025-12-23</td>
+          <td>256</td>
+          <td>15 minutes ago</td>
+          <td><a href="https://github.com/zack0x01/CVE-2025-55182-advanced-scanner-" target="_blank">CVE-2025-55182-advanced-scanner-</a></td>
+          <td class="mono"></td>
         </tr>
         <tr>
-          <td class="cve-cell"><a href="/cve/?id=CVE-2021-26829">CVE-2021-26829</a></td>
-          <td>OpenPLC</td>
-          <td>ScadaBR</td>
-          <td>0.000</td>
-          <td> 0th</td>
-          <td>2025-11-28</td>
-          <td>2025-12-19</td>
+          <td>357</td>
+          <td>1 hour ago</td>
+          <td><a href="https://github.com/Malayke/Next.js-RSC-RCE-Scanner-CVE-2025-66478" target="_blank">Next.js-RSC-RCE-Scanner-CVE-2025-66478</a></td>
+          <td class="mono">A command-line scanner for batch detection of Next.js application versions and determining if they are affected by CVE-2025-66478 vulnerability.</td>
         </tr>
         <tr>
-          <td class="cve-cell"><a href="/cve/?id=CVE-2025-61757">CVE-2025-61757</a></td>
-          <td>Oracle</td>
-          <td>Fusion Middleware</td>
-          <td>0.000</td>
-          <td> 0th</td>
-          <td>2025-11-21</td>
-          <td>2025-12-12</td>
+          <td>198</td>
+          <td>4 days ago</td>
+          <td><a href="https://github.com/ThumpBo/CVE-2025-30208-EXP" target="_blank">CVE-2025-30208-EXP</a></td>
+          <td class="mono">CVE-2025-30208-EXP</td>
         </tr>
         <tr>
-          <td class="cve-cell"><a href="/cve/?id=CVE-2025-13223">CVE-2025-13223</a></td>
-          <td>Google</td>
-          <td>Chromium V8</td>
-          <td>0.000</td>
-          <td> 0th</td>
-          <td>2025-11-19</td>
-          <td>2025-12-10</td>
+          <td>73</td>
+          <td>6 days ago</td>
+          <td><a href="https://github.com/4daysday/cve-2025-8088" target="_blank">cve-2025-8088</a></td>
+          <td class="mono">Path traversal tool based on cve-2025-8088</td>
         </tr>
         <tr>
-          <td class="cve-cell"><a href="/cve/?id=CVE-2025-58034">CVE-2025-58034</a></td>
-          <td>Fortinet</td>
-          <td>FortiWeb</td>
-          <td>0.000</td>
-          <td> 0th</td>
-          <td>2025-11-18</td>
-          <td>2025-11-25</td>
+          <td>163</td>
+          <td>1 day ago</td>
+          <td><a href="https://github.com/ZeroMemoryEx/CVE-2025-26125" target="_blank">CVE-2025-26125</a></td>
+          <td class="mono">( 0day ) Local Privilege Escalation in IObit Malware Fighter</td>
+        </tr>
+        <tr>
+          <td>153</td>
+          <td>8 days ago</td>
+          <td><a href="https://github.com/hoefler02/CVE-2025-21756" target="_blank">CVE-2025-21756</a></td>
+          <td class="mono">Exploit for CVE-2025-21756 for Linux kernel 6.6.75. My first linux kernel exploit!</td>
+        </tr>
+        <tr>
+          <td>136</td>
+          <td>27 days ago</td>
+          <td><a href="https://github.com/platsecurity/CVE-2025-32433" target="_blank">CVE-2025-32433</a></td>
+          <td class="mono">CVE-2025-32433 https://github.com/erlang/otp/security/advisories/GHSA-37cp-fgq5-7wc2</td>
         </tr>
       </tbody>
     </table>
@@ -259,13 +197,6 @@
       <thead><tr><th>CVE</th><th>EPSS</th><th>Percentile</th><th>PoCs</th><th>Summary</th></tr></thead>
       <tbody>
         <tr>
-          <td class="cve-cell"><a href="/cve/?id=CVE-2025-9316">CVE-2025-9316</a></td>
-          <td>0.787</td>
-          <td>99th</td>
-          <td>0</td>
-          <td class="mono">No public description yet.</td>
-        </tr>
-        <tr>
           <td class="cve-cell"><a href="/cve/?id=CVE-2025-8943">CVE-2025-8943</a></td>
           <td>0.658</td>
           <td>98th</td>
@@ -273,32 +204,11 @@
           <td class="mono">The Custom MCPs feature is designed to execute OS commands, for instance, using tools like `npx` to spin up local MCP Servers. However, Flowise&#39;s inherent authentication and authorization model is minimal and lacks ro...</td>
         </tr>
         <tr>
-          <td class="cve-cell"><a href="/cve/?id=CVE-2025-8489">CVE-2025-8489</a></td>
-          <td>0.433</td>
-          <td>97th</td>
-          <td>0</td>
-          <td class="mono">No public description yet.</td>
-        </tr>
-        <tr>
-          <td class="cve-cell"><a href="/cve/?id=CVE-2025-8426">CVE-2025-8426</a></td>
-          <td>0.394</td>
-          <td>97th</td>
-          <td>0</td>
-          <td class="mono">No public description yet.</td>
-        </tr>
-        <tr>
           <td class="cve-cell"><a href="/cve/?id=CVE-2025-8518">CVE-2025-8518</a></td>
           <td>0.339</td>
           <td>97th</td>
           <td>1</td>
           <td class="mono">A vulnerability was found in givanz Vvveb 1.0.5. It has been rated as critical. Affected by this issue is the function Save of the file admin/controller/editor/code.php of the component Code Editor. The manipulation l...</td>
-        </tr>
-        <tr>
-          <td class="cve-cell"><a href="/cve/?id=CVE-2025-8868">CVE-2025-8868</a></td>
-          <td>0.171</td>
-          <td>95th</td>
-          <td>0</td>
-          <td class="mono">No public description yet.</td>
         </tr>
         <tr>
           <td class="cve-cell"><a href="/cve/?id=CVE-2025-8730">CVE-2025-8730</a></td>
@@ -316,7 +226,7 @@
         </tr>
         <tr>
           <td class="cve-cell"><a href="/cve/?id=CVE-2025-9090">CVE-2025-9090</a></td>
-          <td>0.083</td>
+          <td>0.092</td>
           <td>92th</td>
           <td>4</td>
           <td class="mono">A vulnerability was identified in Tenda AC20 16.03.08.12. Affected is the function websFormDefine of the file /goform/telnet of the component Telnet Service. The manipulation leads to command injection. It is possible...</td>
@@ -332,7 +242,6 @@
     </table>
   </div>
 </section>
-
   </main>
   <footer class="site-footer">
     <div class="wrap">

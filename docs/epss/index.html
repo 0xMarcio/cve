@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>CVE PoC Hub</title>
+  <link rel="icon" href="/favicon.ico" />
   <link rel="stylesheet" href="/style.css" />
   <script defer src="/assets/site.js"></script>
 </head>
@@ -26,16 +27,9 @@
   </div>
   <input type="search" placeholder="Filter CVE" data-filter-table="epss-table" class="filter" />
   <div class="table-responsive">
-    <table class="list" id="epss-table" data-require-poc data-require-desc>
+    <table class="list" id="epss-table">
       <thead><tr><th>CVE</th><th>EPSS</th><th>Percentile</th><th>PoCs</th><th>Summary</th></tr></thead>
       <tbody>
-        <tr>
-          <td class="cve-cell"><a href="/cve/?id=CVE-2025-9316">CVE-2025-9316</a></td>
-          <td>0.787</td>
-          <td>99th</td>
-          <td>0</td>
-          <td class="mono">No public description yet.</td>
-        </tr>
         <tr>
           <td class="cve-cell"><a href="/cve/?id=CVE-2025-8943">CVE-2025-8943</a></td>
           <td>0.658</td>
@@ -44,32 +38,11 @@
           <td class="mono">The Custom MCPs feature is designed to execute OS commands, for instance, using tools like `npx` to spin up local MCP Servers. However, Flowise&#39;s inherent authentication and authorization model is minimal and lacks ro...</td>
         </tr>
         <tr>
-          <td class="cve-cell"><a href="/cve/?id=CVE-2025-8489">CVE-2025-8489</a></td>
-          <td>0.433</td>
-          <td>97th</td>
-          <td>0</td>
-          <td class="mono">No public description yet.</td>
-        </tr>
-        <tr>
-          <td class="cve-cell"><a href="/cve/?id=CVE-2025-8426">CVE-2025-8426</a></td>
-          <td>0.394</td>
-          <td>97th</td>
-          <td>0</td>
-          <td class="mono">No public description yet.</td>
-        </tr>
-        <tr>
           <td class="cve-cell"><a href="/cve/?id=CVE-2025-8518">CVE-2025-8518</a></td>
           <td>0.339</td>
           <td>97th</td>
           <td>1</td>
           <td class="mono">A vulnerability was found in givanz Vvveb 1.0.5. It has been rated as critical. Affected by this issue is the function Save of the file admin/controller/editor/code.php of the component Code Editor. The manipulation l...</td>
-        </tr>
-        <tr>
-          <td class="cve-cell"><a href="/cve/?id=CVE-2025-8868">CVE-2025-8868</a></td>
-          <td>0.171</td>
-          <td>95th</td>
-          <td>0</td>
-          <td class="mono">No public description yet.</td>
         </tr>
         <tr>
           <td class="cve-cell"><a href="/cve/?id=CVE-2025-8730">CVE-2025-8730</a></td>
@@ -87,7 +60,7 @@
         </tr>
         <tr>
           <td class="cve-cell"><a href="/cve/?id=CVE-2025-9090">CVE-2025-9090</a></td>
-          <td>0.083</td>
+          <td>0.092</td>
           <td>92th</td>
           <td>4</td>
           <td class="mono">A vulnerability was identified in Tenda AC20 16.03.08.12. Affected is the function websFormDefine of the file /goform/telnet of the component Telnet Service. The manipulation leads to command injection. It is possible...</td>

@@ -3,155 +3,49 @@
   "generated": "2025-12-17",
   "new_high_epss": [
     {
-      "cve": "CVE-2025-9316",
-      "epss": 0.78706,
-      "percentile": 0.98995,
-      "poc_count": 0,
-      "summary": ""
-    },
-    {
       "cve": "CVE-2025-8943",
       "epss": 0.6583,
-      "percentile": 0.9843,
+      "percentile": 0.98431,
       "poc_count": 1,
       "summary": "The Custom MCPs feature is designed to execute OS commands, for instance, using tools like `npx` to spin up local MCP Servers. However, Flowise's inherent authentication and authorization model is minimal and lacks ro..."
     },
     {
-      "cve": "CVE-2025-8489",
-      "epss": 0.43315,
-      "percentile": 0.97363,
-      "poc_count": 0,
-      "summary": ""
-    },
-    {
-      "cve": "CVE-2025-8426",
-      "epss": 0.3937,
-      "percentile": 0.97134,
-      "poc_count": 0,
-      "summary": ""
-    },
-    {
       "cve": "CVE-2025-8518",
       "epss": 0.33903,
-      "percentile": 0.96792,
+      "percentile": 0.96794,
       "poc_count": 1,
       "summary": "A vulnerability was found in givanz Vvveb 1.0.5. It has been rated as critical. Affected by this issue is the function Save of the file admin/controller/editor/code.php of the component Code Editor. The manipulation l..."
     },
     {
-      "cve": "CVE-2025-8868",
-      "epss": 0.17119,
-      "percentile": 0.94767,
-      "poc_count": 0,
-      "summary": ""
-    },
-    {
       "cve": "CVE-2025-8730",
       "epss": 0.11861,
-      "percentile": 0.93477,
+      "percentile": 0.93482,
       "poc_count": 2,
       "summary": "A vulnerability was found in Belkin F9K1009 and F9K1010 2.00.04/2.00.09 and classified as critical. Affected by this issue is some unknown functionality of the component Web Interface. The manipulation leads to hard-c..."
     },
     {
       "cve": "CVE-2025-7795",
       "epss": 0.096,
-      "percentile": 0.92596,
+      "percentile": 0.926,
       "poc_count": 3,
       "summary": "A vulnerability, which was classified as critical, has been found in Tenda FH451 1.0.0.9. Affected by this issue is the function fromP2pListFilter of the file /goform/P2pListFilter. The manipulation of the argument pa..."
     },
     {
       "cve": "CVE-2025-9090",
-      "epss": 0.08297,
-      "percentile": 0.91936,
+      "epss": 0.0924,
+      "percentile": 0.92438,
       "poc_count": 4,
       "summary": "A vulnerability was identified in Tenda AC20 16.03.08.12. Affected is the function websFormDefine of the file /goform/telnet of the component Telnet Service. The manipulation leads to command injection. It is possible..."
     },
     {
       "cve": "CVE-2025-8085",
       "epss": 0.07832,
-      "percentile": 0.91659,
+      "percentile": 0.91666,
       "poc_count": 1,
       "summary": "The Ditty WordPress plugin before 3.1.58 lacks authorization and authentication for requests to its displayItems endpoint, allowing unauthenticated visitors to make requests to arbitrary URLs."
     }
   ],
   "new_kev_entries": [
-    {
-      "cve": "CVE-2025-59718",
-      "date_added": "2025-12-16",
-      "due_date": "2025-12-23",
-      "epss": null,
-      "notes": "https://fortiguard.fortinet.com/psirt/FG-IR-25-647 ; https://docs.fortinet.com/upgrade-tool/fortigate ; https://nvd.nist.gov/vuln/detail/CVE-2025-59718",
-      "percentile": null,
-      "poc_count": 0,
-      "product": "Multiple Products",
-      "required_action": "Apply mitigations per vendor instructions, follow applicable BOD 22-01 guidance for cloud services, or discontinue use of the product if mitigations are unavailable.",
-      "short_description": "Fortinet FortiOS, FortiSwitchMaster, FortiProxy, and FortiWeb contain an improper verification of cryptographic signature vulnerability that may allow an unauthenticated attacker to bypass the FortiCloud SSO login authentication via a crafted SAML message. Please be aware that CVE-2025-59719 pertains to the same problem and is mentioned in the same vendor advisory. Ensure to apply all patches mentioned in the advisory.",
-      "vendor": "Fortinet"
-    },
-    {
-      "cve": "CVE-2025-14611",
-      "date_added": "2025-12-15",
-      "due_date": "2026-01-05",
-      "epss": null,
-      "notes": "https://www.centrestack.com/p/gce_latest_release.html ; https://access.triofox.com/releases_history/; https://support.centrestack.com/hc/en-us/articles/360007159054-Hardening-the-CentreStack-Cluster#h_01JQRV57T37HJFQZKBZH9NBXQP ; https://nvd.nist.gov/vuln/detail/CVE-2025-14611",
-      "percentile": null,
-      "poc_count": 0,
-      "product": "CentreStack and Triofox",
-      "required_action": "Apply mitigations per vendor instructions, follow applicable BOD 22-01 guidance for cloud services, or discontinue use of the product if mitigations are unavailable.",
-      "short_description": "Gladinet CentreStack and TrioFox contain a hardcoded cryptographic keys vulnerability for their implementation of the AES cryptoscheme. This vulnerability degrades security for public exposed endpoints that may make use of it and may offer arbitrary local file inclusion when provided a specially crafted request without authentication.",
-      "vendor": "Gladinet"
-    },
-    {
-      "cve": "CVE-2025-43529",
-      "date_added": "2025-12-15",
-      "due_date": "2026-01-05",
-      "epss": null,
-      "notes": "https://support.apple.com/en-us/125884 ; https://support.apple.com/en-us/125892 ; https://support.apple.com/en-us/125885 ; https://support.apple.com/en-us/125886 ; https://support.apple.com/en-us/125889 ; https://nvd.nist.gov/vuln/detail/CVE-2025-43529",
-      "percentile": null,
-      "poc_count": 0,
-      "product": "Multiple Products",
-      "required_action": "Apply mitigations per vendor instructions, follow applicable BOD 22-01 guidance for cloud services, or discontinue use of the product if mitigations are unavailable.",
-      "short_description": "Apple iOS, iPadOS, macOS, and other Apple products contain a use-after-free vulnerability in WebKit. Processing maliciously crafted web content may lead to memory corruption. This vulnerability could impact HTML parsers that use WebKit, including but not limited to Apple Safari and non-Apple products which rely on WebKit for HTML processing.",
-      "vendor": "Apple"
-    },
-    {
-      "cve": "CVE-2018-4063",
-      "date_added": "2025-12-12",
-      "due_date": "2026-01-02",
-      "epss": null,
-      "notes": "https://www.cisa.gov/news-events/ics-advisories/icsa-19-122-03 ; https://source.sierrawireless.com/resources/airlink/software_reference_docs/technical-bulletin/sierra-wireless-technical-bulletin---swi-psa-2019-003 ; https://source.sierrawireless.com/resources/airlink/hardware_reference_docs/airlink_es450_eol ; https://nvd.nist.gov/vuln/detail/CVE-2018-4063",
-      "percentile": null,
-      "poc_count": 2,
-      "product": "AirLink ALEOS",
-      "required_action": "Apply mitigations per vendor instructions, follow applicable BOD 22-01 guidance for cloud services, or discontinue use of the product if mitigations are unavailable.",
-      "short_description": "Sierra Wireless AirLink ALEOS contains an unrestricted upload of file with dangerous type vulnerability. A specially crafted HTTP request can upload a file, resulting in executable code being uploaded, and routable, to the webserver. An attacker can make an authenticated HTTP request to trigger this vulnerability. The impacted product could be end-of-life (EoL) and/or end-of-service (EoS). Users should discontinue product utilization.",
-      "vendor": "Sierra Wireless"
-    },
-    {
-      "cve": "CVE-2025-14174",
-      "date_added": "2025-12-12",
-      "due_date": "2026-01-02",
-      "epss": null,
-      "notes": "https://chromereleases.googleblog.com/2025/12/stable-channel-update-for-desktop_10.html ; https://learn.microsoft.com/en-us/deployedge/microsoft-edge-relnotes-security ; https://nvd.nist.gov/vuln/detail/CVE-2025-14174",
-      "percentile": null,
-      "poc_count": 0,
-      "product": "Chromium",
-      "required_action": "Apply mitigations per vendor instructions, follow applicable BOD 22-01 guidance for cloud services, or discontinue use of the product if mitigations are unavailable.",
-      "short_description": "Google Chromium contains an out of bounds memory access vulnerability in ANGLE that could allow a remote attacker to perform out of bounds memory access via a crafted HTML page. This vulnerability could affect multiple web browsers that utilize Chromium, including, but not limited to, Google Chrome, Microsoft Edge, and Opera.",
-      "vendor": "Google"
-    },
-    {
-      "cve": "CVE-2025-58360",
-      "date_added": "2025-12-11",
-      "due_date": "2026-01-01",
-      "epss": null,
-      "notes": "This vulnerability affects an open-source component, third-party library, or a protocol used by different products. For more information, please see: https://github.com/geoserver/geoserver/security/advisories/GHSA-fjf5-xgmq-5525 ; https://osgeo-org.atlassian.net/browse/GEOS-11922 ; https://nvd.nist.gov/vuln/detail/CVE-2025-58360",
-      "percentile": null,
-      "poc_count": 0,
-      "product": "GeoServer",
-      "required_action": "Apply mitigations per vendor instructions, follow applicable BOD 22-01 guidance for cloud services, or discontinue use of the product if mitigations are unavailable.",
-      "short_description": "OSGeo GeoServer contains an improper restriction of XML external entity reference vulnerability that occurs when the application accepts XML input through a specific endpoint /geoserver/wms operation GetMap and could allow an attacker to define external entities within the XML request.",
-      "vendor": "OSGeo"
-    },
     {
       "cve": "CVE-2025-6218",
       "date_added": "2025-12-09",
@@ -164,149 +58,6 @@
       "required_action": "Apply mitigations per vendor instructions, follow applicable BOD 22-01 guidance for cloud services, or discontinue use of the product if mitigations are unavailable.",
       "short_description": "RARLAB WinRAR contains a path traversal vulnerability allowing an attacker to execute code in the context of the current user.",
       "vendor": "RARLAB"
-    },
-    {
-      "cve": "CVE-2025-62221",
-      "date_added": "2025-12-09",
-      "due_date": "2025-12-30",
-      "epss": null,
-      "notes": "https://msrc.microsoft.com/update-guide/en-US/vulnerability/CVE-2025-62221 ; https://nvd.nist.gov/vuln/detail/CVE-2025-62221",
-      "percentile": null,
-      "poc_count": 0,
-      "product": "Windows",
-      "required_action": "Apply mitigations per vendor instructions, follow applicable BOD 22-01 guidance for cloud services, or discontinue use of the product if mitigations are unavailable.",
-      "short_description": "Microsoft Windows Cloud Files Mini Filter Driver contains a use after free vulnerability that can allow an authorized attacker to elevate privileges locally.",
-      "vendor": "Microsoft"
-    },
-    {
-      "cve": "CVE-2022-37055",
-      "date_added": "2025-12-08",
-      "due_date": "2025-12-29",
-      "epss": null,
-      "notes": "https://supportannouncement.us.dlink.com/security/publication.aspx?name=SAP10308 ; https://nvd.nist.gov/vuln/detail/CVE-2022-37055",
-      "percentile": null,
-      "poc_count": 2,
-      "product": "Routers",
-      "required_action": "Apply mitigations per vendor instructions, follow applicable BOD 22-01 guidance for cloud services, or discontinue use of the product if mitigations are unavailable.",
-      "short_description": "D-Link Routers contains a buffer overflow vulnerability that has a high impact on confidentiality, integrity, and availability. The impacted products could be end-of-life (EoL) and/or end-of-service (EoS). Users should discontinue product utilization.",
-      "vendor": "D-Link"
-    },
-    {
-      "cve": "CVE-2025-66644",
-      "date_added": "2025-12-08",
-      "due_date": "2025-12-29",
-      "epss": null,
-      "notes": "https://support.arraynetworks.net/prx/001/http/supportportal.arraynetworks.net/ag.html ; https://www.jpcert.or.jp/at/2025/at250024.html ; https://nvd.nist.gov/vuln/detail/CVE-2025-66644",
-      "percentile": null,
-      "poc_count": 0,
-      "product": "ArrayOS AG",
-      "required_action": "Apply mitigations per vendor instructions, follow applicable BOD 22-01 guidance for cloud services, or discontinue use of the product if mitigations are unavailable.",
-      "short_description": "Array Networks ArrayOS AG contains an OS command injection vulnerability that could allow an attacker to execute arbitrary commands.",
-      "vendor": "Array Networks"
-    },
-    {
-      "cve": "CVE-2025-55182",
-      "date_added": "2025-12-05",
-      "due_date": "2025-12-12",
-      "epss": null,
-      "notes": "Check for signs of potential compromise on all internet accessible REACT instances after applying mitigations. For more information, please see: https://react.dev/blog/2025/12/03/critical-security-vulnerability-in-react-server-components ; https://github.com/vercel-labs/fix-react2shell-next?tab=readme-ov-file ; https://nvd.nist.gov/vuln/detail/CVE-2025-55182",
-      "percentile": null,
-      "poc_count": 0,
-      "product": "React Server Components",
-      "required_action": "Apply mitigations per vendor instructions, follow applicable BOD 22-01 guidance for cloud services, or discontinue use of the product if mitigations are unavailable.",
-      "short_description": "Meta React Server Components contains a remote code execution vulnerability that could allow unauthenticated remote code execution by exploiting a flaw in how React decodes payloads sent to React Server Function endpoints. Please note CVE-2025-66478 has been rejected, but it is associated with CVE-2025- 55182.",
-      "vendor": "Meta"
-    },
-    {
-      "cve": "CVE-2021-26828",
-      "date_added": "2025-12-03",
-      "due_date": "2025-12-24",
-      "epss": null,
-      "notes": "This vulnerability could affect an open-source component, third-party library, protocol, or proprietary implementation that could be used by different products. For more information, please see: https://github.com/SCADA-LTS/Scada-LTS/pull/2174 ; https://nvd.nist.gov/vuln/detail/CVE-2021-26828",
-      "percentile": null,
-      "poc_count": 16,
-      "product": "ScadaBR",
-      "required_action": "Apply mitigations per vendor instructions, follow applicable BOD 22-01 guidance for cloud services, or discontinue use of the product if mitigations are unavailable.",
-      "short_description": "OpenPLC ScadaBR contains an unrestricted upload of file with dangerous type vulnerability that allows remote authenticated users to upload and execute arbitrary JSP files via view_edit.shtm.",
-      "vendor": "OpenPLC"
-    },
-    {
-      "cve": "CVE-2025-48572",
-      "date_added": "2025-12-02",
-      "due_date": "2025-12-23",
-      "epss": null,
-      "notes": "https://source.android.com/docs/security/bulletin/2025-12-01 ; https://nvd.nist.gov/vuln/detail/CVE-2025-48572",
-      "percentile": null,
-      "poc_count": 0,
-      "product": "Framework",
-      "required_action": "Apply mitigations per vendor instructions, follow applicable BOD 22-01 guidance for cloud services, or discontinue use of the product if mitigations are unavailable.",
-      "short_description": "Android Framework contains an unspecified vulnerability that allows for privilege escalation.",
-      "vendor": "Android"
-    },
-    {
-      "cve": "CVE-2025-48633",
-      "date_added": "2025-12-02",
-      "due_date": "2025-12-23",
-      "epss": null,
-      "notes": "https://source.android.com/docs/security/bulletin/2025-12-01 ; https://nvd.nist.gov/vuln/detail/CVE-2025-48633",
-      "percentile": null,
-      "poc_count": 0,
-      "product": "Framework",
-      "required_action": "Apply mitigations per vendor instructions, follow applicable BOD 22-01 guidance for cloud services, or discontinue use of the product if mitigations are unavailable.",
-      "short_description": "Android Framework contains an unspecified vulnerability that allows for information disclosure.",
-      "vendor": "Android"
-    },
-    {
-      "cve": "CVE-2021-26829",
-      "date_added": "2025-11-28",
-      "due_date": "2025-12-19",
-      "epss": null,
-      "notes": "This vulnerability could affect an open-source component, third-party library, protocol, or proprietary implementation that could be used by different products. For more information, please see: https://github.com/SCADA-LTS/Scada-LTS/pull/3211 ; https://nvd.nist.gov/vuln/detail/CVE-2021-26829",
-      "percentile": null,
-      "poc_count": 1,
-      "product": "ScadaBR",
-      "required_action": "Apply mitigations per vendor instructions, follow applicable BOD 22-01 guidance for cloud services, or discontinue use of the product if mitigations are unavailable.",
-      "short_description": "OpenPLC ScadaBR contains a cross-site scripting vulnerability via system_settings.shtm.",
-      "vendor": "OpenPLC"
-    },
-    {
-      "cve": "CVE-2025-61757",
-      "date_added": "2025-11-21",
-      "due_date": "2025-12-12",
-      "epss": null,
-      "notes": "https://www.oracle.com/security-alerts/cpuoct2025.html ; https://nvd.nist.gov/vuln/detail/CVE-2025-61757",
-      "percentile": null,
-      "poc_count": 0,
-      "product": "Fusion Middleware",
-      "required_action": "Apply mitigations per vendor instructions, follow applicable BOD 22-01 guidance for cloud services, or discontinue use of the product if mitigations are unavailable.",
-      "short_description": "Oracle Fusion Middleware contains a missing authentication for critical function vulnerability, allowing unauthenticated remote attackers to take over Identity Manager.",
-      "vendor": "Oracle"
-    },
-    {
-      "cve": "CVE-2025-13223",
-      "date_added": "2025-11-19",
-      "due_date": "2025-12-10",
-      "epss": null,
-      "notes": "https://chromereleases.googleblog.com/2025/11/stable-channel-update-for-desktop_17.html ; https://nvd.nist.gov/vuln/detail/CVE-2025-13223",
-      "percentile": null,
-      "poc_count": 0,
-      "product": "Chromium V8",
-      "required_action": "Apply mitigations per vendor instructions, follow applicable BOD 22-01 guidance for cloud services, or discontinue use of the product if mitigations are unavailable.",
-      "short_description": "Google Chromium V8 contains a type confusion vulnerability that allows for heap corruption.",
-      "vendor": "Google"
-    },
-    {
-      "cve": "CVE-2025-58034",
-      "date_added": "2025-11-18",
-      "due_date": "2025-11-25",
-      "epss": null,
-      "notes": "https://fortiguard.fortinet.com/psirt/FG-IR-25-513 ; https://nvd.nist.gov/vuln/detail/CVE-2025-58034",
-      "percentile": null,
-      "poc_count": 0,
-      "product": "FortiWeb",
-      "required_action": "Apply mitigations per vendor instructions, follow applicable BOD 22-01 guidance for cloud services, or discontinue use of the product if mitigations are unavailable.",
-      "short_description": "Fortinet FortiWeb contains an OS command Injection vulnerability that may allow an authenticated attacker to execute unauthorized code on the underlying system via crafted HTTP requests or CLI commands.",
-      "vendor": "Fortinet"
     }
   ],
   "removed_high_epss": [],

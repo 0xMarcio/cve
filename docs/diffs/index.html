@@ -3,12 +3,12 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>{{ title or 'CVE PoC Hub' }}</title>
+  <title>CVE PoC Hub</title>
   <link rel="icon" href="/favicon.ico" />
   <link rel="stylesheet" href="/style.css" />
   <script defer src="/assets/site.js"></script>
 </head>
-<body class="{{ body_class or '' }}">
+<body class="">
   <header class="site-header">
     <div class="wrap">
       <div class="brand"><a href="/">CVE PoC Hub</a></div>
@@ -20,7 +20,28 @@
     </div>
   </header>
   <main class="wrap">
-    {% block content %}{% endblock %}
+<section class="section">
+  <div class="section-header">
+    <h1>New KEV entries</h1>
+    <span class="muted">Only the recent additions</span>
+  </div>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>CVE</th><th>Vendor</th><th>Product</th><th>EPSS</th><th>Percentile</th><th>Date Added</th><th>Due</th></tr></thead>
+      <tbody>
+        <tr>
+          <td class="cve-cell"><a href="/cve/?id=CVE-2025-6218">CVE-2025-6218</a></td>
+          <td>RARLAB</td>
+          <td>WinRAR</td>
+          <td>0.000</td>
+          <td> 0th</td>
+          <td>2025-12-09</td>
+          <td>2025-12-30</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
   </main>
   <footer class="site-footer">
     <div class="wrap">
@@ -28,6 +49,5 @@
       <span><a href="https://github.com/0xMarcio/cve">GitHub repo</a></span>
     </div>
   </footer>
-  {% block extra_scripts %}{% endblock %}
 </body>
 </html>
