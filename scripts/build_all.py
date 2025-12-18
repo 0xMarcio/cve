@@ -19,7 +19,6 @@ from pipeline_outputs import (
     write_top,
 )
 from poc_pipeline import PoCPipeline, build_scope, persist_evidence
-from site_renderer import SiteRenderer
 from utils import API_DIR, DOCS_DIR, load_json
 
 
@@ -106,10 +105,7 @@ def main(argv: List[str] | None = None) -> int:
     prune_old_snapshots()
     prune_old_diffs()
 
-    renderer = SiteRenderer(results=results, index_payload=index_payload, top_payload=top_payload, diff_payload=diff_payload)
-    renderer.build()
-
-    print(f"Generated site under {DOCS_DIR}")
+    print(f"Wrote pipeline outputs under {DOCS_DIR}")
     print(f"Wrote latest snapshot to {snapshot_path}")
     return 0
 

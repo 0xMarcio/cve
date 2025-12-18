@@ -6,28 +6,11 @@
   <title>{{ title or 'CVE PoC Hub' }}</title>
   <link rel="icon" href="/favicon.ico" />
   <link rel="stylesheet" href="/style.css" />
-  <script defer src="/assets/site.js"></script>
 </head>
 <body class="{{ body_class or '' }}">
-  <header class="site-header">
-    <div class="wrap">
-      <div class="brand"><a href="/">CVE PoC Hub</a></div>
-      <nav>
-        <a href="/search/">PoC Search</a>
-        <a href="/kev/">KEV</a>
-        <a href="/epss/">EPSS</a>
-      </nav>
-    </div>
-  </header>
   <main class="wrap">
     {% block content %}{% endblock %}
   </main>
-  <footer class="site-footer">
-    <div class="wrap">
-      <span>Fast CVE triage without the noise.</span>
-      <span><a href="https://github.com/0xMarcio/cve">GitHub repo</a></span>
-    </div>
-  </footer>
   {% block extra_scripts %}{% endblock %}
 </body>
 </html>

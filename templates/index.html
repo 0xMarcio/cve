@@ -1,15 +1,14 @@
 {% extends "base.html" %}
 {% set body_class = "color-no-search" %}
 {% block content %}
-<section class="hero hero-signal" data-search-root>
-  <div class="hero-meta">
-    <p class="lede">Search by CVE id, vendor, product, or keyword.</p>
-    <div class="pill-row tight">
-      <span class="pill">Linked PoCs</span>
-      <span class="pill">MITRE CVE pages</span>
-      <span class="pill">Vendor / product filters</span>
-      <span class="pill">Supports negative terms (e.g. <strong>-windows</strong>)</span>
-    </div>
+<section class="hero" data-search-root>
+  <h1>Find exploit writeups and PoCs instantly</h1>
+  <p class="lede">Search by CVE id, vendor, product, or keyword.</p>
+  <div class="pill-row tight">
+    <span class="pill">Linked PoCs</span>
+    <span class="pill">MITRE CVE pages</span>
+    <span class="pill">Vendor / product filters</span>
+    <span class="pill">Supports negative terms (e.g. <strong>-windows</strong>)</span>
   </div>
   <form class="searchForm" action="#">
     <input type="text" class="search" placeholder="Search CVE, vendor, product, or keyword" autocomplete="off">
@@ -17,7 +16,6 @@
   <div class="search-results" data-results style="display:none">
     <div class="header">
       <h2>Results</h2>
-      <span class="muted">Filter with negative terms (e.g., -windows)</span>
     </div>
     <div class="noResults">No results yet.</div>
     <div class="results-table hide">
@@ -34,11 +32,8 @@
   </div>
 </section>
 
-<section class="section">
-  <div class="section-header">
-    <h1>Trending PoCs</h1>
-    <span class="muted">Current year, updated in the last 4 days</span>
-  </div>
+<section class="section" data-trending-section>
+  <h2>Latest PoC examples</h2>
   <div class="table-wrap" data-trending>
     <table>
       <thead><tr><th>Stars</th><th>Updated</th><th>Name</th><th>Description</th></tr></thead>
@@ -51,32 +46,7 @@
           <td class="mono">{{ row.desc }}</td>
         </tr>
         {% else %}
-        <tr><td colspan="4" class="muted">No recent PoCs.</td></tr>
-        {% endfor %}
-      </tbody>
-    </table>
-  </div>
-</section>
-
-<section class="section">
-  <div class="section-header">
-    <h1>High EPSS not in KEV</h1>
-    <span class="muted">Sorted by score</span>
-  </div>
-  <div class="table-wrap">
-    <table data-require-poc data-require-desc>
-      <thead><tr><th>CVE</th><th>EPSS</th><th>Percentile</th><th>PoCs</th><th>Summary</th></tr></thead>
-      <tbody>
-        {% for row in data.high_epss %}
-        <tr>
-          <td class="cve-cell"><a href="/cve/?id={{ row.cve }}">{{ row.cve }}</a></td>
-          <td>{{ '%.3f'|format(row.epss or 0) }}</td>
-          <td>{{ '%2.0f'|format((row.percentile or 0)*100) }}th</td>
-          <td>{{ row.poc_count }}</td>
-          <td class="mono">{{ row.summary or 'No public description yet.' }}</td>
-        </tr>
-        {% else %}
-        <tr><td colspan="5">No high-EPSS items outside KEV today.</td></tr>
+        <tr><td colspan="4">No recent PoCs.</td></tr>
         {% endfor %}
       </tbody>
     </table>

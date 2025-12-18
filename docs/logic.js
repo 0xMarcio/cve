@@ -7,6 +7,14 @@ function getSearchRoot() {
     return document.querySelector('[data-search-root]');
 }
 
+function getTrendingSection() {
+    return document.querySelector('[data-trending-section]');
+}
+
+function getTrendingBody() {
+    return document.getElementById('trending-body');
+}
+
 function escapeHTML(str) {
     return str.replace(/[&<>"']/g, match => ({
         '&': '&amp;',
@@ -51,7 +59,7 @@ function toggleDropdown(button) {
 window.toggleDropdown = toggleDropdown;
 
 function getCveLink(cveId) {
-    return `<a href="/cve/?id=${cveId}"><b>${cveId}</b></a>`;
+    return `<a href="https://nvd.nist.gov/vuln/detail/${cveId}" target="_blank"><b>${cveId}</b></a>`;
 }
 
 function prepareDataset(raw) {
@@ -141,6 +149,8 @@ window.controls = controls;
 
 document.addEventListener('DOMContentLoaded', () => {
     const root = getSearchRoot();
+    const trendingSection = getTrendingSection();
+    const trendingBody = getTrendingBody();
     if (!root) return;
 
     const results = root.querySelector('[data-results]');
@@ -160,11 +170,46 @@ document.addEventListener('DOMContentLoaded', () => {
     let currentSet = [];
     let debounceTimer;
 
+    function renderTrending(items) {
+        if (!trendingBody) return;
+        if (!items || items.length === 0) {
+            trendingBody.innerHTML = '<tr><td colspan="4">No recent PoCs.</td></tr>';
+            return;
+        }
+        const rows = items.slice(0, 20).map(item => {
+            const stars = item.stars ?? '';
+            const updated = escapeHTML(item.updated || '');
+            const name = escapeHTML(item.name || '');
+            const url = item.url || '#';
+            const desc = escapeHTML(item.desc || '');
+            return `<tr><td>${stars}</td><td>${updated}</td><td><a href="${url}" target="_blank">${name}</a></td><td class="mono">${desc}</td></tr>`;
+        }).join('');
+        trendingBody.innerHTML = rows;
+    }
+
+    async function loadTrending() {
+        if (!trendingBody) return;
+        try {
+            const res = await fetch('/trending_poc.json', { cache: 'no-store' });
+            if (!res.ok) {
+                throw new Error(`Failed to load trending (${res.status})`);
+            }
+            const data = await res.json();
+            const items = Array.isArray(data) ? data : (data.items || []);
+            renderTrending(items);
+        } catch (err) {
+            console.warn(err.message);
+        }
+    }
+
     function doSearch(event) {
         const val = searchValue.value.trim();
 
         if (val !== '') {
             controls.displayResults(results, resultsTableHideable);
+            if (trendingSection) {
+                trendingSection.style.display = 'none';
+            }
             currentSet = window.controls.doSearch(val, window.dataset || []);
 
             if (currentSet.length < totalLimit) {
@@ -176,6 +221,9 @@ document.addEventListener('DOMContentLoaded', () => {
             controls.hideResults(results, resultsTableHideable);
             window.controls.setColor(colorUpdate, 'no-search');
             noResults.style.display = 'none';
+            if (trendingSection) {
+                trendingSection.style.display = '';
+            }
         }
 
         if (event.type === 'submit') {
@@ -219,4 +267,6 @@ document.addEventListener('DOMContentLoaded', () => {
         clearTimeout(debounceTimer);
         debounceTimer = setTimeout(() => doSearch(event), 200);
     });
+
+    loadTrending();
 });

@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Redirecting…</title>
-  <meta http-equiv="refresh" content="3;url=/" />
+  <meta http-equiv="refresh" content="2;url=/" />
   <link rel="stylesheet" href="/style.css" />
 </head>
 <body class="color-no-search">
@@ -12,27 +12,8 @@
     <section class="hero">
       <p class="eyebrow">Not found</p>
       <h1>Redirecting…</h1>
-      <p class="lede" id="msg">Trying to find the right page.</p>
+      <p class="lede">Page not found. Taking you home.</p>
     </section>
   </main>
-  <script>
-    (function() {
-      const path = window.location.pathname;
-      const cveMatch = path.match(/\\/cve\\/((CVE-\\d{4}-\\d+))\\.html/i);
-      if (cveMatch) {
-        const target = `/cve/?id=${cveMatch[1].toUpperCase()}`;
-        document.getElementById('msg').textContent = `Sending you to ${target}`;
-        window.location.replace(target);
-        return;
-      }
-      const navMatch = path.match(/^\\/(kev|epss|diffs)$/i);
-      if (navMatch) {
-        window.location.replace(`/${navMatch[1].toLowerCase()}/`);
-        return;
-      }
-      document.getElementById('msg').textContent = 'Page not found. Taking you home…';
-      setTimeout(() => window.location.replace('/'), 1500);
-    })();
-  </script>
 </body>
 </html>
