@@ -25,6 +25,10 @@ function escapeHTML(str) {
     }[match]));
 }
 
+function normalizeSearchTerm(value) {
+    return value.toLowerCase().replace(/[^a-z0-9]+/g, '');
+}
+
 function convertLinksToList(links) {
     if (links.length === 0) {
         return '';
@@ -75,8 +79,10 @@ function prepareDataset(raw) {
       })
       .map(entry => {
         const descCleaned = descKeyCleaned(entry);
-        const searchText = `${entry.cve || ''} ${descCleaned}`.toLowerCase();
-        return { ...entry, _searchText: searchText };
+        const pocText = (entry.poc || []).join(' ');
+        const searchText = `${entry.cve || ''} ${descCleaned} ${pocText}`.toLowerCase();
+        const searchTextNormalized = normalizeSearchTerm(searchText);
+        return { ...entry, _searchText: searchText, _searchTextNormalized: searchTextNormalized };
       });
 }
 
@@ -91,15 +97,30 @@ const controls = {
         resultsTableHideable.classList.add('hide');
     },
     doSearch(match, dataset) {
-        const words = match.toLowerCase().split(' ').filter(Boolean);
-        const posmatch = words.filter(word => word[0] !== '-');
-        const negmatch = words.filter(word => word[0] === '-').map(word => word.substring(1));
+        const terms = match.match(/-?"[^"]+"|-?\S+/g) || [];
+        const cleaned = terms.map(term => term.replace(/^(-?)"/, '$1').replace(/"$/, ''));
+        const posmatch = cleaned.filter(term => term && term[0] !== '-');
+        const negmatch = cleaned
+            .filter(term => term && term[0] === '-')
+            .map(term => term.substring(1))
+            .filter(Boolean);
 
         return dataset.filter(e => {
             const combinedText = e._searchText || '';
+            const combinedNormalized = e._searchTextNormalized || '';
 
-            const positiveMatch = posmatch.every(word => combinedText.includes(word));
-            const negativeMatch = negmatch.some(word => combinedText.includes(word));
+            const positiveMatch = posmatch.every(word => {
+                const raw = word.toLowerCase();
+                if (combinedText.includes(raw)) return true;
+                const normalized = normalizeSearchTerm(raw);
+                return normalized ? combinedNormalized.includes(normalized) : false;
+            });
+            const negativeMatch = negmatch.some(word => {
+                const raw = word.toLowerCase();
+                if (combinedText.includes(raw)) return true;
+                const normalized = normalizeSearchTerm(raw);
+                return normalized ? combinedNormalized.includes(normalized) : false;
+            });
 
             return positiveMatch && !negativeMatch;
         });
