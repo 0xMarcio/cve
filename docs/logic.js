@@ -64,21 +64,14 @@ function getCveLink(cveId) {
 
 function prepareDataset(raw) {
     if (!Array.isArray(raw)) return [];
-    const currentYear = new Date().getUTCFullYear();
-    const isRecent = (cve) => {
-        const match = /^CVE-(\d{4})-/i.exec(cve || '');
-        if (!match) return false;
-        const year = parseInt(match[1], 10);
-        return year >= currentYear - 1;
-    };
     const descKeyCleaned = (entry) => {
         const base = entry.desc || '';
         return replaceStrings.reduce((desc, str) => desc.replace(str, ''), base);
     };
     return raw
       .filter(entry => {
-        const desc = (entry.desc || '').trim();
-        return desc && Array.isArray(entry.poc) && entry.poc.length > 0 && isRecent(entry.cve || '');
+        const cve = (entry.cve || '').trim();
+        return cve && Array.isArray(entry.poc) && entry.poc.length > 0;
       })
       .map(entry => {
         const descCleaned = descKeyCleaned(entry);
