@@ -93,6 +93,7 @@ main { padding-top: 1.5rem; }
 .hero {
   display: grid;
   gap: 1rem;
+  margin-top: 2rem;
   padding: 1.25rem 1.25rem 1.5rem;
   border-radius: 18px;
   background: linear-gradient(150deg, rgba(122, 240, 193, 0.08), rgba(111, 179, 255, 0.08));
