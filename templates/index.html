@@ -3,17 +3,17 @@
 {% block content %}
 <section class="hero hero-signal" data-search-root>
   <div class="hero-meta">
-    <h1>CVE PoC Hub</h1>
-    <p class="lede">Search PoCs, KEV, and EPSS quickly—no filler.</p>
+    <p class="lede">Search by CVE id, vendor, product, or keyword.</p>
+    <div class="pill-row tight">
+      <span class="pill">Linked PoCs</span>
+      <span class="pill">MITRE CVE pages</span>
+      <span class="pill">Vendor / product filters</span>
+      <span class="pill">Supports negative terms (e.g. <strong>-windows</strong>)</span>
+    </div>
   </div>
   <form class="searchForm" action="#">
     <input type="text" class="search" placeholder="Search CVE, vendor, product, or keyword" autocomplete="off">
   </form>
-  <div class="stat-row">
-    <div class="stat"><strong>{{ metrics.kev_total }}</strong><span>KEV entries tracked</span></div>
-    <div class="stat"><strong>{{ metrics.high_epss_count }}</strong><span>High-EPSS not in KEV</span></div>
-    <div class="stat"><strong>{{ metrics.recent_kev_count }}</strong><span>New KEV in last 30 days</span></div>
-  </div>
   <div class="search-results" data-results style="display:none">
     <div class="header">
       <h2>Results</h2>
