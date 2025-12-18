@@ -25,8 +25,49 @@ function escapeHTML(str) {
     }[match]));
 }
 
-function normalizeSearchTerm(value) {
-    return value.toLowerCase().replace(/[^a-z0-9]+/g, '');
+function normalizeToSpaces(value) {
+    return value.toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim();
+}
+
+function buildLooseRegex(value) {
+    const compact = value.toLowerCase().replace(/[^a-z0-9]+/g, '');
+    if (compact.length < 4) {
+        return null;
+    }
+    const escaped = compact.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    const pattern = escaped.split('').join('[^a-z0-9]*');
+    return new RegExp(pattern);
+}
+
+function buildMatcher(term) {
+    const raw = term.toLowerCase().trim();
+    if (!raw) return null;
+    const isPhrase = /\s/.test(raw);
+    const normalized = raw.replace(/[^a-z0-9]+/g, '');
+    return {
+        raw,
+        normalized,
+        isPhrase,
+        phrase: isPhrase ? normalizeToSpaces(raw) : '',
+        loose: !isPhrase && normalized.length >= 4 ? buildLooseRegex(raw) : null,
+        allowPocBoost: normalized.length >= 4
+    };
+}
+
+function countPocMatches(pocList, matcher) {
+    if (!Array.isArray(pocList) || !matcher) return 0;
+    let count = 0;
+    const raw = matcher.raw;
+    const loose = matcher.loose;
+    for (const link of pocList) {
+        const linkText = (link || '').toLowerCase();
+        if (!linkText) continue;
+        if (linkText.includes(raw) || (loose && loose.test(linkText))) {
+            count += 1;
+            if (count >= 50) break;
+        }
+    }
+    return count;
 }
 
 function convertLinksToList(links) {
@@ -79,10 +120,17 @@ function prepareDataset(raw) {
       })
       .map(entry => {
         const descCleaned = descKeyCleaned(entry);
-        const pocText = (entry.poc || []).join(' ');
-        const searchText = `${entry.cve || ''} ${descCleaned} ${pocText}`.toLowerCase();
-        const searchTextNormalized = normalizeSearchTerm(searchText);
-        return { ...entry, _searchText: searchText, _searchTextNormalized: searchTextNormalized };
+        const cve = (entry.cve || '').toLowerCase();
+        const desc = descCleaned.toLowerCase();
+        const pocText = (entry.poc || []).join(' ').toLowerCase();
+        return {
+            ...entry,
+            _cveText: cve,
+            _descText: desc,
+            _pocText: pocText,
+            _descSpace: normalizeToSpaces(descCleaned),
+            _pocSpace: normalizeToSpaces(pocText)
+        };
       });
 }
 
@@ -96,34 +144,91 @@ const controls = {
         results.style.display = 'none';
         resultsTableHideable.classList.add('hide');
     },
+    scoreEntry(entry, matcher, includeBoost) {
+        if (!matcher) return 0;
+        const raw = matcher.raw;
+        if (!raw) return 0;
+        let score = 0;
+
+        if (matcher.isPhrase) {
+            const phrase = matcher.phrase;
+            if (phrase && entry._descSpace.includes(phrase)) {
+                score = Math.max(score, 200);
+            }
+            if (phrase && entry._pocSpace.includes(phrase)) {
+                score = Math.max(score, 80);
+            }
+            return score;
+        }
+
+        if (entry._cveText.includes(raw)) {
+            score = Math.max(score, 600);
+        }
+        if (entry._descText.includes(raw)) {
+            score = Math.max(score, 240);
+        }
+        if (entry._pocText.includes(raw)) {
+            score = Math.max(score, 80);
+        }
+
+        if (score === 0 && matcher.loose) {
+            if (matcher.loose.test(entry._descText)) {
+                score = Math.max(score, 160);
+            } else if (matcher.loose.test(entry._pocText)) {
+                score = Math.max(score, 60);
+            }
+        }
+
+        if (includeBoost && score > 0 && matcher.allowPocBoost) {
+            const pocMatchCount = countPocMatches(entry.poc || [], matcher);
+            if (pocMatchCount > 1) {
+                score += Math.min(200, pocMatchCount * 3);
+            }
+        }
+
+        return score;
+    },
     doSearch(match, dataset) {
         const terms = match.match(/-?"[^"]+"|-?\S+/g) || [];
         const cleaned = terms.map(term => term.replace(/^(-?)"/, '$1').replace(/"$/, ''));
-        const posmatch = cleaned.filter(term => term && term[0] !== '-');
+        const posmatch = cleaned.filter(term => term && term[0] !== '-').map(buildMatcher).filter(Boolean);
         const negmatch = cleaned
             .filter(term => term && term[0] === '-')
             .map(term => term.substring(1))
+            .filter(Boolean)
+            .map(buildMatcher)
             .filter(Boolean);
 
-        return dataset.filter(e => {
-            const combinedText = e._searchText || '';
-            const combinedNormalized = e._searchTextNormalized || '';
+        const results = [];
 
-            const positiveMatch = posmatch.every(word => {
-                const raw = word.toLowerCase();
-                if (combinedText.includes(raw)) return true;
-                const normalized = normalizeSearchTerm(raw);
-                return normalized ? combinedNormalized.includes(normalized) : false;
-            });
-            const negativeMatch = negmatch.some(word => {
-                const raw = word.toLowerCase();
-                if (combinedText.includes(raw)) return true;
-                const normalized = normalizeSearchTerm(raw);
-                return normalized ? combinedNormalized.includes(normalized) : false;
-            });
+        for (const entry of dataset) {
+            let score = 0;
+            let matched = true;
 
-            return positiveMatch && !negativeMatch;
+            for (const matcher of posmatch) {
+                const termScore = this.scoreEntry(entry, matcher, true);
+                if (termScore === 0) {
+                    matched = false;
+                    break;
+                }
+                score += termScore;
+            }
+
+            if (!matched) continue;
+
+            const hasNegative = negmatch.some(matcher => this.scoreEntry(entry, matcher, false) > 0);
+            if (hasNegative) continue;
+
+            entry._score = score;
+            results.push(entry);
+        }
+
+        results.sort((a, b) => {
+            if (b._score !== a._score) return b._score - a._score;
+            return (b.cve || '').localeCompare(a.cve || '');
         });
+
+        return results;
     },
     updateResults(loc, results, noResults, resultsTableHideable) {
         if (results.length === 0) {
