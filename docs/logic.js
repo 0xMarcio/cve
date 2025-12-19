@@ -301,7 +301,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const name = escapeHTML(item.name || '');
             const url = item.url || '#';
             const desc = escapeHTML(item.desc || '');
-            return `<tr><td>${stars}</td><td>${updated}</td><td><a href="${url}" target="_blank">${name}</a></td><td class="mono">${desc}</td></tr>`;
+            return `<tr><td>${stars}⭐</td><td>${updated}</td><td><a href="${url}" target="_blank">${name}</a></td><td class="mono">${desc}</td></tr>`;
         }).join('');
         trendingBody.innerHTML = rows;
     }
