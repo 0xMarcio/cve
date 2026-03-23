@@ -9,24 +9,24 @@
 | --- | --- | --- | --- |
 | 259⭐ | 2 days ago | [CVE-2026-21858](https://github.com/Chocapikk/CVE-2026-21858) | n8n Ni8mare - Unauthenticated Arbitrary File Read to RCE Chain (CVSS 10.0) |
 | 199⭐ | 3 days ago | [CVE-2026-24061](https://github.com/SafeBreach-Labs/CVE-2026-24061) | Exploitation of CVE-2026-24061 |
-| 63⭐ | 10 hours ago | [CVE-2026-24061-POC](https://github.com/JayGLXR/CVE-2026-24061-POC) |  |
-| 23⭐ | 4 hours ago | [cve-2026-32746](https://github.com/jeffaf/cve-2026-32746) | CVE-2026-32746 - GNU InetUtils telnetd LINEMODE SLC Buffer Overflow PoC (pre-auth RCE, CVSS 9.8) |
+| 63⭐ | 11 hours ago | [CVE-2026-24061-POC](https://github.com/JayGLXR/CVE-2026-24061-POC) |  |
+| 23⭐ | 5 hours ago | [cve-2026-32746](https://github.com/jeffaf/cve-2026-32746) | CVE-2026-32746 - GNU InetUtils telnetd LINEMODE SLC Buffer Overflow PoC (pre-auth RCE, CVSS 9.8) |
 | 8⭐ | 38 days ago | [Ashwesker-CVE-2026-21509](https://github.com/kimstars/Ashwesker-CVE-2026-21509) | CVE-2026-21509 |
 | 26⭐ | 4 days ago | [CVE-2026-1731](https://github.com/win3zz/CVE-2026-1731) | CVE-2026-1731 - Critical command injection vulnerability in BeyondTrust Remote Support and Privileged Remote Access due to unsafe Bash arithmetic evaluation in a WebSocket-reachable script |
-| 30⭐ | 6 hours ago | [CVE-2026-25769](https://github.com/hakaioffsec/CVE-2026-25769) | Remote Code Execution via Insecure Deserialization in Wazuh Cluster  |
+| 30⭐ | 7 hours ago | [CVE-2026-25769](https://github.com/hakaioffsec/CVE-2026-25769) | Remote Code Execution via Insecure Deserialization in Wazuh Cluster  |
 | 31⭐ | 3 days ago | [CVE-2026-22812-exploit](https://github.com/rohmatariow/CVE-2026-22812-exploit) |  |
 | 20⭐ | 4 days ago | [CVE-2026-21852-PoC](https://github.com/atiilla/CVE-2026-21852-PoC) |  |
 | 15⭐ | 4 days ago | [CVE-2026-21509-PoC](https://github.com/gavz/CVE-2026-21509-PoC) | Educational PoC for CVE‑2026‑21509 (Microsoft Office security feature bypass). Generates a harmless DOCX with dummy OLE artifacts to study EDR/AV visibility. Not an exploit. For isolated labs only; see README for 7‑Zip inspection steps and mitigation references. |
-| 31⭐ | 12 hours ago | [CVE-2026-20127---Cisco-SD-WAN-Preauth-RCE](https://github.com/zerozenxlabs/CVE-2026-20127---Cisco-SD-WAN-Preauth-RCE) |  |
+| 31⭐ | 13 hours ago | [CVE-2026-20127---Cisco-SD-WAN-Preauth-RCE](https://github.com/zerozenxlabs/CVE-2026-20127---Cisco-SD-WAN-Preauth-RCE) |  |
 | 21⭐ | 47 days ago | [CVE-2026-23745](https://github.com/Jvr2022/CVE-2026-23745) | Proof of Concept for CVE-2026-23745: Arbitrary File Overwrite vulnerability in node-tar (versions < 7.5.3). |
 | 3⭐ | 23 days ago | [Ashwesker-CVE-2026-21962](https://github.com/boroeurnprach/Ashwesker-CVE-2026-21962) | CVE-2026-21962 |
 | 6⭐ | 51 days ago | [CVE-2026-24061](https://github.com/TryA9ain/CVE-2026-24061) | CVE-2026-24061 Batch Scanning Tool |
 | 3⭐ | 21 days ago | [CVE-2026-24061-POC](https://github.com/0p5cur/CVE-2026-24061-POC) | CVE-2026-24061's poc : a critical authentication bypass in telnetd leading to RCE as root Affects systems with telnetd versions containing the vulnerability from 2015 onwards. |
 | 10⭐ | 15 days ago | [CVE-2026-1357](https://github.com/halilkirazkaya/CVE-2026-1357) | CVE-2026-1357 — WPvivid Backup & Migration ≤ 0.9.123 Unauthenticated RCE Exploit |
 | 6⭐ | 3 days ago | [CVE-2026-29000](https://github.com/kernelzeroday/CVE-2026-29000) | pac4j-jwt JwtAuthenticator auth bypass (CVE-2026-29000) writeup and PoCs |
-| 28⭐ | 2 hours ago | [0xKern3lCrush-Foreverday-BYOVD-CVE-2026-0828](https://github.com/DeathShotXD/0xKern3lCrush-Foreverday-BYOVD-CVE-2026-0828) | Advanced PoC & Research for CVE-2026-0828 (Safetica) and CVE-2025-7771 (ThrottleStop). Analysis of BYOVD (Bring Your Own Vulnerable Driver) TTPs for Ring 0 process termination and physical memory R/W. Researching EDR-Killer patterns, PPL bypasses, and kernel-mode primitives used by MedusaLocker and other threat actors. |
+| 28⭐ | 3 hours ago | [0xKern3lCrush-Foreverday-BYOVD-CVE-2026-0828](https://github.com/DeathShotXD/0xKern3lCrush-Foreverday-BYOVD-CVE-2026-0828) | Advanced PoC & Research for CVE-2026-0828 (Safetica) and CVE-2025-7771 (ThrottleStop). Analysis of BYOVD (Bring Your Own Vulnerable Driver) TTPs for Ring 0 process termination and physical memory R/W. Researching EDR-Killer patterns, PPL bypasses, and kernel-mode primitives used by MedusaLocker and other threat actors. |
 | 5⭐ | 10 days ago | [CVE-2026-20841](https://github.com/atiilla/CVE-2026-20841) |  |
-| 6⭐ | 9 hours ago | [Ashwesker-CVE-2026-20045](https://github.com/dkstar11q/Ashwesker-CVE-2026-20045) | CVE-2026-20045 |
+| 6⭐ | 10 hours ago | [Ashwesker-CVE-2026-20045](https://github.com/dkstar11q/Ashwesker-CVE-2026-20045) | CVE-2026-20045 |
 
 
 ## 2025
@@ -35,10 +35,10 @@
 
 | Stars | Updated | Name | Description |
 | --- | --- | --- | --- |
-| 1395⭐ | 22 hours ago | [CVE-2025-55182](https://github.com/msanft/CVE-2025-55182) | Explanation and full RCE PoC for CVE-2025-55182 |
+| 1395⭐ | 23 hours ago | [CVE-2025-55182](https://github.com/msanft/CVE-2025-55182) | Explanation and full RCE PoC for CVE-2025-55182 |
 | 793⭐ | 2 days ago | [CVE-2025-55182-research](https://github.com/ejpir/CVE-2025-55182-research) | CVE-2025-55182 POC |
 | 689⭐ | 1 day ago | [CVE-2025-33073](https://github.com/mverschu/CVE-2025-33073) | PoC Exploit for the NTLM reflection SMB flaw. |
-| 519⭐ | 14 days ago | [CVE-2025-32463_chwoot](https://github.com/pr0v3rbs/CVE-2025-32463_chwoot) | Escalation of Privilege to the root through sudo binary with chroot option. CVE-2025-32463 |
+| 519⭐ | 15 days ago | [CVE-2025-32463_chwoot](https://github.com/pr0v3rbs/CVE-2025-32463_chwoot) | Escalation of Privilege to the root through sudo binary with chroot option. CVE-2025-32463 |
 | 458⭐ | 1 day ago | [CVE-2025-32463](https://github.com/kh4sh3i/CVE-2025-32463) | Local Privilege Escalation to Root via Sudo chroot in Linux |
 | 311⭐ | 59 days ago | [CVE-2025-53770-Exploit](https://github.com/soltanali0/CVE-2025-53770-Exploit) | SharePoint WebPart Injection Exploit Tool |
 | 312⭐ | 3 days ago | [CVE-2025-55182](https://github.com/emredavut/CVE-2025-55182) | RSC/Next.js RCE Vulnerability Detector & PoC Chrome Extension – CVE-2025-55182 & CVE-2025-66478 |
@@ -71,7 +71,7 @@
 | 224⭐ | 10 days ago | [CVE-2024-38077](https://github.com/qi4L/CVE-2024-38077) | RDL的堆溢出导致的RCE |
 | 384⭐ | 59 days ago | [cve-2024-6387-poc](https://github.com/acrono/cve-2024-6387-poc) | 32-bit PoC for CVE-2024-6387 — mirror of the original 7etsuo/cve-2024-6387-poc |
 | 330⭐ | 18 days ago | [CVE-2024-0044](https://github.com/0xbinder/CVE-2024-0044) | CVE-2024-0044:  a "run-as any app" high-severity vulnerability affecting Android versions 12 and 13 |
-| 311⭐ | 7 hours ago | [CVE-2024-4577](https://github.com/watchtowrlabs/CVE-2024-4577) | PHP CGI Argument Injection (CVE-2024-4577) Remote Code Execution PoC |
+| 311⭐ | 8 hours ago | [CVE-2024-4577](https://github.com/watchtowrlabs/CVE-2024-4577) | PHP CGI Argument Injection (CVE-2024-4577) Remote Code Execution PoC |
 | 316⭐ | 18 days ago | [CVE-2024-21338](https://github.com/hakaioffsec/CVE-2024-21338) | Local Privilege Escalation from Admin to Kernel vulnerability on Windows 10 and Windows 11 operating systems with HVCI enabled. |
 | 225⭐ | 2 days ago | [CVE-2024-21413](https://github.com/CMNatic/CVE-2024-21413) | CVE-2024-21413 PoC for THM Lab |
 | 760⭐ | 3 days ago | [CVE-2024-21413-Microsoft-Outlook-Remote-Code-Execution-Vulnerability](https://github.com/xaitax/CVE-2024-21413-Microsoft-Outlook-Remote-Code-Execution-Vulnerability) | Microsoft-Outlook-Remote-Code-Execution-Vulnerability |
@@ -102,7 +102,7 @@
 | 242⭐ | 7 days ago | [CVE-2023-44487](https://github.com/bcdannyboy/CVE-2023-44487) | Basic vulnerability scanning to see if web servers may be vulnerable to CVE-2023-44487 |
 | 168⭐ | 87 days ago | [CVE-2023-36745](https://github.com/N1k0la-T/CVE-2023-36745) |  |
 | 243⭐ | 18 days ago | [CVE-2023-7028](https://github.com/Vozec/CVE-2023-7028) | This repository presents a proof-of-concept of CVE-2023-7028 |
-| 347⭐ | 169 days ago | [CVE-2023-23397-POC-Powershell](https://github.com/api0cradle/CVE-2023-23397-POC-Powershell) |  |
+| 347⭐ | 170 days ago | [CVE-2023-23397-POC-Powershell](https://github.com/api0cradle/CVE-2023-23397-POC-Powershell) |  |
 | 228⭐ | 29 days ago | [CVE-2023-3519](https://github.com/BishopFox/CVE-2023-3519) | RCE exploit for CVE-2023-3519 |
 | 231⭐ | 31 days ago | [CVE-2023-20887](https://github.com/sinsinology/CVE-2023-20887) | VMWare vRealize Network Insight Pre-Authenticated RCE (CVE-2023-20887) |
 | 180⭐ | 25 days ago | [CVE-2023-28252](https://github.com/fortra/CVE-2023-28252) |  |
@@ -124,17 +124,17 @@
 | 363⭐ | 40 days ago | [CVE-2022-21907](https://github.com/ZZ-SOCMAP/CVE-2022-21907) | HTTP Protocol Stack Remote Code Execution Vulnerability CVE-2022-21907 |
 | 379⭐ | 2 days ago | [CVE-2022-29464](https://github.com/hakivvi/CVE-2022-29464) | WSO2 RCE (CVE-2022-29464) exploit and writeup. |
 | 356⭐ | 13 days ago | [CVE-2022-40684](https://github.com/horizon3ai/CVE-2022-40684) | A proof of concept exploit for CVE-2022-40684 affecting Fortinet FortiOS, FortiProxy, and FortiSwitchManager |
-| 699⭐ | 4 hours ago | [CVE-2022-0847-DirtyPipe-Exploits](https://github.com/AlexisAhmed/CVE-2022-0847-DirtyPipe-Exploits) | A collection of exploits and documentation that can be used to exploit the Linux Dirty Pipe vulnerability. |
-| 437⭐ | 13 hours ago | [CVE-2022-25636](https://github.com/Bonfee/CVE-2022-25636) | CVE-2022-25636 |
+| 699⭐ | 5 hours ago | [CVE-2022-0847-DirtyPipe-Exploits](https://github.com/AlexisAhmed/CVE-2022-0847-DirtyPipe-Exploits) | A collection of exploits and documentation that can be used to exploit the Linux Dirty Pipe vulnerability. |
+| 437⭐ | 14 hours ago | [CVE-2022-25636](https://github.com/Bonfee/CVE-2022-25636) | CVE-2022-25636 |
 | 488⭐ | 11 days ago | [CVE-2022-2588](https://github.com/Markakd/CVE-2022-2588) | exploit for CVE-2022-2588 |
-| 500⭐ | 12 hours ago | [CVE-2022-0995](https://github.com/Bonfee/CVE-2022-0995) | CVE-2022-0995 exploit |
+| 500⭐ | 13 hours ago | [CVE-2022-0995](https://github.com/Bonfee/CVE-2022-0995) | CVE-2022-0995 exploit |
 | 387⭐ | 39 days ago | [CVE-2022-39197](https://github.com/its-arun/CVE-2022-39197) | CobaltStrike <= 4.7.1 RCE |
 | 414⭐ | 4 days ago | [CVE-2022-33679](https://github.com/Bdenneu/CVE-2022-33679) | One day based on https://googleprojectzero.blogspot.com/2022/10/rc4-is-still-considered-harmful.html |
 | 280⭐ | 57 days ago | [CVE-2022-0847](https://github.com/r1is/CVE-2022-0847) | CVE-2022-0847-DirtyPipe-Exploit   CVE-2022-0847 是存在于 Linux内核 5.8 及之后版本中的本地提权漏洞。攻击者通过利用此漏洞，可覆盖重写任意可读文件中的数据，从而可将普通权限的用户提升到特权 root。    CVE-2022-0847 的漏洞原理类似于 CVE-2016-5195 脏牛漏洞（Dirty Cow），但它更容易被利用。漏洞作者将此漏洞命名为“Dirty Pipe” |
 | 350⭐ | 9 days ago | [CVE-2022-21894](https://github.com/Wack0/CVE-2022-21894) | baton drop (CVE-2022-21894): Secure Boot Security Feature Bypass Vulnerability |
 | 378⭐ | 13 days ago | [CVE-2022-0185](https://github.com/Crusaders-of-Rust/CVE-2022-0185) | CVE-2022-0185 |
-| 282⭐ | 22 hours ago | [cve-2022-27255](https://github.com/infobyte/cve-2022-27255) |  |
-| 530⭐ | 2 hours ago | [CVE-2022-38694_unlock_bootloader](https://github.com/TomKing062/CVE-2022-38694_unlock_bootloader) | This is a one-time signature verification bypass. For persistent signature verification bypass, check https://github.com/TomKing062/CVE-2022-38691_38692 |
+| 282⭐ | 23 hours ago | [cve-2022-27255](https://github.com/infobyte/cve-2022-27255) |  |
+| 530⭐ | 3 hours ago | [CVE-2022-38694_unlock_bootloader](https://github.com/TomKing062/CVE-2022-38694_unlock_bootloader) | This is a one-time signature verification bypass. For persistent signature verification bypass, check https://github.com/TomKing062/CVE-2022-38691_38692 |
 | 266⭐ | 69 days ago | [CVE-2022-39952](https://github.com/horizon3ai/CVE-2022-39952) | POC for CVE-2022-39952 |
 | 239⭐ | 3 days ago | [CVE-2022-20699](https://github.com/Audiobahn/CVE-2022-20699) | Cisco Anyconnect VPN unauth RCE (rwx stack) |
 | 220⭐ | 12 days ago | [CVE-2022-34918](https://github.com/veritas501/CVE-2022-34918) | CVE-2022-34918 netfilter nf_tables 本地提权 POC |
