@@ -3,28 +3,28 @@
 
 ## 2026
 
-### Latest 20 of 347 Repositories
+### Latest 20 of 348 Repositories
 
 | Stars | Updated | Name | Description |
 | --- | --- | --- | --- |
-| 4017⭐ | 15 hours ago | [copy-fail-CVE-2026-31431](https://github.com/theori-io/copy-fail-CVE-2026-31431) | Copy Fail (CVE-2026-31431): 9-year-old Linux kernel LPE found by Theori's Xint Code |
+| 4017⭐ | 21 hours ago | [copy-fail-CVE-2026-31431](https://github.com/theori-io/copy-fail-CVE-2026-31431) | Copy Fail (CVE-2026-31431): 9-year-old Linux kernel LPE found by Theori's Xint Code |
 | 565⭐ | 2 days ago | [cve_2026_31431](https://github.com/rootsecdev/cve_2026_31431) | Exploit POC for CVE_2026_31431 |
-| 208⭐ | 1 day ago | [CVE-2026-41089](https://github.com/0xABCD01/CVE-2026-41089) | CVE-2026-41089 PoC — Netlogon CLDAP stack buffer overflow (CVSS 9.8 CRITICAL) |
+| 208⭐ | 2 days ago | [CVE-2026-41089](https://github.com/0xABCD01/CVE-2026-41089) | CVE-2026-41089 PoC — Netlogon CLDAP stack buffer overflow (CVSS 9.8 CRITICAL) |
 | 260⭐ | 3 days ago | [CVE-2026-21858](https://github.com/Chocapikk/CVE-2026-21858) | n8n Ni8mare - Unauthenticated Arbitrary File Read to RCE Chain (CVSS 10.0) |
-| 206⭐ | 17 minutes ago | [CVE-2026-24061](https://github.com/SafeBreach-Labs/CVE-2026-24061) | Exploitation of CVE-2026-24061 |
-| 166⭐ | 7 hours ago | [CVE-2026-43499-popsicle](https://github.com/x-spy/CVE-2026-43499-popsicle) | CVE-2026-43499 Implementation for 6.12.23-android16-5-g75e9b1c7ae7c-abogki463945075-4k |
-| 111⭐ | 9 hours ago | [CVE-2026-43499](https://github.com/MobiusM/CVE-2026-43499) | CVE-2026-43499 PoC |
+| 206⭐ | 6 hours ago | [CVE-2026-24061](https://github.com/SafeBreach-Labs/CVE-2026-24061) | Exploitation of CVE-2026-24061 |
+| 169⭐ | 1 hour ago | [CVE-2026-43499-popsicle](https://github.com/x-spy/CVE-2026-43499-popsicle) | CVE-2026-43499 Implementation for 6.12.23-android16-5-g75e9b1c7ae7c-abogki463945075-4k |
+| 112⭐ | 1 hour ago | [CVE-2026-43499](https://github.com/MobiusM/CVE-2026-43499) | CVE-2026-43499 PoC |
 | 31⭐ | 5 days ago | [cve-2026-31431](https://github.com/adysec/cve-2026-31431) | CVE-2026-31431: Copy Fail | A minimal exploit for Linux authencesn + AF_ALG + splice() page cache write. |
 | 110⭐ | 1 day ago | [CVE-2026-31431-Advanced-Exploit](https://github.com/Sndav/CVE-2026-31431-Advanced-Exploit) | CVE-2026-31431 纯文件利用 |
 | 102⭐ | 3 days ago | [CVE-2026-41651](https://github.com/Vozec/CVE-2026-41651) |  |
-| 61⭐ | 13 hours ago | [CVE-2026-45504](https://github.com/hawktrace/CVE-2026-45504) | CVE-2026-45504 Microsoft Exchange File Read |
+| 61⭐ | 20 hours ago | [CVE-2026-45504](https://github.com/hawktrace/CVE-2026-45504) | CVE-2026-45504 Microsoft Exchange File Read |
 | 181⭐ | 4 days ago | [Copy-Fail-CVE-2026-31431-Kubernetes-PoC](https://github.com/Percivalll/Copy-Fail-CVE-2026-31431-Kubernetes-PoC) | PoC: fully unprivileged container escape to node-level code execution on Kubernetes via CVE-2026-31431 page-cache corruption + shared image layers. Validated on Alibaba Cloud ACK, Amazon EKS and Google GKE. |
-| 79⭐ | 6 days ago | [CVE-2026-0073-Android-adbd-authentication-bypass-POC](https://github.com/SecTestAnnaQuinn/CVE-2026-0073-Android-adbd-authentication-bypass-POC) |  |
 | 102⭐ | 2 days ago | [Copy-Fail-Exploit-CVE-2026-31431](https://github.com/painoob/Copy-Fail-Exploit-CVE-2026-31431) | Most Linux LPEs need a race window or a kernel-specific offset. Copy Fail is a straight-line logic flaw, it needs neither. The same 732-byte Python script (or .c elf) roots every Linux distribution shipped since 2017. |
-| 39⭐ | 6 days ago | [CVE-2026-31431](https://github.com/0xShe/CVE-2026-31431) |  |
+| 79⭐ | 6 days ago | [CVE-2026-0073-Android-adbd-authentication-bypass-POC](https://github.com/SecTestAnnaQuinn/CVE-2026-0073-Android-adbd-authentication-bypass-POC) |  |
 | 69⭐ | 3 days ago | [CVE-2026-34486](https://github.com/striga-ai/CVE-2026-34486) | EncryptInterceptor fail-open bypass in Apache Tomcat Tribes clustering leading to unauthenticated RCE via Java deserialization. |
+| 39⭐ | 7 days ago | [CVE-2026-31431](https://github.com/0xShe/CVE-2026-31431) |  |
 | 192⭐ | 1 day ago | [CVE-2026-41940-PoC](https://github.com/aquace/CVE-2026-41940-PoC) | CVE-2026-41940 authentication bypass vulnerability proof-of-concept |
-| 51⭐ | 25 minutes ago | [poc-CVE-2026-0073](https://github.com/adityatelange/poc-CVE-2026-0073) | CVE-2026-0073 - ADB Wireless Mutual Authentication Bypass PoC |
+| 51⭐ | 6 hours ago | [poc-CVE-2026-0073](https://github.com/adityatelange/poc-CVE-2026-0073) | CVE-2026-0073 - ADB Wireless Mutual Authentication Bypass PoC |
 | 55⭐ | 22 days ago | [CVE-2026-31431-Linux-Copy-Fail](https://github.com/iss4cf0ng/CVE-2026-31431-Linux-Copy-Fail) | Rust implementation Exploit/PoC of CVE-2026-31431-Linux-Copy-Fail, allow executing customized shellcode (such as Meterpreter). |
 | 28⭐ | 49 days ago | [cve-2026-41940-poc](https://github.com/adriyansyah-mf/cve-2026-41940-poc) |  |
 
@@ -35,17 +35,17 @@
 
 | Stars | Updated | Name | Description |
 | --- | --- | --- | --- |
-| 1427⭐ | 23 hours ago | [CVE-2025-55182](https://github.com/msanft/CVE-2025-55182) | Explanation and full RCE PoC for CVE-2025-55182 |
+| 1427⭐ | 1 day ago | [CVE-2025-55182](https://github.com/msanft/CVE-2025-55182) | Explanation and full RCE PoC for CVE-2025-55182 |
 | 797⭐ | 3 days ago | [CVE-2025-55182-research](https://github.com/ejpir/CVE-2025-55182-research) | CVE-2025-55182 POC |
 | 708⭐ | 3 days ago | [CVE-2025-33073](https://github.com/mverschu/CVE-2025-33073) | PoC Exploit for the NTLM reflection SMB flaw. |
 | 527⭐ | 3 days ago | [CVE-2025-32463_chwoot](https://github.com/pr0v3rbs/CVE-2025-32463_chwoot) | Escalation of Privilege to the root through sudo binary with chroot option. CVE-2025-32463 |
-| 469⭐ | 4 days ago | [CVE-2025-32463](https://github.com/kh4sh3i/CVE-2025-32463) | Local Privilege Escalation to Root via Sudo chroot in Linux |
+| 469⭐ | 5 days ago | [CVE-2025-32463](https://github.com/kh4sh3i/CVE-2025-32463) | Local Privilege Escalation to Root via Sudo chroot in Linux |
 | 312⭐ | 3 days ago | [CVE-2025-53770-Exploit](https://github.com/soltanali0/CVE-2025-53770-Exploit) | SharePoint WebPart Injection Exploit Tool |
 | 314⭐ | 2 days ago | [CVE-2025-55182](https://github.com/emredavut/CVE-2025-55182) | RSC/Next.js RCE Vulnerability Detector & PoC Chrome Extension – CVE-2025-55182 & CVE-2025-66478 |
 | 1051⭐ | 3 days ago | [React2Shell-CVE-2025-55182-original-poc](https://github.com/lachlan2k/React2Shell-CVE-2025-55182-original-poc) | Original Proof-of-Concepts for React2Shell CVE-2025-55182 |
 | 403⭐ | 2 days ago | [CVE-2025-24071_PoC](https://github.com/0x6rss/CVE-2025-24071_PoC) | CVE-2025-24071: NTLM Hash Leak via RAR/ZIP Extraction and .library-ms File |
 | 214⭐ | 2 days ago | [CVE-2025-32023](https://github.com/leesh3288/CVE-2025-32023) | PoC & Exploit for CVE-2025-32023 / PlaidCTF 2025 "Zerodeo" |
-| 385⭐ | 19 hours ago | [ColorOS-CVE-2025-10184](https://github.com/yuuouu/ColorOS-CVE-2025-10184) | ColorOS短信漏洞，以及用户自救方案 |
+| 385⭐ | 1 day ago | [ColorOS-CVE-2025-10184](https://github.com/yuuouu/ColorOS-CVE-2025-10184) | ColorOS短信漏洞，以及用户自救方案 |
 | 279⭐ | 3 days ago | [CVE-2025-55182-advanced-scanner-](https://github.com/zack0x01/CVE-2025-55182-advanced-scanner-) |  |
 | 428⭐ | 2 days ago | [Next.js-RSC-RCE-Scanner-CVE-2025-66478](https://github.com/Malayke/Next.js-RSC-RCE-Scanner-CVE-2025-66478) | A command-line scanner for batch detection of Next.js application versions and determining if they are affected by CVE-2025-66478 vulnerability. |
 | 196⭐ | 14 days ago | [POC-CVE-2025-24813](https://github.com/absholi7ly/POC-CVE-2025-24813) | his repository contains an automated Proof of Concept (PoC) script for exploiting **CVE-2025-24813**, a Remote Code Execution (RCE) vulnerability in Apache Tomcat. The vulnerability allows an attacker to upload a malicious serialized payload to the server, leading to arbitrary code execution via deserialization when specific conditions are met. |
@@ -53,7 +53,7 @@
 | 190⭐ | 113 days ago | [RSC-Detect-CVE-2025-55182](https://github.com/alptexans/RSC-Detect-CVE-2025-55182) | RSC Detect CVE 2025 55182 |
 | 161⭐ | 6 days ago | [CVE-2025-21756](https://github.com/hoefler02/CVE-2025-21756) | Exploit for CVE-2025-21756 for Linux kernel 6.6.75. My first linux kernel exploit! |
 | 115⭐ | 1 day ago | [CVE-2025-43300](https://github.com/hunters-sec/CVE-2025-43300) | This is POC for IOS 0click CVE-2025-43300 |
-| 195⭐ | 5 hours ago | [CVE-2025-32756-POC](https://github.com/kn0x0x/CVE-2025-32756-POC) | Proof of Concept for CVE-2025-32756 - A critical stack-based buffer overflow vulnerability affecting multiple Fortinet products. |
+| 195⭐ | 11 hours ago | [CVE-2025-32756-POC](https://github.com/kn0x0x/CVE-2025-32756-POC) | Proof of Concept for CVE-2025-32756 - A critical stack-based buffer overflow vulnerability affecting multiple Fortinet products. |
 | 172⭐ | 3 days ago | [CVE-2025-26125](https://github.com/ZeroMemoryEx/CVE-2025-26125) | ( 0day ) Local Privilege Escalation in IObit Malware Fighter |
 
 
@@ -68,8 +68,8 @@
 | 493⭐ | 6 days ago | [cve-2024-6387-poc](https://github.com/zgzhang/cve-2024-6387-poc) | a signal handler race condition in OpenSSH's server (sshd) |
 | 520⭐ | 5 days ago | [CVE-2024-49113](https://github.com/SafeBreach-Labs/CVE-2024-49113) | LdapNightmare is a PoC tool that tests a vulnerable Windows Server against CVE-2024-49113 |
 | 524⭐ | 3 days ago | [CVE-2024-6387_Check](https://github.com/xaitax/CVE-2024-6387_Check) | CVE-2024-6387_Check is a lightweight, efficient tool designed to identify servers running vulnerable versions of OpenSSH |
-| 225⭐ | 2 days ago | [CVE-2024-38077](https://github.com/qi4L/CVE-2024-38077) | RDL的堆溢出导致的RCE |
-| 334⭐ | 15 hours ago | [CVE-2024-21338](https://github.com/hakaioffsec/CVE-2024-21338) | Local Privilege Escalation from Admin to Kernel vulnerability on Windows 10 and Windows 11 operating systems with HVCI enabled. |
+| 225⭐ | 3 days ago | [CVE-2024-38077](https://github.com/qi4L/CVE-2024-38077) | RDL的堆溢出导致的RCE |
+| 334⭐ | 21 hours ago | [CVE-2024-21338](https://github.com/hakaioffsec/CVE-2024-21338) | Local Privilege Escalation from Admin to Kernel vulnerability on Windows 10 and Windows 11 operating systems with HVCI enabled. |
 | 380⭐ | 8 days ago | [cve-2024-6387-poc](https://github.com/acrono/cve-2024-6387-poc) | 32-bit PoC for CVE-2024-6387 — mirror of the original 7etsuo/cve-2024-6387-poc |
 | 329⭐ | 4 days ago | [CVE-2024-0044](https://github.com/0xbinder/CVE-2024-0044) | CVE-2024-0044:  a "run-as any app" high-severity vulnerability affecting Android versions 12 and 13 |
 | 317⭐ | 5 days ago | [CVE-2024-4577](https://github.com/watchtowrlabs/CVE-2024-4577) | PHP CGI Argument Injection (CVE-2024-4577) Remote Code Execution PoC |
@@ -97,14 +97,14 @@
 | 420⭐ | 3 days ago | [CVE-2023-0386](https://github.com/xkaneiki/CVE-2023-0386) | CVE-2023-0386在ubuntu22.04上的提权 |
 | 115⭐ | 3 days ago | [CVE-2023-21839](https://github.com/ASkyeye/CVE-2023-21839) | Weblogic CVE-2023-21839 RCE (无需Java依赖一键RCE) |
 | 393⭐ | 16 days ago | [CVE-2023-4911](https://github.com/leesh3288/CVE-2023-4911) | PoC for CVE-2023-4911 |
-| 282⭐ | 42 days ago | [CVE-2023-21608](https://github.com/hacksysteam/CVE-2023-21608) | Adobe Acrobat Reader - CVE-2023-21608 - Remote Code Execution Exploit |
-| 317⭐ | 3 days ago | [CVE-2023-4863](https://github.com/mistymntncop/CVE-2023-4863) |  |
+| 282⭐ | 43 days ago | [CVE-2023-21608](https://github.com/hacksysteam/CVE-2023-21608) | Adobe Acrobat Reader - CVE-2023-21608 - Remote Code Execution Exploit |
+| 317⭐ | 4 days ago | [CVE-2023-4863](https://github.com/mistymntncop/CVE-2023-4863) |  |
 | 247⭐ | 5 days ago | [CVE-2023-44487](https://github.com/bcdannyboy/CVE-2023-44487) | Basic vulnerability scanning to see if web servers may be vulnerable to CVE-2023-44487 |
 | 246⭐ | 82 days ago | [CVE-2023-7028](https://github.com/Vozec/CVE-2023-7028) | This repository presents a proof-of-concept of CVE-2023-7028 |
 | 169⭐ | 4 days ago | [CVE-2023-36745](https://github.com/N1k0la-T/CVE-2023-36745) |  |
 | 228⭐ | 66 days ago | [CVE-2023-3519](https://github.com/BishopFox/CVE-2023-3519) | RCE exploit for CVE-2023-3519 |
 | 229⭐ | 44 days ago | [CVE-2023-20887](https://github.com/sinsinology/CVE-2023-20887) | VMWare vRealize Network Insight Pre-Authenticated RCE (CVE-2023-20887) |
-| 346⭐ | 9 hours ago | [CVE-2023-23397-POC-Powershell](https://github.com/api0cradle/CVE-2023-23397-POC-Powershell) |  |
+| 346⭐ | 15 hours ago | [CVE-2023-23397-POC-Powershell](https://github.com/api0cradle/CVE-2023-23397-POC-Powershell) |  |
 | 184⭐ | 5 days ago | [CVE-2023-28252](https://github.com/fortra/CVE-2023-28252) |  |
 | 133⭐ | 8 days ago | [CVE-2023-2640-CVE-2023-32629](https://github.com/g1vi/CVE-2023-2640-CVE-2023-32629) | GameOver(lay) Ubuntu Privilege Escalation |
 | 209⭐ | 5 days ago | [CVE-2023-46747-RCE](https://github.com/W01fh4cker/CVE-2023-46747-RCE) | exploit for f5-big-ip RCE cve-2023-46747 |
@@ -119,23 +119,23 @@
 
 | Stars | Updated | Name | Description |
 | --- | --- | --- | --- |
-| 1130⭐ | 7 days ago | [CVE-2022-0847-DirtyPipe-Exploit](https://github.com/Arinerron/CVE-2022-0847-DirtyPipe-Exploit) | A root exploit for CVE-2022-0847 (Dirty Pipe) |
-| 574⭐ | 34 days ago | [CVE-2022-23222](https://github.com/tr3ee/CVE-2022-23222) | CVE-2022-23222: Linux Kernel eBPF Local Privilege Escalation |
+| 1130⭐ | 8 days ago | [CVE-2022-0847-DirtyPipe-Exploit](https://github.com/Arinerron/CVE-2022-0847-DirtyPipe-Exploit) | A root exploit for CVE-2022-0847 (Dirty Pipe) |
+| 574⭐ | 35 days ago | [CVE-2022-23222](https://github.com/tr3ee/CVE-2022-23222) | CVE-2022-23222: Linux Kernel eBPF Local Privilege Escalation |
 | 362⭐ | 64 days ago | [CVE-2022-21907](https://github.com/ZZ-SOCMAP/CVE-2022-21907) | HTTP Protocol Stack Remote Code Execution Vulnerability CVE-2022-21907 |
 | 727⭐ | 1 day ago | [CVE-2022-0847-DirtyPipe-Exploits](https://github.com/AlexisAhmed/CVE-2022-0847-DirtyPipe-Exploits) | A collection of exploits and documentation that can be used to exploit the Linux Dirty Pipe vulnerability. |
 | 378⭐ | 5 days ago | [CVE-2022-29464](https://github.com/hakivvi/CVE-2022-29464) | WSO2 RCE (CVE-2022-29464) exploit and writeup. |
 | 357⭐ | 5 days ago | [CVE-2022-40684](https://github.com/horizon3ai/CVE-2022-40684) | A proof of concept exploit for CVE-2022-40684 affecting Fortinet FortiOS, FortiProxy, and FortiSwitchManager |
 | 436⭐ | 54 days ago | [CVE-2022-25636](https://github.com/Bonfee/CVE-2022-25636) | CVE-2022-25636 |
 | 489⭐ | 8 days ago | [CVE-2022-2588](https://github.com/Markakd/CVE-2022-2588) | exploit for CVE-2022-2588 |
-| 415⭐ | 5 days ago | [CVE-2022-33679](https://github.com/Bdenneu/CVE-2022-33679) | One day based on https://googleprojectzero.blogspot.com/2022/10/rc4-is-still-considered-harmful.html |
 | 499⭐ | 3 days ago | [CVE-2022-0995](https://github.com/Bonfee/CVE-2022-0995) | CVE-2022-0995 exploit |
 | 386⭐ | 5 days ago | [CVE-2022-39197](https://github.com/its-arun/CVE-2022-39197) | CobaltStrike <= 4.7.1 RCE |
-| 282⭐ | 24 days ago | [CVE-2022-0847](https://github.com/r1is/CVE-2022-0847) | CVE-2022-0847-DirtyPipe-Exploit   CVE-2022-0847 是存在于 Linux内核 5.8 及之后版本中的本地提权漏洞。攻击者通过利用此漏洞，可覆盖重写任意可读文件中的数据，从而可将普通权限的用户提升到特权 root。    CVE-2022-0847 的漏洞原理类似于 CVE-2016-5195 脏牛漏洞（Dirty Cow），但它更容易被利用。漏洞作者将此漏洞命名为“Dirty Pipe” |
+| 415⭐ | 5 days ago | [CVE-2022-33679](https://github.com/Bdenneu/CVE-2022-33679) | One day based on https://googleprojectzero.blogspot.com/2022/10/rc4-is-still-considered-harmful.html |
+| 282⭐ | 25 days ago | [CVE-2022-0847](https://github.com/r1is/CVE-2022-0847) | CVE-2022-0847-DirtyPipe-Exploit   CVE-2022-0847 是存在于 Linux内核 5.8 及之后版本中的本地提权漏洞。攻击者通过利用此漏洞，可覆盖重写任意可读文件中的数据，从而可将普通权限的用户提升到特权 root。    CVE-2022-0847 的漏洞原理类似于 CVE-2016-5195 脏牛漏洞（Dirty Cow），但它更容易被利用。漏洞作者将此漏洞命名为“Dirty Pipe” |
 | 351⭐ | 3 days ago | [CVE-2022-21894](https://github.com/Wack0/CVE-2022-21894) | baton drop (CVE-2022-21894): Secure Boot Security Feature Bypass Vulnerability |
 | 379⭐ | 5 days ago | [CVE-2022-0185](https://github.com/Crusaders-of-Rust/CVE-2022-0185) | CVE-2022-0185 |
-| 571⭐ | 3 hours ago | [CVE-2022-38694_unlock_bootloader](https://github.com/TomKing062/CVE-2022-38694_unlock_bootloader) | This is a one-time signature verification bypass. For persistent signature verification bypass, check https://github.com/TomKing062/CVE-2022-38691_38692 |
+| 571⭐ | 10 hours ago | [CVE-2022-38694_unlock_bootloader](https://github.com/TomKing062/CVE-2022-38694_unlock_bootloader) | This is a one-time signature verification bypass. For persistent signature verification bypass, check https://github.com/TomKing062/CVE-2022-38691_38692 |
 | 284⭐ | 54 days ago | [cve-2022-27255](https://github.com/infobyte/cve-2022-27255) |  |
 | 265⭐ | 102 days ago | [CVE-2022-39952](https://github.com/horizon3ai/CVE-2022-39952) | POC for CVE-2022-39952 |
+| 238⭐ | 8 days ago | [CVE-2022-20699](https://github.com/Audiobahn/CVE-2022-20699) | Cisco Anyconnect VPN unauth RCE (rwx stack) |
 | 236⭐ | 33 days ago | [CVE-2022-30075](https://github.com/aaronsvk/CVE-2022-30075) | Tp-Link Archer AX50 Authenticated RCE (CVE-2022-30075) |
 | 219⭐ | 44 days ago | [CVE-2022-34918](https://github.com/veritas501/CVE-2022-34918) | CVE-2022-34918 netfilter nf_tables 本地提权 POC |
-| 238⭐ | 7 days ago | [CVE-2022-20699](https://github.com/Audiobahn/CVE-2022-20699) | Cisco Anyconnect VPN unauth RCE (rwx stack) |
