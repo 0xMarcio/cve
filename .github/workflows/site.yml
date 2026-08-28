@@ -4,6 +4,11 @@ on:
   schedule:
     - cron: '20 6 * * *'
   workflow_dispatch:
+  workflow_run:
+    workflows:
+      - Sync CVE PoCs
+    types:
+      - completed
   push:
     branches:
       - main
@@ -19,6 +24,7 @@ concurrency:
 
 jobs:
   build:
+    if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
