@@ -5,33 +5,52 @@ on:
     - cron: "15 2 * * *"
   workflow_dispatch:
 
+permissions:
+  contents: write
+
+concurrency:
+  group: repository-updates
+  cancel-in-progress: false
+
 jobs:
   sync:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
 
       - name: Set up Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v7
         with:
-          python-version: '3.x'
+          python-version: '3.13'
 
-      - name: Update CVE records from GitHub PoCs
-        run: python scripts/update_cves.py
+      - name: Test CVE sync
+        run: python3 -m unittest discover -s tests -v
 
-      - name: Check for changes and commit
+      - name: Discover and ingest CVE PoCs
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          git config --global user.name '0xMarcio'
-          git config --global user.email 'marc@codepwn.win'
-          git remote set-url origin https://github-actions[bot]:$GITHUB_TOKEN@github.com/0xMarcio/cve.git
+        run: python3 scripts/update_cves.py --lookback-days 3
 
-          if [ -n "$(git status --porcelain)" ]; then
-            git add .
-            git commit -m "Daily CVE sync $(date +'%Y-%m-%d %H:%M')"
-            git push origin main
-          else
+      - name: Check for changes and commit
+        run: |
+          git config user.name 'CVE-BOT'
+          git config user.email 'cve@codepwn.win'
+
+          git add --all -- \
+            .github/cve_sync_state.json \
+            github.txt \
+            references.txt \
+            docs/CVE_list.json \
+            docs/CVE_blacklist_removed.json \
+            ':(top,glob)[12][0-9][0-9][0-9]/CVE-*.md'
+
+          if git diff --cached --quiet; then
             echo "No changes to commit"
+          else
+            git commit -m "Update CVE PoCs $(date -u +'%Y-%m-%d')"
+            git pull --rebase origin main
+            git push origin main
           fi
