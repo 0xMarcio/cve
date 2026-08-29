@@ -1,5 +1,4 @@
 data/
 .venv/
 docs/api/v1/cve/
-scripts/__pycache__/
-tests/__pycache__/
+__pycache__/

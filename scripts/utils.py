@@ -4,7 +4,7 @@ import json
 import re
 from datetime import datetime, timezone
 from pathlib import Path
-from typing import Dict, Iterable, List, Optional, Tuple
+from typing import Collection, Dict, Iterable, List, Optional, Tuple
 
 import requests
 
@@ -261,20 +261,20 @@ def hash_key(text: str) -> str:
     return hashlib.sha256(text.encode("utf-8")).hexdigest()
 
 
-def load_blacklist(path: Path | None = None) -> List[str]:
+def load_blacklist(path: Path | None = None) -> set[str]:
     target = path or ROOT / "blacklist.txt"
     if not target.exists():
-        return []
-    entries: List[str] = []
+        return set()
+    entries: set[str] = set()
     for raw in target.read_text(encoding="utf-8").splitlines():
         line = raw.strip()
         if line and not line.startswith("#"):
-            entries.append(line)
+            entries.add(line.lower())
     return entries
 
 
 def extract_repo_from_url(url: str) -> str:
-    """Return repository name segment from a URL (best effort)."""
+    """Return the owner and repository segments from a URL."""
     try:
         from urllib.parse import urlparse
 
@@ -287,30 +287,20 @@ def extract_repo_from_url(url: str) -> str:
         path = url
     parts = path.strip("/").split("/")
     if len(parts) >= 2:
-        return parts[1].lower()
+        return "/".join(parts[:2]).lower()
     if parts:
         return parts[-1].lower()
     return ""
 
 
-def is_blacklisted_repo(url: str, blacklist: List[str]) -> bool:
-    repo = extract_repo_from_url(url)
-    if not repo:
+def is_blacklisted_repo(url: str, blacklist: Collection[str]) -> bool:
+    full_name = extract_repo_from_url(url)
+    if not full_name:
         return False
-    for entry in blacklist:
-        slug = entry.strip().lower()
-        if not slug:
-            continue
-        if slug.endswith("*"):
-            prefix = slug[:-1]
-            if prefix and repo.startswith(prefix):
-                return True
-        elif repo == slug:
-            return True
-    return False
+    return full_name in blacklist
 
 
-def filter_links_by_blacklist(links: List[str], blacklist: List[str]) -> List[str]:
+def filter_links_by_blacklist(links: List[str], blacklist: Collection[str]) -> List[str]:
     if not blacklist:
         return links
     filtered: List[str] = []

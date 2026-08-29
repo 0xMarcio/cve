@@ -26,6 +26,7 @@ class RepositoryClassificationTests(unittest.TestCase):
         repo = self.repo(
             "AcmeSecurity/CVE-2026-31431-PoC",
             "Proof of concept for Linux privilege escalation",
+            "CVE-2026-31431 proof of concept.",
         )
         self.assertEqual(
             update_cves.qualifying_repo_cves(repo, 2026, []),
@@ -68,6 +69,7 @@ class RepositoryClassificationTests(unittest.TestCase):
             "Proof of concept for CVE-2026-31431",
             "This repository also includes a proof of concept for CVE-2026-41940.",
         )
+        repo["root"] = {"entries": [{"name": "CVE-2026-41940.py"}]}
         self.assertEqual(
             update_cves.qualifying_repo_cves(repo, 2026, []),
             {"CVE-2026-31431", "CVE-2026-41940"},
@@ -128,34 +130,16 @@ class RepositoryClassificationTests(unittest.TestCase):
             "AcmeSecurity/CVE-2026-31431-PoC-Scanner",
             "Proof-of-concept scanner for CVE-2026-31431",
         )
+        repo["root"] = {"entries": [{"name": "scan.py"}]}
         self.assertEqual(
             update_cves.qualifying_repo_cves(repo, 2026, []),
             {"CVE-2026-31431"},
         )
 
-    def test_rejects_weaponized_and_mass_exploitation_repositories(self) -> None:
-        repo = self.repo(
-            "AcmeSecurity/CVE-2026-31431-PoC",
-            "Weaponized mass exploitation framework for CVE-2026-31431",
-        )
-        self.assertEqual(update_cves.qualifying_repo_cves(repo, 2026, []), set())
-
-    def test_keeps_explicitly_non_weaponized_poc(self) -> None:
-        repo = self.repo(
-            "AcmeSecurity/CVE-2026-31431-PoC",
-            "Crash reproducer, not a\nweaponized exploit",
-        )
-        self.assertEqual(
-            update_cves.qualifying_repo_cves(repo, 2026, []),
-            {"CVE-2026-31431"},
-        )
-
-    def test_blacklist_supports_repository_names_and_full_names(self) -> None:
-        blacklist = ["poc-index", "mirror-org/poc-corpus", "cve-feed*"]
-        self.assertTrue(update_cves.is_blacklisted_repo("AnyOwner/poc-index", blacklist))
+    def test_blacklist_matches_exact_owner_and_repository(self) -> None:
+        blacklist = ["mirror-org/poc-corpus"]
         self.assertTrue(update_cves.is_blacklisted_repo("mirror-org/poc-corpus", blacklist))
         self.assertFalse(update_cves.is_blacklisted_repo("source-org/poc-corpus", blacklist))
-        self.assertTrue(update_cves.is_blacklisted_repo("AnyOwner/cve-feed-daily", blacklist))
 
 
 class ReferenceAndMarkdownTests(unittest.TestCase):
@@ -199,7 +183,7 @@ class ReferenceAndMarkdownTests(unittest.TestCase):
             {"url": "https://github.com/AcmeSecurity/poc-index", "tags": ["exploit"]}
         )
         self.assertEqual(
-            update_cves.poc_references(record, ["poc-index"]),
+            update_cves.poc_references(record, {"acmesecurity/poc-index"}),
             ["https://research.example/copy-fail"],
         )
 

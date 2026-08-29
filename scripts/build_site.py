@@ -5,7 +5,7 @@ import json
 import re
 from datetime import datetime, timezone
 from pathlib import Path
-from typing import Dict, List, Optional
+from typing import Collection, Dict, List, Optional
 from urllib.parse import urlparse
 
 from jinja2 import Environment, FileSystemLoader, select_autoescape
@@ -15,7 +15,6 @@ from utils import DOCS_DIR, TEMPLATES_DIR, ensure_dirs, load_blacklist, parse_tr
 ROOT = DOCS_DIR.parent
 README_PATH = ROOT / "README.md"
 CVE_OUTPUT = DOCS_DIR / "CVE_list.json"
-REMOVED_OUTPUT = DOCS_DIR / "CVE_blacklist_removed.json"
 TRENDING_OUTPUT = DOCS_DIR / "trending_poc.json"
 
 
@@ -72,31 +71,32 @@ def repo_from_url(url: str) -> str:
         path = url
     parts = path.strip("/").split("/")
     if len(parts) >= 2:
-        return parts[1].lower()
+        return "/".join(parts[:2]).lower()
     return (parts[-1] if parts else "").lower()
 
 
-def is_blacklisted(url: str, blacklist: List[str]) -> bool:
-    repo = repo_from_url(url)
-    if not repo:
+def is_blacklisted(url: str, blacklist: Collection[str]) -> bool:
+    full_name = repo_from_url(url)
+    if not full_name:
         return False
-    for entry in blacklist:
-        slug = entry.lower()
-        if not slug:
-            continue
-        if slug.endswith("*"):
-            if repo.startswith(slug[:-1]):
-                return True
-        elif repo == slug:
-            return True
-    return False
+    return full_name in blacklist
 
 
-def collect_links(block: str, *, blacklist: Optional[List[str]] = None, removed: Optional[List[str]] = None) -> List[str]:
+def link_key(url: str) -> str:
+    parsed = urlparse(url)
+    if (parsed.hostname or "").lower() not in {"github.com", "www.github.com"}:
+        return url
+    parts = [part for part in parsed.path.split("/") if part]
+    if len(parts) < 2:
+        return url
+    repo = f"{parts[0]}/{parts[1]}".lower()
+    suffix = "/" + "/".join(parts[2:]) if len(parts) > 2 else ""
+    return f"github:{repo}{suffix}?{parsed.query}#{parsed.fragment}"
+
+
+def collect_links(block: str, *, blacklist: Optional[Collection[str]] = None) -> List[str]:
     links: List[str] = []
-    blacklist = blacklist or []
-    if removed is None:
-        removed = []
+    blacklist = blacklist or set()
     for raw in block.splitlines():
         entry = raw.strip()
         if not entry or "No PoCs" in entry:
@@ -106,38 +106,31 @@ def collect_links(block: str, *, blacklist: Optional[List[str]] = None, removed:
         if not entry:
             continue
         if is_blacklisted(entry, blacklist):
-            removed.append(entry)
             continue
         if entry not in links:
             links.append(entry)
     return links
 
 
-def build_cve_list(blacklist: List[str]) -> Dict[str, object]:
+def build_cve_list(blacklist: Collection[str]) -> List[Dict[str, object]]:
     cve_entries = []
-    removed_by_cve: Dict[str, List[str]] = {}
-    removed_seen: set[str] = set()
 
     for md_path in sorted(ROOT.glob("[12][0-9][0-9][0-9]/CVE-*.md")):
         content = md_path.read_text(encoding="utf-8")
         sections = parse_sections(content)
         description = normalise_block(sections.get("### Description", ""))
-        removed_links: List[str] = []
-        references = collect_links(sections.get("#### Reference", ""), blacklist=blacklist, removed=removed_links)
-        github_links = collect_links(sections.get("#### Github", ""), blacklist=blacklist, removed=removed_links)
+        references = collect_links(sections.get("#### Reference", ""), blacklist=blacklist)
+        github_links = collect_links(sections.get("#### Github", ""), blacklist=blacklist)
 
         poc_entries: List[str] = []
         seen = set()
         for link in references + github_links:
-            if link not in seen:
+            key = link_key(link)
+            if key not in seen:
                 poc_entries.append(link)
-                seen.add(link)
+                seen.add(key)
 
         cve_id = md_path.stem
-        if removed_links:
-            removed_by_cve[cve_id] = sorted(set(removed_links))
-            removed_seen.update(removed_links)
-
         if not poc_entries:
             continue
 
@@ -147,16 +140,10 @@ def build_cve_list(blacklist: List[str]) -> Dict[str, object]:
             "poc": poc_entries,
         })
 
-    return {
-        "entries": cve_entries,
-        "removed": {
-            "removed": sorted(removed_seen),
-            "by_cve": removed_by_cve,
-        },
-    }
+    return cve_entries
 
 
-def build_trending(blacklist: List[str]) -> List[Dict[str, object]]:
+def build_trending(blacklist: Collection[str]) -> List[Dict[str, object]]:
     rows = parse_trending_from_readme(README_PATH)
     if not rows:
         return []
@@ -210,8 +197,7 @@ def main() -> int:
     blacklist = load_blacklist()
 
     cve_payload = build_cve_list(blacklist)
-    write_json(CVE_OUTPUT, cve_payload["entries"])
-    write_json(REMOVED_OUTPUT, cve_payload["removed"], indent=2)
+    write_json(CVE_OUTPUT, cve_payload)
 
     trending_items = build_trending(blacklist)
     write_json(
