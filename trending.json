@@ -343,21 +343,21 @@
  },
  {
   "year": 2025,
-  "stars": 143,
-  "name": "CVE-2025-32433",
-  "url": "https://github.com/ProDefense/CVE-2025-32433",
-  "desc": "CVE-2025-32433 https://github.com/erlang/otp/security/advisories/GHSA-37cp-fgq5-7wc2",
-  "pushed": "2025-08-02T18:24:05Z",
-  "created": "2025-04-18T00:35:11Z"
- },
- {
-  "year": 2025,
   "stars": 161,
   "name": "CVE-2025-21756",
   "url": "https://github.com/hoefler02/CVE-2025-21756",
   "desc": "Exploit for CVE-2025-21756 for Linux kernel 6.6.75. My first linux kernel exploit!",
   "pushed": "2025-06-05T21:32:05Z",
   "created": "2025-04-18T14:22:15Z"
+ },
+ {
+  "year": 2025,
+  "stars": 143,
+  "name": "CVE-2025-32433",
+  "url": "https://github.com/ProDefense/CVE-2025-32433",
+  "desc": "CVE-2025-32433 https://github.com/erlang/otp/security/advisories/GHSA-37cp-fgq5-7wc2",
+  "pushed": "2025-08-02T18:24:05Z",
+  "created": "2025-04-18T00:35:11Z"
  },
  {
   "year": 2024,
@@ -415,21 +415,21 @@
  },
  {
   "year": 2024,
+  "stars": 379,
+  "name": "cve-2024-6387-poc",
+  "url": "https://github.com/acrono/cve-2024-6387-poc",
+  "desc": "32-bit PoC for CVE-2024-6387 — mirror of the original 7etsuo/cve-2024-6387-poc",
+  "pushed": "2024-07-01T12:25:01Z",
+  "created": "2024-07-01T12:16:21Z"
+ },
+ {
+  "year": 2024,
   "stars": 335,
   "name": "CVE-2024-21338",
   "url": "https://github.com/hakaioffsec/CVE-2024-21338",
   "desc": "Local Privilege Escalation from Admin to Kernel vulnerability on Windows 10 and Windows 11 operating systems with HVCI enabled.",
   "pushed": "2024-04-16T21:00:14Z",
   "created": "2024-04-13T05:53:02Z"
- },
- {
-  "year": 2024,
-  "stars": 380,
-  "name": "cve-2024-6387-poc",
-  "url": "https://github.com/acrono/cve-2024-6387-poc",
-  "desc": "32-bit PoC for CVE-2024-6387 — mirror of the original 7etsuo/cve-2024-6387-poc",
-  "pushed": "2024-07-01T12:25:01Z",
-  "created": "2024-07-01T12:16:21Z"
  },
  {
   "year": 2024,
@@ -667,21 +667,21 @@
  },
  {
   "year": 2023,
-  "stars": 346,
-  "name": "CVE-2023-23397-POC-Powershell",
-  "url": "https://github.com/api0cradle/CVE-2023-23397-POC-Powershell",
-  "desc": "",
-  "pushed": "2023-03-17T07:47:40Z",
-  "created": "2023-03-16T19:43:39Z"
- },
- {
-  "year": 2023,
   "stars": 228,
   "name": "CVE-2023-20887",
   "url": "https://github.com/sinsinology/CVE-2023-20887",
   "desc": "VMWare vRealize Network Insight Pre-Authenticated RCE (CVE-2023-20887)",
   "pushed": "2023-06-13T14:39:17Z",
   "created": "2023-06-13T13:17:23Z"
+ },
+ {
+  "year": 2023,
+  "stars": 346,
+  "name": "CVE-2023-23397-POC-Powershell",
+  "url": "https://github.com/api0cradle/CVE-2023-23397-POC-Powershell",
+  "desc": "",
+  "pushed": "2023-03-17T07:47:40Z",
+  "created": "2023-03-16T19:43:39Z"
  },
  {
   "year": 2023,
@@ -766,21 +766,21 @@
  },
  {
   "year": 2022,
-  "stars": 358,
-  "name": "CVE-2022-40684",
-  "url": "https://github.com/horizon3ai/CVE-2022-40684",
-  "desc": "A proof of concept exploit for CVE-2022-40684 affecting Fortinet FortiOS, FortiProxy, and FortiSwitchManager",
-  "pushed": "2022-10-13T15:25:00Z",
-  "created": "2022-10-13T14:24:12Z"
- },
- {
-  "year": 2022,
   "stars": 729,
   "name": "CVE-2022-0847-DirtyPipe-Exploits",
   "url": "https://github.com/AlexisAhmed/CVE-2022-0847-DirtyPipe-Exploits",
   "desc": "A collection of exploits and documentation that can be used to exploit the Linux Dirty Pipe vulnerability.",
   "pushed": "2023-05-20T05:55:45Z",
   "created": "2022-03-12T20:57:24Z"
+ },
+ {
+  "year": 2022,
+  "stars": 358,
+  "name": "CVE-2022-40684",
+  "url": "https://github.com/horizon3ai/CVE-2022-40684",
+  "desc": "A proof of concept exploit for CVE-2022-40684 affecting Fortinet FortiOS, FortiProxy, and FortiSwitchManager",
+  "pushed": "2022-10-13T15:25:00Z",
+  "created": "2022-10-13T14:24:12Z"
  },
  {
   "year": 2022,
@@ -802,21 +802,21 @@
  },
  {
   "year": 2022,
-  "stars": 415,
-  "name": "CVE-2022-33679",
-  "url": "https://github.com/Bdenneu/CVE-2022-33679",
-  "desc": "One day based on https://googleprojectzero.blogspot.com/2022/10/rc4-is-still-considered-harmful.html",
-  "pushed": "2024-11-10T17:21:28Z",
-  "created": "2022-11-02T18:38:01Z"
- },
- {
-  "year": 2022,
   "stars": 497,
   "name": "CVE-2022-0995",
   "url": "https://github.com/Bonfee/CVE-2022-0995",
   "desc": "CVE-2022-0995 exploit",
   "pushed": "2022-03-27T09:07:01Z",
   "created": "2022-03-26T21:46:09Z"
+ },
+ {
+  "year": 2022,
+  "stars": 415,
+  "name": "CVE-2022-33679",
+  "url": "https://github.com/Bdenneu/CVE-2022-33679",
+  "desc": "One day based on https://googleprojectzero.blogspot.com/2022/10/rc4-is-still-considered-harmful.html",
+  "pushed": "2024-11-10T17:21:28Z",
+  "created": "2022-11-02T18:38:01Z"
  },
  {
   "year": 2022,
@@ -892,11 +892,11 @@
  },
  {
   "year": 2022,
-  "stars": 235,
-  "name": "CVE-2022-30075",
-  "url": "https://github.com/aaronsvk/CVE-2022-30075",
-  "desc": "Tp-Link Archer AX50 Authenticated RCE (CVE-2022-30075)",
-  "pushed": "2022-11-20T03:03:53Z",
-  "created": "2022-06-07T23:26:47Z"
+  "stars": 219,
+  "name": "CVE-2022-34918",
+  "url": "https://github.com/veritas501/CVE-2022-34918",
+  "desc": "CVE-2022-34918 netfilter nf_tables 本地提权 POC",
+  "pushed": "2022-09-15T03:19:28Z",
+  "created": "2022-08-02T09:52:02Z"
  }
 ]
