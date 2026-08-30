@@ -4,6 +4,7 @@ const REPLACE_STRINGS = ['HackTheBox - ', 'VulnHub - ', 'UHC - '];
 const PAGE_SIZE = 50;
 const POC_PREVIEW = 5;
 const TREND_ROWS = 20;
+const MIN_QUERY = 2;
 
 const state = {
   query: '',
@@ -210,6 +211,7 @@ function runSearch(query) {
     .filter(Boolean);
 
   const results = [];
+  results.pocTotal = 0;
   for (const entry of dataset) {
     let score = 0;
     let matched = true;
@@ -233,6 +235,7 @@ function runSearch(query) {
     // at the weakest tier, where newest-first is meaningless. How many of the
     // linked PoCs carry the term says far more than which CVE is newer.
     entry._hits = describes ? 0 : countLinkHits(entry, matchers);
+    results.pocTotal += (entry.poc || []).length;
     results.push(entry);
   }
 
@@ -392,7 +395,7 @@ function renderResults(elapsed) {
   }
 
   const shown = results.slice(0, state.shown);
-  const pocTotal = results.reduce((sum, r) => sum + (r.poc || []).length, 0);
+  const pocTotal = results.pocTotal;
   const remaining = results.length - shown.length;
   const footer = remaining > 0
     ? `<button type="button" class="poc-more" data-more-results>+ ${formatCount(remaining)} more matching CVEs</button>`
@@ -460,7 +463,7 @@ function idleStatus() {
 }
 
 function render() {
-  if (!state.query) {
+  if (state.query.length < MIN_QUERY) {
     el.status.textContent = state.ready ? idleStatus() : 'loading index…';
     renderTrending();
     return;
@@ -482,10 +485,21 @@ function render() {
 
 /* ---- wiring ------------------------------------------------------------ */
 
+// A full pass over the index costs ~200ms, so one per keystroke makes typing
+// stutter. 160ms covers an ordinary typing cadence without the wait being felt;
+// clearing the field stays instant.
+let searchTimer = null;
 el.input.addEventListener('input', () => {
-  state.query = el.input.value.trim();
+  const next = el.input.value.trim();
+  if (next === state.query) return;
+  state.query = next;
   state.shown = PAGE_SIZE;
-  render();
+  clearTimeout(searchTimer);
+  if (next.length < MIN_QUERY) {
+    render();
+    return;
+  }
+  searchTimer = setTimeout(render, 160);
 });
 
 document.querySelector('.search').addEventListener('submit', event => event.preventDefault());
