@@ -11,15 +11,11 @@ from urllib.parse import urlparse
 ROOT = Path(__file__).resolve().parents[1]
 DOCS_DIR = ROOT / "docs"
 BLACKLIST = ROOT / "blacklist.txt"
-README_PATH = ROOT / "README.md"
+TRENDING_INPUT = ROOT / "trending.json"
 CVE_OUTPUT = DOCS_DIR / "CVE_list.json"
 TRENDING_OUTPUT = DOCS_DIR / "trending_poc.json"
-TREND_ROW_RE = re.compile(
-    r"^\|\s*(?P<stars>\d+)\s*⭐\s*\|\s*(?P<updated>[^|]+)\|\s*"
-    r"\[(?P<name>[^\]]+)\]\((?P<url>[^)]+)\)\s*\|\s*(?P<desc>.*)\|$"
-)
-
-
+REPO_META = ROOT / "repo_meta.json"
+REPO_META_OUTPUT = DOCS_DIR / "repo_meta.json"
 def load_blacklist() -> set[str]:
     if not BLACKLIST.exists():
         return set()
@@ -28,25 +24,6 @@ def load_blacklist() -> set[str]:
         for line in BLACKLIST.read_text(encoding="utf-8").splitlines()
         if line.strip() and not line.lstrip().startswith("#")
     }
-
-
-def parse_trending_from_readme(readme_path: Path) -> List[Dict[str, str]]:
-    """Read the trending table the hot-CVEs job writes into README.md."""
-    if not readme_path.exists():
-        return []
-    rows: List[Dict[str, str]] = []
-    year: Optional[str] = None
-    for raw in readme_path.read_text(encoding="utf-8").splitlines():
-        line = raw.strip()
-        if line.startswith("## ") and line[3:].strip().isdigit():
-            year = line[3:].strip()
-            continue
-        match = TREND_ROW_RE.match(line)
-        if match and year:
-            row = match.groupdict()
-            row["year"] = year
-            rows.append(row)
-    return rows
 
 
 def normalise_block(text: str) -> str:
@@ -129,10 +106,12 @@ def collect_links(block: str, *, blacklist: Optional[Collection[str]] = None) ->
     return links
 
 
-def build_cve_list(blacklist: Collection[str]) -> List[Dict[str, object]]:
+def build_cve_list(blacklist: Collection[str]) -> tuple[List[Dict[str, object]], int]:
     cve_entries = []
+    total = 0
 
     for md_path in sorted(ROOT.glob("[12][0-9][0-9][0-9]/CVE-*.md")):
+        total += 1
         content = md_path.read_text(encoding="utf-8")
         sections = parse_sections(content)
         description = normalise_block(sections.get("### Description", ""))
@@ -157,47 +136,41 @@ def build_cve_list(blacklist: Collection[str]) -> List[Dict[str, object]]:
             "poc": poc_entries,
         })
 
-    return cve_entries
+    return cve_entries, total
+
+
+def build_repo_meta(cve_entries: List[Dict[str, object]]) -> Dict[str, object]:
+    """Star count and last-push date for the repositories the index actually links."""
+    try:
+        stored = json.loads(REPO_META.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        return {}
+    linked = {
+        repo_from_url(url)
+        for entry in cve_entries
+        for url in entry["poc"]
+        if repo_from_url(url)
+    }
+    return {name: value for name, value in stored.items() if name in linked}
 
 
 def build_trending(blacklist: Collection[str]) -> List[Dict[str, object]]:
-    rows = parse_trending_from_readme(README_PATH)
-    if not rows:
+    """The trending job's own output, minus anything the blacklist covers."""
+    try:
+        rows = json.loads(TRENDING_INPUT.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
         return []
-
-    by_year: Dict[int, List[Dict[str, object]]] = {}
-    for row in rows:
-        year_text = row.get("year") or ""
-        if not str(year_text).isdigit():
-            continue
-        year = int(year_text)
-        url = (row.get("url") or "").strip()
-        if url and is_blacklisted(url, blacklist):
-            continue
-        stars_text = str(row.get("stars") or "").strip()
-        stars = int(re.sub(r"\D", "", stars_text) or 0)
-        item = {
-            "year": year,
-            "stars": stars,
-            "updated": (row.get("updated") or "").strip(),
-            "name": (row.get("name") or "").strip(),
-            "url": url,
-            "desc": (row.get("desc") or "").strip(),
-        }
-        by_year.setdefault(year, []).append(item)
-
-    if not by_year:
-        return []
-
-    current_year = datetime.now(timezone.utc).year
-    target_year = current_year if current_year in by_year else max(by_year)
-    return by_year.get(target_year, [])
+    return [
+        row for row in rows
+        if row.get("url") and not is_blacklisted(str(row["url"]), blacklist)
+    ]
 
 
 def write_json(path: Path, data, *, indent: Optional[int] = None) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     with path.open("w", encoding="utf-8") as handle:
-        json.dump(data, handle, ensure_ascii=False, indent=indent)
+        json.dump(data, handle, ensure_ascii=False, indent=indent,
+                  separators=None if indent else (",", ":"))
 
 
 def main() -> int:
@@ -206,20 +179,28 @@ def main() -> int:
     DOCS_DIR.mkdir(parents=True, exist_ok=True)
     blacklist = load_blacklist()
 
-    cve_payload = build_cve_list(blacklist)
+    cve_payload, total_cves = build_cve_list(blacklist)
     write_json(CVE_OUTPUT, cve_payload)
+
+    repo_meta = build_repo_meta(cve_payload)
+    write_json(REPO_META_OUTPUT, repo_meta)
 
     trending_items = build_trending(blacklist)
     write_json(
         TRENDING_OUTPUT,
         {
             "generated": datetime.now(timezone.utc).isoformat(),
+            "total_cves": total_cves,
+            "with_pocs": len(cve_payload),
             "items": trending_items,
         },
         indent=2,
     )
 
-    print(f"Wrote {CVE_OUTPUT.name} ({len(cve_payload)} CVEs) and {TRENDING_OUTPUT.name}")
+    print(
+        f"Wrote {CVE_OUTPUT.name} ({len(cve_payload)} of {total_cves} CVEs), "
+        f"{REPO_META_OUTPUT.name} ({len(repo_meta)} repositories) and {TRENDING_OUTPUT.name}"
+    )
     return 0
 
 

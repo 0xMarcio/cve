@@ -18,7 +18,9 @@ YEARS = 5
 PER_YEAR = 20
 MIN_STARS = 2
 USER_AGENT = "0xMarcio-cve-trending"
-README = os.path.join(os.path.dirname(os.path.abspath(__file__)), os.pardir, "README.md")
+ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), os.pardir)
+README = os.path.join(ROOT, "README.md")
+TRENDING = os.path.join(ROOT, "trending.json")
 
 
 def search_year(year: int) -> tuple[int, list[dict]]:
@@ -69,6 +71,7 @@ def cell(value: str) -> str:
 def main() -> int:
     current_year = datetime.now(timezone.utc).year
     lines = ['<h1 align="center">Recently updated Proof-of-Concepts</h1>']
+    items: list[dict] = []
 
     for year in range(current_year, current_year - YEARS, -1):
         total, repositories = search_year(year)
@@ -80,14 +83,30 @@ def main() -> int:
         lines.append("| Stars | Updated | Name | Description |")
         lines.append("| --- | --- | --- | --- |")
         for repo in repositories:
+            # pushed_at is the last commit. updated_at also moves when a repository
+            # only gains a star, which is why the table used to claim that a
+            # four-month-old exploit had been updated three hours ago.
+            pushed = str(repo.get("pushed_at") or repo.get("updated_at") or "")
+            items.append({
+                "year": year,
+                "stars": int(repo.get("stargazers_count") or 0),
+                "name": cell(repo.get("name")),
+                "url": repo.get("html_url") or "",
+                "desc": cell(repo.get("description")),
+                "pushed": pushed,
+                "created": str(repo.get("created_at") or ""),
+            })
             lines.append(
-                f"| {repo.get('stargazers_count', 0)}⭐ | {time_ago(repo['updated_at'])} "
+                f"| {repo.get('stargazers_count', 0)}⭐ | {time_ago(pushed)} "
                 f"| [{cell(repo.get('name'))}]({repo.get('html_url')}) | {cell(repo.get('description'))} |"
             )
 
     with open(README, "w", encoding="utf-8") as handle:
         handle.write("\n".join(lines))
-    print(f"Wrote {README}")
+    with open(TRENDING, "w", encoding="utf-8") as handle:
+        json.dump(items, handle, ensure_ascii=False, indent=1)
+        handle.write("\n")
+    print(f"Wrote {README} and {TRENDING} ({len(items)} repositories)")
     return 0
 
 
