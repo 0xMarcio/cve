@@ -1,4 +1,3 @@
-const searchResultFormat = '<tr><td class="cveNum">$cve</td><td class="desc">$description $poc</td></tr>';
 const totalLimit = 10000;
 const replaceStrings = ['HackTheBox - ', 'VulnHub - ', 'UHC - '];
 const colorUpdate = document.body;
@@ -49,25 +48,13 @@ function buildMatcher(term) {
         normalized,
         isPhrase,
         phrase: isPhrase ? normalizeToSpaces(raw) : '',
-        loose: !isPhrase && normalized.length >= 4 ? buildLooseRegex(raw) : null,
-        allowPocBoost: normalized.length >= 4
+        loose: !isPhrase && normalized.length >= 4 ? buildLooseRegex(raw) : null
     };
 }
 
-function countPocMatches(pocList, matcher) {
-    if (!Array.isArray(pocList) || !matcher) return 0;
-    let count = 0;
-    const raw = matcher.raw;
-    const loose = matcher.loose;
-    for (const link of pocList) {
-        const linkText = (link || '').toLowerCase();
-        if (!linkText) continue;
-        if (linkText.includes(raw) || (loose && loose.test(linkText))) {
-            count += 1;
-            if (count >= 50) break;
-        }
-    }
-    return count;
+function linkItem(link) {
+    const safe = escapeHTML(link);
+    return `<li><a target="_blank" rel="noopener" href="${safe}">${safe}</a></li>`;
 }
 
 function convertLinksToList(links) {
@@ -77,13 +64,13 @@ function convertLinksToList(links) {
     let htmlOutput = `<div class="poc-container"><ul>`;
     const displayLimit = 5;
     links.slice(0, displayLimit).forEach(link => {
-        htmlOutput += `<li><a target="_blank" href="${link}">${link}</a></li>`;
+        htmlOutput += linkItem(link);
     });
     htmlOutput += `</ul>`;
     if (links.length > displayLimit) {
         htmlOutput += `
             <ul class="dropdown" style="display:none;">
-                ${links.slice(displayLimit).map(link => `<li><a target="_blank" href="${link}">${link}</a></li>`).join('')}
+                ${links.slice(displayLimit).map(linkItem).join('')}
             </ul>
             <button class="dropdown-btn" onclick="toggleDropdown(this)">Show More</button>`;
     }
@@ -107,31 +94,43 @@ function getCveLink(cveId) {
     return `<a href="https://nvd.nist.gov/vuln/detail/${cveId}" target="_blank"><b>${cveId}</b></a>`;
 }
 
+function pocText(entry) {
+    if (entry._pocText === undefined) {
+        entry._pocText = (entry.poc || []).join(' ').toLowerCase();
+    }
+    return entry._pocText;
+}
+
+function pocSpace(entry) {
+    if (entry._pocSpace === undefined) {
+        entry._pocSpace = normalizeToSpaces(pocText(entry));
+    }
+    return entry._pocSpace;
+}
+
+function descSpace(entry) {
+    if (entry._descSpace === undefined) {
+        entry._descSpace = normalizeToSpaces(entry._descText);
+    }
+    return entry._descSpace;
+}
+
 function prepareDataset(raw) {
     if (!Array.isArray(raw)) return [];
-    const descKeyCleaned = (entry) => {
-        const base = entry.desc || '';
-        return replaceStrings.reduce((desc, str) => desc.replace(str, ''), base);
-    };
-    return raw
-      .filter(entry => {
+    const dataset = [];
+    for (const entry of raw) {
         const cve = (entry.cve || '').trim();
-        return cve && Array.isArray(entry.poc) && entry.poc.length > 0;
-      })
-      .map(entry => {
-        const descCleaned = descKeyCleaned(entry);
-        const cve = (entry.cve || '').toLowerCase();
-        const desc = descCleaned.toLowerCase();
-        const pocText = (entry.poc || []).join(' ').toLowerCase();
-        return {
-            ...entry,
-            _cveText: cve,
-            _descText: desc,
-            _pocText: pocText,
-            _descSpace: normalizeToSpaces(descCleaned),
-            _pocSpace: normalizeToSpaces(pocText)
-        };
-      });
+        if (!cve || !Array.isArray(entry.poc) || entry.poc.length === 0) continue;
+        const parts = cve.split('-');
+        entry._cveText = cve.toLowerCase();
+        entry._descText = replaceStrings
+            .reduce((desc, str) => desc.replace(str, ''), entry.desc || '')
+            .toLowerCase();
+        entry._year = parseInt(parts[1], 10) || 0;
+        entry._num = parseInt(parts[2], 10) || 0;
+        dataset.push(entry);
+    }
+    return dataset;
 }
 
 const controls = {
@@ -144,49 +143,26 @@ const controls = {
         results.style.display = 'none';
         resultsTableHideable.classList.add('hide');
     },
-    scoreEntry(entry, matcher, includeBoost) {
-        if (!matcher) return 0;
-        const raw = matcher.raw;
-        if (!raw) return 0;
-        let score = 0;
+    scoreEntry(entry, matcher) {
+        if (!matcher || !matcher.raw) return 0;
 
         if (matcher.isPhrase) {
             const phrase = matcher.phrase;
-            if (phrase && entry._descSpace.includes(phrase)) {
-                score = Math.max(score, 200);
-            }
-            if (phrase && entry._pocSpace.includes(phrase)) {
-                score = Math.max(score, 80);
-            }
-            return score;
+            if (!phrase) return 0;
+            if (descSpace(entry).includes(phrase)) return 200;
+            if (pocSpace(entry).includes(phrase)) return 80;
+            return 0;
         }
 
-        if (entry._cveText.includes(raw)) {
-            score = Math.max(score, 600);
+        const raw = matcher.raw;
+        if (entry._cveText.includes(raw)) return 600;
+        if (entry._descText.includes(raw)) return 240;
+        if (pocText(entry).includes(raw)) return 80;
+        if (matcher.loose) {
+            if (matcher.loose.test(entry._descText)) return 160;
+            if (matcher.loose.test(pocText(entry))) return 60;
         }
-        if (entry._descText.includes(raw)) {
-            score = Math.max(score, 240);
-        }
-        if (entry._pocText.includes(raw)) {
-            score = Math.max(score, 80);
-        }
-
-        if (score === 0 && matcher.loose) {
-            if (matcher.loose.test(entry._descText)) {
-                score = Math.max(score, 160);
-            } else if (matcher.loose.test(entry._pocText)) {
-                score = Math.max(score, 60);
-            }
-        }
-
-        if (includeBoost && score > 0 && matcher.allowPocBoost) {
-            const pocMatchCount = countPocMatches(entry.poc || [], matcher);
-            if (pocMatchCount > 1) {
-                score += Math.min(200, pocMatchCount * 3);
-            }
-        }
-
-        return score;
+        return 0;
     },
     doSearch(match, dataset) {
         const terms = match.match(/-?"[^"]+"|-?\S+/g) || [];
@@ -206,7 +182,7 @@ const controls = {
             let matched = true;
 
             for (const matcher of posmatch) {
-                const termScore = this.scoreEntry(entry, matcher, true);
+                const termScore = this.scoreEntry(entry, matcher);
                 if (termScore === 0) {
                     matched = false;
                     break;
@@ -216,7 +192,7 @@ const controls = {
 
             if (!matched) continue;
 
-            const hasNegative = negmatch.some(matcher => this.scoreEntry(entry, matcher, false) > 0);
+            const hasNegative = negmatch.some(matcher => this.scoreEntry(entry, matcher) > 0);
             if (hasNegative) continue;
 
             entry._score = score;
@@ -225,7 +201,8 @@ const controls = {
 
         results.sort((a, b) => {
             if (b._score !== a._score) return b._score - a._score;
-            return (b.cve || '').localeCompare(a.cve || '');
+            if (b._year !== a._year) return b._year - a._year;
+            return b._num - a._num;
         });
 
         return results;
@@ -246,13 +223,11 @@ const controls = {
             noResults.style.display = 'none';
             resultsTableHideable.classList.remove('hide');
 
-            const html = results.map(r => {
-                const desc = r.desc || '';
-                return searchResultFormat
-                    .replace('$cve', getCveLink(r.cve))
-                    .replace('$description', escapeHTML(desc))
-                    .replace('$poc', convertLinksToList(r.poc || []));
-            }).join('');
+            const html = results.map(r =>
+                '<tr><td class="cveNum">' + getCveLink(r.cve) +
+                '</td><td class="desc">' + escapeHTML(r.desc || '') + ' ' +
+                convertLinksToList(r.poc || []) + '</td></tr>'
+            ).join('');
             loc.innerHTML = html;
         }
     },
@@ -359,7 +334,7 @@ document.addEventListener('DOMContentLoaded', () => {
     (async () => {
         for (const url of cveListCandidates) {
             try {
-                const res = await fetch(url, { cache: 'no-store' });
+                const res = await fetch(url);
                 if (!res.ok) {
                     throw new Error(`Failed to load ${url} (${res.status})`);
                 }
