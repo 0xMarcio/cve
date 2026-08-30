@@ -32,9 +32,16 @@ CVELIST_DELTA_LOG_URL = (
 )
 
 CVE_RE = re.compile(r"\bCVE[-_ ](?P<year>\d{4})[-_ ](?P<number>\d{4,})\b", re.IGNORECASE)
+# A repository that calls itself an exploit in Chinese is still an exploit;
+# an English-only vocabulary quietly reads every one of them as "not a PoC".
+# CJK terms sit outside the \b group because CJK has no word boundaries.
 POC_RE = re.compile(
     r"\b(?:poc|exploit(?:ation)?|proof[ _-]*of[ _-]*concept|"
-    r"repro(?:ducer|duction|duce)?|payload)\b",
+    r"repro(?:ducer|duction|duce)?|payload|"
+    r"prueba[ _-]*de[ _-]*concepto|explotaci(?:on|ón)|"
+    r"explora(?:cao|ção)|preuve[ _-]*de[ _-]*concept)\b"
+    r"|漏洞利用|漏洞复现|复现|利用代码|利用脚本|攻击脚本|驗證程式|検証コード"
+    r"|эксплойт|익스플로잇",
     re.IGNORECASE,
 )
 CODE_FILE_RE = re.compile(
@@ -48,7 +55,7 @@ NON_POC_RE = re.compile(
     r"github[ _-]*stars|hardening|hub|investigation|"
     r"honeypot|intelligence|ioc|lab|list|lookup|mitigat(?:e|ing|ion|or)|model(?:er|ing)|"
     r"monitor(?:ing)?|notes?|oscp|papers?|patch(?:es|ed|ing)?|pentest|portfolio|prediction|"
-    r"pre[ _-]*checks?|prevent(?:ion|ive)?|profile|protect(?:ion|ive)|prueba|"
+    r"pre[ _-]*checks?|prevent(?:ion|ive)?|profile|protect(?:ion|ive)|"
     r"remediat(?:e|ion)|reports?|"
     r"resources?|rules?|scan(?:s|ner|ning)?|shield|signature|suggester|templates?|toolkit|"
     r"training|tutorial|validat(?:e|ion|or)|verif(?:y|ier|ication)|walkthrough|wazuh|"
