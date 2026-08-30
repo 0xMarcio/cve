@@ -4,53 +4,64 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>CVE PoC Hub</title>
+  <meta name="description" content="Search publicly available proof-of-concept exploits by CVE, vendor or product." />
   <link rel="icon" href="/favicon.ico" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="/style.css" />
 </head>
-<body class="color-no-search">
-  <main class="wrap">
-    <section class="hero" data-search-root>
-      <h1>CVE PoC Hub</h1>
-      <div class="pill-row tight">
+<body>
+  <header class="masthead">
+    <div class="container">
+      <h1 class="wordmark">CVE PoC Hub</h1>
+      <div class="pills">
         <span class="pill">Linked PoCs</span>
         <span class="pill">MITRE CVE pages</span>
         <span class="pill">Vendor / product filters</span>
-        <span class="pill">Supports negative terms (e.g. <strong>-windows</strong>)</span>
+        <span class="pill">Supports negative terms (e.g. -windows)</span>
       </div>
-      <form class="searchForm" action="#">
-        <input type="text" class="search" placeholder="Search CVE, vendor, product, or keyword" autocomplete="off">
+      <form class="search" role="search" autocomplete="off">
+        <span class="search-glyph" aria-hidden="true">⌕</span>
+        <input type="text" spellcheck="false" data-search
+               placeholder="Search CVE, vendor, product, or keyword"
+               aria-label="Search CVE, vendor, product, or keyword" />
+        <span class="search-status" data-status aria-live="polite"></span>
       </form>
-      <div class="search-results" data-results style="display:none">
-        <div class="header">
-          <h2>Results</h2>
-        </div>
-        <div class="noResults">No results yet.</div>
-        <div class="results-table hide">
-          <table class="results">
-            <thead>
-              <tr>
-                <td width="18%">CVE</td>
-                <td>Description / PoC links</td>
-              </tr>
-            </thead>
-            <tbody class="results"></tbody>
-          </table>
-        </div>
-      </div>
-    </section>
+    </div>
+  </header>
 
-    <section class="section" data-trending-section>
-      <h2>Recently updated Proof-of-Concepts</h2>
-      <div class="table-wrap" data-trending>
-        <table>
-          <thead><tr><th>Stars</th><th>Updated</th><th>Name</th><th>Description</th></tr></thead>
-          <tbody id="trending-body">
-            <tr><td colspan="4">No recent PoCs.</td></tr>
-          </tbody>
-        </table>
+  <main class="container content">
+    <section class="card results" data-results hidden></section>
+
+    <section data-trending>
+      <div class="trend-head">
+        <h2 data-trend-title>Trending Proof-of-Concepts</h2>
+        <div class="toggle" role="group" aria-label="Ranking">
+          <button type="button" data-mode="TRENDING" aria-pressed="true">TRENDING</button>
+          <button type="button" data-mode="RECENT" aria-pressed="false">RECENT</button>
+        </div>
+        <span class="trend-note" data-trend-note></span>
+      </div>
+      <div class="card trend-card">
+        <div class="col-head">
+          <span class="col-stars">STARS</span>
+          <span class="col-updated">UPDATED</span>
+          <span>NAME</span>
+          <span class="col-desc">DESCRIPTION</span>
+        </div>
+        <div data-trend-rows></div>
       </div>
     </section>
   </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <span>sources: nvd · mitre · github</span>
+      <span data-refreshed></span>
+    </div>
+  </footer>
+
   <script src="/logic.js"></script>
 </body>
 </html>

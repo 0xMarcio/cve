@@ -1,423 +1,507 @@
-const totalLimit = 10000;
-const replaceStrings = ['HackTheBox - ', 'VulnHub - ', 'UHC - '];
-const colorUpdate = document.body;
+'use strict';
 
-function getSearchRoot() {
-    return document.querySelector('[data-search-root]');
+const REPLACE_STRINGS = ['HackTheBox - ', 'VulnHub - ', 'UHC - '];
+const PAGE_SIZE = 50;
+const POC_PREVIEW = 5;
+const TREND_ROWS = 20;
+
+const state = {
+  query: '',
+  mode: 'TRENDING',
+  shown: PAGE_SIZE,
+  descOpen: new Set(),
+  pocOpen: new Set(),
+  ready: false,
+  results: []
+};
+
+let dataset = [];
+let repoMeta = {};
+let trending = [];
+let indexMeta = null;
+
+/* ---- formatting -------------------------------------------------------- */
+
+function escapeHTML(value) {
+  return String(value == null ? '' : value).replace(/[&<>"']/g, ch => ({
+    '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+  }[ch]));
 }
 
-function getTrendingSection() {
-    return document.querySelector('[data-trending-section]');
+function formatCount(n) {
+  return n.toLocaleString('en-US');
 }
 
-function getTrendingBody() {
-    return document.getElementById('trending-body');
+function formatStars(n) {
+  return n >= 1000 ? (n / 1000).toFixed(1) + 'k' : String(n);
 }
 
-function escapeHTML(str) {
-    return str.replace(/[&<>"']/g, match => ({
-        '&': '&amp;',
-        '<': '&lt;',
-        '>': '&gt;',
-        '"': '&quot;',
-        "'": '&#39;'
-    }[match]));
+function hoursSince(iso) {
+  if (!iso) return null;
+  const then = Date.parse(iso.length === 10 ? iso + 'T00:00:00Z' : iso);
+  if (Number.isNaN(then)) return null;
+  return (Date.now() - then) / 36e5;
 }
+
+/** Long form for the trending table: "3 hours ago", "4 months ago". */
+function longAge(hours) {
+  if (hours == null) return '';
+  const units = [
+    [8760, 'year'], [720, 'month'], [168, 'week'], [24, 'day'], [1, 'hour']
+  ];
+  for (const [size, name] of units) {
+    if (hours >= size) {
+      const n = Math.floor(hours / size);
+      return `${n} ${name}${n === 1 ? '' : 's'} ago`;
+    }
+  }
+  const minutes = Math.max(1, Math.round(hours * 60));
+  return `${minutes} minute${minutes === 1 ? '' : 's'} ago`;
+}
+
+/** Compact age for the PoC columns: 3h, 3d, 2w, 5mo, 2y. */
+function shortAge(hours) {
+  if (hours == null) return '';
+  if (hours < 24) return Math.max(1, Math.round(hours)) + 'h';
+  const days = hours / 24;
+  if (days < 14) return Math.round(days) + 'd';
+  if (days < 60) return Math.round(days / 7) + 'w';
+  if (days < 730) return Math.round(days / 30) + 'mo';
+  return Math.round(days / 365) + 'y';
+}
+
+function repoFromUrl(url) {
+  const match = /^https?:\/\/(?:www\.)?github\.com\/([^/#?]+)\/([^/#?]+)/i.exec(url || '');
+  if (!match) return null;
+  return { owner: match[1], repo: match[2].replace(/\.git$/i, '') };
+}
+
+/** Everything after the host, for links that are not GitHub repositories. */
+function plainLinkLabel(url) {
+  try {
+    const parsed = new URL(url);
+    return parsed.host.replace(/^www\./, '') + parsed.pathname.replace(/\/$/, '');
+  } catch (err) {
+    return url;
+  }
+}
+
+/* ---- matching ---------------------------------------------------------- */
 
 function normalizeToSpaces(value) {
-    return value.toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim();
+  return value.toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim();
 }
 
 function buildLooseRegex(value) {
-    const compact = value.toLowerCase().replace(/[^a-z0-9]+/g, '');
-    if (compact.length < 4) {
-        return null;
-    }
-    const escaped = compact.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-    const pattern = escaped.split('').join('[^a-z0-9]*');
-    return new RegExp(pattern);
+  const compact = value.toLowerCase().replace(/[^a-z0-9]+/g, '');
+  if (compact.length < 4) return null;
+  const escaped = compact.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  return new RegExp(escaped.split('').join('[^a-z0-9]*'));
 }
 
 function buildMatcher(term) {
-    const raw = term.toLowerCase().trim();
-    if (!raw) return null;
-    const isPhrase = /\s/.test(raw);
-    const normalized = raw.replace(/[^a-z0-9]+/g, '');
-    return {
-        raw,
-        normalized,
-        isPhrase,
-        phrase: isPhrase ? normalizeToSpaces(raw) : '',
-        loose: !isPhrase && normalized.length >= 4 ? buildLooseRegex(raw) : null
-    };
-}
-
-function linkItem(link) {
-    const safe = escapeHTML(link);
-    return `<li><a target="_blank" rel="noopener" href="${safe}">${safe}</a></li>`;
-}
-
-function convertLinksToList(links) {
-    if (links.length === 0) {
-        return '';
-    }
-    let htmlOutput = `<div class="poc-container"><ul>`;
-    const displayLimit = 5;
-    links.slice(0, displayLimit).forEach(link => {
-        htmlOutput += linkItem(link);
-    });
-    htmlOutput += `</ul>`;
-    if (links.length > displayLimit) {
-        htmlOutput += `
-            <ul class="dropdown" style="display:none;">
-                ${links.slice(displayLimit).map(linkItem).join('')}
-            </ul>
-            <button class="dropdown-btn" onclick="toggleDropdown(this)">Show More</button>`;
-    }
-    htmlOutput += `</div>`;
-    return htmlOutput;
-}
-
-function toggleDropdown(button) {
-    const dropdown = button.previousElementSibling;
-    if (dropdown.style.display === "none") {
-        dropdown.style.display = "block";
-        button.textContent = "Show Less";
-    } else {
-        dropdown.style.display = "none";
-        button.textContent = "Show More";
-    }
-}
-window.toggleDropdown = toggleDropdown;
-
-function getCveLink(cveId) {
-    return `<a href="https://nvd.nist.gov/vuln/detail/${cveId}" target="_blank"><b>${cveId}</b></a>`;
-}
-
-function pocText(entry) {
-    if (entry._pocText === undefined) {
-        entry._pocText = (entry.poc || []).join(' ').toLowerCase();
-    }
-    return entry._pocText;
-}
-
-function pocSpace(entry) {
-    if (entry._pocSpace === undefined) {
-        entry._pocSpace = normalizeToSpaces(pocText(entry));
-    }
-    return entry._pocSpace;
+  const raw = term.toLowerCase().trim();
+  if (!raw) return null;
+  const isPhrase = /\s/.test(raw);
+  const normalized = raw.replace(/[^a-z0-9]+/g, '');
+  return {
+    raw,
+    isPhrase,
+    phrase: isPhrase ? normalizeToSpaces(raw) : '',
+    loose: !isPhrase && normalized.length >= 4 ? buildLooseRegex(raw) : null
+  };
 }
 
 // Plain substring matching made "rce" hit "open source" and "sudo" hit
 // "pseudo". Require the term to start a word; matching into the end of one is
 // still allowed so that "word" finds "wordpress".
 function wordStart(text, term) {
-    let at = text.indexOf(term);
-    while (at > 0) {
-        const code = text.charCodeAt(at - 1);
-        if (!((code > 96 && code < 123) || (code > 47 && code < 58))) return at;
-        at = text.indexOf(term, at + 1);
-    }
-    return at;
+  let at = text.indexOf(term);
+  while (at > 0) {
+    const code = text.charCodeAt(at - 1);
+    if (!((code > 96 && code < 123) || (code > 47 && code < 58))) return at;
+    at = text.indexOf(term, at + 1);
+  }
+  return at;
 }
 
 // A term in the opening of an advisory is what it is about; one buried deep in
 // the prose is usually incidental. Coarse buckets so that a few characters of
 // difference never outweighs the newest-first tie-break.
 function leadBonus(index) {
-    if (index < 0) return 0;
-    if (index < 80) return 80;
-    if (index < 300) return 40;
-    return 0;
+  if (index < 0) return 0;
+  if (index < 80) return 80;
+  if (index < 300) return 40;
+  return 0;
+}
+
+function pocText(entry) {
+  if (entry._pocText === undefined) {
+    entry._pocText = (entry.poc || []).join(' ').toLowerCase();
+  }
+  return entry._pocText;
+}
+
+function pocSpace(entry) {
+  if (entry._pocSpace === undefined) {
+    entry._pocSpace = normalizeToSpaces(pocText(entry));
+  }
+  return entry._pocSpace;
 }
 
 function descSpace(entry) {
-    if (entry._descSpace === undefined) {
-        entry._descSpace = normalizeToSpaces(entry._descText);
+  if (entry._descSpace === undefined) {
+    entry._descSpace = normalizeToSpaces(entry._descText);
+  }
+  return entry._descSpace;
+}
+
+function scoreEntry(entry, matcher) {
+  if (!matcher || !matcher.raw) return 0;
+
+  if (matcher.isPhrase) {
+    const phrase = matcher.phrase;
+    if (!phrase) return 0;
+    const at = wordStart(descSpace(entry), phrase);
+    if (at >= 0) return 200 + leadBonus(at);
+    if (wordStart(pocSpace(entry), phrase) >= 0) return 80;
+    return 0;
+  }
+
+  const raw = matcher.raw;
+  if (entry._cveText.includes(raw)) return 600;
+  const at = wordStart(entry._descText, raw);
+  if (at >= 0) return 240 + leadBonus(at);
+  if (wordStart(pocText(entry), raw) >= 0) return 80;
+  if (matcher.loose) {
+    if (matcher.loose.test(entry._descText)) return 160;
+    if (matcher.loose.test(pocText(entry))) return 60;
+  }
+  return 0;
+}
+
+function runSearch(query) {
+  const terms = query.match(/-?"[^"]+"|-?\S+/g) || [];
+  const cleaned = terms.map(t => t.replace(/^(-?)"/, '$1').replace(/"$/, ''));
+  const positive = cleaned.filter(t => t && t[0] !== '-');
+  const matchers = positive.map(buildMatcher).filter(Boolean);
+  // Unquoted words are matched independently, so "active directory" also hits a
+  // description holding "active session" and "working directory". Reward the
+  // words appearing together to keep those below real matches.
+  const adjacent = positive.length > 1 ? positive.join(' ').toLowerCase() : '';
+  const negatives = cleaned
+    .filter(t => t && t[0] === '-')
+    .map(t => t.slice(1))
+    .filter(Boolean)
+    .map(buildMatcher)
+    .filter(Boolean);
+
+  const results = [];
+  for (const entry of dataset) {
+    let score = 0;
+    let matched = true;
+    for (const matcher of matchers) {
+      const termScore = scoreEntry(entry, matcher);
+      if (termScore === 0) { matched = false; break; }
+      score += termScore;
     }
-    return entry._descSpace;
+    if (!matched) continue;
+    if (negatives.some(m => scoreEntry(entry, m) > 0)) continue;
+
+    if (adjacent) {
+      const at = wordStart(entry._descText, adjacent);
+      if (at >= 0) score += 300 + leadBonus(at);
+      else if (wordStart(pocText(entry), adjacent) >= 0) score += 100;
+    }
+    entry._score = score;
+    results.push(entry);
+  }
+
+  results.sort((a, b) => {
+    if (b._score !== a._score) return b._score - a._score;
+    if (b._year !== a._year) return b._year - a._year;
+    return b._num - a._num;
+  });
+  return results;
 }
 
 function prepareDataset(raw) {
-    if (!Array.isArray(raw)) return [];
-    const dataset = [];
-    for (const entry of raw) {
-        const cve = (entry.cve || '').trim();
-        if (!cve || !Array.isArray(entry.poc) || entry.poc.length === 0) continue;
-        const parts = cve.split('-');
-        entry._cveText = cve.toLowerCase();
-        entry._descText = replaceStrings
-            .reduce((desc, str) => desc.replace(str, ''), entry.desc || '')
-            .toLowerCase();
-        entry._year = parseInt(parts[1], 10) || 0;
-        entry._num = parseInt(parts[2], 10) || 0;
-        dataset.push(entry);
-    }
-    return dataset;
+  if (!Array.isArray(raw)) return [];
+  const out = [];
+  for (const entry of raw) {
+    const cve = (entry.cve || '').trim();
+    if (!cve || !Array.isArray(entry.poc) || entry.poc.length === 0) continue;
+    const parts = cve.split('-');
+    entry._cveText = cve.toLowerCase();
+    entry._descText = REPLACE_STRINGS
+      .reduce((desc, str) => desc.replace(str, ''), entry.desc || '')
+      .toLowerCase();
+    entry._year = parseInt(parts[1], 10) || 0;
+    entry._num = parseInt(parts[2], 10) || 0;
+    out.push(entry);
+  }
+  return out;
 }
 
-const controls = {
-    oldColor: '',
-    displayResults(results, resultsTableHideable) {
-        results.style.display = '';
-        resultsTableHideable.classList.remove('hide');
-    },
-    hideResults(results, resultsTableHideable) {
-        results.style.display = 'none';
-        resultsTableHideable.classList.add('hide');
-    },
-    scoreEntry(entry, matcher) {
-        if (!matcher || !matcher.raw) return 0;
+/* ---- rendering --------------------------------------------------------- */
 
-        if (matcher.isPhrase) {
-            const phrase = matcher.phrase;
-            if (!phrase) return 0;
-            const at = wordStart(descSpace(entry), phrase);
-            if (at >= 0) return 200 + leadBonus(at);
-            if (wordStart(pocSpace(entry), phrase) >= 0) return 80;
-            return 0;
-        }
-
-        const raw = matcher.raw;
-        if (entry._cveText.includes(raw)) return 600;
-        const at = wordStart(entry._descText, raw);
-        if (at >= 0) return 240 + leadBonus(at);
-        if (wordStart(pocText(entry), raw) >= 0) return 80;
-        if (matcher.loose) {
-            if (matcher.loose.test(entry._descText)) return 160;
-            if (matcher.loose.test(pocText(entry))) return 60;
-        }
-        return 0;
-    },
-    doSearch(match, dataset) {
-        const terms = match.match(/-?"[^"]+"|-?\S+/g) || [];
-        const cleaned = terms.map(term => term.replace(/^(-?)"/, '$1').replace(/"$/, ''));
-        const positive = cleaned.filter(term => term && term[0] !== '-');
-        const posmatch = positive.map(buildMatcher).filter(Boolean);
-        // Unquoted words are matched independently, so "active directory" also
-        // hits a description holding "active session" and "working directory".
-        // Reward the words appearing together to keep those below real matches.
-        const adjacent = positive.length > 1 ? positive.join(' ').toLowerCase() : '';
-        const negmatch = cleaned
-            .filter(term => term && term[0] === '-')
-            .map(term => term.substring(1))
-            .filter(Boolean)
-            .map(buildMatcher)
-            .filter(Boolean);
-
-        const results = [];
-
-        for (const entry of dataset) {
-            let score = 0;
-            let matched = true;
-
-            for (const matcher of posmatch) {
-                const termScore = this.scoreEntry(entry, matcher);
-                if (termScore === 0) {
-                    matched = false;
-                    break;
-                }
-                score += termScore;
-            }
-
-            if (!matched) continue;
-
-            const hasNegative = negmatch.some(matcher => this.scoreEntry(entry, matcher) > 0);
-            if (hasNegative) continue;
-
-            if (adjacent) {
-                const at = wordStart(entry._descText, adjacent);
-                if (at >= 0) {
-                    score += 300 + leadBonus(at);
-                } else if (wordStart(pocText(entry), adjacent) >= 0) {
-                    score += 100;
-                }
-            }
-
-            entry._score = score;
-            results.push(entry);
-        }
-
-        results.sort((a, b) => {
-            if (b._score !== a._score) return b._score - a._score;
-            if (b._year !== a._year) return b._year - a._year;
-            return b._num - a._num;
-        });
-
-        return results;
-    },
-    updateResults(loc, results, noResults, resultsTableHideable) {
-        if (results.length === 0) {
-            noResults.style.display = '';
-            noResults.textContent = 'No results found — try another vendor, product, or CVE id.';
-            resultsTableHideable.classList.add('hide');
-        } else if (results.length > totalLimit) {
-            noResults.style.display = '';
-            resultsTableHideable.classList.add('hide');
-            noResults.textContent = 'Error: ' + results.length + ' results were found, try being more specific';
-            this.setColor(colorUpdate, 'too-many-results');
-        } else {
-            loc.innerHTML = '';
-
-            noResults.style.display = 'none';
-            resultsTableHideable.classList.remove('hide');
-
-            const html = results.map(r =>
-                '<tr><td class="cveNum">' + getCveLink(r.cve) +
-                '</td><td class="desc">' + escapeHTML(r.desc || '') + ' ' +
-                convertLinksToList(r.poc || []) + '</td></tr>'
-            ).join('');
-            loc.innerHTML = html;
-        }
-    },
-    setColor(loc, indicator) {
-        if (this.oldColor === indicator) return;
-        loc.className = loc.className.replace(/\bcolor-\S+/g, '');
-        loc.classList.add('color-' + indicator);
-        this.oldColor = indicator;
-    }
+const el = {
+  input: document.querySelector('[data-search]'),
+  status: document.querySelector('[data-status]'),
+  results: document.querySelector('[data-results]'),
+  trending: document.querySelector('[data-trending]'),
+  trendTitle: document.querySelector('[data-trend-title]'),
+  trendNote: document.querySelector('[data-trend-note]'),
+  trendRows: document.querySelector('[data-trend-rows]'),
+  refreshed: document.querySelector('[data-refreshed]')
 };
 
-window.controls = controls;
+function pocRow(url) {
+  const parsed = repoFromUrl(url);
+  const href = escapeHTML(url);
+  if (!parsed) {
+    return `<div class="poc-row"><span class="poc-name">` +
+      `<a href="${href}" target="_blank" rel="noopener">${escapeHTML(plainLinkLabel(url))}</a>` +
+      `</span><span class="poc-stars"></span><span class="poc-age"></span></div>`;
+  }
+  const key = (parsed.owner + '/' + parsed.repo).toLowerCase();
+  const meta = repoMeta[key];
+  const stars = meta ? meta[0] : null;
+  const hours = meta ? hoursSince(meta[1]) : null;
+  const starClass = stars != null && stars >= 500 ? 'poc-stars is-popular' : 'poc-stars';
+  return `<div class="poc-row">` +
+    `<span class="poc-name"><span class="poc-owner">${escapeHTML(parsed.owner)}</span>` +
+    `<span class="poc-sep"> / </span>` +
+    `<a href="${href}" target="_blank" rel="noopener">${escapeHTML(parsed.repo)}</a></span>` +
+    `<span class="${starClass}">${stars == null ? '' : formatStars(stars) + ' ★'}</span>` +
+    `<span class="poc-age">${escapeHTML(shortAge(hours))}</span></div>`;
+}
 
-document.addEventListener('DOMContentLoaded', () => {
-    const root = getSearchRoot();
-    const trendingSection = getTrendingSection();
-    const trendingBody = getTrendingBody();
-    if (!root) return;
+/** Best-known repositories first, so the five shown by default are the five
+ *  worth opening. Links without a star count keep their original order behind
+ *  them; references from the CVE record have no repository to rank. */
+function rankedLinks(entry) {
+  if (entry._ranked) return entry._ranked;
+  const scored = (entry.poc || []).map((url, index) => {
+    const parsed = repoFromUrl(url);
+    const meta = parsed && repoMeta[(parsed.owner + '/' + parsed.repo).toLowerCase()];
+    return { url, index, stars: meta ? meta[0] : -1 };
+  });
+  scored.sort((a, b) => (b.stars - a.stars) || (a.index - b.index));
+  entry._ranked = scored.map(item => item.url);
+  return entry._ranked;
+}
 
-    const results = root.querySelector('[data-results]');
-    const searchValue = root.querySelector('input.search');
-    const form = root.querySelector('form.searchForm');
-    const resultsTableHideable = root.querySelector('.results-table');
-    const resultsTable = root.querySelector('tbody.results');
-    const noResults = root.querySelector('div.noResults');
+function resultRow(entry) {
+  const id = entry.cve;
+  const open = state.descOpen.has(id);
+  const all = state.pocOpen.has(id);
+  const links = rankedLinks(entry);
+  const visible = all ? links : links.slice(0, POC_PREVIEW);
+  const more = all
+    ? '↑ show fewer'
+    : (links.length > POC_PREVIEW
+        ? `+ ${formatCount(links.length - POC_PREVIEW)} more repositories`
+        : 'all repositories shown');
 
-    document.body.classList.add('fade');
+  const dates = [];
+  if (entry.published) dates.push(['published', entry.published]);
+  if (entry.modified) dates.push(['modified', entry.modified]);
+  const dateHtml = dates.length
+    ? `<dl class="result-dates">${dates.map(([label, value]) =>
+        `<div class="result-date"><dt>${label}</dt><dd>${escapeHTML(value)}</dd></div>`).join('')}</dl>`
+    : '';
 
-    if (!results || !searchValue || !form || !resultsTableHideable || !resultsTable || !noResults) {
-        console.warn('Search container missing expected elements');
-        return;
-    }
+  return `<div class="result-row">
+  <div class="result-meta">
+    <a class="result-id" href="https://nvd.nist.gov/vuln/detail/${encodeURIComponent(id)}" target="_blank" rel="noopener">${escapeHTML(id)}</a>
+    <div class="result-pocs">${formatCount(links.length)} linked PoC${links.length === 1 ? '' : 's'}</div>
+    ${dateHtml}
+    <a class="mitre" href="https://www.cve.org/CVERecord?id=${encodeURIComponent(id)}" target="_blank" rel="noopener">MITRE ↗</a>
+  </div>
+  <div class="result-body">
+    <p class="result-desc${open ? ' is-open' : ''}">${escapeHTML(entry.desc || '')}</p>
+    <button type="button" class="expander" data-toggle-desc="${escapeHTML(id)}">${open ? '↑ collapse' : '↓ full description'}</button>
+    <div class="poc-list">
+      ${visible.map(pocRow).join('')}
+      <button type="button" class="poc-more" data-toggle-poc="${escapeHTML(id)}">${more}</button>
+    </div>
+  </div>
+</div>`;
+}
 
-    let currentSet = [];
+function renderResults(elapsed) {
+  const results = state.results;
+  el.trending.hidden = true;
+  el.results.hidden = false;
 
-    let datasetReady = false;
-    let debounceTimer;
+  if (!results.length) {
+    el.results.innerHTML = `<div class="empty">
+      <div class="empty-head">No CVE matched <b>${escapeHTML(state.query)}</b></div>
+      <div class="empty-hint">Try a CVE ID, a vendor, or a product name. Prefix a term with <code>-</code> to exclude it.</div>
+    </div>`;
+    return;
+  }
 
-    function renderTrending(items) {
-        if (!trendingBody) return;
-        if (!items || items.length === 0) {
-            trendingBody.innerHTML = '<tr><td colspan="4">No recent PoCs.</td></tr>';
-            return;
-        }
-        const rows = items.slice(0, 20).map(item => {
-            const stars = item.stars ?? '';
-            const updated = escapeHTML(item.updated || '');
-            const name = escapeHTML(item.name || '');
-            const url = item.url || '#';
-            const desc = escapeHTML(item.desc || '');
-            return `<tr><td>${stars}⭐</td><td>${updated}</td><td><a href="${url}" target="_blank">${name}</a></td><td class="mono">${desc}</td></tr>`;
-        }).join('');
-        trendingBody.innerHTML = rows;
-    }
+  const shown = results.slice(0, state.shown);
+  const pocTotal = results.reduce((sum, r) => sum + (r.poc || []).length, 0);
+  const remaining = results.length - shown.length;
+  const footer = remaining > 0
+    ? `<button type="button" class="poc-more" data-more-results>+ ${formatCount(remaining)} more matching CVEs</button>`
+    : '';
 
-    async function loadTrending() {
-        if (!trendingBody) return;
-        try {
-            const res = await fetch('/trending_poc.json', { cache: 'no-store' });
-            if (!res.ok) {
-                throw new Error(`Failed to load trending (${res.status})`);
-            }
-            const data = await res.json();
-            const items = Array.isArray(data) ? data : (data.items || []);
-            renderTrending(items);
-        } catch (err) {
-            console.warn(err.message);
-        }
-    }
+  el.results.innerHTML = `<div class="card-head">
+      <h2>Results</h2>
+      <span class="card-count">${formatCount(results.length)} CVE${results.length === 1 ? '' : 's'} · ${formatCount(pocTotal)} PoCs</span>
+    </div>
+    <div class="col-head"><span>CVE</span><span>DESCRIPTION / POC LINKS</span></div>
+    ${shown.map(resultRow).join('')}${footer}`;
 
-    function doSearch(event) {
-        const val = searchValue.value.trim();
+  if (elapsed != null) {
+    el.status.textContent = `matched in ${Math.max(1, Math.round(elapsed))}ms`;
+  }
+}
 
-        if (val !== '') {
-            controls.displayResults(results, resultsTableHideable);
-            if (trendingSection) {
-                trendingSection.style.display = 'none';
-            }
-            // Typing before the CVE list lands would otherwise report no results.
-            if (!datasetReady) {
-                resultsTableHideable.classList.add('hide');
-                noResults.style.display = '';
-                noResults.textContent = 'Loading CVE data…';
-                if (event && event.type === 'submit') {
-                    event.preventDefault();
-                }
-                return;
-            }
-            currentSet = window.controls.doSearch(val, window.dataset || []);
+function trendRow(item) {
+  const popular = item.stars >= 500 ? ' is-popular' : '';
+  return `<div class="trend-row">
+    <span class="trend-stars${popular}">${formatStars(item.stars)} ★</span>
+    <span class="trend-age">${escapeHTML(longAge(item._pushed))}</span>
+    <a class="trend-name" href="${escapeHTML(item.url)}" target="_blank" rel="noopener">${escapeHTML(item.name)}</a>
+    <span class="trend-desc">${escapeHTML(item.desc || '')}</span>
+  </div>`;
+}
 
-            if (currentSet.length < totalLimit) {
-                window.controls.setColor(colorUpdate, currentSet.length === 0 ? 'no-results' : 'results-found');
-            }
+function renderTrending() {
+  el.results.hidden = true;
+  el.trending.hidden = false;
 
-            window.controls.updateResults(resultsTable, currentSet, noResults, resultsTableHideable);
-        } else {
-            controls.hideResults(results, resultsTableHideable);
-            window.controls.setColor(colorUpdate, 'no-search');
-            noResults.style.display = 'none';
-            if (trendingSection) {
-                trendingSection.style.display = '';
-            }
-        }
+  const ranked = trending.slice();
+  if (state.mode === 'TRENDING') {
+    // Stars weighted against how long the repository has existed, so a
+    // fast-climbing new PoC outranks an older one with a bigger absolute count.
+    const rank = r => r.stars / Math.pow((r._created == null ? 8760 : r._created) + 6, 0.45);
+    ranked.sort((a, b) => rank(b) - rank(a));
+  } else {
+    ranked.sort((a, b) => (a._pushed == null ? Infinity : a._pushed) - (b._pushed == null ? Infinity : b._pushed));
+  }
+  const rows = ranked.slice(0, TREND_ROWS);
 
-        if (event && event.type === 'submit') {
-            event.preventDefault();
-        }
-    }
+  el.trendTitle.textContent = state.mode === 'TRENDING'
+    ? 'Trending Proof-of-Concepts'
+    : 'Recently updated Proof-of-Concepts';
 
-    const cveListCandidates = [
-        new URL('/CVE_list.json', window.location.origin).href,
-        new URL('CVE_list.json', window.location.href).href,
-        new URL('../CVE_list.json', window.location.href).href
-    ];
+  el.trendNote.textContent = state.mode === 'TRENDING'
+    ? 'stars gained relative to repository age'
+    : `newest commit first · ${formatCount(trending.length)} repositories`;
 
-    (async () => {
-        for (const url of cveListCandidates) {
-            try {
-                const res = await fetch(url);
-                if (!res.ok) {
-                    throw new Error(`Failed to load ${url} (${res.status})`);
-                }
-                const data = await res.json();
-                window.dataset = prepareDataset(data);
-                currentSet = window.dataset;
-                datasetReady = true;
-                if (searchValue.value.trim() !== '') {
-                    doSearch();
-                } else {
-                    controls.hideResults(results, resultsTableHideable);
-                    noResults.style.display = 'none';
-                    window.controls.setColor(colorUpdate, 'no-search');
-                }
-                return;
-            } catch (err) {
-                console.warn(err.message);
-            }
-        }
-        window.dataset = [];
-        datasetReady = true;
-        noResults.textContent = 'Unable to load CVE list';
-        noResults.style.display = '';
-        controls.setColor(colorUpdate, 'no-results');
-    })();
+  el.trendRows.innerHTML = rows.length
+    ? rows.map(trendRow).join('')
+    : '<div class="trend-row"><span class="trend-desc">No recent PoCs.</span></div>';
 
-    form.addEventListener('submit', doSearch);
+  document.querySelectorAll('.toggle button').forEach(button => {
+    button.setAttribute('aria-pressed', String(button.dataset.mode === state.mode));
+  });
+}
 
-    searchValue.addEventListener('input', event => {
-        clearTimeout(debounceTimer);
-        debounceTimer = setTimeout(() => doSearch(event), 200);
-    });
+function idleStatus() {
+  if (!indexMeta) return '';
+  return `${formatCount(indexMeta.total_cves)} CVEs · ${formatCount(indexMeta.with_pocs)} with PoCs`;
+}
 
-    loadTrending();
+function render() {
+  if (!state.query) {
+    el.status.textContent = state.ready ? idleStatus() : 'loading index…';
+    renderTrending();
+    return;
+  }
+  if (!state.ready) {
+    el.results.hidden = false;
+    el.trending.hidden = true;
+    el.status.textContent = 'loading index…';
+    el.results.innerHTML = `<div class="empty">
+      <div class="empty-head">Loading the CVE index…</div>
+      <div class="empty-hint">The full index is a single download; results appear as soon as it lands.</div>
+    </div>`;
+    return;
+  }
+  const started = performance.now();
+  state.results = runSearch(state.query);
+  renderResults(performance.now() - started);
+}
+
+/* ---- wiring ------------------------------------------------------------ */
+
+el.input.addEventListener('input', () => {
+  state.query = el.input.value.trim();
+  state.shown = PAGE_SIZE;
+  render();
 });
+
+document.querySelector('.search').addEventListener('submit', event => event.preventDefault());
+
+document.querySelector('.toggle').addEventListener('click', event => {
+  const button = event.target.closest('button[data-mode]');
+  if (!button) return;
+  state.mode = button.dataset.mode;
+  renderTrending();
+});
+
+el.results.addEventListener('click', event => {
+  const desc = event.target.closest('[data-toggle-desc]');
+  const poc = event.target.closest('[data-toggle-poc]');
+  const more = event.target.closest('[data-more-results]');
+  if (desc) {
+    const id = desc.dataset.toggleDesc;
+    state.descOpen.has(id) ? state.descOpen.delete(id) : state.descOpen.add(id);
+  } else if (poc) {
+    const id = poc.dataset.togglePoc;
+    state.pocOpen.has(id) ? state.pocOpen.delete(id) : state.pocOpen.add(id);
+  } else if (more) {
+    state.shown += PAGE_SIZE;
+  } else {
+    return;
+  }
+  renderResults(null);
+});
+
+async function loadJSON(url, options) {
+  const response = await fetch(url, options);
+  if (!response.ok) throw new Error(`${url} (${response.status})`);
+  return response.json();
+}
+
+(async () => {
+  try {
+    const meta = await loadJSON('/trending_poc.json', { cache: 'no-store' });
+    indexMeta = meta;
+    trending = (meta.items || []).map(item => Object.assign({}, item, {
+      _pushed: hoursSince(item.pushed),
+      _created: hoursSince(item.created)
+    }));
+    const minutes = Math.max(0, Math.round((Date.now() - Date.parse(meta.generated)) / 60000));
+    el.refreshed.textContent = minutes < 60
+      ? `index refreshed ${minutes} minute${minutes === 1 ? '' : 's'} ago`
+      : `index refreshed ${Math.round(minutes / 60)} hour${Math.round(minutes / 60) === 1 ? '' : 's'} ago`;
+  } catch (err) {
+    console.warn(err.message);
+  }
+  render();
+
+  // The repository metadata is optional: without it the PoC rows simply lose
+  // their star and age columns, which is the documented fallback.
+  loadJSON('/repo_meta.json').then(data => {
+    repoMeta = data || {};
+    for (const entry of dataset) entry._ranked = null;
+    if (state.query && state.ready) renderResults(null);
+  }).catch(err => console.warn(err.message));
+
+  try {
+    dataset = prepareDataset(await loadJSON('/CVE_list.json'));
+    state.ready = true;
+    render();
+  } catch (err) {
+    console.warn(err.message);
+    el.status.textContent = 'index unavailable';
+  }
+})();
