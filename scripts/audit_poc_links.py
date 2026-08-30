@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Remove PoC links whose GitHub repository no longer exists."""
+"""Prune PoC links to deleted repositories and refresh the metadata the site shows."""
 
 from __future__ import annotations
 
@@ -25,37 +25,51 @@ from update_cves import (
 ROOT = Path(__file__).resolve().parents[1]
 STATE_FILE = ROOT / ".github" / "link_audit_state.json"
 GITHUB_LIST = ROOT / "github.txt"
+REPO_META = ROOT / "repo_meta.json"
 GITHUB_SECTION = "#### Github"
+REFERENCE_SECTION = "#### Reference"
 GITHUB_EMPTY = "No PoCs found on GitHub currently."
 BATCH = 20
 
 
-def collect_repositories() -> dict[str, list[tuple[Path, str]]]:
-    """Map every referenced repository to the entries and links citing it."""
-    references: dict[str, list[tuple[Path, str]]] = {}
+def collect_repositories() -> tuple[dict[str, list[tuple[Path, str]]], set[str]]:
+    """Map prunable links to their entries, and name every repository the site shows.
+
+    Only the GitHub section is prunable; a reference comes from the CVE record
+    itself, so it stays even when it rots. Both sections need star counts.
+    """
+    prunable: dict[str, list[tuple[Path, str]]] = {}
+    referenced: set[str] = set()
     for path in sorted(ROOT.glob("[12][0-9][0-9][0-9]/CVE-*.md")):
         text = path.read_text(encoding="utf-8", errors="replace")
         for url in section_links(text, GITHUB_SECTION):
             full_name = github_repo_from_url(url)
             if full_name and "/" in full_name:
-                references.setdefault(full_name, []).append((path, url))
-    return references
+                prunable.setdefault(full_name, []).append((path, url))
+                referenced.add(full_name)
+        for url in section_links(text, REFERENCE_SECTION):
+            full_name = github_repo_from_url(url)
+            if full_name and "/" in full_name:
+                referenced.add(full_name)
+    return prunable, referenced
 
 
-def missing_repositories(client: GitHubClient, names: list[str]) -> set[str]:
-    """Return the repositories GitHub reports as NOT_FOUND.
+def survey(client: GitHubClient, names: list[str]) -> tuple[set[str], dict[str, list]]:
+    """Return the repositories GitHub reports as NOT_FOUND, and stars/last push for the rest.
 
     Anything else — a network error, a throttle, an unexpected response — leaves
-    the repository out of the result, so an audit failure never drops a link.
+    the repository out of both results, so an audit failure never drops a link.
     """
     batches = [names[index : index + BATCH] for index in range(0, len(names), BATCH)]
     missing: set[str] = set()
+    metadata: dict[str, list] = {}
     checked = 0
 
-    def check(batch: list[str]) -> set[str]:
+    def check(batch: list[str]) -> tuple[set[str], dict[str, list]]:
         aliases = " ".join(
             f"r{index}: repository(owner: {json.dumps(name.split('/', 1)[0])}, "
-            f"name: {json.dumps(name.split('/', 1)[1])}) {{ nameWithOwner }}"
+            f"name: {json.dumps(name.split('/', 1)[1])}) "
+            "{ nameWithOwner stargazerCount pushedAt }"
             for index, name in enumerate(batch)
         )
         payload = http_json(
@@ -70,20 +84,49 @@ def missing_repositories(client: GitHubClient, names: list[str]) -> set[str]:
                 index = str(path[0])[1:]
                 if index.isdigit() and int(index) < len(batch):
                     gone.add(batch[int(index)])
-        return gone
+        found: dict[str, list] = {}
+        data = payload.get("data") or {}
+        for index, name in enumerate(batch):
+            repo = data.get(f"r{index}")
+            if not repo:
+                continue
+            pushed = str(repo.get("pushedAt") or "")[:10]
+            found[name.lower()] = [
+                int(repo.get("stargazerCount") or 0),
+                pushed,
+            ]
+        return gone, found
 
     with ThreadPoolExecutor(max_workers=4) as executor:
         futures = {executor.submit(check, batch): batch for batch in batches}
         for future in as_completed(futures):
             batch = futures[future]
             try:
-                missing |= future.result()
+                gone, found = future.result()
+                missing |= gone
+                metadata.update(found)
             except Exception as exc:
                 print(f"Kept {len(batch)} repositories after a failed check: {exc}", file=sys.stderr)
             checked += len(batch)
             if checked % 5000 < len(batch):
                 print(f"Checked {checked} of {len(names)} repositories")
-    return missing
+    return missing, metadata
+
+
+def save_metadata(metadata: dict[str, list], alive: set[str], *, dry_run: bool) -> int:
+    """Merge this run's readings over the stored ones and forget deleted repositories."""
+    try:
+        stored = json.loads(REPO_META.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        stored = {}
+    stored.update(metadata)
+    stored = {name: value for name, value in stored.items() if name.lower() in alive}
+    if not dry_run:
+        REPO_META.write_text(
+            json.dumps(stored, ensure_ascii=False, sort_keys=True, separators=(",", ":")) + "\n",
+            encoding="utf-8",
+        )
+    return len(stored)
 
 
 def prune_entries(
@@ -136,14 +179,19 @@ def save_cursor(cursor: str, *, dry_run: bool) -> None:
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Drop PoC links to deleted repositories")
+    parser = argparse.ArgumentParser(
+        description="Drop PoC links to deleted repositories and refresh repo_meta.json"
+    )
     parser.add_argument("--limit", type=int, default=0, help="Repositories to check this run")
     parser.add_argument("--dry-run", action="store_true", help="Report without writing files")
     args = parser.parse_args()
 
-    references = collect_repositories()
-    names = sorted(references)
-    print(f"{sum(len(v) for v in references.values())} links across {len(names)} repositories")
+    references, referenced = collect_repositories()
+    names = sorted(referenced)
+    print(
+        f"{sum(len(v) for v in references.values())} prunable links | "
+        f"{len(names)} repositories to survey"
+    )
 
     cursor = load_cursor()
     start = next((i for i, name in enumerate(names) if name > cursor), 0) if cursor else 0
@@ -153,14 +201,17 @@ def main() -> int:
     print(f"Checking {len(scope)} repositories starting after {cursor or 'the beginning'}")
 
     token = os.environ.get("GITHUB_TOKEN") or os.environ.get("GH_TOKEN") or ""
-    missing = missing_repositories(GitHubClient(token), scope)
+    missing, metadata = survey(GitHubClient(token), scope)
     print(f"{len(missing)} repositories no longer exist")
 
     entries, links, dead_urls = prune_entries(references, missing, dry_run=args.dry_run)
     inventory = prune_inventory(dead_urls, dry_run=args.dry_run)
+    alive = {name.lower() for name in names if name not in missing}
+    tracked = save_metadata(metadata, alive, dry_run=args.dry_run)
     save_cursor(scope[-1] if scope else "", dry_run=args.dry_run)
 
     print(f"Removed {links} links from {entries} entries | {inventory} inventory lines")
+    print(f"Refreshed stars and last-push for {len(metadata)} repositories | {tracked} tracked")
     return 0
 
 
