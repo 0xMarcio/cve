@@ -24,12 +24,13 @@ jobs:
         with:
           python-version: '3.13'
 
-      # A quarter of the corpus a week keeps each run inside the token's
-      # hourly budget and sweeps everything within the month.
-      - name: Drop links to deleted repositories
+      # A quarter of the repositories and an eighth of the reference links each
+      # week keeps a run inside the token's hourly budget while sweeping
+      # everything within about two months.
+      - name: Drop dead links and refresh repository metadata
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: python3 scripts/audit_poc_links.py --limit 12000
+        run: python3 scripts/audit_poc_links.py --limit 12000 --references 8000
 
       - name: Check for changes and commit
         run: |
@@ -41,6 +42,7 @@ jobs:
             github.txt \
             repo_meta.json \
             kev.json \
+            references.txt \
             ':(top,glob)[12][0-9][0-9][0-9]/CVE-*.md'
 
           if git diff --cached --quiet; then

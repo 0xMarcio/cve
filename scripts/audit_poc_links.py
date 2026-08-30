@@ -10,11 +10,14 @@ import sys
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
 from typing import Iterable
+from urllib import error, request
+from urllib.parse import urlsplit
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 from update_cves import (
     GITHUB_GRAPHQL_URL,
+    USER_AGENT,
     GitHubClient,
     github_repo_from_url,
     http_json,
@@ -25,6 +28,7 @@ from update_cves import (
 ROOT = Path(__file__).resolve().parents[1]
 STATE_FILE = ROOT / ".github" / "link_audit_state.json"
 GITHUB_LIST = ROOT / "github.txt"
+REFERENCE_LIST = ROOT / "references.txt"
 REPO_META = ROOT / "repo_meta.json"
 KEV_FILE = ROOT / "kev.json"
 KEV_URL = (
@@ -33,6 +37,10 @@ KEV_URL = (
 )
 GITHUB_SECTION = "#### Github"
 REFERENCE_SECTION = "#### Reference"
+SECTION_EMPTY = {
+    GITHUB_SECTION: "No PoCs found on GitHub currently.",
+    REFERENCE_SECTION: "No PoCs from references.",
+}
 GITHUB_EMPTY = "No PoCs found on GitHub currently."
 BATCH = 20
 
@@ -169,6 +177,100 @@ def prune_inventory(dead_urls: set[str], *, dry_run: bool) -> int:
     return len(lines) - len(kept)
 
 
+def collect_references() -> dict[str, list[tuple[Path, str]]]:
+    """Every link that is not a GitHub repository, and where it appears."""
+    references: dict[str, list[tuple[Path, str]]] = {}
+    for path in sorted(ROOT.glob("[12][0-9][0-9][0-9]/CVE-*.md")):
+        text = path.read_text(encoding="utf-8", errors="replace")
+        for header in (REFERENCE_SECTION, GITHUB_SECTION):
+            for url in section_links(text, header):
+                if not github_repo_from_url(url):
+                    references.setdefault(url, []).append((path, header))
+    return references
+
+
+def interleave_by_host(urls: list[str]) -> list[str]:
+    """Round-robin the hosts so a slice does not hammer one server in a burst."""
+    hosts: dict[str, list[str]] = {}
+    for url in urls:
+        host = urlsplit(url).netloc.lower()
+        hosts.setdefault(host, []).append(url)
+    queues = list(hosts.values())
+    ordered: list[str] = []
+    while queues:
+        for queue in list(queues):
+            ordered.append(queue.pop(0))
+            if not queue:
+                queues.remove(queue)
+    return ordered
+
+
+def dead_references(urls: list[str], *, workers: int, timeout: int) -> set[str]:
+    """URLs the web answers 404 or 410 for. Everything else keeps its link."""
+    dead: set[str] = set()
+    checked = 0
+
+    def check(url: str) -> tuple[str, bool]:
+        for method in ("HEAD", "GET"):
+            request_headers = {"User-Agent": USER_AGENT, "Accept": "*/*"}
+            try:
+                req = request.Request(url, method=method, headers=request_headers)
+                with request.urlopen(req, timeout=timeout) as response:
+                    if method == "GET":
+                        response.read(1)
+                    return url, False
+            except error.HTTPError as exc:
+                code = exc.code
+                exc.close()
+                # a server that dislikes HEAD is not a server without the page
+                if method == "GET" or code not in {403, 405, 501}:
+                    return url, code in {404, 410}
+            except Exception:
+                if method == "GET":
+                    return url, False
+        return url, False
+
+    with ThreadPoolExecutor(max_workers=workers) as executor:
+        for url, gone in executor.map(check, urls):
+            if gone:
+                dead.add(url)
+            checked += 1
+            if checked % 2000 == 0:
+                print(f"Checked {checked} of {len(urls)} references")
+    return dead
+
+
+def prune_references(
+    references: dict[str, list[tuple[Path, str]]],
+    dead: set[str],
+    *,
+    dry_run: bool,
+) -> tuple[int, int]:
+    by_path: dict[Path, dict[str, set[str]]] = {}
+    for url in dead:
+        for path, header in references.get(url, []):
+            by_path.setdefault(path, {}).setdefault(header, set()).add(url)
+
+    removed = 0
+    for path, headers in sorted(by_path.items()):
+        with path.open("r", encoding="utf-8", newline="") as handle:
+            text = path_text = handle.read()
+        for header, urls in headers.items():
+            empty = SECTION_EMPTY[header]
+            kept = [url for url in section_links(text, header) if url not in urls]
+            removed += len(section_links(text, header)) - len(kept)
+            text, _ = replace_section(text, header, kept, empty)
+        if text != path_text and not dry_run:
+            with path.open("w", encoding="utf-8", newline="") as handle:
+                handle.write(text)
+
+    lines = REFERENCE_LIST.read_text(encoding="utf-8").splitlines() if REFERENCE_LIST.exists() else []
+    kept_lines = [line for line in lines if line.rsplit(" - ", 1)[-1].strip() not in dead]
+    if not dry_run and len(kept_lines) != len(lines):
+        REFERENCE_LIST.write_text("\n".join(kept_lines) + "\n", encoding="utf-8")
+    return removed, len(lines) - len(kept_lines)
+
+
 def refresh_kev(*, dry_run: bool) -> int:
     """Store CISA's known-exploited catalogue: the CVEs attackers actually use.
 
@@ -197,18 +299,29 @@ def refresh_kev(*, dry_run: bool) -> int:
     return len(entries)
 
 
-def load_cursor() -> str:
+def load_state() -> dict:
     try:
-        return str(json.loads(STATE_FILE.read_text(encoding="utf-8")).get("cursor") or "")
+        return json.loads(STATE_FILE.read_text(encoding="utf-8"))
     except (OSError, json.JSONDecodeError):
-        return ""
+        return {}
 
 
-def save_cursor(cursor: str, *, dry_run: bool) -> None:
+def save_state(state: dict, *, dry_run: bool) -> None:
     if dry_run:
         return
     STATE_FILE.parent.mkdir(parents=True, exist_ok=True)
-    STATE_FILE.write_text(json.dumps({"cursor": cursor}, indent=2) + "\n", encoding="utf-8")
+    STATE_FILE.write_text(json.dumps(state, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+
+
+def slice_after(items: list[str], cursor: str, limit: int) -> list[str]:
+    """The next `limit` items after the cursor, wrapping at the end."""
+    if not limit:
+        return items
+    start = next((i for i, item in enumerate(items) if item > cursor), 0) if cursor else 0
+    window = items[start : start + limit]
+    if len(window) < limit:
+        window += items[: limit - len(window)]
+    return window
 
 
 def main() -> int:
@@ -216,6 +329,9 @@ def main() -> int:
         description="Drop PoC links to deleted repositories and refresh repo_meta.json"
     )
     parser.add_argument("--limit", type=int, default=0, help="Repositories to check this run")
+    parser.add_argument("--references", type=int, default=0, help="Reference links to check this run")
+    parser.add_argument("--workers", type=int, default=16, help="Concurrent reference requests")
+    parser.add_argument("--timeout", type=int, default=12, help="Seconds per reference request")
     parser.add_argument("--dry-run", action="store_true", help="Report without writing files")
     args = parser.parse_args()
 
@@ -226,12 +342,9 @@ def main() -> int:
         f"{len(names)} repositories to survey"
     )
 
-    cursor = load_cursor()
-    start = next((i for i, name in enumerate(names) if name > cursor), 0) if cursor else 0
-    scope = names[start : start + args.limit] if args.limit else names
-    if args.limit and len(scope) < args.limit:
-        scope += names[: args.limit - len(scope)]          # wrap around
-    print(f"Checking {len(scope)} repositories starting after {cursor or 'the beginning'}")
+    state = load_state()
+    scope = slice_after(names, str(state.get("cursor") or ""), args.limit)
+    print(f"Checking {len(scope)} repositories starting after {state.get('cursor') or 'the beginning'}")
 
     token = os.environ.get("GITHUB_TOKEN") or os.environ.get("GH_TOKEN") or ""
     missing, metadata = survey(GitHubClient(token), scope)
@@ -241,10 +354,25 @@ def main() -> int:
     inventory = prune_inventory(dead_urls, dry_run=args.dry_run)
     alive = {name.lower() for name in names if name not in missing}
     tracked = save_metadata(metadata, alive, dry_run=args.dry_run)
-    save_cursor(scope[-1] if scope else "", dry_run=args.dry_run)
+    state["cursor"] = scope[-1] if scope else ""
 
     print(f"Removed {links} links from {entries} entries | {inventory} inventory lines")
     print(f"Refreshed stars and last-push for {len(metadata)} repositories | {tracked} tracked")
+
+    if args.references:
+        references = collect_references()
+        urls = sorted(references)
+        window = slice_after(urls, str(state.get("reference_cursor") or ""), args.references)
+        print(f"Checking {len(window)} of {len(urls)} reference links")
+        gone = dead_references(
+            interleave_by_host(window), workers=args.workers, timeout=args.timeout
+        )
+        ref_links, ref_lines = prune_references(references, gone, dry_run=args.dry_run)
+        state["reference_cursor"] = window[-1] if window else ""
+        print(f"Reference links returning 404 or 410: {len(gone)} | "
+              f"removed {ref_links} links, {ref_lines} inventory lines")
+
+    save_state(state, dry_run=args.dry_run)
     print(f"KEV catalogue: {refresh_kev(dry_run=args.dry_run)} known-exploited CVEs")
     return 0
 
