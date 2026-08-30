@@ -301,6 +301,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     let currentSet = [];
+
+    let datasetReady = false;
     let debounceTimer;
 
     function renderTrending(items) {
@@ -343,6 +345,16 @@ document.addEventListener('DOMContentLoaded', () => {
             if (trendingSection) {
                 trendingSection.style.display = 'none';
             }
+            // Typing before the CVE list lands would otherwise report no results.
+            if (!datasetReady) {
+                resultsTableHideable.classList.add('hide');
+                noResults.style.display = '';
+                noResults.textContent = 'Loading CVE data…';
+                if (event && event.type === 'submit') {
+                    event.preventDefault();
+                }
+                return;
+            }
             currentSet = window.controls.doSearch(val, window.dataset || []);
 
             if (currentSet.length < totalLimit) {
@@ -359,7 +371,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
 
-        if (event.type === 'submit') {
+        if (event && event.type === 'submit') {
             event.preventDefault();
         }
     }
@@ -380,15 +392,21 @@ document.addEventListener('DOMContentLoaded', () => {
                 const data = await res.json();
                 window.dataset = prepareDataset(data);
                 currentSet = window.dataset;
-                controls.hideResults(results, resultsTableHideable);
-                noResults.style.display = 'none';
-                window.controls.setColor(colorUpdate, 'no-search');
+                datasetReady = true;
+                if (searchValue.value.trim() !== '') {
+                    doSearch();
+                } else {
+                    controls.hideResults(results, resultsTableHideable);
+                    noResults.style.display = 'none';
+                    window.controls.setColor(colorUpdate, 'no-search');
+                }
                 return;
             } catch (err) {
                 console.warn(err.message);
             }
         }
         window.dataset = [];
+        datasetReady = true;
         noResults.textContent = 'Unable to load CVE list';
         noResults.style.display = '';
         controls.setColor(colorUpdate, 'no-results');
