@@ -3,7 +3,10 @@ name: Hot CVEs List
 on:
   workflow_dispatch:
   schedule:
-      - cron: '0 */6 * * *'
+    - cron: '0 */6 * * *'
+
+permissions:
+  contents: write
 
 concurrency:
   group: repository-updates
@@ -12,37 +15,28 @@ concurrency:
 jobs:
   ScheduledRun:
     runs-on: ubuntu-latest
-        
     steps:
-    
-    - name: Checkout repository
-      uses: actions/checkout@v7
+      - name: Checkout repository
+        uses: actions/checkout@v7
 
-    - name: Set up Python
-      uses: actions/setup-python@v7
-      with:
-        python-version: '3.12'
-    
-    - name: Running the HOT CVEs generator script
-      run: |
-        cd /home/runner/work/cve/cve
-        pip install requests
-        python .github/getTrending.py
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        
-    - name: Check for changes and commit if necessary
-      run: |
-        cd /home/runner/work/cve/cve
-        git config --global user.name 'CVE-BOT'
-        git config --global user.email 'cve@codepwn.win'
-        git remote set-url origin https://github-actions[bot]:$GITHUB_TOKEN@github.com/0xMarcio/cve.git
-        if [ -n "$(git status --porcelain)" ]; then
-          git add .
-          git commit -m "Trending CVEs update $(date +'%Y-%m-%d %H:%M') :robot:"
-          git push origin main
-        else
-          echo "No changes to commit"
-        fi
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Set up Python
+        uses: actions/setup-python@v7
+        with:
+          python-version: '3.13'
+
+      - name: Rebuild the trending PoC table
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: python3 .github/getTrending.py
+
+      - name: Check for changes and commit
+        run: |
+          git config user.name 'CVE-BOT'
+          git config user.email 'cve@codepwn.win'
+          git add -- README.md
+          if git diff --cached --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "Trending CVEs update $(date -u +'%Y-%m-%d %H:%M') :robot:"
+            git push origin HEAD:main
+          fi
