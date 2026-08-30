@@ -8,12 +8,45 @@ from pathlib import Path
 from typing import Collection, Dict, List, Optional
 from urllib.parse import urlparse
 
-from utils import DOCS_DIR, ensure_dirs, load_blacklist, parse_trending_from_readme, is_blacklisted_repo
-
-ROOT = DOCS_DIR.parent
+ROOT = Path(__file__).resolve().parents[1]
+DOCS_DIR = ROOT / "docs"
+BLACKLIST = ROOT / "blacklist.txt"
 README_PATH = ROOT / "README.md"
 CVE_OUTPUT = DOCS_DIR / "CVE_list.json"
 TRENDING_OUTPUT = DOCS_DIR / "trending_poc.json"
+TREND_ROW_RE = re.compile(
+    r"^\|\s*(?P<stars>\d+)\s*⭐\s*\|\s*(?P<updated>[^|]+)\|\s*"
+    r"\[(?P<name>[^\]]+)\]\((?P<url>[^)]+)\)\s*\|\s*(?P<desc>.*)\|$"
+)
+
+
+def load_blacklist() -> set[str]:
+    if not BLACKLIST.exists():
+        return set()
+    return {
+        line.strip().lower()
+        for line in BLACKLIST.read_text(encoding="utf-8").splitlines()
+        if line.strip() and not line.lstrip().startswith("#")
+    }
+
+
+def parse_trending_from_readme(readme_path: Path) -> List[Dict[str, str]]:
+    """Read the trending table the hot-CVEs job writes into README.md."""
+    if not readme_path.exists():
+        return []
+    rows: List[Dict[str, str]] = []
+    year: Optional[str] = None
+    for raw in readme_path.read_text(encoding="utf-8").splitlines():
+        line = raw.strip()
+        if line.startswith("## ") and line[3:].strip().isdigit():
+            year = line[3:].strip()
+            continue
+        match = TREND_ROW_RE.match(line)
+        if match and year:
+            row = match.groupdict()
+            row["year"] = year
+            rows.append(row)
+    return rows
 
 
 def normalise_block(text: str) -> str:
@@ -139,7 +172,7 @@ def build_trending(blacklist: Collection[str]) -> List[Dict[str, object]]:
             continue
         year = int(year_text)
         url = (row.get("url") or "").strip()
-        if url and is_blacklisted_repo(url, blacklist):
+        if url and is_blacklisted(url, blacklist):
             continue
         stars_text = str(row.get("stars") or "").strip()
         stars = int(re.sub(r"\D", "", stars_text) or 0)
@@ -170,7 +203,7 @@ def write_json(path: Path, data, *, indent: Optional[int] = None) -> None:
 def main() -> int:
     argparse.ArgumentParser(description="Build the CVE PoC site data files").parse_args()
 
-    ensure_dirs(DOCS_DIR)
+    DOCS_DIR.mkdir(parents=True, exist_ok=True)
     blacklist = load_blacklist()
 
     cve_payload = build_cve_list(blacklist)
