@@ -147864,3 +147864,14 @@ CVE-2026-82424 - https://github.com/Bai-public/CVE/issues/8
 CVE-2026-82473 - https://github.com/geo-chen/oss/blob/main/kubeedge.md
 CVE-2026-82482 - https://github.com/Leousum/VulnPoC/blob/main/CPG1.6.x/stored_xss_biography.md
 CVE-2026-82483 - https://github.com/Leousum/VulnPoC/blob/main/CPG1.6.x/stored_xss_album_desc.md
+CVE-2026-82484 - https://github.com/ltranquility/submit_vuln/issues/20
+CVE-2026-82485 - https://github.com/ltranquility/submit_vuln/issues/21
+CVE-2026-82487 - https://github.com/Greejith-k/Authenticated-Privilege-Escalation-Vulnerability-in-Beetel-450TC3-Router
+CVE-2026-82488 - https://github.com/Greejith-k/Stored-Cross-Site-Scripting-Stored-XSS-Vulnerability-in-Beetel-450TC3-Router
+CVE-2026-82539 - https://github.com/Xernary/CVE-2026-82539
+CVE-2026-82540 - https://github.com/niadwj221/cve/issues/2
+CVE-2026-82541 - https://github.com/kimjh1946/cve/issues/1
+CVE-2026-82542 - https://github.com/SunnyYANGyaya/cuicuishark-sheep-fishIOT/blob/main/Tenda/HG10/bof-formIPv6Route-destNt.md
+CVE-2026-82543 - https://github.com/vastsa/FileCodeBox/issues/482
+CVE-2026-82545 - https://github.com/ltranquility/submit_vuln/issues/22
+CVE-2026-82547 - https://github.com/magma/magma/issues/16020
