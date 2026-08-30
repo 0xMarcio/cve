@@ -108,6 +108,29 @@ function pocSpace(entry) {
     return entry._pocSpace;
 }
 
+// Plain substring matching made "rce" hit "open source" and "sudo" hit
+// "pseudo". Require the term to start a word; matching into the end of one is
+// still allowed so that "word" finds "wordpress".
+function wordStart(text, term) {
+    let at = text.indexOf(term);
+    while (at > 0) {
+        const code = text.charCodeAt(at - 1);
+        if (!((code > 96 && code < 123) || (code > 47 && code < 58))) return at;
+        at = text.indexOf(term, at + 1);
+    }
+    return at;
+}
+
+// A term in the opening of an advisory is what it is about; one buried deep in
+// the prose is usually incidental. Coarse buckets so that a few characters of
+// difference never outweighs the newest-first tie-break.
+function leadBonus(index) {
+    if (index < 0) return 0;
+    if (index < 80) return 80;
+    if (index < 300) return 40;
+    return 0;
+}
+
 function descSpace(entry) {
     if (entry._descSpace === undefined) {
         entry._descSpace = normalizeToSpaces(entry._descText);
@@ -149,15 +172,17 @@ const controls = {
         if (matcher.isPhrase) {
             const phrase = matcher.phrase;
             if (!phrase) return 0;
-            if (descSpace(entry).includes(phrase)) return 200;
-            if (pocSpace(entry).includes(phrase)) return 80;
+            const at = wordStart(descSpace(entry), phrase);
+            if (at >= 0) return 200 + leadBonus(at);
+            if (wordStart(pocSpace(entry), phrase) >= 0) return 80;
             return 0;
         }
 
         const raw = matcher.raw;
         if (entry._cveText.includes(raw)) return 600;
-        if (entry._descText.includes(raw)) return 240;
-        if (pocText(entry).includes(raw)) return 80;
+        const at = wordStart(entry._descText, raw);
+        if (at >= 0) return 240 + leadBonus(at);
+        if (wordStart(pocText(entry), raw) >= 0) return 80;
         if (matcher.loose) {
             if (matcher.loose.test(entry._descText)) return 160;
             if (matcher.loose.test(pocText(entry))) return 60;
@@ -167,7 +192,12 @@ const controls = {
     doSearch(match, dataset) {
         const terms = match.match(/-?"[^"]+"|-?\S+/g) || [];
         const cleaned = terms.map(term => term.replace(/^(-?)"/, '$1').replace(/"$/, ''));
-        const posmatch = cleaned.filter(term => term && term[0] !== '-').map(buildMatcher).filter(Boolean);
+        const positive = cleaned.filter(term => term && term[0] !== '-');
+        const posmatch = positive.map(buildMatcher).filter(Boolean);
+        // Unquoted words are matched independently, so "active directory" also
+        // hits a description holding "active session" and "working directory".
+        // Reward the words appearing together to keep those below real matches.
+        const adjacent = positive.length > 1 ? positive.join(' ').toLowerCase() : '';
         const negmatch = cleaned
             .filter(term => term && term[0] === '-')
             .map(term => term.substring(1))
@@ -194,6 +224,15 @@ const controls = {
 
             const hasNegative = negmatch.some(matcher => this.scoreEntry(entry, matcher) > 0);
             if (hasNegative) continue;
+
+            if (adjacent) {
+                const at = wordStart(entry._descText, adjacent);
+                if (at >= 0) {
+                    score += 300 + leadBonus(at);
+                } else if (wordStart(pocText(entry), adjacent) >= 0) {
+                    score += 100;
+                }
+            }
 
             entry._score = score;
             results.push(entry);
