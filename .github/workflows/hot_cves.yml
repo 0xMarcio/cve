@@ -36,7 +36,17 @@ jobs:
           git add -- README.md
           if git diff --cached --quiet; then
             echo "No changes to commit"
-          else
-            git commit -m "Trending CVEs update $(date -u +'%Y-%m-%d %H:%M') :robot:"
-            git push origin HEAD:main
+            exit 0
           fi
+
+          git commit -m "Trending CVEs update $(date -u +'%Y-%m-%d %H:%M') :robot:"
+
+          for attempt in 1 2 3; do
+            if git push origin HEAD:main; then
+              exit 0
+            fi
+            echo "Push rejected; replaying onto the current main (attempt $attempt)"
+            git fetch --unshallow origin main 2>/dev/null || git fetch origin main
+            git rebase FETCH_HEAD
+          done
+          exit 1
