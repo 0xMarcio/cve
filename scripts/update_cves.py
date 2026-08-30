@@ -8,7 +8,6 @@ import http.client
 import json
 import os
 import re
-import subprocess
 import sys
 import time
 from collections import defaultdict
@@ -21,8 +20,6 @@ from urllib import error, request
 from urllib.parse import quote, urlparse
 
 ROOT = Path(__file__).resolve().parents[1]
-DOCS_DIR = ROOT / "docs"
-JSON_SCRIPT = DOCS_DIR / "generate_cve_list.py"
 GITHUB_LIST = ROOT / "github.txt"
 REFERENCE_LIST = ROOT / "references.txt"
 BLACKLIST_FILE = ROOT / "blacklist.txt"
@@ -97,10 +94,6 @@ class SyncStats:
     created: list[str] = field(default_factory=list)
     updated: list[str] = field(default_factory=list)
     skipped: list[str] = field(default_factory=list)
-
-    @property
-    def changed(self) -> bool:
-        return bool(self.created or self.updated)
 
 
 def stable_unique(values: Iterable[str]) -> list[str]:
@@ -299,8 +292,7 @@ def qualifying_repo_cves(
     metadata_has_poc = identity_has_poc or bool(POC_RE.search(topics))
     identity_is_non_poc = bool(NON_POC_RE.search(identity_text))
     has_code = root_has_code(repo)
-    name_has_poc = bool(POC_RE.search(normalise_identity(full_name)))
-    if identity_is_non_poc and not (name_cves and name_has_poc and has_code):
+    if identity_is_non_poc and not (name_cves and identity_has_poc and has_code):
         return set()
     if len(readme_cves) > 5 and not identity_cves:
         readme_cves = set()
@@ -902,11 +894,12 @@ def build_markdown(
     )
     lines = [f"### [{cve_id}](https://cve.mitre.org/cgi-bin/cvename.cgi?name={cve_id})"]
     products = details.products or ["n/a"]
-    versions = details.versions or [""]
+    versions = details.versions or ["n/a"]
     vulnerabilities = details.vulnerabilities or ["n/a"]
-    lines.extend(badge("Product", value, "blue") for value in products)
-    lines.extend(badge("Version", value, "brightgreen") for value in versions)
+    version_color = "brightgreen" if details.versions else "blue"
     vuln_color = "brightgreen" if details.vulnerabilities else "blue"
+    lines.extend(badge("Product", value, "blue") for value in products)
+    lines.extend(badge("Version", value, version_color) for value in versions)
     lines.extend(badge("Vulnerability", value, vuln_color) for value in vulnerabilities)
     lines.extend(["", "### Description", "", description, "", "### POC", "", "#### Reference"])
     lines.extend((f"- {url}" for url in references) if references else ["No PoCs from references."])
@@ -1095,10 +1088,6 @@ def newest_delta_time() -> str:
     return str(log[0].get("fetchTime") or "")
 
 
-def regenerate_json() -> None:
-    subprocess.run([sys.executable, JSON_SCRIPT.name], cwd=DOCS_DIR, check=True)
-
-
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Discover and ingest CVE PoC links")
     parser.add_argument("--backfill-dir", type=Path, help="Local CVE List V5 year directory")
@@ -1108,7 +1097,6 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--cve", action="append", default=[], help="Process one CVE ID")
     parser.add_argument("--skip-github", action="store_true", help="Skip GitHub repository discovery")
     parser.add_argument("--skip-cvelist", action="store_true", help="Skip CVE List V5 references")
-    parser.add_argument("--skip-json", action="store_true", help="Skip docs/CVE_list.json generation")
     parser.add_argument("--dry-run", action="store_true", help="Report changes without writing files")
     args = parser.parse_args()
     if bool(args.backfill_dir) != bool(args.year):
@@ -1173,8 +1161,6 @@ def main() -> int:
     github_additions = append_inventory(GITHUB_LIST, accepted_github, dry_run=args.dry_run)
     reference_additions = append_inventory(REFERENCE_LIST, accepted_references, dry_run=args.dry_run)
 
-    if stats.changed and not args.skip_json and not args.dry_run:
-        regenerate_json()
     write_state(checkpoint, dry_run=args.dry_run)
 
     print(
