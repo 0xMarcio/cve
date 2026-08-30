@@ -180,6 +180,19 @@ function scoreEntry(entry, matcher) {
   return 0;
 }
 
+/** How many of an entry's links carry every search term. */
+function countLinkHits(entry, matchers) {
+  let hits = 0;
+  for (const url of entry.poc || []) {
+    const text = url.toLowerCase();
+    if (matchers.every(m => wordStart(text, m.raw) >= 0 || (m.loose && m.loose.test(text)))) {
+      hits += 1;
+      if (hits >= 999) break;
+    }
+  }
+  return hits;
+}
+
 function runSearch(query) {
   const terms = query.match(/-?"[^"]+"|-?\S+/g) || [];
   const cleaned = terms.map(t => t.replace(/^(-?)"/, '$1').replace(/"$/, ''));
@@ -200,9 +213,11 @@ function runSearch(query) {
   for (const entry of dataset) {
     let score = 0;
     let matched = true;
+    let describes = false;
     for (const matcher of matchers) {
       const termScore = scoreEntry(entry, matcher);
       if (termScore === 0) { matched = false; break; }
+      if (termScore >= 160) describes = true;
       score += termScore;
     }
     if (!matched) continue;
@@ -210,15 +225,20 @@ function runSearch(query) {
 
     if (adjacent) {
       const at = wordStart(entry._descText, adjacent);
-      if (at >= 0) score += 300 + leadBonus(at);
+      if (at >= 0) { score += 300 + leadBonus(at); describes = true; }
       else if (wordStart(pocText(entry), adjacent) >= 0) score += 100;
     }
     entry._score = score;
+    // A term nobody's advisory text uses — "log4shell" — leaves every match tied
+    // at the weakest tier, where newest-first is meaningless. How many of the
+    // linked PoCs carry the term says far more than which CVE is newer.
+    entry._hits = describes ? 0 : countLinkHits(entry, matchers);
     results.push(entry);
   }
 
   results.sort((a, b) => {
     if (b._score !== a._score) return b._score - a._score;
+    if (b._hits !== a._hits) return b._hits - a._hits;
     if (b._year !== a._year) return b._year - a._year;
     return b._num - a._num;
   });
@@ -277,17 +297,29 @@ function pocRow(url) {
     `<span class="poc-age">${escapeHTML(shortAge(hours))}</span></div>`;
 }
 
-/** Best-known repositories first, so the five shown by default are the five
- *  worth opening. Links without a star count keep their original order behind
- *  them; references from the CVE record have no repository to rank. */
+function compact(value) {
+  return value.toLowerCase().replace(/[^a-z0-9]/g, '');
+}
+
+/** Best links first. A repository named after the CVE is a proof of concept for
+ *  it; a 5k-star scanner that merely mentions it is not, so stars only order
+ *  repositories that are already about this CVE. Links with no star count keep
+ *  their original order behind both — a reference has no repository to rank. */
 function rankedLinks(entry) {
   if (entry._ranked) return entry._ranked;
+  const id = compact(entry.cve);
   const scored = (entry.poc || []).map((url, index) => {
     const parsed = repoFromUrl(url);
     const meta = parsed && repoMeta[(parsed.owner + '/' + parsed.repo).toLowerCase()];
-    return { url, index, stars: meta ? meta[0] : -1 };
+    return {
+      url,
+      index,
+      dedicated: compact(url).includes(id) ? 1 : 0,
+      stars: meta ? meta[0] : -1
+    };
   });
-  scored.sort((a, b) => (b.stars - a.stars) || (a.index - b.index));
+  scored.sort((a, b) =>
+    (b.dedicated - a.dedicated) || (b.stars - a.stars) || (a.index - b.index));
   entry._ranked = scored.map(item => item.url);
   return entry._ranked;
 }
@@ -303,6 +335,9 @@ function resultRow(entry) {
     : (links.length > POC_PREVIEW
         ? `+ ${formatCount(links.length - POC_PREVIEW)} more repositories`
         : 'all repositories shown');
+  const moreButton = links.length > 1
+    ? `<button type="button" class="poc-more" data-toggle-poc="${escapeHTML(id)}">${more}</button>`
+    : '';
 
   const dates = [];
   if (entry.published) dates.push(['published', entry.published]);
@@ -324,10 +359,23 @@ function resultRow(entry) {
     <button type="button" class="expander" data-toggle-desc="${escapeHTML(id)}">${open ? '↑ collapse' : '↓ full description'}</button>
     <div class="poc-list">
       ${visible.map(pocRow).join('')}
-      <button type="button" class="poc-more" data-toggle-poc="${escapeHTML(id)}">${more}</button>
+      ${moreButton}
     </div>
   </div>
 </div>`;
+}
+
+/** Hide the expander on descriptions that already fit; a button that does
+ *  nothing when clicked is worse than no button. */
+function pruneExpanders() {
+  for (const row of el.results.querySelectorAll('.result-row')) {
+    const desc = row.querySelector('.result-desc');
+    const button = row.querySelector('.expander');
+    if (!desc || !button) continue;
+    if (!desc.classList.contains('is-open') && desc.scrollHeight <= desc.clientHeight + 1) {
+      button.hidden = true;
+    }
+  }
 }
 
 function renderResults(elapsed) {
@@ -356,6 +404,7 @@ function renderResults(elapsed) {
     </div>
     <div class="col-head"><span>CVE</span><span>DESCRIPTION / POC LINKS</span></div>
     ${shown.map(resultRow).join('')}${footer}`;
+  pruneExpanders();
 
   if (elapsed != null) {
     el.status.textContent = `matched in ${Math.max(1, Math.round(elapsed))}ms`;
@@ -378,9 +427,10 @@ function renderTrending() {
 
   const ranked = trending.slice();
   if (state.mode === 'TRENDING') {
-    // Stars weighted against how long the repository has existed, so a
-    // fast-climbing new PoC outranks an older one with a bigger absolute count.
-    const rank = r => r.stars / Math.pow((r._created == null ? 8760 : r._created) + 6, 0.45);
+    // Stars weighted against the age the row displays, so the order is legible
+    // from the table itself: a fresh PoC pulling stars outranks a bigger one
+    // that has been sitting still.
+    const rank = r => r.stars / Math.pow((r._pushed == null ? 8760 : r._pushed) + 6, 0.45);
     ranked.sort((a, b) => rank(b) - rank(a));
   } else {
     ranked.sort((a, b) => (a._pushed == null ? Infinity : a._pushed) - (b._pushed == null ? Infinity : b._pushed));
@@ -392,7 +442,7 @@ function renderTrending() {
     : 'Recently updated Proof-of-Concepts';
 
   el.trendNote.textContent = state.mode === 'TRENDING'
-    ? 'stars gained relative to repository age'
+    ? 'stars weighted against time since the last commit'
     : `newest commit first · ${formatCount(trending.length)} repositories`;
 
   el.trendRows.innerHTML = rows.length
