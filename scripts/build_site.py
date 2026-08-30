@@ -31,18 +31,30 @@ def load_blacklist() -> set[str]:
 def normalise_block(text: str) -> str:
     text = text.replace("\r\n", "\n")
     text = re.sub(r"\n{2,}", "\n", text.strip())
-    lines = [line.lstrip("- ").rstrip() for line in text.split("\n")]
+    lines = [
+        re.sub(r"^#{1,6}\s+", "", line.lstrip("- ")).rstrip()
+        for line in text.split("\n")
+    ]
     return "\n".join(line for line in lines if line)
 
 
+SECTION_HEADERS = ("### Description", "### POC", "#### Reference", "#### Github")
+
+
 def parse_sections(content: str) -> Dict[str, str]:
+    """Split an entry on its own headings only.
+
+    CVE text lifted from a GitHub advisory often opens with "### Impact" or
+    "### Summary"; treating any heading as a boundary let a description end
+    itself and vanish from the index.
+    """
     sections: Dict[str, str] = {}
     current_header: Optional[str] = None
     buffer: List[str] = []
 
     for line in content.splitlines():
         header = line.strip()
-        if header.startswith("### ") or header.startswith("#### "):
+        if header in SECTION_HEADERS:
             if current_header is not None:
                 sections[current_header] = "\n".join(buffer).strip()
             current_header = header
@@ -81,7 +93,7 @@ def is_blacklisted(url: str, blacklist: Collection[str]) -> bool:
 def link_key(url: str) -> str:
     parsed = urlparse(url)
     if (parsed.hostname or "").lower() not in {"github.com", "www.github.com"}:
-        return url
+        return url.rstrip("/")
     parts = [part for part in parsed.path.split("/") if part]
     if len(parts) < 2:
         return url

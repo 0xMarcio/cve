@@ -72,9 +72,14 @@ function shortAge(hours) {
   return Math.round(days / 365) + 'y';
 }
 
+// github.com serves more than repositories; an attachment or an advisory has
+// no owner and no stars, and reads as nonsense in an owner / repo row.
+const NOT_A_REPO = new Set(['user-attachments', 'advisories', 'security', 'orgs',
+  'apps', 'marketplace', 'sponsors', 'topics', 'collections', 'settings', 'notifications']);
+
 function repoFromUrl(url) {
   const match = /^https?:\/\/(?:www\.)?github\.com\/([^/#?]+)\/([^/#?]+)/i.exec(url || '');
-  if (!match) return null;
+  if (!match || NOT_A_REPO.has(match[1].toLowerCase())) return null;
   return { owner: match[1], repo: match[2].replace(/\.git$/i, '') };
 }
 

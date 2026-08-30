@@ -116,7 +116,7 @@ def stable_unique(values: Iterable[str]) -> list[str]:
 def poc_link_key(url: str) -> str:
     parsed = urlparse(url)
     if (parsed.hostname or "").lower() not in {"github.com", "www.github.com"}:
-        return url
+        return url.rstrip("/")
     parts = [part for part in parsed.path.split("/") if part]
     if len(parts) < 2:
         return url
