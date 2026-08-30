@@ -211,10 +211,10 @@ def dead_references(urls: list[str], *, workers: int, timeout: int) -> set[str]:
     checked = 0
 
     def check(url: str) -> tuple[str, bool]:
+        headers = {"User-Agent": USER_AGENT, "Accept": "*/*"}
         for method in ("HEAD", "GET"):
-            request_headers = {"User-Agent": USER_AGENT, "Accept": "*/*"}
             try:
-                req = request.Request(url, method=method, headers=request_headers)
+                req = request.Request(url, method=method, headers=headers)
                 with request.urlopen(req, timeout=timeout) as response:
                     if method == "GET":
                         response.read(1)
@@ -226,8 +226,9 @@ def dead_references(urls: list[str], *, workers: int, timeout: int) -> set[str]:
                 if method == "GET" or code not in {403, 405, 501}:
                     return url, code in {404, 410}
             except Exception:
-                if method == "GET":
-                    return url, False
+                # a timeout or a refused connection keeps the link, and asking
+                # the same unreachable host a second time only doubles the wait
+                return url, False
         return url, False
 
     with ThreadPoolExecutor(max_workers=workers) as executor:
@@ -331,7 +332,7 @@ def main() -> int:
     parser.add_argument("--limit", type=int, default=0, help="Repositories to check this run")
     parser.add_argument("--references", type=int, default=0, help="Reference links to check this run")
     parser.add_argument("--workers", type=int, default=16, help="Concurrent reference requests")
-    parser.add_argument("--timeout", type=int, default=12, help="Seconds per reference request")
+    parser.add_argument("--timeout", type=int, default=8, help="Seconds per reference request")
     parser.add_argument("--dry-run", action="store_true", help="Report without writing files")
     args = parser.parse_args()
 

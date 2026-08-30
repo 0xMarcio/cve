@@ -1,3 +1,4 @@
 {
-  "cursor": "zzzz966/CVE-2020-19360"
+  "cursor": "0-9194/node-poc-http-smuggling",
+  "reference_cursor": "http://lorexxar.cn/2017/07/11/Some%20Vulnerability%20for%20FineCMS%20through%202017.7.11/#Reflected-XSS-in-get-image-php"
 }
