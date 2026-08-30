@@ -26,6 +26,11 @@ ROOT = Path(__file__).resolve().parents[1]
 STATE_FILE = ROOT / ".github" / "link_audit_state.json"
 GITHUB_LIST = ROOT / "github.txt"
 REPO_META = ROOT / "repo_meta.json"
+KEV_FILE = ROOT / "kev.json"
+KEV_URL = (
+    "https://www.cisa.gov/sites/default/files/feeds/"
+    "known_exploited_vulnerabilities.json"
+)
 GITHUB_SECTION = "#### Github"
 REFERENCE_SECTION = "#### Reference"
 GITHUB_EMPTY = "No PoCs found on GitHub currently."
@@ -164,6 +169,34 @@ def prune_inventory(dead_urls: set[str], *, dry_run: bool) -> int:
     return len(lines) - len(kept)
 
 
+def refresh_kev(*, dry_run: bool) -> int:
+    """Store CISA's known-exploited catalogue: the CVEs attackers actually use.
+
+    Keeps only what the page shows, so the whole catalogue costs a few tens of
+    kilobytes. A failure leaves the previous file in place rather than
+    dropping the badge off every entry.
+    """
+    try:
+        payload = http_json(KEV_URL)
+    except Exception as exc:
+        print(f"Kept the stored KEV catalogue after a failed fetch: {exc}", file=sys.stderr)
+        return 0
+    entries = {}
+    for item in (payload or {}).get("vulnerabilities") or []:
+        cve_id = str(item.get("cveID") or "").upper()
+        if cve_id:
+            entries[cve_id] = [
+                str(item.get("dateAdded") or "")[:10],
+                1 if str(item.get("knownRansomwareCampaignUse") or "").lower() == "known" else 0,
+            ]
+    if entries and not dry_run:
+        KEV_FILE.write_text(
+            json.dumps(entries, ensure_ascii=False, sort_keys=True, separators=(",", ":")) + "\n",
+            encoding="utf-8",
+        )
+    return len(entries)
+
+
 def load_cursor() -> str:
     try:
         return str(json.loads(STATE_FILE.read_text(encoding="utf-8")).get("cursor") or "")
@@ -212,6 +245,7 @@ def main() -> int:
 
     print(f"Removed {links} links from {entries} entries | {inventory} inventory lines")
     print(f"Refreshed stars and last-push for {len(metadata)} repositories | {tracked} tracked")
+    print(f"KEV catalogue: {refresh_kev(dry_run=args.dry_run)} known-exploited CVEs")
     return 0
 
 

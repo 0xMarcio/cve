@@ -16,6 +16,8 @@ CVE_OUTPUT = DOCS_DIR / "CVE_list.json"
 TRENDING_OUTPUT = DOCS_DIR / "trending_poc.json"
 REPO_META = ROOT / "repo_meta.json"
 REPO_META_OUTPUT = DOCS_DIR / "repo_meta.json"
+KEV_INPUT = ROOT / "kev.json"
+KEV_OUTPUT = DOCS_DIR / "kev.json"
 def load_blacklist() -> set[str]:
     if not BLACKLIST.exists():
         return set()
@@ -154,6 +156,16 @@ def build_repo_meta(cve_entries: List[Dict[str, object]]) -> Dict[str, object]:
     return {name: value for name, value in stored.items() if name in linked}
 
 
+def build_kev(cve_entries: List[Dict[str, object]]) -> Dict[str, object]:
+    """CISA's known-exploited entries, limited to CVEs the index carries."""
+    try:
+        stored = json.loads(KEV_INPUT.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        return {}
+    have = {str(entry["cve"]) for entry in cve_entries}
+    return {cve: value for cve, value in stored.items() if cve in have}
+
+
 def build_trending(blacklist: Collection[str]) -> List[Dict[str, object]]:
     """The trending job's own output, minus anything the blacklist covers."""
     try:
@@ -185,6 +197,9 @@ def main() -> int:
     repo_meta = build_repo_meta(cve_payload)
     write_json(REPO_META_OUTPUT, repo_meta)
 
+    kev = build_kev(cve_payload)
+    write_json(KEV_OUTPUT, kev)
+
     trending_items = build_trending(blacklist)
     write_json(
         TRENDING_OUTPUT,
@@ -199,7 +214,8 @@ def main() -> int:
 
     print(
         f"Wrote {CVE_OUTPUT.name} ({len(cve_payload)} of {total_cves} CVEs), "
-        f"{REPO_META_OUTPUT.name} ({len(repo_meta)} repositories) and {TRENDING_OUTPUT.name}"
+        f"{REPO_META_OUTPUT.name} ({len(repo_meta)} repositories), "
+        f"{KEV_OUTPUT.name} ({len(kev)} known-exploited) and {TRENDING_OUTPUT.name}"
     )
     return 0
 

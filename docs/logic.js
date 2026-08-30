@@ -18,6 +18,7 @@ const state = {
 
 let dataset = [];
 let repoMeta = {};
+let kev = {};
 let trending = [];
 let indexMeta = null;
 
@@ -342,6 +343,12 @@ function resultRow(entry) {
     ? `<button type="button" class="poc-more" data-toggle-poc="${escapeHTML(id)}">${more}</button>`
     : '';
 
+  const flagged = kev[id];
+  const kevChip = flagged
+    ? `<div class="kev" title="Listed in CISA's Known Exploited Vulnerabilities catalogue on ${escapeHTML(flagged[0])}">` +
+      `KEV${flagged[1] ? ' · RANSOMWARE' : ''}</div>`
+    : '';
+
   const dates = [];
   if (entry.published) dates.push(['published', entry.published]);
   if (entry.modified) dates.push(['modified', entry.modified]);
@@ -354,6 +361,7 @@ function resultRow(entry) {
   <div class="result-meta">
     <a class="result-id" href="https://nvd.nist.gov/vuln/detail/${encodeURIComponent(id)}" target="_blank" rel="noopener">${escapeHTML(id)}</a>
     <div class="result-pocs">${formatCount(links.length)} linked PoC${links.length === 1 ? '' : 's'}</div>
+    ${kevChip}
     ${dateHtml}
     <a class="mitre" href="https://www.cve.org/CVERecord?id=${encodeURIComponent(id)}" target="_blank" rel="noopener">MITRE ↗</a>
   </div>
@@ -554,6 +562,11 @@ async function loadJSON(url, options) {
 
   // The repository metadata is optional: without it the PoC rows simply lose
   // their star and age columns, which is the documented fallback.
+  loadJSON('/kev.json').then(data => {
+    kev = data || {};
+    if (state.query && state.ready) renderResults(null);
+  }).catch(err => console.warn(err.message));
+
   loadJSON('/repo_meta.json').then(data => {
     repoMeta = data || {};
     for (const entry of dataset) entry._ranked = null;

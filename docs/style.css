@@ -146,6 +146,18 @@ a:hover { color: var(--accent-hover); }
   letter-spacing: -.01em;
 }
 .result-pocs { font: 500 11.5px/1 var(--mono); color: var(--text-dim); margin-top: 11px; }
+.kev {
+  display: inline-block;
+  margin-top: 11px;
+  font: 500 10px/1 var(--mono);
+  letter-spacing: .09em;
+  color: var(--text);
+  background: var(--pill);
+  border: 1px solid var(--border-strong);
+  border-radius: 4px;
+  padding: 6px 8px;
+}
+
 .result-dates { display: flex; flex-direction: column; gap: 5px; margin-top: 14px; }
 .result-date { display: flex; gap: 8px; font: 400 10.5px/1.4 var(--mono); }
 .result-date dt { width: 62px; color: var(--text-faintest); margin: 0; }
