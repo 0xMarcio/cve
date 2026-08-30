@@ -244,6 +244,20 @@ def root_has_code(repo: dict[str, Any]) -> bool:
     return any(CODE_FILE_RE.search(name) for name in root_entry_names(repo))
 
 
+def truncated_ids(cve_ids: Collection[str]) -> set[str]:
+    """Identifiers that a longer identifier from the same year extends."""
+    numbers: dict[str, set[str]] = defaultdict(set)
+    for cve_id in cve_ids:
+        _, year, number = cve_id.split("-")
+        numbers[year].add(number)
+    return {
+        f"CVE-{year}-{number}"
+        for year, values in numbers.items()
+        for number in values
+        if any(other.startswith(number) for other in values - {number})
+    }
+
+
 def readme_has_poc_context(readme: str, cve_id: str, full_name: str = "") -> bool:
     year, number = cve_id.split("-")[1:]
     pattern = re.compile(rf"\bCVE[-_ ]{re.escape(year)}[-_ ]{re.escape(number)}\b", re.IGNORECASE)
@@ -282,10 +296,20 @@ def qualifying_repo_cves(
     description = str(repo.get("description") or "")
     topics = " ".join(topic_names(repo))
     readme = readme_text(repo)
-    name_cves = extract_cves(full_name, year)
+    # Underscores are word characters, so a raw name like CVE-A_CVE-B matches
+    # neither identifier; read the separator-normalised form as well.
+    name_cves = extract_cves(full_name, year) | extract_cves(normalise_identity(full_name), year)
     description_cves = extract_cves(description, year)
     topic_cves = extract_cves(topics, year)
     readme_cves = extract_cves(readme, year)
+    # A caption or description that drops a digit — "CVE-2023-3883" written for
+    # CVE-2023-38831 — still parses as a valid identifier and would otherwise
+    # enrol the repository against whatever unrelated advisory owns it. Trust
+    # the repository name, which may deliberately carry both identifiers.
+    truncated = truncated_ids(name_cves | description_cves | topic_cves | readme_cves) - name_cves
+    description_cves -= truncated
+    topic_cves -= truncated
+    readme_cves -= truncated
     identity_cves = name_cves | description_cves | topic_cves
     identity_text = normalise_identity(f"{full_name} {description}")
     identity_has_poc = bool(POC_RE.search(identity_text))
