@@ -8,28 +8,12 @@ from pathlib import Path
 from typing import Collection, Dict, List, Optional
 from urllib.parse import urlparse
 
-from jinja2 import Environment, FileSystemLoader, select_autoescape
-
-from utils import DOCS_DIR, TEMPLATES_DIR, ensure_dirs, load_blacklist, parse_trending_from_readme, is_blacklisted_repo
+from utils import DOCS_DIR, ensure_dirs, load_blacklist, parse_trending_from_readme, is_blacklisted_repo
 
 ROOT = DOCS_DIR.parent
 README_PATH = ROOT / "README.md"
 CVE_OUTPUT = DOCS_DIR / "CVE_list.json"
 TRENDING_OUTPUT = DOCS_DIR / "trending_poc.json"
-
-
-def build_env() -> Environment:
-    loader = FileSystemLoader(str(TEMPLATES_DIR))
-    env = Environment(loader=loader, autoescape=select_autoescape(["html", "xml"]))
-    env.trim_blocks = True
-    env.lstrip_blocks = True
-    return env
-
-
-def render(env: Environment, template_name: str, context: Dict, output_path: Path) -> None:
-    html = env.get_template(template_name).render(**context)
-    output_path.parent.mkdir(parents=True, exist_ok=True)
-    output_path.write_text(html, encoding="utf-8")
 
 
 def normalise_block(text: str) -> str:
@@ -184,14 +168,7 @@ def write_json(path: Path, data, *, indent: Optional[int] = None) -> None:
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Build CVE PoC site")
-    parser.add_argument(
-        "--html-mode",
-        choices=["none", "summary", "all"],
-        default="summary",
-        help="Render HTML or skip it.",
-    )
-    args = parser.parse_args()
+    argparse.ArgumentParser(description="Build the CVE PoC site data files").parse_args()
 
     ensure_dirs(DOCS_DIR)
     blacklist = load_blacklist()
@@ -209,11 +186,7 @@ def main() -> int:
         indent=2,
     )
 
-    if args.html_mode != "none":
-        env = build_env()
-        render(env, "index.html", {"trending": trending_items}, DOCS_DIR / "index.html")
-
-    print("Site generated under docs/")
+    print(f"Wrote {CVE_OUTPUT.name} ({len(cve_payload)} CVEs) and {TRENDING_OUTPUT.name}")
     return 0
 
 

@@ -6,8 +6,6 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Collection, Dict, Iterable, List, Optional, Tuple
 
-import requests
-
 ROOT = Path(__file__).resolve().parents[1]
 DATA_DIR = ROOT / "data"
 DOCS_DIR = ROOT / "docs"
@@ -15,7 +13,6 @@ API_DIR = DOCS_DIR / "api" / "v1"
 SNAPSHOT_DIR = API_DIR / "snapshots"
 DIFFS_DIR = API_DIR / "diffs"
 TOP_DIR = API_DIR / "top"
-TEMPLATES_DIR = ROOT / "templates"
 ASSETS_DIR = DOCS_DIR / "assets"
 CACHE_DIR = DATA_DIR / "cache"
 STATE_DIR = DATA_DIR / "state"
@@ -41,6 +38,8 @@ def save_json(path: Path, data, *, sort_keys: bool = True) -> None:
 
 
 def fetch_json(url: str, *, timeout: int = 30, headers: Optional[Dict[str, str]] = None):
+    import requests
+
     response = requests.get(url, timeout=timeout, headers=headers or {})
     response.raise_for_status()
     return response.json()

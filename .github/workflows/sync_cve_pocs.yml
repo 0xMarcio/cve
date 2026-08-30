@@ -18,8 +18,6 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v7
-        with:
-          fetch-depth: 0
 
       - name: Set up Python
         uses: actions/setup-python@v7
@@ -40,13 +38,11 @@ jobs:
             .github/cve_sync_state.json \
             github.txt \
             references.txt \
-            docs/CVE_list.json \
             ':(top,glob)[12][0-9][0-9][0-9]/CVE-*.md'
 
           if git diff --cached --quiet; then
             echo "No changes to commit"
           else
             git commit -m "Update CVE PoCs $(date -u +'%Y-%m-%d')"
-            git pull --rebase origin main
-            git push origin main
+            git push origin HEAD:main
           fi

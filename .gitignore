@@ -1,4 +1,6 @@
 data/
 .venv/
+docs/CVE_list.json
+docs/trending_poc.json
 docs/api/v1/cve/
 __pycache__/
