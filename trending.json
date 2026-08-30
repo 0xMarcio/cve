@@ -1,102 +1,12 @@
 [
  {
   "year": 2026,
-  "stars": 4056,
-  "name": "copy-fail-CVE-2026-31431",
-  "url": "https://github.com/theori-io/copy-fail-CVE-2026-31431",
-  "desc": "Copy Fail (CVE-2026-31431): 9-year-old Linux kernel LPE found by Theori's Xint Code",
-  "pushed": "2026-04-29T21:21:46Z",
-  "created": "2026-04-29T12:15:28Z"
- },
- {
-  "year": 2026,
-  "stars": 571,
-  "name": "cve_2026_31431",
-  "url": "https://github.com/rootsecdev/cve_2026_31431",
-  "desc": "Exploit POC for CVE_2026_31431",
-  "pushed": "2026-04-29T18:24:24Z",
-  "created": "2026-04-29T17:46:43Z"
- },
- {
-  "year": 2026,
-  "stars": 325,
-  "name": "CVE-2026-54121",
-  "url": "https://github.com/aniqfakhrul/CVE-2026-54121",
-  "desc": "Certighost POC",
-  "pushed": "2026-07-28T15:44:50Z",
-  "created": "2026-07-23T18:54:34Z"
- },
- {
-  "year": 2026,
-  "stars": 531,
-  "name": "cve-2026-41940-PoC",
-  "url": "https://github.com/lanicer/cve-2026-41940-PoC",
-  "desc": "A cPanel and WHM authentication bypassing tool",
-  "pushed": "2026-08-20T10:15:12Z",
-  "created": "2026-08-19T12:46:46Z"
- },
- {
-  "year": 2026,
-  "stars": 235,
-  "name": "CVE-2026-43499-popsicle",
-  "url": "https://github.com/x-spy/CVE-2026-43499-popsicle",
-  "desc": "CVE-2026-43499 Implementation for 6.12.23-android16-5-g75e9b1c7ae7c-abogki463945075-4k",
-  "pushed": "2026-07-15T22:46:59Z",
-  "created": "2026-07-12T10:15:03Z"
- },
- {
-  "year": 2026,
-  "stars": 212,
-  "name": "CVE-2026-41089",
-  "url": "https://github.com/0xABCD01/CVE-2026-41089",
-  "desc": "CVE-2026-41089 PoC — Netlogon CLDAP stack buffer overflow (CVSS 9.8 CRITICAL)",
-  "pushed": "2026-06-02T08:30:55Z",
-  "created": "2026-06-01T04:22:29Z"
- },
- {
-  "year": 2026,
-  "stars": 260,
-  "name": "CVE-2026-21858",
-  "url": "https://github.com/Chocapikk/CVE-2026-21858",
-  "desc": "n8n Ni8mare - Unauthenticated Arbitrary File Read to RCE Chain (CVSS 10.0)",
-  "pushed": "2026-03-26T13:11:41Z",
-  "created": "2026-01-07T19:32:42Z"
- },
- {
-  "year": 2026,
-  "stars": 262,
-  "name": "CVE-2026-40369-EXPLOIT",
-  "url": "https://github.com/orinimron123/CVE-2026-40369-EXPLOIT",
-  "desc": "Full exploit code for CVE-2026-40369 - A Windows kernel arbitrary write vulnerability that allows browser sandbox escape from all browsers render process sandbox",
-  "pushed": "2026-05-18T21:29:59Z",
-  "created": "2026-05-13T20:56:15Z"
- },
- {
-  "year": 2026,
-  "stars": 207,
-  "name": "CVE-2026-24061",
-  "url": "https://github.com/SafeBreach-Labs/CVE-2026-24061",
-  "desc": "Exploitation of CVE-2026-24061",
-  "pushed": "2026-01-22T19:37:20Z",
-  "created": "2026-01-22T18:30:17Z"
- },
- {
-  "year": 2026,
-  "stars": 154,
-  "name": "CVE-2026-43499",
-  "url": "https://github.com/MobiusM/CVE-2026-43499",
-  "desc": "CVE-2026-43499 PoC",
-  "pushed": "2026-06-27T05:04:04Z",
-  "created": "2026-06-27T04:09:11Z"
- },
- {
-  "year": 2026,
-  "stars": 824,
-  "name": "CVE-2026-24061",
-  "url": "https://github.com/jacubes/CVE-2026-24061",
-  "desc": "CVE-2026-24061 exploit PoC",
-  "pushed": "2026-08-20T10:06:17Z",
-  "created": "2026-03-08T11:25:39Z"
+  "stars": 79,
+  "name": "CVE-2026-75604-poc",
+  "url": "https://github.com/rafabd1/CVE-2026-75604-poc",
+  "desc": "CVE-2026-75604 Next.js Windows RCE poc",
+  "pushed": "2026-08-28T02:53:24Z",
+  "created": "2026-08-25T19:06:37Z"
  },
  {
   "year": 2026,
@@ -109,66 +19,129 @@
  },
  {
   "year": 2026,
-  "stars": 79,
-  "name": "CVE-2026-75604-poc",
-  "url": "https://github.com/rafabd1/CVE-2026-75604-poc",
-  "desc": "CVE-2026-75604 Next.js Windows RCE poc",
-  "pushed": "2026-08-28T02:53:24Z",
-  "created": "2026-08-25T19:06:37Z"
+  "stars": 53,
+  "name": "CVE-2026-64638-PoC-XSS2Shell-",
+  "url": "https://github.com/Boreas37/CVE-2026-64638-PoC-XSS2Shell-",
+  "desc": "XSS2Shell (CVE-2026-64638) WordPress pre-auth XSS to RCE chain — PoC exploit + defensive audit tool + nuclei template",
+  "pushed": "2026-08-21T13:31:58Z",
+  "created": "2026-08-07T17:07:17Z"
  },
  {
   "year": 2026,
-  "stars": 128,
-  "name": "CVE-2026-20817",
-  "url": "https://github.com/oxfemale/CVE-2026-20817",
-  "desc": "Windows Error Reporting ALPC Elevation of Privilege (CVE-2026-20817) - Proof-of-Concept exploit demonstrating local privilege escalation via WER service.",
-  "pushed": "2026-02-19T13:37:06Z",
-  "created": "2026-02-18T13:56:17Z"
+  "stars": 35,
+  "name": "CVE-2026-18963-Exploit",
+  "url": "https://github.com/Snizi/CVE-2026-18963-Exploit",
+  "desc": "Exploit for KeyCloak CVE-2026-18963",
+  "pushed": "2026-08-20T22:38:38Z",
+  "created": "2026-08-20T22:01:11Z"
  },
  {
   "year": 2026,
-  "stars": 100,
-  "name": "CVE-2026-42980-POC",
-  "url": "https://github.com/G4sp4rCS/CVE-2026-42980-POC",
-  "desc": "CVE-2026-42980 PUBLIC EXPLOIT + RESEARCH",
-  "pushed": "2026-07-07T03:53:22Z",
-  "created": "2026-07-07T03:52:26Z"
+  "stars": 401,
+  "name": "CVE-2026-9830",
+  "url": "https://github.com/opaxial/CVE-2026-9830",
+  "desc": "CVE-2026-9830 Proof of Concept",
+  "pushed": "2026-08-20T21:56:15Z",
+  "created": "2026-08-15T20:57:13Z"
  },
  {
   "year": 2026,
-  "stars": 111,
-  "name": "CVE-2026-31431-Advanced-Exploit",
-  "url": "https://github.com/Sndav/CVE-2026-31431-Advanced-Exploit",
-  "desc": "CVE-2026-31431 纯文件利用",
-  "pushed": "2026-04-30T16:24:17Z",
-  "created": "2026-04-30T02:55:03Z"
+  "stars": 531,
+  "name": "cve-2026-41940-PoC",
+  "url": "https://github.com/lanicer/cve-2026-41940-PoC",
+  "desc": "A cPanel and WHM authentication bypassing tool",
+  "pushed": "2026-08-20T10:15:12Z",
+  "created": "2026-08-19T12:46:46Z"
  },
  {
   "year": 2026,
-  "stars": 119,
-  "name": "CVE-2026-41651",
-  "url": "https://github.com/Vozec/CVE-2026-41651",
+  "stars": 824,
+  "name": "CVE-2026-24061",
+  "url": "https://github.com/jacubes/CVE-2026-24061",
+  "desc": "CVE-2026-24061 exploit PoC",
+  "pushed": "2026-08-20T10:06:17Z",
+  "created": "2026-03-08T11:25:39Z"
+ },
+ {
+  "year": 2026,
+  "stars": 45,
+  "name": "CVE-2026-50416-writeup-and-poc",
+  "url": "https://github.com/karollooool/CVE-2026-50416-writeup-and-poc",
+  "desc": "CVE-2026-50416: Windows 11 KASLR bypass",
+  "pushed": "2026-08-17T13:07:51Z",
+  "created": "2026-07-17T12:12:33Z"
+ },
+ {
+  "year": 2026,
+  "stars": 60,
+  "name": "watchTowr-vs-Citrix-Netscaler-PreAuth-RCE-CVE-2026-8452",
+  "url": "https://github.com/watchtowrlabs/watchTowr-vs-Citrix-Netscaler-PreAuth-RCE-CVE-2026-8452",
+  "desc": "CVE-2026-8452 PreAuth RCE",
+  "pushed": "2026-08-14T15:08:55Z",
+  "created": "2026-08-14T15:01:25Z"
+ },
+ {
+  "year": 2026,
+  "stars": 24,
+  "name": "CVE-2026-66804-CrossDevice-Service-EoP",
+  "url": "https://github.com/Rat5ak/CVE-2026-66804-CrossDevice-Service-EoP",
+  "desc": "CVE-2026-66804 Windows Cross Device virtual camera EoP - Standard user to SYSTEM",
+  "pushed": "2026-08-13T04:21:37Z",
+  "created": "2026-08-13T01:42:43Z"
+ },
+ {
+  "year": 2026,
+  "stars": 33,
+  "name": "CVE-2026-68138",
+  "url": "https://github.com/aramosf/CVE-2026-68138",
+  "desc": "CVE-2026-68138 Linux qdisc rate-table race local privilege escalation PoC",
+  "pushed": "2026-08-12T15:31:34Z",
+  "created": "2026-08-11T22:22:22Z"
+ },
+ {
+  "year": 2026,
+  "stars": 58,
+  "name": "CVE-2026-55040",
+  "url": "https://github.com/sfewer-r7/CVE-2026-55040",
+  "desc": "Microsoft SharePoint JWT Authentication Bypass (CVE-2026-55040)",
+  "pushed": "2026-08-10T15:35:23Z",
+  "created": "2026-08-06T11:46:34Z"
+ },
+ {
+  "year": 2026,
+  "stars": 19,
+  "name": "CVE-2026-63077",
+  "url": "https://github.com/sfewer-r7/CVE-2026-63077",
+  "desc": "Unauthenticated Remote Code Execution in JetBrains TeamCity (CVE-2026-63077)",
+  "pushed": "2026-08-07T16:23:37Z",
+  "created": "2026-08-07T08:38:01Z"
+ },
+ {
+  "year": 2026,
+  "stars": 49,
+  "name": "CVE-2026-64560-Analysis",
+  "url": "https://github.com/villager1314/CVE-2026-64560-Analysis",
   "desc": "",
-  "pushed": "2026-04-23T13:55:33Z",
-  "created": "2026-04-23T08:57:29Z"
+  "pushed": "2026-08-03T12:39:41Z",
+  "created": "2026-08-03T12:36:27Z"
  },
  {
   "year": 2026,
-  "stars": 18,
-  "name": "CVE-2026-43499-Poc-Analysis",
-  "url": "https://github.com/xianwan1314/CVE-2026-43499-Poc-Analysis",
-  "desc": "Vulnerability analysis and Proof of Concept (PoC) for CVE-2026-43499 affecting Xiaomi devices. For educational and research purposes only.",
-  "pushed": "2026-07-14T16:28:49Z",
-  "created": "2026-07-14T17:24:44Z"
+  "stars": 17,
+  "name": "CVE-2026-60004-POC",
+  "url": "https://github.com/imbas007/CVE-2026-60004-POC",
+  "desc": "CVE-2026-60004 Pre-Auth RCE Exploit — Gitea <= 1.27.0 diffpatch git hook injection (CVSS 9.8)",
+  "pushed": "2026-08-03T08:31:38Z",
+  "created": "2026-08-03T07:48:39Z"
  },
  {
   "year": 2026,
-  "stars": 63,
-  "name": "CVE-2026-45504",
-  "url": "https://github.com/hawktrace/CVE-2026-45504",
-  "desc": "CVE-2026-45504 Microsoft Exchange File Read",
-  "pushed": "2026-06-24T01:45:46Z",
-  "created": "2026-06-24T01:05:34Z"
+  "stars": 25,
+  "name": "CopyFail-CVE-2026-31431",
+  "url": "https://github.com/ZephrFish/CopyFail-CVE-2026-31431",
+  "desc": "",
+  "pushed": "2026-07-30T13:40:20Z",
+  "created": "2026-04-30T00:11:10Z"
  },
  {
   "year": 2026,
@@ -180,400 +153,310 @@
   "created": "2026-07-14T14:21:27Z"
  },
  {
-  "year": 2025,
-  "stars": 1430,
-  "name": "CVE-2025-55182",
-  "url": "https://github.com/msanft/CVE-2025-55182",
-  "desc": "Explanation and full RCE PoC for CVE-2025-55182",
-  "pushed": "2025-12-08T13:51:04Z",
-  "created": "2025-12-04T11:49:55Z"
+  "year": 2026,
+  "stars": 23,
+  "name": "CVE-2026-66066-POC",
+  "url": "https://github.com/Zer0SumGam3/CVE-2026-66066-POC",
+  "desc": "PoC for CVE-2026-66066 in Ruby on Rails",
+  "pushed": "2026-07-30T03:31:15Z",
+  "created": "2026-07-29T21:08:30Z"
+ },
+ {
+  "year": 2026,
+  "stars": 11,
+  "name": "CVE-2026-16232",
+  "url": "https://github.com/sfewer-r7/CVE-2026-16232",
+  "desc": "A proof-of-concept script to exploit CVE-2026-16232, an authentication bypass via the SmartConsole login process using an application token.",
+  "pushed": "2026-07-28T18:45:19Z",
+  "created": "2026-07-28T16:19:31Z"
+ },
+ {
+  "year": 2026,
+  "stars": 325,
+  "name": "CVE-2026-54121",
+  "url": "https://github.com/aniqfakhrul/CVE-2026-54121",
+  "desc": "Certighost POC",
+  "pushed": "2026-07-28T15:44:50Z",
+  "created": "2026-07-23T18:54:34Z"
  },
  {
   "year": 2025,
-  "stars": 793,
-  "name": "CVE-2025-55182-research",
-  "url": "https://github.com/ejpir/CVE-2025-55182-research",
-  "desc": "CVE-2025-55182 POC",
-  "pushed": "2025-12-08T21:21:26Z",
-  "created": "2025-12-03T21:16:22Z"
+  "stars": 3,
+  "name": "CVE-2025-54424",
+  "url": "https://github.com/hophtien/CVE-2025-54424",
+  "desc": "CVE-2025-54424: 1Panel TLS client cert bypass enables RCE via forged CN 'panel_client' using a bundled scanning and exploitation tool. Affected: <= v2.0.5. 🔐",
+  "pushed": "2026-08-30T04:11:00Z",
+  "created": "2025-08-14T05:16:16Z"
  },
  {
   "year": 2025,
-  "stars": 715,
-  "name": "CVE-2025-33073",
-  "url": "https://github.com/mverschu/CVE-2025-33073",
-  "desc": "PoC Exploit for the NTLM reflection SMB flaw.",
-  "pushed": "2026-02-18T09:15:40Z",
-  "created": "2025-06-13T12:15:14Z"
+  "stars": 3,
+  "name": "Project-CVE-2025-54068",
+  "url": "https://github.com/e4zyy/Project-CVE-2025-54068",
+  "desc": "Fast Python scanner detects vulnerable Laravel Livewire v3 sites (CVE-2025-54068, CVSS 9.2). Separates risky sites into vuln.txt, safe sites into safe.txt.",
+  "pushed": "2026-08-27T09:47:21Z",
+  "created": "2026-01-01T12:28:22Z"
  },
  {
   "year": 2025,
-  "stars": 529,
-  "name": "CVE-2025-32463_chwoot",
-  "url": "https://github.com/pr0v3rbs/CVE-2025-32463_chwoot",
-  "desc": "Escalation of Privilege to the root through sudo binary with chroot option. CVE-2025-32463",
-  "pushed": "2025-11-19T13:30:29Z",
-  "created": "2025-07-01T11:26:15Z"
+  "stars": 5,
+  "name": "vivo_iqoo_neo_9_root_research_on_CVE-2025-21479",
+  "url": "https://github.com/linux-tools/vivo_iqoo_neo_9_root_research_on_CVE-2025-21479",
+  "desc": "",
+  "pushed": "2026-08-27T07:13:47Z",
+  "created": "2026-08-19T09:39:46Z"
  },
  {
   "year": 2025,
-  "stars": 475,
+  "stars": 4,
+  "name": "cve-2025-21479_iqooneo8",
+  "url": "https://github.com/Qingizi7/cve-2025-21479_iqooneo8",
+  "desc": "Local root exploit for CVE-2025-21479 (Adreno KGSL) on iQOO Neo8 (SM8475) - physical memory r/w, disables SELinux, spawns root shell",
+  "pushed": "2026-08-21T04:05:23Z",
+  "created": "2026-08-20T01:13:39Z"
+ },
+ {
+  "year": 2025,
+  "stars": 6,
+  "name": "SELinux-Permissive-Only-CVE-2025-21479",
+  "url": "https://github.com/CamsShaft/SELinux-Permissive-Only-CVE-2025-21479",
+  "desc": "This is an SELinux permissive version of the Cheese exploit also known as CVE-2025-21479 which affected the adreno kgsl on many devices including Samsung snapdragon devices",
+  "pushed": "2026-08-14T20:18:24Z",
+  "created": "2026-07-28T06:41:38Z"
+ },
+ {
+  "year": 2025,
+  "stars": 25,
   "name": "CVE-2025-32463",
-  "url": "https://github.com/kh4sh3i/CVE-2025-32463",
-  "desc": "Local Privilege Escalation to Root via Sudo chroot in Linux",
-  "pushed": "2025-07-02T08:04:44Z",
-  "created": "2025-07-02T07:20:20Z"
+  "url": "https://github.com/1xPwn/CVE-2025-32463",
+  "desc": "This CVE addresses a vulnerability in sudo versions 1.9.14 to 1.9.17, enabling unauthorized local privilege escalation to root access.",
+  "pushed": "2026-08-12T23:56:04Z",
+  "created": "2025-08-08T20:00:41Z"
  },
  {
   "year": 2025,
-  "stars": 268,
-  "name": "CVE-2025-48799",
-  "url": "https://github.com/Wh04m1001/CVE-2025-48799",
+  "stars": 20,
+  "name": "CVE-2025-7771",
+  "url": "https://github.com/enessakircolak/CVE-2025-7771",
+  "desc": "ThrottleStop.sys Arbitrary Physical Memory R/W",
+  "pushed": "2026-08-10T23:15:39Z",
+  "created": "2026-08-10T23:15:36Z"
+ },
+ {
+  "year": 2025,
+  "stars": 6,
+  "name": "CVE-2025-8045",
+  "url": "https://github.com/kuzeyardabulut/CVE-2025-8045",
+  "desc": "Dirty Pagetable Exploit for CVE-2025-8045",
+  "pushed": "2026-08-06T14:59:32Z",
+  "created": "2026-08-06T13:52:33Z"
+ },
+ {
+  "year": 2025,
+  "stars": 18,
+  "name": "CVE-2025-53770-Scanner",
+  "url": "https://github.com/ZephrFish/CVE-2025-53770-Scanner",
+  "desc": "ToolShell scanner - CVE-2025-53770 and detection information",
+  "pushed": "2026-07-30T13:40:17Z",
+  "created": "2025-07-21T16:16:57Z"
+ },
+ {
+  "year": 2025,
+  "stars": 4,
+  "name": "CVE-2025-32432",
+  "url": "https://github.com/c0gnit00/CVE-2025-32432",
+  "desc": "Exploit, POC for CVE-2025-32432, CraftCMS2Shell",
+  "pushed": "2026-07-21T16:55:37Z",
+  "created": "2026-07-21T16:52:22Z"
+ },
+ {
+  "year": 2025,
+  "stars": 4,
+  "name": "CVE-2025-64512",
+  "url": "https://github.com/matesz44/CVE-2025-64512",
+  "desc": "CVE-2025-64512: pdfminer.six pickle deserialization rce; .pickle.gz + pdf generator w/ custom payloads",
+  "pushed": "2026-07-19T11:00:19Z",
+  "created": "2026-07-19T10:49:05Z"
+ },
+ {
+  "year": 2025,
+  "stars": 5,
+  "name": "CVE-2025-8110-gogs-poc",
+  "url": "https://github.com/Shirouuu/CVE-2025-8110-gogs-poc",
+  "desc": "PoC for CVE-2025-8110 - Gogs arbitrary file write via symlink",
+  "pushed": "2026-07-17T13:55:12Z",
+  "created": "2026-07-17T13:46:16Z"
+ },
+ {
+  "year": 2025,
+  "stars": 7,
+  "name": "React2Shell-CVE-2025-55182",
+  "url": "https://github.com/AdityaBhatt3010/React2Shell-CVE-2025-55182",
+  "desc": "React2Shell CVE-2025-55182: unauthenticated unsafe deserialization in React Server Components leading to reliable remote code execution via the Flight protocol.",
+  "pushed": "2026-07-13T19:31:45Z",
+  "created": "2026-01-04T12:05:30Z"
+ },
+ {
+  "year": 2025,
+  "stars": 7,
+  "name": "CVE-2025-30065",
+  "url": "https://github.com/h3st4k3r/CVE-2025-30065",
+  "desc": "This PoC targets CVE-2025-30065, an RCE vulnerability in Apache Parquet via Avro schema deserialization. It abuses the getDefaultValue() mechanism to instantiate arbitrary record types during parsing, enabling code execution when untrusted data is processed without proper controls.",
+  "pushed": "2026-07-08T08:05:47Z",
+  "created": "2025-04-04T08:45:24Z"
+ },
+ {
+  "year": 2025,
+  "stars": 4,
+  "name": "CVE-2025-69212-PoC",
+  "url": "https://github.com/BridgerAlderson/CVE-2025-69212-PoC",
+  "desc": "OpenSTAManager v2.9.8 and earlier versions contain a critical OS Command Injection vulnerability in the P7M (signed XML) file decoding function.",
+  "pushed": "2026-07-02T20:41:12Z",
+  "created": "2026-06-30T13:38:40Z"
+ },
+ {
+  "year": 2025,
+  "stars": 3,
+  "name": "CVE-2025-57819",
+  "url": "https://github.com/K3ysTr0K3R/CVE-2025-57819",
+  "desc": "CVE-2025-57819 - FreePBX Unauthenticated Remote Code Execution (RCE)",
+  "pushed": "2026-07-02T19:17:51Z",
+  "created": "2026-07-02T19:07:36Z"
+ },
+ {
+  "year": 2025,
+  "stars": 15,
+  "name": "CVE-2025-27591",
+  "url": "https://github.com/0x00Jeff/CVE-2025-27591",
+  "desc": "self cleaning CVE-2025-27591 Poc that grants a root reverse shell instead of modifying passwd files",
+  "pushed": "2026-06-28T14:59:06Z",
+  "created": "2025-11-19T19:56:14Z"
+ },
+ {
+  "year": 2025,
+  "stars": 4,
+  "name": "CVE-2025-69212-PoC",
+  "url": "https://github.com/tohib09/CVE-2025-69212-PoC",
   "desc": "",
-  "pushed": "2025-07-08T19:35:55Z",
-  "created": "2025-07-08T15:26:04Z"
+  "pushed": "2026-06-28T00:07:25Z",
+  "created": "2026-06-27T23:54:57Z"
  },
  {
   "year": 2025,
-  "stars": 315,
-  "name": "CVE-2025-53770-Exploit",
-  "url": "https://github.com/soltanali0/CVE-2025-53770-Exploit",
-  "desc": "SharePoint WebPart Injection Exploit Tool",
-  "pushed": "2025-11-28T20:11:11Z",
-  "created": "2025-07-21T13:48:37Z"
+  "stars": 5,
+  "name": "CVE-2025-8110",
+  "url": "https://github.com/joaquinrrr/CVE-2025-8110",
+  "desc": "PoC exploit for CVE-2025-8110",
+  "pushed": "2026-06-25T16:53:11Z",
+  "created": "2026-06-25T16:48:18Z"
  },
  {
   "year": 2025,
-  "stars": 316,
-  "name": "CVE-2025-55182",
-  "url": "https://github.com/emredavut/CVE-2025-55182",
-  "desc": "RSC/Next.js RCE Vulnerability Detector & PoC Chrome Extension – CVE-2025-55182 & CVE-2025-66478",
-  "pushed": "2025-12-06T01:27:19Z",
-  "created": "2025-12-06T00:36:16Z"
- },
- {
-  "year": 2025,
-  "stars": 1058,
-  "name": "React2Shell-CVE-2025-55182-original-poc",
-  "url": "https://github.com/lachlan2k/React2Shell-CVE-2025-55182-original-poc",
-  "desc": "Original Proof-of-Concepts for React2Shell CVE-2025-55182",
-  "pushed": "2025-12-05T08:56:15Z",
-  "created": "2025-12-05T08:00:07Z"
- },
- {
-  "year": 2025,
-  "stars": 408,
-  "name": "CVE-2025-24071_PoC",
-  "url": "https://github.com/0x6rss/CVE-2025-24071_PoC",
-  "desc": "CVE-2025-24071: NTLM Hash Leak via RAR/ZIP Extraction and .library-ms File",
-  "pushed": "2025-03-20T21:22:23Z",
-  "created": "2025-03-16T20:10:19Z"
- },
- {
-  "year": 2025,
-  "stars": 215,
-  "name": "CVE-2025-32023",
-  "url": "https://github.com/leesh3288/CVE-2025-32023",
-  "desc": "PoC & Exploit for CVE-2025-32023 / PlaidCTF 2025 \"Zerodeo\"",
-  "pushed": "2025-07-06T18:58:01Z",
-  "created": "2025-07-06T18:09:11Z"
- },
- {
-  "year": 2025,
-  "stars": 385,
-  "name": "ColorOS-CVE-2025-10184",
-  "url": "https://github.com/yuuouu/ColorOS-CVE-2025-10184",
-  "desc": "ColorOS短信漏洞，以及用户自救方案",
-  "pushed": "2025-10-15T11:32:43Z",
-  "created": "2025-09-24T11:48:03Z"
- },
- {
-  "year": 2025,
-  "stars": 282,
-  "name": "CVE-2025-55182-advanced-scanner-",
-  "url": "https://github.com/zack0x01/CVE-2025-55182-advanced-scanner-",
-  "desc": "",
-  "pushed": "2025-12-06T19:52:21Z",
-  "created": "2025-12-06T14:36:55Z"
- },
- {
-  "year": 2025,
-  "stars": 431,
-  "name": "Next.js-RSC-RCE-Scanner-CVE-2025-66478",
-  "url": "https://github.com/Malayke/Next.js-RSC-RCE-Scanner-CVE-2025-66478",
-  "desc": "A command-line scanner for batch detection of Next.js application versions and determining if they are affected by CVE-2025-66478 vulnerability.",
-  "pushed": "2025-12-16T03:18:16Z",
-  "created": "2025-12-04T13:13:33Z"
- },
- {
-  "year": 2025,
-  "stars": 197,
-  "name": "POC-CVE-2025-24813",
-  "url": "https://github.com/absholi7ly/POC-CVE-2025-24813",
-  "desc": "his repository contains an automated Proof of Concept (PoC) script for exploiting **CVE-2025-24813**, a Remote Code Execution (RCE) vulnerability in Apache Tomcat. The vulnerability allows an attacker to upload a malicious serialized payload to the server, leading to arbitrary code execution via deserialization when specific conditions are met.",
-  "pushed": "2025-03-14T07:57:27Z",
-  "created": "2025-03-14T07:36:58Z"
- },
- {
-  "year": 2025,
-  "stars": 233,
-  "name": "CVE-2025-21333-POC",
-  "url": "https://github.com/MrAle98/CVE-2025-21333-POC",
-  "desc": "POC exploit for CVE-2025-21333 heap-based buffer overflow. It leverages WNF state data and I/O ring IOP_MC_BUFFER_ENTRY",
-  "pushed": "2025-04-12T22:14:58Z",
-  "created": "2025-02-27T12:36:55Z"
- },
- {
-  "year": 2025,
-  "stars": 190,
-  "name": "RSC-Detect-CVE-2025-55182",
-  "url": "https://github.com/alptexans/RSC-Detect-CVE-2025-55182",
-  "desc": "RSC Detect CVE 2025 55182",
-  "pushed": "2026-02-25T15:37:19Z",
-  "created": "2026-02-25T15:36:22Z"
- },
- {
-  "year": 2025,
-  "stars": 196,
-  "name": "CVE-2025-30208-EXP",
-  "url": "https://github.com/ThumpBo/CVE-2025-30208-EXP",
-  "desc": "CVE-2025-30208-EXP",
-  "pushed": "2025-04-01T07:52:49Z",
-  "created": "2025-03-26T15:42:31Z"
- },
- {
-  "year": 2025,
-  "stars": 161,
-  "name": "CVE-2025-21756",
-  "url": "https://github.com/hoefler02/CVE-2025-21756",
-  "desc": "Exploit for CVE-2025-21756 for Linux kernel 6.6.75. My first linux kernel exploit!",
-  "pushed": "2025-06-05T21:32:05Z",
-  "created": "2025-04-18T14:22:15Z"
- },
- {
-  "year": 2025,
-  "stars": 143,
-  "name": "CVE-2025-32433",
-  "url": "https://github.com/ProDefense/CVE-2025-32433",
-  "desc": "CVE-2025-32433 https://github.com/erlang/otp/security/advisories/GHSA-37cp-fgq5-7wc2",
-  "pushed": "2025-08-02T18:24:05Z",
-  "created": "2025-04-18T00:35:11Z"
+  "stars": 3,
+  "name": "CVE-2025-7441",
+  "url": "https://github.com/AnotherSec/CVE-2025-7441",
+  "desc": "StoryChief <= 1.0.42 - Unauthenticated Arbitrary File Upload",
+  "pushed": "2026-06-16T19:39:57Z",
+  "created": "2025-10-14T17:40:14Z"
  },
  {
   "year": 2024,
-  "stars": 2457,
-  "name": "CVE-2024-1086",
-  "url": "https://github.com/Notselwyn/CVE-2024-1086",
-  "desc": "Universal local privilege escalation Proof-of-Concept exploit for CVE-2024-1086, working on most Linux kernels between v5.14 and v6.6, including Debian, Ubuntu, and KernelCTF. The success rate is 99.4% in KernelCTF images.",
-  "pushed": "2024-04-17T16:09:54Z",
-  "created": "2024-03-20T21:16:41Z"
+  "stars": 16,
+  "name": "CVE-2024-56426",
+  "url": "https://github.com/Creeeeger/CVE-2024-56426",
+  "desc": "A PoC of the CVE-2024-56426 vulnerability.",
+  "pushed": "2026-08-23T20:42:06Z",
+  "created": "2026-04-07T12:02:52Z"
  },
  {
   "year": 2024,
-  "stars": 693,
-  "name": "CVE-2024-38063",
-  "url": "https://github.com/ynwarcs/CVE-2024-38063",
-  "desc": "poc for CVE-2024-38063 (RCE in tcpip.sys)",
-  "pushed": "2024-08-27T12:22:39Z",
-  "created": "2024-08-24T18:25:46Z"
+  "stars": 3,
+  "name": "CVE-2024-56426",
+  "url": "https://github.com/xcracker000/CVE-2024-56426",
+  "desc": "CVE-2024-56426 Exynos9830 Bootrom Exploit - SM-G985F",
+  "pushed": "2026-08-15T06:21:41Z",
+  "created": "2026-08-15T06:12:04Z"
  },
  {
   "year": 2024,
-  "stars": 496,
-  "name": "cve-2024-6387-poc",
-  "url": "https://github.com/zgzhang/cve-2024-6387-poc",
-  "desc": "a signal handler race condition in OpenSSH's server (sshd)",
-  "pushed": "2024-07-01T10:54:02Z",
-  "created": "2024-07-01T10:55:29Z"
+  "stars": 33,
+  "name": "CVE-2024-4577-PHP-RCE",
+  "url": "https://github.com/ZephrFish/CVE-2024-4577-PHP-RCE",
+  "desc": "PHP RCE PoC for CVE-2024-4577 written in bash, go, python and a nuclei template",
+  "pushed": "2026-07-30T13:40:16Z",
+  "created": "2024-06-08T12:23:35Z"
  },
  {
   "year": 2024,
-  "stars": 520,
-  "name": "CVE-2024-49113",
-  "url": "https://github.com/SafeBreach-Labs/CVE-2024-49113",
-  "desc": "LdapNightmare is a PoC tool that tests a vulnerable Windows Server against CVE-2024-49113",
-  "pushed": "2025-01-02T16:07:23Z",
-  "created": "2025-01-01T15:48:38Z"
+  "stars": 3,
+  "name": "CVE-2024-36104-PoC",
+  "url": "https://github.com/Groppoxx/CVE-2024-36104-PoC",
+  "desc": "PoC for CVE-2024-36104 — unauthenticated Groovy RCE in Apache OFBiz (<18.12.14) via /%2e/%2e/ view path traversal to ProgramExport",
+  "pushed": "2026-07-29T21:15:58Z",
+  "created": "2026-07-29T19:59:36Z"
  },
  {
   "year": 2024,
-  "stars": 527,
-  "name": "CVE-2024-6387_Check",
-  "url": "https://github.com/xaitax/CVE-2024-6387_Check",
-  "desc": "CVE-2024-6387_Check is a lightweight, efficient tool designed to identify servers running vulnerable versions of OpenSSH",
-  "pushed": "2026-05-29T11:44:40Z",
-  "created": "2024-07-01T20:33:20Z"
+  "stars": 8,
+  "name": "CVE-2024-37032-PoC",
+  "url": "https://github.com/itzSh4dowxZ/CVE-2024-37032-PoC",
+  "desc": "CVE-2024-37032 (Probllama) PoC for Ollama ≤0.1.33: path traversal and arbitrary file write via model digest handling, leading to automated privilege escalation.",
+  "pushed": "2026-06-30T02:15:45Z",
+  "created": "2026-05-19T02:10:28Z"
  },
  {
   "year": 2024,
-  "stars": 224,
-  "name": "CVE-2024-38077",
-  "url": "https://github.com/qi4L/CVE-2024-38077",
-  "desc": "RDL的堆溢出导致的RCE",
-  "pushed": "2024-08-14T04:43:05Z",
-  "created": "2024-08-09T05:00:44Z"
+  "stars": 31,
+  "name": "CVE-2024-24919-Bulk-Scanner",
+  "url": "https://github.com/ifconfig-me/CVE-2024-24919-Bulk-Scanner",
+  "desc": "CVE-2024-24919 [Check Point Security Gateway Information Disclosure]",
+  "pushed": "2026-06-28T05:45:51Z",
+  "created": "2024-06-01T10:51:14Z"
  },
  {
   "year": 2024,
-  "stars": 379,
-  "name": "cve-2024-6387-poc",
-  "url": "https://github.com/acrono/cve-2024-6387-poc",
-  "desc": "32-bit PoC for CVE-2024-6387 — mirror of the original 7etsuo/cve-2024-6387-poc",
-  "pushed": "2024-07-01T12:25:01Z",
-  "created": "2024-07-01T12:16:21Z"
+  "stars": 3,
+  "name": "CVE-2024-36991",
+  "url": "https://github.com/0xFZin/CVE-2024-36991",
+  "desc": "Exploit for CVE-2024-36991 , written by me, enumerates a handfull of things, not all, cause not needed.",
+  "pushed": "2026-06-21T09:24:34Z",
+  "created": "2025-07-06T03:50:13Z"
  },
  {
   "year": 2024,
-  "stars": 335,
-  "name": "CVE-2024-21338",
-  "url": "https://github.com/hakaioffsec/CVE-2024-21338",
-  "desc": "Local Privilege Escalation from Admin to Kernel vulnerability on Windows 10 and Windows 11 operating systems with HVCI enabled.",
-  "pushed": "2024-04-16T21:00:14Z",
-  "created": "2024-04-13T05:53:02Z"
+  "stars": 7,
+  "name": "CVE-2024-27983-nodejs-http2",
+  "url": "https://github.com/lirantal/CVE-2024-27983-nodejs-http2",
+  "desc": "CVE-2024-27983 this repository builds up a vulnerable HTTP2 Node.js server (`server-nossl.js`) based on CVE-2024-27983 which exploits a continuation flood vulnerability in HTTP2 servers.",
+  "pushed": "2026-06-12T09:43:06Z",
+  "created": "2024-04-14T11:34:52Z"
  },
  {
   "year": 2024,
-  "stars": 330,
-  "name": "CVE-2024-0044",
-  "url": "https://github.com/0xbinder/CVE-2024-0044",
-  "desc": "CVE-2024-0044: a \"run-as any app\" high-severity vulnerability affecting Android versions 12 and 13",
-  "pushed": "2024-12-02T06:29:52Z",
-  "created": "2024-06-18T12:30:53Z"
+  "stars": 4,
+  "name": "CVE-2024-1065",
+  "url": "https://github.com/kuzeyardabulut/CVE-2024-1065",
+  "desc": "Page Cache Exploit for CVE-2024-1065",
+  "pushed": "2026-06-10T14:00:50Z",
+  "created": "2026-06-02T10:21:23Z"
  },
  {
   "year": 2024,
-  "stars": 321,
-  "name": "CVE-2024-4577",
-  "url": "https://github.com/watchtowrlabs/CVE-2024-4577",
-  "desc": "PHP CGI Argument Injection (CVE-2024-4577) Remote Code Execution PoC",
-  "pushed": "2024-06-22T15:13:52Z",
-  "created": "2024-06-07T09:52:54Z"
+  "stars": 44,
+  "name": "GeoServer-Tools-CVE-2024-36401",
+  "url": "https://github.com/bmth666/GeoServer-Tools-CVE-2024-36401",
+  "desc": "CVE-2024-36401 图形化利用工具，支持各个JDK版本利用以及回显、内存马实现",
+  "pushed": "2026-06-08T07:34:27Z",
+  "created": "2025-04-11T04:36:34Z"
  },
  {
   "year": 2024,
-  "stars": 289,
-  "name": "CVE-2024-30088",
-  "url": "https://github.com/tykawaii98/CVE-2024-30088",
-  "desc": "",
-  "pushed": "2024-07-31T19:11:55Z",
-  "created": "2024-06-24T10:37:26Z"
- },
- {
-  "year": 2024,
-  "stars": 278,
-  "name": "CVE-2024-21413",
-  "url": "https://github.com/CMNatic/CVE-2024-21413",
-  "desc": "CVE-2024-21413 PoC for THM Lab",
-  "pushed": "2024-03-13T02:44:28Z",
-  "created": "2024-02-17T14:52:52Z"
- },
- {
-  "year": 2024,
-  "stars": 769,
-  "name": "CVE-2024-21413-Microsoft-Outlook-Remote-Code-Execution-Vulnerability",
-  "url": "https://github.com/xaitax/CVE-2024-21413-Microsoft-Outlook-Remote-Code-Execution-Vulnerability",
-  "desc": "Microsoft-Outlook-Remote-Code-Execution-Vulnerability",
-  "pushed": "2024-02-19T20:00:35Z",
-  "created": "2024-02-16T15:17:59Z"
- },
- {
-  "year": 2024,
-  "stars": 271,
-  "name": "CVE-2024-49138-POC",
-  "url": "https://github.com/MrAle98/CVE-2024-49138-POC",
-  "desc": "POC exploit for CVE-2024-49138",
-  "pushed": "2025-02-14T22:04:41Z",
-  "created": "2025-01-15T00:43:37Z"
- },
- {
-  "year": 2024,
-  "stars": 194,
-  "name": "CVE-2024-6387",
-  "url": "https://github.com/Karmakstylez/CVE-2024-6387",
-  "desc": "Remote Unauthenticated Code Execution Vulnerability in OpenSSH server (CVE-2024-6387)",
-  "pushed": "2024-08-22T08:50:25Z",
-  "created": "2024-07-08T11:27:49Z"
- },
- {
-  "year": 2024,
-  "stars": 9,
-  "name": "CVE-2024-38077-POC",
-  "url": "https://github.com/SecStarBot/CVE-2024-38077-POC",
-  "desc": "",
-  "pushed": "2024-08-09T01:19:08Z",
-  "created": "2024-08-09T01:24:59Z"
- },
- {
-  "year": 2024,
-  "stars": 235,
-  "name": "CVE_2024_30078_POC_WIFI",
-  "url": "https://github.com/blkph0x/CVE_2024_30078_POC_WIFI",
-  "desc": "basic concept for the latest windows wifi driver CVE",
-  "pushed": "2024-10-31T14:05:40Z",
-  "created": "2024-06-20T05:58:45Z"
- },
- {
-  "year": 2024,
-  "stars": 180,
-  "name": "CVE-2024-25600",
-  "url": "https://github.com/Chocapikk/CVE-2024-25600",
-  "desc": "Unauthenticated Remote Code Execution – Bricks <= 1.9.6",
-  "pushed": "2024-02-25T21:50:09Z",
-  "created": "2024-02-20T20:16:09Z"
- },
- {
-  "year": 2024,
-  "stars": 217,
-  "name": "CVE-2024-21111",
-  "url": "https://github.com/mansk1es/CVE-2024-21111",
-  "desc": "Oracle VirtualBox Elevation of Privilege (Local Privilege Escalation) Vulnerability",
-  "pushed": "2024-05-09T16:39:55Z",
-  "created": "2024-04-22T07:05:04Z"
- },
- {
-  "year": 2024,
-  "stars": 136,
-  "name": "CVE-2024-7479_CVE-2024-7481",
-  "url": "https://github.com/PeterGabaldon/CVE-2024-7479_CVE-2024-7481",
-  "desc": "TeamViewer User to Kernel Elevation of Privilege PoC. CVE-2024-7479 and CVE-2024-7481. ZDI-24-1289 and ZDI-24-1290. TV-2024-1006.",
-  "pushed": "2024-12-22T21:34:26Z",
-  "created": "2024-09-29T10:58:15Z"
- },
- {
-  "year": 2023,
-  "stars": 782,
-  "name": "CVE-2023-38831-winrar-exploit",
-  "url": "https://github.com/b1tg/CVE-2023-38831-winrar-exploit",
-  "desc": "CVE-2023-38831 winrar exploit generator",
-  "pushed": "2023-11-26T06:46:44Z",
-  "created": "2023-08-25T09:44:08Z"
- },
- {
-  "year": 2023,
-  "stars": 382,
-  "name": "CVE-2023-32233",
-  "url": "https://github.com/Liuk3r/CVE-2023-32233",
-  "desc": "CVE-2023-32233: Linux内核中的安全漏洞",
-  "pushed": "2023-05-16T04:34:16Z",
-  "created": "2023-05-16T03:06:40Z"
- },
- {
-  "year": 2023,
-  "stars": 506,
-  "name": "Windows_LPE_AFD_CVE-2023-21768",
-  "url": "https://github.com/chompie1337/Windows_LPE_AFD_CVE-2023-21768",
-  "desc": "LPE exploit for CVE-2023-21768",
-  "pushed": "2023-07-10T16:35:49Z",
-  "created": "2023-03-07T23:00:27Z"
- },
- {
-  "year": 2023,
-  "stars": 418,
-  "name": "CVE-2023-0386",
-  "url": "https://github.com/xkaneiki/CVE-2023-0386",
-  "desc": "CVE-2023-0386在ubuntu22.04上的提权",
-  "pushed": "2023-06-13T08:58:53Z",
-  "created": "2023-05-05T03:02:13Z"
+  "stars": 3,
+  "name": "CVE-2024-21182",
+  "url": "https://github.com/dinosn/CVE-2024-21182",
+  "desc": "Reproducible Docker lab for CVE-2024-21182 — Oracle WebLogic T3/IIOP OpaqueReference JNDI injection → unauthenticated RCE (CVE-2023-21839 patch-bypass family). One-command validate.sh.",
+  "pushed": "2026-06-02T14:11:16Z",
+  "created": "2026-06-02T14:11:12Z"
  },
  {
   "year": 2023,
@@ -586,317 +469,164 @@
  },
  {
   "year": 2023,
-  "stars": 328,
-  "name": "CVE-2023-21752",
-  "url": "https://github.com/Wh04m1001/CVE-2023-21752",
-  "desc": "",
-  "pushed": "2023-01-13T09:01:20Z",
-  "created": "2023-01-10T15:59:26Z"
+  "stars": 33,
+  "name": "CVE-2023-20198-Checker",
+  "url": "https://github.com/ZephrFish/CVE-2023-20198-Checker",
+  "desc": "CVE-2023-20198 & 0Day Implant Scanner",
+  "pushed": "2026-07-30T13:40:14Z",
+  "created": "2023-10-17T22:41:14Z"
  },
  {
   "year": 2023,
-  "stars": 393,
-  "name": "CVE-2023-4911",
-  "url": "https://github.com/leesh3288/CVE-2023-4911",
-  "desc": "PoC for CVE-2023-4911",
-  "pushed": "2023-10-04T14:16:36Z",
-  "created": "2023-10-04T14:12:16Z"
+  "stars": 3,
+  "name": "CVE-2023-52076-PoC",
+  "url": "https://github.com/Groppoxx/CVE-2023-52076-PoC",
+  "desc": "PoC exploit for CVE-2023-52076 - zip-slip path traversal in Atril/Xreader (MATE/Cinnamon) enabling arbitrary file write and RCE via crafted EPUB. Authorized security testing only.",
+  "pushed": "2026-07-27T07:01:52Z",
+  "created": "2026-07-27T06:51:21Z"
  },
  {
   "year": 2023,
-  "stars": 283,
-  "name": "CVE-2023-21608",
-  "url": "https://github.com/hacksysteam/CVE-2023-21608",
-  "desc": "Adobe Acrobat Reader - CVE-2023-21608 - Remote Code Execution Exploit",
-  "pushed": "2023-12-05T12:21:02Z",
-  "created": "2023-01-30T12:57:48Z"
+  "stars": 5,
+  "name": "CVE-2023-36003",
+  "url": "https://github.com/johnnygreeme/CVE-2023-36003",
+  "desc": "PoC for CVE-2023-36003: Windows Exploit Security Feature Bypass Vulnerability in Windows Defender.",
+  "pushed": "2026-07-22T19:46:34Z",
+  "created": "2026-07-22T19:43:34Z"
  },
  {
   "year": 2023,
-  "stars": 317,
-  "name": "CVE-2023-4863",
-  "url": "https://github.com/mistymntncop/CVE-2023-4863",
-  "desc": "",
-  "pushed": "2023-12-18T04:25:00Z",
-  "created": "2023-09-21T05:22:51Z"
+  "stars": 3,
+  "name": "cve-2023-4911-exploit-optimized",
+  "url": "https://github.com/jarpex/cve-2023-4911-exploit-optimized",
+  "desc": "Pure C exploit for CVE-2023-4911 (Looney Tunables) — x86_64 & aarch64 implementations. Multi-processing brute-forcing, dynamic calibration, integrated ELF parser.",
+  "pushed": "2026-07-07T21:02:06Z",
+  "created": "2026-06-29T21:05:09Z"
  },
  {
   "year": 2023,
-  "stars": 242,
-  "name": "CVE-2023-36874",
-  "url": "https://github.com/Wh04m1001/CVE-2023-36874",
-  "desc": "",
-  "pushed": "2023-08-23T16:46:53Z",
-  "created": "2023-08-23T12:07:40Z"
+  "stars": 5,
+  "name": "CVE-2023-22515",
+  "url": "https://github.com/kh4sh3i/CVE-2023-22515",
+  "desc": "CVE-2023-22515 - Broken Access Control Vulnerability in Confluence Data Center and Server",
+  "pushed": "2026-07-07T10:28:47Z",
+  "created": "2023-10-11T11:21:47Z"
  },
  {
   "year": 2023,
-  "stars": 247,
-  "name": "CVE-2023-44487",
-  "url": "https://github.com/bcdannyboy/CVE-2023-44487",
-  "desc": "Basic vulnerability scanning to see if web servers may be vulnerable to CVE-2023-44487",
-  "pushed": "2024-01-08T11:12:08Z",
-  "created": "2023-10-10T14:20:42Z"
+  "stars": 15,
+  "name": "CVE-2023-32315-EXPLOIT",
+  "url": "https://github.com/K3ysTr0K3R/CVE-2023-32315-EXPLOIT",
+  "desc": "A PoC exploit for CVE-2023-32315 - Openfire Authentication Bypass",
+  "pushed": "2026-07-05T17:29:01Z",
+  "created": "2023-12-15T16:30:51Z"
  },
  {
   "year": 2023,
-  "stars": 245,
-  "name": "CVE-2023-7028",
-  "url": "https://github.com/Vozec/CVE-2023-7028",
-  "desc": "This repository presents a proof-of-concept of CVE-2023-7028",
-  "pushed": "2024-01-13T13:50:20Z",
-  "created": "2024-01-12T18:29:27Z"
- },
- {
-  "year": 2023,
-  "stars": 228,
-  "name": "CVE-2023-3519",
-  "url": "https://github.com/BishopFox/CVE-2023-3519",
-  "desc": "RCE exploit for CVE-2023-3519",
-  "pushed": "2023-08-23T16:27:28Z",
-  "created": "2023-07-21T20:17:43Z"
- },
- {
-  "year": 2023,
-  "stars": 169,
-  "name": "CVE-2023-36745",
-  "url": "https://github.com/N1k0la-T/CVE-2023-36745",
-  "desc": "",
-  "pushed": "2023-10-29T11:12:26Z",
-  "created": "2023-10-23T19:06:36Z"
- },
- {
-  "year": 2023,
-  "stars": 228,
-  "name": "CVE-2023-20887",
-  "url": "https://github.com/sinsinology/CVE-2023-20887",
-  "desc": "VMWare vRealize Network Insight Pre-Authenticated RCE (CVE-2023-20887)",
-  "pushed": "2023-06-13T14:39:17Z",
-  "created": "2023-06-13T13:17:23Z"
- },
- {
-  "year": 2023,
-  "stars": 346,
-  "name": "CVE-2023-23397-POC-Powershell",
-  "url": "https://github.com/api0cradle/CVE-2023-23397-POC-Powershell",
-  "desc": "",
-  "pushed": "2023-03-17T07:47:40Z",
-  "created": "2023-03-16T19:43:39Z"
- },
- {
-  "year": 2023,
-  "stars": 183,
-  "name": "CVE-2023-28252",
-  "url": "https://github.com/fortra/CVE-2023-28252",
-  "desc": "",
-  "pushed": "2023-07-10T16:57:44Z",
-  "created": "2023-06-27T12:22:05Z"
- },
- {
-  "year": 2023,
-  "stars": 136,
-  "name": "CVE-2023-2640-CVE-2023-32629",
-  "url": "https://github.com/g1vi/CVE-2023-2640-CVE-2023-32629",
-  "desc": "GameOver(lay) Ubuntu Privilege Escalation",
-  "pushed": "2023-10-09T22:44:21Z",
-  "created": "2023-10-09T22:02:42Z"
- },
- {
-  "year": 2023,
-  "stars": 241,
-  "name": "Weblogic-CVE-2023-21839",
-  "url": "https://github.com/DXask88MA/Weblogic-CVE-2023-21839",
-  "desc": "",
-  "pushed": "2023-02-26T06:43:18Z",
-  "created": "2023-02-21T16:08:56Z"
- },
- {
-  "year": 2023,
-  "stars": 207,
-  "name": "CVE-2023-46747-RCE",
-  "url": "https://github.com/W01fh4cker/CVE-2023-46747-RCE",
-  "desc": "exploit for f5-big-ip RCE cve-2023-46747",
-  "pushed": "2024-10-20T10:27:37Z",
-  "created": "2023-11-01T09:31:05Z"
+  "stars": 6,
+  "name": "CVE-2023-6019",
+  "url": "https://github.com/joaquinrrr/CVE-2023-6019",
+  "desc": "PoC exploit for CVE-2023-6019 - Remote Code Execution via unauthenticated Ray Dashboard Jobs API.",
+  "pushed": "2026-06-19T19:11:03Z",
+  "created": "2026-06-19T19:08:58Z"
  },
  {
   "year": 2022,
-  "stars": 461,
-  "name": "CVE-2022-21882",
-  "url": "https://github.com/KaLendsi/CVE-2022-21882",
-  "desc": "win32k LPE",
-  "pushed": "2022-01-27T04:18:18Z",
-  "created": "2022-01-27T03:44:10Z"
+  "stars": 6,
+  "name": "CVE-2022-22077",
+  "url": "https://github.com/grisuno/CVE-2022-22077",
+  "desc": "CVE-2022-22077 is a high-severity vulnerability (CVSS score 7.8) affecting the RTCore64.sys driver distributed with MSI Center",
+  "pushed": "2026-08-29T20:34:04Z",
+  "created": "2025-09-08T21:12:19Z"
  },
  {
   "year": 2022,
-  "stars": 1133,
-  "name": "CVE-2022-0847-DirtyPipe-Exploit",
-  "url": "https://github.com/Arinerron/CVE-2022-0847-DirtyPipe-Exploit",
-  "desc": "A root exploit for CVE-2022-0847 (Dirty Pipe)",
-  "pushed": "2022-03-08T06:20:05Z",
-  "created": "2022-03-07T18:55:20Z"
+  "stars": 5,
+  "name": "CVE-2022-22947_exp",
+  "url": "https://github.com/Arrnitage/CVE-2022-22947_exp",
+  "desc": "CVE-2022-22947 Exploit script",
+  "pushed": "2026-08-12T01:56:58Z",
+  "created": "2022-03-10T03:51:47Z"
  },
  {
   "year": 2022,
-  "stars": 573,
-  "name": "CVE-2022-23222",
-  "url": "https://github.com/tr3ee/CVE-2022-23222",
-  "desc": "CVE-2022-23222: Linux Kernel eBPF Local Privilege Escalation",
-  "pushed": "2022-06-07T03:41:13Z",
-  "created": "2022-06-07T03:20:23Z"
+  "stars": 59,
+  "name": "F5-CVE-2022-1388-Exploit",
+  "url": "https://github.com/ZephrFish/F5-CVE-2022-1388-Exploit",
+  "desc": "Exploit and Check Script for CVE 2022-1388",
+  "pushed": "2026-07-30T13:40:28Z",
+  "created": "2022-05-09T11:30:09Z"
  },
  {
   "year": 2022,
-  "stars": 360,
-  "name": "CVE-2022-21907",
-  "url": "https://github.com/ZZ-SOCMAP/CVE-2022-21907",
-  "desc": "HTTP Protocol Stack Remote Code Execution Vulnerability CVE-2022-21907",
-  "pushed": "2022-01-20T02:07:59Z",
-  "created": "2022-01-17T02:28:50Z"
+  "stars": 10,
+  "name": "CVE-2022-23093",
+  "url": "https://github.com/sh4den/CVE-2022-23093",
+  "desc": "The FreeBSD ICMP buffer overflow, freebsd buffer overflow poc",
+  "pushed": "2026-07-06T09:40:15Z",
+  "created": "2023-03-02T20:18:54Z"
  },
  {
   "year": 2022,
-  "stars": 377,
+  "stars": 7,
+  "name": "CVE-2022-47966",
+  "url": "https://github.com/sh4den/CVE-2022-47966",
+  "desc": "The manage engine mass loader for CVE-2022-47966",
+  "pushed": "2026-07-06T08:38:55Z",
+  "created": "2023-01-23T10:45:23Z"
+ },
+ {
+  "year": 2022,
+  "stars": 3,
+  "name": "CVE-2022-46169",
+  "url": "https://github.com/sh4den/CVE-2022-46169",
+  "desc": "Cacti Unauthenticated Command Injection",
+  "pushed": "2026-07-06T08:38:52Z",
+  "created": "2023-01-02T18:03:26Z"
+ },
+ {
+  "year": 2022,
+  "stars": 12,
+  "name": "CVE-2022-36804",
+  "url": "https://github.com/sh4den/CVE-2022-36804",
+  "desc": "A loader for bitbucket 2022 rce (cve-2022-36804)",
+  "pushed": "2026-07-06T08:38:49Z",
+  "created": "2022-09-26T08:35:31Z"
+ },
+ {
+  "year": 2022,
+  "stars": 10,
   "name": "CVE-2022-29464",
-  "url": "https://github.com/hakivvi/CVE-2022-29464",
-  "desc": "WSO2 RCE (CVE-2022-29464) exploit and writeup.",
-  "pushed": "2022-04-27T05:52:43Z",
-  "created": "2022-04-20T21:23:52Z"
+  "url": "https://github.com/sh4den/CVE-2022-29464",
+  "desc": "A bots loader for CVE-2022-29464 with multithreading",
+  "pushed": "2026-07-06T08:38:43Z",
+  "created": "2022-05-15T08:51:16Z"
  },
  {
   "year": 2022,
-  "stars": 729,
-  "name": "CVE-2022-0847-DirtyPipe-Exploits",
-  "url": "https://github.com/AlexisAhmed/CVE-2022-0847-DirtyPipe-Exploits",
-  "desc": "A collection of exploits and documentation that can be used to exploit the Linux Dirty Pipe vulnerability.",
-  "pushed": "2023-05-20T05:55:45Z",
-  "created": "2022-03-12T20:57:24Z"
+  "stars": 18,
+  "name": "CVE-2022-27925",
+  "url": "https://github.com/sh4den/CVE-2022-27925",
+  "desc": "A loader for zimbra 2022 rce (cve-2022-27925)",
+  "pushed": "2026-07-06T08:38:40Z",
+  "created": "2022-10-01T10:33:55Z"
  },
  {
   "year": 2022,
-  "stars": 358,
-  "name": "CVE-2022-40684",
-  "url": "https://github.com/horizon3ai/CVE-2022-40684",
-  "desc": "A proof of concept exploit for CVE-2022-40684 affecting Fortinet FortiOS, FortiProxy, and FortiSwitchManager",
-  "pushed": "2022-10-13T15:25:00Z",
-  "created": "2022-10-13T14:24:12Z"
+  "stars": 10,
+  "name": "CVE-2022-26265",
+  "url": "https://github.com/sh4den/CVE-2022-26265",
+  "desc": "The first proof of concept of the Contao CMS RCE",
+  "pushed": "2026-07-06T08:38:37Z",
+  "created": "2022-12-01T23:11:19Z"
  },
  {
   "year": 2022,
-  "stars": 437,
-  "name": "CVE-2022-25636",
-  "url": "https://github.com/Bonfee/CVE-2022-25636",
-  "desc": "CVE-2022-25636",
-  "pushed": "2022-03-07T17:18:19Z",
-  "created": "2022-03-07T13:38:41Z"
- },
- {
-  "year": 2022,
-  "stars": 487,
-  "name": "CVE-2022-2588",
-  "url": "https://github.com/Markakd/CVE-2022-2588",
-  "desc": "exploit for CVE-2022-2588",
-  "pushed": "2023-03-04T05:52:28Z",
-  "created": "2022-08-11T06:01:24Z"
- },
- {
-  "year": 2022,
-  "stars": 497,
-  "name": "CVE-2022-0995",
-  "url": "https://github.com/Bonfee/CVE-2022-0995",
-  "desc": "CVE-2022-0995 exploit",
-  "pushed": "2022-03-27T09:07:01Z",
-  "created": "2022-03-26T21:46:09Z"
- },
- {
-  "year": 2022,
-  "stars": 415,
-  "name": "CVE-2022-33679",
-  "url": "https://github.com/Bdenneu/CVE-2022-33679",
-  "desc": "One day based on https://googleprojectzero.blogspot.com/2022/10/rc4-is-still-considered-harmful.html",
-  "pushed": "2024-11-10T17:21:28Z",
-  "created": "2022-11-02T18:38:01Z"
- },
- {
-  "year": 2022,
-  "stars": 387,
-  "name": "CVE-2022-39197",
-  "url": "https://github.com/its-arun/CVE-2022-39197",
-  "desc": "CobaltStrike <= 4.7.1 RCE",
-  "pushed": "2022-10-25T05:32:54Z",
-  "created": "2022-10-14T11:46:01Z"
- },
- {
-  "year": 2022,
-  "stars": 282,
-  "name": "CVE-2022-0847",
-  "url": "https://github.com/r1is/CVE-2022-0847",
-  "desc": "CVE-2022-0847-DirtyPipe-Exploit CVE-2022-0847 是存在于 Linux内核 5.8 及之后版本中的本地提权漏洞。攻击者通过利用此漏洞，可覆盖重写任意可读文件中的数据，从而可将普通权限的用户提升到特权 root。 CVE-2022-0847 的漏洞原理类似于 CVE-2016-5195 脏牛漏洞（Dirty Cow），但它更容易被利用。漏洞作者将此漏洞命名为“Dirty Pipe”",
-  "pushed": "2023-02-02T02:17:30Z",
-  "created": "2022-03-07T18:36:50Z"
- },
- {
-  "year": 2022,
-  "stars": 353,
-  "name": "CVE-2022-21894",
-  "url": "https://github.com/Wack0/CVE-2022-21894",
-  "desc": "baton drop (CVE-2022-21894): Secure Boot Security Feature Bypass Vulnerability",
-  "pushed": "2023-09-27T06:44:27Z",
-  "created": "2022-08-09T15:53:48Z"
- },
- {
-  "year": 2022,
-  "stars": 379,
-  "name": "CVE-2022-0185",
-  "url": "https://github.com/Crusaders-of-Rust/CVE-2022-0185",
-  "desc": "CVE-2022-0185",
-  "pushed": "2022-04-25T04:11:33Z",
-  "created": "2022-01-19T06:19:38Z"
- },
- {
-  "year": 2022,
-  "stars": 595,
-  "name": "CVE-2022-38694_unlock_bootloader",
-  "url": "https://github.com/TomKing062/CVE-2022-38694_unlock_bootloader",
-  "desc": "This is a one-time signature verification bypass. For persistent signature verification bypass, check https://github.com/TomKing062/CVE-2022-38691_38692",
-  "pushed": "2025-06-14T16:55:26Z",
-  "created": "2023-06-10T08:31:26Z"
- },
- {
-  "year": 2022,
-  "stars": 284,
-  "name": "cve-2022-27255",
-  "url": "https://github.com/infobyte/cve-2022-27255",
-  "desc": "",
-  "pushed": "2022-08-30T13:23:51Z",
-  "created": "2022-07-06T17:29:04Z"
- },
- {
-  "year": 2022,
-  "stars": 265,
-  "name": "CVE-2022-39952",
-  "url": "https://github.com/horizon3ai/CVE-2022-39952",
-  "desc": "POC for CVE-2022-39952",
-  "pushed": "2023-02-25T08:52:03Z",
-  "created": "2023-02-20T15:12:33Z"
- },
- {
-  "year": 2022,
-  "stars": 238,
-  "name": "CVE-2022-20699",
-  "url": "https://github.com/Audiobahn/CVE-2022-20699",
-  "desc": "Cisco Anyconnect VPN unauth RCE (rwx stack)",
-  "pushed": "2022-02-07T15:55:03Z",
-  "created": "2022-02-07T15:53:21Z"
- },
- {
-  "year": 2022,
-  "stars": 219,
-  "name": "CVE-2022-34918",
-  "url": "https://github.com/veritas501/CVE-2022-34918",
-  "desc": "CVE-2022-34918 netfilter nf_tables 本地提权 POC",
-  "pushed": "2022-09-15T03:19:28Z",
-  "created": "2022-08-02T09:52:02Z"
+  "stars": 6,
+  "name": "NimbusPWN-CVE-2022-29799-29800",
+  "url": "https://github.com/joshuavanderpoll/NimbusPWN-CVE-2022-29799-29800",
+  "desc": "NimbusPwn (CVE-2022-29799/29800) local privilege escalation PoC in C.",
+  "pushed": "2026-06-17T20:06:23Z",
+  "created": "2026-06-17T19:44:47Z"
  }
 ]

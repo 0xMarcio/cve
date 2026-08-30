@@ -6,7 +6,7 @@ from __future__ import annotations
 import json
 import os
 import time
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 from urllib import error, parse, request
 
 SEARCH_URL = "https://api.github.com/search/repositories"
@@ -16,6 +16,8 @@ LANGUAGES = (
 )
 YEARS = 5
 PER_YEAR = 20
+POOL = 50          # fetched per year before re-sorting by last commit
+WINDOW_DAYS = 90   # a PoC nobody has touched this quarter is not "recent"
 MIN_STARS = 2
 USER_AGENT = "0xMarcio-cve-trending"
 ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), os.pardir)
@@ -23,14 +25,21 @@ README = os.path.join(ROOT, "README.md")
 TRENDING = os.path.join(ROOT, "trending.json")
 
 
-def search_year(year: int) -> tuple[int, list[dict]]:
-    """Return the repository count and newest PoC repositories for one CVE year."""
+def search_year(year: int, since: str) -> tuple[int, list[dict]]:
+    """Return how many PoC repositories for one CVE year were pushed since a
+    date, and the most recently pushed of them.
+
+    The API can only sort by updated_at, which also moves when a repository
+    merely gains a star. Since a push always bumps updated_at too, the newest
+    commits are guaranteed to sit near the top of that order: take a pool from
+    there and re-sort it by the date the table actually shows.
+    """
     query = " ".join(
-        [f'"CVE-{year}" in:name', f"stars:>{MIN_STARS}"]
+        [f'"CVE-{year}" in:name', f"stars:>{MIN_STARS}", f"pushed:>{since}"]
         + [f"language:{language}" for language in LANGUAGES]
     )
     url = SEARCH_URL + "?" + parse.urlencode(
-        {"q": query, "s": "updated", "o": "desc", "per_page": PER_YEAR}
+        {"q": query, "s": "updated", "o": "desc", "per_page": POOL}
     )
     headers = {"Accept": "application/vnd.github+json", "User-Agent": USER_AGENT}
     # The token authenticates the search API only; it is never placed in the URL,
@@ -69,13 +78,17 @@ def cell(value: str) -> str:
 
 
 def main() -> int:
-    current_year = datetime.now(timezone.utc).year
+    now = datetime.now(timezone.utc)
+    since = (now - timedelta(days=WINDOW_DAYS)).date().isoformat()
+    current_year = now.year
     lines = ['<h1 align="center">Recently updated Proof-of-Concepts</h1>']
     items: list[dict] = []
 
     for year in range(current_year, current_year - YEARS, -1):
-        total, repositories = search_year(year)
-        print(f"CVE-{year}: {total} repositories")
+        total, repositories = search_year(year, since)
+        repositories.sort(key=lambda repo: str(repo.get("pushed_at") or ""), reverse=True)
+        repositories = repositories[:PER_YEAR]
+        print(f"CVE-{year}: {total} repositories pushed since {since}")
         if not repositories:
             continue
         lines.append(f"\n\n## {year}\n")
