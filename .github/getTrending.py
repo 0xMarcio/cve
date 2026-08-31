@@ -5,11 +5,21 @@ from __future__ import annotations
 
 import json
 import os
+import re
 import time
 from datetime import datetime, timedelta, timezone
 from urllib import error, parse, request
 
 SEARCH_URL = "https://api.github.com/search/repositories"
+GRAPHQL_URL = "https://api.github.com/graphql"
+# Editing a README is not updating a proof of concept. Everything a repository
+# carries as paperwork is ignored when working out when its PoC last changed.
+PAPERWORK = re.compile(
+    r"^(?:readme|licen[cs]e|copying|notice|authors|contributing|code_of_conduct"
+    r"|security|changelog|history|\.git|\.editorconfig|\.pre-commit)",
+    re.IGNORECASE,
+)
+PATHS_PER_REPO = 12
 LANGUAGES = (
     "Shell", "Go", "ASP", "WebAssembly", "R", "Lua", "Python", "C++", "C",
     "JavaScript", "Perl", "PowerShell", "Ruby", "Rust", "Java", "PHP",
@@ -42,9 +52,9 @@ def search_year(year: int, since: str) -> tuple[int, list[dict]]:
         {"q": query, "s": "updated", "o": "desc", "per_page": POOL}
     )
     headers = {"Accept": "application/vnd.github+json", "User-Agent": USER_AGENT}
-    # The token authenticates the search API only; it is never placed in the URL,
+    # The token authenticates the API only; it is never placed in the URL,
     # written to disk, or printed, so it cannot leak through logs or the commit.
-    token = os.environ.get("GITHUB_TOKEN") or os.environ.get("GH_TOKEN")
+    token = github_token()
     if token:
         headers["Authorization"] = f"Bearer {token}"
 
@@ -61,6 +71,108 @@ def search_year(year: int, since: str) -> tuple[int, list[dict]]:
                 raise
         time.sleep(5 * (attempt + 1))
     raise RuntimeError(f"GitHub search failed for CVE-{year}")
+
+
+def github_token() -> str:
+    return os.environ.get("GITHUB_TOKEN") or os.environ.get("GH_TOKEN") or ""
+
+
+def graphql(query: str, token: str) -> dict:
+    body = json.dumps({"query": query}).encode("utf-8")
+    headers = {
+        "Accept": "application/json",
+        "Content-Type": "application/json",
+        "User-Agent": USER_AGENT,
+    }
+    if token:
+        headers["Authorization"] = f"Bearer {token}"
+    for attempt in range(3):
+        try:
+            with request.urlopen(
+                request.Request(GRAPHQL_URL, data=body, headers=headers, method="POST"),
+                timeout=45,
+            ) as response:
+                return json.load(response).get("data") or {}
+        except error.HTTPError as exc:
+            if exc.code not in {403, 429, 500, 502, 503, 504} or attempt == 2:
+                raise
+        except (error.URLError, TimeoutError, json.JSONDecodeError):
+            if attempt == 2:
+                raise
+        time.sleep(4 * (attempt + 1))
+    return {}
+
+
+def repository_alias(index: int, full_name: str, body: str) -> str:
+    owner, name = full_name.split("/", 1)
+    return (
+        f"r{index}: repository(owner: {json.dumps(owner)}, name: {json.dumps(name)}) "
+        f"{{ {body} }}"
+    )
+
+
+def code_paths(full_names: list[str], token: str) -> dict[str, list[str]]:
+    """Root entries of each repository that are not paperwork."""
+    paths: dict[str, list[str]] = {}
+    for start in range(0, len(full_names), 20):
+        batch = full_names[start : start + 20]
+        query = "query { " + " ".join(
+            repository_alias(i, n, 'object(expression: "HEAD:") { ... on Tree { entries { name } } }')
+            for i, n in enumerate(batch)
+        ) + " }"
+        data = graphql(query, token)
+        for index, full_name in enumerate(batch):
+            tree = ((data.get(f"r{index}") or {}).get("object") or {}).get("entries") or []
+            names = [str(e.get("name") or "") for e in tree]
+            paths[full_name] = [n for n in names if n and not PAPERWORK.match(n)][:PATHS_PER_REPO]
+    return paths
+
+
+def code_pushed(full_names: list[str], token: str) -> dict[str, str]:
+    """When each repository last committed something that is not paperwork.
+
+    A repository whose only recent commit edits the README has not shipped a
+    new proof of concept, and saying it was updated an hour ago is a lie the
+    whole front page is built on.
+    """
+    paths = code_paths(full_names, token)
+    latest: dict[str, str] = {}
+    batch: list[str] = []
+
+    def flush(names: list[str]) -> None:
+        if not names:
+            return
+        parts = []
+        for index, full_name in enumerate(names):
+            history = " ".join(
+                f'p{j}: history(first: 1, path: {json.dumps(path)}) {{ nodes {{ committedDate }} }}'
+                for j, path in enumerate(paths[full_name])
+            )
+            parts.append(repository_alias(
+                index, full_name,
+                f"defaultBranchRef {{ target {{ ... on Commit {{ {history} }} }} }}",
+            ))
+        data = graphql("query { " + " ".join(parts) + " }", token)
+        for index, full_name in enumerate(names):
+            target = ((data.get(f"r{index}") or {}).get("defaultBranchRef") or {}).get("target") or {}
+            dates = [
+                (target.get(f"p{j}") or {}).get("nodes", [{}])[0].get("committedDate")
+                for j in range(len(paths[full_name]))
+                if (target.get(f"p{j}") or {}).get("nodes")
+            ]
+            dates = [d for d in dates if d]
+            if dates:
+                latest[full_name] = max(dates)
+
+    for full_name in full_names:
+        if not paths.get(full_name):
+            continue
+        batch.append(full_name)
+        if len(batch) == 6:
+            flush(batch)
+            batch = []
+    flush(batch)
+    return latest
 
 
 def time_ago(timestamp: str) -> str:
@@ -84,11 +196,21 @@ def main() -> int:
     lines = ['<h1 align="center">Recently updated Proof-of-Concepts</h1>']
     items: list[dict] = []
 
+    token = github_token()
     for year in range(current_year, current_year - YEARS, -1):
         total, repositories = search_year(year, since)
-        repositories.sort(key=lambda repo: str(repo.get("pushed_at") or ""), reverse=True)
+        shipped = code_pushed([str(r.get("full_name") or "") for r in repositories], token)
+        for repo in repositories:
+            repo["_shipped"] = (
+                shipped.get(str(repo.get("full_name") or ""))
+                or str(repo.get("pushed_at") or repo.get("updated_at") or "")
+            )
+        stale = len(repositories)
+        repositories = [r for r in repositories if r["_shipped"][:10] >= since]
+        repositories.sort(key=lambda repo: repo["_shipped"], reverse=True)
         repositories = repositories[:PER_YEAR]
-        print(f"CVE-{year}: {total} repositories pushed since {since}")
+        print(f"CVE-{year}: {total} pushed since {since}, "
+              f"{stale - len([r for r in repositories])} dropped as paperwork-only")
         if not repositories:
             continue
         lines.append(f"\n\n## {year}\n")
@@ -96,10 +218,10 @@ def main() -> int:
         lines.append("| Stars | Updated | Name | Description |")
         lines.append("| --- | --- | --- | --- |")
         for repo in repositories:
-            # pushed_at is the last commit. updated_at also moves when a repository
-            # only gains a star, which is why the table used to claim that a
-            # four-month-old exploit had been updated three hours ago.
-            pushed = str(repo.get("pushed_at") or repo.get("updated_at") or "")
+            # The last commit that touched anything but paperwork. pushed_at counts
+            # a README tweak, which had the table claiming a year-old exploit was
+            # updated twenty-one hours ago.
+            pushed = repo["_shipped"]
             items.append({
                 "year": year,
                 "stars": int(repo.get("stargazers_count") or 0),
