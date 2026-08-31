@@ -10,7 +10,7 @@
  },
  {
   "year": 2026,
-  "stars": 147,
+  "stars": 152,
   "name": "CVE-2026-62911",
   "url": "https://github.com/hypnguyen1209/CVE-2026-62911",
   "desc": "POC pre-auth RCE on Exchange",
@@ -28,7 +28,7 @@
  },
  {
   "year": 2026,
-  "stars": 35,
+  "stars": 37,
   "name": "CVE-2026-18963-Exploit",
   "url": "https://github.com/Snizi/CVE-2026-18963-Exploit",
   "desc": "Exploit for KeyCloak CVE-2026-18963",
@@ -37,7 +37,7 @@
  },
  {
   "year": 2026,
-  "stars": 402,
+  "stars": 410,
   "name": "CVE-2026-9830",
   "url": "https://github.com/opaxial/CVE-2026-9830",
   "desc": "CVE-2026-9830 Proof of Concept",
@@ -109,7 +109,7 @@
  },
  {
   "year": 2026,
-  "stars": 50,
+  "stars": 53,
   "name": "CVE-2026-64560-Analysis",
   "url": "https://github.com/villager1314/CVE-2026-64560-Analysis",
   "desc": "",
