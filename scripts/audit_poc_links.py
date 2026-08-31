@@ -315,9 +315,12 @@ def save_state(state: dict, *, dry_run: bool) -> None:
 
 
 def slice_after(items: list[str], cursor: str, limit: int) -> list[str]:
-    """The next `limit` items after the cursor, wrapping at the end."""
-    if not limit:
-        return items
+    """The next `limit` items after the cursor, wrapping once at the end.
+
+    A limit of zero, or one larger than the list, means everything -- capped so
+    that wrapping can never hand back the same item twice.
+    """
+    limit = len(items) if not limit else min(limit, len(items))
     start = next((i for i, item in enumerate(items) if item > cursor), 0) if cursor else 0
     window = items[start : start + limit]
     if len(window) < limit:
@@ -330,7 +333,8 @@ def main() -> int:
         description="Drop PoC links to deleted repositories and refresh repo_meta.json"
     )
     parser.add_argument("--limit", type=int, default=0, help="Repositories to check this run")
-    parser.add_argument("--references", type=int, default=0, help="Reference links to check this run")
+    parser.add_argument("--references", type=int, default=0,
+                        help="Reference links to check this run (0 skips them, -1 checks all)")
     parser.add_argument("--workers", type=int, default=16, help="Concurrent reference requests")
     parser.add_argument("--timeout", type=int, default=8, help="Seconds per reference request")
     parser.add_argument("--dry-run", action="store_true", help="Report without writing files")
@@ -363,7 +367,8 @@ def main() -> int:
     if args.references:
         references = collect_references()
         urls = sorted(references)
-        window = slice_after(urls, str(state.get("reference_cursor") or ""), args.references)
+        window = slice_after(urls, str(state.get("reference_cursor") or ""),
+                             0 if args.references < 0 else args.references)
         print(f"Checking {len(window)} of {len(urls)} reference links")
         gone = dead_references(
             interleave_by_host(window), workers=args.workers, timeout=args.timeout
