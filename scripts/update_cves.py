@@ -24,6 +24,7 @@ GITHUB_LIST = ROOT / "github.txt"
 REFERENCE_LIST = ROOT / "references.txt"
 BLACKLIST_FILE = ROOT / "blacklist.txt"
 STATE_FILE = ROOT / ".github" / "cve_sync_state.json"
+KEV_FILE = ROOT / "kev.json"
 
 GITHUB_GRAPHQL_URL = "https://api.github.com/graphql"
 CVE_API_URL = "https://cveawg.mitre.org/api/cve/{cve_id}"
@@ -907,6 +908,23 @@ def fetch_missing_records(
         records.update(fetch_records(urls, allow_not_found=True))
 
 
+def load_kev(path: Path = KEV_FILE) -> dict[str, list]:
+    """CISA's known-exploited catalogue, as refreshed by the weekly audit."""
+    try:
+        return json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        return {}
+
+
+def kev_badge(cve_id: str, kev: dict[str, list]) -> str:
+    """The one badge that says an attacker is using this today."""
+    entry = kev.get(cve_id.upper())
+    if not entry:
+        return ""
+    ransomware = len(entry) > 1 and entry[1]
+    return badge("CISA KEV", "Known Exploited · Ransomware" if ransomware else "Known Exploited", "red")
+
+
 def badge(label: str, message: str, color: str) -> str:
     return (
         "![](https://img.shields.io/static/v1?"
@@ -919,6 +937,7 @@ def build_markdown(
     details: CVEDetails,
     github_links: list[str],
     references: list[str],
+    kev: dict[str, list] | None = None,
 ) -> str:
     description = "\n".join(
         line.expandtabs(4).rstrip() for line in details.description.strip().splitlines()
@@ -932,6 +951,9 @@ def build_markdown(
     lines.extend(badge("Product", value, "blue") for value in products)
     lines.extend(badge("Version", value, version_color) for value in versions)
     lines.extend(badge("Vulnerability", value, vuln_color) for value in vulnerabilities)
+    known_exploited = kev_badge(cve_id, kev or {})
+    if known_exploited:
+        lines.append(known_exploited)
     lines.extend(["", "### Description", "", description, "", "### POC", "", "#### Reference"])
     lines.extend((f"- {url}" for url in references) if references else ["No PoCs from references."])
     lines.extend(["", "#### Github"])
@@ -1042,6 +1064,7 @@ def sync_markdown(
     dry_run: bool,
 ) -> tuple[SyncStats, dict[str, list[str]], dict[str, list[str]]]:
     stats = SyncStats()
+    kev = load_kev()
     accepted_github: dict[str, list[str]] = {}
     accepted_references: dict[str, list[str]] = {}
     cve_ids = sorted(set(github) | set(references))
@@ -1073,7 +1096,7 @@ def sync_markdown(
             if not dry_run:
                 path.parent.mkdir(parents=True, exist_ok=True)
                 path.write_text(
-                    build_markdown(cve_id, details, github_links, reference_links),
+                    build_markdown(cve_id, details, github_links, reference_links, kev),
                     encoding="utf-8",
                 )
             stats.created.append(cve_id)

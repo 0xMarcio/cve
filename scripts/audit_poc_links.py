@@ -17,6 +17,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 from update_cves import (
     GITHUB_GRAPHQL_URL,
+    kev_badge,
     USER_AGENT,
     GitHubClient,
     github_repo_from_url,
@@ -300,6 +301,54 @@ def refresh_kev(*, dry_run: bool) -> int:
     return len(entries)
 
 
+KEV_MARKER = "label=CISA%20KEV"
+
+
+def sync_kev_badges(*, dry_run: bool) -> tuple[int, int]:
+    """Put the known-exploited badge on the entries CISA lists, and only those.
+
+    The site shows KEV in a search result, but the repository is what most
+    people read, and nothing in the markdown said a vulnerability was under
+    active attack.
+    """
+    try:
+        catalogue = json.loads(KEV_FILE.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        return 0, 0
+
+    added = removed = 0
+    for path in sorted(ROOT.glob("[12][0-9][0-9][0-9]/CVE-*.md")):
+        cve_id = path.stem.upper()
+        wanted = kev_badge(cve_id, catalogue)
+        with path.open("r", encoding="utf-8", newline="") as handle:
+            text = handle.read()
+        has = KEV_MARKER in text
+        if not wanted and not has:
+            continue
+
+        newline = "\r\n" if "\r\n" in text else "\n"
+        lines = text.split(newline)
+        lines = [line for line in lines if KEV_MARKER not in line]
+        if wanted:
+            anchor = next((i for i, line in enumerate(lines) if line.strip() == "### Description"), None)
+            if anchor is None:
+                continue
+            insert = anchor
+            while insert > 0 and not lines[insert - 1].strip():
+                insert -= 1
+            lines.insert(insert, wanted)
+
+        updated = newline.join(lines)
+        if updated == text:
+            continue
+        added += 1 if wanted else 0
+        removed += 1 if has and not wanted else 0
+        if not dry_run:
+            with path.open("w", encoding="utf-8", newline="") as handle:
+                handle.write(updated)
+    return added, removed
+
+
 def load_state() -> dict:
     try:
         return json.loads(STATE_FILE.read_text(encoding="utf-8"))
@@ -380,6 +429,8 @@ def main() -> int:
 
     save_state(state, dry_run=args.dry_run)
     print(f"KEV catalogue: {refresh_kev(dry_run=args.dry_run)} known-exploited CVEs")
+    badged, unbadged = sync_kev_badges(dry_run=args.dry_run)
+    print(f"KEV badges: {badged} written, {unbadged} withdrawn")
     return 0
 
 
