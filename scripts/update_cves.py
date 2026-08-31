@@ -309,8 +309,8 @@ def qualifying_repo_cves(
     description_cves = extract_cves(description, year)
     topic_cves = extract_cves(topics, year)
     readme_cves = extract_cves(readme, year)
-    # A caption or description that drops a digit — "CVE-2023-3883" written for
-    # CVE-2023-38831 — still parses as a valid identifier and would otherwise
+    # A caption or description that drops a digit, "CVE-2023-3883" written for
+    # CVE-2023-38831, still parses as a valid identifier and would otherwise
     # enrol the repository against whatever unrelated advisory owns it. Trust
     # the repository name, which may deliberately carry both identifiers.
     truncated = truncated_ids(name_cves | description_cves | topic_cves | readme_cves) - name_cves

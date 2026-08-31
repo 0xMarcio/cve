@@ -237,7 +237,7 @@ function runSearch(query) {
       else if (wordStart(pocText(entry), adjacent) >= 0) score += 100;
     }
     entry._score = score;
-    // A term nobody's advisory text uses — "log4shell" — leaves every match tied
+    // A term nobody's advisory text uses, "log4shell" for one, leaves every match tied
     // at the weakest tier, where newest-first is meaningless. How many of the
     // linked PoCs carry the term says far more than which CVE is newer.
     entry._hits = describes ? 0 : countLinkHits(entry, matchers);
@@ -279,7 +279,6 @@ const el = {
   status: document.querySelector('[data-status]'),
   results: document.querySelector('[data-results]'),
   trending: document.querySelector('[data-trending]'),
-  trendTitle: document.querySelector('[data-trend-title]'),
   trendNote: document.querySelector('[data-trend-note]'),
   trendRows: document.querySelector('[data-trend-rows]'),
   refreshed: document.querySelector('[data-refreshed]')
@@ -288,21 +287,23 @@ const el = {
 function pocRow(url) {
   const parsed = repoFromUrl(url);
   const href = escapeHTML(url);
+  // A gist or an advisory has no owner and no stars; the star and age columns
+  // stay empty rather than inventing a repository shape for it.
   if (!parsed) {
-    return `<div class="poc-row"><span class="poc-name">` +
-      `<a href="${href}" target="_blank" rel="noopener">${escapeHTML(plainLinkLabel(url))}</a>` +
-      `</span><span class="poc-stars"></span><span class="poc-age"></span></div>`;
+    return '<div class="poc-row"><span class="poc-name">' +
+      `<a class="plain" href="${href}" target="_blank" rel="noopener">${escapeHTML(plainLinkLabel(url))}</a>` +
+      '</span><span class="poc-stars"></span><span class="poc-age"></span></div>';
   }
-  const key = (parsed.owner + '/' + parsed.repo).toLowerCase();
-  const meta = repoMeta[key];
+  const meta = repoMeta[(parsed.owner + '/' + parsed.repo).toLowerCase()];
   const stars = meta ? meta[0] : null;
   const hours = meta ? hoursSince(meta[1]) : null;
-  const starClass = stars != null && stars >= 500 ? 'poc-stars is-popular' : 'poc-stars';
-  return `<div class="poc-row">` +
-    `<span class="poc-name"><span class="poc-owner">${escapeHTML(parsed.owner)}</span>` +
-    `<span class="poc-sep"> / </span>` +
+  const popular = stars != null && stars >= 500 ? ' is-popular' : '';
+  // The glyph stays dim at every value so the column reads as numbers.
+  const starCell = stars == null ? '' : `${formatStars(stars)} <span class="star">★</span>`;
+  return '<div class="poc-row">' +
+    `<span class="poc-name">${escapeHTML(parsed.owner)}<span class="poc-sep"> / </span>` +
     `<a href="${href}" target="_blank" rel="noopener">${escapeHTML(parsed.repo)}</a></span>` +
-    `<span class="${starClass}">${stars == null ? '' : formatStars(stars) + ' ★'}</span>` +
+    `<span class="poc-stars${popular}">${starCell}</span>` +
     `<span class="poc-age">${escapeHTML(shortAge(hours))}</span></div>`;
 }
 
@@ -313,7 +314,7 @@ function compact(value) {
 /** Best links first. A repository named after the CVE is a proof of concept for
  *  it; a 5k-star scanner that merely mentions it is not, so stars only order
  *  repositories that are already about this CVE. Links with no star count keep
- *  their original order behind both — a reference has no repository to rank. */
+ *  their original order behind both: a reference has no repository to rank. */
 function rankedLinks(entry) {
   if (entry._ranked) return entry._ranked;
   const id = compact(entry.cve);
@@ -339,36 +340,34 @@ function resultRow(entry) {
   const all = state.pocOpen.has(id);
   const links = rankedLinks(entry);
   const visible = all ? links : links.slice(0, POC_PREVIEW);
-  const more = all
-    ? '↑ show fewer'
-    : (links.length > POC_PREVIEW
-        ? `+ ${formatCount(links.length - POC_PREVIEW)} more repositories`
-        : 'all repositories shown');
-  const moreButton = links.length > 1
-    ? `<button type="button" class="poc-more" data-toggle-poc="${escapeHTML(id)}">${more}</button>`
+  // Nothing to expand means no control: a line reading "all repositories
+  // shown" under a list of three is chrome that answers a question nobody has.
+  const moreButton = links.length > POC_PREVIEW
+    ? `<button type="button" class="poc-more" data-toggle-poc="${escapeHTML(id)}">` +
+      `${all ? '↑ show fewer' : '+ ' + formatCount(links.length - POC_PREVIEW) + ' more'}</button>`
     : '';
 
   const flagged = kev[id];
   const kevChip = flagged
-    ? `<div class="kev" title="Listed in CISA's Known Exploited Vulnerabilities catalogue on ${escapeHTML(flagged[0])}">` +
-      `KEV${flagged[1] ? ' · RANSOMWARE' : ''}</div>`
+    ? `<span class="chip chip-kev" title="Listed in CISA's Known Exploited Vulnerabilities catalogue on ${escapeHTML(flagged[0])}${flagged[1] ? ', used in ransomware campaigns' : ''}">` +
+      `KEV${flagged[1] ? ' RANSOMWARE' : ''}</span>`
     : '';
 
   const dates = [];
-  if (entry.published) dates.push(['published', entry.published]);
-  if (entry.modified) dates.push(['modified', entry.modified]);
+  if (entry.published) dates.push(`published ${entry.published}`);
+  if (entry.modified) dates.push(`modified ${entry.modified}`);
   const dateHtml = dates.length
-    ? `<dl class="result-dates">${dates.map(([label, value]) =>
-        `<div class="result-date"><dt>${label}</dt><dd>${escapeHTML(value)}</dd></div>`).join('')}</dl>`
+    ? `<div class="result-dates">${dates.map(d => `<span>${escapeHTML(d)}</span>`).join('')}</div>`
     : '';
 
   return `<div class="result-row">
   <div class="result-meta">
     <a class="result-id" href="https://nvd.nist.gov/vuln/detail/${encodeURIComponent(id)}" target="_blank" rel="noopener">${escapeHTML(id)}</a>
     <div class="result-pocs">${formatCount(links.length)} linked PoC${links.length === 1 ? '' : 's'}</div>
-    ${kevChip}
     ${dateHtml}
-    <a class="mitre" href="https://www.cve.org/CVERecord?id=${encodeURIComponent(id)}" target="_blank" rel="noopener">MITRE ↗</a>
+    <div class="chips">${kevChip}
+      <a class="chip" href="https://www.cve.org/CVERecord?id=${encodeURIComponent(id)}" target="_blank" rel="noopener">MITRE ↗</a>
+    </div>
   </div>
   <div class="result-body">
     <p class="result-desc${open ? ' is-open' : ''}">${escapeHTML(entry.desc || '')}</p>
@@ -400,10 +399,7 @@ function renderResults(elapsed) {
   el.results.hidden = false;
 
   if (!results.length) {
-    el.results.innerHTML = `<div class="empty">
-      <div class="empty-head">No CVE matched <b>${escapeHTML(state.query)}</b></div>
-      <div class="empty-hint">Try a CVE ID, a vendor, or a product name. Prefix a term with <code>-</code> to exclude it.</div>
-    </div>`;
+    el.results.innerHTML = `<div class="empty">No results for ${escapeHTML(state.query)}</div>`;
     return;
   }
 
@@ -411,12 +407,12 @@ function renderResults(elapsed) {
   const pocTotal = results.pocTotal;
   const remaining = results.length - shown.length;
   const footer = remaining > 0
-    ? `<button type="button" class="poc-more" data-more-results>+ ${formatCount(remaining)} more matching CVEs</button>`
+    ? `<button type="button" class="poc-more" style="padding:9px 16px" data-more-results>+ ${formatCount(remaining)} more matching CVEs</button>`
     : '';
 
-  el.results.innerHTML = `<div class="card-head">
+  el.results.innerHTML = `<div class="panel-head">
       <h2>Results</h2>
-      <span class="card-count">${formatCount(results.length)} CVE${results.length === 1 ? '' : 's'} · ${formatCount(pocTotal)} PoCs</span>
+      <span class="panel-count">${formatCount(results.length)} CVE${results.length === 1 ? '' : 's'} · ${formatCount(pocTotal)} PoCs</span>
     </div>
     <div class="col-head"><span>CVE</span><span>DESCRIPTION / POC LINKS</span></div>
     ${shown.map(resultRow).join('')}${footer}`;
@@ -430,7 +426,7 @@ function renderResults(elapsed) {
 function trendRow(item) {
   const popular = item.stars >= 500 ? ' is-popular' : '';
   return `<div class="trend-row">
-    <span class="trend-stars${popular}">${formatStars(item.stars)} ★</span>
+    <span class="trend-stars${popular}">${formatStars(item.stars)} <span class="star">★</span></span>
     <span class="trend-age">${escapeHTML(longAge(item._pushed))}</span>
     <a class="trend-name" href="${escapeHTML(item.url)}" target="_blank" rel="noopener">${escapeHTML(item.name)}</a>
     <span class="trend-desc">${escapeHTML(item.desc || '')}</span>
@@ -453,19 +449,15 @@ function renderTrending() {
   }
   const rows = ranked.slice(0, TREND_ROWS);
 
-  el.trendTitle.textContent = state.mode === 'TRENDING'
-    ? 'Trending Proof-of-Concepts'
-    : 'Recently updated Proof-of-Concepts';
-
   el.trendNote.textContent = state.mode === 'TRENDING'
     ? 'stars weighted against time since the last commit'
-    : `newest commit first · ${formatCount(trending.length)} repositories`;
+    : 'newest commit first';
 
   el.trendRows.innerHTML = rows.length
     ? rows.map(trendRow).join('')
     : '<div class="trend-row"><span class="trend-desc">No recent PoCs.</span></div>';
 
-  document.querySelectorAll('.toggle button').forEach(button => {
+  document.querySelectorAll('.switch button').forEach(button => {
     button.setAttribute('aria-pressed', String(button.dataset.mode === state.mode));
   });
 }
@@ -485,10 +477,7 @@ function render() {
     el.results.hidden = false;
     el.trending.hidden = true;
     el.status.textContent = 'loading index…';
-    el.results.innerHTML = `<div class="empty">
-      <div class="empty-head">Loading the CVE index…</div>
-      <div class="empty-hint">The full index is a single download; results appear as soon as it lands.</div>
-    </div>`;
+    el.results.innerHTML = '<div class="empty">Loading the CVE index…</div>';
     return;
   }
   const started = performance.now();
@@ -517,7 +506,7 @@ el.input.addEventListener('input', () => {
 
 document.querySelector('.search').addEventListener('submit', event => event.preventDefault());
 
-document.querySelector('.toggle').addEventListener('click', event => {
+document.querySelector('.switch').addEventListener('click', event => {
   const button = event.target.closest('button[data-mode]');
   if (!button) return;
   state.mode = button.dataset.mode;

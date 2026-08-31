@@ -8,42 +8,35 @@
   <link rel="icon" href="/favicon.ico" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="/style.css" />
 </head>
 <body>
-  <header class="masthead">
-    <div class="container">
-      <h1 class="wordmark">CVE PoC Hub</h1>
-      <div class="pills">
-        <span class="pill">Linked PoCs</span>
-        <span class="pill">MITRE CVE pages</span>
-        <span class="pill">Vendor / product filters</span>
-        <span class="pill">Supports negative terms (e.g. -windows)</span>
-      </div>
-      <form class="search" role="search" autocomplete="off">
-        <span class="search-glyph" aria-hidden="true">⌕</span>
-        <input type="text" spellcheck="false" data-search
-               placeholder="Search CVE, vendor, product, or keyword"
-               aria-label="Search CVE, vendor, product, or keyword" />
-        <span class="search-status" data-status aria-live="polite"></span>
-      </form>
-    </div>
-  </header>
+  <div class="container search-bar">
+    <form class="search" role="search" autocomplete="off">
+      <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
+        <circle cx="7.6" cy="7.6" r="5.1" stroke="#8b949e" stroke-width="1.7" />
+        <path d="M11.5 11.5 L15.6 15.6" stroke="#8b949e" stroke-width="1.7" stroke-linecap="round" />
+      </svg>
+      <input type="text" spellcheck="false" data-search
+             placeholder="Search CVE, vendor, product or keyword &middot; exclude with -windows"
+             aria-label="Search CVE, vendor, product or keyword" />
+      <span class="search-status" data-status aria-live="polite"></span>
+    </form>
+  </div>
 
   <main class="container content">
-    <section class="card results" data-results hidden></section>
+    <section class="panel results" data-results hidden></section>
 
     <section data-trending>
-      <div class="trend-head">
-        <h2 data-trend-title>Trending Proof-of-Concepts</h2>
-        <div class="toggle" role="group" aria-label="Ranking">
+      <div class="trend-controls">
+        <div class="switch" role="group" aria-label="Ranking">
           <button type="button" data-mode="TRENDING" aria-pressed="true">TRENDING</button>
           <button type="button" data-mode="RECENT" aria-pressed="false">RECENT</button>
         </div>
         <span class="trend-note" data-trend-note></span>
       </div>
-      <div class="card trend-card">
+      <div class="panel trending">
         <div class="col-head">
           <span class="col-stars">STARS</span>
           <span class="col-updated">UPDATED</span>
@@ -57,7 +50,7 @@
 
   <footer class="site-footer">
     <div class="container">
-      <span>sources: nvd · mitre · github</span>
+      <span>sources: nvd &middot; mitre &middot; github &middot; cisa kev</span>
       <span data-refreshed></span>
     </div>
   </footer>

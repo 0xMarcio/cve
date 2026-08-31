@@ -70,7 +70,7 @@ def collect_repositories() -> tuple[dict[str, list[tuple[Path, str]]], set[str]]
 def survey(client: GitHubClient, names: list[str]) -> tuple[set[str], dict[str, list]]:
     """Return the repositories GitHub reports as NOT_FOUND, and stars/last push for the rest.
 
-    Anything else — a network error, a throttle, an unexpected response — leaves
+    Anything else, a network error or a throttle or an unexpected response, leaves
     the repository out of both results, so an audit failure never drops a link.
     """
     batches = [names[index : index + BATCH] for index in range(0, len(names), BATCH)]
