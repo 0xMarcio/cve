@@ -1,7 +1,7 @@
 [
  {
   "year": 2026,
-  "stars": 79,
+  "stars": 80,
   "name": "CVE-2026-75604-poc",
   "url": "https://github.com/rafabd1/CVE-2026-75604-poc",
   "desc": "CVE-2026-75604 Next.js Windows RCE poc",
@@ -10,7 +10,7 @@
  },
  {
   "year": 2026,
-  "stars": 152,
+  "stars": 153,
   "name": "CVE-2026-62911",
   "url": "https://github.com/hypnguyen1209/CVE-2026-62911",
   "desc": "POC pre-auth RCE on Exchange",
@@ -37,7 +37,7 @@
  },
  {
   "year": 2026,
-  "stars": 410,
+  "stars": 406,
   "name": "CVE-2026-9830",
   "url": "https://github.com/opaxial/CVE-2026-9830",
   "desc": "CVE-2026-9830 Proof of Concept",
@@ -127,7 +127,7 @@
  },
  {
   "year": 2026,
-  "stars": 80,
+  "stars": 81,
   "name": "CVE-2026-43499-Poc-Analysis",
   "url": "https://github.com/Linuxoid-cn/CVE-2026-43499-Poc-Analysis",
   "desc": "Vulnerability analysis and Proof of Concept (PoC) for CVE-2026-43499 affecting Xiaomi devices. For educational and research purposes only.",
@@ -181,7 +181,7 @@
  },
  {
   "year": 2025,
-  "stars": 5,
+  "stars": 6,
   "name": "vivo_iqoo_neo_9_root_research_on_CVE-2025-21479",
   "url": "https://github.com/linux-tools/vivo_iqoo_neo_9_root_research_on_CVE-2025-21479",
   "desc": "",
