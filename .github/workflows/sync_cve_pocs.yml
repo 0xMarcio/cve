@@ -27,7 +27,7 @@ jobs:
       - name: Discover and ingest CVE PoCs
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: python3 scripts/update_cves.py --lookback-days 3 --years 2
+        run: python3 scripts/update_cves.py --lookback-days 3 --years 5
 
       - name: Check for changes and commit
         run: |
