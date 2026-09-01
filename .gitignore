@@ -6,3 +6,20 @@ docs/repo_meta.json
 docs/trending_poc.json
 docs/api/v1/cve/
 __pycache__/
+
+# Assistant tooling. None of it belongs in the repository.
+.claude/
+.codex/
+.cursor/
+.cursorrules
+.windsurf/
+.aider*
+.continue/
+.gemini/
+.roo/
+.cline/
+.github/copilot-instructions.md
+AGENTS.md
+CLAUDE.md
+GEMINI.md
+.mcp.json
