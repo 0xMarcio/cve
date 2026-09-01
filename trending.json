@@ -12,7 +12,7 @@
  },
  {
   "year": 2026,
-  "stars": 154,
+  "stars": 157,
   "name": "CVE-2026-62911",
   "url": "https://github.com/hypnguyen1209/CVE-2026-62911",
   "desc": "POC pre-auth RCE on Exchange",
@@ -45,7 +45,7 @@
  },
  {
   "year": 2026,
-  "stars": 410,
+  "stars": 416,
   "name": "CVE-2026-9830",
   "url": "https://github.com/opaxial/CVE-2026-9830",
   "desc": "CVE-2026-9830 Proof of Concept",
@@ -539,6 +539,18 @@
   "kev": false
  },
  {
+  "year": 2026,
+  "stars": 0,
+  "name": "CVE-2026-68138",
+  "url": "https://github.com/suominen/CVE-2026-68138",
+  "desc": "Tracking CVE-2026-68138, the Linux kernel net/sched qdisc rate-table use-after-free",
+  "pushed": "2026-09-01T03:18:16Z",
+  "created": "2026-08-17T07:33:31Z",
+  "cve": "CVE-2026-68138",
+  "kev": false,
+  "landed": true
+ },
+ {
   "year": 2025,
   "stars": 0,
   "name": "CVE-2025-69080",
@@ -547,18 +559,6 @@
   "pushed": "2026-08-31T21:38:27Z",
   "created": "2026-08-31T21:00:26Z",
   "cve": "CVE-2025-69080",
-  "kev": false,
-  "landed": true
- },
- {
-  "year": 2026,
-  "stars": 0,
-  "name": "CVE-2026-68138",
-  "url": "https://github.com/suominen/CVE-2026-68138",
-  "desc": "Tracking CVE-2026-68138, the Linux kernel net/sched qdisc rate-table use-after-free",
-  "pushed": "2026-08-31T15:11:23Z",
-  "created": "2026-08-17T07:33:31Z",
-  "cve": "CVE-2026-68138",
   "kev": false,
   "landed": true
  },
@@ -576,13 +576,13 @@
  },
  {
   "year": 2026,
-  "stars": 1,
-  "name": "CVE-2026-31802",
-  "url": "https://github.com/Recorded-texteditor120/CVE-2026-31802",
-  "desc": "Demonstrate and analyze the CVE-2026-31802 path traversal vulnerability in npm tar, enabling arbitrary file overwrite via symlink extraction.",
-  "pushed": "2026-08-31T02:15:38Z",
-  "created": "2026-03-28T20:49:46Z",
-  "cve": "CVE-2026-31802",
+  "stars": 0,
+  "name": "CVE-2026-76569",
+  "url": "https://github.com/toanln-cov/CVE-2026-76569",
+  "desc": "Reflected XSS via search GET Parameter in Phoca Download",
+  "pushed": "2026-08-31T07:54:25Z",
+  "created": "2026-08-31T07:51:07Z",
+  "cve": "CVE-2026-76569",
   "kev": false,
   "landed": true
  },
