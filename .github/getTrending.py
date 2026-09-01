@@ -27,7 +27,8 @@ LANGUAGES = (
 )
 YEARS = 5
 PER_YEAR = 20
-POOL = 50          # fetched per year before re-sorting by last commit
+SEARCH_PAGE = 100
+SEARCH_LIMIT = 1000
 WINDOW_DAYS = 90   # a PoC nobody has touched this quarter is not "recent"
 MIN_STARS = 2
 # A PoC published today has no stars yet, so the star floor hid exactly the
@@ -35,6 +36,7 @@ MIN_STARS = 2
 # short window and a hard cap.
 LANDED_DAYS = 10
 LANDED_ROWS = 10
+LANDED_POOL = 50
 NVD_API = "https://services.nvd.nist.gov/rest/json/cves/2.0?cveId="
 # NVD allows five requests per thirty seconds unauthenticated, and only a
 # couple of rows per run ever need one.
@@ -135,7 +137,7 @@ def just_landed(token: str, seen: set[str]) -> list[dict]:
     year = datetime.now(timezone.utc).year
     rows: list[dict] = []
     for target in (year, year - 1):
-        _, found = search(f'"CVE-{target}" in:name pushed:>{since}', POOL)
+        _, found = search(f'"CVE-{target}" in:name pushed:>{since}', LANDED_POOL)
         rows.extend(found)
 
     candidates = []
@@ -176,19 +178,11 @@ def just_landed(token: str, seen: set[str]) -> list[dict]:
 
 def search_year(year: int, since: str) -> tuple[int, list[dict]]:
     """Return how many PoC repositories for one CVE year were pushed since a
-    date, and the most recently pushed of them.
-
-    The API can only sort by updated_at, which also moves when a repository
-    merely gains a star. Since a push always bumps updated_at too, the newest
-    commits are guaranteed to sit near the top of that order: take a pool from
-    there and re-sort it by the date the table actually shows.
+    date, and every result GitHub exposes for the final artifact-date sort.
     """
     query = " ".join(
         [f'"CVE-{year}" in:name', f"stars:>{MIN_STARS}", f"pushed:>{since}"]
         + [f"language:{language}" for language in LANGUAGES]
-    )
-    url = SEARCH_URL + "?" + parse.urlencode(
-        {"q": query, "s": "updated", "o": "desc", "per_page": POOL}
     )
     headers = {"Accept": "application/vnd.github+json", "User-Agent": USER_AGENT}
     # The token authenticates the API only; it is never placed in the URL,
@@ -197,19 +191,42 @@ def search_year(year: int, since: str) -> tuple[int, list[dict]]:
     if token:
         headers["Authorization"] = f"Bearer {token}"
 
-    for attempt in range(3):
-        try:
-            with request.urlopen(request.Request(url, headers=headers), timeout=30) as response:
-                payload = json.load(response)
-            return int(payload.get("total_count") or 0), payload.get("items") or []
-        except error.HTTPError as exc:
-            if exc.code not in {403, 429, 500, 502, 503, 504} or attempt == 2:
-                raise
-        except (error.URLError, TimeoutError, json.JSONDecodeError):
-            if attempt == 2:
-                raise
-        time.sleep(5 * (attempt + 1))
-    raise RuntimeError(f"GitHub search failed for CVE-{year}")
+    repositories: list[dict] = []
+    seen: set[str] = set()
+    total = 0
+    for page in range(1, SEARCH_LIMIT // SEARCH_PAGE + 1):
+        url = SEARCH_URL + "?" + parse.urlencode({
+            "q": query,
+            "s": "updated",
+            "o": "desc",
+            "per_page": SEARCH_PAGE,
+            "page": page,
+        })
+        for attempt in range(3):
+            try:
+                with request.urlopen(
+                    request.Request(url, headers=headers), timeout=30
+                ) as response:
+                    payload = json.load(response)
+                break
+            except error.HTTPError as exc:
+                if exc.code not in {403, 429, 500, 502, 503, 504} or attempt == 2:
+                    raise
+            except (error.URLError, TimeoutError, json.JSONDecodeError):
+                if attempt == 2:
+                    raise
+            time.sleep(5 * (attempt + 1))
+
+        total = int(payload.get("total_count") or 0)
+        found = payload.get("items") or []
+        for repo in found:
+            name = str(repo.get("full_name") or "")
+            if name and name not in seen:
+                seen.add(name)
+                repositories.append(repo)
+        if not found or len(repositories) >= min(total, SEARCH_LIMIT):
+            break
+    return total, repositories
 
 
 def github_token() -> str:
@@ -608,7 +625,7 @@ def main() -> int:
         if not repositories:
             continue
         block = [
-            f"## {year} &middot; newest {len(repositories)} of {total}",
+            f"## Trending in {year}",
             "",
             "| Stars | Updated | Repository | Description |",
             "| --- | --- | --- | --- |",
@@ -691,7 +708,9 @@ def main() -> int:
         lines.append("")
     for index, block in enumerate(sections):
         if index == FOLDED_AFTER and len(sections) > FOLDED_AFTER:
-            years = ", ".join(section[0][3:7] for section in sections[FOLDED_AFTER:])
+            years = ", ".join(
+                section[0].rsplit(" ", 1)[-1] for section in sections[FOLDED_AFTER:]
+            )
             lines.append(f"<details>\n<summary>{years}</summary>\n")
         lines.extend(block)
         lines.append("")

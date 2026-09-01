@@ -1,6 +1,61 @@
 [
  {
   "year": 2026,
+  "stars": 10,
+  "name": "givewp-cve-2026-82222-rce-lab",
+  "url": "https://github.com/dinosn/givewp-cve-2026-82222-rce-lab",
+  "desc": "Authorized Docker lab and clean PoC for validating CVE-2026-82222 RCE in GiveWP 4.16.5.1 and the 4.16.7.2 fix.",
+  "pushed": "2026-08-30T05:18:46Z",
+  "created": "2026-08-30T05:15:27Z",
+  "cve": "CVE-2026-82222",
+  "kev": false
+ },
+ {
+  "year": 2026,
+  "stars": 18,
+  "name": "CVE-2026-72898",
+  "url": "https://github.com/EQSTLab/CVE-2026-72898",
+  "desc": "Metabase SQLi",
+  "pushed": "2026-08-27T07:03:38Z",
+  "created": "2026-08-27T06:51:58Z",
+  "cve": "CVE-2026-72898",
+  "kev": true
+ },
+ {
+  "year": 2026,
+  "stars": 3,
+  "name": "CVE-2026-19478",
+  "url": "https://github.com/EQSTLab/CVE-2026-19478",
+  "desc": "GitLab Code injection",
+  "pushed": "2026-08-27T06:35:52Z",
+  "created": "2026-08-27T06:30:36Z",
+  "cve": "CVE-2026-19478",
+  "kev": false
+ },
+ {
+  "year": 2026,
+  "stars": 3,
+  "name": "CVE-2026-21962",
+  "url": "https://github.com/zeetee1235/CVE-2026-21962",
+  "desc": "Vulnerability in the Oracle HTTP Server, Oracle Weblogic Server Proxy Plug-in product of Oracle Fusion Middleware (component: Weblogic Server Proxy Plug-in for Apache HTTP Server, Weblogic Server Proxy Plug-in for IIS). Supported versions that are affected are 12.2.1.4.0, 14.1.1.0.0 and 14.1.2.0.0. Easily exploitable vulnerability allows unauthenticated attacker with network access via HTTP to compromise Oracle HTTP Server, Oracle Weblogic Server Proxy Plug-in. While the vulnerability is in Oracle HTTP Server, Oracle Weblogic Server Proxy Plug-in, attacks may significantly impact additional products (scope change). Successful attacks of this vulnerability can result in unauthorized creation, deletion or modification access to critical data or all Oracle HTTP Server, Oracle Weblogic Server Proxy Plug-in accessible data as well as unauthorized access to critical data or complete access to all Oracle HTTP Server, Oracle Weblogic Server Proxy Plug-in accessible data. Note: Affected version for Weblogic Server Proxy Plug-in for IIS is 12.2.1.4.0 only. CVSS 3.1 Base Score 10.0 (Confidentiality and Integrity impacts). CVSS Vector: (CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:H/A:N).",
+  "pushed": "2026-08-27T03:00:13Z",
+  "created": "2026-08-27T02:59:01Z",
+  "cve": "CVE-2026-21962",
+  "kev": true
+ },
+ {
+  "year": 2026,
+  "stars": 4,
+  "name": "CVE-2026-73570",
+  "url": "https://github.com/gabrielunknown/CVE-2026-73570",
+  "desc": "Zimbra SNMP Notification OS Command Injection - Unauthenticated RCE via SMTP exploit (Poc)",
+  "pushed": "2026-08-26T03:33:12Z",
+  "created": "2026-08-26T03:30:14Z",
+  "cve": "CVE-2026-73570",
+  "kev": true
+ },
+ {
+  "year": 2026,
   "stars": 81,
   "name": "CVE-2026-75604-poc",
   "url": "https://github.com/rafabd1/CVE-2026-75604-poc",
@@ -12,6 +67,72 @@
  },
  {
   "year": 2026,
+  "stars": 5,
+  "name": "CVE-2026-73570",
+  "url": "https://github.com/HORKimhab/CVE-2026-73570",
+  "desc": "A remote code execution vulnerability exists in Zimbra Collaboration (ZCS) before 10.1.20 when the optional zimbra-snmp package is installed and SNMP notifications are enabled. Due to improper sanitization of untrusted input during SNMP notification processing, an unauthenticated attacker can send specially crafted SMTP requests that may result in execution of arbitrary operating system commands as the Zimbra user.",
+  "pushed": "2026-08-25T19:39:26Z",
+  "created": "2026-08-21T03:18:23Z",
+  "cve": "CVE-2026-73570",
+  "kev": true
+ },
+ {
+  "year": 2026,
+  "stars": 3,
+  "name": "CVE-2026-32475-PoC",
+  "url": "https://github.com/Boreas37/CVE-2026-32475-PoC",
+  "desc": "PoC for CVE-2026-32475: Elementor Pro <=4.2.1 unauthenticated file upload to RCE. Stdlib-only Python.",
+  "pushed": "2026-08-25T12:09:33Z",
+  "created": "2026-08-25T01:20:49Z",
+  "cve": "CVE-2026-32475",
+  "kev": false
+ },
+ {
+  "year": 2026,
+  "stars": 13,
+  "name": "Keycloak_CVE-2026-18963_PoC",
+  "url": "https://github.com/prot0tw/Keycloak_CVE-2026-18963_PoC",
+  "desc": "This repo is poc of cve-2026-18963. Please use it on legal products (lab, local,...).",
+  "pushed": "2026-08-25T03:58:23Z",
+  "created": "2026-08-25T02:28:04Z",
+  "cve": "CVE-2026-18963",
+  "kev": false
+ },
+ {
+  "year": 2026,
+  "stars": 19,
+  "name": "CVE-2026-18963-keycloak",
+  "url": "https://github.com/Red-Darkin/CVE-2026-18963-keycloak",
+  "desc": "A flaw was found in the reset-credentials flow of the keycloak-services component, which is the core engine for identity and access management in Red Hat Build of Keycloak. The issue allows an unauthenticated attacker to force the password reset process for any user without needing to click the required email verification link. This can result in the attacker gaining full control over target user accounts by directly setting new credentials.",
+  "pushed": "2026-08-24T23:44:49Z",
+  "created": "2026-08-24T23:40:17Z",
+  "cve": "CVE-2026-18963",
+  "kev": false
+ },
+ {
+  "year": 2026,
+  "stars": 4,
+  "name": "CVE-2026-20079",
+  "url": "https://github.com/CyberAuth/CVE-2026-20079",
+  "desc": "Python proof of concept for CVE-2026-20079 affecting Cisco Secure Firewall Management Center.",
+  "pushed": "2026-08-24T16:58:50Z",
+  "created": "2026-08-17T18:36:35Z",
+  "cve": "CVE-2026-20079",
+  "kev": false
+ },
+ {
+  "year": 2026,
+  "stars": 4,
+  "name": "CVE-2026-65400",
+  "url": "https://github.com/acheong08/CVE-2026-65400",
+  "desc": "Apple MacOS Screen Sharing Arbitrary File read/write -> RCE",
+  "pushed": "2026-08-22T08:56:04Z",
+  "created": "2026-08-22T08:54:26Z",
+  "cve": "CVE-2026-65400",
+  "kev": true
+ },
+ {
+  "year": 2026,
   "stars": 160,
   "name": "CVE-2026-62911",
   "url": "https://github.com/hypnguyen1209/CVE-2026-62911",
@@ -20,6 +141,28 @@
   "created": "2026-08-22T04:49:33Z",
   "cve": "CVE-2026-62911",
   "kev": false
+ },
+ {
+  "year": 2026,
+  "stars": 4,
+  "name": "CVE-2026-65400-poc",
+  "url": "https://github.com/panchocosil/CVE-2026-65400-poc",
+  "desc": "Read-only PoC for CVE-2026-65400 - macOS Screen Sharing (screensharingd) pre-auth SRP bypass giving root file read. Patched in macOS 26.6.1 / 15.7.9 / 14.8.9.",
+  "pushed": "2026-08-21T18:22:20Z",
+  "created": "2026-08-21T18:22:37Z",
+  "cve": "CVE-2026-65400",
+  "kev": true
+ },
+ {
+  "year": 2026,
+  "stars": 6,
+  "name": "CVE-2026-34910-PoC",
+  "url": "https://github.com/Boreas37/CVE-2026-34910-PoC",
+  "desc": "CVE-2026-34910/34909 - UniFi OS unauth RCE + file read via ..%2f auth bypass (CVSS 10.0, KEV, Mirai ITW)",
+  "pushed": "2026-08-21T13:31:58Z",
+  "created": "2026-08-09T16:58:00Z",
+  "cve": "CVE-2026-34910",
+  "kev": true
  },
  {
   "year": 2026,
@@ -75,149 +218,6 @@
   "created": "2026-03-08T11:25:39Z",
   "cve": "CVE-2026-24061",
   "kev": true
- },
- {
-  "year": 2026,
-  "stars": 24,
-  "name": "CVE-2026-66804-CrossDevice-Service-EoP",
-  "url": "https://github.com/Rat5ak/CVE-2026-66804-CrossDevice-Service-EoP",
-  "desc": "CVE-2026-66804 Windows Cross Device virtual camera EoP - Standard user to SYSTEM",
-  "pushed": "2026-08-13T03:37:37Z",
-  "created": "2026-08-13T01:42:43Z",
-  "cve": "CVE-2026-66804",
-  "kev": false
- },
- {
-  "year": 2026,
-  "stars": 33,
-  "name": "CVE-2026-68138",
-  "url": "https://github.com/aramosf/CVE-2026-68138",
-  "desc": "CVE-2026-68138 Linux qdisc rate-table race local privilege escalation PoC",
-  "pushed": "2026-08-12T15:30:58Z",
-  "created": "2026-08-11T22:22:22Z",
-  "cve": "CVE-2026-68138",
-  "kev": false
- },
- {
-  "year": 2026,
-  "stars": 19,
-  "name": "CVE-2026-63077",
-  "url": "https://github.com/sfewer-r7/CVE-2026-63077",
-  "desc": "Unauthenticated Remote Code Execution in JetBrains TeamCity (CVE-2026-63077)",
-  "pushed": "2026-08-07T11:52:30Z",
-  "created": "2026-08-07T08:38:01Z",
-  "cve": "CVE-2026-63077",
-  "kev": true
- },
- {
-  "year": 2026,
-  "stars": 58,
-  "name": "CVE-2026-55040",
-  "url": "https://github.com/sfewer-r7/CVE-2026-55040",
-  "desc": "Microsoft SharePoint JWT Authentication Bypass (CVE-2026-55040)",
-  "pushed": "2026-08-06T11:50:17Z",
-  "created": "2026-08-06T11:46:34Z",
-  "cve": "CVE-2026-55040",
-  "kev": true
- },
- {
-  "year": 2026,
-  "stars": 17,
-  "name": "CVE-2026-60004-POC",
-  "url": "https://github.com/imbas007/CVE-2026-60004-POC",
-  "desc": "CVE-2026-60004 Pre-Auth RCE Exploit - Gitea <= 1.27.0 diffpatch git hook injection (CVSS 9.8)",
-  "pushed": "2026-08-03T08:31:36Z",
-  "created": "2026-08-03T07:48:39Z",
-  "cve": "CVE-2026-60004",
-  "kev": true
- },
- {
-  "year": 2026,
-  "stars": 81,
-  "name": "CVE-2026-43499-Poc-Analysis",
-  "url": "https://github.com/Linuxoid-cn/CVE-2026-43499-Poc-Analysis",
-  "desc": "Vulnerability analysis and Proof of Concept (PoC) for CVE-2026-43499 affecting Xiaomi devices. For educational and research purposes only.",
-  "pushed": "2026-07-30T11:28:07Z",
-  "created": "2026-07-14T14:21:27Z",
-  "cve": "CVE-2026-43499",
-  "kev": false
- },
- {
-  "year": 2026,
-  "stars": 23,
-  "name": "CVE-2026-66066-POC",
-  "url": "https://github.com/Zer0SumGam3/CVE-2026-66066-POC",
-  "desc": "PoC for CVE-2026-66066 in Ruby on Rails",
-  "pushed": "2026-07-29T23:00:12Z",
-  "created": "2026-07-29T21:08:30Z",
-  "cve": "CVE-2026-66066",
-  "kev": false
- },
- {
-  "year": 2026,
-  "stars": 11,
-  "name": "CVE-2026-16232",
-  "url": "https://github.com/sfewer-r7/CVE-2026-16232",
-  "desc": "A proof-of-concept script to exploit CVE-2026-16232, an authentication bypass via the SmartConsole login process using an application token.",
-  "pushed": "2026-07-28T16:51:44Z",
-  "created": "2026-07-28T16:19:31Z",
-  "cve": "CVE-2026-16232",
-  "kev": true
- },
- {
-  "year": 2026,
-  "stars": 325,
-  "name": "CVE-2026-54121",
-  "url": "https://github.com/aniqfakhrul/CVE-2026-54121",
-  "desc": "Certighost POC",
-  "pushed": "2026-07-27T19:12:07Z",
-  "created": "2026-07-23T18:54:34Z",
-  "cve": "CVE-2026-54121",
-  "kev": false
- },
- {
-  "year": 2026,
-  "stars": 35,
-  "name": "CVE-2026-42533",
-  "url": "https://github.com/imbas007/CVE-2026-42533",
-  "desc": "nginx heap buffer overflow PoC - CVE-2026-42533 pre-auth RCE via two-pass capture clobbering. Crash confirmed on Ubuntu 24.04.",
-  "pushed": "2026-07-27T08:09:52Z",
-  "created": "2026-07-27T08:03:07Z",
-  "cve": "CVE-2026-42533",
-  "kev": false
- },
- {
-  "year": 2026,
-  "stars": 26,
-  "name": "CVE-2026-43499-root-KernelSU",
-  "url": "https://github.com/woshimaniubi8/CVE-2026-43499-root-KernelSU",
-  "desc": "基于内核漏洞CVE-2026-43499的本地提权适配，集成嵌入式 KernelSU.CVE-2026-43499+KernelSU越狱模式",
-  "pushed": "2026-07-26T14:04:48Z",
-  "created": "2026-07-26T12:39:00Z",
-  "cve": "CVE-2026-43499",
-  "kev": false
- },
- {
-  "year": 2026,
-  "stars": 27,
-  "name": "CVE-2026-54121-PoC-Exploit",
-  "url": "https://github.com/tc4dy/CVE-2026-54121-PoC-Exploit",
-  "desc": "👻 CVE-2026-54121 - Best CertiGhost AD CS Multi-Exploit Framework / Advanced toolkit with rogue DC/LDAP servers, certificate abuse, PKINIT hash extraction. Features: detect safe check, exploit full multi-threaded. 🛡️ CVSS 8.8 High - Use Ethically, Stay Legal. 🔒",
-  "pushed": "2026-07-26T12:22:13Z",
-  "created": "2026-07-25T18:01:04Z",
-  "cve": "CVE-2026-54121",
-  "kev": false
- },
- {
-  "year": 2026,
-  "stars": 34,
-  "name": "POC-CVE-2026-60206",
-  "url": "https://github.com/imbas007/POC-CVE-2026-60206",
-  "desc": "cve cve-2026-60206 weblogic saml exploit poc vulnerability oracle scanner security",
-  "pushed": "2026-07-24T02:46:06Z",
-  "created": "2026-07-24T02:30:11Z",
-  "cve": "CVE-2026-60206",
-  "kev": false
  },
  {
   "year": 2025,
@@ -588,6 +588,18 @@
   "landed": true
  },
  {
+  "year": 2026,
+  "stars": 0,
+  "name": "cve-2026-42945",
+  "url": "https://github.com/FranklinF25/cve-2026-42945",
+  "desc": "NGINX Plus and NGINX Open Source have a vulnerability in the ngx_http_rewrite_module module. This vulnerability exists when the rewrite directive is followed by a rewrite, if, or set directive and an unnamed Perl-Compatible Regular Expression (PCRE) capture (for example, $1, $2) with a replacement string that includes a question mark (?). An unauthenticated attacker along with conditions beyond its control can exploit this vulnerability by sending crafted HTTP requests. This may cause a heap buffer overflow in the NGINX worker process leading to a restart. Additionally, attackers can execute code on systems with Address Space Layout Randomization (ASLR) disabled or when the attacker can bypass ASLR. Note: Software versions which have reached End of Technical Support (EoTS) are not evaluated.",
+  "pushed": "2026-08-30T21:06:53Z",
+  "created": "2026-08-30T19:36:38Z",
+  "cve": "CVE-2026-42945",
+  "kev": false,
+  "landed": true
+ },
+ {
   "year": 2025,
   "stars": 0,
   "name": "CVE-2025-6440",
@@ -601,13 +613,13 @@
  },
  {
   "year": 2026,
-  "stars": 10,
-  "name": "givewp-cve-2026-82222-rce-lab",
-  "url": "https://github.com/dinosn/givewp-cve-2026-82222-rce-lab",
-  "desc": "Authorized Docker lab and clean PoC for validating CVE-2026-82222 RCE in GiveWP 4.16.5.1 and the 4.16.7.2 fix.",
-  "pushed": "2026-08-30T05:18:46Z",
-  "created": "2026-08-30T05:15:27Z",
-  "cve": "CVE-2026-82222",
+  "stars": 0,
+  "name": "CVE-2026-76581",
+  "url": "https://github.com/HORKimhab/CVE-2026-76581",
+  "desc": "The WPMU DEV Dashboard plugin for WordPress is vulnerable to Authentication Bypass in all versions up to, and including, 5.0.1. This is due to inconsistent and ambiguous HMAC message construction between the unauthenticated `wdpsso_step1` and `wdpsso_step2` AJAX actions, where step 1 signs and discloses an unseparated concatenation of the token, state, redirect, and domain values, while step 2 verifies an unseparated concatenation that omits the domain field. This makes it possible for unauthenticated attackers, on sites connected to WPMU DEV with Hub SSO enabled and mapped to an administrator, to obtain a valid HMAC from step 1 and replay it to step 2 by moving the domain value into the redirect field, resulting in an authenticated administrator session.",
+  "pushed": "2026-08-30T12:57:31Z",
+  "created": "2026-08-30T12:52:47Z",
+  "cve": "CVE-2026-76581",
   "kev": false,
   "landed": true
  },
@@ -633,18 +645,6 @@
   "created": "2026-08-29T13:12:33Z",
   "cve": "CVE-2026-81578",
   "kev": true,
-  "landed": true
- },
- {
-  "year": 2025,
-  "stars": 0,
-  "name": "cve-2025-29927",
-  "url": "https://github.com/kuyrathdaro/cve-2025-29927",
-  "desc": "Next.js is a React framework for building full-stack web applications. Starting in version 1.11.4 and prior to versions 12.3.5, 13.5.9, 14.2.25, and 15.2.3, it is possible to bypass authorization checks within a Next.js application, if the authorization check occurs in middleware. If patching to a safe version is infeasible, it is recommend that you prevent external user requests which contain the x-middleware-subrequest header from reaching your Next.js application. This vulnerability is fixed in 12.3.5, 13.5.9, 14.2.25, and 15.2.3.",
-  "pushed": "2026-08-29T09:10:43Z",
-  "created": "2026-08-29T09:05:12Z",
-  "cve": "CVE-2025-29927",
-  "kev": false,
   "landed": true
  }
 ]
