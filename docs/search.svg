@@ -1,17 +1,17 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="76" viewBox="0 0 1200 76"
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="92" viewBox="0 0 1200 92"
      role="img" aria-label="Search CVE Radar">
-  <rect x="0.75" y="0.75" width="1198.5" height="74.5" rx="9" fill="#161b22"
+  <rect x="0.75" y="0.75" width="1198.5" height="90.5" rx="10" fill="#161b22"
         stroke="#2f81f7" stroke-width="1.5"/>
   <g fill="none" stroke="#8b949e" stroke-width="2.5" stroke-linecap="round">
-    <circle cx="39" cy="36" r="10"/>
-    <path d="M46.5 43.5 54 51"/>
+    <circle cx="42" cy="44" r="11"/>
+    <path d="M50 52 58 60"/>
   </g>
-  <text x="76" y="44" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace"
-        font-size="18" fill="#8b949e">Search CVE, vendor, product or keyword</text>
-  <text x="1080" y="43" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace"
-        font-size="12" font-weight="700" letter-spacing="1.4" fill="#2f81f7">OPEN</text>
+  <text x="82" y="53" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace"
+        font-size="21" fill="#8b949e">Search CVE, vendor, product or keyword</text>
+  <text x="1044" y="52" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace"
+        font-size="14" font-weight="700" letter-spacing="1.4" fill="#2f81f7">OPEN INDEX</text>
   <g fill="none" stroke="#2f81f7" stroke-width="2" stroke-linecap="round"
      stroke-linejoin="round">
-    <path d="M1158 45 1172 31M1162 31h10v10"/>
+    <path d="M1160 53 1174 39M1164 39h10v10"/>
   </g>
 </svg>

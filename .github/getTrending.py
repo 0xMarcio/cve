@@ -554,7 +554,7 @@ def header(stamp: str, synced: str) -> list[str]:
         "",
         "&nbsp;".join(badges),
         "",
-        f'<a href="{home}"><img src="{SEARCH_CTA_URL}?v=1" alt="Search CVE Radar" width="100%"></a>',
+        f'<a href="{home}"><img src="{SEARCH_CTA_URL}?v=2" alt="Search CVE Radar" width="100%"></a>',
         "",
         "</div>",
         "",
