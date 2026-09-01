@@ -20,6 +20,7 @@ let dataset = [];
 let repoMeta = {};
 let kev = {};
 let ratings = {};
+let epss = {};
 let trending = [];
 let indexMeta = null;
 
@@ -288,12 +289,21 @@ const el = {
   refreshed: document.querySelector('[data-refreshed]')
 };
 
+const CURATED = [
+  { match: '/nuclei-templates/', tag: 'NUCLEI', hint: 'Runnable nuclei detection template',
+    label: url => url.split('/').pop() },
+  { match: '/metasploit-framework/', tag: 'MSF', hint: 'Metasploit module',
+    label: url => url.split('/modules/').pop().replace(/\.rb$/, '') },
+  { match: 'exploit-db.com/exploits/', tag: 'EDB', hint: 'ExploitDB entry',
+    label: url => 'exploit-db.com/' + url.split('/').pop() }
+];
+
 function pocRow(url) {
-  if (url.includes('/nuclei-templates/')) {
-    const file = url.split('/').pop();
+  const curated = CURATED.find(source => url.includes(source.match));
+  if (curated) {
     return '<div class="poc-row"><span class="poc-name">' +
-      '<span class="poc-tag" title="Runnable nuclei detection template">NUCLEI</span>' +
-      `<a href="${escapeHTML(url)}" target="_blank" rel="noopener">${escapeHTML(file)}</a>` +
+      `<span class="poc-tag is-${curated.tag.toLowerCase()}" title="${escapeHTML(curated.hint)}">${curated.tag}</span>` +
+      `<a href="${escapeHTML(url)}" target="_blank" rel="noopener">${escapeHTML(curated.label(url))}</a>` +
       '</span><span class="poc-stars"></span><span class="poc-age"></span></div>';
   }
   const parsed = repoFromUrl(url);
@@ -343,7 +353,12 @@ function rankedLinks(entry) {
     (b.dedicated - a.dedicated) || (b.stars - a.stars) || (a.index - b.index));
   // A nuclei template leads: of everything linked here it is the one entry that
   // runs as it stands, against a target, without reading somebody's code first.
-  entry._ranked = [...(entry.nuclei || []), ...scored.map(item => item.url)];
+  // Curated entries lead: a template, an ExploitDB entry and a Metasploit
+  // module all run as they stand, without reading somebody's code first.
+  entry._ranked = [
+    ...(entry.nuclei || []), ...(entry.msf || []), ...(entry.edb || []),
+    ...scored.map(item => item.url)
+  ];
   return entry._ranked;
 }
 
@@ -367,9 +382,12 @@ function resultRow(entry) {
     ? `<span class="chip chip-sev is-${escapeHTML(rated.severity)}"${rated.cvss_vector ? ` title="${escapeHTML(rated.cvss_vector)}"` : ''}>` +
       `${escapeHTML(rated.severity.toUpperCase())}${rated.cvss ? ' ' + rated.cvss : ''}</span>`
     : '';
-  const epssChip = rated.epss != null
-    ? `<span class="chip chip-epss" title="EPSS: estimated chance of exploitation in the next 30 days, ${Math.round((rated.epss_pct || 0) * 100)}th percentile">` +
-      `EPSS ${(rated.epss * 100).toFixed(rated.epss >= 0.1 ? 0 : 1)}%</span>`
+  // FIRST's feed covers nearly the whole index; a template's own score is the
+  // fallback for the handful it misses.
+  const scored = epss[id] || (rated.epss != null ? [rated.epss, rated.epss_pct || 0] : null);
+  const epssChip = scored
+    ? `<span class="chip chip-epss${scored[0] >= 0.1 ? ' is-hot' : ''}" title="EPSS: estimated chance of exploitation in the next 30 days, ${Math.round(scored[1] * 100)}th percentile">` +
+      `EPSS ${(scored[0] * 100).toFixed(scored[0] >= 0.1 ? 0 : 1)}%</span>`
     : '';
 
   const flagged = kev[id];
@@ -638,6 +656,11 @@ async function loadJSON(url, options) {
 
   loadJSON('/nuclei.json', { cache: 'no-cache' }).then(data => {
     ratings = data || {};
+    if (state.query && state.ready) renderResults(null);
+  }).catch(err => console.warn(err.message));
+
+  loadJSON('/epss.json', { cache: 'no-cache' }).then(data => {
+    epss = data || {};
     if (state.query && state.ready) renderResults(null);
   }).catch(err => console.warn(err.message));
 

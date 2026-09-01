@@ -1,8 +1,12 @@
 from __future__ import annotations
 
 import argparse
+import csv
+import gzip
+import io
 import json
 import re
+import urllib.request
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Collection, Dict, List, Optional
@@ -20,6 +24,8 @@ KEV_INPUT = ROOT / "kev.json"
 KEV_OUTPUT = DOCS_DIR / "kev.json"
 NUCLEI_INPUT = ROOT / "nuclei.json"
 NUCLEI_OUTPUT = DOCS_DIR / "nuclei.json"
+EPSS_OUTPUT = DOCS_DIR / "epss.json"
+EPSS_FEED = "https://epss.empiricalsecurity.com/epss_scores-current.csv.gz"
 def load_blacklist() -> set[str]:
     if not BLACKLIST.exists():
         return set()
@@ -40,7 +46,11 @@ def normalise_block(text: str) -> str:
     return "\n".join(line for line in lines if line)
 
 
-SECTION_HEADERS = ("### Description", "### POC", "#### Reference", "#### Github", "#### Nuclei")
+SECTION_HEADERS = ("### Description", "### POC", "#### Reference", "#### Github",
+                   "#### Nuclei", "#### ExploitDB", "#### Metasploit")
+# Sections whose links are kept apart from the repository list, with the
+# field each becomes in the published index.
+CURATED = (("#### Nuclei", "nuclei"), ("#### ExploitDB", "edb"), ("#### Metasploit", "msf"))
 
 
 def parse_sections(content: str) -> Dict[str, str]:
@@ -133,9 +143,13 @@ def build_cve_list(blacklist: Collection[str]) -> tuple[List[Dict[str, object]],
         description = normalise_block(sections.get("### Description", ""))
         references = collect_links(sections.get("#### Reference", ""), blacklist=blacklist)
         github_links = collect_links(sections.get("#### Github", ""), blacklist=blacklist)
-        # Nuclei templates stay in their own list: they are runnable checks
-        # rather than somebody's repository, and the site labels them as such.
-        nuclei = collect_links(sections.get("#### Nuclei", ""), blacklist=blacklist)
+        # These stay in their own lists: a template, an ExploitDB entry and a
+        # Metasploit module are none of them somebody's repository, and should
+        # not be ranked, starred or credited as one.
+        curated = {
+            field: collect_links(sections.get(header, ""), blacklist=blacklist)
+            for header, field in CURATED
+        }
 
         poc_entries: List[str] = []
         seen = set()
@@ -146,7 +160,7 @@ def build_cve_list(blacklist: Collection[str]) -> tuple[List[Dict[str, object]],
                 seen.add(key)
 
         cve_id = md_path.stem
-        if not poc_entries and not nuclei:
+        if not poc_entries and not any(curated.values()):
             continue
 
         entry = {
@@ -154,8 +168,7 @@ def build_cve_list(blacklist: Collection[str]) -> tuple[List[Dict[str, object]],
             "desc": description,
             "poc": poc_entries,
         }
-        if nuclei:
-            entry["nuclei"] = nuclei
+        entry.update({field: links for field, links in curated.items() if links})
         cve_entries.append(entry)
 
     return cve_entries, total
@@ -201,6 +214,35 @@ def build_nuclei(cve_entries: List[Dict[str, object]]) -> Dict[str, object]:
     }
 
 
+def build_epss(cve_entries: List[Dict[str, object]]) -> Dict[str, object]:
+    """FIRST's exploitation probability, limited to the CVEs indexed.
+
+    EPSS answers the question the PoC count cannot: of everything with exploit
+    code published, which is actually being used. The feed covers essentially
+    the whole index, so it is fetched here rather than tracked in the
+    repository, where a daily rescore of 366,000 rows would be pure churn.
+    """
+    try:
+        with urllib.request.urlopen(EPSS_FEED, timeout=180) as response:
+            raw = gzip.decompress(response.read()).decode("utf-8", "replace")
+    except Exception as problem:
+        print(f"EPSS feed unavailable ({problem}); scores left out of this build")
+        return {}
+    have = {str(entry["cve"]) for entry in cve_entries}
+    text = io.StringIO(raw)
+    text.readline()  # the feed opens with a model version comment, not a header
+    scores: Dict[str, object] = {}
+    for row in csv.DictReader(text):
+        cve = (row.get("cve") or "").strip().upper()
+        if cve not in have:
+            continue
+        try:
+            scores[cve] = [round(float(row["epss"]), 5), round(float(row["percentile"]), 4)]
+        except (KeyError, TypeError, ValueError):
+            continue
+    return scores
+
+
 def build_trending(blacklist: Collection[str]) -> List[Dict[str, object]]:
     """The trending job's own output, minus anything the blacklist covers."""
     try:
@@ -238,6 +280,9 @@ def main() -> int:
     nuclei = build_nuclei(cve_payload)
     write_json(NUCLEI_OUTPUT, nuclei)
 
+    epss = build_epss(cve_payload)
+    write_json(EPSS_OUTPUT, epss)
+
     trending_items = build_trending(blacklist)
     write_json(
         TRENDING_OUTPUT,
@@ -254,7 +299,8 @@ def main() -> int:
         f"Wrote {CVE_OUTPUT.name} ({len(cve_payload)} of {total_cves} CVEs), "
         f"{REPO_META_OUTPUT.name} ({len(repo_meta)} repositories), "
         f"{KEV_OUTPUT.name} ({len(kev)} known-exploited), "
-        f"{NUCLEI_OUTPUT.name} ({len(nuclei)} rated) and {TRENDING_OUTPUT.name}"
+        f"{NUCLEI_OUTPUT.name} ({len(nuclei)} rated), "
+        f"{EPSS_OUTPUT.name} ({len(epss)} scored) and {TRENDING_OUTPUT.name}"
     )
     return 0
 

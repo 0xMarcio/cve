@@ -29,6 +29,11 @@ PER_YEAR = 20
 POOL = 50          # fetched per year before re-sorting by last commit
 WINDOW_DAYS = 90   # a PoC nobody has touched this quarter is not "recent"
 MIN_STARS = 2
+# A PoC published today has no stars yet, so the star floor hid exactly the
+# rows worth seeing first. This lane drops the floor and pays for it with a
+# short window and a hard cap.
+LANDED_DAYS = 10
+LANDED_ROWS = 10
 USER_AGENT = "0xMarcio-cve-trending"
 ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), os.pardir)
 README = os.path.join(ROOT, "README.md")
@@ -42,6 +47,60 @@ SLUG = "0xMarcio/cve"
 RAW = f"https://raw.githubusercontent.com/{SLUG}/main/docs"
 HERO_URL = f"{RAW}/hero.svg"
 KEV_MARK = f'<img src="{RAW}/kev.svg" alt="KEV" title="CISA known exploited" height="14"> '
+
+
+def search(query: str, pool: int) -> tuple[int, list[dict]]:
+    """One repository search, most recently updated first."""
+    url = SEARCH_URL + "?" + parse.urlencode(
+        {"q": query, "s": "updated", "o": "desc", "per_page": pool}
+    )
+    headers = {"Accept": "application/vnd.github+json", "User-Agent": USER_AGENT}
+    token = github_token()
+    if token:
+        headers["Authorization"] = f"Bearer {token}"
+    for attempt in range(3):
+        try:
+            with request.urlopen(request.Request(url, headers=headers), timeout=30) as response:
+                payload = json.load(response)
+            return int(payload.get("total_count") or 0), payload.get("items") or []
+        except error.HTTPError as problem:
+            if problem.code not in (403, 422, 503) or attempt == 2:
+                raise
+            time.sleep(5 * (attempt + 1))
+    return 0, []
+
+
+def just_landed(token: str, seen: set[str]) -> list[dict]:
+    """Fresh PoCs with no star floor at all.
+
+    Everything here still has to survive the paperwork check, so a repository
+    that has only had its README touched does not qualify as landing.
+    """
+    since = (datetime.now(timezone.utc) - timedelta(days=LANDED_DAYS)).date().isoformat()
+    year = datetime.now(timezone.utc).year
+    rows: list[dict] = []
+    for target in (year, year - 1):
+        query = " ".join(
+            [f'"CVE-{target}" in:name', f"pushed:>{since}"]
+            + [f"language:{language}" for language in LANGUAGES]
+        )
+        _, found = search(query, POOL)
+        rows.extend(found)
+    names = [str(r.get("full_name") or "") for r in rows if str(r.get("full_name") or "") not in seen]
+    shipped = code_pushed(names, token)
+    fresh = []
+    for repo in rows:
+        name = str(repo.get("full_name") or "")
+        if name in seen:
+            continue
+        pushed = shipped.get(name) or str(repo.get("pushed_at") or "")
+        if pushed[:10] < since:
+            continue
+        repo["_shipped"] = pushed
+        seen.add(name)
+        fresh.append(repo)
+    fresh.sort(key=lambda repo: repo["_shipped"], reverse=True)
+    return fresh[:LANDED_ROWS]
 
 
 def search_year(year: int, since: str) -> tuple[int, list[dict]]:
@@ -388,6 +447,9 @@ def main() -> int:
             )
         sections.append(block)
 
+    landed = just_landed(token, {item["url"].split("github.com/")[-1] for item in items})
+    print(f"just landed: {len(landed)} repositories with no star floor")
+
     stamp = now.strftime("%Y%m%d%H%M")
     # No hyphens: they are the field separator in a shields badge path.
     synced = now.strftime("%d %b %Y %H:%M UTC")
@@ -396,6 +458,35 @@ def main() -> int:
                  f"newest first. {KEV_MARK.strip()} marks a CVE CISA lists as "
                  f"exploited in the wild.")
     lines.append("")
+    if landed:
+        lines.append(f"## Just landed &middot; last {LANDED_DAYS} days")
+        lines.append("")
+        lines.append("No star floor here, so a PoC published this morning shows up "
+                     "the same day rather than once it has been noticed.")
+        lines.append("")
+        lines.append("| Stars | Updated | Repository | Description |")
+        lines.append("| --- | --- | --- | --- |")
+        for repo in landed:
+            cve = cve_of(repo)
+            exploited = cve in kev
+            items.append({
+                "year": int(cve.split("-")[1]) if cve else current_year,
+                "stars": int(repo.get("stargazers_count") or 0),
+                "name": cell(repo.get("name")),
+                "url": repo.get("html_url") or "",
+                "desc": cell(repo.get("description")),
+                "pushed": repo["_shipped"],
+                "created": str(repo.get("created_at") or ""),
+                "cve": cve,
+                "kev": exploited,
+                "landed": True,
+            })
+            lines.append(
+                f"| {repo.get('stargazers_count', 0)}\u2b50 | {time_ago(repo['_shipped'])} "
+                f"| {KEV_MARK if exploited else ''}[{cell(repo.get('name'))}]({repo.get('html_url')}) "
+                f"| {shorten(repo.get('description'))} |"
+            )
+        lines.append("")
     for index, block in enumerate(sections):
         if index == FOLDED_AFTER and len(sections) > FOLDED_AFTER:
             years = ", ".join(section[0][3:7] for section in sections[FOLDED_AFTER:])

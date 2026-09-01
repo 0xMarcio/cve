@@ -1,12 +1,29 @@
 <div align="center">
 
-<a href="https://cve.codepwn.win/"><img src="https://raw.githubusercontent.com/0xMarcio/cve/main/docs/hero.svg?v=202609010243" alt="CVE Radar" width="100%"></a>
+<a href="https://cve.codepwn.win/"><img src="https://raw.githubusercontent.com/0xMarcio/cve/main/docs/hero.svg?v=202609010322" alt="CVE Radar" width="100%"></a>
 
-[![last sync](https://img.shields.io/badge/last%20sync-01%20Sep%202026%2002%3A43%20UTC-2f81f7?style=flat-square&labelColor=161b22)](https://github.com/0xMarcio/cve/commits/main)&nbsp;[![CI](https://img.shields.io/github/actions/workflow/status/0xMarcio/cve/hot_cves.yml?style=flat-square&label=CI&color=2f81f7&labelColor=161b22&_=202609010243)](https://github.com/0xMarcio/cve/actions/workflows/hot_cves.yml)&nbsp;[![CVEs with PoCs](https://img.shields.io/badge/CVEs%20with%20PoCs-101%2C809-2f81f7?style=flat-square&labelColor=161b22)](https://cve.codepwn.win/)&nbsp;[![known exploited](https://img.shields.io/badge/known%20exploited-1%2C110-f85149?style=flat-square&labelColor=161b22)](https://cve.codepwn.win/)&nbsp;[![stars](https://img.shields.io/github/stars/0xMarcio/cve?style=flat-square&label=stars&color=e3b341&labelColor=161b22&_=202609010243)](https://github.com/0xMarcio/cve/stargazers)
+[![last sync](https://img.shields.io/badge/last%20sync-01%20Sep%202026%2003%3A22%20UTC-2f81f7?style=flat-square&labelColor=161b22)](https://github.com/0xMarcio/cve/commits/main)&nbsp;[![CI](https://img.shields.io/github/actions/workflow/status/0xMarcio/cve/hot_cves.yml?style=flat-square&label=CI&color=2f81f7&labelColor=161b22&_=202609010322)](https://github.com/0xMarcio/cve/actions/workflows/hot_cves.yml)&nbsp;[![CVEs with PoCs](https://img.shields.io/badge/CVEs%20with%20PoCs-101%2C809-2f81f7?style=flat-square&labelColor=161b22)](https://cve.codepwn.win/)&nbsp;[![known exploited](https://img.shields.io/badge/known%20exploited-1%2C110-f85149?style=flat-square&labelColor=161b22)](https://cve.codepwn.win/)&nbsp;[![stars](https://img.shields.io/github/stars/0xMarcio/cve?style=flat-square&label=stars&color=e3b341&labelColor=161b22&_=202609010322)](https://github.com/0xMarcio/cve/stargazers)
 
 </div>
 
 Exploit repositories with a commit in the last 90 days, newest first. <img src="https://raw.githubusercontent.com/0xMarcio/cve/main/docs/kev.svg" alt="KEV" title="CISA known exploited" height="14"> marks a CVE CISA lists as exploited in the wild.
+
+## Just landed &middot; last 10 days
+
+No star floor here, so a PoC published this morning shows up the same day rather than once it has been noticed.
+
+| Stars | Updated | Repository | Description |
+| --- | --- | --- | --- |
+| 0⭐ | 5h ago | [CVE-2025-69080](https://github.com/AndrielSec/CVE-2025-69080) |  |
+| 0⭐ | 12h ago | [CVE-2026-68138](https://github.com/suominen/CVE-2026-68138) | Tracking CVE-2026-68138, the Linux kernel net/sched qdisc rate-table use-after-free |
+| 0⭐ | 13h ago | <img src="https://raw.githubusercontent.com/0xMarcio/cve/main/docs/kev.svg" alt="KEV" title="CISA known exploited" height="14"> [cve-2025-20333](https://github.com/cobbbex/cve-2025-20333) |  |
+| 0⭐ | 15h ago | [CVE-2025-0324-axis-vapix-privesc](https://github.com/kemrec/CVE-2025-0324-axis-vapix-privesc) |  |
+| 1⭐ | 1d ago | [CVE-2026-31802](https://github.com/Recorded-texteditor120/CVE-2026-31802) | Demonstrate and analyze the CVE-2026-31802 path traversal vulnerability in npm tar, enabling arbitrary file… |
+| 1⭐ | 1d ago | [CVE-2025-66478-PoC-Reverse-Shell](https://github.com/JotaEspig/CVE-2025-66478-PoC-Reverse-Shell) | CVE-2025-66478 PoC |
+| 0⭐ | 1d ago | [cve-2026-42945](https://github.com/FranklinF25/cve-2026-42945) |  |
+| 0⭐ | 1d ago | [cve-2026-42533](https://github.com/FranklinF25/cve-2026-42533) |  |
+| 0⭐ | 1d ago | [CVE-2025-6440](https://github.com/katranSefa/CVE-2025-6440) |  |
+| 0⭐ | 1d ago | [CVE-2026-76581](https://github.com/HORKimhab/CVE-2026-76581) | CVE-2026-76581 |
 
 ## 2026 &middot; newest 20 of 253
 
@@ -16,7 +33,7 @@ Exploit repositories with a commit in the last 90 days, newest first. <img src="
 | 153⭐ | 9d ago | [CVE-2026-62911](https://github.com/hypnguyen1209/CVE-2026-62911) | POC pre-auth RCE on Exchange |
 | 53⭐ | 10d ago | [CVE-2026-64638-PoC-XSS2Shell-](https://github.com/Boreas37/CVE-2026-64638-PoC-XSS2Shell-) | XSS2Shell (CVE-2026-64638) WordPress pre-auth XSS to RCE chain - PoC exploit + defensive audit tool + nuclei… |
 | 37⭐ | 11d ago | [CVE-2026-18963-Exploit](https://github.com/Snizi/CVE-2026-18963-Exploit) | Exploit for KeyCloak CVE-2026-18963 |
-| 406⭐ | 11d ago | [CVE-2026-9830](https://github.com/opaxial/CVE-2026-9830) | CVE-2026-9830 Proof of Concept |
+| 409⭐ | 11d ago | [CVE-2026-9830](https://github.com/opaxial/CVE-2026-9830) | CVE-2026-9830 Proof of Concept |
 | 531⭐ | 11d ago | <img src="https://raw.githubusercontent.com/0xMarcio/cve/main/docs/kev.svg" alt="KEV" title="CISA known exploited" height="14"> [cve-2026-41940-PoC](https://github.com/lanicer/cve-2026-41940-PoC) | A cPanel and WHM authentication bypassing tool |
 | 824⭐ | 11d ago | <img src="https://raw.githubusercontent.com/0xMarcio/cve/main/docs/kev.svg" alt="KEV" title="CISA known exploited" height="14"> [CVE-2026-24061](https://github.com/jacubes/CVE-2026-24061) | CVE-2026-24061 exploit PoC |
 | 60⭐ | 17d ago | <img src="https://raw.githubusercontent.com/0xMarcio/cve/main/docs/kev.svg" alt="KEV" title="CISA known exploited" height="14"> [watchTowr-vs-Citrix-Netscaler-PreAuth-RCE-CVE-2026-8452](https://github.com/watchtowrlabs/watchTowr-vs-Citrix-Netscaler-PreAuth-RCE-CVE-2026-8452) | CVE-2026-8452 PreAuth RCE |
