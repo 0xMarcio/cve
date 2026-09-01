@@ -11,6 +11,7 @@ on:
       - Sync Exploit Archives
       - Hot CVEs List
       - Audit PoC Links
+      - Sync PoC-in-GitHub
     types:
       - completed
   push:
