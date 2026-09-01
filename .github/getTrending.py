@@ -268,7 +268,7 @@ def header(stamp: str, synced: str) -> list[str]:
     home = "https://cve.codepwn.win/"
     badges = [
         pill("last sync", synced, "2f81f7", f"https://github.com/{SLUG}/commits/main"),
-        live_pill("actions/workflow/status/" + SLUG + "/hot_cves.yml", "sweep", "2f81f7",
+        live_pill("actions/workflow/status/" + SLUG + "/hot_cves.yml", "CI", "2f81f7",
                   f"https://github.com/{SLUG}/actions/workflows/hot_cves.yml", stamp),
     ]
     if counts.get("with_pocs"):
