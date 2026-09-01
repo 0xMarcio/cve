@@ -25,6 +25,7 @@ REFERENCE_LIST = ROOT / "references.txt"
 BLACKLIST_FILE = ROOT / "blacklist.txt"
 STATE_FILE = ROOT / ".github" / "cve_sync_state.json"
 KEV_FILE = ROOT / "kev.json"
+DATES_FILE = ROOT / "cve_dates.json"
 
 GITHUB_GRAPHQL_URL = "https://api.github.com/graphql"
 CVE_API_URL = "https://cveawg.mitre.org/api/cve/{cve_id}"
@@ -908,6 +909,36 @@ def fetch_missing_records(
         records.update(fetch_records(urls, allow_not_found=True))
 
 
+def record_dates(records: dict[str, dict[str, Any]], *, dry_run: bool) -> int:
+    """Keep cve_dates.json current from the records this run already fetched.
+
+    The file was seeded from the CVE Program's daily 590 MB release; every
+    record the delta log hands us afterwards carries its own dates, so the
+    archive never has to be downloaded again.
+    """
+    try:
+        stored = json.loads(DATES_FILE.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        stored = {}
+    changed = 0
+    for cve_id, record in records.items():
+        meta = record.get("cveMetadata") or {}
+        published = str(meta.get("datePublished") or "")[:10]
+        modified = str(meta.get("dateUpdated") or meta.get("dateReserved") or "")[:10]
+        if not published and not modified:
+            continue
+        value = [published, modified]
+        if stored.get(cve_id) != value:
+            stored[cve_id] = value
+            changed += 1
+    if changed and not dry_run:
+        DATES_FILE.write_text(
+            json.dumps(stored, separators=(",", ":"), sort_keys=True) + "\n",
+            encoding="utf-8",
+        )
+    return changed
+
+
 def load_kev(path: Path = KEV_FILE) -> dict[str, list]:
     """CISA's known-exploited catalogue, as refreshed by the weekly audit."""
     try:
@@ -1215,6 +1246,7 @@ def main() -> int:
     github_additions = append_inventory(GITHUB_LIST, accepted_github, dry_run=args.dry_run)
     reference_additions = append_inventory(REFERENCE_LIST, accepted_references, dry_run=args.dry_run)
 
+    dated = record_dates(records, dry_run=args.dry_run)
     write_state(checkpoint, dry_run=args.dry_run)
 
     print(
@@ -1223,7 +1255,7 @@ def main() -> int:
     )
     print(
         f"Inventory additions: {github_additions} GitHub | "
-        f"{reference_additions} references"
+        f"{reference_additions} references | {dated} publication dates"
     )
     if stats.skipped:
         for entry in stats.skipped[:20]:

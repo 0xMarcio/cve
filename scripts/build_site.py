@@ -21,6 +21,7 @@ TRENDING_OUTPUT = DOCS_DIR / "trending_poc.json"
 REPO_META = ROOT / "repo_meta.json"
 REPO_META_OUTPUT = DOCS_DIR / "repo_meta.json"
 KEV_INPUT = ROOT / "kev.json"
+DATES_INPUT = ROOT / "cve_dates.json"
 KEV_OUTPUT = DOCS_DIR / "kev.json"
 NUCLEI_INPUT = ROOT / "nuclei.json"
 NUCLEI_OUTPUT = DOCS_DIR / "nuclei.json"
@@ -134,6 +135,7 @@ def collect_links(block: str, *, blacklist: Optional[Collection[str]] = None) ->
 
 def build_cve_list(blacklist: Collection[str]) -> tuple[List[Dict[str, object]], int]:
     cve_entries = []
+    dates = load_dates()
     total = 0
 
     for md_path in sorted(ROOT.glob("[12][0-9][0-9][0-9]/CVE-*.md")):
@@ -168,6 +170,11 @@ def build_cve_list(blacklist: Collection[str]) -> tuple[List[Dict[str, object]],
             "desc": description,
             "poc": poc_entries,
         }
+        published, modified = (dates.get(cve_id) or ["", ""])[:2]
+        if published:
+            entry["published"] = published
+        if modified and modified != published:
+            entry["modified"] = modified
         entry.update({field: links for field, links in curated.items() if links})
         cve_entries.append(entry)
 
@@ -187,6 +194,14 @@ def build_repo_meta(cve_entries: List[Dict[str, object]]) -> Dict[str, object]:
         if repo_from_url(url)
     }
     return {name: value for name, value in stored.items() if name in linked}
+
+
+def load_dates() -> Dict[str, list]:
+    """When the CVE Program first published each record and last changed it."""
+    try:
+        return json.loads(DATES_INPUT.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        return {}
 
 
 def build_kev(cve_entries: List[Dict[str, object]]) -> Dict[str, object]:
