@@ -1,8 +1,8 @@
 <div align="center">
 
-<a href="https://cve.codepwn.win/"><img src="https://raw.githubusercontent.com/0xMarcio/cve/main/docs/hero.svg?v=202609011749" alt="CVE Radar" width="100%"></a>
+<a href="https://cve.codepwn.win/"><img src="https://raw.githubusercontent.com/0xMarcio/cve/main/docs/hero.svg?v=202609012057" alt="CVE Radar" width="100%"></a>
 
-[![last sync](https://img.shields.io/badge/last%20sync-01%20Sep%202026%2017%3A49%20UTC-2f81f7?style=flat-square&labelColor=161b22)](https://github.com/0xMarcio/cve/commits/main)&nbsp;[![CI](https://img.shields.io/github/actions/workflow/status/0xMarcio/cve/hot_cves.yml?style=flat-square&label=CI&color=2f81f7&labelColor=161b22&_=202609011749)](https://github.com/0xMarcio/cve/actions/workflows/hot_cves.yml)&nbsp;[![CVEs with PoCs](https://img.shields.io/badge/CVEs%20with%20PoCs-91%2C895-2f81f7?style=flat-square&labelColor=161b22)](https://cve.codepwn.win/)&nbsp;[![known exploited](https://img.shields.io/badge/known%20exploited-1%2C190-f85149?style=flat-square&labelColor=161b22)](https://cve.codepwn.win/)&nbsp;[![stars](https://img.shields.io/github/stars/0xMarcio/cve?style=flat-square&label=stars&color=e3b341&labelColor=161b22&_=202609011749)](https://github.com/0xMarcio/cve/stargazers)
+[![last sync](https://img.shields.io/badge/last%20sync-01%20Sep%202026%2020%3A57%20UTC-2f81f7?style=flat-square&labelColor=161b22)](https://github.com/0xMarcio/cve/commits/main)&nbsp;[![CI](https://img.shields.io/github/actions/workflow/status/0xMarcio/cve/hot_cves.yml?style=flat-square&label=CI&color=2f81f7&labelColor=161b22&_=202609012057)](https://github.com/0xMarcio/cve/actions/workflows/hot_cves.yml)&nbsp;[![CVEs with PoCs](https://img.shields.io/badge/CVEs%20with%20PoCs-91%2C895-2f81f7?style=flat-square&labelColor=161b22)](https://cve.codepwn.win/)&nbsp;[![known exploited](https://img.shields.io/badge/known%20exploited-1%2C190-f85149?style=flat-square&labelColor=161b22)](https://cve.codepwn.win/)&nbsp;[![stars](https://img.shields.io/github/stars/0xMarcio/cve?style=flat-square&label=stars&color=e3b341&labelColor=161b22&_=202609012057)](https://github.com/0xMarcio/cve/stargazers)
 
 </div>
 
@@ -14,8 +14,8 @@ No star floor here, so a PoC published this morning shows up the same day rather
 
 | Stars | Updated | Repository | Description |
 | --- | --- | --- | --- |
-| 0⭐ | 6h ago | [CVE-2025-39401](https://github.com/katranSefa/CVE-2025-39401) | Unrestricted Upload of File with Dangerous Type vulnerability in mojoomla WPAMS apartment-management allows… |
-| 0⭐ | 20h ago | [CVE-2025-69080](https://github.com/AndrielSec/CVE-2025-69080) | Improper Control of Filename for Include/Require Statement in PHP Program ('PHP Remote File Inclusion')… |
+| 0⭐ | 10h ago | [CVE-2025-39401](https://github.com/katranSefa/CVE-2025-39401) | Unrestricted Upload of File with Dangerous Type vulnerability in mojoomla WPAMS apartment-management allows… |
+| 0⭐ | 23h ago | [CVE-2025-69080](https://github.com/AndrielSec/CVE-2025-69080) | Improper Control of Filename for Include/Require Statement in PHP Program ('PHP Remote File Inclusion')… |
 | 0⭐ | 1d ago | <img src="https://raw.githubusercontent.com/0xMarcio/cve/main/docs/kev.svg" alt="KEV" title="CISA known exploited" height="14"> [cve-2025-20333](https://github.com/cobbbex/cve-2025-20333) | A vulnerability in the VPN web server of Cisco Secure Firewall Adaptive Security Appliance (ASA) Software and… |
 | 10⭐ | 1d ago | <img src="https://raw.githubusercontent.com/0xMarcio/cve/main/docs/kev.svg" alt="KEV" title="CISA known exploited" height="14"> [cve-2025-21479-iqoo11pro](https://github.com/Type010/cve-2025-21479-iqoo11pro) | Memory corruption due to unauthorized command execution in GPU micronode while executing specific sequence of… |
 | 2⭐ | 1d ago | [CVE-2026-78904-Digital-Dinar-Drain](https://github.com/vxssroott/CVE-2026-78904-Digital-Dinar-Drain) | CBDC Infrastructure Vulnerability Research. CVE-2026-78904: Infinite mint and redemption bypass in central… |
@@ -33,7 +33,7 @@ No star floor here, so a PoC published this morning shows up the same day rather
 | 160⭐ | 10d ago | [CVE-2026-62911](https://github.com/hypnguyen1209/CVE-2026-62911) | POC pre-auth RCE on Exchange |
 | 53⭐ | 11d ago | [CVE-2026-64638-PoC-XSS2Shell-](https://github.com/Boreas37/CVE-2026-64638-PoC-XSS2Shell-) | XSS2Shell (CVE-2026-64638) WordPress pre-auth XSS to RCE chain - PoC exploit + defensive audit tool + nuclei… |
 | 37⭐ | 11d ago | [CVE-2026-18963-Exploit](https://github.com/Snizi/CVE-2026-18963-Exploit) | Exploit for KeyCloak CVE-2026-18963 |
-| 427⭐ | 11d ago | [CVE-2026-9830](https://github.com/opaxial/CVE-2026-9830) | CVE-2026-9830 Proof of Concept |
+| 431⭐ | 11d ago | [CVE-2026-9830](https://github.com/opaxial/CVE-2026-9830) | CVE-2026-9830 Proof of Concept |
 | 531⭐ | 12d ago | <img src="https://raw.githubusercontent.com/0xMarcio/cve/main/docs/kev.svg" alt="KEV" title="CISA known exploited" height="14"> [cve-2026-41940-PoC](https://github.com/lanicer/cve-2026-41940-PoC) | A cPanel and WHM authentication bypassing tool |
 | 824⭐ | 12d ago | <img src="https://raw.githubusercontent.com/0xMarcio/cve/main/docs/kev.svg" alt="KEV" title="CISA known exploited" height="14"> [CVE-2026-24061](https://github.com/jacubes/CVE-2026-24061) | CVE-2026-24061 exploit PoC |
 | 24⭐ | 19d ago | [CVE-2026-66804-CrossDevice-Service-EoP](https://github.com/Rat5ak/CVE-2026-66804-CrossDevice-Service-EoP) | CVE-2026-66804 Windows Cross Device virtual camera EoP - Standard user to SYSTEM |
@@ -44,7 +44,7 @@ No star floor here, so a PoC published this morning shows up the same day rather
 | 81⭐ | 33d ago | [CVE-2026-43499-Poc-Analysis](https://github.com/Linuxoid-cn/CVE-2026-43499-Poc-Analysis) | Vulnerability analysis and Proof of Concept (PoC) for CVE-2026-43499 affecting Xiaomi devices. For… |
 | 23⭐ | 33d ago | [CVE-2026-66066-POC](https://github.com/Zer0SumGam3/CVE-2026-66066-POC) | PoC for CVE-2026-66066 in Ruby on Rails |
 | 11⭐ | 35d ago | <img src="https://raw.githubusercontent.com/0xMarcio/cve/main/docs/kev.svg" alt="KEV" title="CISA known exploited" height="14"> [CVE-2026-16232](https://github.com/sfewer-r7/CVE-2026-16232) | A proof-of-concept script to exploit CVE-2026-16232, an authentication bypass via the SmartConsole login… |
-| 325⭐ | 35d ago | [CVE-2026-54121](https://github.com/aniqfakhrul/CVE-2026-54121) | Certighost POC |
+| 325⭐ | 36d ago | [CVE-2026-54121](https://github.com/aniqfakhrul/CVE-2026-54121) | Certighost POC |
 | 35⭐ | 36d ago | [CVE-2026-42533](https://github.com/imbas007/CVE-2026-42533) | nginx heap buffer overflow PoC - CVE-2026-42533 pre-auth RCE via two-pass capture clobbering. Crash confirmed… |
 | 26⭐ | 37d ago | [CVE-2026-43499-root-KernelSU](https://github.com/woshimaniubi8/CVE-2026-43499-root-KernelSU) | 基于内核漏洞CVE-2026-43499的本地提权适配，集成嵌入式 KernelSU.CVE-2026-43499+KernelSU越狱模式 |
 | 27⭐ | 37d ago | [CVE-2026-54121-PoC-Exploit](https://github.com/tc4dy/CVE-2026-54121-PoC-Exploit) | 👻 CVE-2026-54121 - Best CertiGhost AD CS Multi-Exploit Framework / Advanced toolkit with rogue DC/LDAP… |
@@ -63,13 +63,13 @@ No star floor here, so a PoC published this morning shows up the same day rather
 | 4⭐ | 44d ago | [CVE-2025-64512](https://github.com/matesz44/CVE-2025-64512) | CVE-2025-64512: pdfminer.six pickle deserialization rce; .pickle.gz + pdf generator w/ custom payloads |
 | 5⭐ | 46d ago | <img src="https://raw.githubusercontent.com/0xMarcio/cve/main/docs/kev.svg" alt="KEV" title="CISA known exploited" height="14"> [CVE-2025-8110-gogs-poc](https://github.com/Shirouuu/CVE-2025-8110-gogs-poc) | PoC for CVE-2025-8110 - Gogs arbitrary file write via symlink |
 | 7⭐ | 55d ago | [CVE-2025-30065](https://github.com/h3st4k3r/CVE-2025-30065) | This PoC targets CVE-2025-30065, an RCE vulnerability in Apache Parquet via Avro schema deserialization. It… |
-| 4⭐ | 60d ago | [CVE-2025-69212-PoC](https://github.com/BridgerAlderson/CVE-2025-69212-PoC) | OpenSTAManager v2.9.8 and earlier versions contain a critical OS Command Injection vulnerability in the P7M… |
-| 3⭐ | 60d ago | <img src="https://raw.githubusercontent.com/0xMarcio/cve/main/docs/kev.svg" alt="KEV" title="CISA known exploited" height="14"> [CVE-2025-57819](https://github.com/K3ysTr0K3R/CVE-2025-57819) | CVE-2025-57819 - FreePBX Unauthenticated Remote Code Execution (RCE) |
+| 4⭐ | 61d ago | [CVE-2025-69212-PoC](https://github.com/BridgerAlderson/CVE-2025-69212-PoC) | OpenSTAManager v2.9.8 and earlier versions contain a critical OS Command Injection vulnerability in the P7M… |
+| 3⭐ | 61d ago | <img src="https://raw.githubusercontent.com/0xMarcio/cve/main/docs/kev.svg" alt="KEV" title="CISA known exploited" height="14"> [CVE-2025-57819](https://github.com/K3ysTr0K3R/CVE-2025-57819) | CVE-2025-57819 - FreePBX Unauthenticated Remote Code Execution (RCE) |
 | 4⭐ | 65d ago | [CVE-2025-69212-PoC](https://github.com/tohib09/CVE-2025-69212-PoC) | OpenSTAManager is an open source management software for technical assistance and invoicing. In 2.9.8 and… |
 | 5⭐ | 68d ago | <img src="https://raw.githubusercontent.com/0xMarcio/cve/main/docs/kev.svg" alt="KEV" title="CISA known exploited" height="14"> [CVE-2025-8110](https://github.com/joaquinrrr/CVE-2025-8110) | PoC exploit for CVE-2025-8110 |
 | 14⭐ | 81d ago | [vulnerable-nextjs-14-CVE-2025-29927](https://github.com/lirantal/vulnerable-nextjs-14-CVE-2025-29927) | Next.js is a React framework for building full-stack web applications. Starting in version 1.11.4 and prior… |
 | 14⭐ | 86d ago | <img src="https://raw.githubusercontent.com/0xMarcio/cve/main/docs/kev.svg" alt="KEV" title="CISA known exploited" height="14"> [FreePBX-CVE-2025-57819-RCE](https://github.com/0xEhab/FreePBX-CVE-2025-57819-RCE) | FreePBX is an open-source web-based graphical user interface. FreePBX 15, 16, and 17 endpoints are vulnerable… |
-| 7⭐ | 86d ago | <img src="https://raw.githubusercontent.com/0xMarcio/cve/main/docs/kev.svg" alt="KEV" title="CISA known exploited" height="14"> [CVE-2025-57819-poc](https://github.com/b4sh2/CVE-2025-57819-poc) | CVE-2025-57819 -> rce |
+| 7⭐ | 87d ago | <img src="https://raw.githubusercontent.com/0xMarcio/cve/main/docs/kev.svg" alt="KEV" title="CISA known exploited" height="14"> [CVE-2025-57819-poc](https://github.com/b4sh2/CVE-2025-57819-poc) | CVE-2025-57819 -> rce |
 
 <details>
 <summary>2024, 2023, 2022</summary>
@@ -90,16 +90,16 @@ No star floor here, so a PoC published this morning shows up the same day rather
 | Stars | Updated | Repository | Description |
 | --- | --- | --- | --- |
 | 3⭐ | 36d ago | [CVE-2023-52076-PoC](https://github.com/Groppoxx/CVE-2023-52076-PoC) | PoC exploit for CVE-2023-52076 - zip-slip path traversal in Atril/Xreader (MATE/Cinnamon) enabling arbitrary… |
-| 5⭐ | 40d ago | [CVE-2023-36003](https://github.com/johnnygreeme/CVE-2023-36003) | PoC for CVE-2023-36003: Windows Exploit Security Feature Bypass Vulnerability in Windows Defender. |
+| 5⭐ | 41d ago | [CVE-2023-36003](https://github.com/johnnygreeme/CVE-2023-36003) | PoC for CVE-2023-36003: Windows Exploit Security Feature Bypass Vulnerability in Windows Defender. |
 | 3⭐ | 55d ago | <img src="https://raw.githubusercontent.com/0xMarcio/cve/main/docs/kev.svg" alt="KEV" title="CISA known exploited" height="14"> [cve-2023-4911-exploit-optimized](https://github.com/jarpex/cve-2023-4911-exploit-optimized) | Pure C exploit for CVE-2023-4911 (Looney Tunables) - x86_64 & aarch64 implementations. Multi-processing… |
 | 15⭐ | 58d ago | <img src="https://raw.githubusercontent.com/0xMarcio/cve/main/docs/kev.svg" alt="KEV" title="CISA known exploited" height="14"> [CVE-2023-32315-EXPLOIT](https://github.com/K3ysTr0K3R/CVE-2023-32315-EXPLOIT) | A PoC exploit for CVE-2023-32315 - Openfire Authentication Bypass |
-| 6⭐ | 73d ago | [CVE-2023-6019](https://github.com/joaquinrrr/CVE-2023-6019) | PoC exploit for CVE-2023-6019 - Remote Code Execution via unauthenticated Ray Dashboard Jobs API. |
+| 6⭐ | 74d ago | [CVE-2023-6019](https://github.com/joaquinrrr/CVE-2023-6019) | PoC exploit for CVE-2023-6019 - Remote Code Execution via unauthenticated Ray Dashboard Jobs API. |
 
 ## 2022 &middot; newest 1 of 11
 
 | Stars | Updated | Repository | Description |
 | --- | --- | --- | --- |
-| 6⭐ | 75d ago | [NimbusPWN-CVE-2022-29799-29800](https://github.com/joshuavanderpoll/NimbusPWN-CVE-2022-29799-29800) | NimbusPwn (CVE-2022-29799/29800) local privilege escalation PoC in C. |
+| 6⭐ | 76d ago | [NimbusPWN-CVE-2022-29799-29800](https://github.com/joshuavanderpoll/NimbusPWN-CVE-2022-29799-29800) | NimbusPwn (CVE-2022-29799/29800) local privilege escalation PoC in C. |
 
 </details>
 
