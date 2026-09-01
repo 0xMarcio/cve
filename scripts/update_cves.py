@@ -23,6 +23,7 @@ ROOT = Path(__file__).resolve().parents[1]
 GITHUB_LIST = ROOT / "github.txt"
 REFERENCE_LIST = ROOT / "references.txt"
 BLACKLIST_FILE = ROOT / "blacklist.txt"
+ADVISORY_FILE = ROOT / "advisory_hosts.txt"
 STATE_FILE = ROOT / ".github" / "cve_sync_state.json"
 KEV_FILE = ROOT / "kev.json"
 DATES_FILE = ROOT / "cve_dates.json"
@@ -165,6 +166,25 @@ def load_blacklist(path: Path = BLACKLIST_FILE) -> set[str]:
         for line in path.read_text(encoding="utf-8").splitlines()
         if line.strip() and not line.lstrip().startswith("#")
     }
+
+
+def load_advisory_hosts(path: Path = ADVISORY_FILE) -> tuple[str, ...]:
+    """Destinations that only publish patch notices, never exploit code."""
+    if not path.exists():
+        return ()
+    return tuple(
+        line.strip().lower()
+        for line in path.read_text(encoding="utf-8").splitlines()
+        if line.strip() and not line.lstrip().startswith("#")
+    )
+
+
+def is_advisory(url: str, rules: Collection[str]) -> bool:
+    trimmed = re.sub(r"^https?://(?:www\.)?", "", url.strip().lower())
+    return any(trimmed.startswith(rule) for rule in rules)
+
+
+ADVISORY_HOSTS = load_advisory_hosts()
 
 
 def is_blacklisted_repo(full_name: str, blacklist: Collection[str]) -> bool:
@@ -693,9 +713,12 @@ def reference_is_poc(
     reference: dict[str, Any],
     blacklist: Collection[str],
     cve_id: str = "",
+    advisories: Collection[str] | None = None,
 ) -> bool:
     url = str(reference.get("url") or "").strip()
     if not url.startswith(("http://", "https://")):
+        return False
+    if is_advisory(url, ADVISORY_HOSTS if advisories is None else advisories):
         return False
     repo = github_repo_from_url(url)
     if repo and (

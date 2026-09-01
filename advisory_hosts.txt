@@ -1,0 +1,26 @@
+# Destinations that only ever publish patch notices, not proofs of concept.
+# A link here documents that a vendor shipped a fix; it never shows anyone how
+# the flaw is exploited, so it does not belong in a PoC list. Matched as a
+# host plus leading path, case-insensitively, against every reference link.
+#
+# Anything ambiguous stays out. Packet Storm, Full Disclosure, openwall,
+# bugzilla, hackerone, huntr and exploit archives all carry working code often
+# enough that a blanket rule would delete real proofs of concept.
+oracle.com/technetwork
+oracle.com/security-alerts
+kb.cert.org/vuls
+ubuntu.com/usn
+usn.ubuntu.com
+security.samsungmobile.com
+qualcomm.com/company
+docs.microsoft.com
+foxitsoftware.com/support
+kc.mcafee.com/corporate
+mandriva.com/security
+vmware.com/security
+h20566.www2.hpe.com/portal
+redhat.com/support
+cisco.com/warp
+dlink.com/en
+# Retired: every /bid/ deep link now resolves to a search box.
+securityfocus.com/bid
