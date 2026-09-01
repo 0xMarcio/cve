@@ -71,6 +71,30 @@ def download(url: str) -> bytes:
         return response.read()
 
 
+# A template that only fetches a plugin's readme and compares the version it
+# finds has not proven anything: it reports that a vulnerable release is
+# installed. Wordfence publishes tens of thousands of these, and filing one as
+# a proof of concept claims something the file does not do.
+PROTOCOL = re.compile(
+    r"\n(?:requests|http|code|network|javascript|dns|file|headless|ssl|websocket|tcp):"
+)
+METADATA_PATH = re.compile(r"(readme\.txt|readme\.md|style\.css|changelog\.txt)\s*$", re.I)
+REQUEST_PATH = re.compile(r"-\s*\"?\{\{BaseURL\}\}([^\"'\n]*)")
+EXERCISES_BUG = re.compile(r"\braw:|\bmethod:\s*(?:POST|PUT|PATCH|DELETE)|payloads:|\bbody:|fuzzing:")
+
+
+def version_probe_only(text: str) -> bool:
+    """True when the template only reads a version string."""
+    parts = PROTOCOL.split(text, maxsplit=1)
+    if len(parts) < 2:
+        return False
+    body = parts[1]
+    if EXERCISES_BUG.search(body):
+        return False
+    paths = REQUEST_PATH.findall(body)
+    return bool(paths) and all(METADATA_PATH.search(path) for path in paths)
+
+
 def parse(text: str) -> dict:
     """Ratings for one template, dropping anything the template does not state."""
     head = text[:4000]
@@ -107,6 +131,8 @@ def collect(archive: bytes, blob: str, scoped: bool) -> dict[str, dict]:
             if handle is None:
                 continue
             text = handle.read().decode("utf-8", "replace")
+            if version_probe_only(text):
+                continue
             cve = named.group(1).upper()
             # Strip the archive's own top level directory from the blob path.
             relative = "/".join(parts[1:])
@@ -148,6 +174,21 @@ def apply_to_markdown(cve: str, url: str, dry_run: bool) -> str:
     return "added"
 
 
+def drop_section(path: Path, dry_run: bool) -> bool:
+    """Remove the nuclei section from an entry no template covers any more."""
+    original = path.read_text(encoding="utf-8")
+    bounds = section_bounds(original, SECTION)
+    if not bounds:
+        return False
+    head = original.rfind("\n" + SECTION, 0, bounds[0] + 1)
+    if head < 0:
+        return False
+    updated = (original[:head] + original[bounds[1]:]).rstrip("\n") + "\n"
+    if not dry_run:
+        path.write_text(updated, encoding="utf-8")
+    return True
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description="Sync nuclei templates into the index")
     parser.add_argument("--dry-run", action="store_true", help="report without writing")
@@ -169,6 +210,15 @@ def main() -> int:
     for cve, entry in sorted(templates.items()):
         tally[apply_to_markdown(cve, entry["url"], args.dry_run)] += 1
 
+    # An entry whose template stopped qualifying is never visited above, so its
+    # section would otherwise outlive the reason it was written.
+    stale = 0
+    for path in ROOT.glob("[12][0-9][0-9][0-9]/CVE-*.md"):
+        if path.stem in templates:
+            continue
+        if SECTION in path.read_text(encoding="utf-8", errors="replace"):
+            stale += drop_section(path, args.dry_run)
+
     payload = {cve: entry for cve, entry in sorted(templates.items())}
     if not args.dry_run:
         with OUTPUT.open("w", encoding="utf-8") as handle:
@@ -178,7 +228,7 @@ def main() -> int:
     rated = sum(1 for e in payload.values() if "cvss" in e)
     scored = sum(1 for e in payload.values() if "epss" in e)
     print(f"markdown: {tally['added']:,} links added, {tally['unchanged']:,} already there, "
-          f"{tally['absent']:,} for CVEs not in the index")
+          f"{tally['absent']:,} for CVEs not in the index, {stale:,} sections withdrawn")
     print(f"{OUTPUT.name}: {len(payload):,} CVEs, {rated:,} with CVSS, {scored:,} with EPSS")
     return 0
 
