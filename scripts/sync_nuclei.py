@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Fold ProjectDiscovery's nuclei templates into the index.
+"""Fold nuclei templates into the index.
 
 A template is a runnable check for one CVE, which makes it a proof of concept
 in its own right, and it carries the severity, CVSS, EPSS and CWE the markdown
@@ -19,11 +19,37 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 OUTPUT = ROOT / "nuclei.json"
-TARBALL = "https://codeload.github.com/projectdiscovery/nuclei-templates/tar.gz/refs/heads/main"
-BLOB = "https://github.com/projectdiscovery/nuclei-templates/blob/main/"
+def source(repo: str, branch: str = "main", *, scoped: bool = False) -> tuple:
+    """A template repository: where to fetch it and how to link into it.
+
+    ProjectDiscovery keeps templates for everything, so only its cves/ tree
+    counts. The community repositories below are nothing but CVE templates,
+    where that scoping would throw the whole repository away.
+    """
+    return (
+        repo,
+        f"https://codeload.github.com/{repo}/tar.gz/refs/heads/{branch}",
+        f"https://github.com/{repo}/blob/{branch}/",
+        scoped,
+    )
+
+
+# Order is precedence. ProjectDiscovery's template is the one to link when it
+# exists; the rest are read only for the CVEs it does not cover. Wordfence
+# alone carries thousands of WordPress plugin CVEs nobody else templates.
+SOURCES = (
+    source("projectdiscovery/nuclei-templates", scoped=True),
+    source("topscoder/nuclei-wordfence-cve"),
+    source("linuxadi/40k-nuclei-templates"),
+    source("CharanRayudu/Custom-Nuclei-Templates"),
+    source("geeknik/the-nuclei-templates"),
+    source("Akokonunes/Private-Nuclei-Templates"),
+)
 SECTION = "#### Nuclei"
 EMPTY = "No nuclei template."
-TEMPLATE_NAME = re.compile(r"^CVE-\d{4}-\d{4,7}\.yaml$")
+# ProjectDiscovery names a template for its CVE and nothing else. Wordfence
+# appends the plugin slug and an advisory uuid, so the id is a prefix there.
+TEMPLATE_NAME = re.compile(r"^(CVE-\d{4}-\d{4,7})(?:[-_.][^/]*)?\.ya?ml$", re.IGNORECASE)
 USER_AGENT = "0xMarcio-cve-nuclei"
 
 # The fields wanted are plain scalars on their own line inside info:, so they
@@ -39,9 +65,9 @@ FIELDS = {
 }
 
 
-def download() -> bytes:
-    request = urllib.request.Request(TARBALL, headers={"User-Agent": USER_AGENT})
-    with urllib.request.urlopen(request, timeout=180) as response:
+def download(url: str) -> bytes:
+    request = urllib.request.Request(url, headers={"User-Agent": USER_AGENT})
+    with urllib.request.urlopen(request, timeout=900) as response:
         return response.read()
 
 
@@ -64,29 +90,28 @@ def parse(text: str) -> dict:
     return found
 
 
-def collect(archive: bytes) -> dict[str, dict]:
-    """Every CVE template in the tarball, keyed by CVE id.
-
-    Templates live under several top level directories (http, code, network and
-    so on); what marks one is a cves/ path segment and a CVE-shaped filename.
-    """
+def collect(archive: bytes, blob: str, scoped: bool) -> dict[str, dict]:
+    """Every CVE template in the tarball, keyed by CVE id."""
     templates: dict[str, dict] = {}
     with tarfile.open(fileobj=io.BytesIO(archive), mode="r:gz") as tar:
         for member in tar:
             if not member.isfile():
                 continue
             parts = Path(member.name).parts
-            if "cves" not in parts or not TEMPLATE_NAME.match(parts[-1]):
+            named = TEMPLATE_NAME.match(parts[-1])
+            if not named:
+                continue
+            if scoped and "cves" not in parts:
                 continue
             handle = tar.extractfile(member)
             if handle is None:
                 continue
             text = handle.read().decode("utf-8", "replace")
-            cve = parts[-1][:-5].upper()
+            cve = named.group(1).upper()
             # Strip the archive's own top level directory from the blob path.
             relative = "/".join(parts[1:])
             entry = parse(text)
-            entry["url"] = BLOB + relative
+            entry["url"] = blob + relative
             # A CVE with more than one template keeps the richer of the two.
             if len(entry) >= len(templates.get(cve, {})):
                 templates[cve] = entry
@@ -128,8 +153,17 @@ def main() -> int:
     parser.add_argument("--dry-run", action="store_true", help="report without writing")
     args = parser.parse_args()
 
-    templates = collect(download())
-    print(f"{len(templates):,} CVE templates in nuclei-templates")
+    templates: dict[str, dict] = {}
+    for repo, tarball, blob, scoped in SOURCES:
+        try:
+            found = collect(download(tarball), blob, scoped)
+        except Exception as problem:
+            print(f"{repo}: unavailable ({problem}); skipped")
+            continue
+        fresh = {cve: entry for cve, entry in found.items() if cve not in templates}
+        templates.update(fresh)
+        print(f"{repo}: {len(found):,} CVE templates, {len(fresh):,} not already covered")
+    print(f"{len(templates):,} CVEs templated in total")
 
     tally = {"added": 0, "unchanged": 0, "absent": 0}
     for cve, entry in sorted(templates.items()):
