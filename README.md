@@ -1,8 +1,8 @@
 <div align="center">
 
-<a href="https://cve.codepwn.win/"><img src="https://raw.githubusercontent.com/0xMarcio/cve/main/docs/hero.svg?v=202609011742" alt="CVE Radar" width="100%"></a>
+<a href="https://cve.codepwn.win/"><img src="https://raw.githubusercontent.com/0xMarcio/cve/main/docs/hero.svg?v=202609011749" alt="CVE Radar" width="100%"></a>
 
-[![last sync](https://img.shields.io/badge/last%20sync-01%20Sep%202026%2017%3A42%20UTC-2f81f7?style=flat-square&labelColor=161b22)](https://github.com/0xMarcio/cve/commits/main)&nbsp;[![CI](https://img.shields.io/github/actions/workflow/status/0xMarcio/cve/hot_cves.yml?style=flat-square&label=CI&color=2f81f7&labelColor=161b22&_=202609011742)](https://github.com/0xMarcio/cve/actions/workflows/hot_cves.yml)&nbsp;[![CVEs with PoCs](https://img.shields.io/badge/CVEs%20with%20PoCs-91%2C895-2f81f7?style=flat-square&labelColor=161b22)](https://cve.codepwn.win/)&nbsp;[![known exploited](https://img.shields.io/badge/known%20exploited-1%2C190-f85149?style=flat-square&labelColor=161b22)](https://cve.codepwn.win/)&nbsp;[![stars](https://img.shields.io/github/stars/0xMarcio/cve?style=flat-square&label=stars&color=e3b341&labelColor=161b22&_=202609011742)](https://github.com/0xMarcio/cve/stargazers)
+[![last sync](https://img.shields.io/badge/last%20sync-01%20Sep%202026%2017%3A49%20UTC-2f81f7?style=flat-square&labelColor=161b22)](https://github.com/0xMarcio/cve/commits/main)&nbsp;[![CI](https://img.shields.io/github/actions/workflow/status/0xMarcio/cve/hot_cves.yml?style=flat-square&label=CI&color=2f81f7&labelColor=161b22&_=202609011749)](https://github.com/0xMarcio/cve/actions/workflows/hot_cves.yml)&nbsp;[![CVEs with PoCs](https://img.shields.io/badge/CVEs%20with%20PoCs-91%2C895-2f81f7?style=flat-square&labelColor=161b22)](https://cve.codepwn.win/)&nbsp;[![known exploited](https://img.shields.io/badge/known%20exploited-1%2C190-f85149?style=flat-square&labelColor=161b22)](https://cve.codepwn.win/)&nbsp;[![stars](https://img.shields.io/github/stars/0xMarcio/cve?style=flat-square&label=stars&color=e3b341&labelColor=161b22&_=202609011749)](https://github.com/0xMarcio/cve/stargazers)
 
 </div>
 
