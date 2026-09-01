@@ -1,8 +1,8 @@
 <div align="center">
 
-<a href="https://cve.codepwn.win/"><img src="https://raw.githubusercontent.com/0xMarcio/cve/main/docs/hero.svg?v=202609010346" alt="CVE Radar" width="100%"></a>
+<a href="https://cve.codepwn.win/"><img src="https://raw.githubusercontent.com/0xMarcio/cve/main/docs/hero.svg?v=202609010400" alt="CVE Radar" width="100%"></a>
 
-[![last sync](https://img.shields.io/badge/last%20sync-01%20Sep%202026%2003%3A46%20UTC-2f81f7?style=flat-square&labelColor=161b22)](https://github.com/0xMarcio/cve/commits/main)&nbsp;[![CI](https://img.shields.io/github/actions/workflow/status/0xMarcio/cve/hot_cves.yml?style=flat-square&label=CI&color=2f81f7&labelColor=161b22&_=202609010346)](https://github.com/0xMarcio/cve/actions/workflows/hot_cves.yml)&nbsp;[![CVEs with PoCs](https://img.shields.io/badge/CVEs%20with%20PoCs-103%2C945-2f81f7?style=flat-square&labelColor=161b22)](https://cve.codepwn.win/)&nbsp;[![known exploited](https://img.shields.io/badge/known%20exploited-1%2C182-f85149?style=flat-square&labelColor=161b22)](https://cve.codepwn.win/)&nbsp;[![stars](https://img.shields.io/github/stars/0xMarcio/cve?style=flat-square&label=stars&color=e3b341&labelColor=161b22&_=202609010346)](https://github.com/0xMarcio/cve/stargazers)
+[![last sync](https://img.shields.io/badge/last%20sync-01%20Sep%202026%2004%3A00%20UTC-2f81f7?style=flat-square&labelColor=161b22)](https://github.com/0xMarcio/cve/commits/main)&nbsp;[![CI](https://img.shields.io/github/actions/workflow/status/0xMarcio/cve/hot_cves.yml?style=flat-square&label=CI&color=2f81f7&labelColor=161b22&_=202609010400)](https://github.com/0xMarcio/cve/actions/workflows/hot_cves.yml)&nbsp;[![CVEs with PoCs](https://img.shields.io/badge/CVEs%20with%20PoCs-103%2C945-2f81f7?style=flat-square&labelColor=161b22)](https://cve.codepwn.win/)&nbsp;[![known exploited](https://img.shields.io/badge/known%20exploited-1%2C182-f85149?style=flat-square&labelColor=161b22)](https://cve.codepwn.win/)&nbsp;[![stars](https://img.shields.io/github/stars/0xMarcio/cve?style=flat-square&label=stars&color=e3b341&labelColor=161b22&_=202609010400)](https://github.com/0xMarcio/cve/stargazers)
 
 </div>
 
@@ -109,19 +109,50 @@ No star floor here, so a PoC published this morning shows up the same day rather
 Every file is plain JSON on the CDN. No key, no rate limit.
 
 ```bash
-curl -s https://cve.codepwn.win/CVE_list.json | jq '.[] | select(.cve=="CVE-2026-75604")'
-curl -s https://cve.codepwn.win/kev.json | jq 'keys | length'
-curl -s https://cve.codepwn.win/repo_meta.json | jq '."sfewer-r7/CVE-2026-55040"'
-curl -s https://cve.codepwn.win/trending_poc.json | jq '{total_cves, with_pocs}'
+# everything the index knows about one CVE
+curl -s https://cve.codepwn.win/CVE_list.json \
+  | jq '.[] | select(.cve == "CVE-2021-44228") | {cve, poc: (.poc | length), nuclei, msf, edb}'
+
+# how bad it is, and how likely it is to be exploited in the next 30 days
+curl -s https://cve.codepwn.win/nuclei.json | jq '."CVE-2021-44228"'
+curl -s https://cve.codepwn.win/epss.json   | jq '."CVE-2021-44228"'
+
+# stars and last push for one PoC repository; repository keys are lowercased
+curl -s https://cve.codepwn.win/repo_meta.json | jq '."sfewer-r7/cve-2026-55040"'
+```
+
+What CISA says is being exploited, that also has a PoC here, ranked by how
+likely each is to be used next:
+
+```bash
+curl -s https://cve.codepwn.win/kev.json  -o kev.json
+curl -s https://cve.codepwn.win/epss.json -o epss.json
+jq -n --slurpfile kev kev.json --slurpfile epss epss.json \
+  '[$kev[0] | keys[] | select($epss[0][.]) | {cve: ., epss: $epss[0][.][0]}]
+   | sort_by(-.epss) | .[:10]'
 ```
 
 | Endpoint | Holds |
 | --- | --- |
-| [`CVE_list.json`](https://cve.codepwn.win/CVE_list.json) | Every indexed CVE, its description and its PoC links |
+| [`CVE_list.json`](https://cve.codepwn.win/CVE_list.json) | Every indexed CVE, its description and its `poc`, `nuclei`, `msf` and `edb` links. 48 MB, 10 MB over the wire |
+| [`epss.json`](https://cve.codepwn.win/epss.json) | Exploitation probability and percentile, for nearly every CVE indexed |
+| [`nuclei.json`](https://cve.codepwn.win/nuclei.json) | Severity, CVSS with its vector, EPSS and CWE, for the CVEs a template rates |
 | [`kev.json`](https://cve.codepwn.win/kev.json) | CISA known exploited, keyed by CVE id |
-| [`repo_meta.json`](https://cve.codepwn.win/repo_meta.json) | Stars and last push date per PoC repository |
+| [`repo_meta.json`](https://cve.codepwn.win/repo_meta.json) | Stars and last push date per PoC repository, keys lowercased |
 | [`trending_poc.json`](https://cve.codepwn.win/trending_poc.json) | Trending repositories plus index totals |
-| [`2026/CVE-2026-75604.md`](2026/CVE-2026-75604.md) | Markdown copy of one CVE, one directory per year |
+| [`2026/CVE-2026-68138.md`](2026/CVE-2026-68138.md) | Markdown copy of one CVE, one directory per year |
+
+## Sources
+
+| Source | What it contributes |
+| --- | --- |
+| GitHub | Repositories naming a CVE, checked for code before they are linked |
+| [Nuclei](https://github.com/projectdiscovery/nuclei-templates) | Runnable templates, and the severity, CVSS, EPSS and CWE ratings |
+| [ExploitDB](https://gitlab.com/exploit-database/exploitdb) | Archived exploits, mapped by their own CVE column |
+| [Metasploit](https://github.com/rapid7/metasploit-framework) | Modules, best ranked first |
+| [EPSS](https://www.first.org/epss/) | Daily exploitation probability from FIRST |
+| [CISA KEV](https://www.cisa.gov/known-exploited-vulnerabilities-catalog) | What is being exploited in the wild |
+| NVD, MITRE | The CVE record itself |
 
 ## Build
 
@@ -129,10 +160,13 @@ curl -s https://cve.codepwn.win/trending_poc.json | jq '{total_cves, with_pocs}'
 | --- | --- | --- |
 | [PoC sweep](.github/workflows/hot_cves.yml) | hourly | New and updated exploit repositories |
 | [CVE sync](.github/workflows/sync_cve_pocs.yml) | daily | New CVEs and references from NVD and MITRE |
+| [Nuclei sync](.github/workflows/sync_nuclei.yml) | daily | New templates and rating changes |
+| [Exploit archives](.github/workflows/sync_exploits.yml) | daily | New ExploitDB entries and Metasploit modules |
 | [Link audit](.github/workflows/audit_poc_links.yml) | weekly | Repositories that went dead, dropped from the index |
 
 A repository counts as updated only when a commit touches something other than
-paperwork, so a README tweak cannot pass a year-old exploit off as recent.
+paperwork, so a README tweak cannot pass a year-old exploit off as recent, and
+one that holds nothing but paperwork is not linked at all.
 
 ## Contributing
 
