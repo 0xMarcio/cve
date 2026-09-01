@@ -3,7 +3,7 @@ name: Hot CVEs List
 on:
   workflow_dispatch:
   schedule:
-    - cron: '0 */6 * * *'
+    - cron: '7 * * * *'
 
 permissions:
   contents: write
@@ -24,6 +24,16 @@ jobs:
         with:
           python-version: '3.13'
 
+      - name: Redraw the banner and recount the index
+        run: |
+          # Counts the corpus with the site build's own parser, so the banner can
+          # never disagree with the site, and drops the figures in docs/stats.json
+          # for the README badges to quote.
+          python3 .github/hero.py
+          # og:image has to be a raster: Twitter, Slack and Discord all ignore SVG
+          sudo apt-get install -y --no-install-recommends librsvg2-bin >/dev/null
+          rsvg-convert -w 1280 -h 640 docs/social-card.svg -o docs/social-card.png
+
       - name: Rebuild the trending PoC table
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -33,7 +43,7 @@ jobs:
         run: |
           git config user.name 'CVE-BOT'
           git config user.email 'cve@codepwn.win'
-          git add -- README.md trending.json
+          git add -- README.md trending.json docs/hero.svg docs/social-card.svg docs/social-card.png docs/stats.json
           if git diff --cached --quiet; then
             echo "No changes to commit"
             exit 0

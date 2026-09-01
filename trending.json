@@ -6,7 +6,9 @@
   "url": "https://github.com/rafabd1/CVE-2026-75604-poc",
   "desc": "CVE-2026-75604 Next.js Windows RCE poc",
   "pushed": "2026-08-26T02:23:55Z",
-  "created": "2026-08-25T19:06:37Z"
+  "created": "2026-08-25T19:06:37Z",
+  "cve": "CVE-2026-75604",
+  "kev": false
  },
  {
   "year": 2026,
@@ -15,16 +17,20 @@
   "url": "https://github.com/hypnguyen1209/CVE-2026-62911",
   "desc": "POC pre-auth RCE on Exchange",
   "pushed": "2026-08-22T04:49:54Z",
-  "created": "2026-08-22T04:49:33Z"
+  "created": "2026-08-22T04:49:33Z",
+  "cve": "CVE-2026-62911",
+  "kev": false
  },
  {
   "year": 2026,
   "stars": 53,
   "name": "CVE-2026-64638-PoC-XSS2Shell-",
   "url": "https://github.com/Boreas37/CVE-2026-64638-PoC-XSS2Shell-",
-  "desc": "XSS2Shell (CVE-2026-64638) WordPress pre-auth XSS to RCE chain — PoC exploit + defensive audit tool + nuclei template",
+  "desc": "XSS2Shell (CVE-2026-64638) WordPress pre-auth XSS to RCE chain - PoC exploit + defensive audit tool + nuclei template",
   "pushed": "2026-08-21T13:31:56Z",
-  "created": "2026-08-07T17:07:17Z"
+  "created": "2026-08-07T17:07:17Z",
+  "cve": "CVE-2026-64638",
+  "kev": false
  },
  {
   "year": 2026,
@@ -33,7 +39,9 @@
   "url": "https://github.com/Snizi/CVE-2026-18963-Exploit",
   "desc": "Exploit for KeyCloak CVE-2026-18963",
   "pushed": "2026-08-20T22:18:11Z",
-  "created": "2026-08-20T22:01:11Z"
+  "created": "2026-08-20T22:01:11Z",
+  "cve": "CVE-2026-18963",
+  "kev": false
  },
  {
   "year": 2026,
@@ -42,7 +50,9 @@
   "url": "https://github.com/opaxial/CVE-2026-9830",
   "desc": "CVE-2026-9830 Proof of Concept",
   "pushed": "2026-08-20T21:56:15Z",
-  "created": "2026-08-15T20:57:13Z"
+  "created": "2026-08-15T20:57:13Z",
+  "cve": "CVE-2026-9830",
+  "kev": false
  },
  {
   "year": 2026,
@@ -51,7 +61,9 @@
   "url": "https://github.com/lanicer/cve-2026-41940-PoC",
   "desc": "A cPanel and WHM authentication bypassing tool",
   "pushed": "2026-08-20T10:15:12Z",
-  "created": "2026-08-19T12:46:46Z"
+  "created": "2026-08-19T12:46:46Z",
+  "cve": "CVE-2026-41940",
+  "kev": true
  },
  {
   "year": 2026,
@@ -60,7 +72,9 @@
   "url": "https://github.com/jacubes/CVE-2026-24061",
   "desc": "CVE-2026-24061 exploit PoC",
   "pushed": "2026-08-20T10:06:17Z",
-  "created": "2026-03-08T11:25:39Z"
+  "created": "2026-03-08T11:25:39Z",
+  "cve": "CVE-2026-24061",
+  "kev": true
  },
  {
   "year": 2026,
@@ -69,7 +83,9 @@
   "url": "https://github.com/watchtowrlabs/watchTowr-vs-Citrix-Netscaler-PreAuth-RCE-CVE-2026-8452",
   "desc": "CVE-2026-8452 PreAuth RCE",
   "pushed": "2026-08-14T15:01:41Z",
-  "created": "2026-08-14T15:01:25Z"
+  "created": "2026-08-14T15:01:25Z",
+  "cve": "CVE-2026-8452",
+  "kev": true
  },
  {
   "year": 2026,
@@ -78,7 +94,9 @@
   "url": "https://github.com/Rat5ak/CVE-2026-66804-CrossDevice-Service-EoP",
   "desc": "CVE-2026-66804 Windows Cross Device virtual camera EoP - Standard user to SYSTEM",
   "pushed": "2026-08-13T03:37:37Z",
-  "created": "2026-08-13T01:42:43Z"
+  "created": "2026-08-13T01:42:43Z",
+  "cve": "CVE-2026-66804",
+  "kev": false
  },
  {
   "year": 2026,
@@ -87,7 +105,9 @@
   "url": "https://github.com/aramosf/CVE-2026-68138",
   "desc": "CVE-2026-68138 Linux qdisc rate-table race local privilege escalation PoC",
   "pushed": "2026-08-12T15:30:58Z",
-  "created": "2026-08-11T22:22:22Z"
+  "created": "2026-08-11T22:22:22Z",
+  "cve": "CVE-2026-68138",
+  "kev": false
  },
  {
   "year": 2026,
@@ -96,7 +116,9 @@
   "url": "https://github.com/sfewer-r7/CVE-2026-63077",
   "desc": "Unauthenticated Remote Code Execution in JetBrains TeamCity (CVE-2026-63077)",
   "pushed": "2026-08-07T11:52:30Z",
-  "created": "2026-08-07T08:38:01Z"
+  "created": "2026-08-07T08:38:01Z",
+  "cve": "CVE-2026-63077",
+  "kev": true
  },
  {
   "year": 2026,
@@ -105,7 +127,9 @@
   "url": "https://github.com/sfewer-r7/CVE-2026-55040",
   "desc": "Microsoft SharePoint JWT Authentication Bypass (CVE-2026-55040)",
   "pushed": "2026-08-06T11:50:17Z",
-  "created": "2026-08-06T11:46:34Z"
+  "created": "2026-08-06T11:46:34Z",
+  "cve": "CVE-2026-55040",
+  "kev": true
  },
  {
   "year": 2026,
@@ -114,16 +138,20 @@
   "url": "https://github.com/villager1314/CVE-2026-64560-Analysis",
   "desc": "",
   "pushed": "2026-08-03T12:39:41Z",
-  "created": "2026-08-03T12:36:27Z"
+  "created": "2026-08-03T12:36:27Z",
+  "cve": "CVE-2026-64560",
+  "kev": false
  },
  {
   "year": 2026,
   "stars": 17,
   "name": "CVE-2026-60004-POC",
   "url": "https://github.com/imbas007/CVE-2026-60004-POC",
-  "desc": "CVE-2026-60004 Pre-Auth RCE Exploit — Gitea <= 1.27.0 diffpatch git hook injection (CVSS 9.8)",
+  "desc": "CVE-2026-60004 Pre-Auth RCE Exploit - Gitea <= 1.27.0 diffpatch git hook injection (CVSS 9.8)",
   "pushed": "2026-08-03T08:31:36Z",
-  "created": "2026-08-03T07:48:39Z"
+  "created": "2026-08-03T07:48:39Z",
+  "cve": "CVE-2026-60004",
+  "kev": true
  },
  {
   "year": 2026,
@@ -132,7 +160,9 @@
   "url": "https://github.com/Linuxoid-cn/CVE-2026-43499-Poc-Analysis",
   "desc": "Vulnerability analysis and Proof of Concept (PoC) for CVE-2026-43499 affecting Xiaomi devices. For educational and research purposes only.",
   "pushed": "2026-07-30T11:28:07Z",
-  "created": "2026-07-14T14:21:27Z"
+  "created": "2026-07-14T14:21:27Z",
+  "cve": "CVE-2026-43499",
+  "kev": false
  },
  {
   "year": 2026,
@@ -141,7 +171,9 @@
   "url": "https://github.com/Zer0SumGam3/CVE-2026-66066-POC",
   "desc": "PoC for CVE-2026-66066 in Ruby on Rails",
   "pushed": "2026-07-29T23:00:12Z",
-  "created": "2026-07-29T21:08:30Z"
+  "created": "2026-07-29T21:08:30Z",
+  "cve": "CVE-2026-66066",
+  "kev": false
  },
  {
   "year": 2026,
@@ -150,7 +182,9 @@
   "url": "https://github.com/sfewer-r7/CVE-2026-16232",
   "desc": "A proof-of-concept script to exploit CVE-2026-16232, an authentication bypass via the SmartConsole login process using an application token.",
   "pushed": "2026-07-28T16:51:44Z",
-  "created": "2026-07-28T16:19:31Z"
+  "created": "2026-07-28T16:19:31Z",
+  "cve": "CVE-2026-16232",
+  "kev": true
  },
  {
   "year": 2026,
@@ -159,16 +193,20 @@
   "url": "https://github.com/aniqfakhrul/CVE-2026-54121",
   "desc": "Certighost POC",
   "pushed": "2026-07-27T19:12:07Z",
-  "created": "2026-07-23T18:54:34Z"
+  "created": "2026-07-23T18:54:34Z",
+  "cve": "CVE-2026-54121",
+  "kev": false
  },
  {
   "year": 2026,
   "stars": 35,
   "name": "CVE-2026-42533",
   "url": "https://github.com/imbas007/CVE-2026-42533",
-  "desc": "nginx heap buffer overflow PoC — CVE-2026-42533 pre-auth RCE via two-pass capture clobbering. Crash confirmed on Ubuntu 24.04.",
+  "desc": "nginx heap buffer overflow PoC - CVE-2026-42533 pre-auth RCE via two-pass capture clobbering. Crash confirmed on Ubuntu 24.04.",
   "pushed": "2026-07-27T08:09:52Z",
-  "created": "2026-07-27T08:03:07Z"
+  "created": "2026-07-27T08:03:07Z",
+  "cve": "CVE-2026-42533",
+  "kev": false
  },
  {
   "year": 2026,
@@ -177,7 +215,9 @@
   "url": "https://github.com/tc4dy/CVE-2026-54121-PoC-Exploit",
   "desc": "👻 CVE-2026-54121 - Best CertiGhost AD CS Multi-Exploit Framework / Advanced toolkit with rogue DC/LDAP servers, certificate abuse, PKINIT hash extraction. Features: detect safe check, exploit full multi-threaded. 🛡️ CVSS 8.8 High - Use Ethically, Stay Legal. 🔒",
   "pushed": "2026-07-26T12:22:13Z",
-  "created": "2026-07-25T18:01:04Z"
+  "created": "2026-07-25T18:01:04Z",
+  "cve": "CVE-2026-54121",
+  "kev": false
  },
  {
   "year": 2025,
@@ -186,7 +226,9 @@
   "url": "https://github.com/linux-tools/vivo_iqoo_neo_9_root_research_on_CVE-2025-21479",
   "desc": "",
   "pushed": "2026-08-27T07:13:42Z",
-  "created": "2026-08-19T09:39:46Z"
+  "created": "2026-08-19T09:39:46Z",
+  "cve": "CVE-2025-21479",
+  "kev": true
  },
  {
   "year": 2025,
@@ -195,7 +237,9 @@
   "url": "https://github.com/Qingizi7/cve-2025-21479_iqooneo8",
   "desc": "Local root exploit for CVE-2025-21479 (Adreno KGSL) on iQOO Neo8 (SM8475) - physical memory r/w, disables SELinux, spawns root shell",
   "pushed": "2026-08-20T01:33:10Z",
-  "created": "2026-08-20T01:13:39Z"
+  "created": "2026-08-20T01:13:39Z",
+  "cve": "CVE-2025-21479",
+  "kev": true
  },
  {
   "year": 2025,
@@ -204,7 +248,9 @@
   "url": "https://github.com/enessakircolak/CVE-2025-7771",
   "desc": "ThrottleStop.sys Arbitrary Physical Memory R/W",
   "pushed": "2026-08-10T23:15:22Z",
-  "created": "2026-08-10T23:15:36Z"
+  "created": "2026-08-10T23:15:36Z",
+  "cve": "CVE-2025-7771",
+  "kev": false
  },
  {
   "year": 2025,
@@ -213,7 +259,9 @@
   "url": "https://github.com/kuzeyardabulut/CVE-2025-8045",
   "desc": "Dirty Pagetable Exploit for CVE-2025-8045",
   "pushed": "2026-08-06T14:58:53Z",
-  "created": "2026-08-06T13:52:33Z"
+  "created": "2026-08-06T13:52:33Z",
+  "cve": "CVE-2025-8045",
+  "kev": false
  },
  {
   "year": 2025,
@@ -222,7 +270,9 @@
   "url": "https://github.com/CamsShaft/SELinux-Permissive-Only-CVE-2025-21479",
   "desc": "This is an SELinux permissive version of the Cheese exploit also known as CVE-2025-21479 which affected the adreno kgsl on many devices including Samsung snapdragon devices",
   "pushed": "2026-08-02T06:48:32Z",
-  "created": "2026-07-28T06:41:38Z"
+  "created": "2026-07-28T06:41:38Z",
+  "cve": "CVE-2025-21479",
+  "kev": true
  },
  {
   "year": 2025,
@@ -231,7 +281,9 @@
   "url": "https://github.com/c0gnit00/CVE-2025-32432",
   "desc": "Exploit, POC for CVE-2025-32432, CraftCMS2Shell",
   "pushed": "2026-07-21T16:55:33Z",
-  "created": "2026-07-21T16:52:22Z"
+  "created": "2026-07-21T16:52:22Z",
+  "cve": "CVE-2025-32432",
+  "kev": true
  },
  {
   "year": 2025,
@@ -240,7 +292,9 @@
   "url": "https://github.com/matesz44/CVE-2025-64512",
   "desc": "CVE-2025-64512: pdfminer.six pickle deserialization rce; .pickle.gz + pdf generator w/ custom payloads",
   "pushed": "2026-07-19T11:00:00Z",
-  "created": "2026-07-19T10:49:05Z"
+  "created": "2026-07-19T10:49:05Z",
+  "cve": "CVE-2025-64512",
+  "kev": false
  },
  {
   "year": 2025,
@@ -249,7 +303,9 @@
   "url": "https://github.com/Shirouuu/CVE-2025-8110-gogs-poc",
   "desc": "PoC for CVE-2025-8110 - Gogs arbitrary file write via symlink",
   "pushed": "2026-07-17T13:55:11Z",
-  "created": "2026-07-17T13:46:16Z"
+  "created": "2026-07-17T13:46:16Z",
+  "cve": "CVE-2025-8110",
+  "kev": true
  },
  {
   "year": 2025,
@@ -258,7 +314,9 @@
   "url": "https://github.com/h3st4k3r/CVE-2025-30065",
   "desc": "This PoC targets CVE-2025-30065, an RCE vulnerability in Apache Parquet via Avro schema deserialization. It abuses the getDefaultValue() mechanism to instantiate arbitrary record types during parsing, enabling code execution when untrusted data is processed without proper controls.",
   "pushed": "2026-07-08T08:01:25Z",
-  "created": "2025-04-04T08:45:24Z"
+  "created": "2025-04-04T08:45:24Z",
+  "cve": "CVE-2025-30065",
+  "kev": false
  },
  {
   "year": 2025,
@@ -267,7 +325,9 @@
   "url": "https://github.com/BridgerAlderson/CVE-2025-69212-PoC",
   "desc": "OpenSTAManager v2.9.8 and earlier versions contain a critical OS Command Injection vulnerability in the P7M (signed XML) file decoding function.",
   "pushed": "2026-07-02T20:41:12Z",
-  "created": "2026-06-30T13:38:40Z"
+  "created": "2026-06-30T13:38:40Z",
+  "cve": "CVE-2025-69212",
+  "kev": false
  },
  {
   "year": 2025,
@@ -276,7 +336,9 @@
   "url": "https://github.com/K3ysTr0K3R/CVE-2025-57819",
   "desc": "CVE-2025-57819 - FreePBX Unauthenticated Remote Code Execution (RCE)",
   "pushed": "2026-07-02T19:17:51Z",
-  "created": "2026-07-02T19:07:36Z"
+  "created": "2026-07-02T19:07:36Z",
+  "cve": "CVE-2025-57819",
+  "kev": true
  },
  {
   "year": 2025,
@@ -285,7 +347,9 @@
   "url": "https://github.com/tohib09/CVE-2025-69212-PoC",
   "desc": "",
   "pushed": "2026-06-27T23:56:25Z",
-  "created": "2026-06-27T23:54:57Z"
+  "created": "2026-06-27T23:54:57Z",
+  "cve": "CVE-2025-69212",
+  "kev": false
  },
  {
   "year": 2025,
@@ -294,7 +358,9 @@
   "url": "https://github.com/joaquinrrr/CVE-2025-8110",
   "desc": "PoC exploit for CVE-2025-8110",
   "pushed": "2026-06-25T16:53:11Z",
-  "created": "2026-06-25T16:48:18Z"
+  "created": "2026-06-25T16:48:18Z",
+  "cve": "CVE-2025-8110",
+  "kev": true
  },
  {
   "year": 2025,
@@ -303,7 +369,9 @@
   "url": "https://github.com/lirantal/vulnerable-nextjs-14-CVE-2025-29927",
   "desc": "",
   "pushed": "2026-06-12T09:41:28Z",
-  "created": "2025-03-23T09:22:35Z"
+  "created": "2025-03-23T09:22:35Z",
+  "cve": "CVE-2025-29927",
+  "kev": false
  },
  {
   "year": 2025,
@@ -312,7 +380,9 @@
   "url": "https://github.com/0xEhab/FreePBX-CVE-2025-57819-RCE",
   "desc": "",
   "pushed": "2026-06-06T21:35:46Z",
-  "created": "2026-06-06T20:49:03Z"
+  "created": "2026-06-06T20:49:03Z",
+  "cve": "CVE-2025-57819",
+  "kev": true
  },
  {
   "year": 2025,
@@ -321,7 +391,9 @@
   "url": "https://github.com/b4sh2/CVE-2025-57819-poc",
   "desc": "CVE-2025-57819 -> rce",
   "pushed": "2026-06-06T20:21:04Z",
-  "created": "2026-06-06T20:13:34Z"
+  "created": "2026-06-06T20:13:34Z",
+  "cve": "CVE-2025-57819",
+  "kev": true
  },
  {
   "year": 2024,
@@ -330,7 +402,9 @@
   "url": "https://github.com/Creeeeger/CVE-2024-56426",
   "desc": "A PoC of the CVE-2024-56426 vulnerability.",
   "pushed": "2026-08-16T15:12:56Z",
-  "created": "2026-04-07T12:02:52Z"
+  "created": "2026-04-07T12:02:52Z",
+  "cve": "CVE-2024-56426",
+  "kev": false
  },
  {
   "year": 2024,
@@ -339,16 +413,20 @@
   "url": "https://github.com/xcracker000/CVE-2024-56426",
   "desc": "CVE-2024-56426 Exynos9830 Bootrom Exploit - SM-G985F",
   "pushed": "2026-08-15T06:21:41Z",
-  "created": "2026-08-15T06:12:04Z"
+  "created": "2026-08-15T06:12:04Z",
+  "cve": "CVE-2024-56426",
+  "kev": false
  },
  {
   "year": 2024,
   "stars": 3,
   "name": "CVE-2024-36104-PoC",
   "url": "https://github.com/Groppoxx/CVE-2024-36104-PoC",
-  "desc": "PoC for CVE-2024-36104 — unauthenticated Groovy RCE in Apache OFBiz (<18.12.14) via /%2e/%2e/ view path traversal to ProgramExport",
+  "desc": "PoC for CVE-2024-36104 - unauthenticated Groovy RCE in Apache OFBiz (<18.12.14) via /%2e/%2e/ view path traversal to ProgramExport",
   "pushed": "2026-07-29T21:15:12Z",
-  "created": "2026-07-29T19:59:36Z"
+  "created": "2026-07-29T19:59:36Z",
+  "cve": "CVE-2024-36104",
+  "kev": false
  },
  {
   "year": 2024,
@@ -357,7 +435,9 @@
   "url": "https://github.com/ifconfig-me/CVE-2024-24919-Bulk-Scanner",
   "desc": "CVE-2024-24919 [Check Point Security Gateway Information Disclosure]",
   "pushed": "2026-06-28T05:45:51Z",
-  "created": "2024-06-01T10:51:14Z"
+  "created": "2024-06-01T10:51:14Z",
+  "cve": "CVE-2024-24919",
+  "kev": true
  },
  {
   "year": 2024,
@@ -366,7 +446,9 @@
   "url": "https://github.com/0xFZin/CVE-2024-36991",
   "desc": "Exploit for CVE-2024-36991 , written by me, enumerates a handfull of things, not all, cause not needed.",
   "pushed": "2026-06-21T09:24:33Z",
-  "created": "2025-07-06T03:50:13Z"
+  "created": "2025-07-06T03:50:13Z",
+  "cve": "CVE-2024-36991",
+  "kev": false
  },
  {
   "year": 2024,
@@ -375,7 +457,9 @@
   "url": "https://github.com/lirantal/CVE-2024-27983-nodejs-http2",
   "desc": "CVE-2024-27983 this repository builds up a vulnerable HTTP2 Node.js server (`server-nossl.js`) based on CVE-2024-27983 which exploits a continuation flood vulnerability in HTTP2 servers.",
   "pushed": "2026-06-12T09:43:05Z",
-  "created": "2024-04-14T11:34:52Z"
+  "created": "2024-04-14T11:34:52Z",
+  "cve": "CVE-2024-27983",
+  "kev": false
  },
  {
   "year": 2024,
@@ -384,7 +468,9 @@
   "url": "https://github.com/kuzeyardabulut/CVE-2024-1065",
   "desc": "Page Cache Exploit for CVE-2024-1065",
   "pushed": "2026-06-06T14:00:55Z",
-  "created": "2026-06-02T10:21:23Z"
+  "created": "2026-06-02T10:21:23Z",
+  "cve": "CVE-2024-1065",
+  "kev": false
  },
  {
   "year": 2023,
@@ -393,7 +479,9 @@
   "url": "https://github.com/Groppoxx/CVE-2023-52076-PoC",
   "desc": "PoC exploit for CVE-2023-52076 - zip-slip path traversal in Atril/Xreader (MATE/Cinnamon) enabling arbitrary file write and RCE via crafted EPUB. Authorized security testing only.",
   "pushed": "2026-07-27T07:00:54Z",
-  "created": "2026-07-27T06:51:21Z"
+  "created": "2026-07-27T06:51:21Z",
+  "cve": "CVE-2023-52076",
+  "kev": false
  },
  {
   "year": 2023,
@@ -402,16 +490,20 @@
   "url": "https://github.com/johnnygreeme/CVE-2023-36003",
   "desc": "PoC for CVE-2023-36003: Windows Exploit Security Feature Bypass Vulnerability in Windows Defender.",
   "pushed": "2026-07-22T19:46:33Z",
-  "created": "2026-07-22T19:43:34Z"
+  "created": "2026-07-22T19:43:34Z",
+  "cve": "CVE-2023-36003",
+  "kev": false
  },
  {
   "year": 2023,
   "stars": 3,
   "name": "cve-2023-4911-exploit-optimized",
   "url": "https://github.com/jarpex/cve-2023-4911-exploit-optimized",
-  "desc": "Pure C exploit for CVE-2023-4911 (Looney Tunables) — x86_64 & aarch64 implementations. Multi-processing brute-forcing, dynamic calibration, integrated ELF parser.",
+  "desc": "Pure C exploit for CVE-2023-4911 (Looney Tunables) - x86_64 & aarch64 implementations. Multi-processing brute-forcing, dynamic calibration, integrated ELF parser.",
   "pushed": "2026-07-07T21:02:04Z",
-  "created": "2026-06-29T21:05:09Z"
+  "created": "2026-06-29T21:05:09Z",
+  "cve": "CVE-2023-4911",
+  "kev": true
  },
  {
   "year": 2023,
@@ -420,7 +512,9 @@
   "url": "https://github.com/K3ysTr0K3R/CVE-2023-32315-EXPLOIT",
   "desc": "A PoC exploit for CVE-2023-32315 - Openfire Authentication Bypass",
   "pushed": "2026-07-05T17:29:00Z",
-  "created": "2023-12-15T16:30:51Z"
+  "created": "2023-12-15T16:30:51Z",
+  "cve": "CVE-2023-32315",
+  "kev": true
  },
  {
   "year": 2023,
@@ -429,7 +523,9 @@
   "url": "https://github.com/joaquinrrr/CVE-2023-6019",
   "desc": "PoC exploit for CVE-2023-6019 - Remote Code Execution via unauthenticated Ray Dashboard Jobs API.",
   "pushed": "2026-06-19T19:09:34Z",
-  "created": "2026-06-19T19:08:58Z"
+  "created": "2026-06-19T19:08:58Z",
+  "cve": "CVE-2023-6019",
+  "kev": false
  },
  {
   "year": 2022,
@@ -438,6 +534,8 @@
   "url": "https://github.com/joshuavanderpoll/NimbusPWN-CVE-2022-29799-29800",
   "desc": "NimbusPwn (CVE-2022-29799/29800) local privilege escalation PoC in C.",
   "pushed": "2026-06-17T20:06:02Z",
-  "created": "2026-06-17T19:44:47Z"
+  "created": "2026-06-17T19:44:47Z",
+  "cve": "CVE-2022-29799",
+  "kev": false
  }
 ]

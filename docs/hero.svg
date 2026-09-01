@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="180" viewBox="0 0 1200 180"
+     role="img" aria-label="CVE Radar, 101,809 CVEs with public proof-of-concept exploits">
+  <clipPath id="card"><rect x="1" y="1" width="1198" height="178" rx="12"/></clipPath>
+  <rect x="0.5" y="0.5" width="1199" height="179" rx="12" fill="#0d1117" stroke="#30363d"/>
+  <g clip-path="url(#card)" opacity="0.6"><g>
+    <circle cx="1090" cy="90" r="56.0" fill="none" stroke="#2f81f7" stroke-width="1" opacity="0.270"/><circle cx="1090" cy="90" r="99.2" fill="none" stroke="#2f81f7" stroke-width="1" opacity="0.195"/><circle cx="1090" cy="90" r="136.0" fill="none" stroke="#2f81f7" stroke-width="1" opacity="0.135"/><circle cx="1090" cy="90" r="160.0" fill="none" stroke="#2f81f7" stroke-width="1" opacity="0.090"/>
+    <line x1="1090" y1="90" x2="1090" y2="-70.0" stroke="#2f81f7"
+          stroke-width="1.5" stroke-linecap="round" opacity="0.480">
+      <animateTransform attributeName="transform" type="rotate"
+                        from="0 1090 90" to="360 1090 90"
+                        dur="8s" repeatCount="indefinite"/>
+    </line>
+  </g></g>
+
+  <text x="56" y="70" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" font-size="44" font-weight="700"
+        fill="#e6edf3" letter-spacing="2">CVE RADAR</text>
+  <text x="56" y="104" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" font-size="15" fill="#8b949e">
+    Public proof-of-concept exploits for every CVE.</text>
+  <text x="56" y="132" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" font-size="15" fill="#2f81f7">cve.codepwn.win</text>
+
+  <text x="620" y="96" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" font-size="34" font-weight="700"
+        fill="#e6edf3" letter-spacing="-0.5">154,097</text>
+  <text x="620" y="117" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" font-size="12"
+        fill="#6e7681" letter-spacing="1.6">CVES INDEXED</text><text x="840" y="96" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" font-size="34" font-weight="700"
+        fill="#2f81f7" letter-spacing="-0.5">101,809</text>
+  <text x="840" y="117" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" font-size="12"
+        fill="#6e7681" letter-spacing="1.6">WITH POCS</text><text x="1010" y="96" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" font-size="34" font-weight="700"
+        fill="#f85149" letter-spacing="-0.5">1,110</text>
+  <text x="1010" y="117" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" font-size="12"
+        fill="#6e7681" letter-spacing="1.6">KNOWN EXPLOITED</text>
+</svg>

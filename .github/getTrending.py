@@ -33,6 +33,13 @@ USER_AGENT = "0xMarcio-cve-trending"
 ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), os.pardir)
 README = os.path.join(ROOT, "README.md")
 TRENDING = os.path.join(ROOT, "trending.json")
+KEV = os.path.join(ROOT, "kev.json")
+STATS = os.path.join(ROOT, "docs", "stats.json")
+DESC_LIMIT = 110   # a table cell, not a paragraph
+FOLDED_AFTER = 2   # years past the newest two are collapsed behind a summary
+CVE_ID = re.compile(r"CVE[-_](\d{4})[-_](\d{4,7})", re.IGNORECASE)
+SLUG = "0xMarcio/cve"
+HERO_URL = f"https://raw.githubusercontent.com/{SLUG}/main/docs/hero.svg"
 
 
 def search_year(year: int, since: str) -> tuple[int, list[dict]]:
@@ -178,23 +185,157 @@ def code_pushed(full_names: list[str], token: str) -> dict[str, str]:
 def time_ago(timestamp: str) -> str:
     moment = datetime.strptime(timestamp, "%Y-%m-%dT%H:%M:%SZ").replace(tzinfo=timezone.utc)
     delta = datetime.now(timezone.utc) - moment
-    for amount, unit in ((delta.days, "day"), (delta.seconds // 3600, "hour"), (delta.seconds // 60, "minute")):
+    for amount, unit in ((delta.days, "d"), (delta.seconds // 3600, "h"), (delta.seconds // 60, "m")):
         if amount > 0:
-            return f"{amount} {unit}{'s' if amount > 1 else ''} ago"
+            return f"{amount}{unit} ago"
     return "just now"
 
 
 def cell(value: str) -> str:
     """Keep repository text on a single markdown table cell."""
-    return " ".join(str(value or "").split()).replace("|", "/")
+    text = " ".join(str(value or "").split()).replace("|", "/")
+    return text.replace("\u2014", "-").replace("\u2013", "-")
+
+
+
+def known_exploited() -> set[str]:
+    """CVE ids CISA lists as exploited in the wild."""
+    try:
+        with open(KEV, encoding="utf-8") as handle:
+            return {str(key).upper() for key in json.load(handle)}
+    except (OSError, ValueError):
+        return set()
+
+
+def cve_of(repo: dict) -> str:
+    match = CVE_ID.search(f"{repo.get('name') or ''} {repo.get('description') or ''}")
+    return f"CVE-{match.group(1)}-{match.group(2)}" if match else ""
+
+
+def shorten(text: str) -> str:
+    text = cell(text)
+    if len(text) <= DESC_LIMIT:
+        return text
+    return text[:DESC_LIMIT].rsplit(" ", 1)[0] + "\u2026"
+
+
+def figures() -> dict:
+    """Index totals, written by hero.py from the same count the banner shows."""
+    try:
+        with open(STATS, encoding="utf-8") as handle:
+            return json.load(handle)
+    except (OSError, ValueError):
+        return {}
+
+
+def shields(text: str) -> str:
+    """Escape one field of a shields badge path.
+
+    The path is split on single hyphens, so a hyphen inside the text has to be
+    doubled before it is percent-encoded or the badge loses everything after it.
+    """
+    return parse.quote(text.replace("-", "--").replace("_", "__"), safe="")
+
+
+def pill(label: str, value: str, colour: str, link: str) -> str:
+    """A shields badge whose text is baked in at build time.
+
+    Anything describing the index is fixed here rather than resolved when the
+    page is viewed: the figure is then exactly the one the banner was drawn
+    from, and it cannot degrade to "resource not found" when a lookup fails.
+    """
+    return (f"[![{label}](https://img.shields.io/badge/"
+            f"{shields(label)}-{shields(value)}-{colour}"
+            f"?style=flat-square&labelColor=161b22)]({link})")
+
+
+def live_pill(path: str, label: str, colour: str, link: str, stamp: str) -> str:
+    """A shields badge that has to be resolved at view time.
+
+    The stamp is ignored by shields but changes the URL every rebuild, so
+    GitHub's image proxy fetches a fresh badge instead of replaying a cached one.
+    """
+    return (f"[![{label}](https://img.shields.io/github/{path}"
+            f"?style=flat-square&label={parse.quote(label)}&color={colour}"
+            f"&labelColor=161b22&_={stamp})]({link})")
+
+
+def header(stamp: str, synced: str) -> list[str]:
+    """Everything above the tables. The banner carries a cache-busting stamp
+    because GitHub proxies README images and would otherwise serve a stale copy
+    of a file that is redrawn whenever the index moves."""
+    counts = figures()
+    home = "https://cve.codepwn.win/"
+    badges = [
+        pill("last sync", synced, "2f81f7", f"https://github.com/{SLUG}/commits/main"),
+        live_pill("actions/workflow/status/" + SLUG + "/hot_cves.yml", "sweep", "2f81f7",
+                  f"https://github.com/{SLUG}/actions/workflows/hot_cves.yml", stamp),
+    ]
+    if counts.get("with_pocs"):
+        badges.append(pill("CVEs with PoCs", f"{counts['with_pocs']:,}", "2f81f7", home))
+    if counts.get("kev"):
+        badges.append(pill("known exploited", f"{counts['kev']:,}", "f85149", home))
+    badges.append(live_pill("stars/" + SLUG, "stars", "e3b341",
+                            f"https://github.com/{SLUG}/stargazers", stamp))
+    return [
+        '<div align="center">',
+        "",
+        f'<a href="{home}"><img src="{HERO_URL}?v={stamp}" alt="CVE Radar" width="100%"></a>',
+        "",
+        "&nbsp;".join(badges),
+        "",
+        "</div>",
+        "",
+    ]
+
+
+FOOTER = """
+
+## Data
+
+Every file is plain JSON on the CDN. No key, no rate limit.
+
+```bash
+curl -s https://cve.codepwn.win/CVE_list.json | jq '.[] | select(.cve=="CVE-2026-75604")'
+curl -s https://cve.codepwn.win/kev.json | jq 'keys | length'
+curl -s https://cve.codepwn.win/repo_meta.json | jq '."sfewer-r7/CVE-2026-55040"'
+curl -s https://cve.codepwn.win/trending_poc.json | jq '{total_cves, with_pocs}'
+```
+
+| Endpoint | Holds |
+| --- | --- |
+| [`CVE_list.json`](https://cve.codepwn.win/CVE_list.json) | Every indexed CVE, its description and its PoC links |
+| [`kev.json`](https://cve.codepwn.win/kev.json) | CISA known exploited, keyed by CVE id |
+| [`repo_meta.json`](https://cve.codepwn.win/repo_meta.json) | Stars and last push date per PoC repository |
+| [`trending_poc.json`](https://cve.codepwn.win/trending_poc.json) | Trending repositories plus index totals |
+| [`2026/CVE-2026-75604.md`](2026/CVE-2026-75604.md) | Markdown copy of one CVE, one directory per year |
+
+## Build
+
+| Job | Cadence | Picks up |
+| --- | --- | --- |
+| [PoC sweep](.github/workflows/hot_cves.yml) | hourly | New and updated exploit repositories |
+| [CVE sync](.github/workflows/sync_cve_pocs.yml) | daily | New CVEs and references from NVD and MITRE |
+| [Link audit](.github/workflows/audit_poc_links.yml) | weekly | Repositories that went dead, dropped from the index |
+
+A repository counts as updated only when a commit touches something other than
+paperwork, so a README tweak cannot pass a year-old exploit off as recent.
+
+## Contributing
+
+Missing PoC, wrong link, dead repository: open an issue with the CVE id and the
+repository URL.
+"""
 
 
 def main() -> int:
     now = datetime.now(timezone.utc)
     since = (now - timedelta(days=WINDOW_DAYS)).date().isoformat()
     current_year = now.year
-    lines = ['<h1 align="center">Recently updated Proof-of-Concepts</h1>']
+    kev = known_exploited()
     items: list[dict] = []
+    sections: list[list[str]] = []
+    flagged = 0
 
     token = github_token()
     for year in range(current_year, current_year - YEARS, -1):
@@ -210,18 +351,23 @@ def main() -> int:
         repositories.sort(key=lambda repo: repo["_shipped"], reverse=True)
         repositories = repositories[:PER_YEAR]
         print(f"CVE-{year}: {total} pushed since {since}, "
-              f"{stale - len([r for r in repositories])} dropped as paperwork-only")
+              f"{stale - len(repositories)} dropped as paperwork-only")
         if not repositories:
             continue
-        lines.append(f"\n\n## {year}\n")
-        lines.append(f"### Latest {len(repositories)} of {total} Repositories\n")
-        lines.append("| Stars | Updated | Name | Description |")
-        lines.append("| --- | --- | --- | --- |")
+        block = [
+            f"## {year} &middot; newest {len(repositories)} of {total}",
+            "",
+            "| Stars | Updated | Repository | Description |",
+            "| --- | --- | --- | --- |",
+        ]
         for repo in repositories:
             # The last commit that touched anything but paperwork. pushed_at counts
             # a README tweak, which had the table claiming a year-old exploit was
             # updated twenty-one hours ago.
             pushed = repo["_shipped"]
+            cve = cve_of(repo)
+            exploited = cve in kev
+            flagged += exploited
             items.append({
                 "year": year,
                 "stars": int(repo.get("stargazers_count") or 0),
@@ -230,18 +376,38 @@ def main() -> int:
                 "desc": cell(repo.get("description")),
                 "pushed": pushed,
                 "created": str(repo.get("created_at") or ""),
+                "cve": cve,
+                "kev": exploited,
             })
-            lines.append(
-                f"| {repo.get('stargazers_count', 0)}⭐ | {time_ago(pushed)} "
-                f"| [{cell(repo.get('name'))}]({repo.get('html_url')}) | {cell(repo.get('description'))} |"
+            block.append(
+                f"| {repo.get('stargazers_count', 0)}\u2b50 | {time_ago(pushed)} "
+                f"| {'\U0001f525 ' if exploited else ''}[{cell(repo.get('name'))}]({repo.get('html_url')}) "
+                f"| {shorten(repo.get('description'))} |"
             )
+        sections.append(block)
+
+    stamp = now.strftime("%Y%m%d%H%M")
+    # No hyphens: they are the field separator in a shields badge path.
+    synced = now.strftime("%d %b %Y %H:%M UTC")
+    lines = header(stamp, synced)
+    lines.append(f"Exploit repositories with a commit in the last {WINDOW_DAYS} days, "
+                 f"newest first. \U0001f525 marks a CVE on the CISA known exploited list.")
+    lines.append("")
+    for index, block in enumerate(sections):
+        if index == FOLDED_AFTER and len(sections) > FOLDED_AFTER:
+            years = ", ".join(section[0][3:7] for section in sections[FOLDED_AFTER:])
+            lines.append(f"<details>\n<summary>{years}</summary>\n")
+        lines.extend(block)
+        lines.append("")
+    if len(sections) > FOLDED_AFTER:
+        lines.append("</details>")
 
     with open(README, "w", encoding="utf-8") as handle:
-        handle.write("\n".join(lines))
+        handle.write("\n".join(lines).rstrip() + FOOTER)
     with open(TRENDING, "w", encoding="utf-8") as handle:
         json.dump(items, handle, ensure_ascii=False, indent=1)
         handle.write("\n")
-    print(f"Wrote {README} and {TRENDING} ({len(items)} repositories)")
+    print(f"Wrote {README} and {TRENDING} ({len(items)} repositories, {flagged} known-exploited)")
     return 0
 
 
