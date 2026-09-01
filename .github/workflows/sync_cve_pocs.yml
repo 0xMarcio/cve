@@ -45,6 +45,7 @@ jobs:
             index/references.txt \
             index/reference_pocs.txt \
             index/cve_dates.json \
+            index/cve_record_state.json \
             cves/
 
           if git diff --cached --quiet; then
