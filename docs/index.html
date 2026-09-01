@@ -10,14 +10,14 @@
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="CVE Radar" />
   <meta property="og:title" content="CVE Radar" />
-  <meta property="og:description" content="Public proof-of-concept exploits for every CVE. Searchable, refreshed hourly, no signup." />
+  <meta property="og:description" content="Public proof-of-concept exploits, indexed by CVE. Searchable, refreshed hourly, no signup." />
   <meta property="og:url" content="https://cve.codepwn.win/" />
   <meta property="og:image" content="https://cve.codepwn.win/social-card.png" />
   <meta property="og:image:width" content="1280" />
   <meta property="og:image:height" content="640" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="CVE Radar" />
-  <meta name="twitter:description" content="Public proof-of-concept exploits for every CVE. Searchable, refreshed hourly, no signup." />
+  <meta name="twitter:description" content="Public proof-of-concept exploits, indexed by CVE. Searchable, refreshed hourly, no signup." />
   <meta name="twitter:image" content="https://cve.codepwn.win/social-card.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -36,7 +36,7 @@
       </svg>
       <div class="hero-id">
         <h1>CVE RADAR</h1>
-        <p>Public proof-of-concept exploits for every CVE.</p>
+        <p>Public proof-of-concept exploits, indexed by CVE.</p>
       </div>
       <dl class="hero-stats">
         <div><dt data-stat-total>&nbsp;</dt><dd>CVES INDEXED</dd></div>
@@ -57,6 +57,36 @@
              aria-label="Search CVE, vendor, product or keyword" />
       <span class="search-status" data-status aria-live="polite"></span>
     </form>
+    <div class="filters" data-filters aria-label="CVE filters">
+      <span class="filter-caption">FILTER</span>
+      <label class="filter-select">
+        <span>SEVERITY</span>
+        <select data-filter-severity disabled>
+          <option value="ALL">ALL</option>
+          <option value="CRITICAL">CRITICAL</option>
+          <option value="HIGH">HIGH</option>
+          <option value="MEDIUM">MEDIUM</option>
+          <option value="LOW">LOW</option>
+          <option value="NONE">NONE</option>
+          <option value="UNSCORED">UNSCORED</option>
+        </select>
+      </label>
+      <button type="button" class="filter-toggle" data-filter-kev aria-pressed="false" disabled>KEV ONLY</button>
+      <label class="filter-select">
+        <span>SOURCE</span>
+        <select data-filter-source disabled>
+          <option value="ALL">ALL</option>
+          <option value="GITHUB">GITHUB</option>
+          <option value="REFERENCE">REFERENCE</option>
+          <option value="NUCLEI">NUCLEI</option>
+          <option value="MSF">METASPLOIT</option>
+          <option value="EDB">EXPLOITDB</option>
+          <option value="VULHUB">VULHUB</option>
+          <option value="COLLECTIONS">COLLECTIONS</option>
+        </select>
+      </label>
+      <button type="button" class="filter-clear" data-clear-filters hidden>CLEAR</button>
+    </div>
   </div>
 
   <main class="container content">
@@ -84,7 +114,7 @@
 
   <footer class="site-footer">
     <div class="container">
-      <span>sources: nvd &middot; mitre &middot; github &middot; cisa kev</span>
+      <span>sources: nvd &middot; cve program &middot; github &middot; cisa kev &middot; first epss</span>
       <span data-refreshed></span>
     </div>
   </footer>

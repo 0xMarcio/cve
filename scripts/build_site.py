@@ -8,6 +8,7 @@ import json
 import re
 import urllib.request
 from datetime import datetime, timezone
+from functools import lru_cache
 from pathlib import Path
 from typing import Collection, Dict, List, Optional
 from urllib.parse import urlparse
@@ -27,6 +28,9 @@ DATES_INPUT = INDEX / "cve_dates.json"
 KEV_OUTPUT = DOCS_DIR / "kev.json"
 NUCLEI_INPUT = INDEX / "nuclei.json"
 NUCLEI_OUTPUT = DOCS_DIR / "nuclei.json"
+METADATA_INPUT = INDEX / "metadata"
+METADATA_OUTPUT = DOCS_DIR / "cve_metadata.json"
+VERIFIED_REFERENCES = INDEX / "reference_pocs.txt"
 EPSS_OUTPUT = DOCS_DIR / "epss.json"
 EPSS_FEED = "https://epss.empiricalsecurity.com/epss_scores-current.csv.gz"
 def load_blacklist() -> set[str]:
@@ -50,10 +54,48 @@ def normalise_block(text: str) -> str:
 
 
 SECTION_HEADERS = ("### Description", "### POC", "#### Reference", "#### Github",
-                   "#### Nuclei", "#### ExploitDB", "#### Metasploit")
+                   "#### Nuclei", "#### ExploitDB", "#### Metasploit", "#### Vulhub",
+                   "#### Collections")
 # Sections whose links are kept apart from the repository list, with the
 # field each becomes in the published index.
-CURATED = (("#### Nuclei", "nuclei"), ("#### ExploitDB", "edb"), ("#### Metasploit", "msf"))
+CURATED = (
+    ("#### Nuclei", "nuclei"),
+    ("#### ExploitDB", "edb"),
+    ("#### Metasploit", "msf"),
+    ("#### Vulhub", "vulhub"),
+    ("#### Collections", "collections"),
+)
+
+
+@lru_cache(maxsize=1)
+def load_metadata() -> Dict[str, object]:
+    """Canonical NVD metadata assembled from the tracked year shards."""
+    entries: Dict[str, object] = {}
+    if not METADATA_INPUT.exists():
+        return entries
+    for path in sorted(METADATA_INPUT.glob("[12][0-9][0-9][0-9].json")):
+        payload = json.loads(path.read_text(encoding="utf-8"))
+        if not isinstance(payload, dict):
+            raise ValueError(f"{path} is not a CVE metadata object")
+        entries.update(payload)
+    return entries
+
+
+@lru_cache(maxsize=1)
+def load_verified_references() -> set[tuple[str, str]]:
+    """CVE Program references with direct exploit evidence."""
+    try:
+        lines = VERIFIED_REFERENCES.read_text(encoding="utf-8").splitlines()
+    except OSError:
+        return set()
+    verified: set[tuple[str, str]] = set()
+    for line in lines:
+        if " - " not in line:
+            continue
+        cve_id, url = line.split(" - ", 1)
+        if cve_id and url:
+            verified.add((cve_id, link_key(url)))
+    return verified
 
 
 def parse_sections(content: str) -> Dict[str, str]:
@@ -138,9 +180,14 @@ def collect_links(block: str, *, blacklist: Optional[Collection[str]] = None) ->
 def build_cve_list(blacklist: Collection[str]) -> tuple[List[Dict[str, object]], int]:
     cve_entries = []
     dates = load_dates()
+    metadata = load_metadata()
+    verified_references = load_verified_references()
     total = 0
 
     for md_path in sorted(CVES.glob("[12][0-9][0-9][0-9]/CVE-*.md")):
+        cve_id = md_path.stem
+        if (metadata.get(cve_id) or {}).get("rejected"):
+            continue
         total += 1
         content = md_path.read_text(encoding="utf-8")
         sections = parse_sections(content)
@@ -154,16 +201,33 @@ def build_cve_list(blacklist: Collection[str]) -> tuple[List[Dict[str, object]],
             field: collect_links(sections.get(header, ""), blacklist=blacklist)
             for header, field in CURATED
         }
+        curated_keys = {
+            link_key(url)
+            for links in curated.values()
+            for url in links
+        }
+        advisory_only = {
+            link_key(str(row[0]))
+            for row in (metadata.get(cve_id) or {}).get("advisories", [])
+            if isinstance(row, list)
+            and row
+            and "Exploit" not in (row[1] if len(row) > 1 and isinstance(row[1], list) else [])
+            and (cve_id, link_key(str(row[0]))) not in verified_references
+        }
 
         poc_entries: List[str] = []
         seen = set()
-        for link in references + github_links:
+        for link in references:
             key = link_key(link)
-            if key not in seen:
+            if key not in seen and key not in curated_keys and key not in advisory_only:
+                poc_entries.append(link)
+                seen.add(key)
+        for link in github_links:
+            key = link_key(link)
+            if key not in seen and key not in curated_keys:
                 poc_entries.append(link)
                 seen.add(key)
 
-        cve_id = md_path.stem
         if not poc_entries and not any(curated.values()):
             continue
 
@@ -228,6 +292,17 @@ def build_nuclei(cve_entries: List[Dict[str, object]]) -> Dict[str, object]:
         cve: {field: value[field] for field in keep if field in value}
         for cve, value in stored.items()
         if cve in have
+    }
+
+
+def build_metadata(cve_entries: List[Dict[str, object]]) -> Dict[str, object]:
+    """CVSS generations and vetted advisories for CVEs published on the site."""
+    have = {str(entry["cve"]) for entry in cve_entries}
+    keep = ("cvss", "advisories")
+    return {
+        cve: {field: value[field] for field in keep if field in value}
+        for cve, value in load_metadata().items()
+        if cve in have and isinstance(value, dict)
     }
 
 
@@ -297,6 +372,9 @@ def main() -> int:
     nuclei = build_nuclei(cve_payload)
     write_json(NUCLEI_OUTPUT, nuclei)
 
+    metadata = build_metadata(cve_payload)
+    write_json(METADATA_OUTPUT, metadata)
+
     epss = build_epss(cve_payload)
     write_json(EPSS_OUTPUT, epss)
 
@@ -317,6 +395,7 @@ def main() -> int:
         f"{REPO_META_OUTPUT.name} ({len(repo_meta)} repositories), "
         f"{KEV_OUTPUT.name} ({len(kev)} known-exploited), "
         f"{NUCLEI_OUTPUT.name} ({len(nuclei)} rated), "
+        f"{METADATA_OUTPUT.name} ({len(metadata)} enriched), "
         f"{EPSS_OUTPUT.name} ({len(epss)} scored) and {TRENDING_OUTPUT.name}"
     )
     return 0

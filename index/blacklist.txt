@@ -25,6 +25,7 @@ b1nslashsh/CVE
 bachkhoasoft/awesome-list-ks
 bb1nfosec/vuln-corpus
 bikramtuladhar/awesome-list
+biswajit2902/defusedxml-norpc
 c-skills/CVEs
 cassis-sec/CVE
 cc8700619/poc
@@ -41,6 +42,7 @@ cxosmo/CVEs
 cyllective/CVEs
 Cyreslab-AI/nist-nvd-mcp-server
 developer3000S/PoC-in-GitHub
+deepin-community/defusedxml
 dinesh-murugan-h/CVEraptor
 DMW11525708/wiki
 dweglowski/security-research
@@ -48,6 +50,7 @@ enthought/cve-search
 Ereline/CVE-Search
 Fakechippies/POC-Hunter
 fkie-cad/nvd-json-data-feeds
+fpauth/fpauthanalysis
 GhostTroops/TOP
 gotr00t0day/kernelpwned
 gregk4sec/cve
@@ -68,11 +71,13 @@ metalx1993/kernel-exploit-intelligence
 miradam/cve-search
 n0-traces/cve_monitor
 n1sh1th/CVE-POC
+nasp-thu/prophetfuzz
 netveil/Awesome-List
 nomi-sec/PoC-in-GitHub
 OrlandoNE/NIST_NVD_sh
 org-ai-assisted/terminal-poc-corpus
 Ostorlab/KEV
+pexip/os-defusedxml
 plzheheplztrying/cve_monitor
 pudiish/CVE
 punggawacybersecurity/CVE-List
@@ -87,6 +92,9 @@ s-index/poc-list
 secure-terminal/terminal-poc-corpus
 serifmuammer/nist-cve-crawler
 soosmile/POC
+stanleyman810/cobalt-strike-rce
+stanleyman810/counter-strike-1.6
+stanleyman810/https_rce
 stratosphereips/nist-cve-search-tool
 swastik99/cve-search
 theulis/NIST-1Password-Kandji-Public
@@ -94,6 +102,7 @@ theulis/NIST-1Password-Public
 Threekiii/CVE
 timgad794/DevHub-HTB-Walkthrough
 timschneeb/postexploitation-toolbox-android
+twais/credable_interview
 trickest/cve
 vicentewncosta/CVE
 vin01/CVEs
@@ -101,6 +110,7 @@ whoforget/CVE-POC
 wiseeyesent/cves
 wisespace-io/cve-search
 Wrin9/POC
+yiwen-ming/fpauthanalysis
 yogeshshe1ke/CVE
 zecool/cve
 zulloper/cve-poc

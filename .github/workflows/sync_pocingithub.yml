@@ -33,11 +33,16 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: python3 scripts/sync_pocingithub.py
 
+      - name: Verify the generated index
+        run: |
+          python3 -m unittest discover -s tests
+          python3 scripts/build_site.py
+
       - name: Check for changes and commit
         run: |
           git config user.name 'CVE-BOT'
           git config user.email 'cve@codepwn.win'
-          git add --all -- cves/
+          git add --all -- index/github.txt index/cve_dates.json index/cve_record_state.json cves/
 
           if git diff --cached --quiet; then
             echo "No changes to commit"

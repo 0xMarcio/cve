@@ -27,6 +27,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 from update_cves import (
+    GITHUB_LIST,
     GITHUB_GRAPHQL_URL,
     CVES,
     GitHubClient,
@@ -34,7 +35,9 @@ from update_cves import (
     http_json,
     is_blacklisted_repo,
     load_blacklist,
+    ensure_cve_entries,
     qualifying_repo_cves,
+    reconcile_inventory,
     replace_section,
     section_links,
 )
@@ -87,6 +90,21 @@ def candidates() -> dict[str, set[str]]:
     return found
 
 
+def candidates_from_file(path: Path) -> dict[str, set[str]]:
+    """CVE repository pairs from a local trending payload."""
+    payload = json.loads(path.read_text(encoding="utf-8"))
+    rows = payload.get("items") if isinstance(payload, dict) else payload
+    found: dict[str, set[str]] = {}
+    for item in rows or []:
+        if not isinstance(item, dict):
+            continue
+        cve = str(item.get("cve") or "").upper()
+        url = str(item.get("url") or "").rstrip("/")
+        if CVE_NAME.match(cve) and url:
+            found.setdefault(cve, set()).add(url)
+    return found
+
+
 def already_linked() -> dict[str, tuple[Path, set[str]]]:
     """What each entry in this index already lists under GitHub."""
     held: dict[str, tuple[Path, set[str]]] = {}
@@ -121,9 +139,11 @@ def main() -> int:
     parser = argparse.ArgumentParser(description="Judge PoC-in-GitHub candidates against this index")
     parser.add_argument("--limit", type=int, default=0, help="Repositories to judge this run")
     parser.add_argument("--dry-run", action="store_true", help="Report without writing files")
+    parser.add_argument("--cvelist-dir", type=Path, help="Local CVE List V5 root for a large backfill")
+    parser.add_argument("--input", type=Path, help="Use a local trending JSON file instead of the upstream archive")
     args = parser.parse_args()
 
-    listed = candidates()
+    listed = candidates_from_file(args.input) if args.input else candidates()
     held = already_linked()
     print(f"{len(listed):,} CVEs listed upstream | {len(held):,} entries in this index")
 
@@ -132,9 +152,8 @@ def main() -> int:
     pending: dict[str, set[str]] = {}
     for cve, urls in listed.items():
         entry = held.get(cve)
-        if entry is None:
-            continue
-        for url in urls - entry[1]:
+        existing = entry[1] if entry is not None else set()
+        for url in urls - existing:
             full_name = github_repo_from_url(url)
             if full_name and "/" in full_name and not is_blacklisted_repo(full_name, blacklist):
                 pending.setdefault(full_name, set()).add(cve)
@@ -172,8 +191,23 @@ def main() -> int:
             if judged % 2000 < BATCH:
                 print(f"  judged {judged:,} of {len(names):,}")
 
+    created, unavailable = ensure_cve_entries(
+        accepted,
+        dry_run=args.dry_run,
+        cvelist_dir=args.cvelist_dir,
+    )
+    if created or unavailable:
+        verb = "would create" if args.dry_run else "created"
+        print(f"base entries: {len(created):,} {verb}, {len(unavailable):,} unpublished or unavailable")
+    for cve in created:
+        path = CVES / cve.split("-")[1] / f"{cve}.md"
+        if path.exists():
+            held[cve] = (path, set(section_links(path.read_text(encoding="utf-8"), SECTION)))
+
     written = 0
     for cve, urls in sorted(accepted.items()):
+        if cve not in held:
+            continue
         path, existing = held[cve]
         merged = section_links(path.read_text(encoding="utf-8", errors="replace"), SECTION)
         merged = merged + sorted(url for url in urls if url.rstrip("/") not in existing)
@@ -185,7 +219,16 @@ def main() -> int:
                 handle.write(updated)
         written += bool(changed)
 
+    indexed = {cve: urls for cve, urls in accepted.items() if cve in held}
+    inventory_added, inventory_removed = reconcile_inventory(
+        GITHUB_LIST,
+        SECTION,
+        indexed,
+        dry_run=args.dry_run,
+    )
+
     print(f"accepted {kept:,} links for {len(accepted):,} CVEs | {written:,} entries updated")
+    print(f"GitHub inventory changes: +{inventory_added:,}/-{inventory_removed:,}")
     print(f"rejected {sum(len(pending[n]) for n in names) - kept:,} candidates that did not pass the gate")
     return 0
 

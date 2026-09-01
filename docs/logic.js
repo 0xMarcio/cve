@@ -3,8 +3,10 @@
 const REPLACE_STRINGS = ['HackTheBox - ', 'VulnHub - ', 'UHC - '];
 const PAGE_SIZE = 50;
 const POC_PREVIEW = 5;
+const ADVISORY_PREVIEW = 3;
 const TREND_ROWS = 20;
 const MIN_QUERY = 2;
+const POC_FIELDS = ['poc', 'nuclei', 'msf', 'edb', 'vulhub', 'collections'];
 
 const state = {
   query: '',
@@ -12,6 +14,10 @@ const state = {
   shown: PAGE_SIZE,
   descOpen: new Set(),
   pocOpen: new Set(),
+  advisoryOpen: new Set(),
+  severity: 'ALL',
+  kevOnly: false,
+  source: 'ALL',
   ready: false,
   results: []
 };
@@ -20,6 +26,7 @@ let dataset = [];
 let repoMeta = {};
 let kev = {};
 let ratings = {};
+let metadata = {};
 let epss = {};
 let trending = [];
 let indexMeta = null;
@@ -146,9 +153,16 @@ function leadBonus(index) {
 
 function pocText(entry) {
   if (entry._pocText === undefined) {
-    entry._pocText = (entry.poc || []).join(' ').toLowerCase();
+    entry._pocText = entryLinks(entry).join(' ').toLowerCase();
   }
   return entry._pocText;
+}
+
+function entryLinks(entry) {
+  if (entry._allLinks === undefined) {
+    entry._allLinks = [...new Set(POC_FIELDS.flatMap(field => entry[field] || []))];
+  }
+  return entry._allLinks;
 }
 
 function pocSpace(entry) {
@@ -192,7 +206,7 @@ function scoreEntry(entry, matcher) {
 /** How many of an entry's links carry every search term. */
 function countLinkHits(entry, matchers) {
   let hits = 0;
-  for (const url of entry.poc || []) {
+  for (const url of entryLinks(entry)) {
     const text = url.toLowerCase();
     if (matchers.every(m => wordStart(text, m.raw) >= 0 || (m.loose && m.loose.test(text)))) {
       hits += 1;
@@ -200,6 +214,54 @@ function countLinkHits(entry, matchers) {
     }
   }
   return hits;
+}
+
+function canonicalCvss(id) {
+  const rows = ((metadata[id] || {}).cvss || []);
+  if (!Array.isArray(rows) || !Array.isArray(rows[0])) return null;
+  const row = rows[0];
+  return {
+    score: Number(row[1]),
+    severity: String(row[2] || '').toUpperCase()
+  };
+}
+
+function entrySeverity(entry) {
+  const score = canonicalCvss(entry.cve);
+  if (score && ['NONE', 'LOW', 'MEDIUM', 'HIGH', 'CRITICAL'].includes(score.severity)) {
+    return score.severity;
+  }
+  const fallback = String((ratings[entry.cve] || {}).severity || '').toUpperCase();
+  return ['NONE', 'LOW', 'MEDIUM', 'HIGH', 'CRITICAL'].includes(fallback) ? fallback : '';
+}
+
+function hasActiveFilters() {
+  return state.severity !== 'ALL' || state.kevOnly || state.source !== 'ALL';
+}
+
+function hasSource(entry, source) {
+  const fields = {
+    NUCLEI: 'nuclei', MSF: 'msf', EDB: 'edb', VULHUB: 'vulhub', COLLECTIONS: 'collections'
+  };
+  if (fields[source]) {
+    const curated = CURATED.find(item => item.tag === source);
+    return (entry[fields[source]] || []).length > 0
+      || (entry.poc || []).some(url => curated && url.includes(curated.match));
+  }
+  if (source === 'GITHUB') {
+    return (entry.poc || []).some(url => /^https?:\/\/(?:www\.)?github\.com\//i.test(url));
+  }
+  if (source === 'REFERENCE') {
+    return (entry.poc || []).some(url => !/^https?:\/\/(?:www\.)?github\.com\//i.test(url));
+  }
+  return true;
+}
+
+function matchesFilters(entry) {
+  if (state.kevOnly && !kev[entry.cve]) return false;
+  if (state.source !== 'ALL' && !hasSource(entry, state.source)) return false;
+  if (state.severity === 'UNSCORED') return !entrySeverity(entry);
+  return state.severity === 'ALL' || entrySeverity(entry) === state.severity;
 }
 
 function runSearch(query) {
@@ -221,6 +283,7 @@ function runSearch(query) {
   const results = [];
   results.pocTotal = 0;
   for (const entry of dataset) {
+    if (!matchesFilters(entry)) continue;
     let score = 0;
     let matched = true;
     let describes = false;
@@ -243,7 +306,7 @@ function runSearch(query) {
     // at the weakest tier, where newest-first is meaningless. How many of the
     // linked PoCs carry the term says far more than which CVE is newer.
     entry._hits = describes ? 0 : countLinkHits(entry, matchers);
-    results.pocTotal += (entry.poc || []).length;
+    results.pocTotal += entryLinks(entry).length;
     results.push(entry);
   }
 
@@ -261,7 +324,11 @@ function prepareDataset(raw) {
   const out = [];
   for (const entry of raw) {
     const cve = (entry.cve || '').trim();
-    if (!cve || !Array.isArray(entry.poc) || entry.poc.length === 0) continue;
+    if (!cve) continue;
+    for (const field of POC_FIELDS) {
+      if (!Array.isArray(entry[field])) entry[field] = [];
+    }
+    if (!entryLinks(entry).length) continue;
     const parts = cve.split('-');
     entry._cveText = cve.toLowerCase();
     entry._descText = REPLACE_STRINGS
@@ -286,16 +353,30 @@ const el = {
   statTotal: document.querySelector('[data-stat-total]'),
   statPocs: document.querySelector('[data-stat-pocs]'),
   statKev: document.querySelector('[data-stat-kev]'),
-  refreshed: document.querySelector('[data-refreshed]')
+  refreshed: document.querySelector('[data-refreshed]'),
+  severity: document.querySelector('[data-filter-severity]'),
+  kevOnly: document.querySelector('[data-filter-kev]'),
+  source: document.querySelector('[data-filter-source]'),
+  clearFilters: document.querySelector('[data-clear-filters]')
 };
 
 const CURATED = [
+  { match: '/zan8in/afrog/', tag: 'AFROG', hint: 'Runnable afrog CVE template',
+    label: url => decodeURIComponent(url.split('/').pop()) },
+  { match: '/chaitin/xray/', tag: 'XRAY', hint: 'Runnable xray CVE template',
+    label: url => decodeURIComponent(url.split('/').pop()) },
+  { match: '/helloexp/0day/', tag: '0DAY', hint: 'CVE-specific exploit collection path',
+    label: url => decodeURIComponent(url.split('/').pop()) },
+  { match: '/tzwlhack/Vulnerability/', tag: 'POC', hint: 'CVE-specific reproduction guide',
+    label: url => decodeURIComponent(url.split('/').pop()) },
   { match: '/nuclei-templates/', tag: 'NUCLEI', hint: 'Runnable nuclei detection template',
     label: url => url.split('/').pop() },
   { match: '/metasploit-framework/', tag: 'MSF', hint: 'Metasploit module',
     label: url => url.split('/modules/').pop().replace(/\.rb$/, '') },
   { match: 'exploit-db.com/exploits/', tag: 'EDB', hint: 'ExploitDB entry',
-    label: url => 'exploit-db.com/' + url.split('/').pop() }
+    label: url => 'exploit-db.com/' + url.split('/').pop() },
+  { match: '/vulhub/vulhub/tree/', tag: 'VULHUB', hint: 'Runnable Vulhub environment',
+    label: url => url.split('/tree/master/').pop() }
 ];
 
 function pocRow(url) {
@@ -353,13 +434,39 @@ function rankedLinks(entry) {
     (b.dedicated - a.dedicated) || (b.stars - a.stars) || (a.index - b.index));
   // A nuclei template leads: of everything linked here it is the one entry that
   // runs as it stands, against a target, without reading somebody's code first.
-  // Curated entries lead: a template, an ExploitDB entry and a Metasploit
-  // module all run as they stand, without reading somebody's code first.
-  entry._ranked = [
-    ...(entry.nuclei || []), ...(entry.msf || []), ...(entry.edb || []),
+  // Curated entries lead: templates, exploit archives, modules and runnable
+  // environments can be used as they stand without first reading a repository.
+  entry._ranked = [...new Set([
+    ...(entry.nuclei || []), ...(entry.msf || []), ...(entry.edb || []), ...(entry.vulhub || []),
+    ...(entry.collections || []),
     ...scored.map(item => item.url)
-  ];
+  ])];
   return entry._ranked;
+}
+
+function cvssTooltip(id) {
+  const rows = ((metadata[id] || {}).cvss || []);
+  if (!Array.isArray(rows)) return '';
+  return rows.filter(Array.isArray).map(row => {
+    const source = row[4] ? ` by ${row[4]}` : '';
+    const assessment = row[5] ? ` (${row[5]})` : '';
+    return `CVSS ${row[0]} ${row[1]} ${row[2]}${source}${assessment}\n${row[3] || ''}`.trim();
+  }).join('\n\n');
+}
+
+function advisoryRow(item) {
+  if (!Array.isArray(item) || !item[0]) return '';
+  const url = String(item[0]);
+  const tags = Array.isArray(item[1]) ? item[1].map(String) : [];
+  const tag = tags.includes('Vendor Advisory') ? 'VENDOR' : tags.includes('Patch') ? 'PATCH' : 'ADVISORY';
+  return '<div class="poc-row"><span class="poc-name">' +
+    `<span class="poc-tag is-advisory" title="${escapeHTML(tags.join(', ') || 'Advisory')}">${tag}</span>` +
+    `<a class="plain" href="${escapeHTML(url)}" target="_blank" rel="noopener">${escapeHTML(plainLinkLabel(url))}</a>` +
+    '</span><span class="poc-stars"></span><span class="poc-age"></span></div>';
+}
+
+function normalizedLink(url) {
+  return String(url || '').replace(/\/$/, '');
 }
 
 function resultRow(entry) {
@@ -375,16 +482,34 @@ function resultRow(entry) {
       `${all ? '↑ show fewer' : '+ ' + formatCount(links.length - POC_PREVIEW) + ' more'}</button>`
     : '';
 
-  // Nuclei rates what it covers, so a row can say how bad the flaw is and how
-  // likely it is to be exploited, not only that somebody wrote code for it.
-  const rated = ratings[id] || {};
-  const severityChip = rated.severity
-    ? `<span class="chip chip-sev is-${escapeHTML(rated.severity)}"${rated.cvss_vector ? ` title="${escapeHTML(rated.cvss_vector)}"` : ''}>` +
-      `${escapeHTML(rated.severity.toUpperCase())}${rated.cvss ? ' ' + rated.cvss : ''}</span>`
+  const advisoryOpen = state.advisoryOpen.has(id);
+  const pocLinks = new Set(entryLinks(entry).map(normalizedLink));
+  const advisories = ((metadata[id] || {}).advisories || [])
+    .filter(item => Array.isArray(item) && !pocLinks.has(normalizedLink(item[0])));
+  const shownAdvisories = advisoryOpen ? advisories : advisories.slice(0, ADVISORY_PREVIEW);
+  const advisoryMore = advisories.length > ADVISORY_PREVIEW
+    ? `<button type="button" class="poc-more" data-toggle-advisory="${escapeHTML(id)}">` +
+      `${advisoryOpen ? '↑ show fewer' : '+ ' + formatCount(advisories.length - ADVISORY_PREVIEW) + ' more'}</button>`
+    : '';
+  const advisoryHtml = advisories.length
+    ? `<div class="advisory-list"><div class="advisory-head">CREDIBLE ADVISORIES <span>${formatCount(advisories.length)}</span></div>` +
+      `${shownAdvisories.map(advisoryRow).join('')}${advisoryMore}</div>`
+    : '';
+
+  // NVD is canonical and carries every CVSS generation. Nuclei remains a
+  // fallback for a template scored before NVD or its CNA publishes a vector.
+  const canonical = canonicalCvss(id);
+  const fallback = ratings[id] || {};
+  const severity = canonical ? canonical.severity : entrySeverity(entry);
+  const cvss = canonical ? canonical.score : fallback.cvss;
+  const tooltip = canonical ? cvssTooltip(id) : String(fallback.cvss_vector || '');
+  const severityChip = severity
+    ? `<span class="chip chip-sev is-${escapeHTML(severity.toLowerCase())}"${tooltip ? ` title="${escapeHTML(tooltip)}"` : ''}>` +
+      `${escapeHTML(severity)}${cvss != null ? ' ' + escapeHTML(cvss) : ''}</span>`
     : '';
   // FIRST's feed covers nearly the whole index; a template's own score is the
   // fallback for the handful it misses.
-  const scored = epss[id] || (rated.epss != null ? [rated.epss, rated.epss_pct || 0] : null);
+  const scored = epss[id] || (fallback.epss != null ? [fallback.epss, fallback.epss_pct || 0] : null);
   const epssChip = scored
     ? `<span class="chip chip-epss${scored[0] >= 0.1 ? ' is-hot' : ''}" title="EPSS: estimated chance of exploitation in the next 30 days, ${Math.round(scored[1] * 100)}th percentile">` +
       `EPSS ${(scored[0] * 100).toFixed(scored[0] >= 0.1 ? 0 : 1)}%</span>`
@@ -409,7 +534,7 @@ function resultRow(entry) {
     <div class="result-pocs">${formatCount(links.length)} linked PoC${links.length === 1 ? '' : 's'}</div>
     ${dateHtml}
     <div class="chips">${kevChip}${severityChip}${epssChip}
-      <a class="chip" href="https://www.cve.org/CVERecord?id=${encodeURIComponent(id)}" target="_blank" rel="noopener">MITRE ↗</a>
+      <a class="chip" href="https://www.cve.org/CVERecord?id=${encodeURIComponent(id)}" target="_blank" rel="noopener">CVE.ORG ↗</a>
     </div>
   </div>
   <div class="result-body">
@@ -419,6 +544,7 @@ function resultRow(entry) {
       ${visible.map(pocRow).join('')}
       ${moreButton}
     </div>
+    ${advisoryHtml}
   </div>
 </div>`;
 }
@@ -442,7 +568,10 @@ function renderResults(elapsed) {
   el.results.hidden = false;
 
   if (!results.length) {
-    el.results.innerHTML = `<div class="empty">No results for ${escapeHTML(state.query)}</div>`;
+    const subject = state.query.length >= MIN_QUERY
+      ? ` for ${escapeHTML(state.query)}`
+      : ' for the active filters';
+    el.results.innerHTML = `<div class="empty">No results${subject}</div>`;
     return;
   }
 
@@ -526,7 +655,7 @@ function idleStatus() {
 }
 
 function render() {
-  if (state.query.length < MIN_QUERY) {
+  if (state.query.length < MIN_QUERY && !hasActiveFilters()) {
     el.status.textContent = state.ready ? idleStatus() : 'loading index…';
     renderTrending();
     return;
@@ -539,7 +668,7 @@ function render() {
     return;
   }
   const started = performance.now();
-  state.results = runSearch(state.query);
+  state.results = runSearch(state.query.length >= MIN_QUERY ? state.query : '');
   renderResults(performance.now() - started);
 }
 
@@ -563,6 +692,45 @@ el.input.addEventListener('input', () => {
 });
 
 document.querySelector('.search').addEventListener('submit', event => event.preventDefault());
+
+function syncFilterControls() {
+  el.severity.value = state.severity;
+  el.source.value = state.source;
+  el.kevOnly.setAttribute('aria-pressed', String(state.kevOnly));
+  el.clearFilters.hidden = !hasActiveFilters();
+}
+
+el.severity.addEventListener('change', () => {
+  state.severity = el.severity.value;
+  state.shown = PAGE_SIZE;
+  syncFilterControls();
+  render();
+});
+
+el.source.addEventListener('change', () => {
+  state.source = el.source.value;
+  state.shown = PAGE_SIZE;
+  syncFilterControls();
+  render();
+});
+
+el.kevOnly.addEventListener('click', () => {
+  state.kevOnly = !state.kevOnly;
+  state.shown = PAGE_SIZE;
+  syncFilterControls();
+  render();
+});
+
+el.clearFilters.addEventListener('click', () => {
+  state.severity = 'ALL';
+  state.kevOnly = false;
+  state.source = 'ALL';
+  state.shown = PAGE_SIZE;
+  syncFilterControls();
+  render();
+});
+
+syncFilterControls();
 
 // Typing anywhere on the page means typing into the search field. The keystroke
 // is not swallowed: focusing during keydown lets the character land in the
@@ -605,6 +773,7 @@ document.querySelector('.switch').addEventListener('click', event => {
 el.results.addEventListener('click', event => {
   const desc = event.target.closest('[data-toggle-desc]');
   const poc = event.target.closest('[data-toggle-poc]');
+  const advisory = event.target.closest('[data-toggle-advisory]');
   const more = event.target.closest('[data-more-results]');
   if (desc) {
     const id = desc.dataset.toggleDesc;
@@ -612,6 +781,9 @@ el.results.addEventListener('click', event => {
   } else if (poc) {
     const id = poc.dataset.togglePoc;
     state.pocOpen.has(id) ? state.pocOpen.delete(id) : state.pocOpen.add(id);
+  } else if (advisory) {
+    const id = advisory.dataset.toggleAdvisory;
+    state.advisoryOpen.has(id) ? state.advisoryOpen.delete(id) : state.advisoryOpen.add(id);
   } else if (more) {
     state.shown += PAGE_SIZE;
   } else {
@@ -648,31 +820,38 @@ async function loadJSON(url, options) {
   // their star and age columns, which is the documented fallback.
   loadJSON('/kev.json', { cache: 'no-cache' }).then(data => {
     kev = data || {};
+    el.kevOnly.disabled = false;
     paintHeroStats();
-    // A search already on screen owns the view; only repaint the idle table.
-    if (!state.query) renderTrending();
-    if (state.query && state.ready) renderResults(null);
+    if (state.ready && (state.query || hasActiveFilters())) render();
+    else renderTrending();
+  }).catch(err => console.warn(err.message));
+
+  loadJSON('/cve_metadata.json', { cache: 'no-cache' }).then(data => {
+    metadata = data || {};
+    el.severity.disabled = false;
+    if (state.ready && (state.query || hasActiveFilters())) render();
   }).catch(err => console.warn(err.message));
 
   loadJSON('/nuclei.json', { cache: 'no-cache' }).then(data => {
     ratings = data || {};
-    if (state.query && state.ready) renderResults(null);
+    if (state.ready && (state.query || hasActiveFilters())) render();
   }).catch(err => console.warn(err.message));
 
   loadJSON('/epss.json', { cache: 'no-cache' }).then(data => {
     epss = data || {};
-    if (state.query && state.ready) renderResults(null);
+    if (state.ready && (state.query || hasActiveFilters())) renderResults(null);
   }).catch(err => console.warn(err.message));
 
   loadJSON('/repo_meta.json', { cache: 'no-cache' }).then(data => {
     repoMeta = data || {};
     for (const entry of dataset) entry._ranked = null;
-    if (state.query && state.ready) renderResults(null);
+    if (state.ready && (state.query || hasActiveFilters())) renderResults(null);
   }).catch(err => console.warn(err.message));
 
   try {
     dataset = prepareDataset(await loadJSON('/CVE_list.json', { cache: 'no-cache' }));
     state.ready = true;
+    el.source.disabled = false;
     render();
   } catch (err) {
     console.warn(err.message);

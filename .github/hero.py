@@ -130,7 +130,7 @@ def hero(counts: dict) -> str:
   <text x="56" y="70" font-family="{MONO}" font-size="44" font-weight="700"
         fill="{FG}" letter-spacing="2">CVE RADAR</text>
   <text x="56" y="104" font-family="{MONO}" font-size="15" fill="{MUTED}">
-    Public proof-of-concept exploits for every CVE.</text>
+    Public proof-of-concept exploits, indexed by CVE.</text>
   <text x="56" y="132" font-family="{MONO}" font-size="15" fill="{ACCENT}">cve.codepwn.win</text>
 
   {blocks}
@@ -158,7 +158,7 @@ def social(counts: dict) -> str:
   <text x="96" y="215" font-family="{MONO}" font-size="76" font-weight="700"
         fill="{FG}" letter-spacing="3">CVE RADAR</text>
   <text x="96" y="272" font-family="{MONO}" font-size="24" fill="{MUTED}">
-    Public proof-of-concept exploits for every CVE.</text>
+    Public proof-of-concept exploits, indexed by CVE.</text>
 
   <rect x="96" y="344" width="1088" height="1" fill="{BORDER}"/>
   {blocks}

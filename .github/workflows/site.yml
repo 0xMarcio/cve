@@ -12,6 +12,8 @@ on:
       - Hot CVEs List
       - Audit PoC Links
       - Sync PoC-in-GitHub
+      - Sync CVE Metadata
+      - Sync PoC Collections
     types:
       - completed
   push:

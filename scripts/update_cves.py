@@ -24,11 +24,14 @@ CVES = ROOT / "cves"
 INDEX = ROOT / "index"
 GITHUB_LIST = INDEX / "github.txt"
 REFERENCE_LIST = INDEX / "references.txt"
+VERIFIED_REFERENCE_LIST = INDEX / "reference_pocs.txt"
 BLACKLIST_FILE = INDEX / "blacklist.txt"
 ADVISORY_FILE = INDEX / "advisory_hosts.txt"
 STATE_FILE = ROOT / ".github" / "cve_sync_state.json"
 KEV_FILE = INDEX / "kev.json"
 DATES_FILE = INDEX / "cve_dates.json"
+RECORD_STATE_FILE = INDEX / "cve_record_state.json"
+RECORD_RETRY_DAYS = 1
 
 GITHUB_GRAPHQL_URL = "https://api.github.com/graphql"
 CVE_API_URL = "https://cveawg.mitre.org/api/cve/{cve_id}"
@@ -376,7 +379,7 @@ def qualifying_repo_cves(
             continue
         if (
             readme_has_poc_context(readme, cve_id, full_name)
-            and (has_artifact or has_code or identity_has_poc)
+            and (has_artifact or identity_has_poc)
         ):
             accepted.add(cve_id)
     return accepted
@@ -716,6 +719,7 @@ def reference_is_poc(
     blacklist: Collection[str],
     cve_id: str = "",
     advisories: Collection[str] | None = None,
+    trust_exploit_tag: bool = True,
 ) -> bool:
     url = str(reference.get("url") or "").strip()
     if not url.startswith(("http://", "https://")):
@@ -730,8 +734,10 @@ def reference_is_poc(
     ):
         return False
     tags = [str(tag).lower() for tag in reference.get("tags") or []]
-    evidence = " ".join([url, str(reference.get("name") or ""), *tags])
-    if any("exploit" in tag for tag in tags):
+    evidence = " ".join(
+        [url, str(reference.get("name") or ""), *(tags if trust_exploit_tag else [])]
+    )
+    if trust_exploit_tag and any("exploit" in tag for tag in tags):
         return True
     return bool(POC_RE.search(evidence))
 
@@ -744,12 +750,22 @@ def poc_references(
     if not cve_id or not record_is_published(record):
         return []
     blacklist = load_blacklist() if blacklist is None else blacklist
-    candidates = [cna_container(record)]
+    containers = record.get("containers") or {}
+    candidates = [(cna_container(record), True)] + [
+        (container, False)
+        for container in containers.get("adp") or []
+        if isinstance(container, dict)
+    ]
     references: list[str] = []
-    for container in candidates:
+    for container, trust_exploit_tag in candidates:
         for item in container.get("references") or []:
             url = str(item.get("url") or "").strip()
-            if reference_is_poc(item, blacklist, cve_id):
+            if reference_is_poc(
+                item,
+                blacklist,
+                cve_id,
+                trust_exploit_tag=trust_exploit_tag,
+            ):
                 references.append(url)
     return stable_unique_poc_links(references)
 
@@ -964,6 +980,104 @@ def record_dates(records: dict[str, dict[str, Any]], *, dry_run: bool) -> int:
     return changed
 
 
+def cvelist_record_path(cvelist_dir: Path, cve_id: str) -> Path:
+    """Resolve one CVE List V5 record without scanning the full corpus."""
+    base = cvelist_dir / "cves" if (cvelist_dir / "cves").is_dir() else cvelist_dir
+    _, year, number = cve_id.split("-", 2)
+    bucket = f"{int(number) // 1000}xxx"
+    return base / year / bucket / f"{cve_id}.json"
+
+
+def load_record_state(path: Path = RECORD_STATE_FILE) -> dict[str, dict[str, str]]:
+    try:
+        payload = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        return {}
+    return payload if isinstance(payload, dict) else {}
+
+
+def retry_record(entry: dict[str, str], today: date) -> bool:
+    if str(entry.get("status") or "").upper() == "REJECTED":
+        return False
+    try:
+        checked = date.fromisoformat(str(entry.get("checked") or ""))
+    except ValueError:
+        return True
+    return (today - checked).days >= RECORD_RETRY_DAYS
+
+
+def ensure_cve_entries(
+    cve_ids: Iterable[str],
+    *,
+    dry_run: bool,
+    cvelist_dir: Path | None = None,
+) -> tuple[set[str], set[str]]:
+    """Create base markdown for published source CVEs missing from the index.
+
+    A local CVE List checkout is the efficient path for a large backfill. The
+    normal scheduled jobs ask the CVE Services API only for new gaps.
+    """
+    wanted = {
+        cve_id.upper()
+        for cve_id in cve_ids
+        if is_valid_cve(cve_id.upper())
+        and not (CVES / cve_id.split("-")[1] / f"{cve_id.upper()}.md").exists()
+    }
+    state = load_record_state()
+    state = {
+        cve_id: value
+        for cve_id, value in state.items()
+        if not (CVES / cve_id.split("-")[1] / f"{cve_id}.md").exists()
+    }
+    if not wanted:
+        if not dry_run and RECORD_STATE_FILE.exists():
+            RECORD_STATE_FILE.write_text(
+                json.dumps(state, separators=(",", ":"), sort_keys=True) + "\n",
+                encoding="utf-8",
+            )
+        return set(), set()
+    if cvelist_dir is not None and not cvelist_dir.is_dir():
+        raise ValueError(f"CVE List directory does not exist: {cvelist_dir}")
+
+    today = date.today()
+    due = wanted if cvelist_dir is not None else {
+        cve_id for cve_id in wanted if retry_record(state.get(cve_id, {}), today)
+    }
+    records: dict[str, dict[str, Any]] = {}
+    if cvelist_dir is not None:
+        for cve_id in sorted(due):
+            path = cvelist_record_path(cvelist_dir, cve_id)
+            if record := read_record(path):
+                records[cve_id] = record
+
+    fetch_missing_records(due, records)
+    created: set[str] = set()
+    unavailable: set[str] = wanted - due
+    kev = load_kev()
+    for cve_id in sorted(due):
+        record = records.get(cve_id) or {}
+        details = details_from_record(record)
+        if details is None:
+            unavailable.add(cve_id)
+            status = str((record.get("cveMetadata") or {}).get("state") or "UNAVAILABLE").upper()
+            state[cve_id] = {"status": status, "checked": today.isoformat()}
+            continue
+        path = CVES / cve_id.split("-")[1] / f"{cve_id}.md"
+        if not dry_run:
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_text(build_markdown(cve_id, details, [], [], kev), encoding="utf-8")
+        created.add(cve_id)
+        state.pop(cve_id, None)
+
+    record_dates(records, dry_run=dry_run)
+    if not dry_run:
+        RECORD_STATE_FILE.write_text(
+            json.dumps(state, separators=(",", ":"), sort_keys=True) + "\n",
+            encoding="utf-8",
+        )
+    return created, unavailable
+
+
 def load_kev(path: Path = KEV_FILE) -> dict[str, list]:
     """CISA's known-exploited catalogue, as refreshed by the weekly audit."""
     try:
@@ -998,7 +1112,7 @@ def build_markdown(
     description = "\n".join(
         line.expandtabs(4).rstrip() for line in details.description.strip().splitlines()
     )
-    lines = [f"### [{cve_id}](https://cve.mitre.org/cgi-bin/cvename.cgi?name={cve_id})"]
+    lines = [f"### [{cve_id}](https://www.cve.org/CVERecord?id={cve_id})"]
     products = details.products or ["n/a"]
     versions = details.versions or ["n/a"]
     vulnerabilities = details.vulnerabilities or ["n/a"]
@@ -1181,6 +1295,43 @@ def append_inventory(path: Path, mappings: dict[str, list[str]], *, dry_run: boo
     return len(additions)
 
 
+def reconcile_inventory(
+    path: Path,
+    section: str,
+    mappings: dict[str, list[str]],
+    *,
+    dry_run: bool,
+) -> tuple[int, int]:
+    """Make an inventory an exact view of its markdown section."""
+    expected = {
+        f"{md_path.stem} - {url}"
+        for md_path in CVES.glob("[12][0-9][0-9][0-9]/CVE-*.md")
+        for url in section_links(md_path.read_text(encoding="utf-8", errors="replace"), section)
+    }
+    expected.update(
+        f"{cve_id} - {url}"
+        for cve_id, urls in mappings.items()
+        for url in urls
+        if url
+    )
+    current_lines = path.read_text(encoding="utf-8").splitlines() if path.exists() else []
+    current = set(current_lines)
+    additions = len(expected - current)
+    removals = len(current - expected) + len(current_lines) - len(current)
+    if not dry_run and (additions or removals):
+        seen: set[str] = set()
+        kept: list[str] = []
+        for line in current_lines:
+            if line in expected and line not in seen:
+                kept.append(line)
+                seen.add(line)
+        path.write_text(
+            "\n".join([*kept, *sorted(expected - seen)]) + "\n",
+            encoding="utf-8",
+        )
+    return additions, removals
+
+
 def write_state(fetch_time: str, *, dry_run: bool) -> None:
     if not fetch_time or dry_run:
         return
@@ -1204,6 +1355,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--year", type=int, help="Year to backfill")
     parser.add_argument("--lookback-days", type=int, default=3, help="GitHub pushed-date overlap")
     parser.add_argument("--years", type=int, default=2, help="Number of recent years to scan")
+    parser.add_argument("--all-years", action="store_true", help="Scan every CVE year since 1999")
     parser.add_argument("--cve", action="append", default=[], help="Process one CVE ID")
     parser.add_argument("--skip-github", action="store_true", help="Skip GitHub repository discovery")
     parser.add_argument("--skip-cvelist", action="store_true", help="Skip CVE List V5 references")
@@ -1245,7 +1397,12 @@ def main() -> int:
     if not args.skip_github:
         token = os.environ.get("GITHUB_TOKEN") or os.environ.get("GH_TOKEN") or ""
         current_year = datetime.now(timezone.utc).year
-        years = [args.year] if backfill else list(range(current_year, current_year - args.years, -1))
+        if backfill:
+            years = [args.year]
+        elif args.all_years:
+            years = list(range(current_year, 1998, -1))
+        else:
+            years = list(range(current_year, current_year - args.years, -1))
         github = discover_github_pocs(
             token,
             years=years,
@@ -1268,8 +1425,23 @@ def main() -> int:
         references,
         dry_run=args.dry_run,
     )
-    github_additions = append_inventory(GITHUB_LIST, accepted_github, dry_run=args.dry_run)
-    reference_additions = append_inventory(REFERENCE_LIST, accepted_references, dry_run=args.dry_run)
+    github_additions, github_removals = reconcile_inventory(
+        GITHUB_LIST,
+        "#### Github",
+        accepted_github,
+        dry_run=args.dry_run,
+    )
+    reference_additions, reference_removals = reconcile_inventory(
+        REFERENCE_LIST,
+        "#### Reference",
+        accepted_references,
+        dry_run=args.dry_run,
+    )
+    verified_reference_additions = append_inventory(
+        VERIFIED_REFERENCE_LIST,
+        accepted_references,
+        dry_run=args.dry_run,
+    )
 
     dated = record_dates(records, dry_run=args.dry_run)
     write_state(checkpoint, dry_run=args.dry_run)
@@ -1279,8 +1451,10 @@ def main() -> int:
         f"Skipped: {len(stats.skipped)}"
     )
     print(
-        f"Inventory additions: {github_additions} GitHub | "
-        f"{reference_additions} references | {dated} publication dates"
+        f"Inventory changes: +{github_additions}/-{github_removals} GitHub | "
+        f"+{reference_additions}/-{reference_removals} references | "
+        f"{verified_reference_additions} verified references added | "
+        f"{dated} publication dates"
     )
     if stats.skipped:
         for entry in stats.skipped[:20]:

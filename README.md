@@ -1,8 +1,8 @@
 <div align="center">
 
-<a href="https://cve.codepwn.win/"><img src="https://raw.githubusercontent.com/0xMarcio/cve/main/docs/hero.svg?v=202609011406" alt="CVE Radar" width="100%"></a>
+<a href="https://cve.codepwn.win/"><img src="https://raw.githubusercontent.com/0xMarcio/cve/main/docs/hero.svg?v=202609011654" alt="CVE Radar" width="100%"></a>
 
-[![last sync](https://img.shields.io/badge/last%20sync-01%20Sep%202026%2014%3A06%20UTC-2f81f7?style=flat-square&labelColor=161b22)](https://github.com/0xMarcio/cve/commits/main)&nbsp;[![CI](https://img.shields.io/github/actions/workflow/status/0xMarcio/cve/hot_cves.yml?style=flat-square&label=CI&color=2f81f7&labelColor=161b22&_=202609011406)](https://github.com/0xMarcio/cve/actions/workflows/hot_cves.yml)&nbsp;[![CVEs with PoCs](https://img.shields.io/badge/CVEs%20with%20PoCs-89%2C125-2f81f7?style=flat-square&labelColor=161b22)](https://cve.codepwn.win/)&nbsp;[![known exploited](https://img.shields.io/badge/known%20exploited-1%2C170-f85149?style=flat-square&labelColor=161b22)](https://cve.codepwn.win/)&nbsp;[![stars](https://img.shields.io/github/stars/0xMarcio/cve?style=flat-square&label=stars&color=e3b341&labelColor=161b22&_=202609011406)](https://github.com/0xMarcio/cve/stargazers)
+[![last sync](https://img.shields.io/badge/last%20sync-01%20Sep%202026%2016%3A54%20UTC-2f81f7?style=flat-square&labelColor=161b22)](https://github.com/0xMarcio/cve/commits/main)&nbsp;[![CI](https://img.shields.io/github/actions/workflow/status/0xMarcio/cve/hot_cves.yml?style=flat-square&label=CI&color=2f81f7&labelColor=161b22&_=202609011654)](https://github.com/0xMarcio/cve/actions/workflows/hot_cves.yml)&nbsp;[![CVEs with PoCs](https://img.shields.io/badge/CVEs%20with%20PoCs-91%2C903-2f81f7?style=flat-square&labelColor=161b22)](https://cve.codepwn.win/)&nbsp;[![known exploited](https://img.shields.io/badge/known%20exploited-1%2C189-f85149?style=flat-square&labelColor=161b22)](https://cve.codepwn.win/)&nbsp;[![stars](https://img.shields.io/github/stars/0xMarcio/cve?style=flat-square&label=stars&color=e3b341&labelColor=161b22&_=202609011654)](https://github.com/0xMarcio/cve/stargazers)
 
 </div>
 
@@ -14,41 +14,41 @@ No star floor here, so a PoC published this morning shows up the same day rather
 
 | Stars | Updated | Repository | Description |
 | --- | --- | --- | --- |
-| 0⭐ | 3h ago | [CVE-2025-39401](https://github.com/katranSefa/CVE-2025-39401) | Unrestricted Upload of File with Dangerous Type vulnerability in mojoomla WPAMS apartment-management allows… |
-| 0⭐ | 10h ago | [CVE-2026-68138](https://github.com/suominen/CVE-2026-68138) | Tracking CVE-2026-68138, the Linux kernel net/sched qdisc rate-table use-after-free |
-| 0⭐ | 16h ago | [CVE-2025-69080](https://github.com/AndrielSec/CVE-2025-69080) | Improper Control of Filename for Include/Require Statement in PHP Program ('PHP Remote File Inclusion')… |
-| 0⭐ | 23h ago | <img src="https://raw.githubusercontent.com/0xMarcio/cve/main/docs/kev.svg" alt="KEV" title="CISA known exploited" height="14"> [cve-2025-20333](https://github.com/cobbbex/cve-2025-20333) | A vulnerability in the VPN web server of Cisco Secure Firewall Adaptive Security Appliance (ASA) Software and… |
-| 0⭐ | 1d ago | [CVE-2026-76569](https://github.com/toanln-cov/CVE-2026-76569) | Reflected XSS via search GET Parameter in Phoca Download |
-| 2⭐ | 1d ago | [CVE-2025-49844](https://github.com/Zain3311/CVE-2025-49844) | 🚨 Exploit the CVE-2025-49844 Redis Lua interpreter UAF vulnerability to execute arbitrary shellcode and gain… |
+| 0⭐ | 6h ago | [CVE-2025-39401](https://github.com/katranSefa/CVE-2025-39401) | Unrestricted Upload of File with Dangerous Type vulnerability in mojoomla WPAMS apartment-management allows… |
+| 0⭐ | 10h ago | [CVE-2026-82329](https://github.com/HORKimhab/CVE-2026-82329) | JFrog Artifactory contains an authentication weakness that, under default configuration, may allow an… |
+| 0⭐ | 19h ago | [CVE-2025-69080](https://github.com/AndrielSec/CVE-2025-69080) | Improper Control of Filename for Include/Require Statement in PHP Program ('PHP Remote File Inclusion')… |
+| 0⭐ | 1d ago | <img src="https://raw.githubusercontent.com/0xMarcio/cve/main/docs/kev.svg" alt="KEV" title="CISA known exploited" height="14"> [cve-2025-20333](https://github.com/cobbbex/cve-2025-20333) | A vulnerability in the VPN web server of Cisco Secure Firewall Adaptive Security Appliance (ASA) Software and… |
 | 10⭐ | 1d ago | <img src="https://raw.githubusercontent.com/0xMarcio/cve/main/docs/kev.svg" alt="KEV" title="CISA known exploited" height="14"> [cve-2025-21479-iqoo11pro](https://github.com/Type010/cve-2025-21479-iqoo11pro) | Memory corruption due to unauthorized command execution in GPU micronode while executing specific sequence of… |
 | 2⭐ | 1d ago | [CVE-2026-78904-Digital-Dinar-Drain](https://github.com/vxssroott/CVE-2026-78904-Digital-Dinar-Drain) | CBDC Infrastructure Vulnerability Research. CVE-2026-78904: Infinite mint and redemption bypass in central… |
 | 0⭐ | 1d ago | [cve-2026-42945](https://github.com/FranklinF25/cve-2026-42945) | NGINX Plus and NGINX Open Source have a vulnerability in the ngx_http_rewrite_module module. This… |
 | 0⭐ | 2d ago | [CVE-2025-6440](https://github.com/katranSefa/CVE-2025-6440) | The WooCommerce Designer Pro plugin for WordPress, used by the Pricom - Printing Company & Design Services… |
+| 0⭐ | 2d ago | [CVE-2026-76581](https://github.com/HORKimhab/CVE-2026-76581) | The WPMU DEV Dashboard plugin for WordPress is vulnerable to Authentication Bypass in all versions up to, and… |
+| 10⭐ | 2d ago | [givewp-cve-2026-82222-rce-lab](https://github.com/dinosn/givewp-cve-2026-82222-rce-lab) | Authorized Docker lab and clean PoC for validating CVE-2026-82222 RCE in GiveWP 4.16.5.1 and the 4.16.7.2 fix. |
 
-## 2026 &middot; newest 20 of 254
+## 2026 &middot; newest 20 of 255
 
 | Stars | Updated | Repository | Description |
 | --- | --- | --- | --- |
 | 81⭐ | 6d ago | [CVE-2026-75604-poc](https://github.com/rafabd1/CVE-2026-75604-poc) | CVE-2026-75604 Next.js Windows RCE poc |
-| 157⭐ | 10d ago | [CVE-2026-62911](https://github.com/hypnguyen1209/CVE-2026-62911) | POC pre-auth RCE on Exchange |
+| 159⭐ | 10d ago | [CVE-2026-62911](https://github.com/hypnguyen1209/CVE-2026-62911) | POC pre-auth RCE on Exchange |
 | 53⭐ | 11d ago | [CVE-2026-64638-PoC-XSS2Shell-](https://github.com/Boreas37/CVE-2026-64638-PoC-XSS2Shell-) | XSS2Shell (CVE-2026-64638) WordPress pre-auth XSS to RCE chain - PoC exploit + defensive audit tool + nuclei… |
 | 37⭐ | 11d ago | [CVE-2026-18963-Exploit](https://github.com/Snizi/CVE-2026-18963-Exploit) | Exploit for KeyCloak CVE-2026-18963 |
-| 421⭐ | 11d ago | [CVE-2026-9830](https://github.com/opaxial/CVE-2026-9830) | CVE-2026-9830 Proof of Concept |
+| 427⭐ | 11d ago | [CVE-2026-9830](https://github.com/opaxial/CVE-2026-9830) | CVE-2026-9830 Proof of Concept |
 | 531⭐ | 12d ago | <img src="https://raw.githubusercontent.com/0xMarcio/cve/main/docs/kev.svg" alt="KEV" title="CISA known exploited" height="14"> [cve-2026-41940-PoC](https://github.com/lanicer/cve-2026-41940-PoC) | A cPanel and WHM authentication bypassing tool |
 | 824⭐ | 12d ago | <img src="https://raw.githubusercontent.com/0xMarcio/cve/main/docs/kev.svg" alt="KEV" title="CISA known exploited" height="14"> [CVE-2026-24061](https://github.com/jacubes/CVE-2026-24061) | CVE-2026-24061 exploit PoC |
-| 60⭐ | 17d ago | <img src="https://raw.githubusercontent.com/0xMarcio/cve/main/docs/kev.svg" alt="KEV" title="CISA known exploited" height="14"> [watchTowr-vs-Citrix-Netscaler-PreAuth-RCE-CVE-2026-8452](https://github.com/watchtowrlabs/watchTowr-vs-Citrix-Netscaler-PreAuth-RCE-CVE-2026-8452) | CVE-2026-8452 PreAuth RCE |
 | 24⭐ | 19d ago | [CVE-2026-66804-CrossDevice-Service-EoP](https://github.com/Rat5ak/CVE-2026-66804-CrossDevice-Service-EoP) | CVE-2026-66804 Windows Cross Device virtual camera EoP - Standard user to SYSTEM |
-| 33⭐ | 19d ago | [CVE-2026-68138](https://github.com/aramosf/CVE-2026-68138) | CVE-2026-68138 Linux qdisc rate-table race local privilege escalation PoC |
+| 33⭐ | 20d ago | [CVE-2026-68138](https://github.com/aramosf/CVE-2026-68138) | CVE-2026-68138 Linux qdisc rate-table race local privilege escalation PoC |
 | 19⭐ | 25d ago | <img src="https://raw.githubusercontent.com/0xMarcio/cve/main/docs/kev.svg" alt="KEV" title="CISA known exploited" height="14"> [CVE-2026-63077](https://github.com/sfewer-r7/CVE-2026-63077) | Unauthenticated Remote Code Execution in JetBrains TeamCity (CVE-2026-63077) |
 | 58⭐ | 26d ago | <img src="https://raw.githubusercontent.com/0xMarcio/cve/main/docs/kev.svg" alt="KEV" title="CISA known exploited" height="14"> [CVE-2026-55040](https://github.com/sfewer-r7/CVE-2026-55040) | Microsoft SharePoint JWT Authentication Bypass (CVE-2026-55040) |
-| 53⭐ | 29d ago | [CVE-2026-64560-Analysis](https://github.com/villager1314/CVE-2026-64560-Analysis) | In the Linux kernel, the following vulnerability has been resolved: posix-cpu-timers: Prevent UAF caused by… |
 | 17⭐ | 29d ago | <img src="https://raw.githubusercontent.com/0xMarcio/cve/main/docs/kev.svg" alt="KEV" title="CISA known exploited" height="14"> [CVE-2026-60004-POC](https://github.com/imbas007/CVE-2026-60004-POC) | CVE-2026-60004 Pre-Auth RCE Exploit - Gitea <= 1.27.0 diffpatch git hook injection (CVSS 9.8) |
 | 81⭐ | 33d ago | [CVE-2026-43499-Poc-Analysis](https://github.com/Linuxoid-cn/CVE-2026-43499-Poc-Analysis) | Vulnerability analysis and Proof of Concept (PoC) for CVE-2026-43499 affecting Xiaomi devices. For… |
 | 23⭐ | 33d ago | [CVE-2026-66066-POC](https://github.com/Zer0SumGam3/CVE-2026-66066-POC) | PoC for CVE-2026-66066 in Ruby on Rails |
-| 11⭐ | 34d ago | <img src="https://raw.githubusercontent.com/0xMarcio/cve/main/docs/kev.svg" alt="KEV" title="CISA known exploited" height="14"> [CVE-2026-16232](https://github.com/sfewer-r7/CVE-2026-16232) | A proof-of-concept script to exploit CVE-2026-16232, an authentication bypass via the SmartConsole login… |
+| 11⭐ | 35d ago | <img src="https://raw.githubusercontent.com/0xMarcio/cve/main/docs/kev.svg" alt="KEV" title="CISA known exploited" height="14"> [CVE-2026-16232](https://github.com/sfewer-r7/CVE-2026-16232) | A proof-of-concept script to exploit CVE-2026-16232, an authentication bypass via the SmartConsole login… |
 | 325⭐ | 35d ago | [CVE-2026-54121](https://github.com/aniqfakhrul/CVE-2026-54121) | Certighost POC |
 | 35⭐ | 36d ago | [CVE-2026-42533](https://github.com/imbas007/CVE-2026-42533) | nginx heap buffer overflow PoC - CVE-2026-42533 pre-auth RCE via two-pass capture clobbering. Crash confirmed… |
 | 26⭐ | 37d ago | [CVE-2026-43499-root-KernelSU](https://github.com/woshimaniubi8/CVE-2026-43499-root-KernelSU) | 基于内核漏洞CVE-2026-43499的本地提权适配，集成嵌入式 KernelSU.CVE-2026-43499+KernelSU越狱模式 |
+| 27⭐ | 37d ago | [CVE-2026-54121-PoC-Exploit](https://github.com/tc4dy/CVE-2026-54121-PoC-Exploit) | 👻 CVE-2026-54121 - Best CertiGhost AD CS Multi-Exploit Framework / Advanced toolkit with rogue DC/LDAP… |
+| 34⭐ | 39d ago | [POC-CVE-2026-60206](https://github.com/imbas007/POC-CVE-2026-60206) | cve cve-2026-60206 weblogic saml exploit poc vulnerability oracle scanner security |
 
 ## 2025 &middot; newest 16 of 24
 
@@ -57,7 +57,7 @@ No star floor here, so a PoC published this morning shows up the same day rather
 | 6⭐ | 5d ago | <img src="https://raw.githubusercontent.com/0xMarcio/cve/main/docs/kev.svg" alt="KEV" title="CISA known exploited" height="14"> [vivo_iqoo_neo_9_root_research_on_CVE-2025-21479](https://github.com/linux-tools/vivo_iqoo_neo_9_root_research_on_CVE-2025-21479) | Memory corruption due to unauthorized command execution in GPU micronode while executing specific sequence of… |
 | 4⭐ | 12d ago | <img src="https://raw.githubusercontent.com/0xMarcio/cve/main/docs/kev.svg" alt="KEV" title="CISA known exploited" height="14"> [cve-2025-21479_iqooneo8](https://github.com/Qingizi7/cve-2025-21479_iqooneo8) | Local root exploit for CVE-2025-21479 (Adreno KGSL) on iQOO Neo8 (SM8475) - physical memory r/w, disables… |
 | 20⭐ | 21d ago | [CVE-2025-7771](https://github.com/enessakircolak/CVE-2025-7771) | ThrottleStop.sys Arbitrary Physical Memory R/W |
-| 6⭐ | 25d ago | [CVE-2025-8045](https://github.com/kuzeyardabulut/CVE-2025-8045) | Dirty Pagetable Exploit for CVE-2025-8045 |
+| 6⭐ | 26d ago | [CVE-2025-8045](https://github.com/kuzeyardabulut/CVE-2025-8045) | Dirty Pagetable Exploit for CVE-2025-8045 |
 | 6⭐ | 30d ago | <img src="https://raw.githubusercontent.com/0xMarcio/cve/main/docs/kev.svg" alt="KEV" title="CISA known exploited" height="14"> [SELinux-Permissive-Only-CVE-2025-21479](https://github.com/CamsShaft/SELinux-Permissive-Only-CVE-2025-21479) | This is an SELinux permissive version of the Cheese exploit also known as CVE-2025-21479 which affected the… |
 | 4⭐ | 41d ago | <img src="https://raw.githubusercontent.com/0xMarcio/cve/main/docs/kev.svg" alt="KEV" title="CISA known exploited" height="14"> [CVE-2025-32432](https://github.com/c0gnit00/CVE-2025-32432) | Exploit, POC for CVE-2025-32432, CraftCMS2Shell |
 | 4⭐ | 44d ago | [CVE-2025-64512](https://github.com/matesz44/CVE-2025-64512) | CVE-2025-64512: pdfminer.six pickle deserialization rce; .pickle.gz + pdf generator w/ custom payloads |
@@ -66,7 +66,7 @@ No star floor here, so a PoC published this morning shows up the same day rather
 | 4⭐ | 60d ago | [CVE-2025-69212-PoC](https://github.com/BridgerAlderson/CVE-2025-69212-PoC) | OpenSTAManager v2.9.8 and earlier versions contain a critical OS Command Injection vulnerability in the P7M… |
 | 3⭐ | 60d ago | <img src="https://raw.githubusercontent.com/0xMarcio/cve/main/docs/kev.svg" alt="KEV" title="CISA known exploited" height="14"> [CVE-2025-57819](https://github.com/K3ysTr0K3R/CVE-2025-57819) | CVE-2025-57819 - FreePBX Unauthenticated Remote Code Execution (RCE) |
 | 4⭐ | 65d ago | [CVE-2025-69212-PoC](https://github.com/tohib09/CVE-2025-69212-PoC) | OpenSTAManager is an open source management software for technical assistance and invoicing. In 2.9.8 and… |
-| 5⭐ | 67d ago | <img src="https://raw.githubusercontent.com/0xMarcio/cve/main/docs/kev.svg" alt="KEV" title="CISA known exploited" height="14"> [CVE-2025-8110](https://github.com/joaquinrrr/CVE-2025-8110) | PoC exploit for CVE-2025-8110 |
+| 5⭐ | 68d ago | <img src="https://raw.githubusercontent.com/0xMarcio/cve/main/docs/kev.svg" alt="KEV" title="CISA known exploited" height="14"> [CVE-2025-8110](https://github.com/joaquinrrr/CVE-2025-8110) | PoC exploit for CVE-2025-8110 |
 | 14⭐ | 81d ago | [vulnerable-nextjs-14-CVE-2025-29927](https://github.com/lirantal/vulnerable-nextjs-14-CVE-2025-29927) | Next.js is a React framework for building full-stack web applications. Starting in version 1.11.4 and prior… |
 | 14⭐ | 86d ago | <img src="https://raw.githubusercontent.com/0xMarcio/cve/main/docs/kev.svg" alt="KEV" title="CISA known exploited" height="14"> [FreePBX-CVE-2025-57819-RCE](https://github.com/0xEhab/FreePBX-CVE-2025-57819-RCE) | FreePBX is an open-source web-based graphical user interface. FreePBX 15, 16, and 17 endpoints are vulnerable… |
 | 7⭐ | 86d ago | <img src="https://raw.githubusercontent.com/0xMarcio/cve/main/docs/kev.svg" alt="KEV" title="CISA known exploited" height="14"> [CVE-2025-57819-poc](https://github.com/b4sh2/CVE-2025-57819-poc) | CVE-2025-57819 -> rce |
@@ -74,14 +74,13 @@ No star floor here, so a PoC published this morning shows up the same day rather
 <details>
 <summary>2024, 2023, 2022</summary>
 
-## 2024 &middot; newest 7 of 10
+## 2024 &middot; newest 6 of 10
 
 | Stars | Updated | Repository | Description |
 | --- | --- | --- | --- |
-| 16⭐ | 15d ago | [CVE-2024-56426](https://github.com/Creeeeger/CVE-2024-56426) | A PoC of the CVE-2024-56426 vulnerability. |
+| 16⭐ | 16d ago | [CVE-2024-56426](https://github.com/Creeeeger/CVE-2024-56426) | A PoC of the CVE-2024-56426 vulnerability. |
 | 3⭐ | 17d ago | [CVE-2024-56426](https://github.com/xcracker000/CVE-2024-56426) | CVE-2024-56426 Exynos9830 Bootrom Exploit - SM-G985F |
 | 3⭐ | 33d ago | [CVE-2024-36104-PoC](https://github.com/Groppoxx/CVE-2024-36104-PoC) | PoC for CVE-2024-36104 - unauthenticated Groovy RCE in Apache OFBiz (<18.12.14) via /%2e/%2e/ view path… |
-| 31⭐ | 65d ago | <img src="https://raw.githubusercontent.com/0xMarcio/cve/main/docs/kev.svg" alt="KEV" title="CISA known exploited" height="14"> [CVE-2024-24919-Bulk-Scanner](https://github.com/ifconfig-me/CVE-2024-24919-Bulk-Scanner) | CVE-2024-24919 [Check Point Security Gateway Information Disclosure] |
 | 3⭐ | 72d ago | [CVE-2024-36991](https://github.com/0xFZin/CVE-2024-36991) | Exploit for CVE-2024-36991 , written by me, enumerates a handfull of things, not all, cause not needed. |
 | 7⭐ | 81d ago | [CVE-2024-27983-nodejs-http2](https://github.com/lirantal/CVE-2024-27983-nodejs-http2) | CVE-2024-27983 this repository builds up a vulnerable HTTP2 Node.js server (`server-nossl.js`) based on… |
 | 4⭐ | 87d ago | [CVE-2024-1065](https://github.com/kuzeyardabulut/CVE-2024-1065) | Page Cache Exploit for CVE-2024-1065 |
@@ -111,11 +110,13 @@ Every file is plain JSON on the CDN. No key, no rate limit.
 ```bash
 # everything the index knows about one CVE
 curl -s https://cve.codepwn.win/CVE_list.json \
-  | jq '.[] | select(.cve == "CVE-2021-44228") | {cve, poc: (.poc | length), nuclei, msf, edb}'
+  | jq '.[] | select(.cve == "CVE-2021-44228") | {cve, poc: (.poc | length), nuclei, msf, edb, vulhub, collections}'
 
-# how bad it is, and how likely it is to be exploited in the next 30 days
-curl -s https://cve.codepwn.win/nuclei.json | jq '."CVE-2021-44228"'
-curl -s https://cve.codepwn.win/epss.json   | jq '."CVE-2021-44228"'
+# every published CVSS assessment plus vetted advisory links
+curl -s https://cve.codepwn.win/cve_metadata.json | jq '."CVE-2021-44228"'
+
+# likelihood of exploitation in the next 30 days
+curl -s https://cve.codepwn.win/epss.json | jq '."CVE-2021-44228"'
 
 # stars and last push for one PoC repository; repository keys are lowercased
 curl -s https://cve.codepwn.win/repo_meta.json | jq '."sfewer-r7/cve-2026-55040"'
@@ -134,34 +135,45 @@ jq -n --slurpfile kev kev.json --slurpfile epss epss.json \
 
 | Endpoint | Holds |
 | --- | --- |
-| [`CVE_list.json`](https://cve.codepwn.win/CVE_list.json) | Every indexed CVE, its description and its `poc`, `nuclei`, `msf` and `edb` links. 48 MB, 10 MB over the wire |
+| [`CVE_list.json`](https://cve.codepwn.win/CVE_list.json) | Every CVE with a linked PoC, its description and its `poc`, `nuclei`, `msf`, `edb`, `vulhub` and `collections` links |
+| [`cve_metadata.json`](https://cve.codepwn.win/cve_metadata.json) | NVD CVSS v2.0, v3.0, v3.1 and v4.0 assessments with vectors and vetted advisory links |
 | [`epss.json`](https://cve.codepwn.win/epss.json) | Exploitation probability and percentile, for nearly every CVE indexed |
-| [`nuclei.json`](https://cve.codepwn.win/nuclei.json) | Severity, CVSS with its vector, EPSS and CWE, for the CVEs a template rates |
+| [`nuclei.json`](https://cve.codepwn.win/nuclei.json) | Template metadata for the CVEs covered by a runnable Nuclei check |
 | [`kev.json`](https://cve.codepwn.win/kev.json) | CISA known exploited, keyed by CVE id |
 | [`repo_meta.json`](https://cve.codepwn.win/repo_meta.json) | Stars and last push date per PoC repository, keys lowercased |
 | [`trending_poc.json`](https://cve.codepwn.win/trending_poc.json) | Trending repositories plus index totals |
-| [`2026/CVE-2026-68138.md`](2026/CVE-2026-68138.md) | Markdown copy of one CVE, one directory per year |
+| [`cves/2026/CVE-2026-68138.md`](cves/2026/CVE-2026-68138.md) | Markdown copy of one CVE, one directory per year |
+
+CVSS rows are `[version, score, severity, vector, source, assessment type]`.
+Advisory rows are `[URL, NVD reference tags]`.
 
 ## Sources
 
 | Source | What it contributes |
 | --- | --- |
 | GitHub | Repositories naming a CVE, checked for code before they are linked |
-| [Nuclei](https://github.com/projectdiscovery/nuclei-templates) | Runnable templates, and the severity, CVSS, EPSS and CWE ratings |
+| [PoC-in-GitHub](https://github.com/nomi-sec/PoC-in-GitHub) | Historical repository candidates, passed through the same code and intent checks |
+| [Nuclei](https://github.com/projectdiscovery/nuclei-templates) | Runnable templates that exercise the vulnerability |
 | [ExploitDB](https://gitlab.com/exploit-database/exploitdb) | Archived exploits, mapped by their own CVE column |
 | [Metasploit](https://github.com/rapid7/metasploit-framework) | Modules, best ranked first |
+| [Vulhub](https://github.com/vulhub/vulhub) | Runnable vulnerable environments and reproduction steps |
+| [afrog](https://github.com/zan8in/afrog), [Vulnerability](https://github.com/tzwlhack/Vulnerability), [0day](https://github.com/helloexp/0day), [xray](https://github.com/chaitin/xray) | CVE-specific templates, code and reproduction guides inside multi-CVE repositories |
 | [EPSS](https://www.first.org/epss/) | Daily exploitation probability from FIRST |
 | [CISA KEV](https://www.cisa.gov/known-exploited-vulnerabilities-catalog) | What is being exploited in the wild |
-| NVD, MITRE | The CVE record itself |
+| [NVD](https://nvd.nist.gov/) | CVSS assessments and tagged vendor, third-party, patch and mitigation references |
+| [CVE Program](https://www.cve.org/) | The CVE record, publication state and CNA references |
 
 ## Build
 
 | Job | Cadence | Picks up |
 | --- | --- | --- |
-| [PoC sweep](.github/workflows/hot_cves.yml) | hourly | New and updated exploit repositories |
-| [CVE sync](.github/workflows/sync_cve_pocs.yml) | daily | New CVEs and references from NVD and MITRE |
+| [Trending sweep](.github/workflows/hot_cves.yml) | hourly | Front-page repositories and prior-hour candidates added to the searchable index |
+| [CVE sync](.github/workflows/sync_cve_pocs.yml) | daily | New CVEs, CNA references and recently pushed GitHub repositories for every CVE year |
+| [Metadata sync](.github/workflows/sync_metadata.yml) | daily plus weekly full pass | CVSS, advisories, rejected records and current CISA KEV status |
 | [Nuclei sync](.github/workflows/sync_nuclei.yml) | daily | New templates and rating changes |
-| [Exploit archives](.github/workflows/sync_exploits.yml) | daily | New ExploitDB entries and Metasploit modules |
+| [Exploit archives](.github/workflows/sync_exploits.yml) | daily | ExploitDB, Metasploit and Vulhub mappings |
+| [Historical GitHub sync](.github/workflows/sync_pocingithub.yml) | weekly | Older PoC repositories missed by the recent-push window |
+| [Path collection sync](.github/workflows/sync_collections.yml) | weekly | CVE-specific artifacts inside curated multi-CVE repositories |
 | [Link audit](.github/workflows/audit_poc_links.yml) | weekly | Repositories that went dead, dropped from the index |
 
 A repository counts as updated only when a commit touches something other than

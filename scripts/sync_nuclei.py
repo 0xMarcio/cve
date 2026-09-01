@@ -17,6 +17,8 @@ import tarfile
 import urllib.request
 from pathlib import Path
 
+from update_cves import ensure_cve_entries
+
 ROOT = Path(__file__).resolve().parents[1]
 CVES = ROOT / "cves"
 INDEX = ROOT / "index"
@@ -194,19 +196,36 @@ def drop_section(path: Path, dry_run: bool) -> bool:
 def main() -> int:
     parser = argparse.ArgumentParser(description="Sync nuclei templates into the index")
     parser.add_argument("--dry-run", action="store_true", help="report without writing")
+    parser.add_argument("--cvelist-dir", type=Path, help="local CVE List V5 root for a large backfill")
     args = parser.parse_args()
 
     templates: dict[str, dict] = {}
+    failures: list[str] = []
     for repo, tarball, blob, scoped in SOURCES:
         try:
             found = collect(download(tarball), blob, scoped)
         except Exception as problem:
-            print(f"{repo}: unavailable ({problem}); skipped")
+            print(f"{repo}: unavailable ({problem})")
+            failures.append(repo)
             continue
         fresh = {cve: entry for cve, entry in found.items() if cve not in templates}
         templates.update(fresh)
         print(f"{repo}: {len(found):,} CVE templates, {len(fresh):,} not already covered")
+    if failures:
+        print(
+            "No files changed because a source was unavailable: " + ", ".join(failures)
+        )
+        return 1
     print(f"{len(templates):,} CVEs templated in total")
+
+    created, unavailable = ensure_cve_entries(
+        templates,
+        dry_run=args.dry_run,
+        cvelist_dir=args.cvelist_dir,
+    )
+    if created or unavailable:
+        verb = "would create" if args.dry_run else "created"
+        print(f"base entries: {len(created):,} {verb}, {len(unavailable):,} unpublished or unavailable")
 
     tally = {"added": 0, "unchanged": 0, "absent": 0}
     for cve, entry in sorted(templates.items()):

@@ -27,7 +27,12 @@ jobs:
       - name: Discover and ingest CVE PoCs
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: python3 scripts/update_cves.py --lookback-days 3 --years 5
+        run: python3 scripts/update_cves.py --lookback-days 3 --all-years
+
+      - name: Verify the generated index
+        run: |
+          python3 -m unittest discover -s tests
+          python3 scripts/build_site.py
 
       - name: Check for changes and commit
         run: |
@@ -38,6 +43,7 @@ jobs:
             .github/cve_sync_state.json \
             index/github.txt \
             index/references.txt \
+            index/reference_pocs.txt \
             index/cve_dates.json \
             cves/
 

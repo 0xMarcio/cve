@@ -1,0 +1,71 @@
+name: Sync CVE Metadata
+
+on:
+  schedule:
+    - cron: '10 3 * * 1-6'
+    - cron: '10 3 * * 0'
+  workflow_dispatch:
+    inputs:
+      full:
+        description: Rebuild every metadata year from NVD
+        required: false
+        default: false
+        type: boolean
+
+permissions:
+  contents: write
+
+concurrency:
+  group: repository-updates
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v7
+
+      - name: Set up Python
+        uses: actions/setup-python@v7
+        with:
+          python-version: '3.13'
+
+      - name: Pull CVSS and advisory metadata from NVD
+        run: |
+          if [ "${{ github.event.schedule }}" = "10 3 * * 0" ] || [ "${{ inputs.full }}" = "true" ]; then
+            python3 scripts/sync_cve_metadata.py --full
+          else
+            python3 scripts/sync_cve_metadata.py
+          fi
+
+      - name: Refresh CISA known-exploited status
+        run: python3 scripts/audit_poc_links.py --kev-only
+
+      - name: Verify the generated index
+        run: |
+          python3 -m unittest discover -s tests
+          python3 scripts/build_site.py
+
+      - name: Check for changes and commit
+        run: |
+          git config user.name 'CVE-BOT'
+          git config user.email 'cve@codepwn.win'
+          git add -- index/metadata/ index/kev.json
+
+          if git diff --cached --quiet; then
+            echo "No changes to commit"
+            exit 0
+          fi
+
+          git commit -m "Sync CVE metadata $(date -u +'%Y-%m-%d')"
+
+          for attempt in 1 2 3; do
+            if git push origin HEAD:main; then
+              exit 0
+            fi
+            echo "Push rejected; replaying onto the current main (attempt $attempt)"
+            git fetch --unshallow origin main 2>/dev/null || git fetch origin main
+            git rebase FETCH_HEAD
+          done
+          exit 1

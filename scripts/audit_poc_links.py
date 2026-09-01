@@ -22,6 +22,8 @@ from update_cves import (
     GitHubClient,
     github_repo_from_url,
     http_json,
+    is_blacklisted_repo,
+    load_blacklist,
     replace_section,
     section_links,
 )
@@ -388,8 +390,13 @@ def main() -> int:
                         help="Reference links to check this run (0 skips them, -1 checks all)")
     parser.add_argument("--workers", type=int, default=16, help="Concurrent reference requests")
     parser.add_argument("--timeout", type=int, default=8, help="Seconds per reference request")
+    parser.add_argument("--kev-only", action="store_true", help="Refresh CISA KEV without auditing links")
     parser.add_argument("--dry-run", action="store_true", help="Report without writing files")
     args = parser.parse_args()
+
+    if args.kev_only:
+        print(f"KEV catalogue: {refresh_kev(dry_run=args.dry_run)} known-exploited CVEs")
+        return 0
 
     references, referenced = collect_repositories()
     names = sorted(referenced)
@@ -403,8 +410,18 @@ def main() -> int:
     print(f"Checking {len(scope)} repositories starting after {state.get('cursor') or 'the beginning'}")
 
     token = os.environ.get("GITHUB_TOKEN") or os.environ.get("GH_TOKEN") or ""
-    missing, metadata = survey(GitHubClient(token), scope)
+    blocked = {
+        name for name in references
+        if is_blacklisted_repo(name, load_blacklist())
+    }
+    missing, metadata = survey(
+        GitHubClient(token),
+        [name for name in scope if name not in blocked],
+    )
     print(f"{len(missing)} repositories no longer exist")
+    if blocked:
+        print(f"Pruning {len(blocked)} explicitly blacklisted repositories")
+    missing |= blocked
 
     entries, links, dead_urls = prune_entries(references, missing, dry_run=args.dry_run)
     inventory = prune_inventory(dead_urls, dry_run=args.dry_run)

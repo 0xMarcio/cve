@@ -5,6 +5,7 @@ docs/kev.json
 docs/repo_meta.json
 docs/trending_poc.json
 docs/nuclei.json
+docs/cve_metadata.json
 docs/epss.json
 docs/api/v1/cve/
 __pycache__/

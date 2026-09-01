@@ -6,6 +6,7 @@ from __future__ import annotations
 import json
 import os
 import re
+import sys
 import time
 from datetime import datetime, timedelta, timezone
 from urllib import error, parse, request
@@ -40,6 +41,10 @@ NVD_API = "https://services.nvd.nist.gov/rest/json/cves/2.0?cveId="
 NVD_LOOKUPS = 4
 USER_AGENT = "0xMarcio-cve-trending"
 ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), os.pardir)
+sys.path.insert(0, os.path.join(ROOT, "scripts"))
+
+from update_cves import load_blacklist, qualifying_repo_cves
+
 README = os.path.join(ROOT, "README.md")
 TRENDING = os.path.join(ROOT, "index", "trending.json")
 KEV = os.path.join(ROOT, "index", "kev.json")
@@ -144,24 +149,28 @@ def just_landed(token: str, seen: set[str]) -> list[dict]:
     # Only the freshest are worth two API round trips each.
     candidates = candidates[:LANDED_ROWS * 4]
 
+    searched = len(candidates)
+    candidates, paths = qualifying_repositories(candidates, token)
     names = [str(repo["full_name"]) for repo in candidates]
-    shipped = code_pushed(names, token)
-    carries_code = code_paths(names, token)
+    shipped = code_pushed(names, token, paths)
 
     fresh, hollow = [], 0
     for repo in candidates:
         name = str(repo["full_name"])
-        if not carries_code.get(name):
-            # Nothing but a README and a licence: a write-up, not an exploit.
+        pushed = shipped.get(name)
+        if not pushed:
             hollow += 1
             continue
-        pushed = shipped.get(name) or str(repo.get("pushed_at") or "")
         if pushed[:10] < since:
             continue
         repo["_shipped"] = pushed
         fresh.append(repo)
     fresh.sort(key=lambda repo: repo["_shipped"], reverse=True)
-    print(f"just landed: {len(fresh)} with code, {hollow} rejected as paperwork only")
+    print(
+        f"just landed: {len(fresh)} qualified, "
+        f"{searched - len(candidates)} rejected by artifact gate, "
+        f"{hollow} without an artifact commit"
+    )
     return fresh[:LANDED_ROWS]
 
 
@@ -258,14 +267,73 @@ def code_paths(full_names: list[str], token: str) -> dict[str, list[str]]:
     return paths
 
 
-def code_pushed(full_names: list[str], token: str) -> dict[str, str]:
+def qualifying_repositories(
+    repositories: list[dict], token: str
+) -> tuple[list[dict], dict[str, list[str]]]:
+    """Apply the index's PoC classifier before publishing a trending row."""
+    accepted: list[dict] = []
+    code: dict[str, list[str]] = {}
+    blacklist = load_blacklist()
+    fields = """
+      readmeMd: object(expression: \"HEAD:README.md\") { ... on Blob { text } }
+      readmeUpper: object(expression: \"HEAD:README.MD\") { ... on Blob { text } }
+      readmeRst: object(expression: \"HEAD:README.rst\") { ... on Blob { text } }
+      readmeBare: object(expression: \"HEAD:README\") { ... on Blob { text } }
+      root: object(expression: \"HEAD:\") {
+        ... on Tree { entries { name type } }
+      }
+    """
+    for start in range(0, len(repositories), 20):
+        batch = repositories[start : start + 20]
+        query = "query { " + " ".join(
+            repository_alias(i, str(repo.get("full_name") or ""), fields)
+            for i, repo in enumerate(batch)
+        ) + " }"
+        data = graphql(query, token)
+        if not data:
+            raise RuntimeError("GitHub returned no repository content for the PoC gate")
+        for index, repo in enumerate(batch):
+            content = data.get(f"r{index}")
+            if content is None:
+                continue
+            full_name = str(repo.get("full_name") or "")
+            topics = [
+                {"topic": {"name": str(topic)}}
+                for topic in repo.get("topics") or []
+                if topic
+            ]
+            candidate = {
+                **content,
+                "nameWithOwner": full_name,
+                "description": repo.get("description") or "",
+                "isFork": bool(repo.get("fork")),
+                "repositoryTopics": {"nodes": topics},
+            }
+            cve = cve_of(repo)
+            if not cve or cve not in qualifying_repo_cves(
+                candidate, int(cve.split("-")[1]), blacklist
+            ):
+                continue
+            entries = ((content.get("root") or {}).get("entries") or [])
+            code[full_name] = [
+                str(entry.get("name") or "")
+                for entry in entries
+                if entry.get("name") and not PAPERWORK.match(str(entry["name"]))
+            ][:PATHS_PER_REPO]
+            accepted.append(repo)
+    return accepted, code
+
+
+def code_pushed(
+    full_names: list[str], token: str, paths: dict[str, list[str]] | None = None
+) -> dict[str, str]:
     """When each repository last committed something that is not paperwork.
 
     A repository whose only recent commit edits the README has not shipped a
     new proof of concept, and saying it was updated an hour ago is a lie the
     whole front page is built on.
     """
-    paths = code_paths(full_names, token)
+    paths = paths if paths is not None else code_paths(full_names, token)
     latest: dict[str, str] = {}
     batch: list[str] = []
 
@@ -333,6 +401,19 @@ def known_exploited() -> set[str]:
 def cve_of(repo: dict) -> str:
     match = CVE_ID.search(f"{repo.get('name') or ''} {repo.get('description') or ''}")
     return f"CVE-{match.group(1)}-{match.group(2)}" if match else ""
+
+
+def repository_summary(repo: dict, cve: str) -> str:
+    """Prefer the CVE summary when a repository only has placeholder copy."""
+    summary = cell(repo.get("description"))
+    remainder = CVE_ID.sub("", summary).strip(" -:|")
+    placeholder = re.fullmatch(
+        r"(?i)(?:draft|todo|tbd|placeholder)(?:\s+or\s+(?:draft|todo|tbd|placeholder))*",
+        remainder,
+    )
+    if not remainder or placeholder:
+        return nvd_description(cve) or summary
+    return summary
 
 
 def shorten(text: str) -> str:
@@ -421,11 +502,13 @@ Every file is plain JSON on the CDN. No key, no rate limit.
 ```bash
 # everything the index knows about one CVE
 curl -s https://cve.codepwn.win/CVE_list.json \\
-  | jq '.[] | select(.cve == "CVE-2021-44228") | {cve, poc: (.poc | length), nuclei, msf, edb}'
+  | jq '.[] | select(.cve == "CVE-2021-44228") | {cve, poc: (.poc | length), nuclei, msf, edb, vulhub, collections}'
 
-# how bad it is, and how likely it is to be exploited in the next 30 days
-curl -s https://cve.codepwn.win/nuclei.json | jq '."CVE-2021-44228"'
-curl -s https://cve.codepwn.win/epss.json   | jq '."CVE-2021-44228"'
+# every published CVSS assessment plus vetted advisory links
+curl -s https://cve.codepwn.win/cve_metadata.json | jq '."CVE-2021-44228"'
+
+# likelihood of exploitation in the next 30 days
+curl -s https://cve.codepwn.win/epss.json | jq '."CVE-2021-44228"'
 
 # stars and last push for one PoC repository; repository keys are lowercased
 curl -s https://cve.codepwn.win/repo_meta.json | jq '."sfewer-r7/cve-2026-55040"'
@@ -444,34 +527,45 @@ jq -n --slurpfile kev kev.json --slurpfile epss epss.json \\
 
 | Endpoint | Holds |
 | --- | --- |
-| [`CVE_list.json`](https://cve.codepwn.win/CVE_list.json) | Every indexed CVE, its description and its `poc`, `nuclei`, `msf` and `edb` links. 48 MB, 10 MB over the wire |
+| [`CVE_list.json`](https://cve.codepwn.win/CVE_list.json) | Every CVE with a linked PoC, its description and its `poc`, `nuclei`, `msf`, `edb`, `vulhub` and `collections` links |
+| [`cve_metadata.json`](https://cve.codepwn.win/cve_metadata.json) | NVD CVSS v2.0, v3.0, v3.1 and v4.0 assessments with vectors and vetted advisory links |
 | [`epss.json`](https://cve.codepwn.win/epss.json) | Exploitation probability and percentile, for nearly every CVE indexed |
-| [`nuclei.json`](https://cve.codepwn.win/nuclei.json) | Severity, CVSS with its vector, EPSS and CWE, for the CVEs a template rates |
+| [`nuclei.json`](https://cve.codepwn.win/nuclei.json) | Template metadata for the CVEs covered by a runnable Nuclei check |
 | [`kev.json`](https://cve.codepwn.win/kev.json) | CISA known exploited, keyed by CVE id |
 | [`repo_meta.json`](https://cve.codepwn.win/repo_meta.json) | Stars and last push date per PoC repository, keys lowercased |
 | [`trending_poc.json`](https://cve.codepwn.win/trending_poc.json) | Trending repositories plus index totals |
-| [`2026/CVE-2026-68138.md`](2026/CVE-2026-68138.md) | Markdown copy of one CVE, one directory per year |
+| [`cves/2026/CVE-2026-68138.md`](cves/2026/CVE-2026-68138.md) | Markdown copy of one CVE, one directory per year |
+
+CVSS rows are `[version, score, severity, vector, source, assessment type]`.
+Advisory rows are `[URL, NVD reference tags]`.
 
 ## Sources
 
 | Source | What it contributes |
 | --- | --- |
 | GitHub | Repositories naming a CVE, checked for code before they are linked |
-| [Nuclei](https://github.com/projectdiscovery/nuclei-templates) | Runnable templates, and the severity, CVSS, EPSS and CWE ratings |
+| [PoC-in-GitHub](https://github.com/nomi-sec/PoC-in-GitHub) | Historical repository candidates, passed through the same code and intent checks |
+| [Nuclei](https://github.com/projectdiscovery/nuclei-templates) | Runnable templates that exercise the vulnerability |
 | [ExploitDB](https://gitlab.com/exploit-database/exploitdb) | Archived exploits, mapped by their own CVE column |
 | [Metasploit](https://github.com/rapid7/metasploit-framework) | Modules, best ranked first |
+| [Vulhub](https://github.com/vulhub/vulhub) | Runnable vulnerable environments and reproduction steps |
+| [afrog](https://github.com/zan8in/afrog), [Vulnerability](https://github.com/tzwlhack/Vulnerability), [0day](https://github.com/helloexp/0day), [xray](https://github.com/chaitin/xray) | CVE-specific templates, code and reproduction guides inside multi-CVE repositories |
 | [EPSS](https://www.first.org/epss/) | Daily exploitation probability from FIRST |
 | [CISA KEV](https://www.cisa.gov/known-exploited-vulnerabilities-catalog) | What is being exploited in the wild |
-| NVD, MITRE | The CVE record itself |
+| [NVD](https://nvd.nist.gov/) | CVSS assessments and tagged vendor, third-party, patch and mitigation references |
+| [CVE Program](https://www.cve.org/) | The CVE record, publication state and CNA references |
 
 ## Build
 
 | Job | Cadence | Picks up |
 | --- | --- | --- |
-| [PoC sweep](.github/workflows/hot_cves.yml) | hourly | New and updated exploit repositories |
-| [CVE sync](.github/workflows/sync_cve_pocs.yml) | daily | New CVEs and references from NVD and MITRE |
+| [Trending sweep](.github/workflows/hot_cves.yml) | hourly | Front-page repositories and prior-hour candidates added to the searchable index |
+| [CVE sync](.github/workflows/sync_cve_pocs.yml) | daily | New CVEs, CNA references and recently pushed GitHub repositories for every CVE year |
+| [Metadata sync](.github/workflows/sync_metadata.yml) | daily plus weekly full pass | CVSS, advisories, rejected records and current CISA KEV status |
 | [Nuclei sync](.github/workflows/sync_nuclei.yml) | daily | New templates and rating changes |
-| [Exploit archives](.github/workflows/sync_exploits.yml) | daily | New ExploitDB entries and Metasploit modules |
+| [Exploit archives](.github/workflows/sync_exploits.yml) | daily | ExploitDB, Metasploit and Vulhub mappings |
+| [Historical GitHub sync](.github/workflows/sync_pocingithub.yml) | weekly | Older PoC repositories missed by the recent-push window |
+| [Path collection sync](.github/workflows/sync_collections.yml) | weekly | CVE-specific artifacts inside curated multi-CVE repositories |
 | [Link audit](.github/workflows/audit_poc_links.yml) | weekly | Repositories that went dead, dropped from the index |
 
 A repository counts as updated only when a commit touches something other than
@@ -497,18 +591,20 @@ def main() -> int:
     token = github_token()
     for year in range(current_year, current_year - YEARS, -1):
         total, repositories = search_year(year, since)
-        shipped = code_pushed([str(r.get("full_name") or "") for r in repositories], token)
+        searched = len(repositories)
+        repositories, paths = qualifying_repositories(repositories, token)
+        shipped = code_pushed(
+            [str(r.get("full_name") or "") for r in repositories], token, paths
+        )
         for repo in repositories:
-            repo["_shipped"] = (
-                shipped.get(str(repo.get("full_name") or ""))
-                or str(repo.get("pushed_at") or repo.get("updated_at") or "")
-            )
-        stale = len(repositories)
+            repo["_shipped"] = shipped.get(str(repo.get("full_name") or ""), "")
+        qualified = len(repositories)
         repositories = [r for r in repositories if r["_shipped"][:10] >= since]
         repositories.sort(key=lambda repo: repo["_shipped"], reverse=True)
         repositories = repositories[:PER_YEAR]
         print(f"CVE-{year}: {total} pushed since {since}, "
-              f"{stale - len(repositories)} dropped as paperwork-only")
+              f"{searched - qualified} rejected by artifact gate, "
+              f"{qualified - len(repositories)} without a recent artifact commit")
         if not repositories:
             continue
         block = [
@@ -527,7 +623,7 @@ def main() -> int:
             flagged += exploited
             # Same fallback the landed lane uses. These CVEs are old enough to
             # be in the index already, so it costs nothing to ask.
-            summary = cell(repo.get("description")) or nvd_description(cve)
+            summary = repository_summary(repo, cve)
             items.append({
                 "year": year,
                 "stars": int(repo.get("stargazers_count") or 0),
@@ -570,7 +666,7 @@ def main() -> int:
             exploited = cve in kev
             # A day-old repository often ships without a description; the CVE's
             # own summary says more than an empty cell.
-            summary = cell(repo.get("description")) or nvd_description(cve)
+            summary = repository_summary(repo, cve)
             if not summary and cve and lookups < NVD_LOOKUPS:
                 lookups += 1
                 summary = cell(nvd_lookup(cve))

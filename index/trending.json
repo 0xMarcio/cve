@@ -12,7 +12,7 @@
  },
  {
   "year": 2026,
-  "stars": 157,
+  "stars": 159,
   "name": "CVE-2026-62911",
   "url": "https://github.com/hypnguyen1209/CVE-2026-62911",
   "desc": "POC pre-auth RCE on Exchange",
@@ -45,7 +45,7 @@
  },
  {
   "year": 2026,
-  "stars": 421,
+  "stars": 427,
   "name": "CVE-2026-9830",
   "url": "https://github.com/opaxial/CVE-2026-9830",
   "desc": "CVE-2026-9830 Proof of Concept",
@@ -74,17 +74,6 @@
   "pushed": "2026-08-20T10:06:17Z",
   "created": "2026-03-08T11:25:39Z",
   "cve": "CVE-2026-24061",
-  "kev": true
- },
- {
-  "year": 2026,
-  "stars": 60,
-  "name": "watchTowr-vs-Citrix-Netscaler-PreAuth-RCE-CVE-2026-8452",
-  "url": "https://github.com/watchtowrlabs/watchTowr-vs-Citrix-Netscaler-PreAuth-RCE-CVE-2026-8452",
-  "desc": "CVE-2026-8452 PreAuth RCE",
-  "pushed": "2026-08-14T15:01:41Z",
-  "created": "2026-08-14T15:01:25Z",
-  "cve": "CVE-2026-8452",
   "kev": true
  },
  {
@@ -130,17 +119,6 @@
   "created": "2026-08-06T11:46:34Z",
   "cve": "CVE-2026-55040",
   "kev": true
- },
- {
-  "year": 2026,
-  "stars": 53,
-  "name": "CVE-2026-64560-Analysis",
-  "url": "https://github.com/villager1314/CVE-2026-64560-Analysis",
-  "desc": "In the Linux kernel, the following vulnerability has been resolved: posix-cpu-timers: Prevent UAF caused by non-leader exec() race Wongi and Jungwoo decoded and reported a non-leader exec() related race which can result in an UAF: sys_timer_delete() exec() posix_cpu_timer_del() // Observes old leader p = pid_task(pid, pid_type); de_thread() switch_leader(); release_task(old_leader) __exit_signal(old_leader) sighand = lock(old_leader, sighand); posix_cpu_timers*_exit(); sighand = lock_task_sighand(p) unhash_task(old_leader); sh = lock(p, sighand) old_leader->sighand = NULL; unlock(sighand); (p->sighand == NULL) unlock(sh) return NULL; // Returns without action if(!sighand) return 0; free_posix_timer(); This is \"harmless\" unless the deleted timer was armed and enqueued in p->signal because on exec() a TGID targeted timer is inherited. As sys_timer_delete() freed the underlying posix timer object run_posix_cpu_timers() or any timerqueue related add/delete operations on other timers will access the freed object's timerqueue node, which results in an UAF. There is a similar problem vs. posix_cpu_timer_set(). For regular posix timers it just transiently returns -ESRCH to user space, but for the use case in do_cpu_nanosleep() it's the same UAF just that the k_itimer is allocated on the stack. Also posix_cpu_timer_rearm() fails to rearm the timer, which means it stops to expire. While debating solutions Frederic pointed out another problem: posix_cpu_timer_del(tmr) __exit_signal(p) posix_cpu_timers*_exit(p); unhash_task(p); p->sighand = NULL; sh = lock_task_sighand(p) sighand = p->sighand; if (!sighand) return NULL; lock(sighand); if (!sh) WARN_ON_ONCE(timer_queued(tmr)); On weakly ordered architectures it is not guaranteed that posix_cpu_timer_del() will observe the stores in posix_cpu_timers*_exit() when p->sighand is observed as NULL, which means the WARN() can be a false positive. Solve these issues by: 1) Changing the store in __exit_signal() to smp_store_release(). 2) Adding a smp_acquire__after_ctrl_dep() into the !sighand path of lock_task_sighand(). 3) Creating a helper function for looking up the task and locking sighand which does not return when sighand == NULL. Instead it retries the task lookup and only if that fails it gives up. 4) Using that helper in the three affected functions. #1/#2 ensures that the reader side which observes sighand == NULL also observes all preceeding stores, i.e. the stores in posix_cpu_timers*_exit() and the ones in unhash_task(). #3 ensures that the above described non-leader exec() situation is handled gracefully. When the task lookup returns the old leader, but sighand == NULL then it retries. In the non-leader exec() case the subsequent task lookup will observe the new leader due to #1/#2. In normal exit() scenarios the subsequent lookup fails. When the task lookup fails, the function also checks whether the timer is still enqueued and issues a warning if that's the case. Unfortunately there is nothing which can be done about it, but as the task is already not longer visible the timer should not be accessed anymore. This check also requires memory ordering, which is not provided when the first lookup fails. To achieve that the check is preceeded by a smp_rmb() which pairs with the smp_wmb() in write_seqlock() in __exit_signal(). That ensures that the stores in posix_cpu_timers*_exit() are visible. The history of the non-leader exec() issue goes back to the early days of posix CPU timers, which stored a pointer to the group leader task in the timer. That obviously fails when a non-leader exec() switches the leader. commit e0a70217107e (\"posix-cpu-timers: workaround to suppress the problems with mt exec\") added a temporary workaround for that in 2010 which surv ---truncated---",
-  "pushed": "2026-08-03T12:39:41Z",
-  "created": "2026-08-03T12:36:27Z",
-  "cve": "CVE-2026-64560",
-  "kev": false
  },
  {
   "year": 2026,
@@ -217,6 +195,28 @@
   "pushed": "2026-07-26T14:04:48Z",
   "created": "2026-07-26T12:39:00Z",
   "cve": "CVE-2026-43499",
+  "kev": false
+ },
+ {
+  "year": 2026,
+  "stars": 27,
+  "name": "CVE-2026-54121-PoC-Exploit",
+  "url": "https://github.com/tc4dy/CVE-2026-54121-PoC-Exploit",
+  "desc": "👻 CVE-2026-54121 - Best CertiGhost AD CS Multi-Exploit Framework / Advanced toolkit with rogue DC/LDAP servers, certificate abuse, PKINIT hash extraction. Features: detect safe check, exploit full multi-threaded. 🛡️ CVSS 8.8 High - Use Ethically, Stay Legal. 🔒",
+  "pushed": "2026-07-26T12:22:13Z",
+  "created": "2026-07-25T18:01:04Z",
+  "cve": "CVE-2026-54121",
+  "kev": false
+ },
+ {
+  "year": 2026,
+  "stars": 34,
+  "name": "POC-CVE-2026-60206",
+  "url": "https://github.com/imbas007/POC-CVE-2026-60206",
+  "desc": "cve cve-2026-60206 weblogic saml exploit poc vulnerability oracle scanner security",
+  "pushed": "2026-07-24T02:46:06Z",
+  "created": "2026-07-24T02:30:11Z",
+  "cve": "CVE-2026-60206",
   "kev": false
  },
  {
@@ -430,17 +430,6 @@
  },
  {
   "year": 2024,
-  "stars": 31,
-  "name": "CVE-2024-24919-Bulk-Scanner",
-  "url": "https://github.com/ifconfig-me/CVE-2024-24919-Bulk-Scanner",
-  "desc": "CVE-2024-24919 [Check Point Security Gateway Information Disclosure]",
-  "pushed": "2026-06-28T05:45:51Z",
-  "created": "2024-06-01T10:51:14Z",
-  "cve": "CVE-2024-24919",
-  "kev": true
- },
- {
-  "year": 2024,
   "stars": 3,
   "name": "CVE-2024-36991",
   "url": "https://github.com/0xFZin/CVE-2024-36991",
@@ -553,12 +542,12 @@
  {
   "year": 2026,
   "stars": 0,
-  "name": "CVE-2026-68138",
-  "url": "https://github.com/suominen/CVE-2026-68138",
-  "desc": "Tracking CVE-2026-68138, the Linux kernel net/sched qdisc rate-table use-after-free",
-  "pushed": "2026-09-01T03:18:16Z",
-  "created": "2026-08-17T07:33:31Z",
-  "cve": "CVE-2026-68138",
+  "name": "CVE-2026-82329",
+  "url": "https://github.com/HORKimhab/CVE-2026-82329",
+  "desc": "JFrog Artifactory contains an authentication weakness that, under default configuration, may allow an unauthenticated attacker with network access to obtain administrative privileges.",
+  "pushed": "2026-09-01T06:18:29Z",
+  "created": "2026-09-01T06:15:07Z",
+  "cve": "CVE-2026-82329",
   "kev": false,
   "landed": true
  },
@@ -584,30 +573,6 @@
   "created": "2026-08-31T14:29:28Z",
   "cve": "CVE-2025-20333",
   "kev": true,
-  "landed": true
- },
- {
-  "year": 2026,
-  "stars": 0,
-  "name": "CVE-2026-76569",
-  "url": "https://github.com/toanln-cov/CVE-2026-76569",
-  "desc": "Reflected XSS via search GET Parameter in Phoca Download",
-  "pushed": "2026-08-31T07:54:25Z",
-  "created": "2026-08-31T07:51:07Z",
-  "cve": "CVE-2026-76569",
-  "kev": false,
-  "landed": true
- },
- {
-  "year": 2025,
-  "stars": 2,
-  "name": "CVE-2025-49844",
-  "url": "https://github.com/Zain3311/CVE-2025-49844",
-  "desc": "🚨 Exploit the CVE-2025-49844 Redis Lua interpreter UAF vulnerability to execute arbitrary shellcode and gain persistent backdoor access.",
-  "pushed": "2026-08-31T01:52:38Z",
-  "created": "2022-04-06T09:27:39Z",
-  "cve": "CVE-2025-49844",
-  "kev": false,
   "landed": true
  },
  {
@@ -655,6 +620,30 @@
   "pushed": "2026-08-30T13:04:44Z",
   "created": "2026-08-30T12:49:43Z",
   "cve": "CVE-2025-6440",
+  "kev": false,
+  "landed": true
+ },
+ {
+  "year": 2026,
+  "stars": 0,
+  "name": "CVE-2026-76581",
+  "url": "https://github.com/HORKimhab/CVE-2026-76581",
+  "desc": "The WPMU DEV Dashboard plugin for WordPress is vulnerable to Authentication Bypass in all versions up to, and including, 5.0.1. This is due to inconsistent and ambiguous HMAC message construction between the unauthenticated `wdpsso_step1` and `wdpsso_step2` AJAX actions, where step 1 signs and discloses an unseparated concatenation of the token, state, redirect, and domain values, while step 2 verifies an unseparated concatenation that omits the domain field. This makes it possible for unauthenticated attackers, on sites connected to WPMU DEV with Hub SSO enabled and mapped to an administrator, to obtain a valid HMAC from step 1 and replay it to step 2 by moving the domain value into the redirect field, resulting in an authenticated administrator session.",
+  "pushed": "2026-08-30T12:57:31Z",
+  "created": "2026-08-30T12:52:47Z",
+  "cve": "CVE-2026-76581",
+  "kev": false,
+  "landed": true
+ },
+ {
+  "year": 2026,
+  "stars": 10,
+  "name": "givewp-cve-2026-82222-rce-lab",
+  "url": "https://github.com/dinosn/givewp-cve-2026-82222-rce-lab",
+  "desc": "Authorized Docker lab and clean PoC for validating CVE-2026-82222 RCE in GiveWP 4.16.5.1 and the 4.16.7.2 fix.",
+  "pushed": "2026-08-30T05:18:46Z",
+  "created": "2026-08-30T05:15:27Z",
+  "cve": "CVE-2026-82222",
   "kev": false,
   "landed": true
  }

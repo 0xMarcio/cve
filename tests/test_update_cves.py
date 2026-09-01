@@ -37,8 +37,9 @@ class RepositoryClassificationTests(unittest.TestCase):
         repo = self.repo(
             "AcmeSecurity/kernel-notes",
             "Linux security notes",
-            "CVE-2026-31431 was fixed in Linux 6.19.",
+            "A linked exploit mentions CVE-2026-31431 as a proof of concept.",
         )
+        repo["root"] = {"entries": [{"name": "index.js"}]}
         self.assertEqual(update_cves.qualifying_repo_cves(repo, 2026, []), set())
 
     def test_accepts_readme_poc_with_repository_intent(self) -> None:
@@ -164,17 +165,23 @@ class ReferenceAndMarkdownTests(unittest.TestCase):
                 "adp": [
                     {
                         "references": [
-                            {"url": "https://database.example/CVE-2026-31431", "tags": ["exploit"]}
+                            {
+                                "url": "https://database.example/CVE-2026-31431-exploit",
+                                "tags": ["exploit"],
+                            }
                         ]
                     }
                 ],
             },
         }
 
-    def test_uses_only_cna_poc_references(self) -> None:
+    def test_uses_cna_and_adp_poc_references(self) -> None:
         self.assertEqual(
             update_cves.poc_references(self.record()),
-            ["https://research.example/copy-fail"],
+            [
+                "https://research.example/copy-fail",
+                "https://database.example/CVE-2026-31431-exploit",
+            ],
         )
 
     def test_excludes_blacklisted_github_references(self) -> None:
@@ -184,7 +191,10 @@ class ReferenceAndMarkdownTests(unittest.TestCase):
         )
         self.assertEqual(
             update_cves.poc_references(record, {"acmesecurity/poc-index"}),
-            ["https://research.example/copy-fail"],
+            [
+                "https://research.example/copy-fail",
+                "https://database.example/CVE-2026-31431-exploit",
+            ],
         )
 
     def test_preserves_markdown_layout(self) -> None:
@@ -198,7 +208,7 @@ class ReferenceAndMarkdownTests(unittest.TestCase):
             ["https://research.example/copy-fail"],
         )
         self.assertIn(
-            "### [CVE-2026-31431](https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-31431)",
+            "### [CVE-2026-31431](https://www.cve.org/CVERecord?id=CVE-2026-31431)",
             markdown,
         )
         self.assertIn(
