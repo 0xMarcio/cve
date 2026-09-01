@@ -39,7 +39,9 @@ DESC_LIMIT = 110   # a table cell, not a paragraph
 FOLDED_AFTER = 2   # years past the newest two are collapsed behind a summary
 CVE_ID = re.compile(r"CVE[-_](\d{4})[-_](\d{4,7})", re.IGNORECASE)
 SLUG = "0xMarcio/cve"
-HERO_URL = f"https://raw.githubusercontent.com/{SLUG}/main/docs/hero.svg"
+RAW = f"https://raw.githubusercontent.com/{SLUG}/main/docs"
+HERO_URL = f"{RAW}/hero.svg"
+KEV_MARK = f'<img src="{RAW}/kev.svg" alt="KEV" title="CISA known exploited" height="14"> '
 
 
 def search_year(year: int, since: str) -> tuple[int, list[dict]]:
@@ -381,7 +383,7 @@ def main() -> int:
             })
             block.append(
                 f"| {repo.get('stargazers_count', 0)}\u2b50 | {time_ago(pushed)} "
-                f"| {'\U0001f525 ' if exploited else ''}[{cell(repo.get('name'))}]({repo.get('html_url')}) "
+                f"| {KEV_MARK if exploited else ''}[{cell(repo.get('name'))}]({repo.get('html_url')}) "
                 f"| {shorten(repo.get('description'))} |"
             )
         sections.append(block)
@@ -391,7 +393,8 @@ def main() -> int:
     synced = now.strftime("%d %b %Y %H:%M UTC")
     lines = header(stamp, synced)
     lines.append(f"Exploit repositories with a commit in the last {WINDOW_DAYS} days, "
-                 f"newest first. \U0001f525 marks a CVE on the CISA known exploited list.")
+                 f"newest first. {KEV_MARK.strip()} marks a CVE CISA lists as "
+                 f"exploited in the wild.")
     lines.append("")
     for index, block in enumerate(sections):
         if index == FOLDED_AFTER and len(sections) > FOLDED_AFTER:

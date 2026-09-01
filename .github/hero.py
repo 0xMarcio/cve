@@ -20,6 +20,7 @@ LIVE_KEV = "https://cve.codepwn.win/kev.json"
 HERO = os.path.join(ROOT, "docs", "hero.svg")
 SOCIAL = os.path.join(ROOT, "docs", "social-card.svg")
 STATS = os.path.join(ROOT, "docs", "stats.json")
+KEV_PILL = os.path.join(ROOT, "docs", "kev.svg")
 
 CANVAS = "#0d1117"
 SUBTLE = "#161b22"
@@ -168,9 +169,26 @@ def social(counts: dict) -> str:
 """
 
 
+def kev_pill() -> str:
+    """The KEV marker the README table puts beside a row.
+
+    Every flagged row points at this one file, so GitHub's image proxy fetches
+    it once and the table stays cheap however many rows carry it.
+    """
+    return (
+        '<svg xmlns="http://www.w3.org/2000/svg" width="34" height="16" viewBox="0 0 34 16" '
+        'role="img" aria-label="CISA known exploited">'
+        f'<rect x="0.5" y="0.5" width="33" height="15" rx="3" fill="rgba(248,81,73,0.14)" '
+        f'stroke="{DANGER}" stroke-opacity="0.45"/>'
+        f'<text x="17" y="11.5" font-family="{MONO}" font-size="9" font-weight="700" '
+        f'letter-spacing="0.9" text-anchor="middle" fill="{DANGER}">KEV</text>'
+        "</svg>\n"
+    )
+
+
 def render(counts: dict) -> None:
     """Draw both cards and leave the figures behind for the README build."""
-    for path, markup in ((HERO, hero(counts)), (SOCIAL, social(counts))):
+    for path, markup in ((HERO, hero(counts)), (SOCIAL, social(counts)), (KEV_PILL, kev_pill())):
         with open(path, "w", encoding="utf-8") as handle:
             handle.write(markup)
     # No timestamp: this file should only change when the figures do, so the

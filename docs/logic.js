@@ -281,6 +281,9 @@ const el = {
   trending: document.querySelector('[data-trending]'),
   trendNote: document.querySelector('[data-trend-note]'),
   trendRows: document.querySelector('[data-trend-rows]'),
+  statTotal: document.querySelector('[data-stat-total]'),
+  statPocs: document.querySelector('[data-stat-pocs]'),
+  statKev: document.querySelector('[data-stat-kev]'),
   refreshed: document.querySelector('[data-refreshed]')
 };
 
@@ -425,10 +428,15 @@ function renderResults(elapsed) {
 
 function trendRow(item) {
   const popular = item.stars >= 500 ? ' is-popular' : '';
+  // The trending table flags the same catalogue the CVE rows do, so a row worth
+  // reading first is visible without opening it.
+  const flagged = item.cve && kev[item.cve]
+    ? `<span class="trend-kev" title="Listed in CISA's Known Exploited Vulnerabilities catalogue">KEV</span>`
+    : '';
   return `<div class="trend-row">
     <span class="trend-stars${popular}">${formatStars(item.stars)} <span class="star">★</span></span>
     <span class="trend-age">${escapeHTML(longAge(item._pushed))}</span>
-    <a class="trend-name" href="${escapeHTML(item.url)}" target="_blank" rel="noopener">${escapeHTML(item.name)}</a>
+    <span class="trend-name-cell">${flagged}<a class="trend-name" href="${escapeHTML(item.url)}" target="_blank" rel="noopener">${escapeHTML(item.name)}</a></span>
     <span class="trend-desc">${escapeHTML(item.desc || '')}</span>
   </div>`;
 }
@@ -462,9 +470,19 @@ function renderTrending() {
   });
 }
 
+function paintHeroStats() {
+  if (!el.statTotal) return;
+  if (indexMeta) {
+    el.statTotal.textContent = formatCount(indexMeta.total_cves);
+    el.statPocs.textContent = formatCount(indexMeta.with_pocs);
+  }
+  const flagged = Object.keys(kev).length;
+  if (flagged) el.statKev.textContent = formatCount(flagged);
+}
+
 function idleStatus() {
-  if (!indexMeta) return '';
-  return `${formatCount(indexMeta.total_cves)} CVEs · ${formatCount(indexMeta.with_pocs)} with PoCs`;
+  // The hero carries the totals now, so the field keeps its slot for timings.
+  return '';
 }
 
 function render() {
@@ -552,12 +570,16 @@ async function loadJSON(url, options) {
   } catch (err) {
     console.warn(err.message);
   }
+  paintHeroStats();
   render();
 
   // The repository metadata is optional: without it the PoC rows simply lose
   // their star and age columns, which is the documented fallback.
   loadJSON('/kev.json').then(data => {
     kev = data || {};
+    paintHeroStats();
+    // A search already on screen owns the view; only repaint the idle table.
+    if (!state.query) renderTrending();
     if (state.query && state.ready) renderResults(null);
   }).catch(err => console.warn(err.message));
 
