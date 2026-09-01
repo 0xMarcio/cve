@@ -13,17 +13,19 @@ from typing import Collection, Dict, List, Optional
 from urllib.parse import urlparse
 
 ROOT = Path(__file__).resolve().parents[1]
+CVES = ROOT / "cves"
+INDEX = ROOT / "index"
 DOCS_DIR = ROOT / "docs"
-BLACKLIST = ROOT / "blacklist.txt"
-TRENDING_INPUT = ROOT / "trending.json"
+BLACKLIST = INDEX / "blacklist.txt"
+TRENDING_INPUT = INDEX / "trending.json"
 CVE_OUTPUT = DOCS_DIR / "CVE_list.json"
 TRENDING_OUTPUT = DOCS_DIR / "trending_poc.json"
-REPO_META = ROOT / "repo_meta.json"
+REPO_META = INDEX / "repo_meta.json"
 REPO_META_OUTPUT = DOCS_DIR / "repo_meta.json"
-KEV_INPUT = ROOT / "kev.json"
-DATES_INPUT = ROOT / "cve_dates.json"
+KEV_INPUT = INDEX / "kev.json"
+DATES_INPUT = INDEX / "cve_dates.json"
 KEV_OUTPUT = DOCS_DIR / "kev.json"
-NUCLEI_INPUT = ROOT / "nuclei.json"
+NUCLEI_INPUT = INDEX / "nuclei.json"
 NUCLEI_OUTPUT = DOCS_DIR / "nuclei.json"
 EPSS_OUTPUT = DOCS_DIR / "epss.json"
 EPSS_FEED = "https://epss.empiricalsecurity.com/epss_scores-current.csv.gz"
@@ -138,7 +140,7 @@ def build_cve_list(blacklist: Collection[str]) -> tuple[List[Dict[str, object]],
     dates = load_dates()
     total = 0
 
-    for md_path in sorted(ROOT.glob("[12][0-9][0-9][0-9]/CVE-*.md")):
+    for md_path in sorted(CVES.glob("[12][0-9][0-9][0-9]/CVE-*.md")):
         total += 1
         content = md_path.read_text(encoding="utf-8")
         sections = parse_sections(content)

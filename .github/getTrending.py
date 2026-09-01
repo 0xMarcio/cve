@@ -41,7 +41,7 @@ NVD_LOOKUPS = 4
 USER_AGENT = "0xMarcio-cve-trending"
 ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), os.pardir)
 README = os.path.join(ROOT, "README.md")
-TRENDING = os.path.join(ROOT, "trending.json")
+TRENDING = os.path.join(ROOT, "index", "trending.json")
 KEV = os.path.join(ROOT, "kev.json")
 STATS = os.path.join(ROOT, "docs", "stats.json")
 DESC_LIMIT = 110   # a table cell, not a paragraph
@@ -82,7 +82,7 @@ def nvd_description(cve: str) -> str:
     """
     if not cve:
         return ""
-    path = os.path.join(ROOT, cve.split("-")[1], f"{cve}.md")
+    path = os.path.join(ROOT, "cves", cve.split("-")[1], f"{cve}.md")
     try:
         with open(path, encoding="utf-8") as handle:
             body = handle.read()

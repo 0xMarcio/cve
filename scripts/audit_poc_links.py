@@ -27,11 +27,13 @@ from update_cves import (
 )
 
 ROOT = Path(__file__).resolve().parents[1]
+CVES = ROOT / "cves"
+INDEX = ROOT / "index"
 STATE_FILE = ROOT / ".github" / "link_audit_state.json"
-GITHUB_LIST = ROOT / "github.txt"
-REFERENCE_LIST = ROOT / "references.txt"
-REPO_META = ROOT / "repo_meta.json"
-KEV_FILE = ROOT / "kev.json"
+GITHUB_LIST = INDEX / "github.txt"
+REFERENCE_LIST = INDEX / "references.txt"
+REPO_META = INDEX / "repo_meta.json"
+KEV_FILE = INDEX / "kev.json"
 KEV_URL = (
     "https://www.cisa.gov/sites/default/files/feeds/"
     "known_exploited_vulnerabilities.json"
@@ -54,7 +56,7 @@ def collect_repositories() -> tuple[dict[str, list[tuple[Path, str]]], set[str]]
     """
     prunable: dict[str, list[tuple[Path, str]]] = {}
     referenced: set[str] = set()
-    for path in sorted(ROOT.glob("[12][0-9][0-9][0-9]/CVE-*.md")):
+    for path in sorted(CVES.glob("[12][0-9][0-9][0-9]/CVE-*.md")):
         text = path.read_text(encoding="utf-8", errors="replace")
         for url in section_links(text, GITHUB_SECTION):
             full_name = github_repo_from_url(url)
@@ -181,7 +183,7 @@ def prune_inventory(dead_urls: set[str], *, dry_run: bool) -> int:
 def collect_references() -> dict[str, list[tuple[Path, str]]]:
     """Every link that is not a GitHub repository, and where it appears."""
     references: dict[str, list[tuple[Path, str]]] = {}
-    for path in sorted(ROOT.glob("[12][0-9][0-9][0-9]/CVE-*.md")):
+    for path in sorted(CVES.glob("[12][0-9][0-9][0-9]/CVE-*.md")):
         text = path.read_text(encoding="utf-8", errors="replace")
         for header in (REFERENCE_SECTION, GITHUB_SECTION):
             for url in section_links(text, header):
@@ -317,7 +319,7 @@ def sync_kev_badges(*, dry_run: bool) -> tuple[int, int]:
         return 0, 0
 
     added = removed = 0
-    for path in sorted(ROOT.glob("[12][0-9][0-9][0-9]/CVE-*.md")):
+    for path in sorted(CVES.glob("[12][0-9][0-9][0-9]/CVE-*.md")):
         cve_id = path.stem.upper()
         wanted = kev_badge(cve_id, catalogue)
         with path.open("r", encoding="utf-8", newline="") as handle:

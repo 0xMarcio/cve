@@ -39,11 +39,11 @@ jobs:
 
           git add --all -- \
             .github/link_audit_state.json \
-            github.txt \
-            repo_meta.json \
-            kev.json \
-            references.txt \
-            ':(top,glob)[12][0-9][0-9][0-9]/CVE-*.md'
+            index/github.txt \
+            index/repo_meta.json \
+            index/kev.json \
+            index/references.txt \
+            cves/
 
           if git diff --cached --quiet; then
             echo "No changes to commit"

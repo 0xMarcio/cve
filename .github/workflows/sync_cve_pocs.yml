@@ -36,10 +36,10 @@ jobs:
 
           git add --all -- \
             .github/cve_sync_state.json \
-            github.txt \
-            references.txt \
-            cve_dates.json \
-            ':(top,glob)[12][0-9][0-9][0-9]/CVE-*.md'
+            index/github.txt \
+            index/references.txt \
+            index/cve_dates.json \
+            cves/
 
           if git diff --cached --quiet; then
             echo "No changes to commit"

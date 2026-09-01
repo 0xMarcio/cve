@@ -32,7 +32,7 @@ jobs:
           git config user.name 'CVE-BOT'
           git config user.email 'cve@codepwn.win'
           git add -u
-          git add -- nuclei.json
+          git add -- index/nuclei.json
           if git diff --cached --quiet; then
             echo "No changes to commit"
             exit 0

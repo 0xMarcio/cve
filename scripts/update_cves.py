@@ -20,13 +20,15 @@ from urllib import error, request
 from urllib.parse import quote, urlparse
 
 ROOT = Path(__file__).resolve().parents[1]
-GITHUB_LIST = ROOT / "github.txt"
-REFERENCE_LIST = ROOT / "references.txt"
-BLACKLIST_FILE = ROOT / "blacklist.txt"
-ADVISORY_FILE = ROOT / "advisory_hosts.txt"
+CVES = ROOT / "cves"
+INDEX = ROOT / "index"
+GITHUB_LIST = INDEX / "github.txt"
+REFERENCE_LIST = INDEX / "references.txt"
+BLACKLIST_FILE = INDEX / "blacklist.txt"
+ADVISORY_FILE = INDEX / "advisory_hosts.txt"
 STATE_FILE = ROOT / ".github" / "cve_sync_state.json"
-KEV_FILE = ROOT / "kev.json"
-DATES_FILE = ROOT / "cve_dates.json"
+KEV_FILE = INDEX / "kev.json"
+DATES_FILE = INDEX / "cve_dates.json"
 
 GITHUB_GRAPHQL_URL = "https://api.github.com/graphql"
 CVE_API_URL = "https://cveawg.mitre.org/api/cve/{cve_id}"
@@ -1125,7 +1127,7 @@ def sync_markdown(
 
     for cve_id in cve_ids:
         year = cve_id.split("-")[1]
-        path = ROOT / year / f"{cve_id}.md"
+        path = CVES / year / f"{cve_id}.md"
         github_links = stable_unique(github.get(cve_id, []))
         reference_links = stable_unique(references.get(cve_id, []))
         record = records.get(cve_id)

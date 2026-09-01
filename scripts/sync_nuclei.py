@@ -18,7 +18,9 @@ import urllib.request
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-OUTPUT = ROOT / "nuclei.json"
+CVES = ROOT / "cves"
+INDEX = ROOT / "index"
+OUTPUT = INDEX / "nuclei.json"
 def source(repo: str, branch: str = "main", *, scoped: bool = False) -> tuple:
     """A template repository: where to fetch it and how to link into it.
 
@@ -155,7 +157,7 @@ def section_bounds(text: str, header: str) -> tuple[int, int] | None:
 
 def apply_to_markdown(cve: str, url: str, dry_run: bool) -> str:
     """Add the template link to one CVE entry. Returns what happened."""
-    path = ROOT / cve.split("-")[1] / f"{cve}.md"
+    path = CVES / cve.split("-")[1] / f"{cve}.md"
     if not path.exists():
         return "absent"
     original = path.read_text(encoding="utf-8")
@@ -213,7 +215,7 @@ def main() -> int:
     # An entry whose template stopped qualifying is never visited above, so its
     # section would otherwise outlive the reason it was written.
     stale = 0
-    for path in ROOT.glob("[12][0-9][0-9][0-9]/CVE-*.md"):
+    for path in CVES.glob("[12][0-9][0-9][0-9]/CVE-*.md"):
         if path.stem in templates:
             continue
         if SECTION in path.read_text(encoding="utf-8", errors="replace"):
