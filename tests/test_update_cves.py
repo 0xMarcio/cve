@@ -76,6 +76,19 @@ class RepositoryClassificationTests(unittest.TestCase):
             {"CVE-2026-31431", "CVE-2026-41940"},
         )
 
+    def test_rejects_readme_reference_when_repository_names_another_cve(self) -> None:
+        repo = self.repo(
+            "AcmeSecurity/CVE-2026-20841-PoC",
+            "Proof of concept for CVE-2026-20841",
+            "The approach resembles the CVE-2016-0856 exploit.",
+        )
+        repo["root"] = {"entries": [{"name": "PoC.md"}]}
+        self.assertEqual(update_cves.qualifying_repo_cves(repo, 2016, []), set())
+        self.assertEqual(
+            update_cves.qualifying_repo_cves(repo, 2026, []),
+            {"CVE-2026-20841"},
+        )
+
     def test_rejects_profile_and_checker_repositories(self) -> None:
         profile = self.repo(
             "AcmeSecurity/AcmeSecurity",

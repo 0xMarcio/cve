@@ -261,6 +261,17 @@ def root_entry_names(repo: dict[str, Any]) -> list[str]:
 
 
 def root_has_poc_artifact(repo: dict[str, Any], cve_id: str) -> bool:
+    if root_has_cve_artifact(repo, cve_id):
+        return True
+    for name in root_entry_names(repo):
+        if name.lower().startswith(("readme", "license", "security")):
+            continue
+        if POC_RE.search(normalise_identity(name)):
+            return True
+    return False
+
+
+def root_has_cve_artifact(repo: dict[str, Any], cve_id: str) -> bool:
     year, number = cve_id.split("-")[1:]
     cve_pattern = re.compile(
         rf"\bCVE[-_ ]{re.escape(year)}[-_ ]{re.escape(number)}\b",
@@ -269,7 +280,7 @@ def root_has_poc_artifact(repo: dict[str, Any], cve_id: str) -> bool:
     for name in root_entry_names(repo):
         if name.lower().startswith(("readme", "license", "security")):
             continue
-        if cve_pattern.search(name) or POC_RE.search(normalise_identity(name)):
+        if cve_pattern.search(name):
             return True
     return False
 
@@ -330,6 +341,12 @@ def qualifying_repo_cves(
     description = str(repo.get("description") or "")
     topics = " ".join(topic_names(repo))
     readme = readme_text(repo)
+    all_identity_cves = (
+        extract_cves(full_name)
+        | extract_cves(normalise_identity(full_name))
+        | extract_cves(description)
+        | extract_cves(topics)
+    )
     # Underscores are word characters, so a raw name like CVE-A_CVE-B matches
     # neither identifier; read the separator-normalised form as well.
     name_cves = extract_cves(full_name, year) | extract_cves(normalise_identity(full_name), year)
@@ -375,6 +392,9 @@ def qualifying_repo_cves(
             accepted.add(cve_id)
     for cve_id in readme_cves:
         has_artifact = root_has_poc_artifact(repo, cve_id)
+        has_cve_artifact = root_has_cve_artifact(repo, cve_id)
+        if all_identity_cves and cve_id not in all_identity_cves and not has_cve_artifact:
+            continue
         if identity_cves and cve_id not in identity_cves and not has_artifact:
             continue
         if (

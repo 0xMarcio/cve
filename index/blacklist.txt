@@ -18,9 +18,11 @@ alexfrancow/CVE-Search
 andraxsnakesecurity/CVE-LIST
 andraxsnakesecurity/CVE-PoC-in-GitHub
 Andromeda254/cve
+andrew-max365/jwport-cve-test
 ARPSyndicate/cve-scores
 actuator/cve
 Asbawy/Asbawy.github.io
+aymanahmedali/bash-scripts
 b1nslashsh/CVE
 bachkhoasoft/awesome-list-ks
 bb1nfosec/vuln-corpus
@@ -30,6 +32,8 @@ c-skills/CVEs
 cassis-sec/CVE
 cc8700619/poc
 ChPratik/NGINX_2026_CVE_Bundle_CTI_Report
+chnzzh/idrac-cve-lib
+chnzzh/redfish-cve-lib
 cometkim/awesome-list
 cpt-ferna02/AVEN
 CVE-Hunters/cve-hunters
@@ -56,6 +60,7 @@ gotr00t0day/kernelpwned
 gregk4sec/cve
 Hacking-Notes/CVE
 hectorgie/PoC-in-GitHub
+hori0729/poc-container-escape
 ishakdev325/cve-search
 jaeminLeee/cve
 javokhir-sec/CVE-PoC-Hub
@@ -69,6 +74,7 @@ Mad-robot/CVE-List
 MarkLee131/awesome-web-pocs
 metalx1993/kernel-exploit-intelligence
 miradam/cve-search
+monney-sys/daily-learning
 n0-traces/cve_monitor
 n1sh1th/CVE-POC
 nasp-thu/prophetfuzz
@@ -97,6 +103,7 @@ stanleyman810/counter-strike-1.6
 stanleyman810/https_rce
 stratosphereips/nist-cve-search-tool
 swastik99/cve-search
+the-priest/priestsbasilisk
 theulis/NIST-1Password-Kandji-Public
 theulis/NIST-1Password-Public
 Threekiii/CVE
