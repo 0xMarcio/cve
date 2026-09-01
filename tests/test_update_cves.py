@@ -8,6 +8,8 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "scripts"))
 
 import update_cves
+import build_site
+import sync_cve_metadata
 
 
 class RepositoryClassificationTests(unittest.TestCase):
@@ -274,6 +276,123 @@ No PoCs found on GitHub currently.
         self.assertIn("Keep this description unchanged.", updated)
         self.assertIn("#### Reference\n- https://research.example/copy-fail\n\n#### Github", updated)
         self.assertTrue(updated.endswith("\n\n"))
+
+
+class MetadataSourceTests(unittest.TestCase):
+    def test_uses_vector_prefix_when_source_field_is_mislabeled(self) -> None:
+        row = sync_cve_metadata.published_metric(
+            {
+                "version": "3.1",
+                "vectorString": "CVSS:3.0/AV:N/AC:L/PR:H/UI:N/S:C/C:L/I:N/A:N",
+                "baseScore": 4.1,
+                "baseSeverity": "MEDIUM",
+            },
+            "3.1",
+            "CISA-ADP",
+            "CISA Vulnrichment",
+        )
+        self.assertIsNotNone(row)
+        self.assertEqual(row[:3], ["3.0", 4.1, "MEDIUM"])
+
+    def test_keeps_every_published_cvss_generation(self) -> None:
+        record = {
+            "containers": {
+                "cna": {
+                    "providerMetadata": {"shortName": "Acme CNA"},
+                    "metrics": [
+                        {
+                            "cvssV4_0": {
+                                "vectorString": "CVSS:4.0/AV:L/AC:L/AT:N/PR:L/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N",
+                                "baseScore": 6.8,
+                                "baseSeverity": "MEDIUM",
+                            }
+                        },
+                        {
+                            "cvssV3_1": {
+                                "vectorString": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:N/I:N/A:H",
+                                "baseScore": 5.5,
+                                "baseSeverity": "MEDIUM",
+                            }
+                        },
+                        {
+                            "cvssV2_0": {
+                                "vectorString": "AV:L/AC:L/Au:S/C:N/I:N/A:C",
+                                "baseScore": 4.6,
+                                "baseSeverity": "MEDIUM",
+                            }
+                        },
+                    ],
+                }
+            }
+        }
+        rows = sync_cve_metadata.cve_program_metrics(record)
+        self.assertEqual([row[0] for row in rows], ["4.0", "3.1", "2.0"])
+
+    def test_github_advisory_requires_reproducible_poc_material(self) -> None:
+        advisory = """### POC
+
+1. Create `poc.py` with this application:
+```python
+from pathlib import Path
+from nicegui import app, ui
+app.add_media_files('/media', Path('media'))
+ui.run(port=8080)
+```
+2. Run `python3 poc.py`.
+3. Send `curl http://localhost:8080/media/%2e%2e/etc/hosts`.
+"""
+        mention = "The reporter says a PoC exists, but no reproduction material was published."
+        self.assertTrue(sync_cve_metadata.advisory_has_poc(advisory))
+        self.assertFalse(sync_cve_metadata.advisory_has_poc(mention))
+
+
+class PublishedLinkDeduplicationTests(unittest.TestCase):
+    def test_unverified_reference_is_not_a_poc(self) -> None:
+        cve_id = "CVE-2024-41968"
+        url = "https://cert.vde.com/en/advisories/VDE-2024-047"
+        self.assertFalse(build_site.reference_is_verified_poc(cve_id, url, {}, set()))
+
+    def test_exact_exploit_tag_makes_reference_a_poc(self) -> None:
+        cve_id = "CVE-2025-66645"
+        url = "https://github.com/advisories/GHSA-hxp3-63hc-5366"
+        metadata = {
+            cve_id: {
+                "advisories": [[url, ["GitHub Advisory", "Exploit"]]],
+            }
+        }
+        self.assertTrue(build_site.reference_is_verified_poc(cve_id, url, metadata, set()))
+
+    def test_one_repository_is_one_poc_and_keeps_the_useful_path(self) -> None:
+        links = [
+            "https://github.com/Helson-S/FuzzyTesting/blob/main/hicolor/cp_dynamic",
+            "https://github.com/Helson-S/FuzzyTesting/blob/main/hicolor/cp_dynamic/poc/sample.png",
+            "https://github.com/Helson-S/FuzzyTesting/blob/main/hicolor/cp_dynamic/vulDescription.md",
+            "https://github.com/AcmeSecurity/CVE-2024-41443",
+        ]
+        self.assertEqual(
+            build_site.dedupe_source_links(links, "CVE-2024-41443"),
+            [
+                "https://github.com/Helson-S/FuzzyTesting/blob/main/hicolor/cp_dynamic/vulDescription.md",
+                "https://github.com/AcmeSecurity/CVE-2024-41443",
+            ],
+        )
+
+    def test_advisory_deduplication_prefers_exploit_evidence(self) -> None:
+        rows = [
+            ["https://github.com/Helson-S/FuzzyTesting", ["Product"]],
+            [
+                "https://github.com/Helson-S/FuzzyTesting/blob/main/vulDescription.md",
+                ["Third Party Advisory", "Exploit"],
+            ],
+        ]
+        self.assertEqual(build_site.dedupe_advisories(rows, "CVE-2024-41443"), [rows[1]])
+
+    def test_distinct_global_github_advisories_are_not_merged(self) -> None:
+        rows = [
+            ["https://github.com/advisories/GHSA-hxp3-63hc-5366", ["GitHub Advisory"]],
+            ["https://github.com/advisories/GHSA-5hgx-prqh-5qmp", ["GitHub Advisory"]],
+        ]
+        self.assertEqual(build_site.dedupe_advisories(rows, "CVE-2025-66645"), rows)
 
 
 if __name__ == "__main__":

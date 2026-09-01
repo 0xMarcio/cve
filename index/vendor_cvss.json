@@ -1,0 +1,298 @@
+{
+  "CVE-2023-45925": {
+    "advisories": [
+      [
+        "https://explore.alas.aws.amazon.com/CVE-2023-45925.html",
+        ["Vendor Advisory"]
+      ]
+    ],
+    "cvss": [
+      [
+        "3.1",
+        4.0,
+        "MEDIUM",
+        "CVSS:3.1/AV:L/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L",
+        "Amazon Linux",
+        "Vendor Advisory"
+      ]
+    ]
+  },
+  "CVE-2024-23082": {
+    "advisories": [
+      [
+        "https://www.ibm.com/support/pages/security-bulletin-threeten-backport-vulnerability-has-been-identified-apache-solr-shipped-ibm-operations-analytics-log-analysis-cve-2024-23081cve-2024-23082",
+        ["Vendor Advisory"]
+      ]
+    ],
+    "cvss": [
+      [
+        "3.0",
+        7.5,
+        "HIGH",
+        "CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+        "IBM",
+        "Vendor Advisory"
+      ]
+    ]
+  },
+  "CVE-2024-29291": {
+    "advisories": [
+      [
+        "https://www.tenable.com/cve/CVE-2024-29291",
+        ["Third Party Advisory"]
+      ]
+    ],
+    "cvss": [
+      [
+        "3.0",
+        7.5,
+        "HIGH",
+        "CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+        "Tenable",
+        "Security Vendor"
+      ],
+      [
+        "2.0",
+        5.0,
+        "MEDIUM",
+        "AV:N/AC:L/Au:N/C:P/I:N/A:N",
+        "Tenable",
+        "Security Vendor"
+      ]
+    ]
+  },
+  "CVE-2025-40019": {
+    "advisories": [
+      [
+        "https://explore.alas.aws.amazon.com/CVE-2025-40019.html",
+        ["Vendor Advisory"]
+      ]
+    ],
+    "cvss": [
+      [
+        "3.1",
+        5.5,
+        "MEDIUM",
+        "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:N/I:N/A:H",
+        "Amazon Linux",
+        "Vendor Advisory"
+      ]
+    ]
+  },
+  "CVE-2025-68325": {
+    "advisories": [
+      [
+        "https://www.suse.com/security/cve/CVE-2025-68325.html",
+        ["Vendor Advisory"]
+      ]
+    ],
+    "cvss": [
+      [
+        "4.0",
+        6.8,
+        "MEDIUM",
+        "CVSS:4.0/AV:L/AC:L/AT:N/PR:L/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N",
+        "SUSE",
+        "Vendor Advisory"
+      ],
+      [
+        "3.1",
+        5.5,
+        "MEDIUM",
+        "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:N/I:N/A:H",
+        "SUSE",
+        "Vendor Advisory"
+      ]
+    ]
+  },
+  "CVE-2026-37065": {
+    "advisories": [
+      [
+        "https://www.tenable.com/cve/CVE-2026-37065",
+        ["Third Party Advisory"]
+      ]
+    ],
+    "cvss": [
+      [
+        "3.1",
+        9.1,
+        "CRITICAL",
+        "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:H/A:H",
+        "Tenable",
+        "Security Vendor"
+      ],
+      [
+        "2.0",
+        6.4,
+        "MEDIUM",
+        "AV:N/AC:L/Au:N/C:N/I:P/A:P",
+        "Tenable",
+        "Security Vendor"
+      ]
+    ]
+  },
+  "CVE-2026-37066": {
+    "advisories": [
+      [
+        "https://www.tenable.com/cve/CVE-2026-37066",
+        ["Third Party Advisory"]
+      ]
+    ],
+    "cvss": [
+      [
+        "3.1",
+        6.5,
+        "MEDIUM",
+        "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:N/A:N",
+        "Tenable",
+        "Security Vendor"
+      ],
+      [
+        "2.0",
+        4.0,
+        "MEDIUM",
+        "AV:N/AC:L/Au:S/C:P/I:N/A:N",
+        "Tenable",
+        "Security Vendor"
+      ]
+    ]
+  },
+  "CVE-2026-37068": {
+    "advisories": [
+      [
+        "https://www.tenable.com/cve/CVE-2026-37068",
+        ["Third Party Advisory"]
+      ]
+    ],
+    "cvss": [
+      [
+        "3.1",
+        8.1,
+        "HIGH",
+        "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:H/A:H",
+        "Tenable",
+        "Security Vendor"
+      ],
+      [
+        "2.0",
+        5.5,
+        "MEDIUM",
+        "AV:N/AC:L/Au:S/C:N/I:P/A:P",
+        "Tenable",
+        "Security Vendor"
+      ]
+    ]
+  },
+  "CVE-2026-37069": {
+    "advisories": [
+      [
+        "https://www.tenable.com/cve/CVE-2026-37069",
+        ["Third Party Advisory"]
+      ]
+    ],
+    "cvss": [
+      [
+        "3.1",
+        5.3,
+        "MEDIUM",
+        "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:N/A:N",
+        "Tenable",
+        "Security Vendor"
+      ],
+      [
+        "2.0",
+        5.0,
+        "MEDIUM",
+        "AV:N/AC:L/Au:N/C:P/I:N/A:N",
+        "Tenable",
+        "Security Vendor"
+      ]
+    ]
+  },
+  "CVE-2026-37070": {
+    "advisories": [
+      [
+        "https://www.tenable.com/cve/CVE-2026-37070",
+        ["Third Party Advisory"]
+      ]
+    ],
+    "cvss": [
+      [
+        "3.1",
+        6.5,
+        "MEDIUM",
+        "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:N/A:N",
+        "Tenable",
+        "Security Vendor"
+      ],
+      [
+        "2.0",
+        4.0,
+        "MEDIUM",
+        "AV:N/AC:L/Au:S/C:P/I:N/A:N",
+        "Tenable",
+        "Security Vendor"
+      ]
+    ]
+  },
+  "CVE-2026-37071": {
+    "advisories": [
+      [
+        "https://www.tenable.com/cve/CVE-2026-37071",
+        ["Third Party Advisory"]
+      ]
+    ],
+    "cvss": [
+      [
+        "3.1",
+        9.8,
+        "CRITICAL",
+        "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+        "Tenable",
+        "Security Vendor"
+      ],
+      [
+        "2.0",
+        7.5,
+        "HIGH",
+        "AV:N/AC:L/Au:N/C:P/I:P/A:P",
+        "Tenable",
+        "Security Vendor"
+      ]
+    ]
+  },
+  "CVE-2026-37072": {
+    "advisories": [
+      [
+        "https://www.tenable.com/cve/CVE-2026-37072",
+        ["Third Party Advisory"]
+      ]
+    ],
+    "cvss": [
+      [
+        "3.1",
+        9.8,
+        "CRITICAL",
+        "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+        "Tenable",
+        "Security Vendor"
+      ],
+      [
+        "2.0",
+        7.5,
+        "HIGH",
+        "AV:N/AC:L/Au:N/C:P/I:P/A:P",
+        "Tenable",
+        "Security Vendor"
+      ]
+    ]
+  },
+  "CVE-2026-77790": {
+    "advisories": [
+      [
+        "https://wpscan.com/vulnerability/42c48c95-1384-4414-9236-64f44bea9027",
+        ["Vendor Advisory", "Exploit"]
+      ]
+    ]
+  }
+}

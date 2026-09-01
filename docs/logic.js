@@ -28,8 +28,8 @@ const state = {
   advisoryOpen: new Set(),
   kevOnly: false,
   filters: {
-    severity: { include: new Set(), exclude: new Set() },
-    source: { include: new Set(), exclude: new Set() }
+    severity: new Set(FILTER_OPTIONS.severity.map(([value]) => value)),
+    source: new Set(FILTER_OPTIONS.source.map(([value]) => value))
   },
   ready: false,
   results: []
@@ -249,8 +249,9 @@ function entrySeverity(entry) {
 }
 
 function hasActiveFilters() {
-  return state.kevOnly || Object.values(state.filters).some(filter =>
-    filter.include.size || filter.exclude.size);
+  return state.kevOnly || Object.entries(state.filters).some(
+    ([kind, filter]) => filter.size !== FILTER_OPTIONS[kind].length
+  );
 }
 
 function entrySources(entry) {
@@ -274,11 +275,7 @@ function entrySources(entry) {
 }
 
 function matchesMultiFilter(values, filter) {
-  for (const value of filter.exclude) {
-    if (values.has(value)) return false;
-  }
-  if (!filter.include.size) return true;
-  for (const value of filter.include) {
+  for (const value of filter) {
     if (values.has(value)) return true;
   }
   return false;
@@ -746,19 +743,12 @@ document.querySelector('.search').addEventListener('submit', event => event.prev
 
 function renderFilterOptions() {
   for (const [kind, options] of Object.entries(FILTER_OPTIONS)) {
-    el.filterOptions[kind].innerHTML =
-      '<div class="filter-popover-head"><span>VALUE</span><span>IN</span><span>OUT</span></div>' +
-      options.map(([value, label]) =>
-        `<div class="filter-option" role="group" aria-label="${escapeHTML(label)}">` +
-        `<span class="filter-option-label">${escapeHTML(label)}</span>` +
-        `<button type="button" class="filter-choice" data-filter-kind="${kind}" ` +
-        `data-filter-value="${value}" data-filter-mode="include" aria-pressed="false" ` +
-        `aria-label="Include ${escapeHTML(label)}">IN</button>` +
-        `<button type="button" class="filter-choice" data-filter-kind="${kind}" ` +
-        `data-filter-value="${value}" data-filter-mode="exclude" aria-pressed="false" ` +
-        `aria-label="Exclude ${escapeHTML(label)}">OUT</button></div>`
-      ).join('') +
-      '<p class="filter-popover-note">Included values match any. Excluded values always win.</p>';
+    el.filterOptions[kind].innerHTML = options.map(([value, label]) =>
+      `<label class="filter-option">` +
+      `<input type="checkbox" data-filter-kind="${kind}" data-filter-value="${value}">` +
+      `<span class="filter-check" aria-hidden="true"></span>` +
+      `<span class="filter-option-label">${escapeHTML(label)}</span></label>`
+    ).join('');
   }
 }
 
@@ -771,28 +761,20 @@ function closeFilterMenus(except) {
 }
 
 function filterTitle(kind) {
-  const filter = state.filters[kind];
-  const included = [...filter.include];
-  const excluded = [...filter.exclude];
-  if (!included.length && !excluded.length) return 'All values';
-  return [
-    included.length ? `Include: ${included.join(', ')}` : '',
-    excluded.length ? `Exclude: ${excluded.join(', ')}` : ''
-  ].filter(Boolean).join(' | ');
+  const selected = [...state.filters[kind]];
+  return selected.length === FILTER_OPTIONS[kind].length ? 'All values' : selected.join(', ');
 }
 
 function syncFilterControls() {
   for (const kind of Object.keys(FILTER_OPTIONS)) {
     const filter = state.filters[kind];
-    const summary = [
-      filter.include.size ? `+${filter.include.size}` : '',
-      filter.exclude.size ? `-${filter.exclude.size}` : ''
-    ].filter(Boolean).join(' ') || 'ALL';
+    const summary = filter.size === FILTER_OPTIONS[kind].length
+      ? 'ALL'
+      : filter.size === 1 ? [...filter][0] : `${filter.size} SELECTED`;
     el.filterSummaries[kind].textContent = summary;
     el.filterTriggers[kind].title = filterTitle(kind);
-    for (const button of el.filterOptions[kind].querySelectorAll('[data-filter-mode]')) {
-      const selected = filter[button.dataset.filterMode].has(button.dataset.filterValue);
-      button.setAttribute('aria-pressed', String(selected));
+    for (const checkbox of el.filterOptions[kind].querySelectorAll('[data-filter-value]')) {
+      checkbox.checked = filter.has(checkbox.dataset.filterValue);
     }
   }
   el.kevOnly.setAttribute('aria-pressed', String(state.kevOnly));
@@ -806,18 +788,13 @@ for (const kind of Object.keys(FILTER_OPTIONS)) {
     el.filterOptions[kind].hidden = !opening;
     el.filterTriggers[kind].setAttribute('aria-expanded', String(opening));
   });
-  el.filterOptions[kind].addEventListener('click', event => {
-    const button = event.target.closest('[data-filter-mode]');
-    if (!button) return;
+  el.filterOptions[kind].addEventListener('change', event => {
+    const checkbox = event.target.closest('[data-filter-value]');
+    if (!checkbox) return;
     const filter = state.filters[kind];
-    const mode = button.dataset.filterMode;
-    const other = mode === 'include' ? 'exclude' : 'include';
-    const value = button.dataset.filterValue;
-    if (filter[mode].has(value)) filter[mode].delete(value);
-    else {
-      filter[mode].add(value);
-      filter[other].delete(value);
-    }
+    const value = checkbox.dataset.filterValue;
+    if (checkbox.checked) filter.add(value);
+    else filter.delete(value);
     state.shown = PAGE_SIZE;
     syncFilterControls();
     render();
@@ -837,9 +814,9 @@ el.kevOnly.addEventListener('click', () => {
 
 el.clearFilters.addEventListener('click', () => {
   state.kevOnly = false;
-  for (const filter of Object.values(state.filters)) {
-    filter.include.clear();
-    filter.exclude.clear();
+  for (const [kind, filter] of Object.entries(state.filters)) {
+    filter.clear();
+    for (const [value] of FILTER_OPTIONS[kind]) filter.add(value);
   }
   state.shown = PAGE_SIZE;
   syncFilterControls();

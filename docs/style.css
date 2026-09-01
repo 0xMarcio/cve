@@ -188,60 +188,59 @@ a:hover { color: var(--accent-hover); }
   z-index: 20;
   top: calc(100% + 6px);
   left: 0;
-  width: 304px;
-  padding: 8px;
+  width: 210px;
+  padding: 6px;
   color: var(--fg-muted);
   border: 1px solid var(--border);
   border-radius: 5px;
   background: var(--canvas-subtle);
   box-shadow: 0 12px 28px rgba(1, 4, 9, .55);
 }
-.filter-popover-head, .filter-option {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) 58px 58px;
-  gap: 6px;
-  align-items: center;
-}
-.filter-popover-head {
-  padding: 3px 5px 7px;
-  color: var(--neutral);
-  font-size: 9px;
-  letter-spacing: .1em;
-}
-.filter-popover-head span:not(:first-child) { text-align: center; }
 .filter-option {
-  padding: 5px;
-  border-top: 1px solid var(--border-muted);
-}
-.filter-option-label { color: var(--fg-subtle); }
-.filter-choice {
-  height: 24px;
-  padding: 0;
-  color: var(--fg-muted);
-  border: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  min-height: 31px;
+  padding: 0 7px;
   border-radius: 3px;
-  background: transparent;
-  font: 500 9px/1 var(--mono);
-  letter-spacing: .06em;
   cursor: pointer;
 }
-.filter-choice:hover { color: var(--fg); border-color: var(--fg-muted); }
-.filter-choice[data-filter-mode="include"][aria-pressed="true"] {
-  color: var(--accent-hover);
-  border-color: rgba(56, 139, 253, .5);
-  background: rgba(56, 139, 253, .12);
+.filter-option:hover { background: var(--canvas); }
+.filter-option input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
 }
-.filter-choice[data-filter-mode="exclude"][aria-pressed="true"] {
-  color: var(--danger);
-  border-color: rgba(248, 81, 73, .45);
-  background: rgba(248, 81, 73, .1);
+.filter-check {
+  position: relative;
+  width: 13px;
+  height: 13px;
+  flex: none;
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  background: var(--canvas);
 }
-.filter-popover-note {
-  margin: 8px 5px 2px;
-  color: var(--neutral);
-  font: 400 9px/1.4 var(--mono);
-  letter-spacing: 0;
+.filter-option input:focus-visible + .filter-check {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
 }
+.filter-option input:checked + .filter-check {
+  border-color: var(--accent);
+  background: var(--accent);
+}
+.filter-option input:checked + .filter-check::after {
+  position: absolute;
+  top: 1px;
+  left: 4px;
+  width: 3px;
+  height: 7px;
+  border-right: 2px solid #fff;
+  border-bottom: 2px solid #fff;
+  transform: rotate(45deg);
+  content: '';
+}
+.filter-option-label { color: var(--fg-subtle); }
 .filter-toggle, .filter-clear {
   height: 31px;
   padding: 0 10px;

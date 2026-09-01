@@ -252,6 +252,24 @@ def dedupe_advisories(rows: Iterable[list], cve_id: str) -> List[list]:
     return [selected[key] for key in sorted(selected, key=order.get)]
 
 
+def reference_is_verified_poc(
+    cve_id: str,
+    url: str,
+    metadata: Dict[str, object],
+    verified: Collection[tuple[str, str]],
+) -> bool:
+    key = link_key(url)
+    if (cve_id, key) in verified:
+        return True
+    for row in (metadata.get(cve_id) or {}).get("advisories", []):
+        if not isinstance(row, list) or not row:
+            continue
+        tags = row[1] if len(row) > 1 and isinstance(row[1], list) else []
+        if "Exploit" in tags and link_key(str(row[0])) == key:
+            return True
+    return False
+
+
 def collect_links(block: str, *, blacklist: Optional[Collection[str]] = None) -> List[str]:
     links: List[str] = []
     blacklist = blacklist or set()
@@ -298,26 +316,20 @@ def build_cve_list(blacklist: Collection[str]) -> tuple[List[Dict[str, object]],
             for header, field in CURATED
         }
         curated_keys = {
-            link_key(url)
+            source_key(url)
             for links in curated.values()
             for url in links
         }
-        advisory_only = {
-            link_key(str(row[0]))
-            for row in (metadata.get(cve_id) or {}).get("advisories", [])
-            if isinstance(row, list)
-            and row
-            and "Exploit" not in (row[1] if len(row) > 1 and isinstance(row[1], list) else [])
-            and (cve_id, link_key(str(row[0]))) not in verified_references
-        }
-
         poc_candidates: List[str] = []
         for link in references:
-            key = link_key(link)
-            if key not in curated_keys and key not in advisory_only:
+            key = source_key(link)
+            if (
+                key not in curated_keys
+                and reference_is_verified_poc(cve_id, link, metadata, verified_references)
+            ):
                 poc_candidates.append(link)
         for link in github_links:
-            if link_key(link) not in curated_keys:
+            if source_key(link) not in curated_keys:
                 poc_candidates.append(link)
         poc_entries = dedupe_source_links(poc_candidates, cve_id)
 

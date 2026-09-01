@@ -22,5 +22,6 @@ h20566.www2.hpe.com/portal
 redhat.com/support
 cisco.com/warp
 dlink.com/en
+cert.vde.com/en/advisories
 # Retired: every /bid/ deep link now resolves to a search box.
 securityfocus.com/bid
