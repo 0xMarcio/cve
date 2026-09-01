@@ -34,6 +34,10 @@ MIN_STARS = 2
 # short window and a hard cap.
 LANDED_DAYS = 10
 LANDED_ROWS = 10
+NVD_API = "https://services.nvd.nist.gov/rest/json/cves/2.0?cveId="
+# NVD allows five requests per thirty seconds unauthenticated, and only a
+# couple of rows per run ever need one.
+NVD_LOOKUPS = 4
 USER_AGENT = "0xMarcio-cve-trending"
 ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), os.pardir)
 README = os.path.join(ROOT, "README.md")
@@ -70,36 +74,94 @@ def search(query: str, pool: int) -> tuple[int, list[dict]]:
     return 0, []
 
 
-def just_landed(token: str, seen: set[str]) -> list[dict]:
-    """Fresh PoCs with no star floor at all.
+def nvd_description(cve: str) -> str:
+    """The CVE's own summary, for a repository that shipped without one.
 
-    Everything here still has to survive the paperwork check, so a repository
-    that has only had its README touched does not qualify as landing.
+    A row reading only "CVE-2026-40179" tells nobody what landed. The index
+    already holds the NVD text for that id, so it stands in.
+    """
+    if not cve:
+        return ""
+    path = os.path.join(ROOT, cve.split("-")[1], f"{cve}.md")
+    try:
+        with open(path, encoding="utf-8") as handle:
+            body = handle.read()
+    except OSError:
+        return ""
+    start = body.find("### Description")
+    if start < 0:
+        return ""
+    block = body[start + len("### Description"):]
+    end = block.find("\n###")
+    text = block[:end if end > 0 else len(block)]
+    return " ".join(text.split())
+
+
+def nvd_lookup(cve: str) -> str:
+    """Ask NVD directly for a CVE the index has not caught up with yet.
+
+    The newest exploits are for the newest CVEs, which is exactly when the
+    daily sync has not run and the local summary does not exist.
+    """
+    url = NVD_API + parse.quote(cve)
+    headers = {"User-Agent": USER_AGENT, "Accept": "application/json"}
+    try:
+        with request.urlopen(request.Request(url, headers=headers), timeout=20) as response:
+            payload = json.load(response)
+        for item in payload.get("vulnerabilities") or []:
+            for entry in item.get("cve", {}).get("descriptions") or []:
+                if entry.get("lang") == "en" and entry.get("value"):
+                    return " ".join(str(entry["value"]).split())
+    except Exception as problem:
+        print(f"NVD lookup for {cve} failed: {problem}")
+    return ""
+
+
+def just_landed(token: str, seen: set[str]) -> list[dict]:
+    """Fresh PoCs with no star floor and no language filter.
+
+    A repository published this morning usually has neither: GitHub has not
+    classified its language yet and nobody has starred it. Filtering on either
+    is what kept day-one exploits off the page. What replaces them is a check
+    that the repository actually carries code, since dropping the filters also
+    lets through the write-ups and empty placeholders that share the naming.
     """
     since = (datetime.now(timezone.utc) - timedelta(days=LANDED_DAYS)).date().isoformat()
     year = datetime.now(timezone.utc).year
     rows: list[dict] = []
     for target in (year, year - 1):
-        query = " ".join(
-            [f'"CVE-{target}" in:name', f"pushed:>{since}"]
-            + [f"language:{language}" for language in LANGUAGES]
-        )
-        _, found = search(query, POOL)
+        _, found = search(f'"CVE-{target}" in:name pushed:>{since}', POOL)
         rows.extend(found)
-    names = [str(r.get("full_name") or "") for r in rows if str(r.get("full_name") or "") not in seen]
-    shipped = code_pushed(names, token)
-    fresh = []
+
+    candidates = []
     for repo in rows:
         name = str(repo.get("full_name") or "")
-        if name in seen:
+        if not name or name in seen or not cve_of(repo):
+            continue
+        seen.add(name)
+        candidates.append(repo)
+    candidates.sort(key=lambda repo: str(repo.get("pushed_at") or ""), reverse=True)
+    # Only the freshest are worth two API round trips each.
+    candidates = candidates[:LANDED_ROWS * 4]
+
+    names = [str(repo["full_name"]) for repo in candidates]
+    shipped = code_pushed(names, token)
+    carries_code = code_paths(names, token)
+
+    fresh, hollow = [], 0
+    for repo in candidates:
+        name = str(repo["full_name"])
+        if not carries_code.get(name):
+            # Nothing but a README and a licence: a write-up, not an exploit.
+            hollow += 1
             continue
         pushed = shipped.get(name) or str(repo.get("pushed_at") or "")
         if pushed[:10] < since:
             continue
         repo["_shipped"] = pushed
-        seen.add(name)
         fresh.append(repo)
     fresh.sort(key=lambda repo: repo["_shipped"], reverse=True)
+    print(f"just landed: {len(fresh)} with code, {hollow} rejected as paperwork only")
     return fresh[:LANDED_ROWS]
 
 
@@ -448,7 +510,6 @@ def main() -> int:
         sections.append(block)
 
     landed = just_landed(token, {item["url"].split("github.com/")[-1] for item in items})
-    print(f"just landed: {len(landed)} repositories with no star floor")
 
     stamp = now.strftime("%Y%m%d%H%M")
     # No hyphens: they are the field separator in a shields badge path.
@@ -466,15 +527,23 @@ def main() -> int:
         lines.append("")
         lines.append("| Stars | Updated | Repository | Description |")
         lines.append("| --- | --- | --- | --- |")
+        lookups = 0
         for repo in landed:
             cve = cve_of(repo)
             exploited = cve in kev
+            # A day-old repository often ships without a description; the CVE's
+            # own summary says more than an empty cell.
+            summary = cell(repo.get("description")) or nvd_description(cve)
+            if not summary and cve and lookups < NVD_LOOKUPS:
+                lookups += 1
+                summary = cell(nvd_lookup(cve))
+                time.sleep(6)
             items.append({
                 "year": int(cve.split("-")[1]) if cve else current_year,
                 "stars": int(repo.get("stargazers_count") or 0),
                 "name": cell(repo.get("name")),
                 "url": repo.get("html_url") or "",
-                "desc": cell(repo.get("description")),
+                "desc": summary,
                 "pushed": repo["_shipped"],
                 "created": str(repo.get("created_at") or ""),
                 "cve": cve,
@@ -484,7 +553,7 @@ def main() -> int:
             lines.append(
                 f"| {repo.get('stargazers_count', 0)}\u2b50 | {time_ago(repo['_shipped'])} "
                 f"| {KEV_MARK if exploited else ''}[{cell(repo.get('name'))}]({repo.get('html_url')}) "
-                f"| {shorten(repo.get('description'))} |"
+                f"| {shorten(summary)} |"
             )
         lines.append("")
     for index, block in enumerate(sections):
