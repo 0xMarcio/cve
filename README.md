@@ -4,7 +4,7 @@
 
 [![last sync](https://img.shields.io/badge/last%20sync-01%20Sep%202026%2022%3A40%20UTC-2f81f7?style=flat-square&labelColor=161b22)](https://github.com/0xMarcio/cve/commits/main)&nbsp;[![CI](https://img.shields.io/github/actions/workflow/status/0xMarcio/cve/hot_cves.yml?style=flat-square&label=CI&color=2f81f7&labelColor=161b22&_=202609012240)](https://github.com/0xMarcio/cve/actions/workflows/hot_cves.yml)&nbsp;[![CVEs with PoCs](https://img.shields.io/badge/CVEs%20with%20PoCs-82%2C409-2f81f7?style=flat-square&labelColor=161b22)](https://cve.codepwn.win/)&nbsp;[![known exploited](https://img.shields.io/badge/known%20exploited-1%2C181-f85149?style=flat-square&labelColor=161b22)](https://cve.codepwn.win/)&nbsp;[![stars](https://img.shields.io/github/stars/0xMarcio/cve?style=flat-square&label=stars&color=e3b341&labelColor=161b22&_=202609012240)](https://github.com/0xMarcio/cve/stargazers)
 
-<a href="https://cve.codepwn.win/">cve.codepwn.win</a>
+<a href="https://cve.codepwn.win/"><img src="https://raw.githubusercontent.com/0xMarcio/cve/main/docs/search.svg?v=1" alt="Search CVE Radar" width="100%"></a>
 
 </div>
 
@@ -173,10 +173,6 @@ Advisory rows are `[URL, NVD reference tags]`.
 | [Historical GitHub sync](.github/workflows/sync_pocingithub.yml) | weekly | Older PoC repositories missed by the recent-push window |
 | [Path collection sync](.github/workflows/sync_collections.yml) | weekly | CVE-specific artifacts inside curated multi-CVE repositories |
 | [Link audit](.github/workflows/audit_poc_links.yml) | weekly | Repositories that went dead, dropped from the index |
-
-A repository counts as updated only when a commit touches something other than
-paperwork, so a README tweak cannot pass a year-old exploit off as recent, and
-one that holds nothing but paperwork is not linked at all.
 
 ## Contributing
 

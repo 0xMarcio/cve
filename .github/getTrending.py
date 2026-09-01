@@ -57,6 +57,7 @@ CVE_ID = re.compile(r"CVE[-_](\d{4})[-_](\d{4,7})", re.IGNORECASE)
 SLUG = "0xMarcio/cve"
 RAW = f"https://raw.githubusercontent.com/{SLUG}/main/docs"
 HERO_URL = f"{RAW}/hero.svg"
+SEARCH_CTA_URL = f"{RAW}/search.svg"
 KEV_MARK = f'<img src="{RAW}/kev.svg" alt="KEV" title="CISA known exploited" height="14"> '
 
 
@@ -553,7 +554,7 @@ def header(stamp: str, synced: str) -> list[str]:
         "",
         "&nbsp;".join(badges),
         "",
-        f'<a href="{home}">cve.codepwn.win</a>',
+        f'<a href="{home}"><img src="{SEARCH_CTA_URL}?v=1" alt="Search CVE Radar" width="100%"></a>',
         "",
         "</div>",
         "",
@@ -634,10 +635,6 @@ Advisory rows are `[URL, NVD reference tags]`.
 | [Historical GitHub sync](.github/workflows/sync_pocingithub.yml) | weekly | Older PoC repositories missed by the recent-push window |
 | [Path collection sync](.github/workflows/sync_collections.yml) | weekly | CVE-specific artifacts inside curated multi-CVE repositories |
 | [Link audit](.github/workflows/audit_poc_links.yml) | weekly | Repositories that went dead, dropped from the index |
-
-A repository counts as updated only when a commit touches something other than
-paperwork, so a README tweak cannot pass a year-old exploit off as recent, and
-one that holds nothing but paperwork is not linked at all.
 
 ## Contributing
 
