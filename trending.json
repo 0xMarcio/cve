@@ -576,13 +576,13 @@
  },
  {
   "year": 2026,
-  "stars": 1,
-  "name": "CVE-2026-31802",
-  "url": "https://github.com/Recorded-texteditor120/CVE-2026-31802",
-  "desc": "Demonstrate and analyze the CVE-2026-31802 path traversal vulnerability in npm tar, enabling arbitrary file overwrite via symlink extraction.",
-  "pushed": "2026-08-31T02:15:38Z",
-  "created": "2026-03-28T20:49:46Z",
-  "cve": "CVE-2026-31802",
+  "stars": 0,
+  "name": "CVE-2026-76569",
+  "url": "https://github.com/toanln-cov/CVE-2026-76569",
+  "desc": "Reflected XSS via search GET Parameter in Phoca Download",
+  "pushed": "2026-08-31T07:54:25Z",
+  "created": "2026-08-31T07:51:07Z",
+  "cve": "CVE-2026-76569",
   "kev": false,
   "landed": true
  },
@@ -623,6 +623,18 @@
   "landed": true
  },
  {
+  "year": 2026,
+  "stars": 0,
+  "name": "cve-2026-42533",
+  "url": "https://github.com/FranklinF25/cve-2026-42533",
+  "desc": "A vulnerability exists in NGINX Plus and NGINX Open Source when a map directive uses regex matching and a string expression references the map's regex capture variables before referencing the map output variable. Alternatively, the same result could be achieved by using a non-cacheable variable in a string expression under certain conditions. An unauthenticated attacker along with conditions beyond their control can exploit this vulnerability by sending crafted HTTP requests. This may cause a heap buffer overflow in the NGINX worker process leading to a restart. Additionally, attackers can execute code on systems with Address Space Layout Randomization (ASLR) disabled or when the attacker can bypass ASLR. Impact: This vulnerability may allow remote attackers to cause a denial-of-service (DoS) on the NGINX system or to possibly trigger a code execution. There is no control plane exposure; this is a data plane issue only. Note: Software versions which have reached End of Technical Support (EoTS) are not evaluated.",
+  "pushed": "2026-08-30T13:29:46Z",
+  "created": "2026-08-29T14:21:49Z",
+  "cve": "CVE-2026-42533",
+  "kev": false,
+  "landed": true
+ },
+ {
   "year": 2025,
   "stars": 0,
   "name": "CVE-2025-6440",
@@ -644,18 +656,6 @@
   "created": "2026-08-30T05:15:27Z",
   "cve": "CVE-2026-82222",
   "kev": false,
-  "landed": true
- },
- {
-  "year": 2025,
-  "stars": 0,
-  "name": "CVE-2025-55182-scanner",
-  "url": "https://github.com/mayank729/CVE-2025-55182-scanner",
-  "desc": "🔍 Scan for CVE-2025-55182 risks in React Server Components with this non-intrusive tool that helps detect critical vulnerabilities in your applications.",
-  "pushed": "2026-08-30T04:24:27Z",
-  "created": "2022-06-17T10:19:10Z",
-  "cve": "CVE-2025-55182",
-  "kev": true,
   "landed": true
  }
 ]
