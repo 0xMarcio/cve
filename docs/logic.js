@@ -19,6 +19,7 @@ const state = {
 let dataset = [];
 let repoMeta = {};
 let kev = {};
+let ratings = {};
 let trending = [];
 let indexMeta = null;
 
@@ -288,6 +289,13 @@ const el = {
 };
 
 function pocRow(url) {
+  if (url.includes('/nuclei-templates/')) {
+    const file = url.split('/').pop();
+    return '<div class="poc-row"><span class="poc-name">' +
+      '<span class="poc-tag" title="Runnable nuclei detection template">NUCLEI</span>' +
+      `<a href="${escapeHTML(url)}" target="_blank" rel="noopener">${escapeHTML(file)}</a>` +
+      '</span><span class="poc-stars"></span><span class="poc-age"></span></div>';
+  }
   const parsed = repoFromUrl(url);
   const href = escapeHTML(url);
   // A gist or an advisory has no owner and no stars; the star and age columns
@@ -333,7 +341,9 @@ function rankedLinks(entry) {
   });
   scored.sort((a, b) =>
     (b.dedicated - a.dedicated) || (b.stars - a.stars) || (a.index - b.index));
-  entry._ranked = scored.map(item => item.url);
+  // A nuclei template leads: of everything linked here it is the one entry that
+  // runs as it stands, against a target, without reading somebody's code first.
+  entry._ranked = [...(entry.nuclei || []), ...scored.map(item => item.url)];
   return entry._ranked;
 }
 
@@ -348,6 +358,18 @@ function resultRow(entry) {
   const moreButton = links.length > POC_PREVIEW
     ? `<button type="button" class="poc-more" data-toggle-poc="${escapeHTML(id)}">` +
       `${all ? '↑ show fewer' : '+ ' + formatCount(links.length - POC_PREVIEW) + ' more'}</button>`
+    : '';
+
+  // Nuclei rates what it covers, so a row can say how bad the flaw is and how
+  // likely it is to be exploited, not only that somebody wrote code for it.
+  const rated = ratings[id] || {};
+  const severityChip = rated.severity
+    ? `<span class="chip chip-sev is-${escapeHTML(rated.severity)}"${rated.cvss_vector ? ` title="${escapeHTML(rated.cvss_vector)}"` : ''}>` +
+      `${escapeHTML(rated.severity.toUpperCase())}${rated.cvss ? ' ' + rated.cvss : ''}</span>`
+    : '';
+  const epssChip = rated.epss != null
+    ? `<span class="chip chip-epss" title="EPSS: estimated chance of exploitation in the next 30 days, ${Math.round((rated.epss_pct || 0) * 100)}th percentile">` +
+      `EPSS ${(rated.epss * 100).toFixed(rated.epss >= 0.1 ? 0 : 1)}%</span>`
     : '';
 
   const flagged = kev[id];
@@ -368,7 +390,7 @@ function resultRow(entry) {
     <a class="result-id" href="https://nvd.nist.gov/vuln/detail/${encodeURIComponent(id)}" target="_blank" rel="noopener">${escapeHTML(id)}</a>
     <div class="result-pocs">${formatCount(links.length)} linked PoC${links.length === 1 ? '' : 's'}</div>
     ${dateHtml}
-    <div class="chips">${kevChip}
+    <div class="chips">${kevChip}${severityChip}${epssChip}
       <a class="chip" href="https://www.cve.org/CVERecord?id=${encodeURIComponent(id)}" target="_blank" rel="noopener">MITRE ↗</a>
     </div>
   </div>
@@ -606,7 +628,7 @@ async function loadJSON(url, options) {
 
   // The repository metadata is optional: without it the PoC rows simply lose
   // their star and age columns, which is the documented fallback.
-  loadJSON('/kev.json').then(data => {
+  loadJSON('/kev.json', { cache: 'no-cache' }).then(data => {
     kev = data || {};
     paintHeroStats();
     // A search already on screen owns the view; only repaint the idle table.
@@ -614,14 +636,19 @@ async function loadJSON(url, options) {
     if (state.query && state.ready) renderResults(null);
   }).catch(err => console.warn(err.message));
 
-  loadJSON('/repo_meta.json').then(data => {
+  loadJSON('/nuclei.json', { cache: 'no-cache' }).then(data => {
+    ratings = data || {};
+    if (state.query && state.ready) renderResults(null);
+  }).catch(err => console.warn(err.message));
+
+  loadJSON('/repo_meta.json', { cache: 'no-cache' }).then(data => {
     repoMeta = data || {};
     for (const entry of dataset) entry._ranked = null;
     if (state.query && state.ready) renderResults(null);
   }).catch(err => console.warn(err.message));
 
   try {
-    dataset = prepareDataset(await loadJSON('/CVE_list.json'));
+    dataset = prepareDataset(await loadJSON('/CVE_list.json', { cache: 'no-cache' }));
     state.ready = true;
     render();
   } catch (err) {

@@ -18,6 +18,8 @@ REPO_META = ROOT / "repo_meta.json"
 REPO_META_OUTPUT = DOCS_DIR / "repo_meta.json"
 KEV_INPUT = ROOT / "kev.json"
 KEV_OUTPUT = DOCS_DIR / "kev.json"
+NUCLEI_INPUT = ROOT / "nuclei.json"
+NUCLEI_OUTPUT = DOCS_DIR / "nuclei.json"
 def load_blacklist() -> set[str]:
     if not BLACKLIST.exists():
         return set()
@@ -38,7 +40,7 @@ def normalise_block(text: str) -> str:
     return "\n".join(line for line in lines if line)
 
 
-SECTION_HEADERS = ("### Description", "### POC", "#### Reference", "#### Github")
+SECTION_HEADERS = ("### Description", "### POC", "#### Reference", "#### Github", "#### Nuclei")
 
 
 def parse_sections(content: str) -> Dict[str, str]:
@@ -131,6 +133,9 @@ def build_cve_list(blacklist: Collection[str]) -> tuple[List[Dict[str, object]],
         description = normalise_block(sections.get("### Description", ""))
         references = collect_links(sections.get("#### Reference", ""), blacklist=blacklist)
         github_links = collect_links(sections.get("#### Github", ""), blacklist=blacklist)
+        # Nuclei templates stay in their own list: they are runnable checks
+        # rather than somebody's repository, and the site labels them as such.
+        nuclei = collect_links(sections.get("#### Nuclei", ""), blacklist=blacklist)
 
         poc_entries: List[str] = []
         seen = set()
@@ -141,14 +146,17 @@ def build_cve_list(blacklist: Collection[str]) -> tuple[List[Dict[str, object]],
                 seen.add(key)
 
         cve_id = md_path.stem
-        if not poc_entries:
+        if not poc_entries and not nuclei:
             continue
 
-        cve_entries.append({
+        entry = {
             "cve": cve_id,
             "desc": description,
             "poc": poc_entries,
-        })
+        }
+        if nuclei:
+            entry["nuclei"] = nuclei
+        cve_entries.append(entry)
 
     return cve_entries, total
 
@@ -176,6 +184,21 @@ def build_kev(cve_entries: List[Dict[str, object]]) -> Dict[str, object]:
         return {}
     have = {str(entry["cve"]) for entry in cve_entries}
     return {cve: value for cve, value in stored.items() if cve in have}
+
+
+def build_nuclei(cve_entries: List[Dict[str, object]]) -> Dict[str, object]:
+    """Severity, CVSS, EPSS and CWE per CVE, limited to the ones indexed."""
+    try:
+        stored = json.loads(NUCLEI_INPUT.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        return {}
+    have = {str(entry["cve"]) for entry in cve_entries}
+    keep = ("severity", "cvss", "cvss_vector", "epss", "epss_pct", "cwe")
+    return {
+        cve: {field: value[field] for field in keep if field in value}
+        for cve, value in stored.items()
+        if cve in have
+    }
 
 
 def build_trending(blacklist: Collection[str]) -> List[Dict[str, object]]:
@@ -212,6 +235,9 @@ def main() -> int:
     kev = build_kev(cve_payload)
     write_json(KEV_OUTPUT, kev)
 
+    nuclei = build_nuclei(cve_payload)
+    write_json(NUCLEI_OUTPUT, nuclei)
+
     trending_items = build_trending(blacklist)
     write_json(
         TRENDING_OUTPUT,
@@ -227,7 +253,8 @@ def main() -> int:
     print(
         f"Wrote {CVE_OUTPUT.name} ({len(cve_payload)} of {total_cves} CVEs), "
         f"{REPO_META_OUTPUT.name} ({len(repo_meta)} repositories), "
-        f"{KEV_OUTPUT.name} ({len(kev)} known-exploited) and {TRENDING_OUTPUT.name}"
+        f"{KEV_OUTPUT.name} ({len(kev)} known-exploited), "
+        f"{NUCLEI_OUTPUT.name} ({len(nuclei)} rated) and {TRENDING_OUTPUT.name}"
     )
     return 0
 

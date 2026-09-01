@@ -206,6 +206,12 @@ a.chip:hover { color: var(--fg); border-color: var(--fg-muted); }
   background: rgba(248, 81, 73, .1);
   border-color: rgba(248, 81, 73, .4);
 }
+.chip-sev { font-weight: 500; letter-spacing: .08em; }
+.chip-sev.is-critical { color: #ff7b72; border-color: rgba(255, 123, 114, .45); background: rgba(255, 123, 114, .1); }
+.chip-sev.is-high { color: #f0883e; border-color: rgba(240, 136, 62, .45); background: rgba(240, 136, 62, .1); }
+.chip-sev.is-medium { color: var(--attention); border-color: rgba(227, 179, 65, .4); background: rgba(227, 179, 65, .1); }
+.chip-sev.is-low { color: var(--fg-muted); }
+.chip-epss { color: var(--fg-subtle); font-variant-numeric: tabular-nums; }
 
 .result-body { padding: 16px; min-width: 0; }
 .result-desc {
@@ -250,6 +256,16 @@ a.chip:hover { color: var(--fg); border-color: var(--fg-muted); }
 .poc-name a { color: var(--fg); font-weight: 500; }
 .poc-name a:hover { color: var(--accent); }
 .poc-name a.plain { color: var(--fg-muted); font-weight: 400; }
+.poc-tag {
+  margin-right: 7px;
+  padding: 2px 5px;
+  border-radius: 3px;
+  font: 600 9px/1 var(--mono);
+  letter-spacing: .08em;
+  color: #a5d6ff;
+  background: rgba(56, 139, 253, .12);
+  border: 1px solid rgba(56, 139, 253, .4);
+}
 .poc-name a.plain:hover { color: var(--accent); }
 .poc-stars { text-align: right; font: 400 12px/1 var(--mono); color: var(--fg-muted); }
 .poc-stars.is-popular { color: var(--attention); }
