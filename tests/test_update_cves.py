@@ -328,6 +328,27 @@ class MetadataSourceTests(unittest.TestCase):
         rows = sync_cve_metadata.cve_program_metrics(record)
         self.assertEqual([row[0] for row in rows], ["4.0", "3.1", "2.0"])
 
+    def test_positive_assessment_outranks_conflicting_zero(self) -> None:
+        rows = sync_cve_metadata.merge_metrics(
+            [[
+                "4.0",
+                0.0,
+                "NONE",
+                "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:A/VC:N/VI:N/VA:N/SC:N/SI:N/SA:N",
+                "Wikimedia Foundation",
+                "CVE Program CNA",
+            ]],
+            [[
+                "3.1",
+                6.1,
+                "MEDIUM",
+                "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:L/I:L/A:N",
+                "nvd@nist.gov",
+                "Primary",
+            ]],
+        )
+        self.assertEqual(rows[0][1:3], [6.1, "MEDIUM"])
+
     def test_github_advisory_requires_reproducible_poc_material(self) -> None:
         advisory = """### POC
 

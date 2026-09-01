@@ -54,8 +54,8 @@ RUN_COMMAND = re.compile(
     r"node|php|ruby|java|go run)\b|^(?:GET|POST|PUT|PATCH|DELETE)\s+\S+\s+HTTP/"
 )
 
-# Newest CVSS generation first. The first valid row is the score displayed by
-# the site; all generations remain available in the payload and tooltip.
+# Positive assessments are canonical when sources disagree. Within that,
+# newest CVSS generation comes first; every generation remains in the tooltip.
 METRIC_FIELDS = (
     ("cvssMetricV40", "4.0"),
     ("cvssMetricV31", "3.1"),
@@ -177,7 +177,7 @@ def normalize_metric(metric: dict[str, Any], version: str) -> list[Any] | None:
     return published_metric(data, version, source, assessment)
 
 
-def metric_rank(row: list[Any]) -> tuple[int, int, int, str, str]:
+def metric_rank(row: list[Any]) -> tuple[int, int, int, int, str, str]:
     source = str(row[4]).lower()
     assessment = str(row[5]).lower()
     assessment_order = {
@@ -190,6 +190,7 @@ def metric_rank(row: list[Any]) -> tuple[int, int, int, str, str]:
         "github reviewed": 5,
     }
     return (
+        0 if isinstance(row[1], (int, float)) and row[1] > 0 else 1,
         VERSION_ORDER.get(str(row[0]), 99),
         assessment_order.get(assessment, 1),
         0 if source == "nvd@nist.gov" else 1,

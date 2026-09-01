@@ -25359,7 +25359,6 @@ CVE-2026-56423 - https://github.com/BiiTts/CVE-2026-56423-MISP-deleteSelection-B
 CVE-2026-56705 - https://github.com/Boreas37/CVE-2026-56705
 CVE-2026-56782 - https://github.com/BiiTts/CVE-2026-56782-Gorse-Auth-Bypass
 CVE-2026-57821 - https://github.com/tc4dy/CVE-2026-6875-PoC-Exploit
-CVE-2026-58037 - https://github.com/shinthink/CVE-2026-58025
 CVE-2026-58048 - https://github.com/tc4dy/CVE-2026-58048-PoC-Exploit
 CVE-2026-58138 - https://github.com/BiiTts/CVE-2026-58138-Conductor-Unauth-RCE
 CVE-2026-58138 - https://github.com/Ch4120N/CVE-2026-58138

@@ -116777,3 +116777,4 @@ CVE-2026-81889 - https://github.com/advisories/GHSA-8x3q-jpjh-qh5c
 CVE-2026-8467 - https://github.com/advisories/GHSA-55hg-8qxv-qj4p
 CVE-2026-8723 - https://github.com/advisories/GHSA-q8mj-m7cp-5q26
 CVE-2026-9769 - https://github.com/advisories/GHSA-v7cf-c9rm-wm3j
+CVE-2026-84371 - https://github.com/advisories/GHSA-g8qq-57p8-ggw5

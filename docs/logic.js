@@ -10,7 +10,7 @@ const POC_FIELDS = ['poc', 'nuclei', 'msf', 'edb', 'vulhub', 'collections'];
 const FILTER_OPTIONS = {
   severity: [
     ['CRITICAL', 'CRITICAL'], ['HIGH', 'HIGH'], ['MEDIUM', 'MEDIUM'],
-    ['LOW', 'LOW'], ['NONE', 'NONE']
+    ['LOW', 'LOW']
   ],
   source: [
     ['GITHUB', 'GITHUB'], ['GHSA', 'GHSA'], ['REFERENCE', 'REFERENCE'],
