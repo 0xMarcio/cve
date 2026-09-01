@@ -7,6 +7,17 @@ const ADVISORY_PREVIEW = 3;
 const TREND_ROWS = 20;
 const MIN_QUERY = 2;
 const POC_FIELDS = ['poc', 'nuclei', 'msf', 'edb', 'vulhub', 'collections'];
+const FILTER_OPTIONS = {
+  severity: [
+    ['CRITICAL', 'CRITICAL'], ['HIGH', 'HIGH'], ['MEDIUM', 'MEDIUM'],
+    ['LOW', 'LOW'], ['NONE', 'NONE'], ['UNSCORED', 'UNSCORED']
+  ],
+  source: [
+    ['GITHUB', 'GITHUB'], ['GHSA', 'GHSA'], ['REFERENCE', 'REFERENCE'],
+    ['NUCLEI', 'NUCLEI'], ['MSF', 'METASPLOIT'], ['EDB', 'EXPLOITDB'],
+    ['VULHUB', 'VULHUB'], ['COLLECTIONS', 'COLLECTIONS']
+  ]
+};
 
 const state = {
   query: '',
@@ -15,9 +26,11 @@ const state = {
   descOpen: new Set(),
   pocOpen: new Set(),
   advisoryOpen: new Set(),
-  severity: 'ALL',
   kevOnly: false,
-  source: 'ALL',
+  filters: {
+    severity: { include: new Set(), exclude: new Set() },
+    source: { include: new Set(), exclude: new Set() }
+  },
   ready: false,
   results: []
 };
@@ -160,7 +173,7 @@ function pocText(entry) {
 
 function entryLinks(entry) {
   if (entry._allLinks === undefined) {
-    entry._allLinks = [...new Set(POC_FIELDS.flatMap(field => entry[field] || []))];
+    entry._allLinks = uniqueSourceLinks(POC_FIELDS.flatMap(field => entry[field] || []));
   }
   return entry._allLinks;
 }
@@ -236,32 +249,46 @@ function entrySeverity(entry) {
 }
 
 function hasActiveFilters() {
-  return state.severity !== 'ALL' || state.kevOnly || state.source !== 'ALL';
+  return state.kevOnly || Object.values(state.filters).some(filter =>
+    filter.include.size || filter.exclude.size);
 }
 
-function hasSource(entry, source) {
+function entrySources(entry) {
+  const sources = new Set();
   const fields = {
     NUCLEI: 'nuclei', MSF: 'msf', EDB: 'edb', VULHUB: 'vulhub', COLLECTIONS: 'collections'
   };
-  if (fields[source]) {
-    const curated = CURATED.find(item => item.tag === source);
-    return (entry[fields[source]] || []).length > 0
-      || (entry.poc || []).some(url => curated && url.includes(curated.match));
+  for (const [source, field] of Object.entries(fields)) {
+    if ((entry[field] || []).length) sources.add(source);
   }
-  if (source === 'GITHUB') {
-    return (entry.poc || []).some(url => /^https?:\/\/(?:www\.)?github\.com\//i.test(url));
+  for (const url of entry.poc || []) {
+    if (/^https?:\/\/(?:www\.)?github\.com\/advisories\/GHSA-/i.test(url)) {
+      sources.add('GHSA');
+    } else if (repoFromUrl(url)) {
+      sources.add('GITHUB');
+    } else {
+      sources.add('REFERENCE');
+    }
   }
-  if (source === 'REFERENCE') {
-    return (entry.poc || []).some(url => !/^https?:\/\/(?:www\.)?github\.com\//i.test(url));
+  return sources;
+}
+
+function matchesMultiFilter(values, filter) {
+  for (const value of filter.exclude) {
+    if (values.has(value)) return false;
   }
-  return true;
+  if (!filter.include.size) return true;
+  for (const value of filter.include) {
+    if (values.has(value)) return true;
+  }
+  return false;
 }
 
 function matchesFilters(entry) {
   if (state.kevOnly && !kev[entry.cve]) return false;
-  if (state.source !== 'ALL' && !hasSource(entry, state.source)) return false;
-  if (state.severity === 'UNSCORED') return !entrySeverity(entry);
-  return state.severity === 'ALL' || entrySeverity(entry) === state.severity;
+  if (!matchesMultiFilter(entrySources(entry), state.filters.source)) return false;
+  const severity = entrySeverity(entry) || 'UNSCORED';
+  return matchesMultiFilter(new Set([severity]), state.filters.severity);
 }
 
 function runSearch(query) {
@@ -354,13 +381,25 @@ const el = {
   statPocs: document.querySelector('[data-stat-pocs]'),
   statKev: document.querySelector('[data-stat-kev]'),
   refreshed: document.querySelector('[data-refreshed]'),
-  severity: document.querySelector('[data-filter-severity]'),
+  filterTriggers: {
+    severity: document.querySelector('[data-filter-trigger="severity"]'),
+    source: document.querySelector('[data-filter-trigger="source"]')
+  },
+  filterSummaries: {
+    severity: document.querySelector('[data-filter-summary="severity"]'),
+    source: document.querySelector('[data-filter-summary="source"]')
+  },
+  filterOptions: {
+    severity: document.querySelector('[data-filter-options="severity"]'),
+    source: document.querySelector('[data-filter-options="source"]')
+  },
   kevOnly: document.querySelector('[data-filter-kev]'),
-  source: document.querySelector('[data-filter-source]'),
   clearFilters: document.querySelector('[data-clear-filters]')
 };
 
 const CURATED = [
+  { match: 'github.com/advisories/GHSA-', tag: 'GHSA', hint: 'GitHub reviewed advisory with reproducible exploit material',
+    label: url => url.split('/').pop() },
   { match: '/zan8in/afrog/', tag: 'AFROG', hint: 'Runnable afrog CVE template',
     label: url => decodeURIComponent(url.split('/').pop()) },
   { match: '/chaitin/xray/', tag: 'XRAY', hint: 'Runnable xray CVE template',
@@ -436,11 +475,11 @@ function rankedLinks(entry) {
   // runs as it stands, against a target, without reading somebody's code first.
   // Curated entries lead: templates, exploit archives, modules and runnable
   // environments can be used as they stand without first reading a repository.
-  entry._ranked = [...new Set([
+  entry._ranked = uniqueSourceLinks([
     ...(entry.nuclei || []), ...(entry.msf || []), ...(entry.edb || []), ...(entry.vulhub || []),
     ...(entry.collections || []),
     ...scored.map(item => item.url)
-  ])];
+  ]);
   return entry._ranked;
 }
 
@@ -466,7 +505,19 @@ function advisoryRow(item) {
 }
 
 function normalizedLink(url) {
+  const parsed = repoFromUrl(String(url || ''));
+  if (parsed) return `github:${parsed.owner.toLowerCase()}/${parsed.repo.toLowerCase()}`;
   return String(url || '').replace(/\/$/, '');
+}
+
+function uniqueSourceLinks(urls) {
+  const seen = new Set();
+  return urls.filter(url => {
+    const key = normalizedLink(url);
+    if (seen.has(key)) return false;
+    seen.add(key);
+    return true;
+  });
 }
 
 function resultRow(entry) {
@@ -693,25 +744,88 @@ el.input.addEventListener('input', () => {
 
 document.querySelector('.search').addEventListener('submit', event => event.preventDefault());
 
+function renderFilterOptions() {
+  for (const [kind, options] of Object.entries(FILTER_OPTIONS)) {
+    el.filterOptions[kind].innerHTML =
+      '<div class="filter-popover-head"><span>VALUE</span><span>IN</span><span>OUT</span></div>' +
+      options.map(([value, label]) =>
+        `<div class="filter-option" role="group" aria-label="${escapeHTML(label)}">` +
+        `<span class="filter-option-label">${escapeHTML(label)}</span>` +
+        `<button type="button" class="filter-choice" data-filter-kind="${kind}" ` +
+        `data-filter-value="${value}" data-filter-mode="include" aria-pressed="false" ` +
+        `aria-label="Include ${escapeHTML(label)}">IN</button>` +
+        `<button type="button" class="filter-choice" data-filter-kind="${kind}" ` +
+        `data-filter-value="${value}" data-filter-mode="exclude" aria-pressed="false" ` +
+        `aria-label="Exclude ${escapeHTML(label)}">OUT</button></div>`
+      ).join('') +
+      '<p class="filter-popover-note">Included values match any. Excluded values always win.</p>';
+  }
+}
+
+function closeFilterMenus(except) {
+  for (const kind of Object.keys(FILTER_OPTIONS)) {
+    if (kind === except) continue;
+    el.filterOptions[kind].hidden = true;
+    el.filterTriggers[kind].setAttribute('aria-expanded', 'false');
+  }
+}
+
+function filterTitle(kind) {
+  const filter = state.filters[kind];
+  const included = [...filter.include];
+  const excluded = [...filter.exclude];
+  if (!included.length && !excluded.length) return 'All values';
+  return [
+    included.length ? `Include: ${included.join(', ')}` : '',
+    excluded.length ? `Exclude: ${excluded.join(', ')}` : ''
+  ].filter(Boolean).join(' | ');
+}
+
 function syncFilterControls() {
-  el.severity.value = state.severity;
-  el.source.value = state.source;
+  for (const kind of Object.keys(FILTER_OPTIONS)) {
+    const filter = state.filters[kind];
+    const summary = [
+      filter.include.size ? `+${filter.include.size}` : '',
+      filter.exclude.size ? `-${filter.exclude.size}` : ''
+    ].filter(Boolean).join(' ') || 'ALL';
+    el.filterSummaries[kind].textContent = summary;
+    el.filterTriggers[kind].title = filterTitle(kind);
+    for (const button of el.filterOptions[kind].querySelectorAll('[data-filter-mode]')) {
+      const selected = filter[button.dataset.filterMode].has(button.dataset.filterValue);
+      button.setAttribute('aria-pressed', String(selected));
+    }
+  }
   el.kevOnly.setAttribute('aria-pressed', String(state.kevOnly));
   el.clearFilters.hidden = !hasActiveFilters();
 }
 
-el.severity.addEventListener('change', () => {
-  state.severity = el.severity.value;
-  state.shown = PAGE_SIZE;
-  syncFilterControls();
-  render();
-});
+for (const kind of Object.keys(FILTER_OPTIONS)) {
+  el.filterTriggers[kind].addEventListener('click', () => {
+    const opening = el.filterOptions[kind].hidden;
+    closeFilterMenus(kind);
+    el.filterOptions[kind].hidden = !opening;
+    el.filterTriggers[kind].setAttribute('aria-expanded', String(opening));
+  });
+  el.filterOptions[kind].addEventListener('click', event => {
+    const button = event.target.closest('[data-filter-mode]');
+    if (!button) return;
+    const filter = state.filters[kind];
+    const mode = button.dataset.filterMode;
+    const other = mode === 'include' ? 'exclude' : 'include';
+    const value = button.dataset.filterValue;
+    if (filter[mode].has(value)) filter[mode].delete(value);
+    else {
+      filter[mode].add(value);
+      filter[other].delete(value);
+    }
+    state.shown = PAGE_SIZE;
+    syncFilterControls();
+    render();
+  });
+}
 
-el.source.addEventListener('change', () => {
-  state.source = el.source.value;
-  state.shown = PAGE_SIZE;
-  syncFilterControls();
-  render();
+document.addEventListener('click', event => {
+  if (!event.target.closest('.filter-menu')) closeFilterMenus();
 });
 
 el.kevOnly.addEventListener('click', () => {
@@ -722,14 +836,17 @@ el.kevOnly.addEventListener('click', () => {
 });
 
 el.clearFilters.addEventListener('click', () => {
-  state.severity = 'ALL';
   state.kevOnly = false;
-  state.source = 'ALL';
+  for (const filter of Object.values(state.filters)) {
+    filter.include.clear();
+    filter.exclude.clear();
+  }
   state.shown = PAGE_SIZE;
   syncFilterControls();
   render();
 });
 
+renderFilterOptions();
 syncFilterControls();
 
 // Typing anywhere on the page means typing into the search field. The keystroke
@@ -737,6 +854,13 @@ syncFilterControls();
 // field it just moved to, so the first letter is never lost.
 document.addEventListener('keydown', event => {
   if (event.ctrlKey || event.metaKey || event.altKey) return;
+  const openFilter = Object.keys(FILTER_OPTIONS).find(kind =>
+    el.filterTriggers[kind].getAttribute('aria-expanded') === 'true');
+  if (event.key === 'Escape' && openFilter) {
+    closeFilterMenus();
+    el.filterTriggers[openFilter].focus();
+    return;
+  }
   if (document.activeElement === el.input) {
     if (event.key === 'Escape') {
       el.input.value = '';
@@ -747,7 +871,7 @@ document.addEventListener('keydown', event => {
   }
   const active = document.activeElement;
   const editing = active && (active.isContentEditable
-    || ['INPUT', 'TEXTAREA', 'SELECT'].includes(active.tagName));
+    || ['INPUT', 'TEXTAREA', 'SELECT', 'BUTTON'].includes(active.tagName));
   if (editing) return;
   // A lone slash is the shortcut, so it focuses without typing itself.
   if (event.key === '/') {
@@ -828,12 +952,13 @@ async function loadJSON(url, options) {
 
   loadJSON('/cve_metadata.json', { cache: 'no-cache' }).then(data => {
     metadata = data || {};
-    el.severity.disabled = false;
+    el.filterTriggers.severity.disabled = false;
     if (state.ready && (state.query || hasActiveFilters())) render();
   }).catch(err => console.warn(err.message));
 
   loadJSON('/nuclei.json', { cache: 'no-cache' }).then(data => {
     ratings = data || {};
+    el.filterTriggers.severity.disabled = false;
     if (state.ready && (state.query || hasActiveFilters())) render();
   }).catch(err => console.warn(err.message));
 
@@ -851,7 +976,7 @@ async function loadJSON(url, options) {
   try {
     dataset = prepareDataset(await loadJSON('/CVE_list.json', { cache: 'no-cache' }));
     state.ready = true;
-    el.source.disabled = false;
+    el.filterTriggers.source.disabled = false;
     render();
   } catch (err) {
     console.warn(err.message);

@@ -33,6 +33,21 @@ METADATA_OUTPUT = DOCS_DIR / "cve_metadata.json"
 VERIFIED_REFERENCES = INDEX / "reference_pocs.txt"
 EPSS_OUTPUT = DOCS_DIR / "epss.json"
 EPSS_FEED = "https://epss.empiricalsecurity.com/epss_scores-current.csv.gz"
+GITHUB_NON_REPOS = {
+    "advisories", "apps", "collections", "marketplace", "notifications",
+    "orgs", "security", "settings", "sponsors", "topics", "user-attachments",
+}
+CODE_SUFFIXES = {
+    ".c", ".cc", ".cpp", ".cs", ".go", ".java", ".js", ".md", ".nse",
+    ".php", ".pl", ".ps1", ".py", ".rb", ".rs", ".sh", ".ts", ".txt",
+    ".yaml", ".yml", ".zip",
+}
+MEDIA_SUFFIXES = {
+    ".bmp", ".gif", ".jpeg", ".jpg", ".mov", ".mp4", ".pdf", ".png",
+    ".svg", ".webm", ".webp",
+}
+
+
 def load_blacklist() -> set[str]:
     if not BLACKLIST.exists():
         return set()
@@ -135,9 +150,9 @@ def repo_from_url(url: str) -> str:
     except Exception:
         path = url
     parts = path.strip("/").split("/")
-    if len(parts) >= 2:
-        return "/".join(parts[:2]).lower()
-    return (parts[-1] if parts else "").lower()
+    if len(parts) < 2 or parts[0].lower() in GITHUB_NON_REPOS:
+        return ""
+    return "/".join(parts[:2]).lower()
 
 
 def is_blacklisted(url: str, blacklist: Collection[str]) -> bool:
@@ -157,6 +172,84 @@ def link_key(url: str) -> str:
     repo = f"{parts[0]}/{parts[1]}".lower()
     suffix = "/" + "/".join(parts[2:]) if len(parts) > 2 else ""
     return f"github:{repo}{suffix}?{parsed.query}#{parsed.fragment}"
+
+
+def source_key(url: str) -> str:
+    """Identity of one source, independent of a path inside its repository."""
+    repo = repo_from_url(url)
+    if repo and "/" in repo:
+        return f"github:{repo}"
+    return url.rstrip("/")
+
+
+def poc_link_rank(url: str, cve_id: str) -> tuple[int, int]:
+    """Choose the most useful path when one repository supplied several."""
+    if not repo_from_url(url):
+        return 0, len(url)
+    parsed = urlparse(url)
+    parts = [part for part in parsed.path.split("/") if part]
+    suffix = "/".join(parts[2:]).lower()
+    if not suffix:
+        return 0, len(url)
+    compact_cve = re.sub(r"[^a-z0-9]", "", cve_id.lower())
+    compact_path = re.sub(r"[^a-z0-9]", "", suffix)
+    if compact_cve and compact_cve in compact_path:
+        return 1, len(url)
+    extension = Path(parts[-1]).suffix.lower()
+    if extension in CODE_SUFFIXES or "/security/advisories/" in parsed.path.lower():
+        return 2, len(url)
+    if re.search(r"(?:^|/)(?:poc|exploit|reproducer)(?:/|$)", suffix):
+        return 3, len(url)
+    if extension in MEDIA_SUFFIXES:
+        return 6, len(url)
+    return 4, len(url)
+
+
+def dedupe_source_links(urls: Iterable[str], cve_id: str) -> List[str]:
+    selected: Dict[str, tuple[int, str]] = {}
+    order: Dict[str, int] = {}
+    for index, url in enumerate(urls):
+        key = source_key(url)
+        order.setdefault(key, index)
+        current = selected.get(key)
+        if current is None or poc_link_rank(url, cve_id) < poc_link_rank(current[1], cve_id):
+            selected[key] = (index, url)
+    return [selected[key][1] for key in sorted(selected, key=order.get)]
+
+
+def advisory_rank(row: list, cve_id: str) -> tuple[int, int, int]:
+    url = str(row[0])
+    tags = set(row[1] if len(row) > 1 and isinstance(row[1], list) else [])
+    if "GitHub Advisory" in tags or "/security/advisories/" in url.lower():
+        tag_rank = 0
+    elif "Exploit" in tags:
+        tag_rank = 1
+    elif "Vendor Advisory" in tags:
+        tag_rank = 2
+    elif "Third Party Advisory" in tags or "Advisory" in tags:
+        tag_rank = 3
+    elif "Issue Tracking" in tags:
+        tag_rank = 4
+    elif "Patch" in tags:
+        tag_rank = 5
+    else:
+        tag_rank = 6
+    path_rank, length = poc_link_rank(url, cve_id)
+    return tag_rank, path_rank, length
+
+
+def dedupe_advisories(rows: Iterable[list], cve_id: str) -> List[list]:
+    selected: Dict[str, list] = {}
+    order: Dict[str, int] = {}
+    for index, row in enumerate(rows):
+        if not isinstance(row, list) or not row:
+            continue
+        key = source_key(str(row[0]))
+        order.setdefault(key, index)
+        current = selected.get(key)
+        if current is None or advisory_rank(row, cve_id) < advisory_rank(current, cve_id):
+            selected[key] = row
+    return [selected[key] for key in sorted(selected, key=order.get)]
 
 
 def collect_links(block: str, *, blacklist: Optional[Collection[str]] = None) -> List[str]:
@@ -198,7 +291,10 @@ def build_cve_list(blacklist: Collection[str]) -> tuple[List[Dict[str, object]],
         # Metasploit module are none of them somebody's repository, and should
         # not be ranked, starred or credited as one.
         curated = {
-            field: collect_links(sections.get(header, ""), blacklist=blacklist)
+            field: dedupe_source_links(
+                collect_links(sections.get(header, ""), blacklist=blacklist),
+                cve_id,
+            )
             for header, field in CURATED
         }
         curated_keys = {
@@ -215,18 +311,15 @@ def build_cve_list(blacklist: Collection[str]) -> tuple[List[Dict[str, object]],
             and (cve_id, link_key(str(row[0]))) not in verified_references
         }
 
-        poc_entries: List[str] = []
-        seen = set()
+        poc_candidates: List[str] = []
         for link in references:
             key = link_key(link)
-            if key not in seen and key not in curated_keys and key not in advisory_only:
-                poc_entries.append(link)
-                seen.add(key)
+            if key not in curated_keys and key not in advisory_only:
+                poc_candidates.append(link)
         for link in github_links:
-            key = link_key(link)
-            if key not in seen and key not in curated_keys:
-                poc_entries.append(link)
-                seen.add(key)
+            if link_key(link) not in curated_keys:
+                poc_candidates.append(link)
+        poc_entries = dedupe_source_links(poc_candidates, cve_id)
 
         if not poc_entries and not any(curated.values()):
             continue
@@ -298,12 +391,19 @@ def build_nuclei(cve_entries: List[Dict[str, object]]) -> Dict[str, object]:
 def build_metadata(cve_entries: List[Dict[str, object]]) -> Dict[str, object]:
     """CVSS generations and vetted advisories for CVEs published on the site."""
     have = {str(entry["cve"]) for entry in cve_entries}
-    keep = ("cvss", "advisories")
-    return {
-        cve: {field: value[field] for field in keep if field in value}
-        for cve, value in load_metadata().items()
-        if cve in have and isinstance(value, dict)
-    }
+    published: Dict[str, object] = {}
+    for cve, value in load_metadata().items():
+        if cve not in have or not isinstance(value, dict):
+            continue
+        entry: Dict[str, object] = {}
+        if value.get("cvss"):
+            entry["cvss"] = value["cvss"]
+        advisories = dedupe_advisories(value.get("advisories", []), cve)
+        if advisories:
+            entry["advisories"] = advisories
+        if entry:
+            published[cve] = entry
+    return published
 
 
 def build_epss(cve_entries: List[Dict[str, object]]) -> Dict[str, object]:

@@ -59,32 +59,23 @@
     </form>
     <div class="filters" data-filters aria-label="CVE filters">
       <span class="filter-caption">FILTER</span>
-      <label class="filter-select">
-        <span>SEVERITY</span>
-        <select data-filter-severity disabled>
-          <option value="ALL">ALL</option>
-          <option value="CRITICAL">CRITICAL</option>
-          <option value="HIGH">HIGH</option>
-          <option value="MEDIUM">MEDIUM</option>
-          <option value="LOW">LOW</option>
-          <option value="NONE">NONE</option>
-          <option value="UNSCORED">UNSCORED</option>
-        </select>
-      </label>
+      <div class="filter-menu" data-filter-menu="severity">
+        <button type="button" class="filter-trigger" data-filter-trigger="severity"
+                aria-haspopup="true" aria-expanded="false" aria-controls="severity-options" disabled>
+          <span>SEVERITY</span><strong data-filter-summary="severity">ALL</strong>
+        </button>
+        <div class="filter-popover" id="severity-options" data-filter-options="severity"
+             aria-label="Include or exclude severities" hidden></div>
+      </div>
       <button type="button" class="filter-toggle" data-filter-kev aria-pressed="false" disabled>KEV ONLY</button>
-      <label class="filter-select">
-        <span>SOURCE</span>
-        <select data-filter-source disabled>
-          <option value="ALL">ALL</option>
-          <option value="GITHUB">GITHUB</option>
-          <option value="REFERENCE">REFERENCE</option>
-          <option value="NUCLEI">NUCLEI</option>
-          <option value="MSF">METASPLOIT</option>
-          <option value="EDB">EXPLOITDB</option>
-          <option value="VULHUB">VULHUB</option>
-          <option value="COLLECTIONS">COLLECTIONS</option>
-        </select>
-      </label>
+      <div class="filter-menu" data-filter-menu="source">
+        <button type="button" class="filter-trigger" data-filter-trigger="source"
+                aria-haspopup="true" aria-expanded="false" aria-controls="source-options" disabled>
+          <span>SOURCE</span><strong data-filter-summary="source">ALL</strong>
+        </button>
+        <div class="filter-popover" id="source-options" data-filter-options="source"
+             aria-label="Include or exclude sources" hidden></div>
+      </div>
       <button type="button" class="filter-clear" data-clear-filters hidden>CLEAR</button>
     </div>
   </div>
@@ -114,7 +105,7 @@
 
   <footer class="site-footer">
     <div class="container">
-      <span>sources: nvd &middot; cve program &middot; github &middot; cisa kev &middot; first epss</span>
+      <span>sources: nvd &middot; cve program &middot; github &middot; github advisories &middot; cisa vulnrichment &middot; cisa kev &middot; first epss</span>
       <span data-refreshed></span>
     </div>
   </footer>
