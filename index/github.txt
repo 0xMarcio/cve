@@ -26828,5 +26828,3 @@ CVE-2021-36260 - https://github.com/kwekre/poc
 CVE-2021-44228 - https://github.com/kwekre/poc
 CVE-2024-55591 - https://github.com/uLl0a/cve-2024-55591-poc
 CVE-2026-82221 - https://github.com/gabrielftanaka/CVE-2026-82221
-CVE-2016-0856 - https://github.com/404godd/CVE-2026-20841-PoC
-CVE-2016-0856 - https://github.com/hamzamalik3461/CVE-2026-20841

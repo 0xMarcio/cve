@@ -82,6 +82,12 @@ class RepositoryClassificationTests(unittest.TestCase):
             "Proof of concept for CVE-2026-20841",
             "The approach resembles the CVE-2016-0856 exploit.",
         )
+        repo["repositoryTopics"] = {
+            "nodes": [
+                {"topic": {"name": "cve-2016-0856"}},
+                {"topic": {"name": "cve-2026-20841"}},
+            ]
+        }
         repo["root"] = {"entries": [{"name": "PoC.md"}]}
         self.assertEqual(update_cves.qualifying_repo_cves(repo, 2016, []), set())
         self.assertEqual(

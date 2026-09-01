@@ -341,9 +341,9 @@ def qualifying_repo_cves(
     description = str(repo.get("description") or "")
     topics = " ".join(topic_names(repo))
     readme = readme_text(repo)
+    all_name_cves = extract_cves(full_name) | extract_cves(normalise_identity(full_name))
     all_identity_cves = (
-        extract_cves(full_name)
-        | extract_cves(normalise_identity(full_name))
+        all_name_cves
         | extract_cves(description)
         | extract_cves(topics)
     )
@@ -384,15 +384,20 @@ def qualifying_repo_cves(
             accepted.add(cve_id)
     for cve_id in description_cves | topic_cves:
         has_context = readme_has_poc_context(readme, cve_id, full_name)
+        has_cve_artifact = root_has_cve_artifact(repo, cve_id)
+        if all_name_cves and cve_id not in all_name_cves and not has_cve_artifact:
+            continue
         if (
             (not identity_is_non_poc or cve_id in name_cves)
             and (metadata_has_poc or has_context)
-            and (has_context or root_has_poc_artifact(repo, cve_id) or has_code)
+            and (has_context or has_cve_artifact or has_code)
         ):
             accepted.add(cve_id)
     for cve_id in readme_cves:
         has_artifact = root_has_poc_artifact(repo, cve_id)
         has_cve_artifact = root_has_cve_artifact(repo, cve_id)
+        if all_name_cves and cve_id not in all_name_cves and not has_cve_artifact:
+            continue
         if all_identity_cves and cve_id not in all_identity_cves and not has_cve_artifact:
             continue
         if identity_cves and cve_id not in identity_cves and not has_artifact:
