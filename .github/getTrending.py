@@ -491,12 +491,15 @@ def main() -> int:
             cve = cve_of(repo)
             exploited = cve in kev
             flagged += exploited
+            # Same fallback the landed lane uses. These CVEs are old enough to
+            # be in the index already, so it costs nothing to ask.
+            summary = cell(repo.get("description")) or nvd_description(cve)
             items.append({
                 "year": year,
                 "stars": int(repo.get("stargazers_count") or 0),
                 "name": cell(repo.get("name")),
                 "url": repo.get("html_url") or "",
-                "desc": cell(repo.get("description")),
+                "desc": summary,
                 "pushed": pushed,
                 "created": str(repo.get("created_at") or ""),
                 "cve": cve,
@@ -505,7 +508,7 @@ def main() -> int:
             block.append(
                 f"| {repo.get('stargazers_count', 0)}\u2b50 | {time_ago(pushed)} "
                 f"| {KEV_MARK if exploited else ''}[{cell(repo.get('name'))}]({repo.get('html_url')}) "
-                f"| {shorten(repo.get('description'))} |"
+                f"| {shorten(summary)} |"
             )
         sections.append(block)
 
