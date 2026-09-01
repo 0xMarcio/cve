@@ -57,7 +57,8 @@ CVE_ID = re.compile(r"CVE[-_](\d{4})[-_](\d{4,7})", re.IGNORECASE)
 SLUG = "0xMarcio/cve"
 RAW = f"https://raw.githubusercontent.com/{SLUG}/main/docs"
 HERO_URL = f"{RAW}/hero.svg"
-SEARCH_CTA_URL = f"{RAW}/search.svg"
+SEARCH_CTA_REV = "8dec6181e823d641132e0ee8a52a1612c2b5dd37"
+SEARCH_CTA_URL = f"https://raw.githubusercontent.com/{SLUG}/{SEARCH_CTA_REV}/docs/search.svg"
 KEV_MARK = f'<img src="{RAW}/kev.svg" alt="KEV" title="CISA known exploited" height="14"> '
 
 
@@ -554,7 +555,7 @@ def header(stamp: str, synced: str) -> list[str]:
         "",
         "&nbsp;".join(badges),
         "",
-        f'<a href="{home}"><img src="{SEARCH_CTA_URL}?v=2" alt="Search CVE Radar" width="100%"></a>',
+        f'<a href="{home}"><img src="{SEARCH_CTA_URL}" alt="Search CVE Radar" width="100%"></a>',
         "",
         "</div>",
         "",
