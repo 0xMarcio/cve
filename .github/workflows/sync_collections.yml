@@ -32,11 +32,23 @@ jobs:
           python3 -m unittest discover -s tests
           python3 scripts/build_site.py
 
+      - name: Refresh published counts
+        run: |
+          python3 .github/hero.py
+          python3 .github/getTrending.py --counts-only
+
       - name: Check for changes and commit
         run: |
           git config user.name 'CVE-BOT'
           git config user.email 'cve@codepwn.win'
-          git add --all -- index/cve_dates.json index/cve_record_state.json cves/
+          git add --all -- \
+            README.md \
+            docs/hero.svg \
+            docs/social-card.svg \
+            docs/stats.json \
+            index/cve_dates.json \
+            index/cve_record_state.json \
+            cves/
 
           if git diff --cached --quiet; then
             echo "No changes to commit"

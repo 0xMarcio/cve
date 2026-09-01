@@ -32,6 +32,11 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: python3 scripts/audit_poc_links.py --limit 12000 --references 12000
 
+      - name: Refresh published counts
+        run: |
+          python3 .github/hero.py
+          python3 .github/getTrending.py --counts-only
+
       - name: Check for changes and commit
         run: |
           git config user.name 'CVE-BOT'
@@ -43,6 +48,10 @@ jobs:
             index/repo_meta.json \
             index/kev.json \
             index/references.txt \
+            README.md \
+            docs/hero.svg \
+            docs/social-card.svg \
+            docs/stats.json \
             cves/
 
           if git diff --cached --quiet; then

@@ -481,6 +481,54 @@ def live_pill(path: str, label: str, colour: str, link: str, stamp: str) -> str:
             f"&labelColor=161b22&_={stamp})]({link})")
 
 
+def count_stamp(counts: dict) -> str:
+    keys = ("total_cves", "with_pocs", "kev")
+    if any(not counts.get(key) for key in keys):
+        raise RuntimeError("docs/stats.json does not contain usable corpus counts")
+    return "-".join(str(int(counts[key])) for key in keys)
+
+
+def refresh_count_header() -> int:
+    """Update only the README figures after a corpus-changing sync."""
+    counts = figures()
+    stamp = count_stamp(counts)
+    with open(README, encoding="utf-8") as handle:
+        content = handle.read()
+
+    content, hero_replacements = re.subn(
+        rf"({re.escape(HERO_URL)}\?v=)[^\"]+",
+        rf"\g<1>{stamp}",
+        content,
+        count=1,
+    )
+    badges = {
+        "CVEs with PoCs": pill(
+            "CVEs with PoCs", f"{counts['with_pocs']:,}", "2f81f7",
+            "https://cve.codepwn.win/",
+        ),
+        "known exploited": pill(
+            "known exploited", f"{counts['kev']:,}", "f85149",
+            "https://cve.codepwn.win/",
+        ),
+    }
+    badge_replacements = 0
+    for label, badge in badges.items():
+        content, replaced = re.subn(
+            rf"\[!\[{re.escape(label)}\]\([^)]+\)\]\([^)]+\)",
+            lambda _: badge,
+            content,
+            count=1,
+        )
+        badge_replacements += replaced
+    if hero_replacements != 1 or badge_replacements != len(badges):
+        raise RuntimeError("README count header is missing an expected field")
+
+    with open(README, "w", encoding="utf-8") as handle:
+        handle.write(content)
+    print(f"Updated README counts to {stamp}")
+    return 0
+
+
 def header(stamp: str, synced: str) -> list[str]:
     """Everything above the tables. The banner carries a cache-busting stamp
     because GitHub proxies README images and would otherwise serve a stale copy
@@ -501,9 +549,11 @@ def header(stamp: str, synced: str) -> list[str]:
     return [
         '<div align="center">',
         "",
-        f'<a href="{home}"><img src="{HERO_URL}?v={stamp}" alt="CVE Radar" width="100%"></a>',
+        f'<a href="{home}"><img src="{HERO_URL}?v={count_stamp(counts)}" alt="CVE Radar" width="100%"></a>',
         "",
         "&nbsp;".join(badges),
+        "",
+        f'<a href="{home}">cve.codepwn.win</a>',
         "",
         "</div>",
         "",
@@ -665,15 +715,8 @@ def main() -> int:
     # No hyphens: they are the field separator in a shields badge path.
     synced = now.strftime("%d %b %Y %H:%M UTC")
     lines = header(stamp, synced)
-    lines.append(f"Exploit repositories with a commit in the last {WINDOW_DAYS} days, "
-                 f"newest first. {KEV_MARK.strip()} marks a CVE CISA lists as "
-                 f"exploited in the wild.")
-    lines.append("")
     if landed:
-        lines.append(f"## Just landed &middot; last {LANDED_DAYS} days")
-        lines.append("")
-        lines.append("No star floor here, so a PoC published this morning shows up "
-                     "the same day rather than once it has been noticed.")
+        lines.append("## Just landed")
         lines.append("")
         lines.append("| Stars | Updated | Repository | Description |")
         lines.append("| --- | --- | --- | --- |")
@@ -727,4 +770,9 @@ def main() -> int:
 
 
 if __name__ == "__main__":
+    if sys.argv[1:] == ["--counts-only"]:
+        raise SystemExit(refresh_count_header())
+    if sys.argv[1:]:
+        print("usage: getTrending.py [--counts-only]", file=sys.stderr)
+        raise SystemExit(2)
     raise SystemExit(main())
