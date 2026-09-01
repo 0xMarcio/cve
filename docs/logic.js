@@ -524,6 +524,37 @@ el.input.addEventListener('input', () => {
 
 document.querySelector('.search').addEventListener('submit', event => event.preventDefault());
 
+// Typing anywhere on the page means typing into the search field. The keystroke
+// is not swallowed: focusing during keydown lets the character land in the
+// field it just moved to, so the first letter is never lost.
+document.addEventListener('keydown', event => {
+  if (event.ctrlKey || event.metaKey || event.altKey) return;
+  if (document.activeElement === el.input) {
+    if (event.key === 'Escape') {
+      el.input.value = '';
+      el.input.dispatchEvent(new Event('input', { bubbles: true }));
+      el.input.blur();
+    }
+    return;
+  }
+  const active = document.activeElement;
+  const editing = active && (active.isContentEditable
+    || ['INPUT', 'TEXTAREA', 'SELECT'].includes(active.tagName));
+  if (editing) return;
+  // A lone slash is the shortcut, so it focuses without typing itself.
+  if (event.key === '/') {
+    event.preventDefault();
+    el.input.focus();
+    return;
+  }
+  if (event.key.length !== 1 && event.key !== 'Backspace') return;
+  el.input.focus();
+});
+
+// A pointer landing on the page is not a request to type, so the field is only
+// focused up front where a keyboard is the likely input.
+if (window.matchMedia('(min-width: 900px)').matches) el.input.focus();
+
 document.querySelector('.switch').addEventListener('click', event => {
   const button = event.target.closest('button[data-mode]');
   if (!button) return;
