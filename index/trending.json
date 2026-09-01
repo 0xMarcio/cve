@@ -1,7 +1,7 @@
 [
  {
   "year": 2026,
-  "stars": 80,
+  "stars": 81,
   "name": "CVE-2026-75604-poc",
   "url": "https://github.com/rafabd1/CVE-2026-75604-poc",
   "desc": "CVE-2026-75604 Next.js Windows RCE poc",
@@ -45,7 +45,7 @@
  },
  {
   "year": 2026,
-  "stars": 416,
+  "stars": 421,
   "name": "CVE-2026-9830",
   "url": "https://github.com/opaxial/CVE-2026-9830",
   "desc": "CVE-2026-9830 Proof of Concept",
@@ -210,13 +210,13 @@
  },
  {
   "year": 2026,
-  "stars": 27,
-  "name": "CVE-2026-54121-PoC-Exploit",
-  "url": "https://github.com/tc4dy/CVE-2026-54121-PoC-Exploit",
-  "desc": "👻 CVE-2026-54121 - Best CertiGhost AD CS Multi-Exploit Framework / Advanced toolkit with rogue DC/LDAP servers, certificate abuse, PKINIT hash extraction. Features: detect safe check, exploit full multi-threaded. 🛡️ CVSS 8.8 High - Use Ethically, Stay Legal. 🔒",
-  "pushed": "2026-07-26T12:22:13Z",
-  "created": "2026-07-25T18:01:04Z",
-  "cve": "CVE-2026-54121",
+  "stars": 26,
+  "name": "CVE-2026-43499-root-KernelSU",
+  "url": "https://github.com/woshimaniubi8/CVE-2026-43499-root-KernelSU",
+  "desc": "基于内核漏洞CVE-2026-43499的本地提权适配，集成嵌入式 KernelSU.CVE-2026-43499+KernelSU越狱模式",
+  "pushed": "2026-07-26T14:04:48Z",
+  "created": "2026-07-26T12:39:00Z",
+  "cve": "CVE-2026-43499",
   "kev": false
  },
  {
@@ -375,7 +375,7 @@
  },
  {
   "year": 2025,
-  "stars": 13,
+  "stars": 14,
   "name": "FreePBX-CVE-2025-57819-RCE",
   "url": "https://github.com/0xEhab/FreePBX-CVE-2025-57819-RCE",
   "desc": "FreePBX is an open-source web-based graphical user interface. FreePBX 15, 16, and 17 endpoints are vulnerable due to insufficiently sanitized user-supplied data allowing unauthenticated access to FreePBX Administrator leading to arbitrary database manipulation and remote code execution. This issue has been patched in endpoint versions 15.0.66, 16.0.89, and 17.0.3.",
@@ -539,6 +539,30 @@
   "kev": false
  },
  {
+  "year": 2025,
+  "stars": 0,
+  "name": "CVE-2025-39401",
+  "url": "https://github.com/katranSefa/CVE-2025-39401",
+  "desc": "Unrestricted Upload of File with Dangerous Type vulnerability in mojoomla WPAMS apartment-management allows Upload a Web Shell to a Web Server.This issue affects WPAMS: from n/a through <= 44.0 (17-08-2023).",
+  "pushed": "2026-09-01T10:53:39Z",
+  "created": "2026-09-01T10:53:21Z",
+  "cve": "CVE-2025-39401",
+  "kev": false,
+  "landed": true
+ },
+ {
+  "year": 2026,
+  "stars": 0,
+  "name": "CVE-2026-82329",
+  "url": "https://github.com/HORKimhab/CVE-2026-82329",
+  "desc": "CVE-2026-82329 - Draft or TODO",
+  "pushed": "2026-09-01T06:18:29Z",
+  "created": "2026-09-01T06:15:07Z",
+  "cve": "CVE-2026-82329",
+  "kev": false,
+  "landed": true
+ },
+ {
   "year": 2026,
   "stars": 0,
   "name": "CVE-2026-68138",
@@ -575,18 +599,6 @@
   "landed": true
  },
  {
-  "year": 2026,
-  "stars": 0,
-  "name": "CVE-2026-76569",
-  "url": "https://github.com/toanln-cov/CVE-2026-76569",
-  "desc": "Reflected XSS via search GET Parameter in Phoca Download",
-  "pushed": "2026-08-31T07:54:25Z",
-  "created": "2026-08-31T07:51:07Z",
-  "cve": "CVE-2026-76569",
-  "kev": false,
-  "landed": true
- },
- {
   "year": 2025,
   "stars": 2,
   "name": "CVE-2025-49844",
@@ -612,6 +624,18 @@
  },
  {
   "year": 2026,
+  "stars": 2,
+  "name": "CVE-2026-78904-Digital-Dinar-Drain",
+  "url": "https://github.com/vxssroott/CVE-2026-78904-Digital-Dinar-Drain",
+  "desc": "CBDC Infrastructure Vulnerability Research. CVE-2026-78904: Infinite mint and redemption bypass in central bank digital currency APIs.",
+  "pushed": "2026-08-30T22:04:08Z",
+  "created": "2026-08-30T21:57:18Z",
+  "cve": "CVE-2026-78904",
+  "kev": false,
+  "landed": true
+ },
+ {
+  "year": 2026,
   "stars": 0,
   "name": "cve-2026-42945",
   "url": "https://github.com/FranklinF25/cve-2026-42945",
@@ -632,30 +656,6 @@
   "created": "2026-08-30T12:49:43Z",
   "cve": "CVE-2025-6440",
   "kev": false,
-  "landed": true
- },
- {
-  "year": 2026,
-  "stars": 10,
-  "name": "givewp-cve-2026-82222-rce-lab",
-  "url": "https://github.com/dinosn/givewp-cve-2026-82222-rce-lab",
-  "desc": "Authorized Docker lab and clean PoC for validating CVE-2026-82222 RCE in GiveWP 4.16.5.1 and the 4.16.7.2 fix.",
-  "pushed": "2026-08-30T05:18:46Z",
-  "created": "2026-08-30T05:15:27Z",
-  "cve": "CVE-2026-82222",
-  "kev": false,
-  "landed": true
- },
- {
-  "year": 2025,
-  "stars": 0,
-  "name": "CVE-2025-55182-scanner",
-  "url": "https://github.com/mayank729/CVE-2025-55182-scanner",
-  "desc": "🔍 Scan for CVE-2025-55182 risks in React Server Components with this non-intrusive tool that helps detect critical vulnerabilities in your applications.",
-  "pushed": "2026-08-30T04:24:27Z",
-  "created": "2022-06-17T10:19:10Z",
-  "cve": "CVE-2025-55182",
-  "kev": true,
   "landed": true
  }
 ]

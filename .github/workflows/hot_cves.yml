@@ -43,7 +43,7 @@ jobs:
         run: |
           git config user.name 'CVE-BOT'
           git config user.email 'cve@codepwn.win'
-          git add -- README.md trending.json docs/hero.svg docs/social-card.svg docs/social-card.png docs/stats.json docs/kev.svg
+          git add -- README.md index/trending.json docs/hero.svg docs/social-card.svg docs/social-card.png docs/stats.json docs/kev.svg
           if git diff --cached --quiet; then
             echo "No changes to commit"
             exit 0
