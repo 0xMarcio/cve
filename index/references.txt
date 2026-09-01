@@ -113846,3 +113846,5 @@ CVE-2025-9575 - https://github.com/wudipjq/my_vuln/blob/main/Linksys/vuln_13/13.
 CVE-2025-9677 - https://github.com/KMov-g/androidapps/blob/main/com.duige.hzw.multilingual.md
 CVE-2025-9745 - https://github.com/physicszq/Routers/tree/main/tmp/01
 CVE-2025-9748 - https://github.com/physicszq/Routers/tree/main/tmp/02
+CVE-2026-84111 - https://github.com/LittleRedBean/CVE/issues/1
+CVE-2026-84153 - https://github.com/jennfong2002-png/CVE/issues/1

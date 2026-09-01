@@ -37646,3 +37646,6 @@ CVE-2026-9815 - https://wpscan.com/vulnerability/043f449f-fc65-4218-83d2-7742e62
 CVE-2026-9822 - https://wpscan.com/vulnerability/107fe41a-c5d9-4547-b413-bbd77cbab986/
 CVE-2026-9830 - https://wpscan.com/vulnerability/5fded411-52fd-4dc5-9a23-b77fcd9cfed2/
 CVE-2026-9833 - https://wpscan.com/vulnerability/75792c33-2d9d-46db-a98c-00ec40951099/
+CVE-2026-83772 - https://uvxbywu62qm.feishu.cn/wiki/ERgywyUVfiUM2lkfVLwc1swknXg?from=from_copylink
+CVE-2026-84111 - https://github.com/LittleRedBean/CVE/issues/1
+CVE-2026-84153 - https://github.com/jennfong2002-png/CVE/issues/1
