@@ -12,7 +12,7 @@
  },
  {
   "year": 2026,
-  "stars": 10,
+  "stars": 11,
   "name": "CVE-2026-62735",
   "url": "https://github.com/nhh9905/CVE-2026-62735",
   "desc": "CVE 1-day in http.sys",
@@ -199,7 +199,7 @@
  },
  {
   "year": 2026,
-  "stars": 441,
+  "stars": 447,
   "name": "CVE-2026-9830",
   "url": "https://github.com/opaxial/CVE-2026-9830",
   "desc": "CVE-2026-9830 Proof of Concept",
@@ -530,12 +530,48 @@
  {
   "year": 2025,
   "stars": 0,
+  "name": "CVE-2025-6440",
+  "url": "https://github.com/katranSefa/CVE-2025-6440",
+  "desc": "The WooCommerce Designer Pro plugin for WordPress, used by the Pricom - Printing Company & Design Services WordPress theme, is vulnerable to arbitrary file uploads due to missing file type validation in the 'wcdp_save_canvas_design_ajax' function in all versions up to, and including, 1.9.26. This makes it possible for unauthenticated attackers to upload arbitrary files on the affected site's server which may make remote code execution possible.",
+  "pushed": "2026-09-02T14:46:39Z",
+  "created": "2026-08-30T12:49:43Z",
+  "cve": "CVE-2025-6440",
+  "kev": false,
+  "landed": true
+ },
+ {
+  "year": 2025,
+  "stars": 0,
+  "name": "CVE-2025-29009",
+  "url": "https://github.com/katranSefa/CVE-2025-29009",
+  "desc": "Unrestricted Upload of File with Dangerous Type vulnerability in Webkul Medical Prescription Attachment Plugin for WooCommerce medical-prescription-attachment-plugin-for-woocommerce allows Upload a Web Shell to a Web Server.This issue affects Medical Prescription Attachment Plugin for WooCommerce: from n/a through <= 1.2.3.",
+  "pushed": "2026-09-02T14:39:51Z",
+  "created": "2026-09-02T14:39:37Z",
+  "cve": "CVE-2025-29009",
+  "kev": false,
+  "landed": true
+ },
+ {
+  "year": 2025,
+  "stars": 0,
   "name": "CVE-2025-69080",
   "url": "https://github.com/AndrielSec/CVE-2025-69080",
   "desc": "Improper Control of Filename for Include/Require Statement in PHP Program ('PHP Remote File Inclusion') vulnerability in JanStudio Gecko gecko allows PHP Local File Inclusion.This issue affects Gecko: from n/a through <= 1.9.8.",
   "pushed": "2026-09-02T14:03:02Z",
   "created": "2026-08-31T21:00:26Z",
   "cve": "CVE-2025-69080",
+  "kev": false,
+  "landed": true
+ },
+ {
+  "year": 2026,
+  "stars": 2,
+  "name": "CVE-2026-43499-poc",
+  "url": "https://github.com/lkeld/CVE-2026-43499-poc",
+  "desc": "In the Linux kernel, the following vulnerability has been resolved: rtmutex: Use waiter::task instead of current in remove_waiter() remove_waiter() is used by the slowlock paths, but it is also used for proxy-lock rollback in rt_mutex_start_proxy_lock() when invoked from futex_requeue(). In the latter case waiter::task is not current, but remove_waiter() operates on current for the dequeue operation. That results in several problems: 1) the rbtree dequeue happens without waiter::task::pi_lock being held 2) the waiter task's pi_blocked_on state is not cleared, which leaves a dangling pointer primed for UAF around. 3) rt_mutex_adjust_prio_chain() operates on the wrong top priority waiter task Use waiter::task instead of current in all related operations in remove_waiter() to cure those problems. [ tglx: Fixup rt_mutex_adjust_prio_chain(), add a comment and amend the changelog ]",
+  "pushed": "2026-09-01T16:41:30Z",
+  "created": "2026-09-01T07:34:56Z",
+  "cve": "CVE-2026-43499",
   "kev": false,
   "landed": true
  },
@@ -600,18 +636,6 @@
   "landed": true
  },
  {
-  "year": 2025,
-  "stars": 0,
-  "name": "CVE-2025-6440",
-  "url": "https://github.com/katranSefa/CVE-2025-6440",
-  "desc": "The WooCommerce Designer Pro plugin for WordPress, used by the Pricom - Printing Company & Design Services WordPress theme, is vulnerable to arbitrary file uploads due to missing file type validation in the 'wcdp_save_canvas_design_ajax' function in all versions up to, and including, 1.9.26. This makes it possible for unauthenticated attackers to upload arbitrary files on the affected site's server which may make remote code execution possible.",
-  "pushed": "2026-08-30T13:04:44Z",
-  "created": "2026-08-30T12:49:43Z",
-  "cve": "CVE-2025-6440",
-  "kev": false,
-  "landed": true
- },
- {
   "year": 2026,
   "stars": 2,
   "name": "CVE-2026-19745",
@@ -620,30 +644,6 @@
   "pushed": "2026-08-29T16:32:19Z",
   "created": "2026-08-29T16:21:05Z",
   "cve": "CVE-2026-19745",
-  "kev": false,
-  "landed": true
- },
- {
-  "year": 2026,
-  "stars": 2,
-  "name": "PaperCut-CVE-2026-81578-82078",
-  "url": "https://github.com/yora1928/PaperCut-CVE-2026-81578-82078",
-  "desc": "Security research tool for PaperCut CVE-2026-81578 & CVE-2026-82078",
-  "pushed": "2026-08-29T13:13:49Z",
-  "created": "2026-08-29T13:12:33Z",
-  "cve": "CVE-2026-81578",
-  "kev": true,
-  "landed": true
- },
- {
-  "year": 2025,
-  "stars": 0,
-  "name": "cve-2025-29927",
-  "url": "https://github.com/kuyrathdaro/cve-2025-29927",
-  "desc": "Next.js is a React framework for building full-stack web applications. Starting in version 1.11.4 and prior to versions 12.3.5, 13.5.9, 14.2.25, and 15.2.3, it is possible to bypass authorization checks within a Next.js application, if the authorization check occurs in middleware. If patching to a safe version is infeasible, it is recommend that you prevent external user requests which contain the x-middleware-subrequest header from reaching your Next.js application. This vulnerability is fixed in 12.3.5, 13.5.9, 14.2.25, and 15.2.3.",
-  "pushed": "2026-08-29T09:10:43Z",
-  "created": "2026-08-29T09:05:12Z",
-  "cve": "CVE-2025-29927",
   "kev": false,
   "landed": true
  }
