@@ -199,7 +199,7 @@
  },
  {
   "year": 2026,
-  "stars": 447,
+  "stars": 450,
   "name": "CVE-2026-9830",
   "url": "https://github.com/opaxial/CVE-2026-9830",
   "desc": "CVE-2026-9830 Proof of Concept",

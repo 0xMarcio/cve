@@ -26854,3 +26854,4 @@ CVE-2024-6387 - https://github.com/zgzhang/cve-2024-6387-poc
 CVE-2026-43499 - https://github.com/slapah/ghostlock-h8q
 CVE-2026-75604 - https://github.com/HackSpeak/CVE-2026-75604
 CVE-2026-75604 - https://github.com/e4zyy/Project-CVE-2026-75604
+CVE-2025-29009 - https://github.com/katranSefa/CVE-2025-29009
