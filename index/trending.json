@@ -12,6 +12,17 @@
  },
  {
   "year": 2026,
+  "stars": 5,
+  "name": "CVE-2026-62735",
+  "url": "https://github.com/nhh9905/CVE-2026-62735",
+  "desc": "CVE 1-day in http.sys",
+  "pushed": "2026-08-27T09:13:10Z",
+  "created": "2026-08-25T04:55:10Z",
+  "cve": "CVE-2026-62735",
+  "kev": false
+ },
+ {
+  "year": 2026,
   "stars": 18,
   "name": "CVE-2026-72898",
   "url": "https://github.com/EQSTLab/CVE-2026-72898",
@@ -133,7 +144,7 @@
  },
  {
   "year": 2026,
-  "stars": 160,
+  "stars": 162,
   "name": "CVE-2026-62911",
   "url": "https://github.com/hypnguyen1209/CVE-2026-62911",
   "desc": "POC pre-auth RCE on Exchange",
@@ -188,7 +199,7 @@
  },
  {
   "year": 2026,
-  "stars": 432,
+  "stars": 433,
   "name": "CVE-2026-9830",
   "url": "https://github.com/opaxial/CVE-2026-9830",
   "desc": "CVE-2026-9830 Proof of Concept",
@@ -206,17 +217,6 @@
   "pushed": "2026-08-20T10:15:12Z",
   "created": "2026-08-19T12:46:46Z",
   "cve": "CVE-2026-41940",
-  "kev": true
- },
- {
-  "year": 2026,
-  "stars": 824,
-  "name": "CVE-2026-24061",
-  "url": "https://github.com/jacubes/CVE-2026-24061",
-  "desc": "CVE-2026-24061 exploit PoC",
-  "pushed": "2026-08-20T10:06:17Z",
-  "created": "2026-03-08T11:25:39Z",
-  "cve": "CVE-2026-24061",
   "kev": true
  },
  {
