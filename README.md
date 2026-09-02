@@ -1,10 +1,10 @@
 <div align="center">
 
-<a href="https://cve.codepwn.win/"><img src="https://raw.githubusercontent.com/0xMarcio/cve/main/docs/hero.svg?v=170946-82409-1181" alt="CVE Radar" width="100%"></a>
+<a href="https://pocindex.io/"><img src="https://raw.githubusercontent.com/0xMarcio/cve/main/docs/hero.svg?v=170946-82409-1181" alt="PoC Index" width="100%"></a>
 
-[![last sync](https://img.shields.io/badge/last%20sync-01%20Sep%202026%2023%3A15%20UTC-2f81f7?style=flat-square&labelColor=161b22)](https://github.com/0xMarcio/cve/commits/main)&nbsp;[![CI](https://img.shields.io/github/actions/workflow/status/0xMarcio/cve/hot_cves.yml?style=flat-square&label=CI&color=2f81f7&labelColor=161b22&_=202609012315)](https://github.com/0xMarcio/cve/actions/workflows/hot_cves.yml)&nbsp;[![CVEs with PoCs](https://img.shields.io/badge/CVEs%20with%20PoCs-82%2C409-2f81f7?style=flat-square&labelColor=161b22)](https://cve.codepwn.win/)&nbsp;[![known exploited](https://img.shields.io/badge/known%20exploited-1%2C181-f85149?style=flat-square&labelColor=161b22)](https://cve.codepwn.win/)&nbsp;[![stars](https://img.shields.io/github/stars/0xMarcio/cve?style=flat-square&label=stars&color=e3b341&labelColor=161b22&_=202609012315)](https://github.com/0xMarcio/cve/stargazers)
+[![last sync](https://img.shields.io/badge/last%20sync-01%20Sep%202026%2023%3A15%20UTC-2f81f7?style=flat-square&labelColor=161b22)](https://github.com/0xMarcio/cve/commits/main)&nbsp;[![CI](https://img.shields.io/github/actions/workflow/status/0xMarcio/cve/hot_cves.yml?style=flat-square&label=CI&color=2f81f7&labelColor=161b22&_=202609012315)](https://github.com/0xMarcio/cve/actions/workflows/hot_cves.yml)&nbsp;[![CVEs with PoCs](https://img.shields.io/badge/CVEs%20with%20PoCs-82%2C409-2f81f7?style=flat-square&labelColor=161b22)](https://pocindex.io/)&nbsp;[![known exploited](https://img.shields.io/badge/known%20exploited-1%2C181-f85149?style=flat-square&labelColor=161b22)](https://pocindex.io/)&nbsp;[![stars](https://img.shields.io/github/stars/0xMarcio/cve?style=flat-square&label=stars&color=e3b341&labelColor=161b22&_=202609012315)](https://github.com/0xMarcio/cve/stargazers)
 
-<a href="https://cve.codepwn.win/"><img src="https://raw.githubusercontent.com/0xMarcio/cve/8dec6181e823d641132e0ee8a52a1612c2b5dd37/docs/search.svg" alt="Search CVE Radar" width="100%"></a>
+<a href="https://pocindex.io/"><img src="https://raw.githubusercontent.com/0xMarcio/cve/8dec6181e823d641132e0ee8a52a1612c2b5dd37/docs/search.svg" alt="Search PoC Index" width="100%"></a>
 
 </div>
 
@@ -107,25 +107,25 @@ Every file is plain JSON on the CDN. No key, no rate limit.
 
 ```bash
 # everything the index knows about one CVE
-curl -s https://cve.codepwn.win/CVE_list.json \
+curl -s https://pocindex.io/CVE_list.json \
   | jq '.[] | select(.cve == "CVE-2021-44228") | {cve, poc: (.poc | length), nuclei, msf, edb, vulhub, collections}'
 
 # every published CVSS assessment plus vetted advisory links
-curl -s https://cve.codepwn.win/cve_metadata.json | jq '."CVE-2021-44228"'
+curl -s https://pocindex.io/cve_metadata.json | jq '."CVE-2021-44228"'
 
 # likelihood of exploitation in the next 30 days
-curl -s https://cve.codepwn.win/epss.json | jq '."CVE-2021-44228"'
+curl -s https://pocindex.io/epss.json | jq '."CVE-2021-44228"'
 
 # stars and last push for one PoC repository; repository keys are lowercased
-curl -s https://cve.codepwn.win/repo_meta.json | jq '."sfewer-r7/cve-2026-55040"'
+curl -s https://pocindex.io/repo_meta.json | jq '."sfewer-r7/cve-2026-55040"'
 ```
 
 What CISA says is being exploited, that also has a PoC here, ranked by how
 likely each is to be used next:
 
 ```bash
-curl -s https://cve.codepwn.win/kev.json  -o kev.json
-curl -s https://cve.codepwn.win/epss.json -o epss.json
+curl -s https://pocindex.io/kev.json  -o kev.json
+curl -s https://pocindex.io/epss.json -o epss.json
 jq -n --slurpfile kev kev.json --slurpfile epss epss.json \
   '[$kev[0] | keys[] | select($epss[0][.]) | {cve: ., epss: $epss[0][.][0]}]
    | sort_by(-.epss) | .[:10]'
@@ -133,13 +133,13 @@ jq -n --slurpfile kev kev.json --slurpfile epss epss.json \
 
 | Endpoint | Holds |
 | --- | --- |
-| [`CVE_list.json`](https://cve.codepwn.win/CVE_list.json) | Every CVE with a linked PoC, its description and its `poc`, `nuclei`, `msf`, `edb`, `vulhub` and `collections` links |
-| [`cve_metadata.json`](https://cve.codepwn.win/cve_metadata.json) | NVD CVSS v2.0, v3.0, v3.1 and v4.0 assessments with vectors and vetted advisory links |
-| [`epss.json`](https://cve.codepwn.win/epss.json) | Exploitation probability and percentile, for nearly every CVE indexed |
-| [`nuclei.json`](https://cve.codepwn.win/nuclei.json) | Template metadata for the CVEs covered by a runnable Nuclei check |
-| [`kev.json`](https://cve.codepwn.win/kev.json) | CISA known exploited, keyed by CVE id |
-| [`repo_meta.json`](https://cve.codepwn.win/repo_meta.json) | Stars and last push date per PoC repository, keys lowercased |
-| [`trending_poc.json`](https://cve.codepwn.win/trending_poc.json) | Trending repositories plus index totals |
+| [`CVE_list.json`](https://pocindex.io/CVE_list.json) | Every CVE with a linked PoC, its description and its `poc`, `nuclei`, `msf`, `edb`, `vulhub` and `collections` links |
+| [`cve_metadata.json`](https://pocindex.io/cve_metadata.json) | NVD CVSS v2.0, v3.0, v3.1 and v4.0 assessments with vectors and vetted advisory links |
+| [`epss.json`](https://pocindex.io/epss.json) | Exploitation probability and percentile, for nearly every CVE indexed |
+| [`nuclei.json`](https://pocindex.io/nuclei.json) | Template metadata for the CVEs covered by a runnable Nuclei check |
+| [`kev.json`](https://pocindex.io/kev.json) | CISA known exploited, keyed by CVE id |
+| [`repo_meta.json`](https://pocindex.io/repo_meta.json) | Stars and last push date per PoC repository, keys lowercased |
+| [`trending_poc.json`](https://pocindex.io/trending_poc.json) | Trending repositories plus index totals |
 | [`cves/2026/CVE-2026-68138.md`](cves/2026/CVE-2026-68138.md) | Markdown copy of one CVE, one directory per year |
 
 CVSS rows are `[version, score, severity, vector, source, assessment type]`.

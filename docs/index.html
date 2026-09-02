@@ -3,22 +3,46 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>CVE PoC Hub</title>
-  <meta name="description" content="Search publicly available proof-of-concept exploits by CVE, vendor or product." />
+  <!-- Absolute URLs all point at the canonical host. Keep them in step with
+       SITE in scripts/brand.py, which drives every generated surface. -->
+  <title>PoC Index: Search CVE Proof-of-Concept Exploits</title>
+  <meta name="description" content="Search 82,000+ public CVE proof-of-concept exploits from GitHub, Nuclei, ExploitDB, Metasploit and Vulhub. Updated hourly. Free JSON API, no signup." />
+  <meta name="robots" content="index, follow, max-image-preview:large" />
   <link rel="icon" href="/favicon.ico" />
-  <link rel="canonical" href="https://cve.codepwn.win/" />
+  <link rel="canonical" href="https://pocindex.io/" />
   <meta property="og:type" content="website" />
-  <meta property="og:site_name" content="CVE Radar" />
-  <meta property="og:title" content="CVE Radar" />
+  <meta property="og:site_name" content="PoC Index" />
+  <meta property="og:title" content="PoC Index: Search CVE Proof-of-Concept Exploits" />
   <meta property="og:description" content="Public proof-of-concept exploits, indexed by CVE. Searchable, refreshed hourly, no signup." />
-  <meta property="og:url" content="https://cve.codepwn.win/" />
-  <meta property="og:image" content="https://cve.codepwn.win/social-card.png" />
+  <meta property="og:url" content="https://pocindex.io/" />
+  <meta property="og:image" content="https://pocindex.io/social-card.png" />
   <meta property="og:image:width" content="1280" />
   <meta property="og:image:height" content="640" />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="CVE Radar" />
+  <meta name="twitter:title" content="PoC Index: Search CVE Proof-of-Concept Exploits" />
   <meta name="twitter:description" content="Public proof-of-concept exploits, indexed by CVE. Searchable, refreshed hourly, no signup." />
-  <meta name="twitter:image" content="https://cve.codepwn.win/social-card.png" />
+  <meta name="twitter:image" content="https://pocindex.io/social-card.png" />
+  <!-- WebSite.name is how Google decides what to print as the site name in a
+       result. Without it the title, the og tags and the h1 were three different
+       names and it picked one on its own. SearchAction points at the ?q= route
+       logic.js now keeps in the URL. -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "PoC Index",
+    "url": "https://pocindex.io/",
+    "description": "Search 82,000+ public CVE proof-of-concept exploits from GitHub, Nuclei, ExploitDB, Metasploit and Vulhub. Updated hourly. Free JSON API, no signup.",
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": {
+        "@type": "EntryPoint",
+        "urlTemplate": "https://pocindex.io/?q={search_term_string}"
+      },
+      "query-input": "required name=search_term_string"
+    }
+  }
+  </script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
@@ -35,7 +59,7 @@
         <line class="hero-sweep" x1="200" y1="200" x2="200" y2="0" />
       </svg>
       <div class="hero-id">
-        <h1>CVE RADAR</h1>
+        <h1>PoC Index</h1>
         <p>Public proof-of-concept exploits, indexed by CVE.</p>
       </div>
       <dl class="hero-stats">
@@ -107,6 +131,9 @@
     <div class="container">
       <span>sources: nvd &middot; cve program &middot; github &middot; github advisories &middot; cisa vulnrichment &middot; cisa kev &middot; first epss</span>
       <span data-refreshed></span>
+    </div>
+    <div class="container site-legal">
+      <span>CVE is a trademark of The MITRE Corporation. PoC Index is not affiliated with or endorsed by MITRE or the CVE Program.</span>
     </div>
   </footer>
 

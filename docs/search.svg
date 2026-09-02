@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="92" viewBox="0 0 1200 92"
-     role="img" aria-label="Search CVE Radar">
+     role="img" aria-label="Search PoC Index">
   <rect x="0.75" y="0.75" width="1198.5" height="90.5" rx="10" fill="#161b22"
         stroke="#2f81f7" stroke-width="1.5"/>
   <g fill="none" stroke="#8b949e" stroke-width="2.5" stroke-linecap="round">

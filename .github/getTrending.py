@@ -45,6 +45,7 @@ USER_AGENT = "0xMarcio-cve-trending"
 ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), os.pardir)
 sys.path.insert(0, os.path.join(ROOT, "scripts"))
 
+from brand import BRAND, SITE
 from update_cves import load_blacklist, qualifying_repo_cves
 
 README = os.path.join(ROOT, "README.md")
@@ -506,11 +507,11 @@ def refresh_count_header() -> int:
     badges = {
         "CVEs with PoCs": pill(
             "CVEs with PoCs", f"{counts['with_pocs']:,}", "2f81f7",
-            "https://cve.codepwn.win/",
+            f"{SITE}/",
         ),
         "known exploited": pill(
             "known exploited", f"{counts['kev']:,}", "f85149",
-            "https://cve.codepwn.win/",
+            f"{SITE}/",
         ),
     }
     badge_replacements = 0
@@ -536,7 +537,7 @@ def header(stamp: str, synced: str) -> list[str]:
     because GitHub proxies README images and would otherwise serve a stale copy
     of a file that is redrawn whenever the index moves."""
     counts = figures()
-    home = "https://cve.codepwn.win/"
+    home = f"{SITE}/"
     badges = [
         pill("last sync", synced, "2f81f7", f"https://github.com/{SLUG}/commits/main"),
         live_pill("actions/workflow/status/" + SLUG + "/hot_cves.yml", "CI", "2f81f7",
@@ -551,11 +552,11 @@ def header(stamp: str, synced: str) -> list[str]:
     return [
         '<div align="center">',
         "",
-        f'<a href="{home}"><img src="{HERO_URL}?v={count_stamp(counts)}" alt="CVE Radar" width="100%"></a>',
+        f'<a href="{home}"><img src="{HERO_URL}?v={count_stamp(counts)}" alt="{BRAND}" width="100%"></a>',
         "",
         "&nbsp;".join(badges),
         "",
-        f'<a href="{home}"><img src="{SEARCH_CTA_URL}" alt="Search CVE Radar" width="100%"></a>',
+        f'<a href="{home}"><img src="{SEARCH_CTA_URL}" alt="Search {BRAND}" width="100%"></a>',
         "",
         "</div>",
         "",
@@ -570,25 +571,25 @@ Every file is plain JSON on the CDN. No key, no rate limit.
 
 ```bash
 # everything the index knows about one CVE
-curl -s https://cve.codepwn.win/CVE_list.json \\
+curl -s @SITE@/CVE_list.json \\
   | jq '.[] | select(.cve == "CVE-2021-44228") | {cve, poc: (.poc | length), nuclei, msf, edb, vulhub, collections}'
 
 # every published CVSS assessment plus vetted advisory links
-curl -s https://cve.codepwn.win/cve_metadata.json | jq '."CVE-2021-44228"'
+curl -s @SITE@/cve_metadata.json | jq '."CVE-2021-44228"'
 
 # likelihood of exploitation in the next 30 days
-curl -s https://cve.codepwn.win/epss.json | jq '."CVE-2021-44228"'
+curl -s @SITE@/epss.json | jq '."CVE-2021-44228"'
 
 # stars and last push for one PoC repository; repository keys are lowercased
-curl -s https://cve.codepwn.win/repo_meta.json | jq '."sfewer-r7/cve-2026-55040"'
+curl -s @SITE@/repo_meta.json | jq '."sfewer-r7/cve-2026-55040"'
 ```
 
 What CISA says is being exploited, that also has a PoC here, ranked by how
 likely each is to be used next:
 
 ```bash
-curl -s https://cve.codepwn.win/kev.json  -o kev.json
-curl -s https://cve.codepwn.win/epss.json -o epss.json
+curl -s @SITE@/kev.json  -o kev.json
+curl -s @SITE@/epss.json -o epss.json
 jq -n --slurpfile kev kev.json --slurpfile epss epss.json \\
   '[$kev[0] | keys[] | select($epss[0][.]) | {cve: ., epss: $epss[0][.][0]}]
    | sort_by(-.epss) | .[:10]'
@@ -596,13 +597,13 @@ jq -n --slurpfile kev kev.json --slurpfile epss epss.json \\
 
 | Endpoint | Holds |
 | --- | --- |
-| [`CVE_list.json`](https://cve.codepwn.win/CVE_list.json) | Every CVE with a linked PoC, its description and its `poc`, `nuclei`, `msf`, `edb`, `vulhub` and `collections` links |
-| [`cve_metadata.json`](https://cve.codepwn.win/cve_metadata.json) | NVD CVSS v2.0, v3.0, v3.1 and v4.0 assessments with vectors and vetted advisory links |
-| [`epss.json`](https://cve.codepwn.win/epss.json) | Exploitation probability and percentile, for nearly every CVE indexed |
-| [`nuclei.json`](https://cve.codepwn.win/nuclei.json) | Template metadata for the CVEs covered by a runnable Nuclei check |
-| [`kev.json`](https://cve.codepwn.win/kev.json) | CISA known exploited, keyed by CVE id |
-| [`repo_meta.json`](https://cve.codepwn.win/repo_meta.json) | Stars and last push date per PoC repository, keys lowercased |
-| [`trending_poc.json`](https://cve.codepwn.win/trending_poc.json) | Trending repositories plus index totals |
+| [`CVE_list.json`](@SITE@/CVE_list.json) | Every CVE with a linked PoC, its description and its `poc`, `nuclei`, `msf`, `edb`, `vulhub` and `collections` links |
+| [`cve_metadata.json`](@SITE@/cve_metadata.json) | NVD CVSS v2.0, v3.0, v3.1 and v4.0 assessments with vectors and vetted advisory links |
+| [`epss.json`](@SITE@/epss.json) | Exploitation probability and percentile, for nearly every CVE indexed |
+| [`nuclei.json`](@SITE@/nuclei.json) | Template metadata for the CVEs covered by a runnable Nuclei check |
+| [`kev.json`](@SITE@/kev.json) | CISA known exploited, keyed by CVE id |
+| [`repo_meta.json`](@SITE@/repo_meta.json) | Stars and last push date per PoC repository, keys lowercased |
+| [`trending_poc.json`](@SITE@/trending_poc.json) | Trending repositories plus index totals |
 | [`cves/2026/CVE-2026-68138.md`](cves/2026/CVE-2026-68138.md) | Markdown copy of one CVE, one directory per year |
 
 CVSS rows are `[version, score, severity, vector, source, assessment type]`.
@@ -641,7 +642,7 @@ Advisory rows are `[URL, NVD reference tags]`.
 
 Missing PoC, wrong link, dead repository: open an issue with the CVE id and the
 repository URL.
-"""
+""".replace("@SITE@", SITE)
 
 
 def main() -> int:

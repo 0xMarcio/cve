@@ -57,7 +57,7 @@ jobs:
       - name: Check for changes and commit
         run: |
           git config user.name 'CVE-BOT'
-          git config user.email 'cve@codepwn.win'
+          git config user.email 'bot@pocindex.io'
           git add -- \
             README.md \
             cves/ \

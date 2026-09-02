@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1280" height="640" viewBox="0 0 1280 640"
-     role="img" aria-label="CVE Radar">
+     role="img" aria-label="PoC Index">
   <clipPath id="card"><rect x="56" y="56" width="1168" height="528" rx="16"/></clipPath>
   <rect width="1280" height="640" fill="#0d1117"/>
   <g clip-path="url(#card)" opacity="0.6"><g>
@@ -14,7 +14,7 @@
   <rect x="56" y="56" width="1168" height="528" rx="16" fill="none" stroke="#30363d"/>
 
   <text x="96" y="215" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" font-size="76" font-weight="700"
-        fill="#e6edf3" letter-spacing="3">CVE RADAR</text>
+        fill="#e6edf3" letter-spacing="3">PoC Index</text>
   <text x="96" y="272" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" font-size="24" fill="#8b949e">
     Public proof-of-concept exploits, indexed by CVE.</text>
 
@@ -31,5 +31,5 @@
         fill="#6e7681" letter-spacing="1.6">KNOWN EXPLOITED</text>
 
   <text x="96" y="532" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" font-size="22" fill="#2f81f7"
-        letter-spacing="1">cve.codepwn.win</text>
+        letter-spacing="1">pocindex.io</text>
 </svg>

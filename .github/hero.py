@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Render the CVE Radar hero banner and social card as self-contained SVG.
+"""Render the PoC Index hero banner and social card as self-contained SVG.
 
 Both cards are plain SVG with no external font, image or stylesheet reference:
 GitHub proxies README images through camo, which fetches the file on its own and
@@ -11,12 +11,17 @@ from __future__ import annotations
 import importlib.util
 import json
 import os
+import sys
 from urllib import request
 
 ROOT = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), os.pardir))
 BUILD_SITE = os.path.join(ROOT, "scripts", "build_site.py")
-LIVE_STATS = "https://cve.codepwn.win/trending_poc.json"
-LIVE_KEV = "https://cve.codepwn.win/kev.json"
+sys.path.insert(0, os.path.join(ROOT, "scripts"))
+
+from brand import BRAND, SITE, SUBTITLE, host
+
+LIVE_STATS = f"{SITE}/trending_poc.json"
+LIVE_KEV = f"{SITE}/kev.json"
 HERO = os.path.join(ROOT, "docs", "hero.svg")
 SOCIAL = os.path.join(ROOT, "docs", "social-card.svg")
 STATS = os.path.join(ROOT, "docs", "stats.json")
@@ -122,16 +127,16 @@ def hero(counts: dict) -> str:
         )
     )
     return f"""<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="180" viewBox="0 0 1200 180"
-     role="img" aria-label="CVE Radar, {group(counts['with_pocs'])} CVEs with public proof-of-concept exploits">
+     role="img" aria-label="{BRAND}, {group(counts['with_pocs'])} CVEs with public proof-of-concept exploits">
   <clipPath id="card"><rect x="1" y="1" width="1198" height="178" rx="12"/></clipPath>
   <rect x="0.5" y="0.5" width="1199" height="179" rx="12" fill="{CANVAS}" stroke="{BORDER}"/>
   <g clip-path="url(#card)" opacity="0.6">{sweep(1090, 90, 160, 0.3)}</g>
 
   <text x="56" y="70" font-family="{MONO}" font-size="44" font-weight="700"
-        fill="{FG}" letter-spacing="2">CVE RADAR</text>
+        fill="{FG}" letter-spacing="2">{BRAND}</text>
   <text x="56" y="104" font-family="{MONO}" font-size="15" fill="{MUTED}">
-    Public proof-of-concept exploits, indexed by CVE.</text>
-  <text x="56" y="132" font-family="{MONO}" font-size="15" fill="{ACCENT}">cve.codepwn.win</text>
+    {SUBTITLE}</text>
+  <text x="56" y="132" font-family="{MONO}" font-size="15" fill="{ACCENT}">{host()}</text>
 
   {blocks}
 </svg>
@@ -149,22 +154,22 @@ def social(counts: dict) -> str:
         )
     )
     return f"""<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="640" viewBox="0 0 1280 640"
-     role="img" aria-label="CVE Radar">
+     role="img" aria-label="{BRAND}">
   <clipPath id="card"><rect x="56" y="56" width="1168" height="528" rx="16"/></clipPath>
   <rect width="1280" height="640" fill="{CANVAS}"/>
   <g clip-path="url(#card)" opacity="0.6">{sweep(1000, 300, 220, 0.26)}</g>
   <rect x="56" y="56" width="1168" height="528" rx="16" fill="none" stroke="{BORDER}"/>
 
   <text x="96" y="215" font-family="{MONO}" font-size="76" font-weight="700"
-        fill="{FG}" letter-spacing="3">CVE RADAR</text>
+        fill="{FG}" letter-spacing="3">{BRAND}</text>
   <text x="96" y="272" font-family="{MONO}" font-size="24" fill="{MUTED}">
-    Public proof-of-concept exploits, indexed by CVE.</text>
+    {SUBTITLE}</text>
 
   <rect x="96" y="344" width="1088" height="1" fill="{BORDER}"/>
   {blocks}
 
   <text x="96" y="532" font-family="{MONO}" font-size="22" fill="{ACCENT}"
-        letter-spacing="1">cve.codepwn.win</text>
+        letter-spacing="1">{host()}</text>
 </svg>
 """
 

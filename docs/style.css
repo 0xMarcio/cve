@@ -1,4 +1,4 @@
-/* CVE PoC Hub. GitHub Primer dark_default tokens, per the refit handoff. */
+/* PoC Index. GitHub Primer dark_default tokens, per the refit handoff. */
 :root {
   --canvas: #0d1117;
   --canvas-subtle: #161b22;
@@ -520,7 +520,9 @@ a.chip:hover { color: var(--fg); border-color: var(--fg-muted); }
   font: 400 11px/1.6 var(--mono);
   color: var(--fg-muted);
 }
-.site-footer span:last-child { margin-left: auto; }
+.site-footer .container:first-child span:last-child { margin-left: auto; }
+.site-legal { padding-top: 8px; }
+.site-legal span { margin-left: 0; opacity: .72; }
 
 /* ---- narrow viewports --------------------------------------------------- */
 

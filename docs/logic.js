@@ -702,7 +702,38 @@ function idleStatus() {
   return '';
 }
 
+/* ---- url state --------------------------------------------------------- */
+
+// A result was unlinkable: every search lived in memory, so nobody could cite
+// one and no crawler ever saw a second page. The query rides in ?q= now, which
+// is also the route the SearchAction in index.html declares.
+function readURLState() {
+  const params = new URLSearchParams(location.search);
+  const query = (params.get('q') || '').trim();
+  if (query) {
+    state.query = query;
+    el.input.value = query;
+  }
+  if (params.get('kev') === '1') state.kevOnly = true;
+}
+
+// replaceState, not pushState: typing a query should not bury the back button
+// under one history entry per keystroke.
+let urlTimer = null;
+function syncURL() {
+  clearTimeout(urlTimer);
+  urlTimer = setTimeout(() => {
+    const params = new URLSearchParams();
+    if (state.query.length >= MIN_QUERY) params.set('q', state.query);
+    if (state.kevOnly) params.set('kev', '1');
+    const search = params.toString();
+    const next = search ? `${location.pathname}?${search}` : location.pathname;
+    if (next !== location.pathname + location.search) history.replaceState(null, '', next);
+  }, 300);
+}
+
 function render() {
+  syncURL();
   if (state.query.length < MIN_QUERY && !hasActiveFilters()) {
     el.status.textContent = state.ready ? idleStatus() : 'loading index…';
     renderTrending();
@@ -914,6 +945,8 @@ async function loadJSON(url, options) {
   } catch (err) {
     console.warn(err.message);
   }
+  readURLState();
+  syncFilterControls();
   paintHeroStats();
   render();
 
