@@ -56,6 +56,13 @@ function formatCount(n) {
   return n.toLocaleString('en-US');
 }
 
+/** 1st, 2nd, 3rd, 4th. A hard-coded "th" printed 51th on 21,100 CVEs. */
+function ordinal(n) {
+  const tens = n % 100;
+  if (tens >= 11 && tens <= 13) return `${n}th`;
+  return `${n}${['th', 'st', 'nd', 'rd'][n % 10] || 'th'}`;
+}
+
 function formatStars(n) {
   return n >= 1000 ? (n / 1000).toFixed(1) + 'k' : String(n);
 }
@@ -284,8 +291,12 @@ function matchesMultiFilter(values, filter) {
 function matchesFilters(entry) {
   if (state.kevOnly && !kev[entry.cve]) return false;
   if (!matchesMultiFilter(entrySources(entry), state.filters.source)) return false;
-  const severity = entrySeverity(entry) || 'UNSCORED';
-  return matchesMultiFilter(new Set([severity]), state.filters.severity);
+  // ALL has to mean all. The options list only names the four scored bands, so
+  // testing membership hid every CVE nobody has scored yet even with nothing
+  // filtered: 41 of them were unreachable by search, including by exact ID.
+  if (state.filters.severity.size === FILTER_OPTIONS.severity.length) return true;
+  const severity = entrySeverity(entry);
+  return severity ? matchesMultiFilter(new Set([severity]), state.filters.severity) : false;
 }
 
 function runSearch(query) {
@@ -559,7 +570,7 @@ function resultRow(entry) {
   // fallback for the handful it misses.
   const scored = epss[id] || (fallback.epss != null ? [fallback.epss, fallback.epss_pct || 0] : null);
   const epssChip = scored
-    ? `<span class="chip chip-epss${scored[0] >= 0.1 ? ' is-hot' : ''}" title="EPSS: estimated chance of exploitation in the next 30 days, ${Math.round(scored[1] * 100)}th percentile">` +
+    ? `<span class="chip chip-epss${scored[0] >= 0.1 ? ' is-hot' : ''}" title="EPSS: estimated chance of exploitation in the next 30 days, ${ordinal(Math.round(scored[1] * 100))} percentile">` +
       `EPSS ${(scored[0] * 100).toFixed(scored[0] >= 0.1 ? 0 : 1)}%</span>`
     : '';
 
@@ -621,6 +632,12 @@ function renderResults(elapsed) {
       ? ` for ${escapeHTML(state.query)}`
       : ' for the active filters';
     el.results.innerHTML = `<div class="empty">No results${subject}</div>`;
+    // The live region is the only account of this a screen reader gets, and
+    // returning here left it reading "loading index…" over a page that had
+    // already given up.
+    if (elapsed != null) {
+      el.status.textContent = `no results in ${Math.max(1, Math.round(elapsed))}ms`;
+    }
     return;
   }
 
@@ -633,7 +650,7 @@ function renderResults(elapsed) {
 
   el.results.innerHTML = `<div class="panel-head">
       <h2>Results</h2>
-      <span class="panel-count">${formatCount(results.length)} CVE${results.length === 1 ? '' : 's'} · ${formatCount(pocTotal)} PoCs</span>
+      <span class="panel-count">${formatCount(results.length)} CVE${results.length === 1 ? '' : 's'} · ${formatCount(pocTotal)} PoC${pocTotal === 1 ? '' : 's'}</span>
     </div>
     <div class="col-head"><span>CVE</span><span>DESCRIPTION / POC LINKS</span></div>
     ${shown.map(resultRow).join('')}${footer}`;

@@ -58,11 +58,11 @@ def urlset(urls: list[tuple[str, str]]) -> str:
     )
 
 
-def sitemap_index(names: list[str], today: str) -> str:
+def sitemap_index(names: list[tuple[str, str]]) -> str:
     body = "".join(
         f"  <sitemap>\n    <loc>{SITE}/{name}</loc>\n"
-        f"    <lastmod>{today}</lastmod>\n  </sitemap>\n"
-        for name in names
+        f"    <lastmod>{lastmod}</lastmod>\n  </sitemap>\n"
+        for name, lastmod in names
     )
     return (
         '<?xml version="1.0" encoding="UTF-8"?>\n'
@@ -87,29 +87,44 @@ def main() -> int:
     except FileNotFoundError:
         cves = []
 
+    # build_pages.py works out when each page actually changed, taking the new
+    # PoC repositories into account and not only the CVE record date, and drops
+    # the answer here. Falling back to the record date keeps a standalone run
+    # working, just less accurately.
+    try:
+        with open(os.path.join(DOCS, "page_lastmod.json"), encoding="utf-8") as handle:
+            page_dates = json.load(handle)
+    except (OSError, json.JSONDecodeError):
+        page_dates = {}
+
     years: dict[str, list[tuple[str, str]]] = {}
     for entry in cves:
         cid = entry["cve"]
         year = cid.split("-")[1]
-        lastmod = entry.get("modified") or entry.get("published") or today
+        lastmod = page_dates.get(cid) or entry.get("modified") or entry.get("published") or today
         years.setdefault(year, []).append((f"{SITE}/{cid}", lastmod))
 
-    names = []
+    # A shard's own lastmod is the newest page in it. Stamping every shard with
+    # today told a crawler all 29 had changed on every build, which is the kind
+    # of lastmod Google stops trusting and then ignores.
+    names: list[tuple[str, str]] = []
     for year in sorted(years):
         name = f"sitemap-{year}.xml"
         with open(os.path.join(DOCS, name), "w", encoding="utf-8") as handle:
             handle.write(urlset(years[year]))
-        names.append(name)
+        names.append((name, max(date for _, date in years[year])))
 
     with open(os.path.join(DOCS, "sitemap-home.xml"), "w", encoding="utf-8") as handle:
         handle.write(urlset([(f"{SITE}/", today)]))
-    names.insert(0, "sitemap-home.xml")
+    names.insert(0, ("sitemap-home.xml", today))
 
     with open(SITEMAP, "w", encoding="utf-8") as handle:
-        handle.write(sitemap_index(names, today))
+        handle.write(sitemap_index(names))
 
     total = sum(len(v) for v in years.values()) + 1
-    print(f"Wrote {ROBOTS}, {SITEMAP} and {len(names)} shards ({total:,} URLs) for {SITE}")
+    sourced = sum(1 for entry in cves if page_dates.get(entry["cve"]))
+    print(f"Wrote {ROBOTS}, {SITEMAP} and {len(names)} shards ({total:,} URLs) for {SITE}; "
+          f"{sourced:,} lastmod values reflect page content")
     return 0
 
 

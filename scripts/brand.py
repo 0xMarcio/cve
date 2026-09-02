@@ -26,3 +26,19 @@ SLUG = "0xMarcio/pocindex"
 def host() -> str:
     """SITE without the scheme, for the places that display a bare domain."""
     return SITE.split("://", 1)[-1].rstrip("/")
+
+# The head fragment every page shares. The per-CVE pages rendered without it and
+# fell back to system fonts, which is why they read as a different site.
+FONTS = (
+    '<link rel="preconnect" href="https://fonts.googleapis.com"/>\n'
+    '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>\n'
+    '<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600'
+    '&amp;family=IBM+Plex+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>'
+)
+
+# One footer credit line. The homepage and the generated pages listed different
+# sources, so a reader met two different claims about where the data comes from.
+SOURCES_LINE = (
+    "sources: nvd &middot; cve program &middot; github &middot; github advisories "
+    "&middot; cisa vulnrichment &middot; cisa kev &middot; first epss"
+)

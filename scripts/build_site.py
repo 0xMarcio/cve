@@ -10,7 +10,7 @@ import urllib.request
 from datetime import datetime, timezone
 from functools import lru_cache
 from pathlib import Path
-from typing import Collection, Dict, List, Optional
+from typing import Collection, Dict, Iterable, List, Optional
 from urllib.parse import urlparse
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -140,11 +140,21 @@ def parse_sections(content: str) -> Dict[str, str]:
     return sections
 
 
+GITHUB_HOSTS = {"github.com", "www.github.com"}
+
+
 def repo_from_url(url: str) -> str:
+    """owner/repo for a GitHub URL, matching repoFromUrl in logic.js exactly.
+
+    Two disagreements with the browser lived here. "github" as a substring of
+    the host accepted notgithub.example.com as a repository, and a clone URL
+    kept its .git suffix, so poc-rebar3.git and poc-rebar3 counted as two
+    sources on the page and one in search. 273 CVEs disagreed across the two.
+    """
     try:
         parsed = urlparse(url)
-        host = (parsed.netloc or "").lower()
-        if host and "github" not in host:
+        host = (parsed.hostname or "").lower()
+        if host and host not in GITHUB_HOSTS:
             return ""
         path = parsed.path or url
     except Exception:
@@ -152,7 +162,8 @@ def repo_from_url(url: str) -> str:
     parts = path.strip("/").split("/")
     if len(parts) < 2 or parts[0].lower() in GITHUB_NON_REPOS:
         return ""
-    return "/".join(parts[:2]).lower()
+    owner, repo = parts[0].lower(), re.sub(r"\.git$", "", parts[1], flags=re.I).lower()
+    return f"{owner}/{repo}" if repo else ""
 
 
 def is_blacklisted(url: str, blacklist: Collection[str]) -> bool:
@@ -425,13 +436,17 @@ def build_epss(cve_entries: List[Dict[str, object]]) -> Dict[str, object]:
     code published, which is actually being used. The feed covers essentially
     the whole index, so it is fetched here rather than tracked in the
     repository, where a daily rescore of 366,000 rows would be pure churn.
+
+    A failure raises rather than returning {}. Swallowing it published an empty
+    epss.json, which is not "EPSS is missing" to a reader: every score silently
+    disappears from 82,000 pages and the site looks like it never had them. A
+    build that cannot get the feed should not replace the one that did.
     """
     try:
         with urllib.request.urlopen(EPSS_FEED, timeout=180) as response:
             raw = gzip.decompress(response.read()).decode("utf-8", "replace")
     except Exception as problem:
-        print(f"EPSS feed unavailable ({problem}); scores left out of this build")
-        return {}
+        raise RuntimeError(f"EPSS feed unavailable: {problem}") from problem
     have = {str(entry["cve"]) for entry in cve_entries}
     text = io.StringIO(raw)
     text.readline()  # the feed opens with a model version comment, not a header
@@ -444,6 +459,14 @@ def build_epss(cve_entries: List[Dict[str, object]]) -> Dict[str, object]:
             scores[cve] = [round(float(row["epss"]), 5), round(float(row["percentile"]), 4)]
         except (KeyError, TypeError, ValueError):
             continue
+    # The feed normally covers the whole index. A truncated or reshaped one
+    # parses cleanly and yields a handful of rows, which would ship as a real
+    # build; anything below nine in ten CVEs is a broken feed, not news.
+    if have and len(scores) < 0.9 * len(have):
+        raise RuntimeError(
+            f"EPSS feed covered {len(scores):,} of {len(have):,} indexed CVEs; "
+            "refusing to publish a partial rescore"
+        )
     return scores
 
 

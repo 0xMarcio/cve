@@ -558,14 +558,24 @@ a.chip:hover { color: var(--fg); border-color: var(--fg-muted); }
 }
 .cve-home { font: 700 19px/1 var(--mono); color: var(--fg); letter-spacing: .04em; }
 .cve-home:hover { color: var(--accent); }
-.cve-search { flex: 1; max-width: 520px; }
+/* The same bar the homepage draws, at header height. It was a bare input with
+   its own border and no icon, which read as a different site's search box. */
+.cve-search {
+  flex: 1; max-width: 520px;
+  display: flex; align-items: center; gap: 11px;
+  height: 40px; padding: 0 14px;
+  background: var(--canvas-subtle);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+}
+.cve-search:focus-within { border-color: var(--accent-emphasis); }
+.cve-search svg { flex: none; display: block; }
 .cve-search input {
-  width: 100%; padding: 9px 14px; border-radius: 8px;
-  background: var(--canvas-subtle); border: 1px solid var(--border);
-  color: var(--fg); font: 400 13px/1.4 var(--mono);
+  flex: 1; min-width: 0;
+  background: transparent; border: 0; outline: 0; padding: 0;
+  color: var(--fg); font: 400 13px/1 var(--mono);
 }
 .cve-search input::placeholder { color: var(--neutral); }
-.cve-search input:focus { outline: none; border-color: var(--accent-emphasis); }
 
 .cve-page { flex: 1; padding-top: 32px; padding-bottom: 56px; max-width: 900px; }
 .cve-page h1 { margin: 0 0 14px; font: 700 32px/1.1 var(--mono); color: var(--fg); }
@@ -581,6 +591,8 @@ a.chip:hover { color: var(--fg); border-color: var(--fg-muted); }
   background: var(--canvas-subtle); border: 1px solid var(--border-muted); border-radius: 10px;
 }
 .cve-facts dt { font: 500 11px/1.5 var(--mono); letter-spacing: .06em; color: var(--fg-muted); text-transform: uppercase; }
+/* Who scored it. Two CVSS rows are two opinions, not a repeated line. */
+.cve-facts dt span { color: var(--neutral); text-transform: none; letter-spacing: 0; }
 .cve-facts dd { margin: 0; font: 400 13px/1.5 var(--mono); color: var(--fg-subtle); }
 .cve-facts dd code { display: block; margin-top: 3px; font-size: 11px; color: var(--neutral); word-break: break-all; }
 

@@ -7,11 +7,11 @@ docs/trending_poc.json
 docs/nuclei.json
 docs/cve_metadata.json
 docs/epss.json
-docs/api/v1/cve/
 docs/robots.txt
 docs/sitemap.xml
 docs/sitemap-*.xml
 docs/CVE-*.html
+docs/404.html
 __pycache__/
 
 # Assistant tooling. None of it belongs in the repository.
@@ -30,3 +30,4 @@ AGENTS.md
 CLAUDE.md
 GEMINI.md
 .mcp.json
+docs/page_lastmod.json

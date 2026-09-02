@@ -81,7 +81,7 @@
              aria-label="Search CVE, vendor, product or keyword" />
       <span class="search-status" data-status aria-live="polite"></span>
     </form>
-    <div class="filters" data-filters aria-label="CVE filters">
+    <div class="filters" data-filters role="group" aria-label="CVE filters">
       <span class="filter-caption">FILTER</span>
       <div class="filter-menu" data-filter-menu="severity">
         <button type="button" class="filter-trigger" data-filter-trigger="severity"
@@ -89,7 +89,7 @@
           <span>SEVERITY</span><strong data-filter-summary="severity">ALL</strong>
         </button>
         <div class="filter-popover" id="severity-options" data-filter-options="severity"
-             aria-label="Severities" hidden></div>
+             role="group" aria-label="Severities" hidden></div>
       </div>
       <button type="button" class="filter-toggle" data-filter-kev aria-pressed="false" disabled>KEV</button>
       <div class="filter-menu" data-filter-menu="source">
@@ -98,7 +98,7 @@
           <span>SOURCE</span><strong data-filter-summary="source">ALL</strong>
         </button>
         <div class="filter-popover" id="source-options" data-filter-options="source"
-             aria-label="Sources" hidden></div>
+             role="group" aria-label="Sources" hidden></div>
       </div>
       <button type="button" class="filter-clear" data-clear-filters hidden>CLEAR</button>
     </div>
