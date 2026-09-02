@@ -12,7 +12,7 @@
  },
  {
   "year": 2026,
-  "stars": 6,
+  "stars": 10,
   "name": "CVE-2026-62735",
   "url": "https://github.com/nhh9905/CVE-2026-62735",
   "desc": "CVE 1-day in http.sys",
@@ -23,7 +23,7 @@
  },
  {
   "year": 2026,
-  "stars": 18,
+  "stars": 19,
   "name": "CVE-2026-72898",
   "url": "https://github.com/EQSTLab/CVE-2026-72898",
   "desc": "Metabase SQLi",
@@ -144,7 +144,7 @@
  },
  {
   "year": 2026,
-  "stars": 163,
+  "stars": 164,
   "name": "CVE-2026-62911",
   "url": "https://github.com/hypnguyen1209/CVE-2026-62911",
   "desc": "POC pre-auth RCE on Exchange",
@@ -199,7 +199,7 @@
  },
  {
   "year": 2026,
-  "stars": 434,
+  "stars": 441,
   "name": "CVE-2026-9830",
   "url": "https://github.com/opaxial/CVE-2026-9830",
   "desc": "CVE-2026-9830 Proof of Concept",
@@ -530,6 +530,18 @@
  {
   "year": 2025,
   "stars": 0,
+  "name": "CVE-2025-69080",
+  "url": "https://github.com/AndrielSec/CVE-2025-69080",
+  "desc": "Improper Control of Filename for Include/Require Statement in PHP Program ('PHP Remote File Inclusion') vulnerability in JanStudio Gecko gecko allows PHP Local File Inclusion.This issue affects Gecko: from n/a through <= 1.9.8.",
+  "pushed": "2026-09-02T14:03:02Z",
+  "created": "2026-08-31T21:00:26Z",
+  "cve": "CVE-2025-69080",
+  "kev": false,
+  "landed": true
+ },
+ {
+  "year": 2025,
+  "stars": 0,
   "name": "CVE-2025-39401",
   "url": "https://github.com/katranSefa/CVE-2025-39401",
   "desc": "Unrestricted Upload of File with Dangerous Type vulnerability in mojoomla WPAMS apartment-management allows Upload a Web Shell to a Web Server.This issue affects WPAMS: from n/a through <= 44.0 (17-08-2023).",
@@ -548,18 +560,6 @@
   "pushed": "2026-09-01T10:47:41Z",
   "created": "2026-09-01T09:08:39Z",
   "cve": "CVE-2026-18963",
-  "kev": false,
-  "landed": true
- },
- {
-  "year": 2025,
-  "stars": 0,
-  "name": "CVE-2025-69080",
-  "url": "https://github.com/AndrielSec/CVE-2025-69080",
-  "desc": "Improper Control of Filename for Include/Require Statement in PHP Program ('PHP Remote File Inclusion') vulnerability in JanStudio Gecko gecko allows PHP Local File Inclusion.This issue affects Gecko: from n/a through <= 1.9.8.",
-  "pushed": "2026-08-31T21:38:27Z",
-  "created": "2026-08-31T21:00:26Z",
-  "cve": "CVE-2025-69080",
   "kev": false,
   "landed": true
  },
