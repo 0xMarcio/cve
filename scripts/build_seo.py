@@ -8,6 +8,7 @@ domain move is one edit rather than a hunt through the tree.
 
 from __future__ import annotations
 
+import json
 import os
 import sys
 from datetime import datetime, timezone
@@ -45,7 +46,7 @@ def robots() -> str:
     return "\n".join(lines)
 
 
-def sitemap(urls: list[tuple[str, str]]) -> str:
+def urlset(urls: list[tuple[str, str]]) -> str:
     body = "".join(
         f"  <url>\n    <loc>{loc}</loc>\n    <lastmod>{lastmod}</lastmod>\n  </url>\n"
         for loc, lastmod in urls
@@ -53,22 +54,62 @@ def sitemap(urls: list[tuple[str, str]]) -> str:
     return (
         '<?xml version="1.0" encoding="UTF-8"?>\n'
         '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
-        f"{body}"
-        "</urlset>\n"
+        f"{body}</urlset>\n"
+    )
+
+
+def sitemap_index(names: list[str], today: str) -> str:
+    body = "".join(
+        f"  <sitemap>\n    <loc>{SITE}/{name}</loc>\n"
+        f"    <lastmod>{today}</lastmod>\n  </sitemap>\n"
+        for name in names
+    )
+    return (
+        '<?xml version="1.0" encoding="UTF-8"?>\n'
+        '<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
+        f"{body}</sitemapindex>\n"
     )
 
 
 def main() -> int:
     today = datetime.now(timezone.utc).strftime("%Y-%m-%d")
-    urls = [(f"{SITE}/", today)]
-
     os.makedirs(DOCS, exist_ok=True)
+
     with open(ROBOTS, "w", encoding="utf-8") as handle:
         handle.write(robots())
-    with open(SITEMAP, "w", encoding="utf-8") as handle:
-        handle.write(sitemap(urls))
 
-    print(f"Wrote {ROBOTS} and {SITEMAP} ({len(urls)} URL) for {SITE}")
+    # One sitemap per CVE year. The 50,000 URL cap makes some split necessary and
+    # the year is the split the data already has, which also means a crawler only
+    # refetches the shard that moved.
+    try:
+        with open(os.path.join(DOCS, "CVE_list.json"), encoding="utf-8") as handle:
+            cves = json.load(handle)
+    except FileNotFoundError:
+        cves = []
+
+    years: dict[str, list[tuple[str, str]]] = {}
+    for entry in cves:
+        cid = entry["cve"]
+        year = cid.split("-")[1]
+        lastmod = entry.get("modified") or entry.get("published") or today
+        years.setdefault(year, []).append((f"{SITE}/{cid}", lastmod))
+
+    names = []
+    for year in sorted(years):
+        name = f"sitemap-{year}.xml"
+        with open(os.path.join(DOCS, name), "w", encoding="utf-8") as handle:
+            handle.write(urlset(years[year]))
+        names.append(name)
+
+    with open(os.path.join(DOCS, "sitemap-home.xml"), "w", encoding="utf-8") as handle:
+        handle.write(urlset([(f"{SITE}/", today)]))
+    names.insert(0, "sitemap-home.xml")
+
+    with open(SITEMAP, "w", encoding="utf-8") as handle:
+        handle.write(sitemap_index(names, today))
+
+    total = sum(len(v) for v in years.values()) + 1
+    print(f"Wrote {ROBOTS}, {SITEMAP} and {len(names)} shards ({total:,} URLs) for {SITE}")
     return 0
 
 

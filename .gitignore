@@ -10,6 +10,8 @@ docs/epss.json
 docs/api/v1/cve/
 docs/robots.txt
 docs/sitemap.xml
+docs/sitemap-*.xml
+docs/CVE-*.html
 __pycache__/
 
 # Assistant tooling. None of it belongs in the repository.

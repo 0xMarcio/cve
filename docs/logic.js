@@ -578,10 +578,11 @@ function resultRow(entry) {
 
   return `<div class="result-row">
   <div class="result-meta">
-    <a class="result-id" href="https://nvd.nist.gov/vuln/detail/${encodeURIComponent(id)}" target="_blank" rel="noopener">${escapeHTML(id)}</a>
+    <a class="result-id" href="/${encodeURIComponent(id)}">${escapeHTML(id)}</a>
     <div class="result-pocs">${formatCount(links.length)} linked PoC${links.length === 1 ? '' : 's'}</div>
     ${dateHtml}
     <div class="chips">${kevChip}${severityChip}${epssChip}
+      <a class="chip" href="https://nvd.nist.gov/vuln/detail/${encodeURIComponent(id)}" target="_blank" rel="noopener">NVD ↗</a>
       <a class="chip" href="https://www.cve.org/CVERecord?id=${encodeURIComponent(id)}" target="_blank" rel="noopener">CVE.ORG ↗</a>
     </div>
   </div>

@@ -32,7 +32,10 @@ jobs:
       - name: Build site data
         run: python3 scripts/build_site.py
 
-      - name: Build robots.txt and sitemap.xml
+      - name: Build per-CVE pages
+        run: python3 scripts/build_pages.py
+
+      - name: Build robots.txt and sitemaps
         run: python3 scripts/build_seo.py
 
       - name: Verify published counts
