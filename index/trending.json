@@ -23,7 +23,7 @@
  },
  {
   "year": 2026,
-  "stars": 3,
+  "stars": 4,
   "name": "CVE-2026-19478",
   "url": "https://github.com/EQSTLab/CVE-2026-19478",
   "desc": "GitLab Code injection",

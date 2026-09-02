@@ -26833,3 +26833,4 @@ CVE-2024-1086 - https://github.com/Notselwyn/CVE-2024-1086
 CVE-2024-4577 - https://github.com/11whoami99/CVE-2024-4577
 CVE-2024-4577 - https://github.com/watchtowrlabs/CVE-2024-4577
 CVE-2024-6387 - https://github.com/zgzhang/cve-2024-6387-poc
+CVE-2026-75604 - https://github.com/rafabd1/CVE-2026-75604-poc
