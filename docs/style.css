@@ -520,9 +520,7 @@ a.chip:hover { color: var(--fg); border-color: var(--fg-muted); }
   font: 400 11px/1.6 var(--mono);
   color: var(--fg-muted);
 }
-.site-footer .container:first-child span:last-child { margin-left: auto; }
-.site-legal { padding-top: 8px; }
-.site-legal span { margin-left: 0; opacity: .72; }
+.site-footer span:last-child { margin-left: auto; }
 
 /* ---- narrow viewports --------------------------------------------------- */
 

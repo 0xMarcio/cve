@@ -45,7 +45,7 @@ USER_AGENT = "0xMarcio-cve-trending"
 ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), os.pardir)
 sys.path.insert(0, os.path.join(ROOT, "scripts"))
 
-from brand import BRAND, SITE
+from brand import BRAND, SITE, SLUG
 from update_cves import load_blacklist, qualifying_repo_cves
 
 README = os.path.join(ROOT, "README.md")
@@ -55,7 +55,6 @@ STATS = os.path.join(ROOT, "docs", "stats.json")
 DESC_LIMIT = 110   # a table cell, not a paragraph
 FOLDED_AFTER = 2   # years past the newest two are collapsed behind a summary
 CVE_ID = re.compile(r"CVE[-_](\d{4})[-_](\d{4,7})", re.IGNORECASE)
-SLUG = "0xMarcio/cve"
 RAW = f"https://raw.githubusercontent.com/{SLUG}/main/docs"
 HERO_URL = f"{RAW}/hero.svg"
 SEARCH_CTA_REV = "8dec6181e823d641132e0ee8a52a1612c2b5dd37"

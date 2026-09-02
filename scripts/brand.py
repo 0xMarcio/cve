@@ -20,25 +20,19 @@ DESCRIPTION = (
     "ExploitDB, Metasploit and Vulhub. Updated hourly. Free JSON API, no signup."
 )
 # Shown under the GitHub About box and in search results for the repository.
-# Deliberately unlike the upstream wording: 167 forks carry the old description
-# verbatim, so a generic line ranks the copies alongside the original.
+# Deliberately unlike the upstream wording: the forks carry the old description
+# verbatim, so a generic line ranks the copies alongside the original. Kept under
+# 150 characters because GitHub truncates listings around there.
 REPO_DESCRIPTION = (
-    "Search public CVE proof-of-concept exploits from GitHub, Nuclei, ExploitDB, "
-    "Metasploit and Vulhub. 82,000+ CVEs with PoCs, updated hourly with CVSS, KEV "
-    "and EPSS. Free JSON API, no signup."
+    "Search 82,000+ public CVE proof-of-concept exploits from GitHub, Nuclei, "
+    "ExploitDB, Metasploit and Vulhub. Updated hourly. Plain JSON, no key."
 )
 
 # Flip to https://pocindex.io only after DNS resolves and GitHub Pages has issued
 # the certificate. A canonical pointing at a host that does not answer yet drops
 # the page out of the index, so this trails the DNS cutover, it does not lead it.
 SITE = "https://pocindex.io"
-SLUG = "0xMarcio/cve"
-
-# CVE is a MITRE trademark, so it stays out of the brand and carries a notice.
-LEGAL = (
-    "CVE is a trademark of The MITRE Corporation. "
-    f"{BRAND} is not affiliated with or endorsed by MITRE or the CVE Program."
-)
+SLUG = "0xMarcio/pocindex"
 
 
 def host() -> str:
