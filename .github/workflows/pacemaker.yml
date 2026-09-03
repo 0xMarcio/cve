@@ -33,5 +33,5 @@ jobs:
           [ "$next" -gt "$now" ] || next=$(( next + 3600 ))
           echo "Sleeping $(( (next - now) / 60 )) minutes until $(date -u -d @"$next" +%H:%M) UTC"
           sleep $(( next - now ))
-          gh workflow run hot_cves.yml --ref main
-          gh workflow run pacemaker.yml --ref main
+          gh workflow run hot_cves.yml -R "$GITHUB_REPOSITORY" --ref main
+          gh workflow run pacemaker.yml -R "$GITHUB_REPOSITORY" --ref main
