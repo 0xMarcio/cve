@@ -1,7 +1,7 @@
 [
  {
   "year": 2026,
-  "stars": 3,
+  "stars": 4,
   "name": "CVE-2026-19490",
   "url": "https://github.com/TarPeg007/CVE-2026-19490",
   "desc": "NetScaler ADC/Gateway SAML unsigned-assertion bypass via HTTP-Redirect binding (CTX696939) - root cause analysis + PoC",
@@ -12,7 +12,7 @@
  },
  {
   "year": 2026,
-  "stars": 12,
+  "stars": 13,
   "name": "givewp-cve-2026-82222-rce-lab",
   "url": "https://github.com/dinosn/givewp-cve-2026-82222-rce-lab",
   "desc": "Authorized Docker lab and clean PoC for validating CVE-2026-82222 RCE in GiveWP 4.16.5.1 and the 4.16.7.2 fix.",
@@ -155,7 +155,7 @@
  },
  {
   "year": 2026,
-  "stars": 169,
+  "stars": 172,
   "name": "CVE-2026-62911",
   "url": "https://github.com/hypnguyen1209/CVE-2026-62911",
   "desc": "POC pre-auth RCE on Exchange",
@@ -177,7 +177,7 @@
  },
  {
   "year": 2026,
-  "stars": 6,
+  "stars": 7,
   "name": "CVE-2026-34910-PoC",
   "url": "https://github.com/Boreas37/CVE-2026-34910-PoC",
   "desc": "CVE-2026-34910/34909 - UniFi OS unauth RCE + file read via ..%2f auth bypass (CVSS 10.0, KEV, Mirai ITW)",
@@ -210,7 +210,7 @@
  },
  {
   "year": 2026,
-  "stars": 457,
+  "stars": 461,
   "name": "CVE-2026-9830",
   "url": "https://github.com/opaxial/CVE-2026-9830",
   "desc": "CVE-2026-9830 Proof of Concept",
@@ -265,7 +265,7 @@
  },
  {
   "year": 2025,
-  "stars": 6,
+  "stars": 7,
   "name": "SELinux-Permissive-Only-CVE-2025-21479",
   "url": "https://github.com/CamsShaft/SELinux-Permissive-Only-CVE-2025-21479",
   "desc": "This is an SELinux permissive version of the Cheese exploit also known as CVE-2025-21479 which affected the adreno kgsl on many devices including Samsung snapdragon devices",
@@ -529,7 +529,55 @@
  },
  {
   "year": 2026,
+  "stars": 0,
+  "name": "CVE-2026-80428",
+  "url": "https://github.com/Zipkoppie/CVE-2026-80428",
+  "desc": "CVE-2026-80428 PoC",
+  "pushed": "2026-09-03T13:39:57Z",
+  "created": "2026-09-03T13:38:01Z",
+  "cve": "CVE-2026-80428",
+  "kev": false,
+  "landed": true
+ },
+ {
+  "year": 2026,
+  "stars": 0,
+  "name": "CVE-2026-78071",
+  "url": "https://github.com/toanln-cov/CVE-2026-78071",
+  "desc": "Stored XSS via Location Title in DPCalendar Free",
+  "pushed": "2026-09-03T10:01:38Z",
+  "created": "2026-09-03T10:01:02Z",
+  "cve": "CVE-2026-78071",
+  "kev": false,
+  "landed": true
+ },
+ {
+  "year": 2026,
   "stars": 2,
+  "name": "CVE-2026-65349",
+  "url": "https://github.com/ByteV0rtex/CVE-2026-65349",
+  "desc": "CVE-2026-65349 PoC - getattrlist OOB write in vfs_attr_pack_internal (iOS 26.6 / 23G71)",
+  "pushed": "2026-09-02T19:49:52Z",
+  "created": "2026-09-02T20:12:31Z",
+  "cve": "CVE-2026-65349",
+  "kev": false,
+  "landed": true
+ },
+ {
+  "year": 2026,
+  "stars": 12,
+  "name": "CVE-2026-65343",
+  "url": "https://github.com/ByteV0rtex/CVE-2026-65343",
+  "desc": "CVE-2026-65343 PoC - AppleKeyStore OOB read → KASLR defeat (iOS 26.6 / 23G71)",
+  "pushed": "2026-09-02T19:49:42Z",
+  "created": "2026-09-02T20:12:10Z",
+  "cve": "CVE-2026-65343",
+  "kev": false,
+  "landed": true
+ },
+ {
+  "year": 2026,
+  "stars": 3,
   "name": "CVE-2026-64788",
   "url": "https://github.com/ByteV0rtex/CVE-2026-64788",
   "desc": "CVE-2026-64788 PoC - IOGPUFamily Use-After-Free (iOS 26.6 / 23G71)",
@@ -597,54 +645,6 @@
   "created": "2026-09-01T12:20:52Z",
   "cve": "CVE-2025-11142",
   "kev": false,
-  "landed": true
- },
- {
-  "year": 2025,
-  "stars": 0,
-  "name": "CVE-2025-39401",
-  "url": "https://github.com/katranSefa/CVE-2025-39401",
-  "desc": "Unrestricted Upload of File with Dangerous Type vulnerability in mojoomla WPAMS apartment-management allows Upload a Web Shell to a Web Server.This issue affects WPAMS: from n/a through <= 44.0 (17-08-2023).",
-  "pushed": "2026-09-01T10:53:39Z",
-  "created": "2026-09-01T10:53:21Z",
-  "cve": "CVE-2025-39401",
-  "kev": false,
-  "landed": true
- },
- {
-  "year": 2026,
-  "stars": 2,
-  "name": "CVE-2026-18963",
-  "url": "https://github.com/EQSTLab/CVE-2026-18963",
-  "desc": "Keycloak reset-credentials flow bypass",
-  "pushed": "2026-09-01T10:47:41Z",
-  "created": "2026-09-01T09:08:39Z",
-  "cve": "CVE-2026-18963",
-  "kev": false,
-  "landed": true
- },
- {
-  "year": 2025,
-  "stars": 0,
-  "name": "CVE-2025-0324-axis-vapix-privesc",
-  "url": "https://github.com/kemrec/CVE-2025-0324-axis-vapix-privesc",
-  "desc": "The VAPIX Device Configuration framework allowed a privilege escalation, enabling a lower-privileged user to gain administrator privileges.",
-  "pushed": "2026-09-01T05:39:35Z",
-  "created": "2026-08-31T04:45:53Z",
-  "cve": "CVE-2025-0324",
-  "kev": false,
-  "landed": true
- },
- {
-  "year": 2025,
-  "stars": 0,
-  "name": "cve-2025-20333",
-  "url": "https://github.com/cobbbex/cve-2025-20333",
-  "desc": "A vulnerability in the VPN web server of Cisco Secure Firewall Adaptive Security Appliance (ASA) Software and Cisco Secure Firewall Threat Defense (FTD) Software could allow an authenticated, remote attacker to execute arbitrary code on an affected device. This vulnerability is due to improper validation of user-supplied input in HTTP(S) requests. An attacker with valid VPN user credentials could exploit this vulnerability by sending crafted HTTP requests to an affected device. A successful exploit could allow the attacker to execute arbitrary code as root, possibly resulting in the complete compromise of the affected device.",
-  "pushed": "2026-08-31T14:22:49Z",
-  "created": "2026-08-31T14:29:28Z",
-  "cve": "CVE-2025-20333",
-  "kev": true,
   "landed": true
  }
 ]
