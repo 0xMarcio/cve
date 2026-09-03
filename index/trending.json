@@ -12,6 +12,17 @@
  },
  {
   "year": 2026,
+  "stars": 3,
+  "name": "CVE-2026-78904-Digital-Dinar-Drain",
+  "url": "https://github.com/vxssroott/CVE-2026-78904-Digital-Dinar-Drain",
+  "desc": "CBDC Infrastructure Vulnerability Research. CVE-2026-78904: Infinite mint and redemption bypass in central bank digital currency APIs.",
+  "pushed": "2026-08-30T22:04:08Z",
+  "created": "2026-08-30T21:57:18Z",
+  "cve": "CVE-2026-78904",
+  "kev": false
+ },
+ {
+  "year": 2026,
   "stars": 13,
   "name": "givewp-cve-2026-82222-rce-lab",
   "url": "https://github.com/dinosn/givewp-cve-2026-82222-rce-lab",
@@ -78,7 +89,7 @@
  },
  {
   "year": 2026,
-  "stars": 83,
+  "stars": 84,
   "name": "CVE-2026-75604-poc",
   "url": "https://github.com/rafabd1/CVE-2026-75604-poc",
   "desc": "CVE-2026-75604 Next.js Windows RCE poc",
@@ -199,24 +210,13 @@
  },
  {
   "year": 2026,
-  "stars": 37,
+  "stars": 38,
   "name": "CVE-2026-18963-Exploit",
   "url": "https://github.com/Snizi/CVE-2026-18963-Exploit",
   "desc": "Exploit for KeyCloak CVE-2026-18963",
   "pushed": "2026-08-20T22:18:11Z",
   "created": "2026-08-20T22:01:11Z",
   "cve": "CVE-2026-18963",
-  "kev": false
- },
- {
-  "year": 2026,
-  "stars": 461,
-  "name": "CVE-2026-9830",
-  "url": "https://github.com/opaxial/CVE-2026-9830",
-  "desc": "CVE-2026-9830 Proof of Concept",
-  "pushed": "2026-08-20T21:56:15Z",
-  "created": "2026-08-15T20:57:13Z",
-  "cve": "CVE-2026-9830",
   "kev": false
  },
  {
@@ -530,18 +530,6 @@
  {
   "year": 2026,
   "stars": 0,
-  "name": "CVE-2026-80428",
-  "url": "https://github.com/Zipkoppie/CVE-2026-80428",
-  "desc": "CVE-2026-80428 PoC",
-  "pushed": "2026-09-03T13:39:57Z",
-  "created": "2026-09-03T13:38:01Z",
-  "cve": "CVE-2026-80428",
-  "kev": false,
-  "landed": true
- },
- {
-  "year": 2026,
-  "stars": 0,
   "name": "CVE-2026-78071",
   "url": "https://github.com/toanln-cov/CVE-2026-78071",
   "desc": "Stored XSS via Location Title in DPCalendar Free",
@@ -565,7 +553,7 @@
  },
  {
   "year": 2026,
-  "stars": 12,
+  "stars": 38,
   "name": "CVE-2026-65343",
   "url": "https://github.com/ByteV0rtex/CVE-2026-65343",
   "desc": "CVE-2026-65343 PoC - AppleKeyStore OOB read → KASLR defeat (iOS 26.6 / 23G71)",
@@ -644,6 +632,18 @@
   "pushed": "2026-09-01T12:21:38Z",
   "created": "2026-09-01T12:20:52Z",
   "cve": "CVE-2025-11142",
+  "kev": false,
+  "landed": true
+ },
+ {
+  "year": 2025,
+  "stars": 0,
+  "name": "CVE-2025-39401",
+  "url": "https://github.com/katranSefa/CVE-2025-39401",
+  "desc": "Unrestricted Upload of File with Dangerous Type vulnerability in mojoomla WPAMS apartment-management allows Upload a Web Shell to a Web Server.This issue affects WPAMS: from n/a through <= 44.0 (17-08-2023).",
+  "pushed": "2026-09-01T10:53:39Z",
+  "created": "2026-09-01T10:53:21Z",
+  "cve": "CVE-2025-39401",
   "kev": false,
   "landed": true
  }

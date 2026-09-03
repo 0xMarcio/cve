@@ -26884,3 +26884,5 @@ CVE-2026-73570 - https://github.com/byt3l0rd/CVE-2026-73570
 CVE-2026-7899 - https://github.com/HORKimhab/CVE-2026-7899
 CVE-2026-82329 - https://github.com/realalexandergeorgiev/artifactory-CVE-2026-82329-poc.py
 CVE-2026-9055 - https://github.com/EXEcution-py/CVE-2026-9055
+CVE-2026-78071 - https://github.com/toanln-cov/CVE-2026-78071
+CVE-2026-80428 - https://github.com/Zipkoppie/CVE-2026-80428
