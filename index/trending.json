@@ -12,7 +12,7 @@
  },
  {
   "year": 2026,
-  "stars": 13,
+  "stars": 14,
   "name": "CVE-2026-62735",
   "url": "https://github.com/nhh9905/CVE-2026-62735",
   "desc": "CVE 1-day in http.sys",
@@ -144,7 +144,7 @@
  },
  {
   "year": 2026,
-  "stars": 164,
+  "stars": 167,
   "name": "CVE-2026-62911",
   "url": "https://github.com/hypnguyen1209/CVE-2026-62911",
   "desc": "POC pre-auth RCE on Exchange",
@@ -155,7 +155,7 @@
  },
  {
   "year": 2026,
-  "stars": 4,
+  "stars": 5,
   "name": "CVE-2026-65400-poc",
   "url": "https://github.com/panchocosil/CVE-2026-65400-poc",
   "desc": "Read-only PoC for CVE-2026-65400 - macOS Screen Sharing (screensharingd) pre-auth SRP bypass giving root file read. Patched in macOS 26.6.1 / 15.7.9 / 14.8.9.",
@@ -199,7 +199,7 @@
  },
  {
   "year": 2026,
-  "stars": 452,
+  "stars": 454,
   "name": "CVE-2026-9830",
   "url": "https://github.com/opaxial/CVE-2026-9830",
   "desc": "CVE-2026-9830 Proof of Concept",
@@ -528,6 +528,18 @@
   "kev": false
  },
  {
+  "year": 2026,
+  "stars": 2,
+  "name": "CVE-2026-19490",
+  "url": "https://github.com/TarPeg007/CVE-2026-19490",
+  "desc": "NetScaler ADC/Gateway SAML unsigned-assertion bypass via HTTP-Redirect binding (CTX696939) - root cause analysis + PoC",
+  "pushed": "2026-09-02T15:42:44Z",
+  "created": "2026-09-02T15:43:53Z",
+  "cve": "CVE-2026-19490",
+  "kev": false,
+  "landed": true
+ },
+ {
   "year": 2025,
   "stars": 0,
   "name": "CVE-2025-6440",
@@ -608,18 +620,6 @@
   "pushed": "2026-09-01T10:47:41Z",
   "created": "2026-09-01T09:08:39Z",
   "cve": "CVE-2026-18963",
-  "kev": false,
-  "landed": true
- },
- {
-  "year": 2026,
-  "stars": 0,
-  "name": "CVE-2026-0768",
-  "url": "https://github.com/HORKimhab/CVE-2026-0768",
-  "desc": "Langflow code Code Injection Remote Code Execution Vulnerability. This vulnerability allows remote attackers to execute arbitrary code on affected installations of Langflow. Authentication is not required to exploit this vulnerability. The specific flaw exists within the handling of the code parameter provided to the validate endpoint. The issue results from the lack of proper validation of a user-supplied string before using it to execute Python code. An attacker can leverage this vulnerability to execute code in the context of root. . Was ZDI-CAN-27322.",
-  "pushed": "2026-09-01T08:06:20Z",
-  "created": "2026-09-01T08:01:23Z",
-  "cve": "CVE-2026-0768",
   "kev": false,
   "landed": true
  },
