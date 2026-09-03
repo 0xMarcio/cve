@@ -26874,7 +26874,6 @@ CVE-2026-1555 - https://github.com/katranSefa/CVE-2026-1555
 CVE-2026-19490 - https://github.com/TarPeg007/CVE-2026-19490
 CVE-2026-24423 - https://github.com/CyberAlp0/SmarterMail-CVE-2026-24423
 CVE-2026-38577 - https://github.com/poxsky/CVE-2026-38577-by-deepak-Anmol
-CVE-2026-43499 - https://github.com/Cxyofficial/K50G-POCOF4GT-CVE-2026-43499-PoC
 CVE-2026-43499 - https://github.com/ain0203root/Root-My-Galaxy-Payloads-S721B-DZG1
 CVE-2026-5027 - https://github.com/rmhowe425/POC-CVE-2026-5027
 CVE-2026-64788 - https://github.com/ByteV0rtex/CVE-2026-64788

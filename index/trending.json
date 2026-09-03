@@ -1,7 +1,18 @@
 [
  {
   "year": 2026,
-  "stars": 11,
+  "stars": 3,
+  "name": "CVE-2026-19490",
+  "url": "https://github.com/TarPeg007/CVE-2026-19490",
+  "desc": "NetScaler ADC/Gateway SAML unsigned-assertion bypass via HTTP-Redirect binding (CTX696939) - root cause analysis + PoC",
+  "pushed": "2026-09-02T15:42:44Z",
+  "created": "2026-09-02T15:43:53Z",
+  "cve": "CVE-2026-19490",
+  "kev": false
+ },
+ {
+  "year": 2026,
+  "stars": 12,
   "name": "givewp-cve-2026-82222-rce-lab",
   "url": "https://github.com/dinosn/givewp-cve-2026-82222-rce-lab",
   "desc": "Authorized Docker lab and clean PoC for validating CVE-2026-82222 RCE in GiveWP 4.16.5.1 and the 4.16.7.2 fix.",
@@ -67,7 +78,7 @@
  },
  {
   "year": 2026,
-  "stars": 82,
+  "stars": 83,
   "name": "CVE-2026-75604-poc",
   "url": "https://github.com/rafabd1/CVE-2026-75604-poc",
   "desc": "CVE-2026-75604 Next.js Windows RCE poc",
@@ -144,7 +155,7 @@
  },
  {
   "year": 2026,
-  "stars": 167,
+  "stars": 169,
   "name": "CVE-2026-62911",
   "url": "https://github.com/hypnguyen1209/CVE-2026-62911",
   "desc": "POC pre-auth RCE on Exchange",
@@ -199,7 +210,7 @@
  },
  {
   "year": 2026,
-  "stars": 454,
+  "stars": 457,
   "name": "CVE-2026-9830",
   "url": "https://github.com/opaxial/CVE-2026-9830",
   "desc": "CVE-2026-9830 Proof of Concept",
@@ -207,17 +218,6 @@
   "created": "2026-08-15T20:57:13Z",
   "cve": "CVE-2026-9830",
   "kev": false
- },
- {
-  "year": 2026,
-  "stars": 531,
-  "name": "cve-2026-41940-PoC",
-  "url": "https://github.com/lanicer/cve-2026-41940-PoC",
-  "desc": "A cPanel and WHM authentication bypassing tool",
-  "pushed": "2026-08-20T10:15:12Z",
-  "created": "2026-08-19T12:46:46Z",
-  "cve": "CVE-2026-41940",
-  "kev": true
  },
  {
   "year": 2025,
@@ -530,12 +530,12 @@
  {
   "year": 2026,
   "stars": 2,
-  "name": "CVE-2026-19490",
-  "url": "https://github.com/TarPeg007/CVE-2026-19490",
-  "desc": "NetScaler ADC/Gateway SAML unsigned-assertion bypass via HTTP-Redirect binding (CTX696939) - root cause analysis + PoC",
-  "pushed": "2026-09-02T15:42:44Z",
-  "created": "2026-09-02T15:43:53Z",
-  "cve": "CVE-2026-19490",
+  "name": "CVE-2026-64788",
+  "url": "https://github.com/ByteV0rtex/CVE-2026-64788",
+  "desc": "CVE-2026-64788 PoC - IOGPUFamily Use-After-Free (iOS 26.6 / 23G71)",
+  "pushed": "2026-09-02T19:49:24Z",
+  "created": "2026-09-02T20:11:13Z",
+  "cve": "CVE-2026-64788",
   "kev": false,
   "landed": true
  },
