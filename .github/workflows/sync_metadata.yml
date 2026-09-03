@@ -66,6 +66,7 @@ jobs:
             docs/hero.svg \
             docs/social-card.svg \
             docs/stats.json \
+            docs/kev.svg \
             index/cve_dates.json \
             index/cve_record_state.json \
             index/github_advisories.json \

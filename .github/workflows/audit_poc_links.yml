@@ -33,6 +33,9 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: python3 scripts/audit_poc_links.py --limit 12000 --references 12000
 
+      - name: Verify the generated index
+        run: python3 scripts/build_site.py
+
       - name: Refresh published counts
         run: |
           python3 .github/hero.py
@@ -54,6 +57,7 @@ jobs:
             docs/hero.svg \
             docs/social-card.svg \
             docs/stats.json \
+            docs/kev.svg \
             cves/
 
           if git diff --cached --quiet; then

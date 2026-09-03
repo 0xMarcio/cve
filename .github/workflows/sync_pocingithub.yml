@@ -54,6 +54,7 @@ jobs:
             docs/hero.svg \
             docs/social-card.svg \
             docs/stats.json \
+            docs/kev.svg \
             index/github.txt \
             index/cve_dates.json \
             index/cve_record_state.json \

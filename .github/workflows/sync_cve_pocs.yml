@@ -57,6 +57,7 @@ jobs:
             docs/hero.svg \
             docs/social-card.svg \
             docs/stats.json \
+            docs/kev.svg \
             cves/
 
           if git diff --cached --quiet; then
