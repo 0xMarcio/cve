@@ -446,6 +446,10 @@ def load_github_cache() -> tuple[str, dict[str, list[Any]]]:
     }
 
 
+class TransientAPIError(RuntimeError):
+    """A response worth retrying: rate limited or a server-side failure."""
+
+
 def github_advisory_pages(*, since: str | None) -> Iterable[list[dict[str, Any]]]:
     token = os.environ.get("GITHUB_TOKEN") or os.environ.get("GH_TOKEN")
     headers = {
@@ -474,15 +478,19 @@ def github_advisory_pages(*, since: str | None) -> Iterable[list[dict[str, Any]]
                     link = response.getheader("Link") or ""
                     body = response.read()
                     if response.status >= 400:
-                        message = body.decode("utf-8", "replace")[:300]
-                        raise RuntimeError(f"GitHub advisory API {response.status}: {message}")
+                        message = f"GitHub advisory API {response.status}: {body.decode('utf-8', 'replace')[:300]}"
+                        if response.status in (403, 429) or response.status >= 500:
+                            raise TransientAPIError(message)
+                        raise RuntimeError(message)
                     payload = json.loads(body)
                     break
-                except (OSError, http.client.HTTPException, json.JSONDecodeError):
+                except (OSError, http.client.HTTPException, json.JSONDecodeError, TransientAPIError) as problem:
                     connection.close()
                     if attempt == 2:
                         raise
-                    time.sleep(attempt + 1)
+                    # A rate limit or a server error needs a real pause; a dropped
+                    # connection only a moment.
+                    time.sleep(30 * (attempt + 1) if isinstance(problem, TransientAPIError) else attempt + 1)
                     connection = http.client.HTTPSConnection("api.github.com", timeout=90)
             if not isinstance(payload, list):
                 raise RuntimeError("GitHub advisory API returned a non-list payload")
@@ -760,6 +768,18 @@ def write_shards(entries: dict[str, dict[str, Any]], *, dry_run: bool) -> tuple[
         if current == rendered:
             existing.discard(path)
             continue
+        try:
+            before = len(json.loads(current)) if current else 0
+        except ValueError:
+            before = 0
+        if len(payload) < before * 0.9:
+            # A complete run starts from nothing, so a year whose NVD feed came
+            # back short would be published short. Withdrawn records are a
+            # handful a day; a tenth of a year is a broken feed.
+            raise RuntimeError(
+                f"{path.name} would shrink from {before:,} to {len(payload):,} CVEs; "
+                "refusing to publish a short NVD feed"
+            )
         changed += 1
         existing.discard(path)
         if dry_run:
@@ -771,6 +791,8 @@ def write_shards(entries: dict[str, dict[str, Any]], *, dry_run: bool) -> tuple[
         temporary.replace(path)
 
     for path in existing:
+        if path.stat().st_size > len("{}\n"):
+            raise RuntimeError(f"{path.name} would be deleted outright; refusing to publish an empty NVD feed")
         removed += 1
         if not dry_run:
             path.unlink()

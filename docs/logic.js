@@ -568,7 +568,7 @@ function resultRow(entry) {
     : '';
   // FIRST's feed covers nearly the whole index; a template's own score is the
   // fallback for the handful it misses.
-  const scored = epss[id] || (fallback.epss != null ? [fallback.epss, fallback.epss_pct || 0] : null);
+  const scored = epss[id] || null;
   const epssChip = scored
     ? `<span class="chip chip-epss${scored[0] >= 0.1 ? ' is-hot' : ''}" title="EPSS: estimated chance of exploitation in the next 30 days, ${ordinal(Math.round(scored[1] * 100))} percentile">` +
       `EPSS ${(scored[0] * 100).toFixed(scored[0] >= 0.1 ? 0 : 1)}%</span>`

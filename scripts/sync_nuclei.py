@@ -63,8 +63,6 @@ FIELDS = {
     "severity": re.compile(r"^\s{2,4}severity:\s*([a-z]+)\s*$", re.M),
     "cvss": re.compile(r"^\s+cvss-score:\s*([0-9.]+)\s*$", re.M),
     "cvss_vector": re.compile(r"^\s+cvss-metrics:\s*(\S+)\s*$", re.M),
-    "epss": re.compile(r"^\s+epss-score:\s*([0-9.]+)\s*$", re.M),
-    "epss_pct": re.compile(r"^\s+epss-percentile:\s*([0-9.]+)\s*$", re.M),
     "cwe": re.compile(r"^\s+cwe-id:\s*(CWE-\d+)\s*$", re.M | re.I),
 }
 
@@ -108,7 +106,7 @@ def parse(text: str) -> dict:
         if not match:
             continue
         value = match.group(1).strip().strip('"\'')
-        if key in ("cvss", "epss", "epss_pct"):
+        if key == "cvss":
             try:
                 found[key] = round(float(value), 5)
             except ValueError:
@@ -247,10 +245,9 @@ def main() -> int:
             handle.write("\n")
 
     rated = sum(1 for e in payload.values() if "cvss" in e)
-    scored = sum(1 for e in payload.values() if "epss" in e)
     print(f"markdown: {tally['added']:,} links added, {tally['unchanged']:,} already there, "
           f"{tally['absent']:,} for CVEs not in the index, {stale:,} sections withdrawn")
-    print(f"{OUTPUT.name}: {len(payload):,} CVEs, {rated:,} with CVSS, {scored:,} with EPSS")
+    print(f"{OUTPUT.name}: {len(payload):,} CVEs, {rated:,} with CVSS")
     return 0
 
 

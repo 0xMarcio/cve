@@ -397,13 +397,13 @@ def build_kev(cve_entries: List[Dict[str, object]]) -> Dict[str, object]:
 
 
 def build_nuclei(cve_entries: List[Dict[str, object]]) -> Dict[str, object]:
-    """Severity, CVSS, EPSS and CWE per CVE, limited to the ones indexed."""
+    """Severity, CVSS and CWE per CVE, limited to the ones indexed."""
     try:
         stored = json.loads(NUCLEI_INPUT.read_text(encoding="utf-8"))
     except (OSError, json.JSONDecodeError):
         return {}
     have = {str(entry["cve"]) for entry in cve_entries}
-    keep = ("severity", "cvss", "cvss_vector", "epss", "epss_pct", "cwe")
+    keep = ("severity", "cvss", "cvss_vector", "cwe")
     return {
         cve: {field: value[field] for field in keep if field in value}
         for cve, value in stored.items()

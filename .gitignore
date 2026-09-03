@@ -12,6 +12,7 @@ docs/sitemap.xml
 docs/sitemap-*.xml
 docs/CVE-*.html
 docs/404.html
+docs/social-card.png
 __pycache__/
 
 # Assistant tooling. None of it belongs in the repository.

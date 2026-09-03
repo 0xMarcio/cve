@@ -20,6 +20,7 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
+    timeout-minutes: 25
     steps:
       - name: Checkout
         uses: actions/checkout@v7
@@ -37,6 +38,14 @@ jobs:
 
       - name: Build robots.txt and sitemaps
         run: python3 scripts/build_seo.py
+
+      - name: Rasterise the social card
+        run: |
+          # og:image has to be a raster: Twitter, Slack and Discord all ignore SVG.
+          # Drawn here so the PNG lives in the deployed artifact, not in git.
+          sudo apt-get update -qq >/dev/null
+          sudo apt-get install -y --no-install-recommends librsvg2-bin >/dev/null
+          rsvg-convert -w 1280 -h 640 docs/social-card.svg -o docs/social-card.png
 
       - name: Verify published counts
         run: |

@@ -2,7 +2,7 @@ name: Audit PoC Links
 
 on:
   schedule:
-    - cron: '40 3 * * 1'
+    - cron: '40 3 * * *'
   workflow_dispatch:
 
 permissions:
@@ -16,6 +16,7 @@ concurrency:
 jobs:
   audit:
     runs-on: ubuntu-latest
+    timeout-minutes: 30
     steps:
       - name: Checkout repository
         uses: actions/checkout@v7
@@ -25,13 +26,14 @@ jobs:
         with:
           python-version: '3.13'
 
-      # A quarter of the repositories and a fifth of the reference links each
-      # week: about nine minutes of GraphQL and, at a measured 15 URLs a
-      # second, thirteen of HTTP. Everything is swept within five weeks.
+      # A seventh of the old weekly batch every day: the 12,000-and-12,000
+      # weekly run measured an hour, and it holds the repository-updates lock
+      # the whole time, which stalls the hourly refresh and can cancel a daily
+      # sync queued behind it. Same sweep period, about nine minutes a day.
       - name: Drop dead links and refresh repository metadata
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: python3 scripts/audit_poc_links.py --limit 12000 --references 12000
+        run: python3 scripts/audit_poc_links.py --limit 1750 --references 1750
 
       - name: Verify the generated index
         run: python3 scripts/build_site.py
