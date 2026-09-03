@@ -7,6 +7,7 @@ on:
 
 permissions:
   contents: write
+  actions: write
 
 concurrency:
   group: repository-updates
@@ -38,6 +39,7 @@ jobs:
           python3 .github/getTrending.py --counts-only
 
       - name: Check for changes and commit
+        id: commit
         run: |
           git config user.name 'CVE-BOT'
           git config user.email 'bot@pocindex.io'
@@ -59,10 +61,19 @@ jobs:
 
           for attempt in 1 2 3; do
             if git push origin HEAD:main; then
+              echo "pushed=true" >> "$GITHUB_OUTPUT"
               exit 0
             fi
             echo "Push rejected; replaying onto the current main (attempt $attempt)"
             git fetch --unshallow origin main 2>/dev/null || git fetch origin main
-            git rebase FETCH_HEAD
+            git rebase FETCH_HEAD || { git rebase --abort; exit 1; }
           done
           exit 1
+
+      # Commits pushed with the workflow token raise no push event, so site.yml
+      # would otherwise wait for its daily schedule. Dispatching is exempt.
+      - name: Rebuild and deploy the site
+        if: steps.commit.outputs.pushed == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run site.yml --ref main
