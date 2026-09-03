@@ -1,7 +1,7 @@
 [
  {
   "year": 2026,
-  "stars": 10,
+  "stars": 11,
   "name": "givewp-cve-2026-82222-rce-lab",
   "url": "https://github.com/dinosn/givewp-cve-2026-82222-rce-lab",
   "desc": "Authorized Docker lab and clean PoC for validating CVE-2026-82222 RCE in GiveWP 4.16.5.1 and the 4.16.7.2 fix.",
@@ -12,7 +12,7 @@
  },
  {
   "year": 2026,
-  "stars": 11,
+  "stars": 13,
   "name": "CVE-2026-62735",
   "url": "https://github.com/nhh9905/CVE-2026-62735",
   "desc": "CVE 1-day in http.sys",
@@ -199,7 +199,7 @@
  },
  {
   "year": 2026,
-  "stars": 450,
+  "stars": 452,
   "name": "CVE-2026-9830",
   "url": "https://github.com/opaxial/CVE-2026-9830",
   "desc": "CVE-2026-9830 Proof of Concept",
@@ -578,6 +578,18 @@
  {
   "year": 2025,
   "stars": 0,
+  "name": "cve-2025-11142-axis-mediaclip-rce",
+  "url": "https://github.com/kemrec/cve-2025-11142-axis-mediaclip-rce",
+  "desc": "The VAPIX API mediaclip.cgi that did not have a sufficient input validation allowing for a possible remote code execution. This flaw can only be exploited after authenticating with an operator- or administrator- privileged service account.",
+  "pushed": "2026-09-01T12:21:38Z",
+  "created": "2026-09-01T12:20:52Z",
+  "cve": "CVE-2025-11142",
+  "kev": false,
+  "landed": true
+ },
+ {
+  "year": 2025,
+  "stars": 0,
   "name": "CVE-2025-39401",
   "url": "https://github.com/katranSefa/CVE-2025-39401",
   "desc": "Unrestricted Upload of File with Dangerous Type vulnerability in mojoomla WPAMS apartment-management allows Upload a Web Shell to a Web Server.This issue affects WPAMS: from n/a through <= 44.0 (17-08-2023).",
@@ -600,6 +612,30 @@
   "landed": true
  },
  {
+  "year": 2026,
+  "stars": 0,
+  "name": "CVE-2026-0768",
+  "url": "https://github.com/HORKimhab/CVE-2026-0768",
+  "desc": "Langflow code Code Injection Remote Code Execution Vulnerability. This vulnerability allows remote attackers to execute arbitrary code on affected installations of Langflow. Authentication is not required to exploit this vulnerability. The specific flaw exists within the handling of the code parameter provided to the validate endpoint. The issue results from the lack of proper validation of a user-supplied string before using it to execute Python code. An attacker can leverage this vulnerability to execute code in the context of root. . Was ZDI-CAN-27322.",
+  "pushed": "2026-09-01T08:06:20Z",
+  "created": "2026-09-01T08:01:23Z",
+  "cve": "CVE-2026-0768",
+  "kev": false,
+  "landed": true
+ },
+ {
+  "year": 2025,
+  "stars": 0,
+  "name": "CVE-2025-0324-axis-vapix-privesc",
+  "url": "https://github.com/kemrec/CVE-2025-0324-axis-vapix-privesc",
+  "desc": "The VAPIX Device Configuration framework allowed a privilege escalation, enabling a lower-privileged user to gain administrator privileges.",
+  "pushed": "2026-09-01T05:39:35Z",
+  "created": "2026-08-31T04:45:53Z",
+  "cve": "CVE-2025-0324",
+  "kev": false,
+  "landed": true
+ },
+ {
   "year": 2025,
   "stars": 0,
   "name": "cve-2025-20333",
@@ -609,42 +645,6 @@
   "created": "2026-08-31T14:29:28Z",
   "cve": "CVE-2025-20333",
   "kev": true,
-  "landed": true
- },
- {
-  "year": 2025,
-  "stars": 10,
-  "name": "cve-2025-21479-iqoo11pro",
-  "url": "https://github.com/Type010/cve-2025-21479-iqoo11pro",
-  "desc": "Memory corruption due to unauthorized command execution in GPU micronode while executing specific sequence of commands.",
-  "pushed": "2026-08-31T00:20:50Z",
-  "created": "2026-08-13T08:02:16Z",
-  "cve": "CVE-2025-21479",
-  "kev": true,
-  "landed": true
- },
- {
-  "year": 2026,
-  "stars": 2,
-  "name": "CVE-2026-78904-Digital-Dinar-Drain",
-  "url": "https://github.com/vxssroott/CVE-2026-78904-Digital-Dinar-Drain",
-  "desc": "CBDC Infrastructure Vulnerability Research. CVE-2026-78904: Infinite mint and redemption bypass in central bank digital currency APIs.",
-  "pushed": "2026-08-30T22:04:08Z",
-  "created": "2026-08-30T21:57:18Z",
-  "cve": "CVE-2026-78904",
-  "kev": false,
-  "landed": true
- },
- {
-  "year": 2026,
-  "stars": 2,
-  "name": "CVE-2026-19745",
-  "url": "https://github.com/drbloop2000/CVE-2026-19745",
-  "desc": "Learn how I found my first two CVEs by pure accident.",
-  "pushed": "2026-08-29T16:32:19Z",
-  "created": "2026-08-29T16:21:05Z",
-  "cve": "CVE-2026-19745",
-  "kev": false,
   "landed": true
  }
 ]
