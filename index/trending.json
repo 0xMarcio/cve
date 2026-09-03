@@ -529,6 +529,18 @@
  },
  {
   "year": 2026,
+  "stars": 40,
+  "name": "CVE-2026-65343",
+  "url": "https://github.com/ByteV0rtex/CVE-2026-65343",
+  "desc": "CVE-2026-65343 PoC - AppleKeyStore OOB read → KASLR defeat (iOS 26.6 / 23G71)",
+  "pushed": "2026-09-03T20:38:35Z",
+  "created": "2026-09-02T20:12:10Z",
+  "cve": "CVE-2026-65343",
+  "kev": false,
+  "landed": true
+ },
+ {
+  "year": 2026,
   "stars": 0,
   "name": "CVE-2026-78071",
   "url": "https://github.com/toanln-cov/CVE-2026-78071",
@@ -548,18 +560,6 @@
   "pushed": "2026-09-02T19:49:52Z",
   "created": "2026-09-02T20:12:31Z",
   "cve": "CVE-2026-65349",
-  "kev": false,
-  "landed": true
- },
- {
-  "year": 2026,
-  "stars": 40,
-  "name": "CVE-2026-65343",
-  "url": "https://github.com/ByteV0rtex/CVE-2026-65343",
-  "desc": "CVE-2026-65343 PoC - AppleKeyStore OOB read → KASLR defeat (iOS 26.6 / 23G71)",
-  "pushed": "2026-09-02T19:49:42Z",
-  "created": "2026-09-02T20:12:10Z",
-  "cve": "CVE-2026-65343",
   "kev": false,
   "landed": true
  },
