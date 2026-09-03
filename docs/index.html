@@ -82,23 +82,16 @@
       <span class="search-status" data-status aria-live="polite"></span>
     </form>
     <div class="filters" data-filters role="group" aria-label="CVE filters">
-      <span class="filter-caption">FILTER</span>
-      <div class="filter-menu" data-filter-menu="severity">
-        <button type="button" class="filter-trigger" data-filter-trigger="severity"
-                aria-haspopup="true" aria-expanded="false" aria-controls="severity-options" disabled>
-          <span>SEVERITY</span><strong data-filter-summary="severity">ALL</strong>
-        </button>
-        <div class="filter-popover" id="severity-options" data-filter-options="severity"
-             role="group" aria-label="Severities" hidden></div>
+      <div class="filter-group" role="group" aria-label="Severity">
+        <span class="filter-caption">SEVERITY</span>
+        <div class="filter-chips" data-filter-chips="severity"></div>
       </div>
-      <button type="button" class="filter-toggle" data-filter-kev aria-pressed="false" disabled>KEV</button>
-      <div class="filter-menu" data-filter-menu="source">
-        <button type="button" class="filter-trigger" data-filter-trigger="source"
-                aria-haspopup="true" aria-expanded="false" aria-controls="source-options" disabled>
-          <span>SOURCE</span><strong data-filter-summary="source">ALL</strong>
-        </button>
-        <div class="filter-popover" id="source-options" data-filter-options="source"
-             role="group" aria-label="Sources" hidden></div>
+      <span class="filter-sep" aria-hidden="true"></span>
+      <button type="button" class="filter-chip is-kev" data-filter-kev aria-pressed="false" disabled>KEV</button>
+      <span class="filter-sep" aria-hidden="true"></span>
+      <div class="filter-group" role="group" aria-label="Source">
+        <span class="filter-caption">SOURCE</span>
+        <div class="filter-chips" data-filter-chips="source"></div>
       </div>
       <button type="button" class="filter-clear" data-clear-filters hidden>CLEAR</button>
     </div>

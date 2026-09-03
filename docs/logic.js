@@ -389,17 +389,9 @@ const el = {
   statPocs: document.querySelector('[data-stat-pocs]'),
   statKev: document.querySelector('[data-stat-kev]'),
   refreshed: document.querySelector('[data-refreshed]'),
-  filterTriggers: {
-    severity: document.querySelector('[data-filter-trigger="severity"]'),
-    source: document.querySelector('[data-filter-trigger="source"]')
-  },
-  filterSummaries: {
-    severity: document.querySelector('[data-filter-summary="severity"]'),
-    source: document.querySelector('[data-filter-summary="source"]')
-  },
-  filterOptions: {
-    severity: document.querySelector('[data-filter-options="severity"]'),
-    source: document.querySelector('[data-filter-options="source"]')
+  filterChips: {
+    severity: document.querySelector('[data-filter-chips="severity"]'),
+    source: document.querySelector('[data-filter-chips="source"]')
   },
   kevOnly: document.querySelector('[data-filter-kev]'),
   clearFilters: document.querySelector('[data-clear-filters]')
@@ -733,6 +725,12 @@ function readURLState() {
     el.input.value = query;
   }
   if (params.get('kev') === '1') state.kevOnly = true;
+  const short = { severity: 'sev', source: 'src' };
+  for (const [kind, options] of Object.entries(FILTER_OPTIONS)) {
+    const wanted = (params.get(short[kind]) || '').toUpperCase().split(',')
+      .filter(value => options.some(([each]) => each === value));
+    if (wanted.length) state.filters[kind] = new Set(wanted);
+  }
 }
 
 // replaceState, not pushState: typing a query should not bury the back button
@@ -744,6 +742,12 @@ function syncURL() {
     const params = new URLSearchParams();
     if (state.query.length >= MIN_QUERY) params.set('q', state.query);
     if (state.kevOnly) params.set('kev', '1');
+    const short = { severity: 'sev', source: 'src' };
+    for (const [kind, filter] of Object.entries(state.filters)) {
+      if (filter.size !== FILTER_OPTIONS[kind].length) {
+        params.set(short[kind], FILTER_OPTIONS[kind].map(([value]) => value).filter(value => filter.has(value)).join(','));
+      }
+    }
     const search = params.toString();
     const next = search ? `${location.pathname}?${search}` : location.pathname;
     if (next !== location.pathname + location.search) history.replaceState(null, '', next);
@@ -790,40 +794,42 @@ el.input.addEventListener('input', () => {
 
 document.querySelector('.search').addEventListener('submit', event => event.preventDefault());
 
+// One chip per value, every one of them on the page. A full set is the idle
+// state and draws nothing lit, so the first click narrows to that value; later
+// clicks widen the set, and switching the last lit chip off is a clear.
 function renderFilterOptions() {
   for (const [kind, options] of Object.entries(FILTER_OPTIONS)) {
-    el.filterOptions[kind].innerHTML = options.map(([value, label]) =>
-      `<label class="filter-option">` +
-      `<input type="checkbox" data-filter-kind="${kind}" data-filter-value="${value}">` +
-      `<span class="filter-check" aria-hidden="true"></span>` +
-      `<span class="filter-option-label">${escapeHTML(label)}</span></label>`
+    el.filterChips[kind].innerHTML = options.map(([value, label]) =>
+      `<button type="button" class="filter-chip is-${escapeHTML(value.toLowerCase())}" ` +
+      `data-filter-kind="${kind}" data-filter-value="${value}" aria-pressed="false" disabled>` +
+      `${escapeHTML(label)}</button>`
     ).join('');
   }
 }
 
-function closeFilterMenus(except) {
-  for (const kind of Object.keys(FILTER_OPTIONS)) {
-    if (kind === except) continue;
-    el.filterOptions[kind].hidden = true;
-    el.filterTriggers[kind].setAttribute('aria-expanded', 'false');
-  }
+function enableFilter(kind) {
+  for (const chip of el.filterChips[kind].querySelectorAll('[data-filter-value]')) chip.disabled = false;
 }
 
-function filterTitle(kind) {
-  const selected = [...state.filters[kind]];
-  return selected.length === FILTER_OPTIONS[kind].length ? 'All values' : selected.join(', ');
+function toggleFilter(kind, value) {
+  const filter = state.filters[kind];
+  if (filter.size === FILTER_OPTIONS[kind].length) {
+    filter.clear();
+    filter.add(value);
+  } else if (!filter.has(value)) {
+    filter.add(value);
+  } else {
+    filter.delete(value);
+    if (!filter.size) for (const [each] of FILTER_OPTIONS[kind]) filter.add(each);
+  }
 }
 
 function syncFilterControls() {
   for (const kind of Object.keys(FILTER_OPTIONS)) {
     const filter = state.filters[kind];
-    const summary = filter.size === FILTER_OPTIONS[kind].length
-      ? 'ALL'
-      : filter.size === 1 ? [...filter][0] : `${filter.size} SELECTED`;
-    el.filterSummaries[kind].textContent = summary;
-    el.filterTriggers[kind].title = filterTitle(kind);
-    for (const checkbox of el.filterOptions[kind].querySelectorAll('[data-filter-value]')) {
-      checkbox.checked = filter.has(checkbox.dataset.filterValue);
+    const narrowed = filter.size !== FILTER_OPTIONS[kind].length;
+    for (const chip of el.filterChips[kind].querySelectorAll('[data-filter-value]')) {
+      chip.setAttribute('aria-pressed', String(narrowed && filter.has(chip.dataset.filterValue)));
     }
   }
   el.kevOnly.setAttribute('aria-pressed', String(state.kevOnly));
@@ -831,28 +837,15 @@ function syncFilterControls() {
 }
 
 for (const kind of Object.keys(FILTER_OPTIONS)) {
-  el.filterTriggers[kind].addEventListener('click', () => {
-    const opening = el.filterOptions[kind].hidden;
-    closeFilterMenus(kind);
-    el.filterOptions[kind].hidden = !opening;
-    el.filterTriggers[kind].setAttribute('aria-expanded', String(opening));
-  });
-  el.filterOptions[kind].addEventListener('change', event => {
-    const checkbox = event.target.closest('[data-filter-value]');
-    if (!checkbox) return;
-    const filter = state.filters[kind];
-    const value = checkbox.dataset.filterValue;
-    if (checkbox.checked) filter.add(value);
-    else filter.delete(value);
+  el.filterChips[kind].addEventListener('click', event => {
+    const chip = event.target.closest('[data-filter-value]');
+    if (!chip || chip.disabled) return;
+    toggleFilter(kind, chip.dataset.filterValue);
     state.shown = PAGE_SIZE;
     syncFilterControls();
     render();
   });
 }
-
-document.addEventListener('click', event => {
-  if (!event.target.closest('.filter-menu')) closeFilterMenus();
-});
 
 el.kevOnly.addEventListener('click', () => {
   state.kevOnly = !state.kevOnly;
@@ -880,13 +873,6 @@ syncFilterControls();
 // field it just moved to, so the first letter is never lost.
 document.addEventListener('keydown', event => {
   if (event.ctrlKey || event.metaKey || event.altKey) return;
-  const openFilter = Object.keys(FILTER_OPTIONS).find(kind =>
-    el.filterTriggers[kind].getAttribute('aria-expanded') === 'true');
-  if (event.key === 'Escape' && openFilter) {
-    closeFilterMenus();
-    el.filterTriggers[openFilter].focus();
-    return;
-  }
   if (document.activeElement === el.input) {
     if (event.key === 'Escape') {
       el.input.value = '';
@@ -980,13 +966,13 @@ async function loadJSON(url, options) {
 
   loadJSON('/cve_metadata.json', { cache: 'no-cache' }).then(data => {
     metadata = data || {};
-    el.filterTriggers.severity.disabled = false;
+    enableFilter('severity');
     if (state.ready && (state.query || hasActiveFilters())) render();
   }).catch(err => console.warn(err.message));
 
   loadJSON('/nuclei.json', { cache: 'no-cache' }).then(data => {
     ratings = data || {};
-    el.filterTriggers.severity.disabled = false;
+    enableFilter('severity');
     if (state.ready && (state.query || hasActiveFilters())) render();
   }).catch(err => console.warn(err.message));
 
@@ -1004,7 +990,7 @@ async function loadJSON(url, options) {
   try {
     dataset = prepareDataset(await loadJSON('/CVE_list.json', { cache: 'no-cache' }));
     state.ready = true;
-    el.filterTriggers.source.disabled = false;
+    enableFilter('source');
     render();
   } catch (err) {
     console.warn(err.message);

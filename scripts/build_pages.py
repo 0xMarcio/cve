@@ -239,16 +239,24 @@ def link_rows(urls: list, repo_meta: dict, *, trusted: bool = False) -> str:
     return "".join(rows)
 
 
-def header() -> str:
-    """The bar every generated page opens with, so none of them can drift."""
-    return f"""<header class="container cve-bar"><a class="cve-home" href="/">{BRAND}</a>
-<form class="cve-search" role="search" action="/" method="get">
+def header(count: int | None = None) -> str:
+    """The bar every generated page opens with, so none of them can drift.
+
+    It is the homepage's own search bar, same height, type and placeholder,
+    under the wordmark. The pages are static, so enter submits to /?q= and the
+    homepage picks the query up from the URL.
+    """
+    tally = f'<a class="cve-count" href="/">{count:,} CVEs with PoCs</a>' if count else ""
+    return f"""<header class="container cve-top"><a class="cve-home" href="/">{BRAND}</a>{tally}</header>
+<div class="container search-bar"><form class="search" role="search" action="/" method="get" autocomplete="off">
 <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
 <circle cx="7.6" cy="7.6" r="5.1" stroke="#8b949e" stroke-width="1.7"/>
 <path d="M11.5 11.5 L15.6 15.6" stroke="#8b949e" stroke-width="1.7" stroke-linecap="round"/>
 </svg>
-<input type="text" name="q" spellcheck="false" placeholder="Search CVE, vendor, product or keyword" aria-label="Search CVE, vendor, product or keyword"/>
-</form></header>"""
+<input type="text" name="q" spellcheck="false" placeholder="Search CVE, vendor, product or keyword &middot; exclude with -windows" aria-label="Search CVE, vendor, product or keyword"/>
+<span class="search-status">enter searches the index</span>
+<button type="submit" class="sr-only">Search</button>
+</form></div>"""
 
 
 def footer(tail: str = '<a href="/">Back to the index</a>') -> str:
@@ -398,7 +406,7 @@ def page(entry: dict, data: dict) -> str:
 <script type="application/ld+json">{ld}</script>
 </head>
 <body>
-{header()}
+{header(len(data["cves"]))}
 <main class="container cve-page">
 <h1>{cid}</h1>
 <div class="chips">{''.join(chips)}</div>
