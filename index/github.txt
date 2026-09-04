@@ -26851,3 +26851,4 @@ CVE-2024-9465 - https://github.com/mustafaakalin/CVE-2024-9465
 CVE-2025-24071 - https://github.com/buffertrychar/CVE-2025-24071-POC
 CVE-2026-52832 - https://github.com/mdvpat/CVE-2026-52832-PoC-exploit-nuclio-dashboard
 CVE-2026-65643 - https://github.com/tc4dy/CVE-2026-65643-PoC-Exploit
+CVE-2026-73570 - https://github.com/dahnutz/zimbra-cve-2026-73570-ir
