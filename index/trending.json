@@ -100,7 +100,7 @@
  },
  {
   "year": 2026,
-  "stars": 84,
+  "stars": 85,
   "name": "CVE-2026-75604-poc",
   "url": "https://github.com/rafabd1/CVE-2026-75604-poc",
   "desc": "CVE-2026-75604 Next.js Windows RCE poc",
@@ -177,7 +177,7 @@
  },
  {
   "year": 2026,
-  "stars": 173,
+  "stars": 174,
   "name": "CVE-2026-62911",
   "url": "https://github.com/hypnguyen1209/CVE-2026-62911",
   "desc": "POC pre-auth RCE on Exchange",
@@ -518,6 +518,18 @@
  },
  {
   "year": 2026,
+  "stars": 0,
+  "name": "CVE-2026-19516",
+  "url": "https://github.com/HORKimhab/CVE-2026-19516",
+  "desc": "CVE-2026-19516",
+  "pushed": "2026-09-04T13:06:57Z",
+  "created": "2026-09-04T13:02:38Z",
+  "cve": "CVE-2026-19516",
+  "kev": false,
+  "landed": true
+ },
+ {
+  "year": 2026,
   "stars": 2,
   "name": "CVE-2026-65643-PoC-Toolkit",
   "url": "https://github.com/tc4dy/CVE-2026-65643-PoC-Toolkit",
@@ -549,18 +561,6 @@
   "pushed": "2026-09-04T05:58:26Z",
   "created": "2026-09-02T20:11:13Z",
   "cve": "CVE-2026-64788",
-  "kev": false,
-  "landed": true
- },
- {
-  "year": 2026,
-  "stars": 0,
-  "name": "CVE-2026-31787",
-  "url": "https://github.com/0xAtharv/CVE-2026-31787",
-  "desc": "Linux kernel double free in Xen privcmd driver",
-  "pushed": "2026-09-04T01:21:16Z",
-  "created": "2026-09-04T01:08:31Z",
-  "cve": "CVE-2026-31787",
   "kev": false,
   "landed": true
  },
