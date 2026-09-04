@@ -291,6 +291,41 @@ def root_has_code(repo: dict[str, Any]) -> bool:
     return any(CODE_FILE_RE.search(name) for name in root_entry_names(repo))
 
 
+TEXT_ONLY_RE = re.compile(
+    r"^(?:readme|license|licence|security|contributing|changelog|code_of_conduct|"
+    r"\.gitignore|\.gitattributes|funding\.yml)(?:\.|$)|\.(?:md|txt|rst)$",
+    re.IGNORECASE,
+)
+PAYLOAD_RE = re.compile(r"```|~~~|^ {4}\S", re.MULTILINE)
+COMMAND_RE = re.compile(
+    r"\b(?:curl|wget|python3?|php|perl|ruby|nc|ncat|bash|msfconsole|nuclei|sqlmap|"
+    r"GET /|POST /|PUT /)\b|https?://[^\s)]*\?"
+)
+
+
+def repo_is_bare(repo: dict[str, Any], readme: str) -> bool:
+    """Nothing runnable, and nothing that says how.
+
+    A sample of two hundred indexed repositories held fourteen with a bare
+    README or none at all: empty shells, placeholders, a link to a paywall.
+    Anything with a directory, a file that is not documentation, a file named
+    for the CVE or as a PoC, or a README that carries a code block, a command,
+    a request or a real write-up is not bare. Where the root is unknown the
+    question is not asked.
+    """
+    root = repo.get("root")
+    if not isinstance(root, dict):
+        return False
+    for entry in root.get("entries") or []:
+        name = str(entry.get("name") or "")
+        if str(entry.get("type") or "") == "tree" or not TEXT_ONLY_RE.search(name):
+            return False
+        if POC_RE.search(normalise_identity(name)) or CODE_FILE_RE.search(name):
+            return False
+    text = readme or ""
+    return not (len(text) >= 1000 or PAYLOAD_RE.search(text) or COMMAND_RE.search(text))
+
+
 def truncated_ids(cve_ids: Collection[str]) -> set[str]:
     """Identifiers that a longer identifier from the same year extends."""
     numbers: dict[str, set[str]] = defaultdict(set)
@@ -343,6 +378,8 @@ def qualifying_repo_cves(
     description = str(repo.get("description") or "")
     topics = " ".join(topic_names(repo))
     readme = readme_text(repo)
+    if repo_is_bare(repo, readme):
+        return set()
     all_name_cves = extract_cves(full_name) | extract_cves(normalise_identity(full_name))
     all_identity_cves = (
         all_name_cves

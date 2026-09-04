@@ -2,7 +2,7 @@ name: Sync PoC-in-GitHub
 
 on:
   schedule:
-    - cron: '10 5 * * 3'
+    - cron: '10 5 * * *'
   workflow_dispatch:
 
 permissions:
@@ -26,10 +26,11 @@ jobs:
         with:
           python-version: '3.13'
 
-      # Every candidate is judged again each week rather than remembered as
+      # Every candidate is judged again each day rather than remembered as
       # rejected: a repository that was an empty shell in March is often a
       # working exploit by June, and re-reading 6,800 of them costs five
-      # minutes.
+      # minutes. Daily because the collection keeps finding repositories our
+      # own search missed.
       - name: Judge upstream PoC candidates
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

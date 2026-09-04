@@ -16,6 +16,8 @@ from urllib.parse import urlsplit
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 from update_cves import (
+    readme_text,
+    repo_is_bare,
     GITHUB_GRAPHQL_URL,
     kev_badge,
     USER_AGENT,
@@ -72,11 +74,24 @@ def collect_repositories() -> tuple[dict[str, list[tuple[Path, str]]], set[str]]
     return prunable, referenced
 
 
-def survey(client: GitHubClient, names: list[str]) -> tuple[set[str], dict[str, list]]:
-    """Return the repositories GitHub reports as NOT_FOUND, and stars/last push for the rest.
+REPO_FIELDS = (
+    "{ nameWithOwner stargazerCount pushedAt "
+    'readmeMd: object(expression: "HEAD:README.md") { ... on Blob { text } } '
+    'readmeUpper: object(expression: "HEAD:README.MD") { ... on Blob { text } } '
+    'readmeRst: object(expression: "HEAD:README.rst") { ... on Blob { text } } '
+    'readmeBare: object(expression: "HEAD:README") { ... on Blob { text } } '
+    'root: object(expression: "HEAD:") { ... on Tree { entries { name type } } } }'
+)
 
-    Anything else, a network error or a throttle or an unexpected response, leaves
-    the repository out of both results, so an audit failure never drops a link.
+
+def survey(client: GitHubClient, names: list[str]) -> tuple[set[str], dict[str, list]]:
+    """Return the repositories to drop, and stars/last push for the rest.
+
+    Dropped means GitHub reports NOT_FOUND, or the repository is bare: no code,
+    no directory, no artifact and a README with nothing runnable in it, which
+    the discovery gate would reject today. Anything else, a network error or a
+    throttle or an unexpected response, leaves the repository out of both
+    results, so an audit failure never drops a link.
     """
     batches = [names[index : index + BATCH] for index in range(0, len(names), BATCH)]
     missing: set[str] = set()
@@ -87,7 +102,7 @@ def survey(client: GitHubClient, names: list[str]) -> tuple[set[str], dict[str, 
         aliases = " ".join(
             f"r{index}: repository(owner: {json.dumps(name.split('/', 1)[0])}, "
             f"name: {json.dumps(name.split('/', 1)[1])}) "
-            "{ nameWithOwner stargazerCount pushedAt }"
+            f"{REPO_FIELDS}"
             for index, name in enumerate(batch)
         )
         payload = http_json(
@@ -107,6 +122,9 @@ def survey(client: GitHubClient, names: list[str]) -> tuple[set[str], dict[str, 
         for index, name in enumerate(batch):
             repo = data.get(f"r{index}")
             if not repo:
+                continue
+            if repo_is_bare(repo, readme_text(repo)):
+                gone.add(name)
                 continue
             pushed = str(repo.get("pushedAt") or "")[:10]
             found[name.lower()] = [
@@ -418,7 +436,7 @@ def main() -> int:
         GitHubClient(token),
         [name for name in scope if name not in blocked],
     )
-    print(f"{len(missing)} repositories no longer exist")
+    print(f"{len(missing)} repositories no longer exist or hold nothing runnable")
     if blocked:
         print(f"Pruning {len(blocked)} explicitly blacklisted repositories")
     missing |= blocked

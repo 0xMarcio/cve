@@ -16,7 +16,7 @@ concurrency:
 jobs:
   audit:
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 50
     steps:
       - name: Checkout repository
         uses: actions/checkout@v7
@@ -26,14 +26,13 @@ jobs:
         with:
           python-version: '3.13'
 
-      # A seventh of the old weekly batch every day: the 12,000-and-12,000
-      # weekly run measured an hour, and it holds the repository-updates lock
-      # the whole time, which stalls the hourly refresh and can cancel a daily
-      # sync queued behind it. Same sweep period, about nine minutes a day.
+      # 4,000 repositories and 3,000 reference links a day sweeps the whole
+      # index about weekly, in around half an hour. A sample found one link in
+      # eight pointing at a deleted repository under the old fortnightly sweep.
       - name: Drop dead links and refresh repository metadata
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: python3 scripts/audit_poc_links.py --limit 1750 --references 1750
+        run: python3 scripts/audit_poc_links.py --limit 4000 --references 3000
 
       - name: Verify the generated index
         run: python3 scripts/build_site.py

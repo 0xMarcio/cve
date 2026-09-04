@@ -26,6 +26,15 @@ jobs:
         with:
           python-version: '3.13'
 
+      # Every repository pushed in the last day that names a CVE of this year
+      # or last, with its README read and the classifier applied, so a PoC
+      # published this morning is on the site within the hour. The daily run
+      # keeps covering every year and the CVE record references.
+      - name: Discover this year's PoCs pushed in the last day
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: python3 scripts/update_cves.py --lookback-days 1 --years 2 --skip-cvelist
+
       - name: Ingest the previous hour's candidates
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -52,6 +61,8 @@ jobs:
             README.md \
             index/trending.json \
             index/github.txt \
+            index/references.txt \
+            index/reference_pocs.txt \
             index/cve_dates.json \
             index/cve_record_state.json \
             docs/hero.svg \
