@@ -26858,3 +26858,5 @@ CVE-2026-31431 - https://github.com/FranklinF25/cve-2026-31431
 CVE-2026-34197 - https://github.com/nirvanasec/CVE-2026-34197-PoC
 CVE-2026-83548 - https://github.com/xcoy0te/CVE-2026-83548-checker
 CVE-2026-19632 - https://github.com/ghostpels/CVE-2026-19632
+CVE-2026-19900 - https://github.com/on3sk-0x1/cve-2026-19900-PoC
+CVE-2026-85769 - https://github.com/isukasanuj/CVE-2026-85769
