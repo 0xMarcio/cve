@@ -12,7 +12,7 @@
  },
  {
   "year": 2026,
-  "stars": 6,
+  "stars": 7,
   "name": "CVE-2026-19490",
   "url": "https://github.com/TarPeg007/CVE-2026-19490",
   "desc": "NetScaler ADC/Gateway SAML unsigned-assertion bypass via HTTP-Redirect binding (CTX696939) - root cause analysis + PoC",
@@ -554,13 +554,25 @@
  },
  {
   "year": 2026,
-  "stars": 63,
+  "stars": 65,
   "name": "CVE-2026-65343",
   "url": "https://github.com/ByteV0rtex/CVE-2026-65343",
   "desc": "CVE-2026-65343 PoC - AppleKeyStore OOB read → KASLR defeat (iOS 26.6 / 23G71)",
   "pushed": "2026-09-03T20:38:35Z",
   "created": "2026-09-02T20:12:10Z",
   "cve": "CVE-2026-65343",
+  "kev": false,
+  "landed": true
+ },
+ {
+  "year": 2026,
+  "stars": 1,
+  "name": "CVE-2026-65643-PoC-Exploit",
+  "url": "https://github.com/tc4dy/CVE-2026-65643-PoC-Exploit",
+  "desc": "🧰 CVE-2026-65643 - cPanel Domain Parking RCE Toolkit (CVSS 8.7) / Red/Blue Team suite for unpatched cPanel & WHM 11.x (110,134,136,138). 2 tools: Full Exploit (reverse shell, webshell, persistence, root passwd, file R/W, mass scan, Tor), Blue Team PoC (detection, reporting, audit). w/Python. 🦾 Only Use Ethically, Stay Legal <3",
+  "pushed": "2026-09-03T18:14:23Z",
+  "created": "2026-09-03T18:13:54Z",
+  "cve": "CVE-2026-65643",
   "kev": false,
   "landed": true
  },
@@ -621,18 +633,6 @@
   "pushed": "2026-09-02T14:03:02Z",
   "created": "2026-08-31T21:00:26Z",
   "cve": "CVE-2025-69080",
-  "kev": false,
-  "landed": true
- },
- {
-  "year": 2026,
-  "stars": 2,
-  "name": "CVE-2026-43499-poc",
-  "url": "https://github.com/lkeld/CVE-2026-43499-poc",
-  "desc": "In the Linux kernel, the following vulnerability has been resolved: rtmutex: Use waiter::task instead of current in remove_waiter() remove_waiter() is used by the slowlock paths, but it is also used for proxy-lock rollback in rt_mutex_start_proxy_lock() when invoked from futex_requeue(). In the latter case waiter::task is not current, but remove_waiter() operates on current for the dequeue operation. That results in several problems: 1) the rbtree dequeue happens without waiter::task::pi_lock being held 2) the waiter task's pi_blocked_on state is not cleared, which leaves a dangling pointer primed for UAF around. 3) rt_mutex_adjust_prio_chain() operates on the wrong top priority waiter task Use waiter::task instead of current in all related operations in remove_waiter() to cure those problems. [ tglx: Fixup rt_mutex_adjust_prio_chain(), add a comment and amend the changelog ]",
-  "pushed": "2026-09-01T16:41:30Z",
-  "created": "2026-09-01T07:34:56Z",
-  "cve": "CVE-2026-43499",
   "kev": false,
   "landed": true
  }
