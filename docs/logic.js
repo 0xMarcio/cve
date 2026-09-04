@@ -22,6 +22,7 @@ const FILTER_OPTIONS = {
 const state = {
   query: '',
   mode: 'TRENDING',
+  sort: 'RELEVANCE',
   shown: PAGE_SIZE,
   descOpen: new Set(),
   pocOpen: new Set(),
@@ -205,6 +206,7 @@ function scoreEntry(entry, matcher) {
   if (matcher.isPhrase) {
     const phrase = matcher.phrase;
     if (!phrase) return 0;
+    if (entry._titleSpace && wordStart(entry._titleSpace, phrase) >= 0) return 300;
     const at = wordStart(descSpace(entry), phrase);
     if (at >= 0) return 200 + leadBonus(at);
     if (wordStart(pocSpace(entry), phrase) >= 0) return 80;
@@ -213,6 +215,9 @@ function scoreEntry(entry, matcher) {
 
   const raw = matcher.raw;
   if (entry._cveText.includes(raw)) return 600;
+  // The record's own title, vendor and product name what it is about; a hit
+  // there outranks any position in the prose.
+  if (entry._titleText && wordStart(entry._titleText, raw) >= 0) return 400;
   const at = wordStart(entry._descText, raw);
   if (at >= 0) return 240 + leadBonus(at);
   if (wordStart(pocText(entry), raw) >= 0) return 80;
@@ -246,13 +251,23 @@ function canonicalCvss(id) {
   };
 }
 
+// Cached per entry. A filter pass asked the metadata for every one of 82,000
+// entries on every keystroke; the answer only changes when a data file lands,
+// which bumps the epoch.
+let severityEpoch = 0;
 function entrySeverity(entry) {
+  if (entry._sevEpoch === severityEpoch) return entry._sev;
   const score = canonicalCvss(entry.cve);
+  let severity = '';
   if (score && ['NONE', 'LOW', 'MEDIUM', 'HIGH', 'CRITICAL'].includes(score.severity)) {
-    return score.severity;
+    severity = score.severity;
+  } else {
+    const fallback = String((ratings[entry.cve] || {}).severity || '').toUpperCase();
+    severity = ['NONE', 'LOW', 'MEDIUM', 'HIGH', 'CRITICAL'].includes(fallback) ? fallback : '';
   }
-  const fallback = String((ratings[entry.cve] || {}).severity || '').toUpperCase();
-  return ['NONE', 'LOW', 'MEDIUM', 'HIGH', 'CRITICAL'].includes(fallback) ? fallback : '';
+  entry._sev = severity;
+  entry._sevEpoch = severityEpoch;
+  return severity;
 }
 
 function hasActiveFilters() {
@@ -262,6 +277,7 @@ function hasActiveFilters() {
 }
 
 function entrySources(entry) {
+  if (entry._sources) return entry._sources;
   const sources = new Set();
   const fields = {
     NUCLEI: 'nuclei', MSF: 'msf', EDB: 'edb', VULHUB: 'vulhub', COLLECTIONS: 'collections'
@@ -278,6 +294,7 @@ function entrySources(entry) {
       sources.add('REFERENCE');
     }
   }
+  entry._sources = sources;
   return sources;
 }
 
@@ -299,7 +316,173 @@ function matchesFilters(entry) {
   return severity ? matchesMultiFilter(new Set([severity]), state.filters.severity) : false;
 }
 
-function runSearch(query) {
+/* ---- word index -------------------------------------------------------- */
+
+// Every keystroke used to scan 28 MB of description text, and for terms of
+// four characters or more the loose regex then ran against every entry that
+// did not match, about 80,000 regex tests a keystroke. The index maps each
+// word to the entries carrying it, so a term is a prefix lookup in a sorted
+// word list and the scan only touches the candidates. It is built in slices
+// after the index loads so typing never waits on it; until then the scan does
+// the work exactly as before.
+const wordIndex = { words: null, postings: new Map(), ready: false, built: 0 };
+
+function tokensOf(text) {
+  return text ? text.match(/[a-z0-9]+/g) || [] : [];
+}
+
+function indexSlice(budget) {
+  const started = performance.now();
+  const postings = wordIndex.postings;
+  while (wordIndex.built < dataset.length) {
+    const at = wordIndex.built;
+    const entry = dataset[at];
+    const words = (entry._descText + ' ' + entry._titleText + ' ' + pocSpace(entry)).match(/[a-z0-9]+/g);
+    if (words) {
+      // Entries arrive in order, so a repeat within one entry is always the
+      // last id on the list and needs no set to catch it.
+      for (const word of words) {
+        const list = postings.get(word);
+        if (!list) postings.set(word, [at]);
+        else if (list[list.length - 1] !== at) list.push(at);
+      }
+    }
+    wordIndex.built += 1;
+    if ((at & 127) === 0 && performance.now() - started > budget) break;
+  }
+  if (wordIndex.built < dataset.length) {
+    yieldThen(() => indexSlice(budget));
+    return;
+  }
+  wordIndex.words = [...postings.keys()].sort();
+  wordIndex.ready = true;
+  wordIndex.elapsed = Math.round(performance.now() - wordIndex.startedAt);
+}
+
+// Hands the thread back between slices. A timer would do, except that a
+// background tab clamps timers to once a second and the build took a minute
+// there; a message port yields to the event loop without that throttle.
+const yieldPort = new MessageChannel();
+let yieldNext = null;
+yieldPort.port1.onmessage = () => {
+  const next = yieldNext;
+  yieldNext = null;
+  if (next) next();
+};
+function yieldThen(fn) {
+  yieldNext = fn;
+  yieldPort.port2.postMessage(null);
+}
+
+function buildWordIndex() {
+  wordIndex.postings = new Map();
+  wordIndex.words = null;
+  wordIndex.built = 0;
+  wordIndex.ready = false;
+  wordIndex.startedAt = performance.now();
+  indexSlice(32);
+}
+
+// The slice of the sorted word list that starts with the prefix.
+function wordRange(prefix) {
+  const words = wordIndex.words;
+  if (!words) return [0, 0];
+  let low = 0;
+  let high = words.length;
+  while (low < high) {
+    const mid = (low + high) >> 1;
+    if (words[mid] < prefix) low = mid + 1;
+    else high = mid;
+  }
+  const start = low;
+  high = words.length;
+  while (low < high) {
+    const mid = (low + high) >> 1;
+    if (words[mid].startsWith(prefix)) low = mid + 1;
+    else high = mid;
+  }
+  return [start, low];
+}
+
+// How many of the terms each entry can satisfy, by word. A term has to start a
+// word, and may run on into the end of one, so its last part is a prefix and
+// any earlier parts are whole words: "pan-os" is the word "pan" followed by a
+// word starting "os". The scoring pass still checks the literal text; this
+// only decides which entries are worth its time.
+function candidateCounts(matchers) {
+  const size = dataset.length;
+  const total = new Uint8Array(size);
+  const stampOf = new Int32Array(size);
+  let stamp = 0;
+  for (const matcher of matchers) {
+    const parts = tokensOf(matcher.isPhrase ? matcher.phrase : matcher.raw);
+    if (!parts.length) return null;
+    const partCount = new Uint8Array(size);
+    parts.forEach((part, index) => {
+      stamp += 1;
+      const bump = at => {
+        if (stampOf[at] !== stamp) {
+          stampOf[at] = stamp;
+          partCount[at] += 1;
+        }
+      };
+      if (index === parts.length - 1) {
+        const [start, end] = wordRange(part);
+        for (let i = start; i < end; i++) {
+          for (const at of wordIndex.postings.get(wordIndex.words[i])) bump(at);
+        }
+      } else {
+        for (const at of wordIndex.postings.get(part) || []) bump(at);
+      }
+    });
+    // A CVE id is not a word in anybody's description, so it is checked apart.
+    const raw = matcher.raw;
+    for (let at = 0; at < size; at++) {
+      if (partCount[at] === parts.length || dataset[at]._cveText.includes(raw)) total[at] += 1;
+    }
+  }
+  return total;
+}
+
+/* ---- search ------------------------------------------------------------ */
+
+const SORTS = [['RELEVANCE', 'RELEVANCE'], ['NEWEST', 'NEWEST'], ['POCS', 'MOST POCS']];
+
+// Coarse steps so that one extra repository never decides the order on its own.
+function linkBucket(count) {
+  return count >= 100 ? 4 : count >= 20 ? 3 : count >= 5 ? 2 : count >= 2 ? 1 : 0;
+}
+
+// Within a score tier the evidence decides, newest last: whether CISA lists
+// it, how many PoCs exist, how likely exploitation is. Falling straight
+// through to the year put five 2026 records above regreSSHion for "openssh"
+// and hid Log4Shell from the first page of "log4j".
+function compareRelevance(a, b) {
+  if (b._score !== a._score) return b._score - a._score;
+  if (b._hits !== a._hits) return b._hits - a._hits;
+  const ka = kev[a.cve] ? 1 : 0;
+  const kb = kev[b.cve] ? 1 : 0;
+  if (kb !== ka) return kb - ka;
+  const la = linkBucket(entryLinks(a).length);
+  const lb = linkBucket(entryLinks(b).length);
+  if (lb !== la) return lb - la;
+  const ea = Math.round(((epss[a.cve] || [0])[0] || 0) * 100);
+  const eb = Math.round(((epss[b.cve] || [0])[0] || 0) * 100);
+  if (eb !== ea) return eb - ea;
+  if (b._year !== a._year) return b._year - a._year;
+  return b._num - a._num;
+}
+
+function compareNewest(a, b) {
+  return (b._year - a._year) || (b._num - a._num) || (b._score - a._score);
+}
+
+function comparePocs(a, b) {
+  return (entryLinks(b).length - entryLinks(a).length) || (b._score - a._score)
+    || (b._year - a._year) || (b._num - a._num);
+}
+
+function runSearch(query, scan = false) {
   const terms = query.match(/-?"[^"]+"|-?\S+/g) || [];
   const cleaned = terms.map(t => t.replace(/^(-?)"/, '$1').replace(/"$/, ''));
   const positive = cleaned.filter(t => t && t[0] !== '-');
@@ -315,9 +498,12 @@ function runSearch(query) {
     .map(buildMatcher)
     .filter(Boolean);
 
+  const counts = !scan && wordIndex.ready && matchers.length ? candidateCounts(matchers) : null;
   const results = [];
   results.pocTotal = 0;
-  for (const entry of dataset) {
+  for (let at = 0; at < dataset.length; at++) {
+    if (counts && counts[at] !== matchers.length) continue;
+    const entry = dataset[at];
     if (!matchesFilters(entry)) continue;
     let score = 0;
     let matched = true;
@@ -345,12 +531,12 @@ function runSearch(query) {
     results.push(entry);
   }
 
-  results.sort((a, b) => {
-    if (b._score !== a._score) return b._score - a._score;
-    if (b._hits !== a._hits) return b._hits - a._hits;
-    if (b._year !== a._year) return b._year - a._year;
-    return b._num - a._num;
-  });
+  // The index finds a term where it starts a word. Its loose form, "log-4j"
+  // for log4j, can only be found by the full pass, which is worth paying for
+  // when the indexed pass came back nearly empty and not otherwise.
+  if (counts && results.length < 5 && matchers.some(m => m.loose)) return runSearch(query, true);
+
+  results.sort(state.sort === 'NEWEST' ? compareNewest : state.sort === 'POCS' ? comparePocs : compareRelevance);
   return results;
 }
 
@@ -371,6 +557,10 @@ function prepareDataset(raw) {
       .toLowerCase();
     entry._year = parseInt(parts[1], 10) || 0;
     entry._num = parseInt(parts[2], 10) || 0;
+    // Title, vendor and product, once the records carry them.
+    const named = [entry.title || '', ...(entry.vendor || []), ...(entry.product || [])].join(' ');
+    entry._titleText = named.toLowerCase();
+    entry._titleSpace = normalizeToSpaces(entry._titleText);
     out.push(entry);
   }
   return out;
@@ -640,9 +830,13 @@ function renderResults(elapsed) {
     ? `<button type="button" class="poc-more" style="padding:9px 16px" data-more-results>+ ${formatCount(remaining)} more matching CVEs</button>`
     : '';
 
+  const sortSwitch = SORTS.map(([key, label]) =>
+    `<button type="button" data-sort="${key}" aria-pressed="${String(state.sort === key)}">${label}</button>`
+  ).join('');
   el.results.innerHTML = `<div class="panel-head">
       <h2>Results</h2>
       <span class="panel-count">${formatCount(results.length)} CVE${results.length === 1 ? '' : 's'} · ${formatCount(pocTotal)} PoC${pocTotal === 1 ? '' : 's'}</span>
+      <div class="switch switch-sort" role="group" aria-label="Order">${sortSwitch}</div>
     </div>
     <div class="col-head"><span>CVE</span><span>DESCRIPTION / POC LINKS</span></div>
     ${shown.map(resultRow).join('')}${footer}`;
@@ -692,7 +886,7 @@ function renderTrending() {
     ? rows.map(trendRow).join('')
     : '<div class="trend-row"><span class="trend-desc">No recent PoCs.</span></div>';
 
-  document.querySelectorAll('.switch button').forEach(button => {
+  document.querySelectorAll('.trend-controls .switch button').forEach(button => {
     button.setAttribute('aria-pressed', String(button.dataset.mode === state.mode));
   });
 }
@@ -725,6 +919,8 @@ function readURLState() {
     el.input.value = query;
   }
   if (params.get('kev') === '1') state.kevOnly = true;
+  const sort = (params.get('sort') || '').toUpperCase();
+  if (SORTS.some(([key]) => key === sort)) state.sort = sort;
   const short = { severity: 'sev', source: 'src' };
   for (const [kind, options] of Object.entries(FILTER_OPTIONS)) {
     const wanted = (params.get(short[kind]) || '').toUpperCase().split(',')
@@ -742,6 +938,7 @@ function syncURL() {
     const params = new URLSearchParams();
     if (state.query.length >= MIN_QUERY) params.set('q', state.query);
     if (state.kevOnly) params.set('kev', '1');
+    if (state.sort !== 'RELEVANCE') params.set('sort', state.sort.toLowerCase());
     const short = { severity: 'sev', source: 'src' };
     for (const [kind, filter] of Object.entries(state.filters)) {
       if (filter.size !== FILTER_OPTIONS[kind].length) {
@@ -907,6 +1104,13 @@ document.querySelector('.switch').addEventListener('click', event => {
 });
 
 el.results.addEventListener('click', event => {
+  const sort = event.target.closest('[data-sort]');
+  if (sort) {
+    state.sort = sort.dataset.sort;
+    state.shown = PAGE_SIZE;
+    render();
+    return;
+  }
   const desc = event.target.closest('[data-toggle-desc]');
   const poc = event.target.closest('[data-toggle-poc]');
   const advisory = event.target.closest('[data-toggle-advisory]');
@@ -966,12 +1170,14 @@ async function loadJSON(url, options) {
 
   loadJSON('/cve_metadata.json', { cache: 'no-cache' }).then(data => {
     metadata = data || {};
+    severityEpoch += 1;
     enableFilter('severity');
     if (state.ready && (state.query || hasActiveFilters())) render();
   }).catch(err => console.warn(err.message));
 
   loadJSON('/nuclei.json', { cache: 'no-cache' }).then(data => {
     ratings = data || {};
+    severityEpoch += 1;
     enableFilter('severity');
     if (state.ready && (state.query || hasActiveFilters())) render();
   }).catch(err => console.warn(err.message));
@@ -992,6 +1198,7 @@ async function loadJSON(url, options) {
     state.ready = true;
     enableFilter('source');
     render();
+    buildWordIndex();
   } catch (err) {
     console.warn(err.message);
     el.status.textContent = 'index unavailable';

@@ -374,6 +374,8 @@ a.chip:hover { color: var(--fg); border-color: var(--fg-muted); }
   color: var(--fg-muted);
 }
 .switch button[aria-pressed="true"] { background: var(--accent-emphasis); color: #ffffff; }
+.panel-head .switch { margin-left: auto; align-self: center; }
+.switch-sort button { padding: 5px 9px; font-size: 10px; }
 .trend-note {
   flex: none;
   white-space: nowrap;
