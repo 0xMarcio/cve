@@ -114,6 +114,17 @@ def main() -> int:
             handle.write(urlset(years[year]))
         names.append((name, max(date for _, date in years[year])))
 
+    # The year and block hubs build_pages.py writes, keyed in page_lastmod.json
+    # under their own names beside the CVE ids.
+    hubs = sorted(
+        (f"{SITE}/{name}", date) for name, date in page_dates.items()
+        if not name.startswith("CVE-") or name.endswith("xxx")
+    )
+    if hubs:
+        with open(os.path.join(DOCS, "sitemap-hubs.xml"), "w", encoding="utf-8") as handle:
+            handle.write(urlset(hubs))
+        names.insert(0, ("sitemap-hubs.xml", max(date for _, date in hubs)))
+
     with open(os.path.join(DOCS, "sitemap-home.xml"), "w", encoding="utf-8") as handle:
         handle.write(urlset([(f"{SITE}/", today)]))
     names.insert(0, ("sitemap-home.xml", today))
@@ -121,7 +132,7 @@ def main() -> int:
     with open(SITEMAP, "w", encoding="utf-8") as handle:
         handle.write(sitemap_index(names))
 
-    total = sum(len(v) for v in years.values()) + 1
+    total = sum(len(v) for v in years.values()) + 1 + len(hubs)
     sourced = sum(1 for entry in cves if page_dates.get(entry["cve"]))
     print(f"Wrote {ROBOTS}, {SITEMAP} and {len(names)} shards ({total:,} URLs) for {SITE}; "
           f"{sourced:,} lastmod values reflect page content")

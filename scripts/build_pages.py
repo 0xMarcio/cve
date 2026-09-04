@@ -408,6 +408,7 @@ def page(entry: dict, data: dict) -> str:
 <body>
 {header(len(data["cves"]))}
 <main class="container cve-page">
+{crumbs(cid)}
 <h1>{cid}</h1>
 <div class="chips">{''.join(chips)}</div>
 <p class="cve-desc">{esc(desc)}</p>
@@ -424,6 +425,121 @@ def page(entry: dict, data: dict) -> str:
 </body>
 </html>
 """
+
+
+def block_of(cid: str) -> tuple[str, str]:
+    """The year and the thousand-block a CVE id falls in: CVE-2024-3400 is 2024, 3xxx."""
+    _, year, number = cid.split("-", 2)
+    return year, f"{int(number) // 1000}xxx"
+
+
+def crumbs(cid: str) -> str:
+    year, block = block_of(cid)
+    return (f'<nav class="crumbs" aria-label="Browse"><a href="/{year}">{year}</a>'
+            f'<span>/</span><a href="/CVE-{year}-{block}">CVE-{year}-{block}</a></nav>')
+
+
+def hub_shell(title: str, description: str, path: str, body: str, count: int) -> str:
+    url = f"{SITE}/{path}"
+    return f"""<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>{esc(title)} | {BRAND}</title>
+<meta name="description" content="{esc(description)}"/>
+<meta name="robots" content="index, follow"/>
+<link rel="canonical" href="{url}"/>
+<meta property="og:type" content="website"/>
+<meta property="og:site_name" content="{BRAND}"/>
+<meta property="og:title" content="{esc(title)}"/>
+<meta property="og:description" content="{esc(description)}"/>
+<meta property="og:url" content="{url}"/>
+<meta property="og:image" content="{SITE}/social-card.png"/>
+<meta name="twitter:card" content="summary_large_image"/>
+<link rel="icon" href="/favicon.ico"/>
+{FONTS}
+<link rel="stylesheet" href="/style.css"/>
+</head>
+<body>
+{header(count)}
+<main class="container cve-page hub">
+{body}
+</main>
+{footer(f'<a href="/">{count:,} CVEs with PoCs</a>')}
+</body>
+</html>
+"""
+
+
+def hub_pages(cves: list, data: dict) -> dict:
+    """One page per year and one per thousand-block of ids, linking every CVE page.
+
+    A sitemap gets a page discovered; a link from a page already indexed gets
+    it crawled and ranked. 62,000 of the CVE pages had no internal link at all,
+    only a sitemap entry, so the tree is now home, year, block, CVE, with at
+    most a thousand links on any one page.
+    """
+    blocks: dict = defaultdict(list)
+    for entry in cves:
+        blocks[block_of(entry["cve"])].append(entry)
+    years: dict = defaultdict(list)
+    for (year, block), entries in blocks.items():
+        years[year].append((block, entries))
+    total = len(cves)
+    pages = {}
+    lastmod = {}
+
+    for (year, block), entries in blocks.items():
+        entries.sort(key=lambda e: int(e["cve"].split("-")[2]))
+        low = int(block[:-3]) * 1000
+        name = f"CVE-{year}-{block}"
+        rows = []
+        for entry in entries:
+            cid = entry["cve"]
+            links = len(entry.get("poc") or []) + sum(len(entry.get(k) or []) for k, _, _ in SOURCES)
+            flagged = '<span class="hub-kev">KEV</span>' if data["kev"].get(cid) else ""
+            rows.append(
+                f'<li><a href="/{cid}">{cid}</a><span class="hub-count">{links:,} PoC{"" if links == 1 else "s"}</span>'
+                f'<span class="hub-desc">{flagged}{esc(short(entry.get("desc") or "", 140))}</span></li>'
+            )
+        title = f"CVE-{year}-{low} to CVE-{year}-{low + 999}: {len(entries):,} with public PoC exploits"
+        description = (f"{len(entries):,} CVEs from CVE-{year}-{low} to CVE-{year}-{low + 999} "
+                       "with public proof-of-concept exploits, with PoC counts and known-exploited status.")
+        body = (f'<nav class="crumbs" aria-label="Browse"><a href="/{year}">{year}</a><span>/</span>{name}</nav>'
+                f"<h1>CVE-{year}-{low} to CVE-{year}-{low + 999}</h1>"
+                f'<p class="cve-desc">{len(entries):,} CVEs with public proof-of-concept exploits.</p>'
+                f'<ul class="hub-list">{"".join(rows)}</ul>')
+        pages[f"{name}.html"] = hub_shell(title, description, name, body, total)
+        lastmod[name] = max(data["lastmod"].get(e["cve"], "") for e in entries) or data["today"]
+
+    ordered = sorted(years)
+    for year in ordered:
+        year_blocks = sorted(years[year], key=lambda item: int(item[0][:-3]))
+        count = sum(len(entries) for _, entries in year_blocks)
+        rows = "".join(
+            f'<li><a href="/CVE-{year}-{block}">CVE-{year}-{int(block[:-3]) * 1000} to {int(block[:-3]) * 1000 + 999}</a>'
+            f'<span class="hub-count">{len(entries):,} CVEs</span></li>'
+            for block, entries in year_blocks
+        )
+        at = ordered.index(year)
+        neighbours = []
+        if at > 0:
+            neighbours.append(f'<a href="/{ordered[at - 1]}">{ordered[at - 1]}</a>')
+        if at + 1 < len(ordered):
+            neighbours.append(f'<a href="/{ordered[at + 1]}">{ordered[at + 1]}</a>')
+        title = f"CVE-{year}: {count:,} CVEs with public PoC exploits"
+        description = (f"Every {year} CVE with a public proof-of-concept exploit, {count:,} in all, "
+                       "grouped by id with PoC counts and known-exploited status.")
+        body = (f'<nav class="crumbs" aria-label="Browse"><a href="/">all years</a><span>/</span>{year}</nav>'
+                f"<h1>CVE-{year}</h1>"
+                f'<p class="cve-desc">{count:,} CVEs with public proof-of-concept exploits, in {len(year_blocks)} blocks of a thousand ids.</p>'
+                f'<ul class="hub-list hub-blocks">{rows}</ul>'
+                + (f'<p class="hub-neighbours">{" · ".join(neighbours)}</p>' if neighbours else ""))
+        pages[f"{year}.html"] = hub_shell(title, description, year, body, total)
+        lastmod[year] = max(lastmod[f"CVE-{year}-{block}"] for block, _ in year_blocks)
+
+    return {"pages": pages, "lastmod": lastmod}
 
 
 def check_static_drift() -> None:
@@ -497,8 +613,16 @@ def main() -> int:
         lastmod[cid] = page_lastmod(entry, data)
         written += 1
 
+    data["lastmod"] = lastmod
+    hubs = hub_pages(cves, data)
+    for name, markup in hubs["pages"].items():
+        with open(os.path.join(DOCS, name), "w", encoding="utf-8") as handle:
+            handle.write(markup)
+    lastmod.update(hubs["lastmod"])
+
     # The sitemap has to quote the same date the page does, so it is computed
-    # once here and handed to build_seo.py rather than derived twice.
+    # once here and handed to build_seo.py rather than derived twice. Hub pages
+    # ride in the same file under their own names.
     with open(os.path.join(DOCS, LASTMOD), "w", encoding="utf-8") as handle:
         json.dump(lastmod, handle, separators=(",", ":"))
 
@@ -508,7 +632,7 @@ def main() -> int:
     check_static_drift()
 
     related = sum(1 for cid in lastmod if data["related"].get(cid))
-    print(f"Wrote {written:,} CVE pages into {DOCS} "
+    print(f"Wrote {written:,} CVE pages and {len(hubs['pages']):,} hub pages into {DOCS} "
           f"({related:,} with a shared-author Related block)")
     return 0
 
