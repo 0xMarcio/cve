@@ -2462,8 +2462,6 @@ CVE-2017-1635 - https://github.com/bcdannyboy/cve-2017-1635-PoC
 CVE-2017-1635 - https://github.com/emcalv/tivoli-poc
 CVE-2017-16524 - https://github.com/realistic-security/CVE-2017-16524
 CVE-2017-16541 - https://github.com/Ethan-Chen-uwo/A-breif-introduction-of-CVE-2017-16541
-CVE-2017-16567 - https://github.com/dewankpant/CVE-2017-16567
-CVE-2017-16568 - https://github.com/dewankpant/CVE-2017-16568
 CVE-2017-16651 - https://github.com/ropbear/CVE-2017-16651
 CVE-2017-16720 - https://github.com/CN016/WebAccess-CVE-2017-16720-
 CVE-2017-16725 - https://github.com/bitfu/uc-httpd-1.0.0-buffer-overflow-exploit
@@ -2798,7 +2796,6 @@ CVE-2017-7269 - https://github.com/c0d3cr4f73r/CVE-2017-7269
 CVE-2017-7269 - https://github.com/caicai1355/CVE-2017-7269-exploit
 CVE-2017-7269 - https://github.com/Cappricio-Securities/CVE-2017-7269
 CVE-2017-7269 - https://github.com/danigargu/explodingcan
-CVE-2017-7269 - https://github.com/denchief1/CVE-2017-7269
 CVE-2017-7269 - https://github.com/eliuha/webdav_exploit
 CVE-2017-7269 - https://github.com/g0rx/iis6-exploit-2017-CVE-2017-7269
 CVE-2017-7269 - https://github.com/homjxi0e/cve-2017-7269
@@ -3068,7 +3065,6 @@ CVE-2018-0114 - https://github.com/Starry-lord/CVE-2018-0114
 CVE-2018-0114 - https://github.com/zi0Black/POC-CVE-2018-0114
 CVE-2018-0171 - https://github.com/AlrikRr/Cisco-Smart-Exploit
 CVE-2018-0202 - https://github.com/jaychowjingjie/CVE-2018-0202
-CVE-2018-0208 - https://github.com/dima5455/Cve-2018-0208
 CVE-2018-0296 - https://github.com/3ndG4me/CVE-2020-3452-Exploit
 CVE-2018-0296 - https://github.com/bhenner1/CVE-2018-0296
 CVE-2018-0296 - https://github.com/milo2012/CVE-2018-0296
@@ -3271,7 +3267,6 @@ CVE-2018-12537 - https://github.com/tafamace/CVE-2018-12537
 CVE-2018-12540 - https://github.com/tafamace/CVE-2018-12540
 CVE-2018-1259 - https://github.com/tafamace/CVE-2018-1259
 CVE-2018-12613 - https://github.com/0x00-0x00/CVE-2018-12613
-CVE-2018-12613 - https://github.com/eastmountyxz/CVE-2018-12613-phpMyAdmin
 CVE-2018-12613 - https://github.com/ivanitlearning/CVE-2018-12613
 CVE-2018-1263 - https://github.com/sakib570/CVE-2018-1263-Demo
 CVE-2018-12636 - https://github.com/nth347/CVE-2018-12636_exploit
@@ -4362,7 +4357,6 @@ CVE-2019-0708 - https://github.com/edvacco/CVE-2019-0708-POC
 CVE-2019-0708 - https://github.com/Ekultek/BlueKeep
 CVE-2019-0708 - https://github.com/f8al/CVE-2019-0708-POC
 CVE-2019-0708 - https://github.com/freeide/CVE-2019-0708
-CVE-2019-0708 - https://github.com/freeide/CVE-2019-0708-PoC-Exploit
 CVE-2019-0708 - https://github.com/FrostsaberX/CVE-2019-0708
 CVE-2019-0708 - https://github.com/FroydCod3r/CVE-2019-0708
 CVE-2019-0708 - https://github.com/ga1ois/BlueHat-2019-Seattle
@@ -5017,10 +5011,8 @@ CVE-2019-15107 - https://github.com/cd6629/Python-scripts
 CVE-2019-15107 - https://github.com/cdedmondson/Modified-CVE-2019-15107
 CVE-2019-15107 - https://github.com/ch4ko/webmin_CVE-2019-15107
 CVE-2019-15107 - https://github.com/ChakoMoonFish/webmin_CVE-2019-15107
-CVE-2019-15107 - https://github.com/darrenmartyn/CVE-2019-15107
 CVE-2019-15107 - https://github.com/diegojuan/CVE-2019-15107
 CVE-2019-15107 - https://github.com/EdouardosStav/CVE-2019-15107-RCE-WebMin
-CVE-2019-15107 - https://github.com/f0rkr/CVE-2019-15107
 CVE-2019-15107 - https://github.com/foxsin34/WebMin-1.890-Exploit-unauthorized-RCE
 CVE-2019-15107 - https://github.com/g0db0x/CVE_2019_15107
 CVE-2019-15107 - https://github.com/g1vi/CVE-2019-15107
@@ -5345,7 +5337,6 @@ CVE-2019-19781 - https://github.com/aqhmal/CVE-2019-19781
 CVE-2019-19781 - https://github.com/azams/go-citrixmash
 CVE-2019-19781 - https://github.com/b510/CVE-2019-19781
 CVE-2019-19781 - https://github.com/becrevex/Citrix_CVE-2019-19781
-CVE-2019-19781 - https://github.com/digitalshadows/CVE-2019-19781_IOCs
 CVE-2019-19781 - https://github.com/hollerith/CVE-2019-19781
 CVE-2019-19781 - https://github.com/hyunjin0334/CVE-2019-19781
 CVE-2019-19781 - https://github.com/ianxtianxt/CVE-2019-19781
@@ -5653,7 +5644,6 @@ CVE-2019-6110 - https://github.com/mbadanoiu/MAL-008
 CVE-2019-6111 - https://github.com/mbadanoiu/MAL-008
 CVE-2019-6203 - https://github.com/qingxp9/CVE-2019-6203-PoC
 CVE-2019-6207 - https://github.com/DimitriFourny/cve-2019-6207
-CVE-2019-6207 - https://github.com/dothanthitiendiettiende/CVE-2019-6207
 CVE-2019-6207 - https://github.com/maldiohead/CVE-2019-6207
 CVE-2019-6225 - https://github.com/fatgrass/OsirisJailbreak12
 CVE-2019-6225 - https://github.com/iFenixx/voucher_swap-Exploit-for-iOS-12.1.2
@@ -7167,7 +7157,6 @@ CVE-2020-29607 - https://github.com/Alienfader/CVE-2020-29607
 CVE-2020-29607 - https://github.com/ar2o3/CVE-2020-29607
 CVE-2020-29661 - https://github.com/wojkos9/arm-CVE-2020-29661
 CVE-2020-29669 - https://github.com/code-byter/CVE-2020-29669
-CVE-2020-2969 - https://github.com/emad-almousa/CVE-2020-2969
 CVE-2020-2978 - https://github.com/emad-almousa/CVE-2020-2978
 CVE-2020-3153 - https://github.com/goichot/CVE-2020-3153
 CVE-2020-3153 - https://github.com/raspberry-pie/CVE-2020-3153
@@ -7839,7 +7828,6 @@ CVE-2021-21239 - https://github.com/illera88/CVE-2021-21239
 CVE-2021-21239 - https://github.com/RyanBoomer30/CVE-2021-21239-Exploit
 CVE-2021-21300 - https://github.com/1uanWu/CVE-2021-21300
 CVE-2021-21300 - https://github.com/AlkenePan/CVE-2021-21300
-CVE-2021-21300 - https://github.com/danshuizhangyu/CVE-2021-21300
 CVE-2021-21300 - https://github.com/erranfenech/CVE-2021-21300
 CVE-2021-21300 - https://github.com/ETOCheney/cve-2021-21300
 CVE-2021-21300 - https://github.com/Faisal78123/CVE-2021-21300
@@ -7894,8 +7882,6 @@ CVE-2021-21551 - https://github.com/waldo-irc/CVE-2021-21551
 CVE-2021-21707 - https://github.com/useru1k/php-8.1.0-dev-exploit
 CVE-2021-21708 - https://github.com/s3rg0x/GPT-FastPentest
 CVE-2021-21708 - https://github.com/Sergio-F20/GPT-FastPentest
-CVE-2021-2173 - https://github.com/emad-almousa/CVE-2021-2173
-CVE-2021-2175 - https://github.com/emad-almousa/CVE-2021-2175
 CVE-2021-21809 - https://github.com/anldori/CVE-2021-21809
 CVE-2021-21972 - https://github.com/B1anda0/CVE-2021-21972
 CVE-2021-21972 - https://github.com/byteofandri/CVE-2021-21972
@@ -8090,7 +8076,6 @@ CVE-2021-22986 - https://github.com/Al1ex/CVE-2021-22986
 CVE-2021-22986 - https://github.com/amitlttwo/CVE-2021-22986
 CVE-2021-22986 - https://github.com/DDestinys/CVE-2021-22986
 CVE-2021-22986 - https://github.com/dorkerdevil/CVE-2021-22986-Poc
-CVE-2021-22986 - https://github.com/dotslashed/CVE-2021-22986
 CVE-2021-22986 - https://github.com/huydung26/CVE-2021-22986
 CVE-2021-22986 - https://github.com/kiri-48/CVE-2021-22986
 CVE-2021-22986 - https://github.com/microvorld/CVE-2021-22986
@@ -8400,7 +8385,6 @@ CVE-2021-28378 - https://github.com/pandatix/CVE-2021-28378
 CVE-2021-28476 - https://github.com/0vercl0k/CVE-2021-28476
 CVE-2021-28476 - https://github.com/australeo/CVE-2021-28476
 CVE-2021-28476 - https://github.com/bluefrostsecurity/CVE-2021-28476
-CVE-2021-28476 - https://github.com/dengyang123x/0vercl0k
 CVE-2021-28476 - https://github.com/LaCeeKa/CVE-2021-28476-tools-env
 CVE-2021-28480 - https://github.com/Threonic/CVE-2021-28480
 CVE-2021-28480 - https://github.com/ZephrFish/CVE-2021-28480_HoneyPoC3
@@ -8561,7 +8545,6 @@ CVE-2021-30955 - https://github.com/nickorlow/CVE-2021-30955-POC
 CVE-2021-30955 - https://github.com/st-rnd/desc_race-1
 CVE-2021-30955 - https://github.com/timb-machine-mirrors/jakeajames-CVE-2021-30955
 CVE-2021-30955 - https://github.com/verygenericname/CVE-2021-30955-POC-IPA
-CVE-2021-30956 - https://github.com/fordsham/CVE-2021-30956
 CVE-2021-31159 - https://github.com/ricardojoserf/CVE-2021-31159
 CVE-2021-31166 - https://github.com/0vercl0k/CVE-2021-31166
 CVE-2021-31166 - https://github.com/0xmaximus/Home-Demolisher
@@ -8718,7 +8701,6 @@ CVE-2021-31602 - https://github.com/0cool-design/PWNentaho
 CVE-2021-31630 - https://github.com/adibna/cve-2021-31630
 CVE-2021-31630 - https://github.com/behindsecurity/htb-wifinetictwo-exploit
 CVE-2021-31630 - https://github.com/FlojBoj/CVE-2021-31630
-CVE-2021-31630 - https://github.com/h3v0x/CVE-2021-31630-OpenPLC_RCE
 CVE-2021-31630 - https://github.com/hev0x/CVE-2021-31630-OpenPLC_RCE
 CVE-2021-31630 - https://github.com/Hunt3r0x/CVE-2021-31630-HTB
 CVE-2021-31630 - https://github.com/junnythemarksman/CVE-2021-31630
@@ -9246,7 +9228,6 @@ CVE-2021-4034 - https://github.com/dannyotown/linux-vulnerability
 CVE-2021-4034 - https://github.com/deep-know/CVE-2021-4034
 CVE-2021-4034 - https://github.com/defhacks/cve-2021-4034
 CVE-2021-4034 - https://github.com/deoxykev/CVE-2021-4034-Rust
-CVE-2021-4034 - https://github.com/dh4r4/PwnKit-CVE-2021-4034-
 CVE-2021-4034 - https://github.com/DosAmp/pkwned
 CVE-2021-4034 - https://github.com/drapl0n/pwnKit
 CVE-2021-4034 - https://github.com/dzonerzy/poc-cve-2021-4034
@@ -9521,7 +9502,6 @@ CVE-2021-41091 - https://github.com/UncleJ4ck/CVE-2021-41091
 CVE-2021-41160 - https://github.com/Jajangjaman/CVE-2021-41160
 CVE-2021-41174 - https://github.com/we45/nuclei-appsec-workflows
 CVE-2021-41182 - https://github.com/aredspy/CVE-2021-41182-Tester
-CVE-2021-41184 - https://github.com/gabrielolivra/Exploit-Medium-CVE-2021-41184
 CVE-2021-41269 - https://github.com/shoucheng3/jmrozanec__cron-utils_CVE-2021-41269_9-1-5
 CVE-2021-41277 - https://github.com/Chen-ling-afk/CVE-2021-41277
 CVE-2021-41277 - https://github.com/chengling-ing/CVE-2021-41277
@@ -9869,7 +9849,6 @@ CVE-2021-43798 - https://github.com/davidr-io/Grafana-8.3-Directory-Traversal
 CVE-2021-43798 - https://github.com/fanygit/Grafana-CVE-2021-43798Exp
 CVE-2021-43798 - https://github.com/FAOG99/GrafanaDirectoryScanner
 CVE-2021-43798 - https://github.com/G01d3nW01f/CVE-2021-43798
-CVE-2021-43798 - https://github.com/gixxyboy/CVE-2021-43798
 CVE-2021-43798 - https://github.com/halencarjunior/grafana-CVE-2021-43798
 CVE-2021-43798 - https://github.com/hupe1980/CVE-2021-43798
 CVE-2021-43798 - https://github.com/Iris288/CVE-2021-43798
@@ -11295,7 +11274,6 @@ CVE-2022-23642 - https://github.com/Altelus1/CVE-2022-23642
 CVE-2022-23648 - https://github.com/brant-ruan/poc-demo
 CVE-2022-23648 - https://github.com/raesene/CVE-2022-23648-POC
 CVE-2022-23731 - https://github.com/DavidBuchanan314/WAMpage
-CVE-2022-23773 - https://github.com/danbudris/CVE-2022-23773-repro
 CVE-2022-23773 - https://github.com/danbudris/CVE-2022-23773-repro-target
 CVE-2022-23773 - https://github.com/YouShengLiu/CVE-2022-23773-Reproduce
 CVE-2022-23779 - https://github.com/fbusr/CVE-2022-23779
@@ -12360,9 +12338,7 @@ CVE-2022-4047 - https://github.com/entroychang/CVE-2022-4047
 CVE-2022-40470 - https://github.com/RashidKhanPathan/CVE-2022-40470
 CVE-2022-40471 - https://github.com/RashidKhanPathan/CVE-2022-40471
 CVE-2022-40490 - https://github.com/whitej3rry/CVE-2022-40490
-CVE-2022-4060 - https://github.com/devmehedi101/wordpress-exploit
 CVE-2022-4060 - https://github.com/securi3ytalent/wordpress-exploit
-CVE-2022-4061 - https://github.com/devmehedi101/wordpress-exploit
 CVE-2022-4061 - https://github.com/securi3ytalent/wordpress-exploit
 CVE-2022-40634 - https://github.com/mbadanoiu/CVE-2022-40634
 CVE-2022-40635 - https://github.com/mbadanoiu/CVE-2022-40635
@@ -12765,7 +12741,6 @@ CVE-2022-4953 - https://github.com/Wayne-Ker/WordPress-Elementor-Plugin-3.5.5-XS
 CVE-2023-0045 - https://github.com/ASkyeye/CVE-2023-0045
 CVE-2023-0045 - https://github.com/es0j/CVE-2023-0045
 CVE-2023-0099 - https://github.com/amirzargham/CVE-2023-0099-exploit
-CVE-2023-0110 - https://github.com/emotest1/cve_2023_0110
 CVE-2023-0156 - https://github.com/b0marek/CVE-2023-0156
 CVE-2023-0157 - https://github.com/b0marek/CVE-2023-0157
 CVE-2023-0179 - https://github.com/H4K6/CVE-2023-0179-PoC
@@ -12803,8 +12778,6 @@ CVE-2023-0630 - https://github.com/RandomRobbieBF/CVE-2023-0630
 CVE-2023-0656 - https://github.com/BishopFox/CVE-2022-22274_CVE-2023-0656
 CVE-2023-0669 - https://github.com/0xf4n9x/CVE-2023-0669
 CVE-2023-0669 - https://github.com/Avento/CVE-2023-0669
-CVE-2023-0669 - https://github.com/cataiovita/CVE-2023-0669
-CVE-2023-0669 - https://github.com/cataliniovita/CVE-2023-0669
 CVE-2023-0748 - https://github.com/gonzxph/CVE-2023-0748
 CVE-2023-0830 - https://github.com/xbz0n/CVE-2023-0830
 CVE-2023-0860 - https://github.com/0xsu3ks/CVE-2023-0860
@@ -13018,7 +12991,6 @@ CVE-2023-21823 - https://github.com/Elizarfish/CVE-2023-21823
 CVE-2023-21837 - https://github.com/hktalent/CVE-2023-21837
 CVE-2023-21839 - https://github.com/ASkyeye/CVE-2023-21839
 CVE-2023-21839 - https://github.com/DXask88MA/Weblogic-CVE-2023-21839
-CVE-2023-21839 - https://github.com/fakenews2025/CVE-2023-21839
 CVE-2023-21839 - https://github.com/Firebasky/CVE-2023-21839
 CVE-2023-21839 - https://github.com/houqe/POC_CVE-2023-21839
 CVE-2023-21839 - https://github.com/Romanc9/Gui-poc-test
@@ -13027,8 +12999,6 @@ CVE-2023-21931 - https://github.com/TimeSHU/weblogic_CVE-2023-21931_POC-EXP
 CVE-2023-21939 - https://github.com/Y4Sec-Team/CVE-2023-21939
 CVE-2023-21987 - https://github.com/chunzhennn/cve-2023-21987-poc
 CVE-2023-22047 - https://github.com/tuo4n8/CVE-2023-22047
-CVE-2023-22074 - https://github.com/emad-almousa/CVE-2023-22074
-CVE-2023-22077 - https://github.com/emad-almousa/CVE-2023-22077
 CVE-2023-22098 - https://github.com/Diego-AltF4/CVE-2023-22098
 CVE-2023-2215 - https://github.com/zwxxb/CVE-2023-2215
 CVE-2023-22432 - https://github.com/aeyesec/CVE-2023-22432
@@ -13958,7 +13928,6 @@ CVE-2023-3460 - https://github.com/ollie-blue/CVE_2023_3460
 CVE-2023-3460 - https://github.com/Rajneeshkarya/CVE-2023-3460
 CVE-2023-3460 - https://github.com/rizqimaulanaa/CVE-2023-3460
 CVE-2023-3460 - https://github.com/yon3zu/Mass-CVE-2023-3460
-CVE-2023-34600 - https://github.com/costacoco/Adiscon
 CVE-2023-34634 - https://github.com/radman404/CVE-2023-34634
 CVE-2023-34732 - https://github.com/saykino/CVE-2023-34732
 CVE-2023-34830 - https://github.com/leekenghwa/CVE-2023-34830---Reflected-XSS-found-in-I-doit-Open-v24-and-below
@@ -13970,7 +13939,6 @@ CVE-2023-34839 - https://github.com/sahiloj/CVE-2023-34839
 CVE-2023-34840 - https://github.com/Xh4H/CVE-2023-34840
 CVE-2023-34843 - https://github.com/rootd4ddy/CVE-2023-34843
 CVE-2023-34845 - https://github.com/r4vanan/CVE-2023-34845
-CVE-2023-34852 - https://github.com/funny-kill/CVE-2023-34852
 CVE-2023-34853 - https://github.com/risuxx/CVE-2023-34853
 CVE-2023-34924 - https://github.com/ChrisL0tus/CVE-2023-34924
 CVE-2023-34960 - https://github.com/Aituglo/CVE-2023-34960
@@ -14072,9 +14040,7 @@ CVE-2023-36427 - https://github.com/tandasat/CVE-2023-36427
 CVE-2023-36471 - https://github.com/shoucheng3/xwiki__xwiki-commons_CVE-2023-36471_14-10-5
 CVE-2023-36531 - https://github.com/RandomRobbieBF/CVE-2023-36531
 CVE-2023-36542 - https://github.com/shoucheng3/asf__nifi_CVE-2023-36542_1-22-0
-CVE-2023-36643 - https://github.com/caffeinated-labs/CVE-2023-36643
 CVE-2023-36644 - https://github.com/caffeinated-labs/CVE-2023-36644
-CVE-2023-36645 - https://github.com/caffeinated-labs/CVE-2023-36645
 CVE-2023-36664 - https://github.com/churamanib/CVE-2023-36664-Ghostscript-command-injection
 CVE-2023-36664 - https://github.com/jakabakos/CVE-2023-36664-Ghostscript-command-injection
 CVE-2023-36664 - https://github.com/JeanChpt/CVE-2023-36664
@@ -14901,7 +14867,6 @@ CVE-2023-49974 - https://github.com/geraldoalcantara/CVE-2023-49974
 CVE-2023-49976 - https://github.com/geraldoalcantara/CVE-2023-49976
 CVE-2023-49977 - https://github.com/geraldoalcantara/CVE-2023-49977
 CVE-2023-49978 - https://github.com/geraldoalcantara/CVE-2023-49978
-CVE-2023-49979 - https://github.com/geraldoalcantara/CVE-2023-49979
 CVE-2023-49980 - https://github.com/geraldoalcantara/CVE-2023-49980
 CVE-2023-49981 - https://github.com/geraldoalcantara/CVE-2023-49981
 CVE-2023-49982 - https://github.com/geraldoalcantara/CVE-2023-49982
@@ -15645,17 +15610,11 @@ CVE-2024-23722 - https://github.com/alexcote1/CVE-2024-23722-poc
 CVE-2024-23724 - https://github.com/gl1tch0x1/Ghost-CMS-Exploit
 CVE-2024-23724 - https://github.com/Youssefdds/CVE-2024-23724
 CVE-2024-23733 - https://github.com/ekcrsm/CVE-2024-23733
-CVE-2024-23738 - https://github.com/giovannipajeu1/CVE-2024-23738
 CVE-2024-23738 - https://github.com/V3x0r/CVE-2024-23738
-CVE-2024-23739 - https://github.com/giovannipajeu1/CVE-2024-23739
 CVE-2024-23739 - https://github.com/V3x0r/CVE-2024-23739
-CVE-2024-23740 - https://github.com/giovannipajeu1/CVE-2024-23740
 CVE-2024-23740 - https://github.com/V3x0r/CVE-2024-23740
-CVE-2024-23741 - https://github.com/giovannipajeu1/CVE-2024-23741
 CVE-2024-23741 - https://github.com/V3x0r/CVE-2024-23741
-CVE-2024-23742 - https://github.com/giovannipajeu1/CVE-2024-23742
 CVE-2024-23742 - https://github.com/V3x0r/CVE-2024-23742
-CVE-2024-23743 - https://github.com/giovannipajeu1/CVE-2024-23743
 CVE-2024-23743 - https://github.com/V3x0r/CVE-2024-23743
 CVE-2024-23745 - https://github.com/louiselalanne/CVE-2024-23745
 CVE-2024-23746 - https://github.com/louiselalanne/CVE-2024-23746
@@ -15908,7 +15867,6 @@ CVE-2024-27198 - https://github.com/CharonDefalt/CVE-2024-27198-RCE
 CVE-2024-27198 - https://github.com/chebuya/CVE-2024-30851-jasmin-ransomware-path-traversal-poc
 CVE-2024-27198 - https://github.com/Chocapikk/CVE-2024-27198
 CVE-2024-27198 - https://github.com/Cythonic1/CVE-2024-27198_POC
-CVE-2024-27198 - https://github.com/dkhacks/CVE_2024_27198
 CVE-2024-27198 - https://github.com/Donata64/tc_test01
 CVE-2024-27198 - https://github.com/geniuszly/CVE-2024-27198
 CVE-2024-27198 - https://github.com/HPT-Intern-Task-Submission/CVE-2024-27198
@@ -16163,7 +16121,6 @@ CVE-2024-3094 - https://github.com/teyhouse/CVE-2024-3094
 CVE-2024-3094 - https://github.com/valeriot30/cve-2024-3094
 CVE-2024-3094 - https://github.com/Yuma-Tsushima07/CVE-2024-3094
 CVE-2024-30973 - https://github.com/Athos-Zago/CVE-2024-30973
-CVE-2024-30998 - https://github.com/efekaanakkar/CVE-2024-30998
 CVE-2024-3105 - https://github.com/hunThubSpace/CVE-2024-3105-PoC
 CVE-2024-31114 - https://github.com/Nxploited/CVE-2024-31114
 CVE-2024-3116 - https://github.com/TechieNeurons/CVE-2024-3116_RCE_in_pgadmin_8.4
@@ -16442,7 +16399,6 @@ CVE-2024-35250 - https://github.com/yinsel/CVE-2024-35250-BOF
 CVE-2024-35250 - https://github.com/zsxen/WHS3-KernelPanic
 CVE-2024-35315 - https://github.com/ewilded/CVE-2024-35315-POC
 CVE-2024-35333 - https://github.com/momo1239/CVE-2024-35333
-CVE-2024-35511 - https://github.com/efekaanakkar/CVE-2024-35511
 CVE-2024-3552 - https://github.com/KiPhuong/cve-2024-3552
 CVE-2024-35584 - https://github.com/whwhwh96/CVE-2024-35584
 CVE-2024-3568 - https://github.com/llm-sec/transformer-hacker
@@ -16869,7 +16825,6 @@ CVE-2024-45058 - https://github.com/0xbhsu/CVE-2024-45058
 CVE-2024-45195 - https://github.com/wyyazjjl/CVE-2024-45195
 CVE-2024-45200 - https://github.com/chadhyatt/kartlanpwn
 CVE-2024-45216 - https://github.com/congdong007/CVE-2024-45216-Poc
-CVE-2024-45241 - https://github.com/d4lyw/CVE-2024-45241
 CVE-2024-45241 - https://github.com/verylazytech/CVE-2024-45241
 CVE-2024-45260 - https://github.com/aggressor0/GL.iNet-Exploits
 CVE-2024-45261 - https://github.com/aggressor0/GL.iNet-Exploits
@@ -16972,7 +16927,6 @@ CVE-2024-46507 - https://github.com/Somchandra17/CVE-2024-46507
 CVE-2024-46532 - https://github.com/KamenRiderDarker/CVE-2024-46532
 CVE-2024-46538 - https://github.com/EQSTLab/CVE-2024-46538
 CVE-2024-46538 - https://github.com/LauLeysen/CVE-2024-46538
-CVE-2024-46627 - https://github.com/d4lyw/CVE-2024-46627
 CVE-2024-46635 - https://github.com/h1thub/CVE-2024-46635
 CVE-2024-46658 - https://github.com/jackalkarlos/CVE-2024-46658
 CVE-2024-46981 - https://github.com/publicqi/CVE-2024-46981
@@ -17157,7 +17111,6 @@ CVE-2024-50623 - https://github.com/watchtowrlabs/CVE-2024-50623
 CVE-2024-50633 - https://github.com/cetinpy/CVE-2024-50633
 CVE-2024-50677 - https://github.com/ZumiYumi/CVE-2024-50677
 CVE-2024-50803 - https://github.com/Praison001/CVE-2024-50803-Redaxo
-CVE-2024-50804 - https://github.com/g3tsyst3m/CVE-2024-50804
 CVE-2024-5083 - https://github.com/Roronoawjd/CVE-2024-5083
 CVE-2024-5084 - https://github.com/amessedad/autoexploitGPT
 CVE-2024-5084 - https://github.com/Chocapikk/CVE-2024-5084
@@ -17584,7 +17537,6 @@ CVE-2024-8856 - https://github.com/Jenderal92/CVE-2024-8856
 CVE-2024-8856 - https://github.com/ubaydev/CVE-2024-8856
 CVE-2024-8902 - https://github.com/Chinzzii/vulnscan
 CVE-2024-8926 - https://github.com/Night-have-dreams/php-cgi-Injector
-CVE-2024-8949 - https://github.com/gh-ost00/CVE-2024-8949-POC
 CVE-2024-8963 - https://github.com/fl4m3-s/IvantiCSA_Unauth_RCE
 CVE-2024-8963 - https://github.com/flyingllama87/CVE-2024-8190-unauth
 CVE-2024-8963 - https://github.com/patfire94/CVE-2024-8963
@@ -18273,7 +18225,6 @@ CVE-2025-30400 - https://github.com/encrypter15/CVE-2025-30400
 CVE-2025-30400 - https://github.com/Shasheen8/agent-Bando
 CVE-2025-30406 - https://github.com/mchklt/CVE-2025-30406
 CVE-2025-30406 - https://github.com/W01fh4cker/CVE-2025-30406
-CVE-2025-3054 - https://github.com/frogchung/CVE-2025-3054-Exploit
 CVE-2025-30567 - https://github.com/Oyst3r1ng/CVE-2025-30567
 CVE-2025-30712 - https://github.com/jamesb5959/CVE-2025-30712-_PoC
 CVE-2025-30772 - https://github.com/Nxploited/CVE-2025-30772
@@ -18681,9 +18632,6 @@ CVE-2025-48384 - https://github.com/beishanxueyuan/CVE-2025-48384-test
 CVE-2025-48384 - https://github.com/butyraldehyde/CVE-2025-48384-PoC
 CVE-2025-48384 - https://github.com/butyraldehyde/CVE-2025-48384-PoC-Part2
 CVE-2025-48384 - https://github.com/ECHO6789/CVE-2025-48384-submodule
-CVE-2025-48384 - https://github.com/eliox01/CVE-2025-48384
-CVE-2025-48384 - https://github.com/elprogramadorgt/CVE-2025-48384
-CVE-2025-48384 - https://github.com/f1shh/CVE-2025-48384
 CVE-2025-48384 - https://github.com/fishyyh/CVE-2025-48384
 CVE-2025-48384 - https://github.com/fishyyh/CVE-2025-48384-POC
 CVE-2025-48384 - https://github.com/fluoworite/CVE-2025-48384
@@ -18741,7 +18689,6 @@ CVE-2025-49113 - https://github.com/SteamPunk424/CVE-2025-49113-Roundcube-RCE-PH
 CVE-2025-49113 - https://github.com/SyFi/CVE-2025-49113
 CVE-2025-49113 - https://github.com/Zuack55/Roundcube-1.6.10-Post-Auth-RCE-CVE-2025-49113-
 CVE-2025-49113 - https://github.com/Zwique/CVE-2025-49113
-CVE-2025-49125 - https://github.com/gregk4sec/CVE-2025-49125
 CVE-2025-49132 - https://github.com/0xtensho/CVE-2025-49132-poc
 CVE-2025-49132 - https://github.com/63square/CVE-2025-49132
 CVE-2025-49132 - https://github.com/GRodolphe/CVE-2025-49132_poc
@@ -18915,7 +18862,6 @@ CVE-2025-55188 - https://github.com/lunbun/CVE-2025-55188
 CVE-2025-55234 - https://github.com/mrk336/CVE-2025-55234
 CVE-2025-55287 - https://github.com/Eternalvalhalla/CVE-2025-55287-POC
 CVE-2025-55575 - https://github.com/Aether-0/CVE-2025-55575
-CVE-2025-55668 - https://github.com/gregk4sec/CVE-2025-55668
 CVE-2025-55763 - https://github.com/krispybyte/CVE-2025-55763
 CVE-2025-55780 - https://github.com/ISH2YU/CVE-2025-55780
 CVE-2025-55885 - https://github.com/0xZeroSec/CVE-2025-55885
@@ -19855,7 +19801,6 @@ CVE-2026-25632 - https://github.com/lazarus0x1337/CVE-2026-25632
 CVE-2026-25643 - https://github.com/jduardo2704/CVE-2026-25643-Frigate-RCE
 CVE-2026-25643 - https://github.com/joshuavanderpoll/CVE-2026-25643
 CVE-2026-25676 - https://github.com/Nexxus67/cve-2026-25676
-CVE-2026-25731 - https://github.com/dxlerYT/CVE-2026-25731
 CVE-2026-25732 - https://github.com/mbanyamer/CVE-2026-25732-NiceGUI-3.6.1
 CVE-2026-25746 - https://github.com/ChrisSub08/CVE-2026-25746_SqlInjectionVulnerabilityOpenEMR7.0.4
 CVE-2026-25747 - https://github.com/dinosn/CVE-2026-33453
@@ -19893,7 +19838,6 @@ CVE-2026-26215 - https://github.com/mbanyamer/-CVE-2026-26215-manga-image-transl
 CVE-2026-26216 - https://github.com/joaovicdev/EXPLOIT-CVE-2026-26216
 CVE-2026-26221 - https://github.com/mbanyamer/CVE-2026-26221-Hyland-OnBase-Timer-Service-Unauthenticated-RCE
 CVE-2026-26235 - https://github.com/mbanyamer/CVE-2026-26235-JUNG-Smart-Visu-Server-Unauthenticated-Reboot-Shutdown
-CVE-2026-26331 - https://github.com/dxlerYT/CVE-2026-26331
 CVE-2026-26335 - https://github.com/mbanyamer/CVE-2026-26335-Calero-VeraSMART-RCE
 CVE-2026-26336 - https://github.com/CEAarab/CVE-2026-26336-PoC
 CVE-2026-2636 - https://github.com/uname1able/CVE-2026-2636
@@ -20304,7 +20248,6 @@ CVE-2026-32238 - https://github.com/ChrisSub08/CVE-2026-32238_RemoteCodeExecutio
 CVE-2026-32247 - https://github.com/romain-deperne/CVE-2026-32247
 CVE-2026-32255 - https://github.com/kOaDT/poc-cve-2026-32255
 CVE-2026-3227 - https://github.com/do4choo/CVE-2026-3227-TP-Link-authenticated-RCE
-CVE-2026-32321 - https://github.com/drkim-dev/CVE-2026-32321
 CVE-2026-32475 - https://github.com/0xBlackash/CVE-2026-32475
 CVE-2026-32475 - https://github.com/Boreas37/CVE-2026-32475-PoC
 CVE-2026-32475 - https://github.com/sahmsec/CVE-2026-32475
@@ -21516,7 +21459,6 @@ CVE-2026-6356 - https://github.com/Penguinsecq/CVE-2026-6356
 CVE-2026-63563 - https://github.com/redr0nin/CVE-2026-63563
 CVE-2026-63621 - https://github.com/oscerd/CVE-2026-63621
 CVE-2026-63720 - https://github.com/rahulreddykarne/CVE-2026-63720-datamodel-code-generator
-CVE-2026-6433 - https://github.com/davinmaritza/wp-exploit
 CVE-2026-6433 - https://github.com/murrez/CVE-2026-6433
 CVE-2026-6440 - https://github.com/Alixploit22/CVE-2026-6440
 CVE-2026-64531 - https://github.com/0xBlackash/CVE-2026-64531
@@ -21560,7 +21502,6 @@ CVE-2026-64640 - https://github.com/oscerd/CVE-2026-64640
 CVE-2026-64725 - https://github.com/altvist/cve-2026-64725-poc
 CVE-2026-64824 - https://github.com/Boreas37/CVE-2026-64824-PoC
 CVE-2026-64849 - https://github.com/BiuTrap/CVE-2026-64849
-CVE-2026-64849 - https://github.com/codeb0ssx/CVE-2026-64849-PoC
 CVE-2026-64849 - https://github.com/zavisco/CVE-2026-64849.yaml
 CVE-2026-65008 - https://github.com/zer0dayf/CVE-2026-65008
 CVE-2026-65321 - https://github.com/rahulreddykarne/CVE-2026-65321-pyathena
@@ -21642,7 +21583,6 @@ CVE-2026-7028 - https://github.com/Xmyronn/CVE-2026-7028-SQLI
 CVE-2026-70463 - https://github.com/Fyyre/CVE-2026-70463
 CVE-2026-70481 - https://github.com/Foxer131/CVE-2026-70481
 CVE-2026-70553 - https://github.com/woshidashabi1126/CVE-2026-70553-PoC
-CVE-2026-70559 - https://github.com/codeb0ssx/CVE-2026-70559-PoC
 CVE-2026-70638 - https://github.com/Hunt-Benito/one-multiply-too-many-cve-2026-70638-llama-cpp-android-jni-integer-overflow
 CVE-2026-7070 - https://github.com/George0Papasotiriou/CVE-2026-7070-RDP-Clipboard-Hijacking-via-Virtual-Channel-Injection
 CVE-2026-7071 - https://github.com/Xmyronn/CVE-2026-7071-access-Control
@@ -21668,7 +21608,6 @@ CVE-2026-72898 - https://github.com/4minx/CVE-2026-72898
 CVE-2026-72898 - https://github.com/BlackHatExploitation/metabase-sql-poc
 CVE-2026-72898 - https://github.com/EQSTLab/CVE-2026-72898
 CVE-2026-72898 - https://github.com/VuxNx/CVE-2026-72898
-CVE-2026-72898 - https://github.com/codeb0ssx/CVE-2026-72898-PoC
 CVE-2026-7299 - https://github.com/Stuub/Appsmith-1.98-Stored-XSS-Exploit
 CVE-2026-73034 - https://github.com/Boreas37/CVE-2026-73034-PoC
 CVE-2026-73072 - https://github.com/HORKimhab/CVE-2026-73072
@@ -23193,7 +23132,6 @@ CVE-2024-5315 - https://github.com/yqhao-2002/cvebench2tb
 CVE-2024-53359 - https://github.com/crysalix4/CVE
 CVE-2024-53621 - https://github.com/qingwei4/Router-VR
 CVE-2024-53677 - https://github.com/NKozl/Kozlitsky_Nikita_DZ_10
-CVE-2024-53677 - https://github.com/ctfsec/CVE-2024-53677
 CVE-2024-53677 - https://github.com/hiteshpatra/CVE-2024-53677
 CVE-2024-53677 - https://github.com/seoyoung-kang/CVE-2024-53677
 CVE-2024-53704 - https://github.com/sfewer-r7/SonicSessionLeak
@@ -23569,7 +23507,6 @@ CVE-2025-24893 - https://github.com/rippsec/CVE-2025-24893-XWiki-SSTI-RCE
 CVE-2025-24893 - https://github.com/vasilysaint/CVE-2025-24893
 CVE-2025-24963 - https://github.com/hiteshpatra/CVE-2025-24963
 CVE-2025-24990 - https://github.com/moiz-2x/CVE-2025-24990_POC
-CVE-2025-24999 - https://github.com/emad-almousa/CVE-2025-24999
 CVE-2025-25198 - https://github.com/Groppoxx/CVE-2025-25198-PoC
 CVE-2025-25198 - https://github.com/enzocipher/CVE-2025-25198
 CVE-2025-25200 - https://github.com/dwictor0/PoC-CVE-2025-25200
@@ -23672,7 +23609,6 @@ CVE-2025-31201 - https://github.com/x011/Hello-World
 CVE-2025-31277 - https://github.com/adoemwanmei/DarkSword-Pro
 CVE-2025-31324 - https://github.com/aristois913/CVE-2025-31324
 CVE-2025-31486 - https://github.com/ll104567/CVE-2025-31486
-CVE-2025-31651 - https://github.com/gregk4sec/CVE-2025-31651-o
 CVE-2025-31722 - https://github.com/h3raklez/CVE-2025-31722
 CVE-2025-31931 - https://github.com/yohanes/POC-CVE-2025-31931
 CVE-2025-32023 - https://github.com/44528zja/Blackash-CVE-2025-32023
@@ -24229,7 +24165,6 @@ CVE-2025-55182 - https://github.com/grejh0t/CVE-2025-55182
 CVE-2025-55182 - https://github.com/gunyakit/CVE-2025-55182-PoC-exploit
 CVE-2025-55182 - https://github.com/gwangwon0807/whs_kr
 CVE-2025-55182 - https://github.com/h0tak88r/next88
-CVE-2025-55182 - https://github.com/h3n1s3/React2shell-Research
 CVE-2025-55182 - https://github.com/hakkuri01/r2rs
 CVE-2025-55182 - https://github.com/hanacus87/react2shell-poc
 CVE-2025-55182 - https://github.com/hoosin/CVE-2025-55182
@@ -26524,22 +26459,18 @@ CVE-2021-44228 - https://github.com/cve-2021-44228/CLEAN-PHOBOS-1.7.2
 CVE-2021-44228 - https://github.com/cve-2021-44228/CarrotHack
 CVE-2021-44228 - https://github.com/cve-2021-44228/ChaosClicker
 CVE-2021-44228 - https://github.com/cve-2021-44228/ChaosInjector
-CVE-2021-44228 - https://github.com/cve-2021-44228/ConstHack.cc
 CVE-2021-44228 - https://github.com/cve-2021-44228/DonkeyDupe
 CVE-2021-44228 - https://github.com/cve-2021-44228/EBOLA
 CVE-2021-44228 - https://github.com/cve-2021-44228/FutureAuth
 CVE-2021-44228 - https://github.com/cve-2021-44228/LegacyClient
 CVE-2021-44228 - https://github.com/cve-2021-44228/ListedHack
-CVE-2021-44228 - https://github.com/cve-2021-44228/LoveClient
 CVE-2021-44228 - https://github.com/cve-2021-44228/MalwareCollection
-CVE-2021-44228 - https://github.com/cve-2021-44228/ObamaHack
 CVE-2021-44228 - https://github.com/cve-2021-44228/PigHack-Buildable-SRC
 CVE-2021-44228 - https://github.com/cve-2021-44228/PopbobPoisonedPlugin
 CVE-2021-44228 - https://github.com/cve-2021-44228/Ruhama
 CVE-2021-44228 - https://github.com/cve-2021-44228/SilenceClient
 CVE-2021-44228 - https://github.com/cve-2021-44228/TablistPlus
 CVE-2021-44228 - https://github.com/cve-2021-44228/YHWOT
-CVE-2021-44228 - https://github.com/cve-2021-44228/birdpoop-rootless
 CVE-2021-44228 - https://github.com/cve-2021-44228/bloodhack
 CVE-2021-44228 - https://github.com/cve-2021-44228/discord-account-generator
 CVE-2021-44228 - https://github.com/cve-2021-44228/force-op-backdoor-plugin
@@ -26558,7 +26489,6 @@ CVE-2021-44228 - https://github.com/cve-2021-44228/snow-4.0-cracked
 CVE-2021-44228 - https://github.com/cve-2021-44228/synapse
 CVE-2021-44228 - https://github.com/cve-2021-44228/turok
 CVE-2021-44228 - https://github.com/cve-2021-44228/vaccinebot
-CVE-2021-44228 - https://github.com/cve-2021-44228/webhack
 CVE-2021-44228 - https://github.com/cve-2021-44228/wordup
 CVE-2021-44228 - https://github.com/demining/Log4j-Vulnerability
 CVE-2021-44228 - https://github.com/hmxh123/Log4Shell-Vulnerability-Replication
@@ -26783,7 +26713,6 @@ CVE-2024-7928 - https://github.com/fa-rrel/CVE-2024-7928
 CVE-2024-7954 - https://github.com/fa-rrel/CVE-2024-7954-RCE
 CVE-2024-8353 - https://github.com/0xb0mb3r/CVE-2024-5932-PoC
 CVE-2024-8856 - https://github.com/ubaii/CVE-2024-8856
-CVE-2024-8949 - https://github.com/fa-rrel/CVE-2024-8949-POC
 CVE-2024-9047 - https://github.com/mr-won/CVE-2024-9047
 CVE-2024-9264 - https://github.com/PunitTailor55/Grafana-CVE-2024-9264
 CVE-2025-0282 - https://github.com/Hexastrike/Ivanti-Secure-Connect-Logs-Parser
