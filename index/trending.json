@@ -1,6 +1,17 @@
 [
  {
   "year": 2026,
+  "stars": 5,
+  "name": "CVE-2026-15409-15410-Framework",
+  "url": "https://github.com/tc4dy/CVE-2026-15409-15410-Framework",
+  "desc": "CVE-2026-15409/15410 SonicWall SMA1000 multi-exploit Framework 🔥 SSRF→Erlang RPC→RCE→root privesc. Features: --detect safe check, --exec, --read-file, --privesc, --rpc, interactive shell, batch threading, file write, ws-url override, pipe support.🛡️ KEV listed CVSS 10.0 actively exploited. Authorized testing only. Use Ethically, Stay Legal. 🔒",
+  "pushed": "2026-09-04T21:50:52Z",
+  "created": "2026-07-17T17:30:02Z",
+  "cve": "CVE-2026-15409",
+  "kev": true
+ },
+ {
+  "year": 2026,
   "stars": 3,
   "name": "CVE-2026-62735",
   "url": "https://github.com/HackSpeak/CVE-2026-62735",
@@ -207,17 +218,6 @@
   "created": "2026-08-09T16:58:00Z",
   "cve": "CVE-2026-34910",
   "kev": true
- },
- {
-  "year": 2026,
-  "stars": 53,
-  "name": "CVE-2026-64638-PoC-XSS2Shell-",
-  "url": "https://github.com/Boreas37/CVE-2026-64638-PoC-XSS2Shell-",
-  "desc": "XSS2Shell (CVE-2026-64638) WordPress pre-auth XSS to RCE chain - PoC exploit + defensive audit tool + nuclei template",
-  "pushed": "2026-08-21T13:31:56Z",
-  "created": "2026-08-07T17:07:17Z",
-  "cve": "CVE-2026-64638",
-  "kev": false
  },
  {
   "year": 2025,
