@@ -1,6 +1,17 @@
 [
  {
   "year": 2026,
+  "stars": 3,
+  "name": "CVE-2026-62735",
+  "url": "https://github.com/HackSpeak/CVE-2026-62735",
+  "desc": "Windows HTTP.sys integer overflow -> nonpaged pool overflow LPE PoC (CVE-2026-62735): crash + full SYSTEM exploit; for authorized testing",
+  "pushed": "2026-09-03T10:41:36Z",
+  "created": "2026-09-03T10:41:14Z",
+  "cve": "CVE-2026-62735",
+  "kev": false
+ },
+ {
+  "year": 2026,
   "stars": 6,
   "name": "CVE-2026-19490",
   "url": "https://github.com/TarPeg007/CVE-2026-19490",
@@ -23,7 +34,7 @@
  },
  {
   "year": 2026,
-  "stars": 15,
+  "stars": 16,
   "name": "givewp-cve-2026-82222-rce-lab",
   "url": "https://github.com/dinosn/givewp-cve-2026-82222-rce-lab",
   "desc": "Authorized Docker lab and clean PoC for validating CVE-2026-82222 RCE in GiveWP 4.16.5.1 and the 4.16.7.2 fix.",
@@ -34,7 +45,7 @@
  },
  {
   "year": 2026,
-  "stars": 15,
+  "stars": 16,
   "name": "CVE-2026-62735",
   "url": "https://github.com/nhh9905/CVE-2026-62735",
   "desc": "CVE 1-day in http.sys",
@@ -206,17 +217,6 @@
   "pushed": "2026-08-21T13:31:56Z",
   "created": "2026-08-07T17:07:17Z",
   "cve": "CVE-2026-64638",
-  "kev": false
- },
- {
-  "year": 2026,
-  "stars": 38,
-  "name": "CVE-2026-18963-Exploit",
-  "url": "https://github.com/Snizi/CVE-2026-18963-Exploit",
-  "desc": "Exploit for KeyCloak CVE-2026-18963",
-  "pushed": "2026-08-20T22:18:11Z",
-  "created": "2026-08-20T22:01:11Z",
-  "cve": "CVE-2026-18963",
   "kev": false
  },
  {
@@ -530,7 +530,7 @@
  },
  {
   "year": 2026,
-  "stars": 51,
+  "stars": 55,
   "name": "CVE-2026-65343",
   "url": "https://github.com/ByteV0rtex/CVE-2026-65343",
   "desc": "CVE-2026-65343 PoC - AppleKeyStore OOB read → KASLR defeat (iOS 26.6 / 23G71)",
@@ -549,18 +549,6 @@
   "pushed": "2026-09-03T13:39:57Z",
   "created": "2026-09-03T13:38:01Z",
   "cve": "CVE-2026-80428",
-  "kev": false,
-  "landed": true
- },
- {
-  "year": 2026,
-  "stars": 2,
-  "name": "CVE-2026-62735",
-  "url": "https://github.com/HackSpeak/CVE-2026-62735",
-  "desc": "Windows HTTP.sys integer overflow -> nonpaged pool overflow LPE PoC (CVE-2026-62735): crash + full SYSTEM exploit; for authorized testing",
-  "pushed": "2026-09-03T10:41:36Z",
-  "created": "2026-09-03T10:41:14Z",
-  "cve": "CVE-2026-62735",
   "kev": false,
   "landed": true
  },
@@ -633,6 +621,18 @@
   "pushed": "2026-09-02T14:03:02Z",
   "created": "2026-08-31T21:00:26Z",
   "cve": "CVE-2025-69080",
+  "kev": false,
+  "landed": true
+ },
+ {
+  "year": 2026,
+  "stars": 2,
+  "name": "CVE-2026-43499-poc",
+  "url": "https://github.com/lkeld/CVE-2026-43499-poc",
+  "desc": "In the Linux kernel, the following vulnerability has been resolved: rtmutex: Use waiter::task instead of current in remove_waiter() remove_waiter() is used by the slowlock paths, but it is also used for proxy-lock rollback in rt_mutex_start_proxy_lock() when invoked from futex_requeue(). In the latter case waiter::task is not current, but remove_waiter() operates on current for the dequeue operation. That results in several problems: 1) the rbtree dequeue happens without waiter::task::pi_lock being held 2) the waiter task's pi_blocked_on state is not cleared, which leaves a dangling pointer primed for UAF around. 3) rt_mutex_adjust_prio_chain() operates on the wrong top priority waiter task Use waiter::task instead of current in all related operations in remove_waiter() to cure those problems. [ tglx: Fixup rt_mutex_adjust_prio_chain(), add a comment and amend the changelog ]",
+  "pushed": "2026-09-01T16:41:30Z",
+  "created": "2026-09-01T07:34:56Z",
+  "cve": "CVE-2026-43499",
   "kev": false,
   "landed": true
  }
