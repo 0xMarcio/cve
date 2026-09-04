@@ -26899,3 +26899,4 @@ CVE-2026-78070 - https://github.com/toanln-cov/CVE-2026-78070
 CVE-2026-80428 - https://github.com/digiprosec/CVE-2026-80428
 CVE-2026-82329 - https://github.com/0xCyp1337/CVE-2026-82329
 CVE-2026-10134 - https://github.com/rmhowe425/POC-CVE-2026-10134
+CVE-2026-41579 - https://github.com/Prathmesh234/runc-poc
