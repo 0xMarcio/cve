@@ -5096,7 +5096,6 @@ CVE-2019-16097 - https://github.com/ianxtianxt/CVE-2019-16097
 CVE-2019-16097 - https://github.com/luckybool1020/CVE-2019-16097
 CVE-2019-16097 - https://github.com/rockmelodies/CVE-2019-16097-batch
 CVE-2019-16098 - https://github.com/0xDivyanshu-new/CVE-2019-16098
-CVE-2019-16098 - https://github.com/Barakat/CVE-2019-16098
 CVE-2019-16098 - https://github.com/Offensive-Panda/NT-AUTHORITY-SYSTEM-CONTEXT-RTCORE
 CVE-2019-16098 - https://github.com/Rydersel/PlaguewareCSGO_3.0
 CVE-2019-16113 - https://github.com/cybervaca/CVE-2019-16113
@@ -26900,3 +26899,15 @@ CVE-2026-80428 - https://github.com/digiprosec/CVE-2026-80428
 CVE-2026-82329 - https://github.com/0xCyp1337/CVE-2026-82329
 CVE-2026-10134 - https://github.com/rmhowe425/POC-CVE-2026-10134
 CVE-2026-41579 - https://github.com/Prathmesh234/runc-poc
+CVE-2019-16098 - https://github.com/abraxas/veneficus-implant-public
+CVE-2020-17519 - https://github.com/NaiLuo003/poc
+CVE-2020-1938 - https://github.com/lem0n817/tomcatfileread
+CVE-2023-4569 - https://github.com/LxxxtSec/Saligia-Labs
+CVE-2023-50387 - https://github.com/666564657269636f/DNSSec
+CVE-2023-5536 - https://github.com/karthikparambil/lxd2root
+CVE-2024-21546 - https://github.com/digitalsurgn/CVE-2024-21546
+CVE-2026-26211 - https://github.com/LindHunt/CVE-2026-26211
+CVE-2026-38577 - https://github.com/poxsky/CVE-2026-38577
+CVE-2026-43499 - https://github.com/Cxyofficial/K50G-POCOF4GT-CVE-2026-43499-PoC
+CVE-2026-47627 - https://github.com/AneKazek/cve-2026-47627
+CVE-2026-64788 - https://github.com/AmorCool/iOS26.6-CVE-2026-64788
