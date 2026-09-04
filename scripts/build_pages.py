@@ -280,9 +280,13 @@ def page(entry: dict, data: dict) -> str:
     # figure in the title and the meta description.
     total = len(pocs) + sum(len(entry.get(key) or []) for key, _, _ in SOURCES)
     count = f"{total:,} public PoC exploit" + ("" if total == 1 else "s")
-    title = f"{cid}: {count} | {BRAND}"
-    meta_desc = short(f"{cid}. {count}. {desc}", 155)
+    # The record's own title names the product and the flaw, which is what a
+    # query says and what the description often leaves for the second line.
+    headline = " ".join((entry.get("title") or "").split())
+    title = f"{cid}: {count}. {short(headline, 70)} | {BRAND}" if headline else f"{cid}: {count} | {BRAND}"
+    meta_desc = short(f"{cid}. {headline + '. ' if headline else ''}{count}. {desc}", 155)
     url = f"{SITE}/{cid}"
+    affected = list(dict.fromkeys([*(entry.get("vendor") or [])[:3], *(entry.get("product") or [])[:6]]))
 
     chips = []
     if flagged:
@@ -308,6 +312,8 @@ def page(entry: dict, data: dict) -> str:
         chips.append(f'<span class="chip chip-epss{hot}">EPSS {ep[0] * 100:.1f}%</span>')
 
     facts = []
+    if affected:
+        facts.append(f"<dt>Affected</dt><dd>{esc(' · '.join(affected))}</dd>")
     for row in unique_cvss(rows):
         # Who scored it, so two surviving rows read as two opinions rather than
         # as the page repeating itself.
@@ -369,6 +375,7 @@ def page(entry: dict, data: dict) -> str:
             "mainEntity": {
                 "@type": "Thing",
                 "name": cid,
+                **({"alternateName": headline} if headline else {}),
                 "identifier": cid,
                 "description": short(desc, 600) or cid,
                 "sameAs": [
@@ -410,6 +417,7 @@ def page(entry: dict, data: dict) -> str:
 <main class="container cve-page">
 {crumbs(cid)}
 <h1>{cid}</h1>
+{f'<p class="cve-title">{esc(headline)}</p>' if headline else ''}
 <div class="chips">{''.join(chips)}</div>
 <p class="cve-desc">{esc(desc)}</p>
 <dl class="cve-facts">{''.join(facts)}</dl>
@@ -501,7 +509,7 @@ def hub_pages(cves: list, data: dict) -> dict:
             flagged = '<span class="hub-kev">KEV</span>' if data["kev"].get(cid) else ""
             rows.append(
                 f'<li><a href="/{cid}">{cid}</a><span class="hub-count">{links:,} PoC{"" if links == 1 else "s"}</span>'
-                f'<span class="hub-desc">{flagged}{esc(short(entry.get("desc") or "", 140))}</span></li>'
+                f'<span class="hub-desc">{flagged}{esc(short(entry.get("title") or entry.get("desc") or "", 140))}</span></li>'
             )
         title = f"CVE-{year}-{low} to CVE-{year}-{low + 999}: {len(entries):,} with public PoC exploits"
         description = (f"{len(entries):,} CVEs from CVE-{year}-{low} to CVE-{year}-{low + 999} "

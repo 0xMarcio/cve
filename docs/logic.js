@@ -780,6 +780,7 @@ function resultRow(entry) {
     </div>
   </div>
   <div class="result-body">
+    ${entry.title ? `<p class="result-title">${escapeHTML(entry.title)}</p>` : ''}
     <p class="result-desc${open ? ' is-open' : ''}">${escapeHTML(entry.desc || '')}</p>
     <button type="button" class="expander" data-toggle-desc="${escapeHTML(id)}">${open ? '↑ collapse' : '↓ full description'}</button>
     <div class="poc-list">
@@ -1168,11 +1169,19 @@ async function loadJSON(url, options) {
     else renderTrending();
   }).catch(err => console.warn(err.message));
 
-  loadJSON('/cve_metadata.json', { cache: 'no-cache' }).then(data => {
-    metadata = data || {};
+  // The metadata comes in two halves. The CVSS rows are small and gate the
+  // severity filter, so they load with everything else; the advisories are
+  // 2.4 MB on the wire and only show inside a rendered row, so they follow
+  // the index rather than compete with it.
+  loadJSON('/cvss.json', { cache: 'no-cache' }).then(data => {
+    for (const [id, rows] of Object.entries(data || {})) (metadata[id] || (metadata[id] = {})).cvss = rows;
     severityEpoch += 1;
     enableFilter('severity');
     if (state.ready && (state.query || hasActiveFilters())) render();
+  }).catch(err => console.warn(err.message));
+  const loadAdvisories = () => loadJSON('/advisories.json', { cache: 'no-cache' }).then(data => {
+    for (const [id, rows] of Object.entries(data || {})) (metadata[id] || (metadata[id] = {})).advisories = rows;
+    if (state.ready && (state.query || hasActiveFilters())) renderResults(null);
   }).catch(err => console.warn(err.message));
 
   loadJSON('/nuclei.json', { cache: 'no-cache' }).then(data => {
@@ -1203,4 +1212,5 @@ async function loadJSON(url, options) {
     console.warn(err.message);
     el.status.textContent = 'index unavailable';
   }
+  loadAdvisories();
 })();

@@ -33,6 +33,8 @@ RENDER_CRITICAL = ("trending_poc.json", "kev.json", "stats.json")
 BULK_PAYLOADS = (
     "CVE_list.json",
     "cve_metadata.json",
+    "cvss.json",
+    "advisories.json",
     "epss.json",
     "repo_meta.json",
     "nuclei.json",

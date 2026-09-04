@@ -102,6 +102,8 @@ class CVEDetails:
     products: list[str]
     versions: list[str]
     vulnerabilities: list[str]
+    title: str = ""
+    vendors: list[str] = field(default_factory=list)
 
 
 @dataclass
@@ -714,7 +716,11 @@ def details_from_record(record: dict[str, Any]) -> CVEDetails | None:
 
     products: list[str] = []
     versions: list[str] = []
+    vendors: list[str] = []
     for affected in cna.get("affected") or []:
+        vendor = str(affected.get("vendor") or "").strip()
+        if vendor and vendor.lower() not in ("n/a", "unknown"):
+            vendors.append(vendor)
         product = str(affected.get("product") or "").strip()
         if product:
             products.append(product)
@@ -736,6 +742,8 @@ def details_from_record(record: dict[str, Any]) -> CVEDetails | None:
         products=stable_unique(products),
         versions=stable_unique(versions),
         vulnerabilities=stable_unique(vulnerabilities),
+        title=" ".join(str(cna.get("title") or "").split()),
+        vendors=stable_unique(vendors),
     )
 
 
@@ -1127,6 +1135,96 @@ def badge(label: str, message: str, color: str) -> str:
     )
 
 
+def record_preamble(cve_id: str, details: CVEDetails, kev: dict[str, list] | None = None) -> list[str]:
+    """Everything above the description: the heading, the record's own title
+    in bold, and one badge per vendor, product, version and weakness.
+
+    The title and the vendor are what people search for and what the
+    description often never names: "PAN-OS: OS Command Injection in
+    GlobalProtect" says more than a paragraph that opens with "A command
+    injection as a result of arbitrary file creation".
+    """
+    lines = [f"### [{cve_id}](https://www.cve.org/CVERecord?id={cve_id})"]
+    if details.title:
+        lines.append(f"**{details.title}**")
+    products = details.products or ["n/a"]
+    versions = details.versions or ["n/a"]
+    vulnerabilities = details.vulnerabilities or ["n/a"]
+    version_color = "brightgreen" if details.versions else "blue"
+    vuln_color = "brightgreen" if details.vulnerabilities else "blue"
+    lines.extend(badge("Vendor", value, "blue") for value in details.vendors)
+    lines.extend(badge("Product", value, "blue") for value in products)
+    lines.extend(badge("Version", value, version_color) for value in versions)
+    lines.extend(badge("Vulnerability", value, vuln_color) for value in vulnerabilities)
+    known_exploited = kev_badge(cve_id, kev or {})
+    if known_exploited:
+        lines.append(known_exploited)
+    return lines
+
+
+def refresh_record_header(path: Path, details: CVEDetails, kev: dict[str, list], *, dry_run: bool) -> bool:
+    """Rewrite one existing record's preamble from its current CVE record.
+
+    Only the lines above "### Description" move; the description and every
+    PoC section stay byte for byte, so a record whose title, vendor or
+    products did not change is not touched at all.
+    """
+    with path.open("r", encoding="utf-8", newline="") as handle:
+        text = handle.read()
+    newline = "\r\n" if "\r\n" in text else "\n"
+    lines = text.split(newline)
+    anchor = next((i for i, line in enumerate(lines) if line.strip() == "### Description"), None)
+    if anchor is None:
+        return False
+    updated = newline.join([*record_preamble(path.stem.upper(), details, kev), "", *lines[anchor:]])
+    if updated == text:
+        return False
+    if not dry_run:
+        with path.open("w", encoding="utf-8", newline="") as handle:
+            handle.write(updated)
+    return True
+
+
+def refresh_record_headers(records: dict[str, dict[str, Any]], *, dry_run: bool) -> int:
+    """Refresh the preamble of every existing record among those given."""
+    kev = load_kev()
+    refreshed = 0
+    for cve_id, record in records.items():
+        path = CVES / cve_id.split("-")[1] / f"{cve_id}.md"
+        if not path.exists():
+            continue
+        details = details_from_record(record or {})
+        if details is None:
+            continue
+        if refresh_record_header(path, details, kev, dry_run=dry_run):
+            refreshed += 1
+    return refreshed
+
+
+def refresh_all_record_headers(cvelist_dir: Path, *, dry_run: bool) -> tuple[int, int]:
+    """The one-off pass over every record, from a local CVE List checkout.
+
+    Reads the records one at a time: the whole list is 330,000 JSON files and
+    holding them all would need most of a gigabyte for nothing.
+    """
+    kev = load_kev()
+    seen = refreshed = 0
+    for path in sorted(CVES.glob("[12][0-9][0-9][0-9]/CVE-*.md")):
+        cve_id = path.stem.upper()
+        record = read_record(cvelist_record_path(cvelist_dir, cve_id))
+        if not record:
+            continue
+        details = details_from_record(record)
+        if details is None:
+            continue
+        seen += 1
+        if refresh_record_header(path, details, kev, dry_run=dry_run):
+            refreshed += 1
+        if seen % 20000 == 0:
+            print(f"{seen:,} records read, {refreshed:,} refreshed", flush=True)
+    return seen, refreshed
+
+
 def build_markdown(
     cve_id: str,
     details: CVEDetails,
@@ -1137,18 +1235,7 @@ def build_markdown(
     description = "\n".join(
         line.expandtabs(4).rstrip() for line in details.description.strip().splitlines()
     )
-    lines = [f"### [{cve_id}](https://www.cve.org/CVERecord?id={cve_id})"]
-    products = details.products or ["n/a"]
-    versions = details.versions or ["n/a"]
-    vulnerabilities = details.vulnerabilities or ["n/a"]
-    version_color = "brightgreen" if details.versions else "blue"
-    vuln_color = "brightgreen" if details.vulnerabilities else "blue"
-    lines.extend(badge("Product", value, "blue") for value in products)
-    lines.extend(badge("Version", value, version_color) for value in versions)
-    lines.extend(badge("Vulnerability", value, vuln_color) for value in vulnerabilities)
-    known_exploited = kev_badge(cve_id, kev or {})
-    if known_exploited:
-        lines.append(known_exploited)
+    lines = record_preamble(cve_id, details, kev)
     lines.extend(["", "### Description", "", description, "", "### POC", "", "#### Reference"])
     lines.extend((f"- {url}" for url in references) if references else ["No PoCs from references."])
     lines.extend(["", "#### Github"])
@@ -1385,6 +1472,12 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--skip-github", action="store_true", help="Skip GitHub repository discovery")
     parser.add_argument("--skip-cvelist", action="store_true", help="Skip CVE List V5 references")
     parser.add_argument("--dry-run", action="store_true", help="Report changes without writing files")
+    parser.add_argument("--cvelist-dir", type=Path, help="Local CVE List V5 checkout")
+    parser.add_argument(
+        "--refresh-headers",
+        action="store_true",
+        help="Rewrite the title and badges of every record from --cvelist-dir, and do nothing else",
+    )
     args = parser.parse_args()
     if bool(args.backfill_dir) != bool(args.year):
         parser.error("--backfill-dir and --year must be used together")
@@ -1398,6 +1491,13 @@ def main() -> int:
     cve_filter = {cve.upper() for cve in args.cve if is_valid_cve(cve.upper())}
     if args.cve and len(cve_filter) != len(args.cve):
         raise SystemExit("Every --cve value must be a valid CVE ID")
+
+    if args.refresh_headers:
+        if not args.cvelist_dir or not args.cvelist_dir.is_dir():
+            raise SystemExit("--refresh-headers needs --cvelist-dir pointing at a CVE List V5 checkout")
+        seen, refreshed = refresh_all_record_headers(args.cvelist_dir, dry_run=args.dry_run)
+        print(f"Record headers: {seen:,} records read, {refreshed:,} refreshed")
+        return 0
 
     backfill = bool(args.backfill_dir)
     records: dict[str, dict[str, Any]] = {}
@@ -1468,6 +1568,9 @@ def main() -> int:
         dry_run=args.dry_run,
     )
 
+    # A record that changed upstream may have a new title, vendor or product
+    # list; the ones fetched this run are refreshed in place.
+    refreshed = refresh_record_headers(records, dry_run=args.dry_run)
     dated = record_dates(records, dry_run=args.dry_run)
     write_state(checkpoint, dry_run=args.dry_run)
 
@@ -1479,7 +1582,7 @@ def main() -> int:
         f"Inventory changes: +{github_additions}/-{github_removals} GitHub | "
         f"+{reference_additions}/-{reference_removals} references | "
         f"{verified_reference_additions} verified references added | "
-        f"{dated} publication dates"
+        f"{dated} publication dates | {refreshed} headers refreshed"
     )
     if stats.skipped:
         for entry in stats.skipped[:20]:

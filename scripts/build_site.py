@@ -11,7 +11,7 @@ from datetime import datetime, timezone
 from functools import lru_cache
 from pathlib import Path
 from typing import Collection, Dict, Iterable, List, Optional
-from urllib.parse import urlparse
+from urllib.parse import unquote, urlparse
 
 ROOT = Path(__file__).resolve().parents[1]
 CVES = ROOT / "cves"
@@ -30,6 +30,11 @@ NUCLEI_INPUT = INDEX / "nuclei.json"
 NUCLEI_OUTPUT = DOCS_DIR / "nuclei.json"
 METADATA_INPUT = INDEX / "metadata"
 METADATA_OUTPUT = DOCS_DIR / "cve_metadata.json"
+# The same metadata in the two halves the page loads apart: the CVSS rows the
+# severity filter needs before anything can be searched, and the advisories
+# only a rendered row shows. cve_metadata.json stays whole for API readers.
+CVSS_OUTPUT = DOCS_DIR / "cvss.json"
+ADVISORIES_OUTPUT = DOCS_DIR / "advisories.json"
 VERIFIED_REFERENCES = INDEX / "reference_pocs.txt"
 EPSS_OUTPUT = DOCS_DIR / "epss.json"
 EPSS_FEED = "https://epss.empiricalsecurity.com/epss_scores-current.csv.gz"
@@ -111,6 +116,30 @@ def load_verified_references() -> set[tuple[str, str]]:
         if cve_id and url:
             verified.add((cve_id, link_key(url)))
     return verified
+
+
+BADGE = re.compile(r"!\[\]\(https://img\.shields\.io/static/v1\?label=(Vendor|Product)&message=([^&)]*)&")
+
+
+def parse_preamble(content: str) -> tuple[str, List[str], List[str]]:
+    """The record's title and its vendor and product badges, from above the description."""
+    title = ""
+    vendors: List[str] = []
+    products: List[str] = []
+    for line in content.splitlines():
+        stripped = line.strip()
+        if stripped == "### Description":
+            break
+        if not title and len(stripped) > 4 and stripped.startswith("**") and stripped.endswith("**"):
+            title = " ".join(stripped[2:-2].split())
+            continue
+        match = BADGE.match(stripped)
+        if not match:
+            continue
+        value = " ".join(unquote(match.group(2)).split())
+        if value and value.lower() != "n/a":
+            (vendors if match.group(1) == "Vendor" else products).append(value)
+    return title, vendors, products
 
 
 def parse_sections(content: str) -> Dict[str, str]:
@@ -352,6 +381,13 @@ def build_cve_list(blacklist: Collection[str]) -> tuple[List[Dict[str, object]],
             "desc": description,
             "poc": poc_entries,
         }
+        title, vendors, products = parse_preamble(content)
+        if title:
+            entry["title"] = title
+        if vendors:
+            entry["vendor"] = vendors
+        if products:
+            entry["product"] = products
         published, modified = (dates.get(cve_id) or ["", ""])[:2]
         if published:
             entry["published"] = published
@@ -509,6 +545,8 @@ def main() -> int:
 
     metadata = build_metadata(cve_payload)
     write_json(METADATA_OUTPUT, metadata)
+    write_json(CVSS_OUTPUT, {cve: value["cvss"] for cve, value in metadata.items() if value.get("cvss")})
+    write_json(ADVISORIES_OUTPUT, {cve: value["advisories"] for cve, value in metadata.items() if value.get("advisories")})
 
     epss = build_epss(cve_payload)
     write_json(EPSS_OUTPUT, epss)

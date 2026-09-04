@@ -257,6 +257,7 @@ a.chip:hover { color: var(--fg); border-color: var(--fg-muted); }
 .chip-epss.is-hot { color: #f0883e; border-color: rgba(240, 136, 62, .45); background: rgba(240, 136, 62, .1); }
 
 .result-body { padding: 16px; min-width: 0; }
+.result-title { margin: 0 0 6px; max-width: 96ch; font: 500 14px/1.35 var(--sans); color: var(--fg); text-wrap: pretty; }
 .result-desc {
   margin: 0;
   max-width: 96ch;
@@ -484,6 +485,7 @@ a.chip:hover { color: var(--fg); border-color: var(--fg-muted); }
 
 .cve-page { flex: 1; padding-top: 32px; padding-bottom: 56px; max-width: 900px; }
 .cve-page h1 { margin: 0 0 14px; font: 700 32px/1.1 var(--mono); color: var(--fg); }
+.cve-title { margin: -4px 0 14px; max-width: 70ch; font: 400 17px/1.4 var(--sans); color: var(--fg-subtle); text-wrap: pretty; }
 .cve-page h2 {
   margin: 34px 0 12px; font: 500 11px/1 var(--mono); letter-spacing: .1em;
   text-transform: uppercase; color: var(--fg-muted);
