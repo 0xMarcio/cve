@@ -2,7 +2,7 @@
 
 <a href="https://pocindex.io/"><img src="https://raw.githubusercontent.com/0xMarcio/pocindex/main/docs/hero.svg?v=171172-82586-1184" alt="PoC Index" width="100%"></a>
 
-[![last sync](https://img.shields.io/badge/last%20sync-04%20Sep%202026%2015%3A07%20UTC-2f81f7?style=flat-square&labelColor=161b22)](https://github.com/0xMarcio/pocindex/commits/main)&nbsp;[![CI](https://img.shields.io/github/actions/workflow/status/0xMarcio/pocindex/hot_cves.yml?style=flat-square&label=CI&color=2f81f7&labelColor=161b22&_=202609041507)](https://github.com/0xMarcio/pocindex/actions/workflows/hot_cves.yml)&nbsp;[![CVEs with PoCs](https://img.shields.io/badge/CVEs%20with%20PoCs-82%2C586-2f81f7?style=flat-square&labelColor=161b22)](https://pocindex.io/)&nbsp;[![known exploited](https://img.shields.io/badge/known%20exploited-1%2C184-f85149?style=flat-square&labelColor=161b22)](https://pocindex.io/)&nbsp;[![stars](https://img.shields.io/github/stars/0xMarcio/pocindex?style=flat-square&label=stars&color=e3b341&labelColor=161b22&_=202609041507)](https://github.com/0xMarcio/pocindex/stargazers)
+[![last sync](https://img.shields.io/badge/last%20sync-04%20Sep%202026%2016%3A07%20UTC-2f81f7?style=flat-square&labelColor=161b22)](https://github.com/0xMarcio/pocindex/commits/main)&nbsp;[![CI](https://img.shields.io/github/actions/workflow/status/0xMarcio/pocindex/hot_cves.yml?style=flat-square&label=CI&color=2f81f7&labelColor=161b22&_=202609041607)](https://github.com/0xMarcio/pocindex/actions/workflows/hot_cves.yml)&nbsp;[![CVEs with PoCs](https://img.shields.io/badge/CVEs%20with%20PoCs-82%2C586-2f81f7?style=flat-square&labelColor=161b22)](https://pocindex.io/)&nbsp;[![known exploited](https://img.shields.io/badge/known%20exploited-1%2C184-f85149?style=flat-square&labelColor=161b22)](https://pocindex.io/)&nbsp;[![stars](https://img.shields.io/github/stars/0xMarcio/pocindex?style=flat-square&label=stars&color=e3b341&labelColor=161b22&_=202609041607)](https://github.com/0xMarcio/pocindex/stargazers)
 
 <a href="https://pocindex.io/"><img src="https://raw.githubusercontent.com/0xMarcio/pocindex/8dec6181e823d641132e0ee8a52a1612c2b5dd37/docs/search.svg" alt="Search PoC Index" width="100%"></a>
 
@@ -12,11 +12,11 @@
 
 | Stars | Updated | Repository | Description |
 | --- | --- | --- | --- |
-| 0⭐ | 2h ago | [CVE-2026-19516](https://github.com/HORKimhab/CVE-2026-19516) | A caller-supplied X-Grafana-URL request header controls the destination of mcp-grafana's outbound requests,… |
-| 2⭐ | 4h ago | [CVE-2026-65643-PoC-Toolkit](https://github.com/tc4dy/CVE-2026-65643-PoC-Toolkit) | 🧰 CVE-2026-65643 - cPanel Domain Parking RCE Toolkit (CVSS 8.7) / Red/Blue Team suite for unpatched cPanel &… |
-| 2⭐ | 9h ago | [CVE-2026-65349](https://github.com/ByteV0rtex/CVE-2026-65349) | CVE-2026-65349 PoC - getattrlist OOB write in vfs_attr_pack_internal (iOS 26.6 / 23G71) |
-| 4⭐ | 9h ago | [CVE-2026-64788](https://github.com/ByteV0rtex/CVE-2026-64788) | CVE-2026-64788 PoC - IOGPUFamily Use-After-Free (iOS 26.6 / 23G71) |
-| 66⭐ | 18h ago | [CVE-2026-65343](https://github.com/ByteV0rtex/CVE-2026-65343) | CVE-2026-65343 PoC - AppleKeyStore OOB read → KASLR defeat (iOS 26.6 / 23G71) |
+| 0⭐ | 3h ago | [CVE-2026-19516](https://github.com/HORKimhab/CVE-2026-19516) | A caller-supplied X-Grafana-URL request header controls the destination of mcp-grafana's outbound requests,… |
+| 2⭐ | 5h ago | [CVE-2026-65643-PoC-Toolkit](https://github.com/tc4dy/CVE-2026-65643-PoC-Toolkit) | 🧰 CVE-2026-65643 - cPanel Domain Parking RCE Toolkit (CVSS 8.7) / Red/Blue Team suite for unpatched cPanel &… |
+| 2⭐ | 10h ago | [CVE-2026-65349](https://github.com/ByteV0rtex/CVE-2026-65349) | CVE-2026-65349 PoC - getattrlist OOB write in vfs_attr_pack_internal (iOS 26.6 / 23G71) |
+| 4⭐ | 10h ago | [CVE-2026-64788](https://github.com/ByteV0rtex/CVE-2026-64788) | CVE-2026-64788 PoC - IOGPUFamily Use-After-Free (iOS 26.6 / 23G71) |
+| 66⭐ | 19h ago | [CVE-2026-65343](https://github.com/ByteV0rtex/CVE-2026-65343) | CVE-2026-65343 PoC - AppleKeyStore OOB read → KASLR defeat (iOS 26.6 / 23G71) |
 | 0⭐ | 1d ago | [CVE-2026-80428](https://github.com/Zipkoppie/CVE-2026-80428) | CVE-2026-80428 PoC |
 | 0⭐ | 1d ago | [CVE-2026-78071](https://github.com/toanln-cov/CVE-2026-78071) | Stored XSS via Location Title in DPCalendar Free |
 | 0⭐ | 2d ago | [CVE-2025-6440](https://github.com/katranSefa/CVE-2025-6440) | The WooCommerce Designer Pro plugin for WordPress, used by the Pricom - Printing Company & Design Services… |
@@ -28,7 +28,7 @@
 | Stars | Updated | Repository | Description |
 | --- | --- | --- | --- |
 | 3⭐ | 1d ago | [CVE-2026-62735](https://github.com/HackSpeak/CVE-2026-62735) | Windows HTTP.sys integer overflow -> nonpaged pool overflow LPE PoC (CVE-2026-62735): crash + full SYSTEM… |
-| 7⭐ | 1d ago | [CVE-2026-19490](https://github.com/TarPeg007/CVE-2026-19490) | NetScaler ADC/Gateway SAML unsigned-assertion bypass via HTTP-Redirect binding (CTX696939) - root cause… |
+| 7⭐ | 2d ago | [CVE-2026-19490](https://github.com/TarPeg007/CVE-2026-19490) | NetScaler ADC/Gateway SAML unsigned-assertion bypass via HTTP-Redirect binding (CTX696939) - root cause… |
 | 3⭐ | 4d ago | [CVE-2026-78904-Digital-Dinar-Drain](https://github.com/vxssroott/CVE-2026-78904-Digital-Dinar-Drain) | CBDC Infrastructure Vulnerability Research. CVE-2026-78904: Infinite mint and redemption bypass in central… |
 | 16⭐ | 5d ago | [givewp-cve-2026-82222-rce-lab](https://github.com/dinosn/givewp-cve-2026-82222-rce-lab) | Authorized Docker lab and clean PoC for validating CVE-2026-82222 RCE in GiveWP 4.16.5.1 and the 4.16.7.2 fix. |
 | 16⭐ | 8d ago | [CVE-2026-62735](https://github.com/nhh9905/CVE-2026-62735) | CVE 1-day in http.sys |
@@ -75,7 +75,7 @@
 
 | Stars | Updated | Repository | Description |
 | --- | --- | --- | --- |
-| 16⭐ | 18d ago | [CVE-2024-56426](https://github.com/Creeeeger/CVE-2024-56426) | A PoC of the CVE-2024-56426 vulnerability. |
+| 16⭐ | 19d ago | [CVE-2024-56426](https://github.com/Creeeeger/CVE-2024-56426) | A PoC of the CVE-2024-56426 vulnerability. |
 | 3⭐ | 20d ago | [CVE-2024-56426](https://github.com/xcracker000/CVE-2024-56426) | CVE-2024-56426 Exynos9830 Bootrom Exploit - SM-G985F |
 | 3⭐ | 36d ago | [CVE-2024-36104-PoC](https://github.com/Groppoxx/CVE-2024-36104-PoC) | PoC for CVE-2024-36104 - unauthenticated Groovy RCE in Apache OFBiz (<18.12.14) via /%2e/%2e/ view path… |
 | 3⭐ | 75d ago | [CVE-2024-36991](https://github.com/0xFZin/CVE-2024-36991) | Exploit for CVE-2024-36991 , written by me, enumerates a handfull of things, not all, cause not needed. |
