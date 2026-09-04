@@ -517,6 +517,18 @@
   "kev": false
  },
  {
+  "year": 2025,
+  "stars": 0,
+  "name": "CVE-2025-9974",
+  "url": "https://github.com/Rajdave69/CVE-2025-9974",
+  "desc": "Proof of Concept code for the CVE-2025-9974 affecting Nokia Beacon routers.",
+  "pushed": "2026-09-04T23:07:34Z",
+  "created": "2026-09-02T23:26:14Z",
+  "cve": "CVE-2025-9974",
+  "kev": false,
+  "landed": true
+ },
+ {
   "year": 2026,
   "stars": 0,
   "name": "CVE-2026-19516",
@@ -621,18 +633,6 @@
   "pushed": "2026-09-02T14:39:51Z",
   "created": "2026-09-02T14:39:37Z",
   "cve": "CVE-2025-29009",
-  "kev": false,
-  "landed": true
- },
- {
-  "year": 2025,
-  "stars": 0,
-  "name": "CVE-2025-69080",
-  "url": "https://github.com/AndrielSec/CVE-2025-69080",
-  "desc": "Improper Control of Filename for Include/Require Statement in PHP Program ('PHP Remote File Inclusion') vulnerability in JanStudio Gecko gecko allows PHP Local File Inclusion.This issue affects Gecko: from n/a through <= 1.9.8.",
-  "pushed": "2026-09-02T14:03:02Z",
-  "created": "2026-08-31T21:00:26Z",
-  "cve": "CVE-2025-69080",
   "kev": false,
   "landed": true
  }
