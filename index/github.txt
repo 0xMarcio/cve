@@ -26854,3 +26854,4 @@ CVE-2026-65643 - https://github.com/tc4dy/CVE-2026-65643-PoC-Exploit
 CVE-2026-73570 - https://github.com/dahnutz/zimbra-cve-2026-73570-ir
 CVE-2026-19516 - https://github.com/HORKimhab/CVE-2026-19516
 CVE-2026-63077 - https://github.com/0xCyp1337/CVE-2026-63077
+CVE-2026-31431 - https://github.com/FranklinF25/cve-2026-31431
