@@ -26906,8 +26906,6 @@ CVE-2023-4569 - https://github.com/LxxxtSec/Saligia-Labs
 CVE-2023-50387 - https://github.com/666564657269636f/DNSSec
 CVE-2023-5536 - https://github.com/karthikparambil/lxd2root
 CVE-2024-21546 - https://github.com/digitalsurgn/CVE-2024-21546
-CVE-2026-26211 - https://github.com/LindHunt/CVE-2026-26211
 CVE-2026-38577 - https://github.com/poxsky/CVE-2026-38577
-CVE-2026-43499 - https://github.com/Cxyofficial/K50G-POCOF4GT-CVE-2026-43499-PoC
 CVE-2026-47627 - https://github.com/AneKazek/cve-2026-47627
 CVE-2026-64788 - https://github.com/AmorCool/iOS26.6-CVE-2026-64788
