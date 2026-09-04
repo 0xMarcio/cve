@@ -19890,7 +19890,6 @@ CVE-2026-26119 - https://github.com/r3vpwnx/CVE-2026-26119
 CVE-2026-26128 - https://github.com/jarnovandenbrink/CVE-2026-26128
 CVE-2026-26179 - https://github.com/nikosecurity/CVE-2026-26179
 CVE-2026-26198 - https://github.com/NetVanguard-cmd/CVE-2026-26198
-CVE-2026-26211 - https://github.com/LindHunt/CVE-2026-26211
 CVE-2026-26215 - https://github.com/mbanyamer/-CVE-2026-26215-manga-image-translator-RCE
 CVE-2026-26216 - https://github.com/joaovicdev/EXPLOIT-CVE-2026-26216
 CVE-2026-26221 - https://github.com/mbanyamer/CVE-2026-26221-Hyland-OnBase-Timer-Service-Unauthenticated-RCE
@@ -26899,3 +26898,4 @@ CVE-2026-75604 - https://github.com/FORTBRIDGE-UK/cve-2026-75604
 CVE-2026-78070 - https://github.com/toanln-cov/CVE-2026-78070
 CVE-2026-80428 - https://github.com/digiprosec/CVE-2026-80428
 CVE-2026-82329 - https://github.com/0xCyp1337/CVE-2026-82329
+CVE-2026-10134 - https://github.com/rmhowe425/POC-CVE-2026-10134
