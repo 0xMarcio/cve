@@ -16,7 +16,7 @@ from datetime import datetime, timezone
 ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), os.pardir)
 sys.path.insert(0, os.path.join(ROOT, "scripts"))
 
-from brand import SITE
+from brand import BRAND, DESCRIPTION, SITE
 
 DOCS = os.path.join(ROOT, "docs")
 ROBOTS = os.path.join(DOCS, "robots.txt")
@@ -46,6 +46,20 @@ def robots() -> str:
     lines += [f"Disallow: /{name}" for name in BULK_PAYLOADS]
     lines += ["", f"Sitemap: {SITE}/sitemap.xml", ""]
     return "\n".join(lines)
+
+
+def opensearch() -> str:
+    """The descriptor a browser reads to offer the site as a search engine."""
+    return (
+        '<?xml version="1.0" encoding="UTF-8"?>\n'
+        '<OpenSearchDescription xmlns="http://a9.com/-/spec/opensearch/1.1/">\n'
+        f"  <ShortName>{BRAND}</ShortName>\n"
+        f"  <Description>{DESCRIPTION}</Description>\n"
+        "  <InputEncoding>UTF-8</InputEncoding>\n"
+        f'  <Image width="16" height="16" type="image/x-icon">{SITE}/favicon.ico</Image>\n'
+        f'  <Url type="text/html" method="get" template="{SITE}/?q={{searchTerms}}"/>\n'
+        "</OpenSearchDescription>\n"
+    )
 
 
 def urlset(urls: list[tuple[str, str]]) -> str:
@@ -79,6 +93,8 @@ def main() -> int:
 
     with open(ROBOTS, "w", encoding="utf-8") as handle:
         handle.write(robots())
+    with open(os.path.join(DOCS, "opensearch.xml"), "w", encoding="utf-8") as handle:
+        handle.write(opensearch())
 
     # One sitemap per CVE year. The 50,000 URL cap makes some split necessary and
     # the year is the split the data already has, which also means a crawler only

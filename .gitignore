@@ -8,6 +8,7 @@ docs/nuclei.json
 docs/cve_metadata.json
 docs/epss.json
 docs/robots.txt
+docs/opensearch.xml
 docs/sitemap.xml
 docs/sitemap-*.xml
 docs/CVE-*.html

@@ -386,6 +386,20 @@ def page(entry: dict, data: dict) -> str:
         }
     )
 
+    year, block = block_of(cid)
+    trail = json_ld(
+        {
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+                {"@type": "ListItem", "position": 1, "name": BRAND, "item": f"{SITE}/"},
+                {"@type": "ListItem", "position": 2, "name": f"CVE-{year}", "item": f"{SITE}/{year}"},
+                {"@type": "ListItem", "position": 3, "name": f"CVE-{year}-{block}", "item": f"{SITE}/CVE-{year}-{block}"},
+                {"@type": "ListItem", "position": 4, "name": cid, "item": url},
+            ],
+        }
+    )
+
     return f"""<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -411,6 +425,7 @@ def page(entry: dict, data: dict) -> str:
 {FONTS}
 <link rel="stylesheet" href="/style.css"/>
 <script type="application/ld+json">{ld}</script>
+<script type="application/ld+json">{trail}</script>
 </head>
 <body>
 {header(len(data["cves"]))}

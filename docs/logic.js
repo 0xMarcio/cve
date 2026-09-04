@@ -409,39 +409,145 @@ function wordRange(prefix) {
 // any earlier parts are whole words: "pan-os" is the word "pan" followed by a
 // word starting "os". The scoring pass still checks the literal text; this
 // only decides which entries are worth its time.
-function candidateCounts(matchers) {
+function candidateCounts(groups) {
   const size = dataset.length;
   const total = new Uint8Array(size);
   const stampOf = new Int32Array(size);
+  const hit = new Uint8Array(size);
   let stamp = 0;
-  for (const matcher of matchers) {
-    const parts = tokensOf(matcher.isPhrase ? matcher.phrase : matcher.raw);
-    if (!parts.length) return null;
-    const partCount = new Uint8Array(size);
-    parts.forEach((part, index) => {
-      stamp += 1;
-      const bump = at => {
-        if (stampOf[at] !== stamp) {
-          stampOf[at] = stamp;
-          partCount[at] += 1;
+  for (const group of groups) {
+    hit.fill(0);
+    for (const matcher of group) {
+      const parts = tokensOf(matcher.isPhrase ? matcher.phrase : matcher.raw);
+      if (!parts.length) return null;
+      const partCount = new Uint8Array(size);
+      parts.forEach((part, index) => {
+        stamp += 1;
+        const bump = at => {
+          if (stampOf[at] !== stamp) {
+            stampOf[at] = stamp;
+            partCount[at] += 1;
+          }
+        };
+        if (index === parts.length - 1) {
+          const [start, end] = wordRange(part);
+          for (let i = start; i < end; i++) {
+            for (const at of wordIndex.postings.get(wordIndex.words[i])) bump(at);
+          }
+        } else {
+          for (const at of wordIndex.postings.get(part) || []) bump(at);
         }
-      };
-      if (index === parts.length - 1) {
-        const [start, end] = wordRange(part);
-        for (let i = start; i < end; i++) {
-          for (const at of wordIndex.postings.get(wordIndex.words[i])) bump(at);
-        }
-      } else {
-        for (const at of wordIndex.postings.get(part) || []) bump(at);
+      });
+      // A CVE id is not a word in anybody's description, so it is checked apart.
+      const raw = matcher.raw;
+      for (let at = 0; at < size; at++) {
+        if (partCount[at] === parts.length || dataset[at]._cveText.includes(raw)) hit[at] = 1;
       }
-    });
-    // A CVE id is not a word in anybody's description, so it is checked apart.
-    const raw = matcher.raw;
-    for (let at = 0; at < size; at++) {
-      if (partCount[at] === parts.length || dataset[at]._cveText.includes(raw)) total[at] += 1;
     }
+    for (let at = 0; at < size; at++) if (hit[at]) total[at] += 1;
   }
   return total;
+}
+
+function scoreGroup(entry, group) {
+  let best = 0;
+  for (const matcher of group) {
+    const score = scoreEntry(entry, matcher);
+    if (score > best) best = score;
+  }
+  return best;
+}
+
+/* ---- what people type versus what the records say ----------------------- */
+
+// Security slang against NVD prose. "sqli" found 843 CVEs and "sql injection"
+// 12,719; a term expands to its phrases and an entry matches on any of them.
+const ALIASES = {
+  sqli: ['sql injection'],
+  xss: ['cross-site scripting', 'cross site scripting'],
+  rce: ['remote code execution'],
+  lpe: ['privilege escalation'],
+  privesc: ['privilege escalation'],
+  eop: ['elevation of privilege', 'privilege escalation'],
+  lfi: ['local file inclusion'],
+  rfi: ['remote file inclusion'],
+  xxe: ['xml external entity'],
+  csrf: ['cross-site request forgery'],
+  ssrf: ['server-side request forgery'],
+  ssti: ['server-side template injection'],
+  idor: ['insecure direct object reference'],
+  dos: ['denial of service'],
+  cmdi: ['command injection'],
+  traversal: ['path traversal', 'directory traversal'],
+  deserialization: ['deserialization of untrusted data', 'insecure deserialization'],
+  bypass: ['authentication bypass', 'authorization bypass'],
+  overflow: ['buffer overflow', 'heap overflow', 'stack overflow', 'integer overflow']
+};
+
+// The names a vulnerability is known by, when the query is exactly that name.
+// The record it belongs to leads whatever the prose and repositories say.
+const NAMED = {
+  log4shell: 'CVE-2021-44228', heartbleed: 'CVE-2014-0160', eternalblue: 'CVE-2017-0144',
+  eternalromance: 'CVE-2017-0145', wannacry: 'CVE-2017-0144', printnightmare: 'CVE-2021-34527',
+  zerologon: 'CVE-2020-1472', spring4shell: 'CVE-2022-22965', proxyshell: 'CVE-2021-34473',
+  proxylogon: 'CVE-2021-26855', proxynotshell: 'CVE-2022-41040', citrixbleed: 'CVE-2023-4966',
+  citrixbleed2: 'CVE-2025-5777', regresshion: 'CVE-2024-6387', bluekeep: 'CVE-2019-0708',
+  shellshock: 'CVE-2014-6271', dirtypipe: 'CVE-2022-0847', dirtycow: 'CVE-2016-5195',
+  follina: 'CVE-2022-30190', ghostcat: 'CVE-2020-1938', looneytunables: 'CVE-2023-4911',
+  text4shell: 'CVE-2022-42889', pwnkit: 'CVE-2021-4034', baronsamedit: 'CVE-2021-3156',
+  moveit: 'CVE-2023-34362', smbghost: 'CVE-2020-0796', petitpotam: 'CVE-2021-36942',
+  hivenightmare: 'CVE-2021-36934', serioussam: 'CVE-2021-36934', sambacry: 'CVE-2017-7494',
+  drupalgeddon: 'CVE-2014-3704', drupalgeddon2: 'CVE-2018-7600', curveball: 'CVE-2020-0601',
+  sigred: 'CVE-2020-1350', poodle: 'CVE-2014-3566', meltdown: 'CVE-2017-5754', spectre: 'CVE-2017-5753',
+  krack: 'CVE-2017-13077', zenbleed: 'CVE-2023-20593', downfall: 'CVE-2022-40982',
+  terrapin: 'CVE-2023-48795', xzbackdoor: 'CVE-2024-3094'
+};
+
+function namedCve(query) {
+  return NAMED[query.toLowerCase().replace(/[^a-z0-9]+/g, '')] || null;
+}
+
+// A typo has no word in the index at all, which a real term nearly never has.
+// The closest word one edit away, weighed by how many records use it, stands
+// in and the status line says so.
+function withinOneEdit(a, b) {
+  if (a === b) return true;
+  if (Math.abs(a.length - b.length) > 1) return false;
+  let i = 0;
+  while (i < a.length && i < b.length && a[i] === b[i]) i++;
+  if (a.length === b.length) {
+    if (a.slice(i + 1) === b.slice(i + 1)) return true;
+    return i + 1 < a.length && a[i] === b[i + 1] && a[i + 1] === b[i] && a.slice(i + 2) === b.slice(i + 2);
+  }
+  return a.length > b.length ? a.slice(i + 1) === b.slice(i) : b.slice(i + 1) === a.slice(i);
+}
+
+function closestWord(term) {
+  const [start, end] = wordRange(term[0]);
+  let best = null;
+  let bestSize = 0;
+  for (let i = start; i < end; i++) {
+    const word = wordIndex.words[i];
+    if (Math.abs(word.length - term.length) > 1 || !withinOneEdit(term, word)) continue;
+    const size = wordIndex.postings.get(word).length;
+    if (size > bestSize) { best = word; bestSize = size; }
+  }
+  return best;
+}
+
+function correctTerms(terms) {
+  const changes = [];
+  const fixed = terms.map(term => {
+    const bare = term.replace(/^-?"|"$/g, '').toLowerCase();
+    if (term[0] === '-' || term[0] === '"' || !/^[a-z0-9]{4,}$/.test(bare) || ALIASES[bare]) return term;
+    const [start, end] = wordRange(bare);
+    if (end > start) return term;
+    const alt = closestWord(bare);
+    if (!alt) return term;
+    changes.push([bare, alt]);
+    return alt;
+  });
+  return changes.length ? { query: fixed.join(' '), changes } : null;
 }
 
 /* ---- search ------------------------------------------------------------ */
@@ -482,11 +588,12 @@ function comparePocs(a, b) {
     || (b._year - a._year) || (b._num - a._num);
 }
 
-function runSearch(query, scan = false) {
+function runSearch(query, scan = false, corrected = false) {
   const terms = query.match(/-?"[^"]+"|-?\S+/g) || [];
   const cleaned = terms.map(t => t.replace(/^(-?)"/, '$1').replace(/"$/, ''));
   const positive = cleaned.filter(t => t && t[0] !== '-');
   const matchers = positive.map(buildMatcher).filter(Boolean);
+  const groups = matchers.map(m => [m, ...(ALIASES[m.raw] || []).map(buildMatcher).filter(Boolean)]);
   // Unquoted words are matched independently, so "active directory" also hits a
   // description holding "active session" and "working directory". Reward the
   // words appearing together to keep those below real matches.
@@ -498,18 +605,18 @@ function runSearch(query, scan = false) {
     .map(buildMatcher)
     .filter(Boolean);
 
-  const counts = !scan && wordIndex.ready && matchers.length ? candidateCounts(matchers) : null;
+  const counts = !scan && wordIndex.ready && groups.length ? candidateCounts(groups) : null;
   const results = [];
   results.pocTotal = 0;
   for (let at = 0; at < dataset.length; at++) {
-    if (counts && counts[at] !== matchers.length) continue;
+    if (counts && counts[at] !== groups.length) continue;
     const entry = dataset[at];
     if (!matchesFilters(entry)) continue;
     let score = 0;
     let matched = true;
     let describes = false;
-    for (const matcher of matchers) {
-      const termScore = scoreEntry(entry, matcher);
+    for (const group of groups) {
+      const termScore = scoreGroup(entry, group);
       if (termScore === 0) { matched = false; break; }
       if (termScore >= 160) describes = true;
       score += termScore;
@@ -534,10 +641,35 @@ function runSearch(query, scan = false) {
   // The index finds a term where it starts a word. Its loose form, "log-4j"
   // for log4j, can only be found by the full pass, which is worth paying for
   // when the indexed pass came back nearly empty and not otherwise.
-  if (counts && results.length < 5 && matchers.some(m => m.loose)) return runSearch(query, true);
+  let out = results;
+  if (counts && results.length < 5 && matchers.some(m => m.loose)) out = runSearch(query, true, corrected);
 
-  results.sort(state.sort === 'NEWEST' ? compareNewest : state.sort === 'POCS' ? comparePocs : compareRelevance);
-  return results;
+  if (!out.length && !scan && !corrected && wordIndex.ready) {
+    const fix = correctTerms(terms);
+    if (fix) {
+      const again = runSearch(fix.query, false, true);
+      again.corrected = fix.changes;
+      return again;
+    }
+  }
+
+  const star = scan || corrected ? null : namedCve(query);
+  if (star) {
+    let entry = out.find(e => e.cve === star);
+    if (!entry) {
+      entry = dataset.find(e => e.cve === star);
+      if (entry && matchesFilters(entry)) {
+        entry._score = 0;
+        entry._hits = 0;
+        out.pocTotal += entryLinks(entry).length;
+        out.push(entry);
+      }
+    }
+    if (entry) entry._score += 100000;
+  }
+
+  out.sort(state.sort === 'NEWEST' ? compareNewest : state.sort === 'POCS' ? comparePocs : compareRelevance);
+  return out;
 }
 
 function prepareDataset(raw) {
@@ -844,7 +976,10 @@ function renderResults(elapsed) {
   pruneExpanders();
 
   if (elapsed != null) {
-    el.status.textContent = `matched in ${Math.max(1, Math.round(elapsed))}ms`;
+    const note = results.corrected
+      ? results.corrected.map(([typed, used]) => `${used} for ${typed}`).join(', ') + ' · '
+      : '';
+    el.status.textContent = `${note}matched in ${Math.max(1, Math.round(elapsed))}ms`;
   }
 }
 
