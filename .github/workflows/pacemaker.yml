@@ -5,8 +5,10 @@ name: Pacemaker
 # come from a cron. A workflow_dispatch call creates a run within seconds, so
 # each pacemaker run sleeps until the next :05, fires the Hot CVEs refresh and
 # its own successor, and the chain keeps time by itself. The cron below only
-# restarts the chain if a link ever fails; while the chain is alive the
-# concurrency group holds the extra run back and the next link cancels it.
+# restarts the chain if a link ever fails. While the chain is alive the
+# concurrency group queues the extra run behind the running link, and a link
+# that starts and finds another still waiting steps aside, so the queue never
+# holds more than one.
 on:
   workflow_dispatch:
   schedule:
@@ -28,6 +30,11 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
+          waiting=$(gh run list -R "$GITHUB_REPOSITORY" --workflow pacemaker.yml --status pending --json databaseId --jq 'length')
+          if [ "${waiting:-0}" -gt 0 ]; then
+            echo "Another link is already waiting its turn; stepping aside"
+            exit 0
+          fi
           now=$(date -u +%s)
           next=$(( now / 3600 * 3600 + 300 ))
           [ "$next" -gt "$now" ] || next=$(( next + 3600 ))
