@@ -1,7 +1,7 @@
 [
  {
   "year": 2026,
-  "stars": 5,
+  "stars": 6,
   "name": "CVE-2026-19490",
   "url": "https://github.com/TarPeg007/CVE-2026-19490",
   "desc": "NetScaler ADC/Gateway SAML unsigned-assertion bypass via HTTP-Redirect binding (CTX696939) - root cause analysis + PoC",
@@ -375,17 +375,6 @@
  },
  {
   "year": 2025,
-  "stars": 14,
-  "name": "FreePBX-CVE-2025-57819-RCE",
-  "url": "https://github.com/0xEhab/FreePBX-CVE-2025-57819-RCE",
-  "desc": "FreePBX is an open-source web-based graphical user interface. FreePBX 15, 16, and 17 endpoints are vulnerable due to insufficiently sanitized user-supplied data allowing unauthenticated access to FreePBX Administrator leading to arbitrary database manipulation and remote code execution. This issue has been patched in endpoint versions 15.0.66, 16.0.89, and 17.0.3.",
-  "pushed": "2026-06-06T21:35:46Z",
-  "created": "2026-06-06T20:49:03Z",
-  "cve": "CVE-2025-57819",
-  "kev": true
- },
- {
-  "year": 2025,
   "stars": 7,
   "name": "CVE-2025-57819-poc",
   "url": "https://github.com/b4sh2/CVE-2025-57819-poc",
@@ -529,13 +518,25 @@
  },
  {
   "year": 2026,
-  "stars": 45,
+  "stars": 46,
   "name": "CVE-2026-65343",
   "url": "https://github.com/ByteV0rtex/CVE-2026-65343",
   "desc": "CVE-2026-65343 PoC - AppleKeyStore OOB read → KASLR defeat (iOS 26.6 / 23G71)",
   "pushed": "2026-09-03T20:38:35Z",
   "created": "2026-09-02T20:12:10Z",
   "cve": "CVE-2026-65343",
+  "kev": false,
+  "landed": true
+ },
+ {
+  "year": 2026,
+  "stars": 0,
+  "name": "CVE-2026-80428",
+  "url": "https://github.com/Zipkoppie/CVE-2026-80428",
+  "desc": "CVE-2026-80428 PoC",
+  "pushed": "2026-09-03T13:39:57Z",
+  "created": "2026-09-03T13:38:01Z",
+  "cve": "CVE-2026-80428",
   "kev": false,
   "landed": true
  },
@@ -632,18 +633,6 @@
   "pushed": "2026-09-01T12:21:38Z",
   "created": "2026-09-01T12:20:52Z",
   "cve": "CVE-2025-11142",
-  "kev": false,
-  "landed": true
- },
- {
-  "year": 2025,
-  "stars": 0,
-  "name": "CVE-2025-39401",
-  "url": "https://github.com/katranSefa/CVE-2025-39401",
-  "desc": "Unrestricted Upload of File with Dangerous Type vulnerability in mojoomla WPAMS apartment-management allows Upload a Web Shell to a Web Server.This issue affects WPAMS: from n/a through <= 44.0 (17-08-2023).",
-  "pushed": "2026-09-01T10:53:39Z",
-  "created": "2026-09-01T10:53:21Z",
-  "cve": "CVE-2025-39401",
   "kev": false,
   "landed": true
  }
