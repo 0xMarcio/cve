@@ -26886,3 +26886,16 @@ CVE-2026-82329 - https://github.com/realalexandergeorgiev/artifactory-CVE-2026-8
 CVE-2026-9055 - https://github.com/EXEcution-py/CVE-2026-9055
 CVE-2026-78071 - https://github.com/toanln-cov/CVE-2026-78071
 CVE-2026-80428 - https://github.com/Zipkoppie/CVE-2026-80428
+CVE-2025-33073 - https://github.com/abraxas/veneficus-implant-public
+CVE-2025-37164 - https://github.com/gigachadusers/hpe-exploit
+CVE-2026-31787 - https://github.com/0xAtharv/CVE-2026-31787
+CVE-2026-40976 - https://github.com/madebyrokit/CVE-2026-40976-POC
+CVE-2026-43499 - https://github.com/Memetic0/Root-My-Galaxy-Payloads-standalone
+CVE-2026-4813 - https://github.com/Trachinus/CVE-2026-4813
+CVE-2026-62735 - https://github.com/HackSpeak/CVE-2026-62735
+CVE-2026-65343 - https://github.com/AmorCool/iOS26.6-CVE-2026-65343
+CVE-2026-65643 - https://github.com/tc4dy/CVE-2026-65643-PoC-Toolkit
+CVE-2026-75604 - https://github.com/FORTBRIDGE-UK/cve-2026-75604
+CVE-2026-78070 - https://github.com/toanln-cov/CVE-2026-78070
+CVE-2026-80428 - https://github.com/digiprosec/CVE-2026-80428
+CVE-2026-82329 - https://github.com/0xCyp1337/CVE-2026-82329

@@ -34,7 +34,7 @@
  },
  {
   "year": 2026,
-  "stars": 14,
+  "stars": 15,
   "name": "CVE-2026-62735",
   "url": "https://github.com/nhh9905/CVE-2026-62735",
   "desc": "CVE 1-day in http.sys",
@@ -518,7 +518,19 @@
  },
  {
   "year": 2026,
-  "stars": 50,
+  "stars": 0,
+  "name": "CVE-2026-31787",
+  "url": "https://github.com/0xAtharv/CVE-2026-31787",
+  "desc": "Linux kernel double free in Xen privcmd driver",
+  "pushed": "2026-09-04T01:21:16Z",
+  "created": "2026-09-04T01:08:31Z",
+  "cve": "CVE-2026-31787",
+  "kev": false,
+  "landed": true
+ },
+ {
+  "year": 2026,
+  "stars": 51,
   "name": "CVE-2026-65343",
   "url": "https://github.com/ByteV0rtex/CVE-2026-65343",
   "desc": "CVE-2026-65343 PoC - AppleKeyStore OOB read → KASLR defeat (iOS 26.6 / 23G71)",
@@ -621,18 +633,6 @@
   "pushed": "2026-09-01T16:41:30Z",
   "created": "2026-09-01T07:34:56Z",
   "cve": "CVE-2026-43499",
-  "kev": false,
-  "landed": true
- },
- {
-  "year": 2025,
-  "stars": 0,
-  "name": "cve-2025-11142-axis-mediaclip-rce",
-  "url": "https://github.com/kemrec/cve-2025-11142-axis-mediaclip-rce",
-  "desc": "The VAPIX API mediaclip.cgi that did not have a sufficient input validation allowing for a possible remote code execution. This flaw can only be exploited after authenticating with an operator- or administrator- privileged service account.",
-  "pushed": "2026-09-01T12:21:38Z",
-  "created": "2026-09-01T12:20:52Z",
-  "cve": "CVE-2025-11142",
   "kev": false,
   "landed": true
  }
