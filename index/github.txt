@@ -26838,3 +26838,5 @@ CVE-2024-21546 - https://github.com/digitalsurgn/CVE-2024-21546
 CVE-2026-38577 - https://github.com/poxsky/CVE-2026-38577
 CVE-2026-47627 - https://github.com/AneKazek/cve-2026-47627
 CVE-2026-64788 - https://github.com/AmorCool/iOS26.6-CVE-2026-64788
+CVE-2026-82329 - https://github.com/gagaltotal/CVE-2026-82329-poc
+CVE-2026-85046 - https://github.com/HORKimhab/CVE-2026-85046
