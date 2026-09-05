@@ -26841,12 +26841,10 @@ CVE-2026-64788 - https://github.com/AmorCool/iOS26.6-CVE-2026-64788
 CVE-2026-82329 - https://github.com/gagaltotal/CVE-2026-82329-poc
 CVE-2026-85046 - https://github.com/HORKimhab/CVE-2026-85046
 CVE-2018-17240 - https://github.com/BBge/CVE-2018-17240
-CVE-2019-16098 - https://github.com/Barakat/CVE-2019-16098
 CVE-2024-1086 - https://github.com/Notselwyn/CVE-2024-1086
 CVE-2024-4577 - https://github.com/11whoami99/CVE-2024-4577
 CVE-2024-4577 - https://github.com/watchtowrlabs/CVE-2024-4577
 CVE-2024-53027 - https://github.com/v3ilsm1th/CVE-2024-53027-WIP
-CVE-2024-6387 - https://github.com/zgzhang/cve-2024-6387-poc
 CVE-2024-9465 - https://github.com/mustafaakalin/CVE-2024-9465
 CVE-2025-24071 - https://github.com/buffertrychar/CVE-2025-24071-POC
 CVE-2026-52832 - https://github.com/mdvpat/CVE-2026-52832-PoC-exploit-nuclio-dashboard
@@ -26865,3 +26863,9 @@ CVE-2025-3248 - https://github.com/LeotheGGman/Langflow-RCE-CVE-2025-3248
 CVE-2026-22778 - https://github.com/joaovicdev/EXPLOIT-CVE-2026-22778
 CVE-2026-57062 - https://github.com/goldendivider/gpgsm-cve-2026-57062-cms-gcm-short-tag
 CVE-2026-6471 - https://github.com/goldendivider/cve-2026-6471-postgres-logical-decoding-dlopen
+CVE-2023-42793 - https://github.com/burakacar6/CVE-2023-42793-TeamCity-Unauthenticated-RCE
+CVE-2026-26211 - https://github.com/LindHunt/CVE-2026-26211
+CVE-2026-32475 - https://github.com/4minx/CVE-2026-32475
+CVE-2026-32475 - https://github.com/dinosn/cve-2026-32475-elementor-pro-lab
+CVE-2026-43499 - https://github.com/Cxyofficial/K50G-POCOF4GT-CVE-2026-43499-PoC
+CVE-2026-78839 - https://github.com/nabeelmkhan/CVE-2026-78839
