@@ -26388,6 +26388,11 @@
 "severity": "medium",
 "url": "https://github.com/projectdiscovery/nuclei-templates/blob/main/http/cves/2023/CVE-2023-5375.yaml"
 },
+"CVE-2023-54391": {
+"name": "Proxmox VE - Default Credentials with TFA Bypass",
+"severity": "critical",
+"url": "https://github.com/projectdiscovery/nuclei-templates/blob/main/http/cves/2023/CVE-2023-54391.yaml"
+},
 "CVE-2023-5556": {
 "cvss": 6.1,
 "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:L/I:L/A:N",
@@ -35011,6 +35016,13 @@
 "name": "URL Shortify <= 1.12.1 - Open Redirect",
 "severity": "medium",
 "url": "https://github.com/projectdiscovery/nuclei-templates/blob/main/http/cves/2026/CVE-2026-1277.yaml"
+},
+"CVE-2026-12843": {
+"cvss": 5.4,
+"cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:L/I:L/A:N",
+"name": ">",
+"severity": "medium",
+"url": "https://github.com/topscoder/nuclei-wordfence-cve/blob/main/nuclei-templates/2026/CVE-2026-12843-sfwd_lms-48d29e8d-4084-401e-82ff-e4750d739c7c.yaml"
 },
 "CVE-2026-12898": {
 "cvss": 6.5,
