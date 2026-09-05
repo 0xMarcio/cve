@@ -26861,3 +26861,5 @@ CVE-2026-19632 - https://github.com/ghostpels/CVE-2026-19632
 CVE-2026-19900 - https://github.com/on3sk-0x1/cve-2026-19900-PoC
 CVE-2026-85769 - https://github.com/isukasanuj/CVE-2026-85769
 CVE-2026-7873 - https://github.com/rmhowe425/POC-CVE-2026-7873
+CVE-2025-3248 - https://github.com/LeotheGGman/Langflow-RCE-CVE-2025-3248
+CVE-2026-22778 - https://github.com/joaovicdev/EXPLOIT-CVE-2026-22778
