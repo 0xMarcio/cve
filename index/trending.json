@@ -45,7 +45,7 @@
  },
  {
   "year": 2026,
-  "stars": 7,
+  "stars": 8,
   "name": "CVE-2026-19490",
   "url": "https://github.com/TarPeg007/CVE-2026-19490",
   "desc": "NetScaler ADC/Gateway SAML unsigned-assertion bypass via HTTP-Redirect binding (CTX696939) - root cause analysis + PoC",
@@ -75,6 +75,17 @@
   "created": "2026-08-30T05:15:27Z",
   "cve": "CVE-2026-82222",
   "kev": false
+ },
+ {
+  "year": 2026,
+  "stars": 3,
+  "name": "PaperCut-CVE-2026-81578-82078",
+  "url": "https://github.com/yora1928/PaperCut-CVE-2026-81578-82078",
+  "desc": "Security research tool for PaperCut CVE-2026-81578 & CVE-2026-82078",
+  "pushed": "2026-08-29T13:13:49Z",
+  "created": "2026-08-29T13:12:33Z",
+  "cve": "CVE-2026-81578",
+  "kev": true
  },
  {
   "year": 2026,
@@ -133,7 +144,7 @@
  },
  {
   "year": 2026,
-  "stars": 86,
+  "stars": 87,
   "name": "CVE-2026-75604-poc",
   "url": "https://github.com/rafabd1/CVE-2026-75604-poc",
   "desc": "CVE-2026-75604 Next.js Windows RCE poc",
@@ -207,17 +218,6 @@
   "created": "2026-08-22T08:54:26Z",
   "cve": "CVE-2026-65400",
   "kev": true
- },
- {
-  "year": 2026,
-  "stars": 174,
-  "name": "CVE-2026-62911",
-  "url": "https://github.com/hypnguyen1209/CVE-2026-62911",
-  "desc": "POC pre-auth RCE on Exchange",
-  "pushed": "2026-08-22T04:49:54Z",
-  "created": "2026-08-22T04:49:33Z",
-  "cve": "CVE-2026-62911",
-  "kev": false
  },
  {
   "year": 2025,
@@ -580,18 +580,6 @@
  },
  {
   "year": 2026,
-  "stars": 0,
-  "name": "CVE-2026-31787",
-  "url": "https://github.com/0xAtharv/CVE-2026-31787",
-  "desc": "Linux kernel double free in Xen privcmd driver",
-  "pushed": "2026-09-04T01:21:16Z",
-  "created": "2026-09-04T01:08:31Z",
-  "cve": "CVE-2026-31787",
-  "kev": false,
-  "landed": true
- },
- {
-  "year": 2026,
   "stars": 68,
   "name": "CVE-2026-65343",
   "url": "https://github.com/ByteV0rtex/CVE-2026-65343",
@@ -611,6 +599,18 @@
   "pushed": "2026-09-03T13:39:57Z",
   "created": "2026-09-03T13:38:01Z",
   "cve": "CVE-2026-80428",
+  "kev": false,
+  "landed": true
+ },
+ {
+  "year": 2026,
+  "stars": 0,
+  "name": "CVE-2026-78071",
+  "url": "https://github.com/toanln-cov/CVE-2026-78071",
+  "desc": "Stored XSS via Location Title in DPCalendar Free",
+  "pushed": "2026-09-03T10:01:38Z",
+  "created": "2026-09-03T10:01:02Z",
+  "cve": "CVE-2026-78071",
   "kev": false,
   "landed": true
  }
