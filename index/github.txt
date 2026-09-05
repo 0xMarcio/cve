@@ -26766,3 +26766,4 @@ CVE-2023-42793 - https://github.com/burakacar6/CVE-2023-42793-TeamCity-Unauthent
 CVE-2026-32475 - https://github.com/4minx/CVE-2026-32475
 CVE-2026-32475 - https://github.com/dinosn/cve-2026-32475-elementor-pro-lab
 CVE-2026-78839 - https://github.com/nabeelmkhan/CVE-2026-78839
+CVE-2026-75865 - https://github.com/ghostpels/CVE-2026-75865

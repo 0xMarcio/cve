@@ -592,7 +592,7 @@
  },
  {
   "year": 2026,
-  "stars": 66,
+  "stars": 67,
   "name": "CVE-2026-65343",
   "url": "https://github.com/ByteV0rtex/CVE-2026-65343",
   "desc": "CVE-2026-65343 PoC - AppleKeyStore OOB read → KASLR defeat (iOS 26.6 / 23G71)",
