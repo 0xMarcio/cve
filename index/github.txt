@@ -26863,3 +26863,5 @@ CVE-2026-85769 - https://github.com/isukasanuj/CVE-2026-85769
 CVE-2026-7873 - https://github.com/rmhowe425/POC-CVE-2026-7873
 CVE-2025-3248 - https://github.com/LeotheGGman/Langflow-RCE-CVE-2025-3248
 CVE-2026-22778 - https://github.com/joaovicdev/EXPLOIT-CVE-2026-22778
+CVE-2026-57062 - https://github.com/goldendivider/gpgsm-cve-2026-57062-cms-gcm-short-tag
+CVE-2026-6471 - https://github.com/goldendivider/cve-2026-6471-postgres-logical-decoding-dlopen
