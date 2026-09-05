@@ -26786,3 +26786,5 @@ CVE-2026-70426 - https://github.com/Secneural/CVE-POC
 CVE-2026-85046 - https://github.com/adriyansyah-mf/cve-2026-85046-poc
 CVE-2026-84645 - https://github.com/mhtsec/CVE-2026-84645
 CVE-2026-0920 - https://github.com/K3ysTr0K3R/CVE-2026-0920
+CVE-2026-43499 - https://github.com/rgnv/GhostUnlock-SM-S918U
+CVE-2026-58138 - https://github.com/0xBlackash/CVE-2026-58138
