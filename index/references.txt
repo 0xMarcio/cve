@@ -88350,14 +88350,12 @@ CVE-2003-1200 - http://marc.info/?l=bugtraq&m=107936753929354&w=2
 CVE-2003-1216 - http://marc.info/?l=bugtraq&m=107005608726609&w=2
 CVE-2003-1236 - http://www.securityfocus.com/archive/1/305663
 CVE-2003-1245 - http://archives.neohapsis.com/archives/bugtraq/2003-02/0302.html
-CVE-2003-1301 - http://www.illegalaccess.org/exploit/ObjectStackOverflow.html
 CVE-2003-1307 - http://www.securityfocus.com/archive/1/449298/100/0/threaded
 CVE-2003-1377 - http://www.securityfocus.com/archive/1/312924
 CVE-2003-1432 - http://archives.neohapsis.com/archives/bugtraq/2003-05/0142.html
 CVE-2003-1452 - http://www.securityfocus.com/archive/1/319811
 CVE-2003-1475 - http://www.securityfocus.com/archive/1/320980
 CVE-2003-1481 - http://www.securityfocus.com/archive/1/320438
-CVE-2003-1508 - http://www.irchelp.org/irchelp/mirc/exploit.html
 CVE-2003-1508 - http://www.securityfocus.com/archive/1/342179
 CVE-2003-1573 - http://archives.neohapsis.com/archives/bugtraq/2004-01/0148.html
 CVE-2003-1573 - http://archives.neohapsis.com/archives/fulldisclosure/2004-01/0675.html
@@ -88389,7 +88387,6 @@ CVE-2004-1120 - http://www.securityfocus.com/archive/1/382219
 CVE-2004-1315 - http://marc.info/?t=110079440800004&r=1&w=2
 CVE-2004-1326 - http://marc.info/?l=bugtraq&m=110356470029424&w=2
 CVE-2004-1364 - http://www.securityfocus.com/archive/1/454861/100/0/threaded
-CVE-2004-1439 - http://www.ir3ip.net/pipermail/bugtraq/2004-September/009960.html
 CVE-2004-1456 - http://marc.info/?l=bugtraq&m=109173359428253&w=2
 CVE-2004-1466 - http://archives.neohapsis.com/archives/fulldisclosure/2004-08/0757.html
 CVE-2004-1532 - http://marc.info/?l=bugtraq&m=110079586328430&w=2
@@ -88503,7 +88500,6 @@ CVE-2005-3738 - http://www.securityfocus.com/archive/1/426942/100/0/threaded
 CVE-2005-3738 - http://www.securityfocus.com/archive/1/427196/100/0/threaded
 CVE-2005-3812 - http://www.securityfocus.com/archive/1/417602/30/0/threaded
 CVE-2005-3868 - http://www.exploit-db.com/exploits/13993
-CVE-2005-3946 - http://www.illegalaccess.org/exploit/opera85/OperaApplet.html
 CVE-2005-3981 - http://www.securityfocus.com/archive/1/418289/100/0/threaded
 CVE-2005-3981 - http://www.securityfocus.com/archive/1/418431/100/0/threaded
 CVE-2005-4195 - http://www.securityfocus.com/archive/1/491611/100/0/threaded
@@ -88626,7 +88622,6 @@ CVE-2006-2407 - http://www.securityfocus.com/archive/1/434402/100/0/threaded
 CVE-2006-2407 - http://www.securityfocus.com/archive/1/434415/100/0/threaded
 CVE-2006-2407 - http://www.securityfocus.com/archive/1/434415/30/4920/threaded
 CVE-2006-2419 - http://kiki91.altervista.org/exploit/dir.txt
-CVE-2006-2426 - http://www.illegalaccess.org/exploit/FullDiskApplet.html
 CVE-2006-2451 - http://www.securityfocus.com/archive/1/439869/100/0/threaded
 CVE-2006-2451 - http://www.securityfocus.com/archive/1/440117/100/0/threaded
 CVE-2006-2460 - http://www.securityfocus.com/archive/1/434009/100/0/threaded
@@ -88777,7 +88772,6 @@ CVE-2006-5086 - http://www.securityfocus.com/archive/1/447167/100/0/threaded
 CVE-2006-5100 - http://www.securityfocus.com/archive/1/446996/100/0/threaded
 CVE-2006-5103 - http://archives.neohapsis.com/archives/bugtraq/2006-10/0244.html
 CVE-2006-5103 - http://www.securityfocus.com/archive/1/450027/100/100/threaded
-CVE-2006-5156 - http://www.remote-exploit.org/advisories/mcafee-epo.pdf
 CVE-2006-5166 - http://www.securityfocus.com/archive/1/447499/100/0/threaded
 CVE-2006-5178 - http://www.securityfocus.com/archive/1/448020/100/0/threaded
 CVE-2006-5180 - http://www.securityfocus.com/archive/1/447253/100/0/threaded
@@ -88990,7 +88984,6 @@ CVE-2007-1963 - http://www.securityfocus.com/archive/1/464563/100/0/threaded
 CVE-2007-1976 - http://www.attrition.org/pipermail/vim/2007-April/001489.html
 CVE-2007-1976 - http://www.attrition.org/pipermail/vim/2007-April/001490.html
 CVE-2007-1976 - https://www.exploit-db.com/exploits/3642
-CVE-2007-2024 - http://www.nabble.com/Fwd%3A-Critical-phpwiki-c99shell-exploit-t3571197.html
 CVE-2007-2024 - http://www.securityfocus.com/archive/1/465489/100/0/threaded
 CVE-2007-2024 - http://www.securityfocus.com/archive/1/465514/100/0/threaded
 CVE-2007-2024 - http://www.securityfocus.com/archive/1/465550/100/0/threaded
@@ -89147,7 +89140,6 @@ CVE-2008-1289 - http://www.securityfocus.com/archive/1/489817/100/0/threaded
 CVE-2008-1426 - http://www.securityfocus.com/archive/1/489891/100/0/threaded
 CVE-2008-1436 - http://www.securityfocus.com/archive/1/497168/100/0/threaded
 CVE-2008-1472 - http://www.securityfocus.com/archive/1/489893/100/0/threaded
-CVE-2008-1610 - http://www.offensive-security.com/0day/quick-tftp-poc.py.txt
 CVE-2008-1649 - http://www.securityfocus.com/archive/1/490338/100/0/threaded
 CVE-2008-1650 - http://www.securityfocus.com/archive/1/490338/100/0/threaded
 CVE-2008-1651 - http://www.securityfocus.com/archive/1/490338/100/0/threaded
@@ -89985,7 +89977,6 @@ CVE-2010-1094 - http://www.exploit-db.com/exploits/11582
 CVE-2010-1127 - http://archives.neohapsis.com/archives/bugtraq/2010-01/0237.html
 CVE-2010-1127 - http://archives.neohapsis.com/archives/bugtraq/2010-01/0278.html
 CVE-2010-1146 - http://www.exploit-db.com/exploits/12130
-CVE-2010-1147 - http://www.indahax.com/exploits/opendchub-0-8-1-remote-code-execution-exploit#more-600
 CVE-2010-1147 - http://www.securityfocus.com/archive/1/510428
 CVE-2010-1174 - http://www.exploit-db.com/exploits/11878
 CVE-2010-1184 - http://www.remote-exploit.org/?p=437
@@ -90392,7 +90383,6 @@ CVE-2010-4557 - http://www.exploit-db.com/exploits/15707
 CVE-2010-4566 - http://www.exploit-db.com/exploits/16916
 CVE-2010-4598 - http://www.exploit-db.com/exploits/15802
 CVE-2010-4604 - http://www.exploit-db.com/exploits/15745
-CVE-2010-4604 - http://www.kryptoslogic.com/advisories/2010/kryptoslogic-ibm-tivoli-dsmtca-exploit.c
 CVE-2010-4615 - http://www.exploit-db.com/exploits/15777
 CVE-2010-4617 - http://www.exploit-db.com/exploits/15791
 CVE-2010-4619 - http://www.exploit-db.com/exploits/15775
@@ -91089,7 +91079,6 @@ CVE-2013-1814 - http://www.exploit-db.com/exploits/24744/
 CVE-2013-1852 - http://www.exploit-db.com/exploits/24789
 CVE-2013-1858 - http://www.openwall.com/lists/oss-security/2013/03/14/6
 CVE-2013-1892 - http://www.exploit-db.com/exploits/24935
-CVE-2013-1959 - http://www.exploit-db.com/exploits/25307
 CVE-2013-20005 - https://www.exploit-db.com/exploits/24627
 CVE-2013-20006 - https://www.exploit-db.com/exploits/24627
 CVE-2013-2010 - http://www.exploit-db.com/exploits/25137
@@ -91149,7 +91138,6 @@ CVE-2013-4467 - http://www.exploit-db.com/exploits/29513
 CVE-2013-4468 - http://www.exploit-db.com/exploits/29513
 CVE-2013-4664 - https://www.exploit-database.net/?id=48229
 CVE-2013-4665 - https://www.exploit-database.net/?id=48229
-CVE-2013-4730 - http://www.exploit-db.com/exploits/26471
 CVE-2013-4743 - http://www.exploit-db.com/exploits/26520
 CVE-2013-4835 - http://www.exploit-db.com/exploits/30473
 CVE-2013-4859 - http://www.exploit-db.com/exploits/27284
@@ -91765,13 +91753,11 @@ CVE-2017-20215 - https://packetstormsecurity.com/files/144325
 CVE-2017-20215 - https://www.exploit-db.com/exploits/42788/
 CVE-2017-20216 - https://packetstormsecurity.com/files/144321
 CVE-2017-20216 - https://www.exploit-db.com/exploits/42785/
-CVE-2017-20217 - http://www.securitylab.ru/poc/486048.php
 CVE-2017-20217 - https://packetstormsecurity.com/files/142383
 CVE-2017-20217 - https://www.exploit-db.com/exploits/41958/
 CVE-2017-20218 - https://packetstormsecurity.com/files/142384
 CVE-2017-20218 - https://www.exploit-db.com/exploits/41959/
 CVE-2017-20219 - https://packetstormsecurity.com/files/142385
-CVE-2017-20220 - http://www.securitylab.ru/poc/486047.php
 CVE-2017-20220 - https://packetstormsecurity.com/files/142386
 CVE-2017-20220 - https://www.exploit-db.com/exploits/41960/
 CVE-2017-20221 - https://packetstormsecurity.com/files/145550
