@@ -2,7 +2,7 @@
 
 <a href="https://pocindex.io/"><img src="https://raw.githubusercontent.com/0xMarcio/pocindex/main/docs/hero.svg?v=171174-82588-1185" alt="PoC Index" width="100%"></a>
 
-[![last sync](https://img.shields.io/badge/last%20sync-04%20Sep%202026%2023%3A07%20UTC-2f81f7?style=flat-square&labelColor=161b22)](https://github.com/0xMarcio/pocindex/commits/main)&nbsp;[![CI](https://img.shields.io/github/actions/workflow/status/0xMarcio/pocindex/hot_cves.yml?style=flat-square&label=CI&color=2f81f7&labelColor=161b22&_=202609042307)](https://github.com/0xMarcio/pocindex/actions/workflows/hot_cves.yml)&nbsp;[![CVEs with PoCs](https://img.shields.io/badge/CVEs%20with%20PoCs-82%2C588-2f81f7?style=flat-square&labelColor=161b22)](https://pocindex.io/)&nbsp;[![known exploited](https://img.shields.io/badge/known%20exploited-1%2C185-f85149?style=flat-square&labelColor=161b22)](https://pocindex.io/)&nbsp;[![stars](https://img.shields.io/github/stars/0xMarcio/pocindex?style=flat-square&label=stars&color=e3b341&labelColor=161b22&_=202609042307)](https://github.com/0xMarcio/pocindex/stargazers)
+[![last sync](https://img.shields.io/badge/last%20sync-05%20Sep%202026%2000%3A06%20UTC-2f81f7?style=flat-square&labelColor=161b22)](https://github.com/0xMarcio/pocindex/commits/main)&nbsp;[![CI](https://img.shields.io/github/actions/workflow/status/0xMarcio/pocindex/hot_cves.yml?style=flat-square&label=CI&color=2f81f7&labelColor=161b22&_=202609050006)](https://github.com/0xMarcio/pocindex/actions/workflows/hot_cves.yml)&nbsp;[![CVEs with PoCs](https://img.shields.io/badge/CVEs%20with%20PoCs-82%2C588-2f81f7?style=flat-square&labelColor=161b22)](https://pocindex.io/)&nbsp;[![known exploited](https://img.shields.io/badge/known%20exploited-1%2C185-f85149?style=flat-square&labelColor=161b22)](https://pocindex.io/)&nbsp;[![stars](https://img.shields.io/github/stars/0xMarcio/pocindex?style=flat-square&label=stars&color=e3b341&labelColor=161b22&_=202609050006)](https://github.com/0xMarcio/pocindex/stargazers)
 
 <a href="https://pocindex.io/"><img src="https://raw.githubusercontent.com/0xMarcio/pocindex/8dec6181e823d641132e0ee8a52a1612c2b5dd37/docs/search.svg" alt="Search PoC Index" width="100%"></a>
 
@@ -12,22 +12,22 @@
 
 | Stars | Updated | Repository | Description |
 | --- | --- | --- | --- |
-| 0⭐ | 1m ago | [CVE-2025-9974](https://github.com/Rajdave69/CVE-2025-9974) | Proof of Concept code for the CVE-2025-9974 affecting Nokia Beacon routers. |
-| 0⭐ | 10h ago | [CVE-2026-19516](https://github.com/HORKimhab/CVE-2026-19516) | A caller-supplied X-Grafana-URL request header controls the destination of mcp-grafana's outbound requests,… |
-| 2⭐ | 12h ago | [CVE-2026-65643-PoC-Toolkit](https://github.com/tc4dy/CVE-2026-65643-PoC-Toolkit) | 🧰 CVE-2026-65643 - cPanel Domain Parking RCE Toolkit (CVSS 8.7) / Red/Blue Team suite for unpatched cPanel &… |
-| 2⭐ | 17h ago | [CVE-2026-65349](https://github.com/ByteV0rtex/CVE-2026-65349) | CVE-2026-65349 PoC - getattrlist OOB write in vfs_attr_pack_internal (iOS 26.6 / 23G71) |
-| 4⭐ | 17h ago | [CVE-2026-64788](https://github.com/ByteV0rtex/CVE-2026-64788) | CVE-2026-64788 PoC - IOGPUFamily Use-After-Free (iOS 26.6 / 23G71) |
+| 1⭐ | 1h ago | [CVE-2025-9974](https://github.com/Rajdave69/CVE-2025-9974) | Proof of Concept code for the CVE-2025-9974 affecting Nokia Beacon routers. |
+| 0⭐ | 11h ago | [CVE-2026-19516](https://github.com/HORKimhab/CVE-2026-19516) | A caller-supplied X-Grafana-URL request header controls the destination of mcp-grafana's outbound requests,… |
+| 2⭐ | 13h ago | [CVE-2026-65643-PoC-Toolkit](https://github.com/tc4dy/CVE-2026-65643-PoC-Toolkit) | 🧰 CVE-2026-65643 - cPanel Domain Parking RCE Toolkit (CVSS 8.7) / Red/Blue Team suite for unpatched cPanel &… |
+| 2⭐ | 18h ago | [CVE-2026-65349](https://github.com/ByteV0rtex/CVE-2026-65349) | CVE-2026-65349 PoC - getattrlist OOB write in vfs_attr_pack_internal (iOS 26.6 / 23G71) |
+| 4⭐ | 18h ago | [CVE-2026-64788](https://github.com/ByteV0rtex/CVE-2026-64788) | CVE-2026-64788 PoC - IOGPUFamily Use-After-Free (iOS 26.6 / 23G71) |
+| 0⭐ | 22h ago | [CVE-2026-31787](https://github.com/0xAtharv/CVE-2026-31787) | Linux kernel double free in Xen privcmd driver |
 | 66⭐ | 1d ago | [CVE-2026-65343](https://github.com/ByteV0rtex/CVE-2026-65343) | CVE-2026-65343 PoC - AppleKeyStore OOB read → KASLR defeat (iOS 26.6 / 23G71) |
 | 0⭐ | 1d ago | [CVE-2026-80428](https://github.com/Zipkoppie/CVE-2026-80428) | CVE-2026-80428 PoC |
 | 0⭐ | 1d ago | [CVE-2026-78071](https://github.com/toanln-cov/CVE-2026-78071) | Stored XSS via Location Title in DPCalendar Free |
 | 0⭐ | 2d ago | [CVE-2025-6440](https://github.com/katranSefa/CVE-2025-6440) | The WooCommerce Designer Pro plugin for WordPress, used by the Pricom - Printing Company & Design Services… |
-| 0⭐ | 2d ago | [CVE-2025-29009](https://github.com/katranSefa/CVE-2025-29009) | Unrestricted Upload of File with Dangerous Type vulnerability in Webkul Medical Prescription Attachment… |
 
 ## Trending in 2026
 
 | Stars | Updated | Repository | Description |
 | --- | --- | --- | --- |
-| 5⭐ | 1h ago | <img src="https://raw.githubusercontent.com/0xMarcio/pocindex/main/docs/kev.svg" alt="KEV" title="CISA known exploited" height="14"> [CVE-2026-15409-15410-Framework](https://github.com/tc4dy/CVE-2026-15409-15410-Framework) | CVE-2026-15409/15410 SonicWall SMA1000 multi-exploit Framework 🔥 SSRF→Erlang RPC→RCE→root privesc. Features:… |
+| 5⭐ | 2h ago | <img src="https://raw.githubusercontent.com/0xMarcio/pocindex/main/docs/kev.svg" alt="KEV" title="CISA known exploited" height="14"> [CVE-2026-15409-15410-Framework](https://github.com/tc4dy/CVE-2026-15409-15410-Framework) | CVE-2026-15409/15410 SonicWall SMA1000 multi-exploit Framework 🔥 SSRF→Erlang RPC→RCE→root privesc. Features:… |
 | 3⭐ | 1d ago | [CVE-2026-62735](https://github.com/HackSpeak/CVE-2026-62735) | Windows HTTP.sys integer overflow -> nonpaged pool overflow LPE PoC (CVE-2026-62735): crash + full SYSTEM… |
 | 7⭐ | 2d ago | [CVE-2026-19490](https://github.com/TarPeg007/CVE-2026-19490) | NetScaler ADC/Gateway SAML unsigned-assertion bypass via HTTP-Redirect binding (CTX696939) - root cause… |
 | 3⭐ | 5d ago | [CVE-2026-78904-Digital-Dinar-Drain](https://github.com/vxssroott/CVE-2026-78904-Digital-Dinar-Drain) | CBDC Infrastructure Vulnerability Research. CVE-2026-78904: Infinite mint and redemption bypass in central… |
@@ -41,7 +41,7 @@
 | 5⭐ | 10d ago | <img src="https://raw.githubusercontent.com/0xMarcio/pocindex/main/docs/kev.svg" alt="KEV" title="CISA known exploited" height="14"> [CVE-2026-73570](https://github.com/HORKimhab/CVE-2026-73570) | A remote code execution vulnerability exists in Zimbra Collaboration (ZCS) before 10.1.20 when the optional… |
 | 3⭐ | 10d ago | [CVE-2026-32475-PoC](https://github.com/Boreas37/CVE-2026-32475-PoC) | PoC for CVE-2026-32475: Elementor Pro <=4.2.1 unauthenticated file upload to RCE. Stdlib-only Python. |
 | 13⭐ | 10d ago | [Keycloak_CVE-2026-18963_PoC](https://github.com/prot0tw/Keycloak_CVE-2026-18963_PoC) | This repo is poc of cve-2026-18963. Please use it on legal products (lab, local,...). |
-| 19⭐ | 10d ago | [CVE-2026-18963-keycloak](https://github.com/Red-Darkin/CVE-2026-18963-keycloak) | A flaw was found in the reset-credentials flow of the keycloak-services component, which is the core engine… |
+| 19⭐ | 11d ago | [CVE-2026-18963-keycloak](https://github.com/Red-Darkin/CVE-2026-18963-keycloak) | A flaw was found in the reset-credentials flow of the keycloak-services component, which is the core engine… |
 | 4⭐ | 11d ago | [CVE-2026-20079](https://github.com/CyberAuth/CVE-2026-20079) | Python proof of concept for CVE-2026-20079 affecting Cisco Secure Firewall Management Center. |
 | 4⭐ | 13d ago | <img src="https://raw.githubusercontent.com/0xMarcio/pocindex/main/docs/kev.svg" alt="KEV" title="CISA known exploited" height="14"> [CVE-2026-65400](https://github.com/acheong08/CVE-2026-65400) | Apple MacOS Screen Sharing Arbitrary File read/write -> RCE |
 | 174⭐ | 13d ago | [CVE-2026-62911](https://github.com/hypnguyen1209/CVE-2026-62911) | POC pre-auth RCE on Exchange |
@@ -54,7 +54,7 @@
 | --- | --- | --- | --- |
 | 6⭐ | 8d ago | <img src="https://raw.githubusercontent.com/0xMarcio/pocindex/main/docs/kev.svg" alt="KEV" title="CISA known exploited" height="14"> [vivo_iqoo_neo_9_root_research_on_CVE-2025-21479](https://github.com/linux-tools/vivo_iqoo_neo_9_root_research_on_CVE-2025-21479) | Memory corruption due to unauthorized command execution in GPU micronode while executing specific sequence of… |
 | 4⭐ | 15d ago | <img src="https://raw.githubusercontent.com/0xMarcio/pocindex/main/docs/kev.svg" alt="KEV" title="CISA known exploited" height="14"> [cve-2025-21479_iqooneo8](https://github.com/Qingizi7/cve-2025-21479_iqooneo8) | Local root exploit for CVE-2025-21479 (Adreno KGSL) on iQOO Neo8 (SM8475) - physical memory r/w, disables… |
-| 20⭐ | 24d ago | [CVE-2025-7771](https://github.com/enessakircolak/CVE-2025-7771) | ThrottleStop.sys Arbitrary Physical Memory R/W |
+| 20⭐ | 25d ago | [CVE-2025-7771](https://github.com/enessakircolak/CVE-2025-7771) | ThrottleStop.sys Arbitrary Physical Memory R/W |
 | 6⭐ | 29d ago | [CVE-2025-8045](https://github.com/kuzeyardabulut/CVE-2025-8045) | Dirty Pagetable Exploit for CVE-2025-8045 |
 | 7⭐ | 33d ago | <img src="https://raw.githubusercontent.com/0xMarcio/pocindex/main/docs/kev.svg" alt="KEV" title="CISA known exploited" height="14"> [SELinux-Permissive-Only-CVE-2025-21479](https://github.com/CamsShaft/SELinux-Permissive-Only-CVE-2025-21479) | This is an SELinux permissive version of the Cheese exploit also known as CVE-2025-21479 which affected the… |
 | 4⭐ | 45d ago | <img src="https://raw.githubusercontent.com/0xMarcio/pocindex/main/docs/kev.svg" alt="KEV" title="CISA known exploited" height="14"> [CVE-2025-32432](https://github.com/c0gnit00/CVE-2025-32432) | Exploit, POC for CVE-2025-32432, CraftCMS2Shell |
@@ -63,10 +63,9 @@
 | 7⭐ | 58d ago | [CVE-2025-30065](https://github.com/h3st4k3r/CVE-2025-30065) | This PoC targets CVE-2025-30065, an RCE vulnerability in Apache Parquet via Avro schema deserialization. It… |
 | 4⭐ | 64d ago | [CVE-2025-69212-PoC](https://github.com/BridgerAlderson/CVE-2025-69212-PoC) | OpenSTAManager v2.9.8 and earlier versions contain a critical OS Command Injection vulnerability in the P7M… |
 | 3⭐ | 64d ago | <img src="https://raw.githubusercontent.com/0xMarcio/pocindex/main/docs/kev.svg" alt="KEV" title="CISA known exploited" height="14"> [CVE-2025-57819](https://github.com/K3ysTr0K3R/CVE-2025-57819) | CVE-2025-57819 - FreePBX Unauthenticated Remote Code Execution (RCE) |
-| 4⭐ | 68d ago | [CVE-2025-69212-PoC](https://github.com/tohib09/CVE-2025-69212-PoC) | OpenSTAManager is an open source management software for technical assistance and invoicing. In 2.9.8 and… |
+| 4⭐ | 69d ago | [CVE-2025-69212-PoC](https://github.com/tohib09/CVE-2025-69212-PoC) | OpenSTAManager is an open source management software for technical assistance and invoicing. In 2.9.8 and… |
 | 5⭐ | 71d ago | <img src="https://raw.githubusercontent.com/0xMarcio/pocindex/main/docs/kev.svg" alt="KEV" title="CISA known exploited" height="14"> [CVE-2025-8110](https://github.com/joaquinrrr/CVE-2025-8110) | PoC exploit for CVE-2025-8110 |
 | 14⭐ | 84d ago | [vulnerable-nextjs-14-CVE-2025-29927](https://github.com/lirantal/vulnerable-nextjs-14-CVE-2025-29927) | Next.js is a React framework for building full-stack web applications. Starting in version 1.11.4 and prior… |
-| 7⭐ | 90d ago | <img src="https://raw.githubusercontent.com/0xMarcio/pocindex/main/docs/kev.svg" alt="KEV" title="CISA known exploited" height="14"> [CVE-2025-57819-poc](https://github.com/b4sh2/CVE-2025-57819-poc) | CVE-2025-57819 -> rce |
 
 <details>
 <summary>2024, 2023, 2022</summary>
@@ -80,7 +79,6 @@
 | 3⭐ | 37d ago | [CVE-2024-36104-PoC](https://github.com/Groppoxx/CVE-2024-36104-PoC) | PoC for CVE-2024-36104 - unauthenticated Groovy RCE in Apache OFBiz (<18.12.14) via /%2e/%2e/ view path… |
 | 3⭐ | 75d ago | [CVE-2024-36991](https://github.com/0xFZin/CVE-2024-36991) | Exploit for CVE-2024-36991 , written by me, enumerates a handfull of things, not all, cause not needed. |
 | 7⭐ | 84d ago | [CVE-2024-27983-nodejs-http2](https://github.com/lirantal/CVE-2024-27983-nodejs-http2) | CVE-2024-27983 this repository builds up a vulnerable HTTP2 Node.js server (`server-nossl.js`) based on… |
-| 4⭐ | 90d ago | [CVE-2024-1065](https://github.com/kuzeyardabulut/CVE-2024-1065) | Page Cache Exploit for CVE-2024-1065 |
 
 ## Trending in 2023
 

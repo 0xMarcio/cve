@@ -374,17 +374,6 @@
   "kev": false
  },
  {
-  "year": 2025,
-  "stars": 7,
-  "name": "CVE-2025-57819-poc",
-  "url": "https://github.com/b4sh2/CVE-2025-57819-poc",
-  "desc": "CVE-2025-57819 -> rce",
-  "pushed": "2026-06-06T20:21:04Z",
-  "created": "2026-06-06T20:13:34Z",
-  "cve": "CVE-2025-57819",
-  "kev": true
- },
- {
   "year": 2024,
   "stars": 16,
   "name": "CVE-2024-56426",
@@ -437,17 +426,6 @@
   "pushed": "2026-06-12T09:43:05Z",
   "created": "2024-04-14T11:34:52Z",
   "cve": "CVE-2024-27983",
-  "kev": false
- },
- {
-  "year": 2024,
-  "stars": 4,
-  "name": "CVE-2024-1065",
-  "url": "https://github.com/kuzeyardabulut/CVE-2024-1065",
-  "desc": "Page Cache Exploit for CVE-2024-1065",
-  "pushed": "2026-06-06T14:00:55Z",
-  "created": "2026-06-02T10:21:23Z",
-  "cve": "CVE-2024-1065",
   "kev": false
  },
  {
@@ -518,7 +496,7 @@
  },
  {
   "year": 2025,
-  "stars": 0,
+  "stars": 1,
   "name": "CVE-2025-9974",
   "url": "https://github.com/Rajdave69/CVE-2025-9974",
   "desc": "Proof of Concept code for the CVE-2025-9974 affecting Nokia Beacon routers.",
@@ -578,6 +556,18 @@
  },
  {
   "year": 2026,
+  "stars": 0,
+  "name": "CVE-2026-31787",
+  "url": "https://github.com/0xAtharv/CVE-2026-31787",
+  "desc": "Linux kernel double free in Xen privcmd driver",
+  "pushed": "2026-09-04T01:21:16Z",
+  "created": "2026-09-04T01:08:31Z",
+  "cve": "CVE-2026-31787",
+  "kev": false,
+  "landed": true
+ },
+ {
+  "year": 2026,
   "stars": 66,
   "name": "CVE-2026-65343",
   "url": "https://github.com/ByteV0rtex/CVE-2026-65343",
@@ -621,18 +611,6 @@
   "pushed": "2026-09-02T14:46:39Z",
   "created": "2026-08-30T12:49:43Z",
   "cve": "CVE-2025-6440",
-  "kev": false,
-  "landed": true
- },
- {
-  "year": 2025,
-  "stars": 0,
-  "name": "CVE-2025-29009",
-  "url": "https://github.com/katranSefa/CVE-2025-29009",
-  "desc": "Unrestricted Upload of File with Dangerous Type vulnerability in Webkul Medical Prescription Attachment Plugin for WooCommerce medical-prescription-attachment-plugin-for-woocommerce allows Upload a Web Shell to a Web Server.This issue affects Medical Prescription Attachment Plugin for WooCommerce: from n/a through <= 1.2.3.",
-  "pushed": "2026-09-02T14:39:51Z",
-  "created": "2026-09-02T14:39:37Z",
-  "cve": "CVE-2025-29009",
   "kev": false,
   "landed": true
  }
