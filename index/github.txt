@@ -26784,3 +26784,4 @@ CVE-2025-29927 - https://github.com/Ritinify/CVE-2025-29927-PoC
 CVE-2026-66447 - https://github.com/Secneural/CVE-POC
 CVE-2026-70426 - https://github.com/Secneural/CVE-POC
 CVE-2026-85046 - https://github.com/adriyansyah-mf/cve-2026-85046-poc
+CVE-2026-84645 - https://github.com/mhtsec/CVE-2026-84645
