@@ -2,7 +2,7 @@
 
 <a href="https://pocindex.io/"><img src="https://raw.githubusercontent.com/0xMarcio/pocindex/main/docs/hero.svg?v=171175-82589-1185" alt="PoC Index" width="100%"></a>
 
-[![last sync](https://img.shields.io/badge/last%20sync-05%20Sep%202026%2004%3A07%20UTC-2f81f7?style=flat-square&labelColor=161b22)](https://github.com/0xMarcio/pocindex/commits/main)&nbsp;[![CI](https://img.shields.io/github/actions/workflow/status/0xMarcio/pocindex/hot_cves.yml?style=flat-square&label=CI&color=2f81f7&labelColor=161b22&_=202609050407)](https://github.com/0xMarcio/pocindex/actions/workflows/hot_cves.yml)&nbsp;[![CVEs with PoCs](https://img.shields.io/badge/CVEs%20with%20PoCs-82%2C589-2f81f7?style=flat-square&labelColor=161b22)](https://pocindex.io/)&nbsp;[![known exploited](https://img.shields.io/badge/known%20exploited-1%2C185-f85149?style=flat-square&labelColor=161b22)](https://pocindex.io/)&nbsp;[![stars](https://img.shields.io/github/stars/0xMarcio/pocindex?style=flat-square&label=stars&color=e3b341&labelColor=161b22&_=202609050407)](https://github.com/0xMarcio/pocindex/stargazers)
+[![last sync](https://img.shields.io/badge/last%20sync-05%20Sep%202026%2005%3A07%20UTC-2f81f7?style=flat-square&labelColor=161b22)](https://github.com/0xMarcio/pocindex/commits/main)&nbsp;[![CI](https://img.shields.io/github/actions/workflow/status/0xMarcio/pocindex/hot_cves.yml?style=flat-square&label=CI&color=2f81f7&labelColor=161b22&_=202609050507)](https://github.com/0xMarcio/pocindex/actions/workflows/hot_cves.yml)&nbsp;[![CVEs with PoCs](https://img.shields.io/badge/CVEs%20with%20PoCs-82%2C589-2f81f7?style=flat-square&labelColor=161b22)](https://pocindex.io/)&nbsp;[![known exploited](https://img.shields.io/badge/known%20exploited-1%2C185-f85149?style=flat-square&labelColor=161b22)](https://pocindex.io/)&nbsp;[![stars](https://img.shields.io/github/stars/0xMarcio/pocindex?style=flat-square&label=stars&color=e3b341&labelColor=161b22&_=202609050507)](https://github.com/0xMarcio/pocindex/stargazers)
 
 <a href="https://pocindex.io/"><img src="https://raw.githubusercontent.com/0xMarcio/pocindex/8dec6181e823d641132e0ee8a52a1612c2b5dd37/docs/search.svg" alt="Search PoC Index" width="100%"></a>
 
@@ -12,12 +12,12 @@
 
 | Stars | Updated | Repository | Description |
 | --- | --- | --- | --- |
-| 0⭐ | 59m ago | <img src="https://raw.githubusercontent.com/0xMarcio/pocindex/main/docs/kev.svg" alt="KEV" title="CISA known exploited" height="14"> [Langflow-RCE-CVE-2025-3248](https://github.com/LeotheGGman/Langflow-RCE-CVE-2025-3248) | Langflow versions prior to 1.3.0 are susceptible to code injection in the /api/v1/validate/code endpoint. A… |
-| 1⭐ | 5h ago | [CVE-2025-9974](https://github.com/Rajdave69/CVE-2025-9974) | Proof of Concept code for the CVE-2025-9974 affecting Nokia Beacon routers. |
-| 0⭐ | 15h ago | [CVE-2026-19516](https://github.com/HORKimhab/CVE-2026-19516) | A caller-supplied X-Grafana-URL request header controls the destination of mcp-grafana's outbound requests,… |
-| 2⭐ | 17h ago | [CVE-2026-65643-PoC-Toolkit](https://github.com/tc4dy/CVE-2026-65643-PoC-Toolkit) | 🧰 CVE-2026-65643 - cPanel Domain Parking RCE Toolkit (CVSS 8.7) / Red/Blue Team suite for unpatched cPanel &… |
-| 2⭐ | 22h ago | [CVE-2026-65349](https://github.com/ByteV0rtex/CVE-2026-65349) | CVE-2026-65349 PoC - getattrlist OOB write in vfs_attr_pack_internal (iOS 26.6 / 23G71) |
-| 4⭐ | 22h ago | [CVE-2026-64788](https://github.com/ByteV0rtex/CVE-2026-64788) | CVE-2026-64788 PoC - IOGPUFamily Use-After-Free (iOS 26.6 / 23G71) |
+| 0⭐ | 1h ago | <img src="https://raw.githubusercontent.com/0xMarcio/pocindex/main/docs/kev.svg" alt="KEV" title="CISA known exploited" height="14"> [Langflow-RCE-CVE-2025-3248](https://github.com/LeotheGGman/Langflow-RCE-CVE-2025-3248) | Langflow versions prior to 1.3.0 are susceptible to code injection in the /api/v1/validate/code endpoint. A… |
+| 1⭐ | 6h ago | [CVE-2025-9974](https://github.com/Rajdave69/CVE-2025-9974) | Proof of Concept code for the CVE-2025-9974 affecting Nokia Beacon routers. |
+| 0⭐ | 16h ago | [CVE-2026-19516](https://github.com/HORKimhab/CVE-2026-19516) | A caller-supplied X-Grafana-URL request header controls the destination of mcp-grafana's outbound requests,… |
+| 2⭐ | 18h ago | [CVE-2026-65643-PoC-Toolkit](https://github.com/tc4dy/CVE-2026-65643-PoC-Toolkit) | 🧰 CVE-2026-65643 - cPanel Domain Parking RCE Toolkit (CVSS 8.7) / Red/Blue Team suite for unpatched cPanel &… |
+| 2⭐ | 23h ago | [CVE-2026-65349](https://github.com/ByteV0rtex/CVE-2026-65349) | CVE-2026-65349 PoC - getattrlist OOB write in vfs_attr_pack_internal (iOS 26.6 / 23G71) |
+| 4⭐ | 23h ago | [CVE-2026-64788](https://github.com/ByteV0rtex/CVE-2026-64788) | CVE-2026-64788 PoC - IOGPUFamily Use-After-Free (iOS 26.6 / 23G71) |
 | 0⭐ | 1d ago | [CVE-2026-31787](https://github.com/0xAtharv/CVE-2026-31787) | Linux kernel double free in Xen privcmd driver |
 | 66⭐ | 1d ago | [CVE-2026-65343](https://github.com/ByteV0rtex/CVE-2026-65343) | CVE-2026-65343 PoC - AppleKeyStore OOB read → KASLR defeat (iOS 26.6 / 23G71) |
 | 0⭐ | 1d ago | [CVE-2026-80428](https://github.com/Zipkoppie/CVE-2026-80428) | CVE-2026-80428 PoC |
@@ -27,7 +27,7 @@
 
 | Stars | Updated | Repository | Description |
 | --- | --- | --- | --- |
-| 5⭐ | 6h ago | <img src="https://raw.githubusercontent.com/0xMarcio/pocindex/main/docs/kev.svg" alt="KEV" title="CISA known exploited" height="14"> [CVE-2026-15409-15410-Framework](https://github.com/tc4dy/CVE-2026-15409-15410-Framework) | CVE-2026-15409/15410 SonicWall SMA1000 multi-exploit Framework 🔥 SSRF→Erlang RPC→RCE→root privesc. Features:… |
+| 5⭐ | 7h ago | <img src="https://raw.githubusercontent.com/0xMarcio/pocindex/main/docs/kev.svg" alt="KEV" title="CISA known exploited" height="14"> [CVE-2026-15409-15410-Framework](https://github.com/tc4dy/CVE-2026-15409-15410-Framework) | CVE-2026-15409/15410 SonicWall SMA1000 multi-exploit Framework 🔥 SSRF→Erlang RPC→RCE→root privesc. Features:… |
 | 3⭐ | 1d ago | [CVE-2026-62735](https://github.com/HackSpeak/CVE-2026-62735) | Windows HTTP.sys integer overflow -> nonpaged pool overflow LPE PoC (CVE-2026-62735): crash + full SYSTEM… |
 | 7⭐ | 2d ago | [CVE-2026-19490](https://github.com/TarPeg007/CVE-2026-19490) | NetScaler ADC/Gateway SAML unsigned-assertion bypass via HTTP-Redirect binding (CTX696939) - root cause… |
 | 3⭐ | 5d ago | [CVE-2026-78904-Digital-Dinar-Drain](https://github.com/vxssroott/CVE-2026-78904-Digital-Dinar-Drain) | CBDC Infrastructure Vulnerability Research. CVE-2026-78904: Infinite mint and redemption bypass in central… |
@@ -44,7 +44,7 @@
 | 19⭐ | 11d ago | [CVE-2026-18963-keycloak](https://github.com/Red-Darkin/CVE-2026-18963-keycloak) | A flaw was found in the reset-credentials flow of the keycloak-services component, which is the core engine… |
 | 4⭐ | 11d ago | [CVE-2026-20079](https://github.com/CyberAuth/CVE-2026-20079) | Python proof of concept for CVE-2026-20079 affecting Cisco Secure Firewall Management Center. |
 | 4⭐ | 13d ago | <img src="https://raw.githubusercontent.com/0xMarcio/pocindex/main/docs/kev.svg" alt="KEV" title="CISA known exploited" height="14"> [CVE-2026-65400](https://github.com/acheong08/CVE-2026-65400) | Apple MacOS Screen Sharing Arbitrary File read/write -> RCE |
-| 174⭐ | 13d ago | [CVE-2026-62911](https://github.com/hypnguyen1209/CVE-2026-62911) | POC pre-auth RCE on Exchange |
+| 174⭐ | 14d ago | [CVE-2026-62911](https://github.com/hypnguyen1209/CVE-2026-62911) | POC pre-auth RCE on Exchange |
 | 5⭐ | 14d ago | <img src="https://raw.githubusercontent.com/0xMarcio/pocindex/main/docs/kev.svg" alt="KEV" title="CISA known exploited" height="14"> [CVE-2026-65400-poc](https://github.com/panchocosil/CVE-2026-65400-poc) | Read-only PoC for CVE-2026-65400 - macOS Screen Sharing (screensharingd) pre-auth SRP bypass giving root file… |
 | 7⭐ | 14d ago | <img src="https://raw.githubusercontent.com/0xMarcio/pocindex/main/docs/kev.svg" alt="KEV" title="CISA known exploited" height="14"> [CVE-2026-34910-PoC](https://github.com/Boreas37/CVE-2026-34910-PoC) | CVE-2026-34910/34909 - UniFi OS unauth RCE + file read via ..%2f auth bypass (CVSS 10.0, KEV, Mirai ITW) |
 
