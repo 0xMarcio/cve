@@ -495,6 +495,18 @@
   "kev": false
  },
  {
+  "year": 2026,
+  "stars": 2,
+  "name": "cve-2026-32475-elementor-pro-lab",
+  "url": "https://github.com/dinosn/cve-2026-32475-elementor-pro-lab",
+  "desc": "A/B Docker lab + PoC for CVE-2026-32475 (Elementor Pro Forms unauthenticated arbitrary file upload -> RCE via validation/move loop desync)",
+  "pushed": "2026-09-05T06:14:16Z",
+  "created": "2026-09-05T06:23:21Z",
+  "cve": "CVE-2026-32475",
+  "kev": false,
+  "landed": true
+ },
+ {
   "year": 2025,
   "stars": 0,
   "name": "Langflow-RCE-CVE-2025-3248",
@@ -599,18 +611,6 @@
   "pushed": "2026-09-03T13:39:57Z",
   "created": "2026-09-03T13:38:01Z",
   "cve": "CVE-2026-80428",
-  "kev": false,
-  "landed": true
- },
- {
-  "year": 2026,
-  "stars": 0,
-  "name": "CVE-2026-78071",
-  "url": "https://github.com/toanln-cov/CVE-2026-78071",
-  "desc": "Stored XSS via Location Title in DPCalendar Free",
-  "pushed": "2026-09-03T10:01:38Z",
-  "created": "2026-09-03T10:01:02Z",
-  "cve": "CVE-2026-78071",
   "kev": false,
   "landed": true
  }
