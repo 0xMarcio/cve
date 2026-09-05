@@ -26780,3 +26780,4 @@ CVE-2026-56290 - https://github.com/katranSefa/CVE-2026-56290
 CVE-2026-3326 - https://github.com/katranSefa/CVE-2026-3326
 CVE-2026-41940 - https://github.com/0xgh057r3c0n/CVE-2026-41940
 CVE-2026-64560 - https://github.com/quyicheng03-boop/xiaomi15-dada-cve-2026-64560
+CVE-2025-29927 - https://github.com/Ritinify/CVE-2025-29927-PoC
