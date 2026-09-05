@@ -111,7 +111,7 @@
  },
  {
   "year": 2026,
-  "stars": 85,
+  "stars": 86,
   "name": "CVE-2026-75604-poc",
   "url": "https://github.com/rafabd1/CVE-2026-75604-poc",
   "desc": "CVE-2026-75604 Next.js Windows RCE poc",
