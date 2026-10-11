@@ -27333,3 +27333,5 @@ CVE-2026-106610 - https://github.com/KevineCharles/CVE-2026-106610-miniorange-ot
 CVE-2026-108592 - https://github.com/asvorg/CVE-2026-108592-poc
 CVE-2026-38812 - https://github.com/YYF1337/RuoYi-CVE-2026-38812-UNFIX
 CVE-2025-24813 - https://github.com/toyplan/cve-2025-24813
+CVE-2025-57819 - https://github.com/Wayang1337/CVE-2025-57819
+CVE-2026-104335 - https://github.com/Farih123/CVE-2026-104335
