@@ -27327,3 +27327,4 @@ CVE-2026-104335 - https://github.com/Farih123/CVE-2026-104335
 CVE-2026-40224 - https://github.com/0xparad0x/Exploit-CVE-2026-40224
 CVE-2025-57819 - https://github.com/HexBytee/FreePBX-SQLi-RCE
 CVE-2026-27626 - https://github.com/Shisones/CVE-2026-27626
+CVE-2026-106446 - https://github.com/shift-left-test-org2/auto-pr-demo
