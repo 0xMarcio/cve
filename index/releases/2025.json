@@ -8488,6 +8488,7 @@
 "CVE-2025-55182 github:lutraat/cve-2025-55182-react-rsc-exploit?#":{"basis":"unknown","cve":"CVE-2025-55182","imported":true,"released":null,"url":"https://github.com/lutraat/CVE-2025-55182-React-RSC-Exploit"},
 "CVE-2025-55182 github:lvmalware/cve-2025-55182?#":{"basis":"unknown","cve":"CVE-2025-55182","imported":true,"released":null,"url":"https://github.com/LvMalware/CVE-2025-55182"},
 "CVE-2025-55182 github:m3ngx1ng/cve-2025-55182-gui?#":{"basis":"unknown","cve":"CVE-2025-55182","imported":true,"released":null,"url":"https://github.com/m3ngx1ng/CVE-2025-55182-GUI"},
+"CVE-2025-55182 github:m4rc3l08/reactorwriteup-hackthebox?#":{"basis":"unknown","cve":"CVE-2025-55182","released":null,"seen":"2026-10-11T18:12:02Z","url":"https://github.com/M4rc3l08/ReactorWriteUp-HackTheBox"},
 "CVE-2025-55182 github:m4rgs/cve-2025-55182-react2shell-exploit?#":{"basis":"unknown","cve":"CVE-2025-55182","imported":true,"released":null,"url":"https://github.com/M4rgs/CVE-2025-55182-React2Shell-Exploit"},
 "CVE-2025-55182 github:m4xsec/cve-2025-55182-react2shell-rce-shell?#":{"basis":"unknown","cve":"CVE-2025-55182","imported":true,"released":null,"url":"https://github.com/M4xSec/CVE-2025-55182-React2Shell-RCE-Shell"},
 "CVE-2025-55182 github:mahaveer-choudhary/cve-2025-55182?#":{"basis":"unknown","cve":"CVE-2025-55182","imported":true,"released":null,"url":"https://github.com/mahaveer-choudhary/CVE-2025-55182"},
