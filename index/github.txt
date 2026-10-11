@@ -27331,3 +27331,4 @@ CVE-2026-84411 - https://github.com/maxprog-svg/CVE-2026-84411
 CVE-2026-102428 - https://github.com/MRdark-ops/sqli-cve-2026-102428
 CVE-2026-106610 - https://github.com/KevineCharles/CVE-2026-106610-miniorange-otp-ato
 CVE-2026-108592 - https://github.com/asvorg/CVE-2026-108592-poc
+CVE-2026-38812 - https://github.com/YYF1337/RuoYi-CVE-2026-38812-UNFIX
