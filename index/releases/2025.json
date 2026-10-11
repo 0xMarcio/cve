@@ -9164,6 +9164,7 @@
 "CVE-2025-57819 github:blueisbeautiful/cve-2025-57819?#":{"basis":"unknown","cve":"CVE-2025-57819","imported":true,"released":null,"url":"https://github.com/blueisbeautiful/CVE-2025-57819"},
 "CVE-2025-57819 github:brokendreamsclub/cve-2025-57819?#":{"basis":"unknown","cve":"CVE-2025-57819","imported":true,"released":null,"url":"https://github.com/brokendreamsclub/CVE-2025-57819"},
 "CVE-2025-57819 github:cybertechajju/cve-2025-57819?#":{"basis":"unknown","cve":"CVE-2025-57819","imported":true,"released":null,"url":"https://github.com/cybertechajju/cve-2025-57819"},
+"CVE-2025-57819 github:hexbytee/freepbx-sqli-rce?#":{"basis":"unknown","cve":"CVE-2025-57819","released":null,"seen":"2026-10-11T11:28:23Z","url":"https://github.com/HexBytee/FreePBX-SQLi-RCE"},
 "CVE-2025-57819 github:its1zero/cve-2025-57819-exploit?#":{"basis":"unknown","cve":"CVE-2025-57819","imported":true,"released":null,"url":"https://github.com/Its1Zero/cve-2025-57819-exploit"},
 "CVE-2025-57819 github:jasonbernier/cve-2025-5781?#":{"basis":"unknown","cve":"CVE-2025-57819","imported":true,"released":null,"url":"https://github.com/jasonbernier/CVE-2025-5781"},
 "CVE-2025-57819 github:jazztherabbit/freepbx-sqli-rce?#":{"basis":"unknown","cve":"CVE-2025-57819","imported":true,"released":null,"url":"https://github.com/JazzTheRabbit/FreePBX-SQLi-RCE"},
