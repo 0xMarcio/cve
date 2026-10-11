@@ -2,7 +2,7 @@
 
 <a href="https://pocindex.io/"><img src="https://raw.githubusercontent.com/0xMarcio/pocindex/main/docs/hero.svg?v=173814-84368-1230" alt="PoC Index" width="100%"></a>
 
-[![last sync](https://img.shields.io/badge/last%20sync-11%20Oct%202026%2003%3A07%20UTC-2f81f7?style=flat-square&labelColor=161b22)](https://github.com/0xMarcio/pocindex/commits/main)&nbsp;[![CI](https://img.shields.io/github/actions/workflow/status/0xMarcio/pocindex/hot_cves.yml?style=flat-square&label=CI&color=2f81f7&labelColor=161b22&_=202610110307)](https://github.com/0xMarcio/pocindex/actions/workflows/hot_cves.yml)&nbsp;[![CVEs with PoCs](https://img.shields.io/badge/CVEs%20with%20PoCs-84%2C368-2f81f7?style=flat-square&labelColor=161b22)](https://pocindex.io/)&nbsp;[![known exploited](https://img.shields.io/badge/known%20exploited-1%2C230-f85149?style=flat-square&labelColor=161b22)](https://pocindex.io/)&nbsp;[![stars](https://img.shields.io/github/stars/0xMarcio/pocindex?style=flat-square&label=stars&color=e3b341&labelColor=161b22&_=202610110307)](https://github.com/0xMarcio/pocindex/stargazers)
+[![last sync](https://img.shields.io/badge/last%20sync-11%20Oct%202026%2004%3A07%20UTC-2f81f7?style=flat-square&labelColor=161b22)](https://github.com/0xMarcio/pocindex/commits/main)&nbsp;[![CI](https://img.shields.io/github/actions/workflow/status/0xMarcio/pocindex/hot_cves.yml?style=flat-square&label=CI&color=2f81f7&labelColor=161b22&_=202610110407)](https://github.com/0xMarcio/pocindex/actions/workflows/hot_cves.yml)&nbsp;[![CVEs with PoCs](https://img.shields.io/badge/CVEs%20with%20PoCs-84%2C368-2f81f7?style=flat-square&labelColor=161b22)](https://pocindex.io/)&nbsp;[![known exploited](https://img.shields.io/badge/known%20exploited-1%2C230-f85149?style=flat-square&labelColor=161b22)](https://pocindex.io/)&nbsp;[![stars](https://img.shields.io/github/stars/0xMarcio/pocindex?style=flat-square&label=stars&color=e3b341&labelColor=161b22&_=202610110407)](https://github.com/0xMarcio/pocindex/stargazers)
 
 <a href="https://pocindex.io/"><img src="https://raw.githubusercontent.com/0xMarcio/pocindex/8dec6181e823d641132e0ee8a52a1612c2b5dd37/docs/search.svg" alt="Search PoC Index" width="100%"></a>
 
@@ -14,13 +14,13 @@
 
 | Stars | Released | PoC | Description |
 | --- | --- | --- | --- |
-| 0⭐ | 1h ago | [RuoYi-CVE-2026-38812-UNFIX](https://github.com/YYF1337/RuoYi-CVE-2026-38812-UNFIX) | RuoYi v4.8.2 is vulnerable to SQL Injection via the /tool/gen/createTable endpoint. The issue affects the… |
-| 0⭐ | 3h ago | [CVE-2026-108592-poc](https://github.com/asvorg/CVE-2026-108592-poc) | CVE-2026-108592 - Environment Variable Exposure PoC in mini-swe-agent |
-| 0⭐ | 18h ago | [CVE-2026-102428](https://github.com/murrez/CVE-2026-102428) | CVE-2026-102428 PoC: OrdaSoft Joomla OS CCK (com_os_cck) <=8.3.15 unauth SQLi - order_field/order_direction… |
-| 0⭐ | 18h ago | [CVE-2026-106445](https://github.com/murrez/CVE-2026-106445) | CVE-2026-106445 - Handlebars 4.0.0-4.7.9 RCE via Function.prototype.constructor bypass (GHSA-p8wg-vrv2-v86f).… |
-| 0⭐ | 18h ago | [CVE-2026-107806](https://github.com/murrez/CVE-2026-107806) | CVE-2026-107806 - nginx-ui 2.3.8-2.4.x auth RCE via forged backup restore (TestConfigCmd). PoCbit PoC: GET… |
-| 0⭐ | 22h ago | [CVE-2026-94503](https://github.com/Wayang1337/CVE-2026-94503) | Zombify <= 1.7.7 Unauthenticated Arbitrary File Upload |
-| 0⭐ | 22h ago | [CVE-2026-85097](https://github.com/Wayang1337/CVE-2026-85097) | Bricksforge <= 3.1.8.9 Unauthenticated Arbitrary File Upload |
+| 0⭐ | 2h ago | [RuoYi-CVE-2026-38812-UNFIX](https://github.com/YYF1337/RuoYi-CVE-2026-38812-UNFIX) | RuoYi v4.8.2 is vulnerable to SQL Injection via the /tool/gen/createTable endpoint. The issue affects the… |
+| 0⭐ | 4h ago | [CVE-2026-108592-poc](https://github.com/asvorg/CVE-2026-108592-poc) | CVE-2026-108592 - Environment Variable Exposure PoC in mini-swe-agent |
+| 0⭐ | 19h ago | [CVE-2026-102428](https://github.com/murrez/CVE-2026-102428) | CVE-2026-102428 PoC: OrdaSoft Joomla OS CCK (com_os_cck) <=8.3.15 unauth SQLi - order_field/order_direction… |
+| 0⭐ | 19h ago | [CVE-2026-106445](https://github.com/murrez/CVE-2026-106445) | CVE-2026-106445 - Handlebars 4.0.0-4.7.9 RCE via Function.prototype.constructor bypass (GHSA-p8wg-vrv2-v86f).… |
+| 0⭐ | 19h ago | [CVE-2026-107806](https://github.com/murrez/CVE-2026-107806) | CVE-2026-107806 - nginx-ui 2.3.8-2.4.x auth RCE via forged backup restore (TestConfigCmd). PoCbit PoC: GET… |
+| 0⭐ | 23h ago | [CVE-2026-94503](https://github.com/Wayang1337/CVE-2026-94503) | Zombify <= 1.7.7 Unauthenticated Arbitrary File Upload |
+| 0⭐ | 23h ago | [CVE-2026-85097](https://github.com/Wayang1337/CVE-2026-85097) | Bricksforge <= 3.1.8.9 Unauthenticated Arbitrary File Upload |
 | 1⭐ | 1d ago | [telegram-cve-2026-107181](https://github.com/SeanDishman/telegram-cve-2026-107181) | Telegram CVE-2026-107181 |
 | 1⭐ | 1d ago | [CVE-2026-84520](https://github.com/csrXamfi/CVE-2026-84520) | AppleFDEKeyStore poc |
 | 0⭐ | 1d ago | [CVE-2025-34071](https://github.com/cppghoul/CVE-2025-34071) | RCE in Kerio Control 9.4.5 via unsigned firmware update. |
@@ -41,13 +41,13 @@
 | 108⭐ | 68d ago | [SCCM-CVE-2026-47301-Remote-Code-Execution-Exploit](https://github.com/OmriBaso/SCCM-CVE-2026-47301-Remote-Code-Execution-Exploit) | Proof-of-concept exploit chain (CVE-2026-47301) for Microsoft Configuration Manager (SCCM), combining a… |
 | 40⭐ | 17d ago | [CVE-2026-84543](https://github.com/petermalone/CVE-2026-84543) | Technical disclosure and PoC for CVE-2026-84543, a macOS SMB kernel vulnerability |
 | 39⭐ | 18d ago | <img src="https://raw.githubusercontent.com/0xMarcio/pocindex/main/docs/kev.svg" alt="KEV" title="CISA known exploited" height="14"> [cve-2026-87902-poc](https://github.com/ressl/cve-2026-87902-poc) | PoC for CVE-2026-87902 - unauthenticated path traversal in WordPress page-template resolution (local PHP… |
-| 31⭐ | 13d ago | [CVE-2026-34990](https://github.com/predyy/CVE-2026-34990) | CVE-2026-34990 minimal PoC. CUPS <= 2.4.16 local privesc. |
 | 108⭐ | 84d ago | [CVE-2026-43499-Poc-Analysis](https://github.com/Linuxoid-cn/CVE-2026-43499-Poc-Analysis) | Vulnerability analysis and Proof of Concept (PoC) for CVE-2026-43499 affecting Xiaomi devices. For… |
+| 31⭐ | 13d ago | [CVE-2026-34990](https://github.com/predyy/CVE-2026-34990) | CVE-2026-34990 minimal PoC. CUPS <= 2.4.16 local privesc. |
 | 35⭐ | 4d ago | <img src="https://raw.githubusercontent.com/0xMarcio/pocindex/main/docs/kev.svg" alt="KEV" title="CISA known exploited" height="14"> [CVE-2026-87902](https://github.com/abraxas/CVE-2026-87902) | CVE-2026-87902 - WordPress - WordPress Core - Critical 9.2 - Unauthenticated Local File Inclusion… |
 | 26⭐ | 12d ago | <img src="https://raw.githubusercontent.com/0xMarcio/pocindex/main/docs/kev.svg" alt="KEV" title="CISA known exploited" height="14"> [CVE-2026-85706](https://github.com/EQSTLab/CVE-2026-85706) | GitLab Unauthenticated Arbitrary File Read |
 | 43⭐ | 29d ago | <img src="https://raw.githubusercontent.com/0xMarcio/pocindex/main/docs/kev.svg" alt="KEV" title="CISA known exploited" height="14"> [cve-2026-85706](https://github.com/guneykabel/cve-2026-85706) | Exploit poc for CVE-2026-85706 an unauthenticated arbitrary file read on Gitlab CE-EE affecting versions:… |
-| 23⭐ | 12d ago | <img src="https://raw.githubusercontent.com/0xMarcio/pocindex/main/docs/kev.svg" alt="KEV" title="CISA known exploited" height="14"> [watchTowr-vs-Citrix-Netscaler-CVE-2026-88771](https://github.com/watchtowrlabs/watchTowr-vs-Citrix-Netscaler-CVE-2026-88771) | Improper input validation vulnerability in Citrix NetScaler ADC and Citrix NetScaler Gateway. This issue… |
 | 86⭐ | 89d ago | [Android-CVE-2026-43499](https://github.com/CakesTwix/Android-CVE-2026-43499) | Android version CVE-2026-43499 tester |
+| 23⭐ | 12d ago | <img src="https://raw.githubusercontent.com/0xMarcio/pocindex/main/docs/kev.svg" alt="KEV" title="CISA known exploited" height="14"> [watchTowr-vs-Citrix-Netscaler-CVE-2026-88771](https://github.com/watchtowrlabs/watchTowr-vs-Citrix-Netscaler-CVE-2026-88771) | Improper input validation vulnerability in Citrix NetScaler ADC and Citrix NetScaler Gateway. This issue… |
 | 30⭐ | 19d ago | [CVE-2026-43786](https://github.com/Malwation/CVE-2026-43786) | Proof of concept for CVE-2026-43786, a local privilege escalation vulnerability in macOS CoreServices that… |
 
 ## Trending in 2025
