@@ -2,7 +2,7 @@
 
 <a href="https://pocindex.io/"><img src="https://raw.githubusercontent.com/0xMarcio/pocindex/main/docs/hero.svg?v=173814-84368-1230" alt="PoC Index" width="100%"></a>
 
-[![last sync](https://img.shields.io/badge/last%20sync-11%20Oct%202026%2005%3A07%20UTC-2f81f7?style=flat-square&labelColor=161b22)](https://github.com/0xMarcio/pocindex/commits/main)&nbsp;[![CI](https://img.shields.io/github/actions/workflow/status/0xMarcio/pocindex/hot_cves.yml?style=flat-square&label=CI&color=2f81f7&labelColor=161b22&_=202610110507)](https://github.com/0xMarcio/pocindex/actions/workflows/hot_cves.yml)&nbsp;[![CVEs with PoCs](https://img.shields.io/badge/CVEs%20with%20PoCs-84%2C368-2f81f7?style=flat-square&labelColor=161b22)](https://pocindex.io/)&nbsp;[![known exploited](https://img.shields.io/badge/known%20exploited-1%2C230-f85149?style=flat-square&labelColor=161b22)](https://pocindex.io/)&nbsp;[![stars](https://img.shields.io/github/stars/0xMarcio/pocindex?style=flat-square&label=stars&color=e3b341&labelColor=161b22&_=202610110507)](https://github.com/0xMarcio/pocindex/stargazers)
+[![last sync](https://img.shields.io/badge/last%20sync-11%20Oct%202026%2006%3A07%20UTC-2f81f7?style=flat-square&labelColor=161b22)](https://github.com/0xMarcio/pocindex/commits/main)&nbsp;[![CI](https://img.shields.io/github/actions/workflow/status/0xMarcio/pocindex/hot_cves.yml?style=flat-square&label=CI&color=2f81f7&labelColor=161b22&_=202610110607)](https://github.com/0xMarcio/pocindex/actions/workflows/hot_cves.yml)&nbsp;[![CVEs with PoCs](https://img.shields.io/badge/CVEs%20with%20PoCs-84%2C368-2f81f7?style=flat-square&labelColor=161b22)](https://pocindex.io/)&nbsp;[![known exploited](https://img.shields.io/badge/known%20exploited-1%2C230-f85149?style=flat-square&labelColor=161b22)](https://pocindex.io/)&nbsp;[![stars](https://img.shields.io/github/stars/0xMarcio/pocindex?style=flat-square&label=stars&color=e3b341&labelColor=161b22&_=202610110607)](https://github.com/0xMarcio/pocindex/stargazers)
 
 <a href="https://pocindex.io/"><img src="https://raw.githubusercontent.com/0xMarcio/pocindex/8dec6181e823d641132e0ee8a52a1612c2b5dd37/docs/search.svg" alt="Search PoC Index" width="100%"></a>
 
@@ -14,16 +14,16 @@
 
 | Stars | Released | PoC | Description |
 | --- | --- | --- | --- |
-| 0⭐ | 3h ago | [RuoYi-CVE-2026-38812-UNFIX](https://github.com/YYF1337/RuoYi-CVE-2026-38812-UNFIX) | RuoYi v4.8.2 is vulnerable to SQL Injection via the /tool/gen/createTable endpoint. The issue affects the… |
-| 0⭐ | 5h ago | [CVE-2026-108592-poc](https://github.com/asvorg/CVE-2026-108592-poc) | CVE-2026-108592 - Environment Variable Exposure PoC in mini-swe-agent |
-| 0⭐ | 20h ago | [CVE-2026-102428](https://github.com/murrez/CVE-2026-102428) | CVE-2026-102428 PoC: OrdaSoft Joomla OS CCK (com_os_cck) <=8.3.15 unauth SQLi - order_field/order_direction… |
-| 0⭐ | 20h ago | [CVE-2026-106445](https://github.com/murrez/CVE-2026-106445) | CVE-2026-106445 - Handlebars 4.0.0-4.7.9 RCE via Function.prototype.constructor bypass (GHSA-p8wg-vrv2-v86f).… |
-| 0⭐ | 20h ago | [CVE-2026-107806](https://github.com/murrez/CVE-2026-107806) | CVE-2026-107806 - nginx-ui 2.3.8-2.4.x auth RCE via forged backup restore (TestConfigCmd). PoCbit PoC: GET… |
+| 0⭐ | 1h ago | <img src="https://raw.githubusercontent.com/0xMarcio/pocindex/main/docs/kev.svg" alt="KEV" title="CISA known exploited" height="14"> [cve-2025-24813](https://github.com/toyplan/cve-2025-24813) | Path Equivalence: 'file.Name' (Internal Dot) leading to Remote Code Execution and/or Information disclosure… |
+| 0⭐ | 4h ago | [RuoYi-CVE-2026-38812-UNFIX](https://github.com/YYF1337/RuoYi-CVE-2026-38812-UNFIX) | RuoYi v4.8.2 is vulnerable to SQL Injection via the /tool/gen/createTable endpoint. The issue affects the… |
+| 0⭐ | 6h ago | [CVE-2026-108592-poc](https://github.com/asvorg/CVE-2026-108592-poc) | CVE-2026-108592 - Environment Variable Exposure PoC in mini-swe-agent |
+| 0⭐ | 21h ago | [CVE-2026-102428](https://github.com/murrez/CVE-2026-102428) | CVE-2026-102428 PoC: OrdaSoft Joomla OS CCK (com_os_cck) <=8.3.15 unauth SQLi - order_field/order_direction… |
+| 0⭐ | 21h ago | [CVE-2026-106445](https://github.com/murrez/CVE-2026-106445) | CVE-2026-106445 - Handlebars 4.0.0-4.7.9 RCE via Function.prototype.constructor bypass (GHSA-p8wg-vrv2-v86f).… |
+| 0⭐ | 21h ago | [CVE-2026-107806](https://github.com/murrez/CVE-2026-107806) | CVE-2026-107806 - nginx-ui 2.3.8-2.4.x auth RCE via forged backup restore (TestConfigCmd). PoCbit PoC: GET… |
 | 0⭐ | 1d ago | [CVE-2026-94503](https://github.com/Wayang1337/CVE-2026-94503) | Zombify <= 1.7.7 Unauthenticated Arbitrary File Upload |
 | 0⭐ | 1d ago | [CVE-2026-85097](https://github.com/Wayang1337/CVE-2026-85097) | Bricksforge <= 3.1.8.9 Unauthenticated Arbitrary File Upload |
 | 1⭐ | 1d ago | [telegram-cve-2026-107181](https://github.com/SeanDishman/telegram-cve-2026-107181) | Telegram CVE-2026-107181 |
 | 1⭐ | 1d ago | [CVE-2026-84520](https://github.com/csrXamfi/CVE-2026-84520) | AppleFDEKeyStore poc |
-| 0⭐ | 1d ago | [CVE-2025-34071](https://github.com/cppghoul/CVE-2025-34071) | RCE in Kerio Control 9.4.5 via unsigned firmware update. |
 
 ## Trending in 2026
 
@@ -44,7 +44,7 @@
 | 108⭐ | 84d ago | [CVE-2026-43499-Poc-Analysis](https://github.com/Linuxoid-cn/CVE-2026-43499-Poc-Analysis) | Vulnerability analysis and Proof of Concept (PoC) for CVE-2026-43499 affecting Xiaomi devices. For… |
 | 31⭐ | 13d ago | [CVE-2026-34990](https://github.com/predyy/CVE-2026-34990) | CVE-2026-34990 minimal PoC. CUPS <= 2.4.16 local privesc. |
 | 35⭐ | 4d ago | <img src="https://raw.githubusercontent.com/0xMarcio/pocindex/main/docs/kev.svg" alt="KEV" title="CISA known exploited" height="14"> [CVE-2026-87902](https://github.com/abraxas/CVE-2026-87902) | CVE-2026-87902 - WordPress - WordPress Core - Critical 9.2 - Unauthenticated Local File Inclusion… |
-| 26⭐ | 12d ago | <img src="https://raw.githubusercontent.com/0xMarcio/pocindex/main/docs/kev.svg" alt="KEV" title="CISA known exploited" height="14"> [CVE-2026-85706](https://github.com/EQSTLab/CVE-2026-85706) | GitLab Unauthenticated Arbitrary File Read |
+| 26⭐ | 13d ago | <img src="https://raw.githubusercontent.com/0xMarcio/pocindex/main/docs/kev.svg" alt="KEV" title="CISA known exploited" height="14"> [CVE-2026-85706](https://github.com/EQSTLab/CVE-2026-85706) | GitLab Unauthenticated Arbitrary File Read |
 | 43⭐ | 29d ago | <img src="https://raw.githubusercontent.com/0xMarcio/pocindex/main/docs/kev.svg" alt="KEV" title="CISA known exploited" height="14"> [cve-2026-85706](https://github.com/guneykabel/cve-2026-85706) | Exploit poc for CVE-2026-85706 an unauthenticated arbitrary file read on Gitlab CE-EE affecting versions:… |
 | 13⭐ | 4d ago | [watchTowr-vs-Atlassian-CVE-2026-21589](https://github.com/watchtowrlabs/watchTowr-vs-Atlassian-CVE-2026-21589) | h3. Summary This is a vulnerability in Bitbucket Data Center, Confluence Data Center, Jira Service Management… |
 | 86⭐ | 89d ago | [Android-CVE-2026-43499](https://github.com/CakesTwix/Android-CVE-2026-43499) | Android version CVE-2026-43499 tester |
