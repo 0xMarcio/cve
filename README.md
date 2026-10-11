@@ -2,7 +2,7 @@
 
 <a href="https://pocindex.io/"><img src="https://raw.githubusercontent.com/0xMarcio/pocindex/main/docs/hero.svg?v=173815-84369-1230" alt="PoC Index" width="100%"></a>
 
-[![last sync](https://img.shields.io/badge/last%20sync-11%20Oct%202026%2007%3A07%20UTC-2f81f7?style=flat-square&labelColor=161b22)](https://github.com/0xMarcio/pocindex/commits/main)&nbsp;[![CI](https://img.shields.io/github/actions/workflow/status/0xMarcio/pocindex/hot_cves.yml?style=flat-square&label=CI&color=2f81f7&labelColor=161b22&_=202610110707)](https://github.com/0xMarcio/pocindex/actions/workflows/hot_cves.yml)&nbsp;[![CVEs with PoCs](https://img.shields.io/badge/CVEs%20with%20PoCs-84%2C369-2f81f7?style=flat-square&labelColor=161b22)](https://pocindex.io/)&nbsp;[![known exploited](https://img.shields.io/badge/known%20exploited-1%2C230-f85149?style=flat-square&labelColor=161b22)](https://pocindex.io/)&nbsp;[![stars](https://img.shields.io/github/stars/0xMarcio/pocindex?style=flat-square&label=stars&color=e3b341&labelColor=161b22&_=202610110707)](https://github.com/0xMarcio/pocindex/stargazers)
+[![last sync](https://img.shields.io/badge/last%20sync-11%20Oct%202026%2008%3A07%20UTC-2f81f7?style=flat-square&labelColor=161b22)](https://github.com/0xMarcio/pocindex/commits/main)&nbsp;[![CI](https://img.shields.io/github/actions/workflow/status/0xMarcio/pocindex/hot_cves.yml?style=flat-square&label=CI&color=2f81f7&labelColor=161b22&_=202610110807)](https://github.com/0xMarcio/pocindex/actions/workflows/hot_cves.yml)&nbsp;[![CVEs with PoCs](https://img.shields.io/badge/CVEs%20with%20PoCs-84%2C369-2f81f7?style=flat-square&labelColor=161b22)](https://pocindex.io/)&nbsp;[![known exploited](https://img.shields.io/badge/known%20exploited-1%2C230-f85149?style=flat-square&labelColor=161b22)](https://pocindex.io/)&nbsp;[![stars](https://img.shields.io/github/stars/0xMarcio/pocindex?style=flat-square&label=stars&color=e3b341&labelColor=161b22&_=202610110807)](https://github.com/0xMarcio/pocindex/stargazers)
 
 <a href="https://pocindex.io/"><img src="https://raw.githubusercontent.com/0xMarcio/pocindex/8dec6181e823d641132e0ee8a52a1612c2b5dd37/docs/search.svg" alt="Search PoC Index" width="100%"></a>
 
@@ -14,14 +14,14 @@
 
 | Stars | Released | PoC | Description |
 | --- | --- | --- | --- |
-| 0⭐ | 35m ago | <img src="https://raw.githubusercontent.com/0xMarcio/pocindex/main/docs/kev.svg" alt="KEV" title="CISA known exploited" height="14"> [CVE-2025-57819](https://github.com/Wayang1337/CVE-2025-57819) | FreePBX unauthenticated SQLi (endpoint module) |
-| 0⭐ | 59m ago | [CVE-2026-104335](https://github.com/Farih123/CVE-2026-104335) | IBM Langflow OSS 1.0.0 through 1.12.2 could allow a remote authenticated attacker to execute arbitrary code… |
-| 0⭐ | 2h ago | <img src="https://raw.githubusercontent.com/0xMarcio/pocindex/main/docs/kev.svg" alt="KEV" title="CISA known exploited" height="14"> [cve-2025-24813](https://github.com/toyplan/cve-2025-24813) | Path Equivalence: 'file.Name' (Internal Dot) leading to Remote Code Execution and/or Information disclosure… |
-| 0⭐ | 5h ago | [RuoYi-CVE-2026-38812-UNFIX](https://github.com/YYF1337/RuoYi-CVE-2026-38812-UNFIX) | RuoYi v4.8.2 is vulnerable to SQL Injection via the /tool/gen/createTable endpoint. The issue affects the… |
-| 0⭐ | 7h ago | [CVE-2026-108592-poc](https://github.com/asvorg/CVE-2026-108592-poc) | CVE-2026-108592 - Environment Variable Exposure PoC in mini-swe-agent |
-| 0⭐ | 22h ago | [CVE-2026-102428](https://github.com/murrez/CVE-2026-102428) | CVE-2026-102428 PoC: OrdaSoft Joomla OS CCK (com_os_cck) <=8.3.15 unauth SQLi - order_field/order_direction… |
-| 0⭐ | 22h ago | [CVE-2026-106445](https://github.com/murrez/CVE-2026-106445) | CVE-2026-106445 - Handlebars 4.0.0-4.7.9 RCE via Function.prototype.constructor bypass (GHSA-p8wg-vrv2-v86f).… |
-| 0⭐ | 22h ago | [CVE-2026-107806](https://github.com/murrez/CVE-2026-107806) | CVE-2026-107806 - nginx-ui 2.3.8-2.4.x auth RCE via forged backup restore (TestConfigCmd). PoCbit PoC: GET… |
+| 0⭐ | 1h ago | <img src="https://raw.githubusercontent.com/0xMarcio/pocindex/main/docs/kev.svg" alt="KEV" title="CISA known exploited" height="14"> [CVE-2025-57819](https://github.com/Wayang1337/CVE-2025-57819) | FreePBX unauthenticated SQLi (endpoint module) |
+| 0⭐ | 1h ago | [CVE-2026-104335](https://github.com/Farih123/CVE-2026-104335) | IBM Langflow OSS 1.0.0 through 1.12.2 could allow a remote authenticated attacker to execute arbitrary code… |
+| 0⭐ | 3h ago | <img src="https://raw.githubusercontent.com/0xMarcio/pocindex/main/docs/kev.svg" alt="KEV" title="CISA known exploited" height="14"> [cve-2025-24813](https://github.com/toyplan/cve-2025-24813) | Path Equivalence: 'file.Name' (Internal Dot) leading to Remote Code Execution and/or Information disclosure… |
+| 0⭐ | 6h ago | [RuoYi-CVE-2026-38812-UNFIX](https://github.com/YYF1337/RuoYi-CVE-2026-38812-UNFIX) | RuoYi v4.8.2 is vulnerable to SQL Injection via the /tool/gen/createTable endpoint. The issue affects the… |
+| 0⭐ | 8h ago | [CVE-2026-108592-poc](https://github.com/asvorg/CVE-2026-108592-poc) | CVE-2026-108592 - Environment Variable Exposure PoC in mini-swe-agent |
+| 0⭐ | 23h ago | [CVE-2026-102428](https://github.com/murrez/CVE-2026-102428) | CVE-2026-102428 PoC: OrdaSoft Joomla OS CCK (com_os_cck) <=8.3.15 unauth SQLi - order_field/order_direction… |
+| 0⭐ | 23h ago | [CVE-2026-106445](https://github.com/murrez/CVE-2026-106445) | CVE-2026-106445 - Handlebars 4.0.0-4.7.9 RCE via Function.prototype.constructor bypass (GHSA-p8wg-vrv2-v86f).… |
+| 0⭐ | 23h ago | [CVE-2026-107806](https://github.com/murrez/CVE-2026-107806) | CVE-2026-107806 - nginx-ui 2.3.8-2.4.x auth RCE via forged backup restore (TestConfigCmd). PoCbit PoC: GET… |
 | 0⭐ | 1d ago | [CVE-2026-94503](https://github.com/Wayang1337/CVE-2026-94503) | Zombify <= 1.7.7 Unauthenticated Arbitrary File Upload |
 | 0⭐ | 1d ago | [CVE-2026-85097](https://github.com/Wayang1337/CVE-2026-85097) | Bricksforge <= 3.1.8.9 Unauthenticated Arbitrary File Upload |
 
@@ -34,7 +34,7 @@
 | 332⭐ | 75d ago | [CVE-2026-54121](https://github.com/aniqfakhrul/CVE-2026-54121) | Certighost POC |
 | 185⭐ | 50d ago | [CVE-2026-62911](https://github.com/hypnguyen1209/CVE-2026-62911) | POC pre-auth RCE on Exchange |
 | 92⭐ | 29d ago | <img src="https://raw.githubusercontent.com/0xMarcio/pocindex/main/docs/kev.svg" alt="KEV" title="CISA known exploited" height="14"> [CVE-2026-20805-PoC](https://github.com/ZeroDayEvil/CVE-2026-20805-PoC) | 🛡️ Official AI Security Tool module for CVE-2026-20805 (Desktop Window Manager / dwm.exe Information… |
-| 49⭐ | 11d ago | [CVE-2026-94545](https://github.com/EQSTLab/CVE-2026-94545) | Next.js RCE |
+| 49⭐ | 12d ago | [CVE-2026-94545](https://github.com/EQSTLab/CVE-2026-94545) | Next.js RCE |
 | 88⭐ | 29d ago | [CVE-2026-21858-n8n-FullChain](https://github.com/ZeroDayEvil/CVE-2026-21858-n8n-FullChain) | 🛡️ Official AI Security Tool module for CVE-2026-21858 + CVE-2025-68613 (n8n "Ni8mare" Unauthenticated… |
 | 105⭐ | 46d ago | [CVE-2026-75604-poc](https://github.com/rafabd1/CVE-2026-75604-poc) | CVE-2026-75604 Next.js Windows RCE poc |
 | 86⭐ | 37d ago | [CVE-2026-65343](https://github.com/ByteV0rtex/CVE-2026-65343) | CVE-2026-65343 PoC - AppleKeyStore OOB read → KASLR defeat (iOS 26.6 / 23G71) |
@@ -56,7 +56,7 @@
 | --- | --- | --- | --- |
 | 22⭐ | 61d ago | [CVE-2025-7771](https://github.com/enessakircolak/CVE-2025-7771) | ThrottleStop.sys Arbitrary Physical Memory R/W |
 | 8⭐ | 24d ago | <img src="https://raw.githubusercontent.com/0xMarcio/pocindex/main/docs/kev.svg" alt="KEV" title="CISA known exploited" height="14"> [CVE-2025-32432-exploit-by-P34NUT](https://github.com/P34NUT2/CVE-2025-32432-exploit-by-P34NUT) | Reliable CVE-2025-32432 pre-auth RCE exploit for Craft CMS 3.x/4.x/5.x, works where other public PoCs fail |
-| 10⭐ | 44d ago | <img src="https://raw.githubusercontent.com/0xMarcio/pocindex/main/docs/kev.svg" alt="KEV" title="CISA known exploited" height="14"> [vivo_iqoo_neo_9_root_research_on_CVE-2025-21479](https://github.com/linux-tools/vivo_iqoo_neo_9_root_research_on_CVE-2025-21479) | Memory corruption due to unauthorized command execution in GPU micronode while executing specific sequence of… |
+| 10⭐ | 45d ago | <img src="https://raw.githubusercontent.com/0xMarcio/pocindex/main/docs/kev.svg" alt="KEV" title="CISA known exploited" height="14"> [vivo_iqoo_neo_9_root_research_on_CVE-2025-21479](https://github.com/linux-tools/vivo_iqoo_neo_9_root_research_on_CVE-2025-21479) | Memory corruption due to unauthorized command execution in GPU micronode while executing specific sequence of… |
 | 7⭐ | 52d ago | <img src="https://raw.githubusercontent.com/0xMarcio/pocindex/main/docs/kev.svg" alt="KEV" title="CISA known exploited" height="14"> [cve-2025-21479_iqooneo8](https://github.com/Qingizi7/cve-2025-21479_iqooneo8) | Local root exploit for CVE-2025-21479 (Adreno KGSL) on iQOO Neo8 (SM8475) - physical memory r/w, disables… |
 | 8⭐ | 70d ago | <img src="https://raw.githubusercontent.com/0xMarcio/pocindex/main/docs/kev.svg" alt="KEV" title="CISA known exploited" height="14"> [SELinux-Permissive-Only-CVE-2025-21479](https://github.com/CamsShaft/SELinux-Permissive-Only-CVE-2025-21479) | This is an SELinux permissive version of the Cheese exploit also known as CVE-2025-21479 which affected the… |
 | 7⭐ | 65d ago | [CVE-2025-8045](https://github.com/kuzeyardabulut/CVE-2025-8045) | Dirty Pagetable Exploit for CVE-2025-8045 |
