@@ -20709,7 +20709,6 @@ CVE-2026-60137 - https://github.com/Icex0/wp2shell-poc
 CVE-2026-60137 - https://github.com/Iqbalx7/wp2shell
 CVE-2026-60137 - https://github.com/JohenLastGen-JLG/wp2shell
 CVE-2026-60137 - https://github.com/NULL200OK/WP2Shell
-CVE-2026-60137 - https://github.com/SentinelXofficial/sxwp2shell
 CVE-2026-60137 - https://github.com/TranDongA3/POC-CVE-2026-63030-CVE-2026-60137-
 CVE-2026-60137 - https://github.com/allannjuguna/Wp2Shell
 CVE-2026-60137 - https://github.com/c0gnit00/Wp2Shell
@@ -20769,7 +20768,6 @@ CVE-2026-63030 - https://github.com/Iqbalx7/wp2shell
 CVE-2026-63030 - https://github.com/JohenLastGen-JLG/wp2shell
 CVE-2026-63030 - https://github.com/NULL200OK/WP2Shell
 CVE-2026-63030 - https://github.com/Procjevt/CVE-2026-63030
-CVE-2026-63030 - https://github.com/SentinelXofficial/sxwp2shell
 CVE-2026-63030 - https://github.com/ThomasNJordan/wp2shell
 CVE-2026-63030 - https://github.com/TomorrowX6/CVE-2026-63030-poc
 CVE-2026-63030 - https://github.com/TranDongA3/POC-CVE-2026-63030-CVE-2026-60137-
@@ -21162,7 +21160,6 @@ CVE-2026-41238 - https://github.com/snowcapped-morula414/bingo
 CVE-2026-43499 - https://github.com/BailinT/GKI_KernelSU_SUSFS-hwid
 CVE-2026-43499 - https://github.com/JackKnifeAI/S25-Ultra-Root
 CVE-2026-43499 - https://github.com/Kelsidavis/lg-g710tm-unlock
-CVE-2026-43499 - https://github.com/PuceLi/GKI_KernelSU_SUSFS_Local
 CVE-2026-43499 - https://github.com/Te-River/SukiSU_SUSFS-Kernel
 CVE-2026-43499 - https://github.com/jojobear691/SM-A166W-DZG1-Temporary-Root
 CVE-2026-43499 - https://github.com/qianmingzi7-coder/tb322fc-r2-kernel-public-build
@@ -21172,7 +21169,6 @@ CVE-2026-44115 - https://github.com/agenticdome/agenticdome-openclaw-security-ts
 CVE-2026-44118 - https://github.com/agenticdome/agenticdome-openclaw-security-ts
 CVE-2026-49468 - https://github.com/josephbrito/LiteLLM-Unauthenticated-Command-Injection
 CVE-2026-53163 - https://github.com/BailinT/GKI_KernelSU_SUSFS-hwid
-CVE-2026-53163 - https://github.com/PuceLi/GKI_KernelSU_SUSFS_Local
 CVE-2026-53163 - https://github.com/Te-River/SukiSU_SUSFS-Kernel
 CVE-2026-53163 - https://github.com/qianmingzi7-coder/tb322fc-r2-kernel-public-build
 CVE-2026-53787 - https://github.com/ChrisSEC2014/amasty-chekout-POC-rce
@@ -23391,7 +23387,6 @@ CVE-2025-55182 - https://github.com/S-Mughal/NextJS-app-CVE-2025-55182
 CVE-2025-55182 - https://github.com/S3cr3t-SDN/React4Shell
 CVE-2025-55182 - https://github.com/Sairbo/Unihackers---CVE-2025-55182-
 CVE-2025-55182 - https://github.com/Saturate/CVE-2025-55182-react2shell
-CVE-2025-55182 - https://github.com/SentinelXofficial/CVE-2025-55182
 CVE-2025-55182 - https://github.com/Shadowroot97/React2Shell-CVE-2025-55182
 CVE-2025-55182 - https://github.com/SpeatX/React2Shell-CVE-2025-55182
 CVE-2025-55182 - https://github.com/Spritualkb/CVE-2025-55182-exp
@@ -24221,7 +24216,6 @@ CVE-2025-9074 - https://github.com/x0da6h/POC-for-CVE-2025-9074
 CVE-2025-9074 - https://github.com/zaydbf/CVE-2025-9074-Poc
 CVE-2025-9209 - https://github.com/Nxploited/CVE-2025-9209
 CVE-2025-9223 - https://github.com/networkkiller/CVE-2025-9223
-CVE-2025-9242 - https://github.com/UnusualGiraffe/WatchGuard-CVE-2025-9242-PoC-and-Mass-Scanner
 CVE-2025-9242 - https://github.com/watchtowrlabs/watchTowr-vs-WatchGuard-CVE-2025-9242
 CVE-2025-9286 - https://github.com/Nxploited/CVE-2025-9286
 CVE-2025-9316 - https://github.com/horizon3ai/n-able_n-central_xxe_file_read
@@ -25884,7 +25878,6 @@ CVE-2024-34351 - https://github.com/avergnaud/csr-rsc-ssg-isr-ssr-ssrf
 CVE-2024-34716 - https://github.com/TanveerS1ngh/Prestashop-CVE-2024-34716
 CVE-2024-3495 - https://github.com/fa-rrel/SQL_Injection
 CVE-2024-35250 - https://github.com/Brentlyw/GiveMeKernel
-CVE-2024-36401 - https://github.com/PunitTailor55/GeoServer-CVE-2024-36401
 CVE-2024-36401 - https://github.com/yisas93/CVE-2024-36401-PoC
 CVE-2024-36991 - https://github.com/TcchSquad/CVE-2024-36991-Tool
 CVE-2024-37393 - https://github.com/optistream/securenvoy-cve-2024-37393
@@ -25937,7 +25930,6 @@ CVE-2024-7954 - https://github.com/fa-rrel/CVE-2024-7954-RCE
 CVE-2024-8353 - https://github.com/0xb0mb3r/CVE-2024-5932-PoC
 CVE-2024-8856 - https://github.com/ubaii/CVE-2024-8856
 CVE-2024-9047 - https://github.com/mr-won/CVE-2024-9047
-CVE-2024-9264 - https://github.com/PunitTailor55/Grafana-CVE-2024-9264
 CVE-2025-0282 - https://github.com/Hexastrike/Ivanti-Secure-Connect-Logs-Parser
 CVE-2025-10184 - https://github.com/yuuouu/OnePush-CVE-2025-10184
 CVE-2025-24054 - https://github.com/xigney/CVE-2025-24054_PoC
@@ -27000,7 +26992,6 @@ CVE-2026-63292 - https://github.com/0xBlackash/CVE-2026-63292
 CVE-2025-24801 - https://github.com/kevenpanchal/CVE-2025-24801-GLPI-10.0.17-and-prior-Authenticated-RCE
 CVE-2026-103922 - https://github.com/techupdate24/capacitor-flaw-cve-2026-103922
 CVE-2026-104286 - https://github.com/techupdate24/fortimail-zero-day-cve-2026-104286
-CVE-2025-45737 - https://github.com/Shinn-Home/CVE-2025-45737
 CVE-2026-40281 - https://github.com/MRdark-ops/CVE-2026-40281-exploit
 CVE-2026-55559 - https://github.com/MRdark-ops/CVE-2026-55559
 CVE-2026-102268 - https://github.com/covepseng/cve-2026-102268-poc
@@ -27033,14 +27024,12 @@ CVE-2026-63030 - https://github.com/hitechcloud-vietnam/wp2shell-PoC
 CVE-2026-103956 - https://github.com/abraxas/cve-2026-103956-loom-unauth
 CVE-2026-40281 - https://github.com/HackfutSecRoot/-GOTENBERG-RCE-CHAIN
 CVE-2026-42589 - https://github.com/HackfutSecRoot/-GOTENBERG-RCE-CHAIN
-CVE-2026-43499 - https://github.com/PyeProof/Root-My-Galaxy-S938NKSUCDZIF
 CVE-2025-60787 - https://github.com/diamorphine666/CVE-2025-60787
 CVE-2026-27944 - https://github.com/diamorphine666/CVE-2026-27944
 CVE-2026-102489 - https://github.com/Rubby2001/CVE-POCS
 CVE-2026-76460 - https://github.com/Rubby2001/CVE-POCS
 CVE-2026-82329 - https://github.com/Rubby2001/CVE-POCS
 CVE-2026-8461 - https://github.com/Rubby2001/CVE-POCS
-CVE-2026-43499 - https://github.com/ProofPage/Root-My-Galaxy-Payloads
 CVE-2019-8900 - https://github.com/Weeabo-Inc/a9pwn
 CVE-2020-13484 - https://github.com/zhuravlevp/crowdsec-bitrix-scenarios
 CVE-2020-14472 - https://github.com/CTIresource/Vendor-Verbiage
