@@ -27329,3 +27329,5 @@ CVE-2025-57819 - https://github.com/HexBytee/FreePBX-SQLi-RCE
 CVE-2026-27626 - https://github.com/Shisones/CVE-2026-27626
 CVE-2026-106446 - https://github.com/shift-left-test-org2/auto-pr-demo
 CVE-2025-55182 - https://github.com/M4rc3l08/ReactorWriteUp-HackTheBox
+CVE-2026-104286 - https://github.com/0xREBYTE/CVE-2026-104286-PoC
+CVE-2026-41940 - https://github.com/sakidekin/CVE-2026-41940-PoC
