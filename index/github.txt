@@ -27340,3 +27340,11 @@ CVE-2026-13078 - https://github.com/0xad3m/CVE-2026-13078-POC
 CVE-2026-79987 - https://github.com/y3g1/CraftCMS-CVE-2026-79987
 CVE-2024-21626 - https://github.com/ghs053020-stack/cve-2024-21626
 CVE-2026-91737 - https://github.com/sm1ee/CVE-2026-91737
+CVE-2026-104082 - https://github.com/eev4n/smartermail
+CVE-2026-104083 - https://github.com/eev4n/smartermail
+CVE-2026-104084 - https://github.com/eev4n/smartermail
+CVE-2026-28819 - https://github.com/keepantidev/18.7.8-exploit
+CVE-2026-28943 - https://github.com/keepantidev/18.7.8-exploit
+CVE-2026-28972 - https://github.com/keepantidev/18.7.8-exploit
+CVE-2026-29000 - https://github.com/Erikgavs/CVE-2026-29000
+CVE-2026-43668 - https://github.com/keepantidev/18.7.8-exploit
