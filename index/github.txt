@@ -27333,3 +27333,4 @@ CVE-2026-104286 - https://github.com/0xREBYTE/CVE-2026-104286-PoC
 CVE-2026-41940 - https://github.com/sakidekin/CVE-2026-41940-PoC
 CVE-2026-15748 - https://github.com/0x4cr/CVE-2026-15748
 CVE-2026-102489 - https://github.com/1xPwn/CVE-2026-102489
+CVE-2026-91136 - https://github.com/fl0ydsec/CVE-2026-91136
