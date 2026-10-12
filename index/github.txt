@@ -27355,3 +27355,4 @@ CVE-2026-85097 - https://github.com/tc4dy/CVE-2026-85097-Toolkit
 CVE-2025-33187 - https://github.com/christopherowen/dgx-spark-CVE-2025-33187
 CVE-2026-84411 - https://github.com/Apiratchai/CVE-2026-84411-reproduction
 CVE-2025-32432 - https://github.com/l0lsuit/CVE-2025-32432-craftcms-rce
+CVE-2026-3888 - https://github.com/alinpfan/CVE-2026-3888-PoC
