@@ -27332,3 +27332,4 @@ CVE-2025-55182 - https://github.com/M4rc3l08/ReactorWriteUp-HackTheBox
 CVE-2026-104286 - https://github.com/0xREBYTE/CVE-2026-104286-PoC
 CVE-2026-41940 - https://github.com/sakidekin/CVE-2026-41940-PoC
 CVE-2026-15748 - https://github.com/0x4cr/CVE-2026-15748
+CVE-2026-102489 - https://github.com/1xPwn/CVE-2026-102489
