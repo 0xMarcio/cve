@@ -2,7 +2,7 @@
 
 <a href="https://pocindex.io/"><img src="https://raw.githubusercontent.com/0xMarcio/pocindex/main/docs/hero.svg?v=174061-84615-1230" alt="PoC Index" width="100%"></a>
 
-[![last sync](https://img.shields.io/badge/last%20sync-12%20Oct%202026%2021%3A08%20UTC-2f81f7?style=flat-square&labelColor=161b22)](https://github.com/0xMarcio/pocindex/commits/main)&nbsp;[![CI](https://img.shields.io/github/actions/workflow/status/0xMarcio/pocindex/hot_cves.yml?style=flat-square&label=CI&color=2f81f7&labelColor=161b22&_=202610122108)](https://github.com/0xMarcio/pocindex/actions/workflows/hot_cves.yml)&nbsp;[![CVEs with PoCs](https://img.shields.io/badge/CVEs%20with%20PoCs-84%2C615-2f81f7?style=flat-square&labelColor=161b22)](https://pocindex.io/)&nbsp;[![known exploited](https://img.shields.io/badge/known%20exploited-1%2C230-f85149?style=flat-square&labelColor=161b22)](https://pocindex.io/)&nbsp;[![stars](https://img.shields.io/github/stars/0xMarcio/pocindex?style=flat-square&label=stars&color=e3b341&labelColor=161b22&_=202610122108)](https://github.com/0xMarcio/pocindex/stargazers)
+[![last sync](https://img.shields.io/badge/last%20sync-12%20Oct%202026%2022%3A08%20UTC-2f81f7?style=flat-square&labelColor=161b22)](https://github.com/0xMarcio/pocindex/commits/main)&nbsp;[![CI](https://img.shields.io/github/actions/workflow/status/0xMarcio/pocindex/hot_cves.yml?style=flat-square&label=CI&color=2f81f7&labelColor=161b22&_=202610122208)](https://github.com/0xMarcio/pocindex/actions/workflows/hot_cves.yml)&nbsp;[![CVEs with PoCs](https://img.shields.io/badge/CVEs%20with%20PoCs-84%2C615-2f81f7?style=flat-square&labelColor=161b22)](https://pocindex.io/)&nbsp;[![known exploited](https://img.shields.io/badge/known%20exploited-1%2C230-f85149?style=flat-square&labelColor=161b22)](https://pocindex.io/)&nbsp;[![stars](https://img.shields.io/github/stars/0xMarcio/pocindex?style=flat-square&label=stars&color=e3b341&labelColor=161b22&_=202610122208)](https://github.com/0xMarcio/pocindex/stargazers)
 
 <a href="https://pocindex.io/"><img src="https://raw.githubusercontent.com/0xMarcio/pocindex/8dec6181e823d641132e0ee8a52a1612c2b5dd37/docs/search.svg" alt="Search PoC Index" width="100%"></a>
 
@@ -14,22 +14,22 @@
 
 | Stars | Released | PoC | Description |
 | --- | --- | --- | --- |
-| 0⭐ | 1h ago | [CVE-2026-84411-reproduction](https://github.com/Apiratchai/CVE-2026-84411-reproduction) | CVE-2026-84411 root cause notes and a non-destructive probe (RouterOS before 7.24) |
-| 1⭐ | 4h ago | [CVE-2026-85097-Toolkit](https://github.com/tc4dy/CVE-2026-85097-Toolkit) | CVE-2026-85097 - Bricksforge WordPress Plugin Unauth File Upload to RCE Toolkit (CVSS 10.0) / Red/Blue Team… |
-| 0⭐ | 5h ago | <img src="https://raw.githubusercontent.com/0xMarcio/pocindex/main/docs/kev.svg" alt="KEV" title="CISA known exploited" height="14"> [CVE-2026-63030-CVE-2026-60137-WP2SHELL](https://github.com/0xCyp1337/CVE-2026-63030-CVE-2026-60137-WP2SHELL) | WordPress 6.9.x before 6.9.5 and 7.0.x before 7.0.2 is affected by a REST API batch endpoint route confusion… |
-| 0⭐ | 7h ago | [CVE-2026-91737](https://github.com/sm1ee/CVE-2026-91737) | CVE-2026-91737 Chrome renderer RCE PoC (PDFium) |
-| 0⭐ | 10h ago | [cve-2024-21626](https://github.com/ghs053020-stack/cve-2024-21626) | runc is a CLI tool for spawning and running containers on Linux according to the OCI specification. In runc… |
-| 1⭐ | 18h ago | <img src="https://raw.githubusercontent.com/0xMarcio/pocindex/main/docs/kev.svg" alt="KEV" title="CISA known exploited" height="14"> [CVE-2026-9586_POC_EXPLOIT](https://github.com/fromABUV/CVE-2026-9586_POC_EXPLOIT) | For new CVEs without existing/working/non-mangled POCs |
-| 0⭐ | 18h ago | [CVE-2026-103889](https://github.com/kayes817/CVE-2026-103889) | Proof of concept and isolated Docker lab for CVE-2026-103889, an unauthenticated RCE vulnerability in Expivi… |
-| 0⭐ | 19h ago | [CVE-2026-91136](https://github.com/fl0ydsec/CVE-2026-91136) | CVE-2026-91136 Divi Plus <= 2.4.0 unauthenticated arbitrary file read (mass scanner + exploit) |
-| 4⭐ | 20h ago | <img src="https://raw.githubusercontent.com/0xMarcio/pocindex/main/docs/kev.svg" alt="KEV" title="CISA known exploited" height="14"> [CVE-2026-102489](https://github.com/1xPwn/CVE-2026-102489) | CVE-2026-102489 exploit in golang |
-| 0⭐ | 1d ago | [CVE-2026-15748](https://github.com/0x4cr/CVE-2026-15748) | Unauthenticated RCE in WordPress Forminator Forms <= 1.56.1 (CVSS 9.8) |
+| 0⭐ | 1h ago | <img src="https://raw.githubusercontent.com/0xMarcio/pocindex/main/docs/kev.svg" alt="KEV" title="CISA known exploited" height="14"> [CVE-2025-32432-craftcms-rce](https://github.com/l0lsuit/CVE-2025-32432-craftcms-rce) | Working PoC + debugging writeup for CVE-2025-32432 (Craft CMS pre-auth RCE) |
+| 0⭐ | 2h ago | [CVE-2026-84411-reproduction](https://github.com/Apiratchai/CVE-2026-84411-reproduction) | CVE-2026-84411 root cause notes and a non-destructive probe (RouterOS before 7.24) |
+| 1⭐ | 5h ago | [CVE-2026-85097-Toolkit](https://github.com/tc4dy/CVE-2026-85097-Toolkit) | CVE-2026-85097 - Bricksforge WordPress Plugin Unauth File Upload to RCE Toolkit (CVSS 10.0) / Red/Blue Team… |
+| 0⭐ | 6h ago | <img src="https://raw.githubusercontent.com/0xMarcio/pocindex/main/docs/kev.svg" alt="KEV" title="CISA known exploited" height="14"> [CVE-2026-63030-CVE-2026-60137-WP2SHELL](https://github.com/0xCyp1337/CVE-2026-63030-CVE-2026-60137-WP2SHELL) | WordPress 6.9.x before 6.9.5 and 7.0.x before 7.0.2 is affected by a REST API batch endpoint route confusion… |
+| 0⭐ | 8h ago | [CVE-2026-91737](https://github.com/sm1ee/CVE-2026-91737) | CVE-2026-91737 Chrome renderer RCE PoC (PDFium) |
+| 0⭐ | 11h ago | [cve-2024-21626](https://github.com/ghs053020-stack/cve-2024-21626) | runc is a CLI tool for spawning and running containers on Linux according to the OCI specification. In runc… |
+| 1⭐ | 19h ago | <img src="https://raw.githubusercontent.com/0xMarcio/pocindex/main/docs/kev.svg" alt="KEV" title="CISA known exploited" height="14"> [CVE-2026-9586_POC_EXPLOIT](https://github.com/fromABUV/CVE-2026-9586_POC_EXPLOIT) | For new CVEs without existing/working/non-mangled POCs |
+| 0⭐ | 19h ago | [CVE-2026-103889](https://github.com/kayes817/CVE-2026-103889) | Proof of concept and isolated Docker lab for CVE-2026-103889, an unauthenticated RCE vulnerability in Expivi… |
+| 0⭐ | 20h ago | [CVE-2026-91136](https://github.com/fl0ydsec/CVE-2026-91136) | CVE-2026-91136 Divi Plus <= 2.4.0 unauthenticated arbitrary file read (mass scanner + exploit) |
+| 4⭐ | 21h ago | <img src="https://raw.githubusercontent.com/0xMarcio/pocindex/main/docs/kev.svg" alt="KEV" title="CISA known exploited" height="14"> [CVE-2026-102489](https://github.com/1xPwn/CVE-2026-102489) | CVE-2026-102489 exploit in golang |
 
 ## Trending in 2026
 
 | Stars | Updated | Repository | Description |
 | --- | --- | --- | --- |
-| 477⭐ | 52d ago | [CVE-2026-9830](https://github.com/opaxial/CVE-2026-9830) | CVE-2026-9830 Proof of Concept |
+| 477⭐ | 53d ago | [CVE-2026-9830](https://github.com/opaxial/CVE-2026-9830) | CVE-2026-9830 Proof of Concept |
 | 332⭐ | 77d ago | [CVE-2026-54121](https://github.com/aniqfakhrul/CVE-2026-54121) | Certighost POC |
 | 96⭐ | 13d ago | [CVE-2026-41096-PoC](https://github.com/ZeroDayEvil/CVE-2026-41096-PoC) | 🛡️ Official AI Security Tool module for CVE-2026-41096 (Windows DNSAPI.dll Heap Overflow / DNS-Mayhem Deep… |
 | 185⭐ | 51d ago | [CVE-2026-62911](https://github.com/hypnguyen1209/CVE-2026-62911) | POC pre-auth RCE on Exchange |
@@ -54,7 +54,7 @@
 
 | Stars | Updated | Repository | Description |
 | --- | --- | --- | --- |
-| 5⭐ | 6h ago | <img src="https://raw.githubusercontent.com/0xMarcio/pocindex/main/docs/kev.svg" alt="KEV" title="CISA known exploited" height="14"> [CVE-2025-8110](https://github.com/Ghxstsec/CVE-2025-8110) | Improper Symbolic link handling in the PutContents API in Gogs allows Local Execution of Code. |
+| 5⭐ | 7h ago | <img src="https://raw.githubusercontent.com/0xMarcio/pocindex/main/docs/kev.svg" alt="KEV" title="CISA known exploited" height="14"> [CVE-2025-8110](https://github.com/Ghxstsec/CVE-2025-8110) | Improper Symbolic link handling in the PutContents API in Gogs allows Local Execution of Code. |
 | 22⭐ | 62d ago | [CVE-2025-7771](https://github.com/enessakircolak/CVE-2025-7771) | ThrottleStop.sys Arbitrary Physical Memory R/W |
 | 8⭐ | 25d ago | <img src="https://raw.githubusercontent.com/0xMarcio/pocindex/main/docs/kev.svg" alt="KEV" title="CISA known exploited" height="14"> [CVE-2025-32432-exploit-by-P34NUT](https://github.com/P34NUT2/CVE-2025-32432-exploit-by-P34NUT) | Reliable CVE-2025-32432 pre-auth RCE exploit for Craft CMS 3.x/4.x/5.x, works where other public PoCs fail |
 | 10⭐ | 46d ago | <img src="https://raw.githubusercontent.com/0xMarcio/pocindex/main/docs/kev.svg" alt="KEV" title="CISA known exploited" height="14"> [vivo_iqoo_neo_9_root_research_on_CVE-2025-21479](https://github.com/linux-tools/vivo_iqoo_neo_9_root_research_on_CVE-2025-21479) | Memory corruption due to unauthorized command execution in GPU micronode while executing specific sequence of… |
@@ -77,7 +77,7 @@
 | --- | --- | --- | --- |
 | 17⭐ | 9d ago | [CVE-2024-56426](https://github.com/Creeeeger/CVE-2024-56426) | A PoC of the CVE-2024-56426 vulnerability. |
 | 4⭐ | 58d ago | [CVE-2024-56426](https://github.com/xcracker000/CVE-2024-56426) | CVE-2024-56426 Exynos9830 Bootrom Exploit - SM-G985F |
-| 3⭐ | 74d ago | [CVE-2024-36104-PoC](https://github.com/Groppoxx/CVE-2024-36104-PoC) | PoC for CVE-2024-36104 - unauthenticated Groovy RCE in Apache OFBiz (<18.12.14) via /%2e/%2e/ view path… |
+| 3⭐ | 75d ago | [CVE-2024-36104-PoC](https://github.com/Groppoxx/CVE-2024-36104-PoC) | PoC for CVE-2024-36104 - unauthenticated Groovy RCE in Apache OFBiz (<18.12.14) via /%2e/%2e/ view path… |
 
 ## Trending in 2023
 
