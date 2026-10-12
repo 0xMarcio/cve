@@ -27336,3 +27336,6 @@ CVE-2026-103889 - https://github.com/kayes817/CVE-2026-103889
 CVE-2026-9586 - https://github.com/fromABUV/CVE-2026-9586_POC_EXPLOIT
 CVE-2014-3936 - https://github.com/Walnut1337/DIR-505_backdoor
 CVE-2022-38181 - https://github.com/yapishu/Hisense-A4NF-AFTHU71990-ginza-owner
+CVE-2026-13078 - https://github.com/0xad3m/CVE-2026-13078-POC
+CVE-2026-79987 - https://github.com/y3g1/CraftCMS-CVE-2026-79987
+CVE-2024-21626 - https://github.com/ghs053020-stack/cve-2024-21626
