@@ -32849,6 +32849,14 @@
 "severity": "low",
 "url": "https://github.com/topscoder/nuclei-wordfence-cve/blob/main/nuclei-templates/2026/CVE-2026-12536-fusion_builder-6199b852-3270-4456-934b-68c3ef11b9e5.yaml"
 },
+"CVE-2026-12609": {
+"cvss": 7.5,
+"cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+"cwe": "CWE-22",
+"name": "Eclipse Theia - Unauthenticated Path Traversal",
+"severity": "high",
+"url": "https://github.com/projectdiscovery/nuclei-templates/blob/main/http/cves/2026/CVE-2026-12609.yaml"
+},
 "CVE-2026-1277": {
 "cvss": 4.7,
 "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:N/I:L/A:N",
@@ -33599,6 +33607,14 @@
 "severity": "critical",
 "url": "https://github.com/projectdiscovery/nuclei-templates/blob/main/http/cves/2026/CVE-2026-25895.yaml"
 },
+"CVE-2026-26077": {
+"cvss": 6.5,
+"cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:L/A:L",
+"cwe": "CWE-306",
+"name": "Discourse - Unauthenticated Mailpace Webhook Bounce-Score Forgery",
+"severity": "medium",
+"url": "https://github.com/projectdiscovery/nuclei-templates/blob/main/http/cves/2026/CVE-2026-26077.yaml"
+},
 "CVE-2026-2614": {
 "cvss": 7.5,
 "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
@@ -33707,6 +33723,12 @@
 "name": "WooCommerce Wholesale Lead Capture <= 2.0.3.1 - Unauthenticated Privilege Escalation",
 "severity": "critical",
 "url": "https://github.com/projectdiscovery/nuclei-templates/blob/main/http/cves/2026/CVE-2026-27542.yaml"
+},
+"CVE-2026-27604": {
+"cwe": "CWE-862",
+"name": "FOSSBilling 0.5.4-0.7.x - Unauthenticated System API Role Authorization Bypass",
+"severity": "critical",
+"url": "https://github.com/projectdiscovery/nuclei-templates/blob/main/http/cves/2026/CVE-2026-27604.yaml"
 },
 "CVE-2026-27645": {
 "cvss": 6.1,
