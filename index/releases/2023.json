@@ -3953,7 +3953,7 @@
 "CVE-2023-31584 github:rootd4ddy/cve-2023-31584?#":{"basis":"unknown","cve":"CVE-2023-31584","imported":true,"released":null,"url":"https://github.com/rootd4ddy/CVE-2023-31584"},
 "CVE-2023-31587 github:yanbushuang/cve/blob/main/TendaAC5.md?#":{"basis":"unknown","cve":"CVE-2023-31587","imported":true,"released":null,"url":"https://github.com/yanbushuang/CVE/blob/main/TendaAC5.md"},
 "CVE-2023-3159 github:ethan42/linux-ieee1394?#":{"basis":"unknown","cve":"CVE-2023-3159","imported":true,"released":null,"url":"https://github.com/ethan42/linux-ieee1394"},
-"CVE-2023-31594 github:yozarseef95/cve-2023-31594?#":{"basis":"unknown","cve":"CVE-2023-31594","imported":true,"released":null,"url":"https://github.com/Yozarseef95/CVE-2023-31594"},
+"CVE-2023-31594 github:yozarseef95/cve-2023-31594?#":{"basis":"pending","checked":"2026-10-12T20:08:55Z","created":"2023-05-24T04:09:24Z","cve":"CVE-2023-31594","head":"c329a836c7b7f0b0e113fb092b31af0f95684526","imported":true,"pending":true,"pushed_at":"2026-10-12T19:34:55Z","released":null,"repo":644694025,"url":"https://github.com/Yozarseef95/CVE-2023-31594"},
 "CVE-2023-31595 github:yozarseef95/cve-2023-31595?#":{"basis":"unknown","cve":"CVE-2023-31595","imported":true,"released":null,"url":"https://github.com/Yozarseef95/CVE-2023-31595"},
 "CVE-2023-31606 github:e23e/cve-2023-31606?#":{"basis":"unknown","cve":"CVE-2023-31606","imported":true,"released":null,"url":"https://github.com/e23e/CVE-2023-31606"},
 "CVE-2023-31606 github:merbinr/cve-2023-31606?#":{"basis":"unknown","cve":"CVE-2023-31606","imported":true,"released":null,"url":"https://github.com/merbinr/CVE-2023-31606"},
