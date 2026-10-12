@@ -1,8 +1,8 @@
 <div align="center">
 
-<a href="https://pocindex.io/"><img src="https://raw.githubusercontent.com/0xMarcio/pocindex/main/docs/hero.svg?v=174052-84606-1230" alt="PoC Index" width="100%"></a>
+<a href="https://pocindex.io/"><img src="https://raw.githubusercontent.com/0xMarcio/pocindex/main/docs/hero.svg?v=174053-84607-1230" alt="PoC Index" width="100%"></a>
 
-[![last sync](https://img.shields.io/badge/last%20sync-12%20Oct%202026%2013%3A14%20UTC-2f81f7?style=flat-square&labelColor=161b22)](https://github.com/0xMarcio/pocindex/commits/main)&nbsp;[![CI](https://img.shields.io/github/actions/workflow/status/0xMarcio/pocindex/hot_cves.yml?style=flat-square&label=CI&color=2f81f7&labelColor=161b22&_=202610121314)](https://github.com/0xMarcio/pocindex/actions/workflows/hot_cves.yml)&nbsp;[![CVEs with PoCs](https://img.shields.io/badge/CVEs%20with%20PoCs-84%2C606-2f81f7?style=flat-square&labelColor=161b22)](https://pocindex.io/)&nbsp;[![known exploited](https://img.shields.io/badge/known%20exploited-1%2C230-f85149?style=flat-square&labelColor=161b22)](https://pocindex.io/)&nbsp;[![stars](https://img.shields.io/github/stars/0xMarcio/pocindex?style=flat-square&label=stars&color=e3b341&labelColor=161b22&_=202610121314)](https://github.com/0xMarcio/pocindex/stargazers)
+[![last sync](https://img.shields.io/badge/last%20sync-12%20Oct%202026%2014%3A08%20UTC-2f81f7?style=flat-square&labelColor=161b22)](https://github.com/0xMarcio/pocindex/commits/main)&nbsp;[![CI](https://img.shields.io/github/actions/workflow/status/0xMarcio/pocindex/hot_cves.yml?style=flat-square&label=CI&color=2f81f7&labelColor=161b22&_=202610121408)](https://github.com/0xMarcio/pocindex/actions/workflows/hot_cves.yml)&nbsp;[![CVEs with PoCs](https://img.shields.io/badge/CVEs%20with%20PoCs-84%2C607-2f81f7?style=flat-square&labelColor=161b22)](https://pocindex.io/)&nbsp;[![known exploited](https://img.shields.io/badge/known%20exploited-1%2C230-f85149?style=flat-square&labelColor=161b22)](https://pocindex.io/)&nbsp;[![stars](https://img.shields.io/github/stars/0xMarcio/pocindex?style=flat-square&label=stars&color=e3b341&labelColor=161b22&_=202610121408)](https://github.com/0xMarcio/pocindex/stargazers)
 
 <a href="https://pocindex.io/"><img src="https://raw.githubusercontent.com/0xMarcio/pocindex/8dec6181e823d641132e0ee8a52a1612c2b5dd37/docs/search.svg" alt="Search PoC Index" width="100%"></a>
 
@@ -14,16 +14,16 @@
 
 | Stars | Released | PoC | Description |
 | --- | --- | --- | --- |
+| 0⭐ | 17m ago | [CVE-2026-91737](https://github.com/sm1ee/CVE-2026-91737) | Use after free in PDF in Google Chrome prior to 153.0.8010.47 allowed a remote attacker to execute arbitrary… |
 | 0⭐ | 3h ago | [cve-2024-21626](https://github.com/ghs053020-stack/cve-2024-21626) | runc is a CLI tool for spawning and running containers on Linux according to the OCI specification. In runc… |
-| 0⭐ | 10h ago | <img src="https://raw.githubusercontent.com/0xMarcio/pocindex/main/docs/kev.svg" alt="KEV" title="CISA known exploited" height="14"> [CVE-2026-9586_POC_EXPLOIT](https://github.com/fromABUV/CVE-2026-9586_POC_EXPLOIT) | For new CVEs without existing/working/non-mangled POCs |
-| 0⭐ | 10h ago | [CVE-2026-103889](https://github.com/kayes817/CVE-2026-103889) | Proof of concept and isolated Docker lab for CVE-2026-103889, an unauthenticated RCE vulnerability in Expivi… |
-| 0⭐ | 11h ago | [CVE-2026-91136](https://github.com/fl0ydsec/CVE-2026-91136) | CVE-2026-91136 Divi Plus <= 2.4.0 unauthenticated arbitrary file read (mass scanner + exploit) |
-| 3⭐ | 12h ago | <img src="https://raw.githubusercontent.com/0xMarcio/pocindex/main/docs/kev.svg" alt="KEV" title="CISA known exploited" height="14"> [CVE-2026-102489](https://github.com/1xPwn/CVE-2026-102489) | CVE-2026-102489 exploit in golang |
-| 0⭐ | 17h ago | [CVE-2026-15748](https://github.com/0x4cr/CVE-2026-15748) | Unauthenticated RCE in WordPress Forminator Forms <= 1.56.1 (CVSS 9.8) |
+| 0⭐ | 11h ago | <img src="https://raw.githubusercontent.com/0xMarcio/pocindex/main/docs/kev.svg" alt="KEV" title="CISA known exploited" height="14"> [CVE-2026-9586_POC_EXPLOIT](https://github.com/fromABUV/CVE-2026-9586_POC_EXPLOIT) | For new CVEs without existing/working/non-mangled POCs |
+| 0⭐ | 11h ago | [CVE-2026-103889](https://github.com/kayes817/CVE-2026-103889) | Proof of concept and isolated Docker lab for CVE-2026-103889, an unauthenticated RCE vulnerability in Expivi… |
+| 0⭐ | 12h ago | [CVE-2026-91136](https://github.com/fl0ydsec/CVE-2026-91136) | CVE-2026-91136 Divi Plus <= 2.4.0 unauthenticated arbitrary file read (mass scanner + exploit) |
+| 3⭐ | 13h ago | <img src="https://raw.githubusercontent.com/0xMarcio/pocindex/main/docs/kev.svg" alt="KEV" title="CISA known exploited" height="14"> [CVE-2026-102489](https://github.com/1xPwn/CVE-2026-102489) | CVE-2026-102489 exploit in golang |
+| 0⭐ | 18h ago | [CVE-2026-15748](https://github.com/0x4cr/CVE-2026-15748) | Unauthenticated RCE in WordPress Forminator Forms <= 1.56.1 (CVSS 9.8) |
 |  | 1d ago | [CVE-2026-27626](https://github.com/Shisones/CVE-2026-27626) | OliveTin gives access to predefined shell commands from a web interface. In versions up to and including… |
 | 0⭐ | 1d ago | [Exploit-CVE-2026-40224](https://github.com/0xparad0x/Exploit-CVE-2026-40224) | CVE-2026-40224: systemd-machined local privilege escalation |
 | 0⭐ | 1d ago | <img src="https://raw.githubusercontent.com/0xMarcio/pocindex/main/docs/kev.svg" alt="KEV" title="CISA known exploited" height="14"> [CVE-2025-57819](https://github.com/Wayang1337/CVE-2025-57819) | FreePBX unauthenticated SQLi (endpoint module) |
-| 0⭐ | 1d ago | [CVE-2026-104335](https://github.com/Farih123/CVE-2026-104335) | IBM Langflow OSS 1.0.0 through 1.12.2 could allow a remote authenticated attacker to execute arbitrary code… |
 
 ## Trending in 2026
 
@@ -64,8 +64,8 @@
 | 3⭐ | 45d ago | <img src="https://raw.githubusercontent.com/0xMarcio/pocindex/main/docs/kev.svg" alt="KEV" title="CISA known exploited" height="14"> [CVE-2025-3248-Langflow-RCE](https://github.com/hideki233/CVE-2025-3248-Langflow-RCE) | Langflow versions prior to 1.3.0 are susceptible to code injection in the /api/v1/validate/code endpoint. A… |
 | 3⭐ | 55d ago | <img src="https://raw.githubusercontent.com/0xMarcio/pocindex/main/docs/kev.svg" alt="KEV" title="CISA known exploited" height="14"> [vivo_iqoo_neo_9_root_research_on_CVE-2025-21479](https://github.com/reaizuguo/vivo_iqoo_neo_9_root_research_on_CVE-2025-21479) | iQOO Neo9 (PD2338C) 免解锁 Caps-Root 工具** - 基于 CVE-2025-21479 (Adreno GPU SDS) 的任意物理写提权方案 |
 | 4⭐ | 85d ago | [CVE-2025-64512](https://github.com/matesz44/CVE-2025-64512) | CVE-2025-64512: pdfminer.six pickle deserialization rce; .pickle.gz + pdf generator w/ custom payloads |
-| 4⭐ | 86d ago | <img src="https://raw.githubusercontent.com/0xMarcio/pocindex/main/docs/kev.svg" alt="KEV" title="CISA known exploited" height="14"> [CVE-2025-8110-gogs-poc](https://github.com/Shirouuu/CVE-2025-8110-gogs-poc) | PoC for CVE-2025-8110 - Gogs arbitrary file write via symlink |
-| 3⭐ | 83d ago | [CVE-2025-6019-udisks2-XFS-Resize-TOCTOU-Privilege-Escalation](https://github.com/JM00NJ/CVE-2025-6019-udisks2-XFS-Resize-TOCTOU-Privilege-Escalation) | CVE-2025-6019: udisks2 XFS Resize TOCTOU Privilege Escalation |
+| 4⭐ | 87d ago | <img src="https://raw.githubusercontent.com/0xMarcio/pocindex/main/docs/kev.svg" alt="KEV" title="CISA known exploited" height="14"> [CVE-2025-8110-gogs-poc](https://github.com/Shirouuu/CVE-2025-8110-gogs-poc) | PoC for CVE-2025-8110 - Gogs arbitrary file write via symlink |
+| 3⭐ | 84d ago | [CVE-2025-6019-udisks2-XFS-Resize-TOCTOU-Privilege-Escalation](https://github.com/JM00NJ/CVE-2025-6019-udisks2-XFS-Resize-TOCTOU-Privilege-Escalation) | CVE-2025-6019: udisks2 XFS Resize TOCTOU Privilege Escalation |
 
 <details>
 <summary>2024, 2023, 2022</summary>
