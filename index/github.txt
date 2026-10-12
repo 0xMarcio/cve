@@ -27335,3 +27335,4 @@ CVE-2026-15748 - https://github.com/0x4cr/CVE-2026-15748
 CVE-2026-102489 - https://github.com/1xPwn/CVE-2026-102489
 CVE-2026-91136 - https://github.com/fl0ydsec/CVE-2026-91136
 CVE-2026-103889 - https://github.com/kayes817/CVE-2026-103889
+CVE-2026-9586 - https://github.com/fromABUV/CVE-2026-9586_POC_EXPLOIT
