@@ -3221,7 +3221,7 @@
 "CVE-2017-3881 github:rapid7/metasploit-framework/blob/master/modules/auxiliary/dos/cisco/ios_telnet_rocem.rb?#":{"basis":"unknown","cve":"CVE-2017-3881","imported":true,"released":null,"url":"https://github.com/rapid7/metasploit-framework/blob/master/modules/auxiliary/dos/cisco/ios_telnet_rocem.rb"},
 "CVE-2017-3881 github:xairy/easy-linux-pwn?#":{"basis":"unknown","cve":"CVE-2017-3881","imported":true,"released":null,"url":"https://github.com/xairy/easy-linux-pwn"},
 "CVE-2017-3881 https://www.exploit-db.com/exploits/41872":{"basis":"source","cve":"CVE-2017-3881","imported":true,"released":"2017-04-12","source":"2017-04-12","url":"https://www.exploit-db.com/exploits/41872"},
-"CVE-2017-3881 https://www.exploit-db.com/exploits/41874":{"basis":"unknown","cve":"CVE-2017-3881","imported":true,"released":null,"url":"https://www.exploit-db.com/exploits/41874/"},
+"CVE-2017-3881 https://www.exploit-db.com/exploits/41874":{"basis":"unknown","cve":"CVE-2017-3881","gone":"2026-10-12T11:40:21Z","imported":true,"released":null,"url":"https://www.exploit-db.com/exploits/41874/"},
 "CVE-2017-3881 https://www.exploit-db.com/exploits/42122":{"basis":"source","cve":"CVE-2017-3881","imported":true,"released":"2017-04-12","source":"2017-04-12","url":"https://www.exploit-db.com/exploits/42122"},
 "CVE-2017-3897 https://www.exploit-db.com/exploits/44067":{"basis":"source","cve":"CVE-2017-3897","imported":true,"released":"2017-07-30","source":"2017-07-30","url":"https://www.exploit-db.com/exploits/44067"},
 "CVE-2017-3898 https://www.exploit-db.com/exploits/44062":{"basis":"source","cve":"CVE-2017-3898","imported":true,"released":"2017-09-07","source":"2017-09-07","url":"https://www.exploit-db.com/exploits/44062"},

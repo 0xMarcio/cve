@@ -10,7 +10,6 @@ CVE-2000-0649 - https://github.com/rafaelh/CVE-2000-0649
 CVE-2000-0649 - https://github.com/stevenvegar/cve-2000-0649
 CVE-2000-0917 - https://github.com/davidliu88/oinkmaster
 CVE-2000-0917 - https://github.com/zer0duck/oinkmaster
-CVE-2000-0979 - https://github.com/Z6543/CVE-2000-0979
 CVE-2002-0082 - https://github.com/Nishant-Pall/Kioptrix-exploit
 CVE-2002-0082 - https://github.com/ratiros01/CVE-2002-0082
 CVE-2002-0748 - https://github.com/fauzanwijaya/CVE-2002-0748
@@ -24721,7 +24720,6 @@ CVE-2009-4118 - https://github.com/alt3kx/CVE-2009-4118
 CVE-2009-4623 - https://github.com/sammonsempes/CVE-2009-4623
 CVE-2010-0219 - https://github.com/vvts-alpha/CVE-2010-0219
 CVE-2010-2075 - https://github.com/Tc-XoNoR/CVE-2010-2075
-CVE-2010-2075 - https://github.com/adamssamson/Penetration-Testing-of-UnrealIRCd-3.2.8.1-on-Metasploitable-2
 CVE-2010-2075 - https://github.com/earthbendergara/unrealircd3.2.8.1-local-exploit
 CVE-2010-2861 - https://github.com/greysneakthief/14641-v2
 CVE-2010-3863 - https://github.com/sh1inroot-alt/shiro-cve-2010-3863

@@ -557,7 +557,7 @@
 "CVE-2000-0976 https://www.exploit-db.com/exploits/20294":{"basis":"source","cve":"CVE-2000-0976","imported":true,"released":"2000-10-12","source":"2000-10-12","url":"https://www.exploit-db.com/exploits/20294"},
 "CVE-2000-0977 https://www.exploit-db.com/exploits/20303":{"basis":"source","cve":"CVE-2000-0977","imported":true,"released":"2000-10-11","source":"2000-10-11","url":"https://www.exploit-db.com/exploits/20303"},
 "CVE-2000-0979 github:rapid7/metasploit-framework/blob/master/modules/auxiliary/scanner/smb/cve_2000_0979.rb?#":{"basis":"unknown","cve":"CVE-2000-0979","imported":true,"released":null,"url":"https://github.com/rapid7/metasploit-framework/blob/master/modules/auxiliary/scanner/smb/cve_2000_0979.rb"},
-"CVE-2000-0979 github:z6543/cve-2000-0979?#":{"basis":"unknown","cve":"CVE-2000-0979","imported":true,"released":null,"url":"https://github.com/Z6543/CVE-2000-0979"},
+"CVE-2000-0979 github:z6543/cve-2000-0979?#":{"basis":"unknown","cve":"CVE-2000-0979","gone":"2026-10-12T11:40:21Z","imported":true,"released":null,"url":"https://github.com/Z6543/CVE-2000-0979"},
 "CVE-2000-0979 https://www.exploit-db.com/exploits/20283":{"basis":"source","cve":"CVE-2000-0979","imported":true,"released":"2000-10-10","source":"2000-10-10","url":"https://www.exploit-db.com/exploits/20283"},
 "CVE-2000-0979 https://www.exploit-db.com/exploits/20284":{"basis":"source","cve":"CVE-2000-0979","imported":true,"released":"2000-10-10","source":"2000-10-10","url":"https://www.exploit-db.com/exploits/20284"},
 "CVE-2000-0983 https://www.exploit-db.com/exploits/20289":{"basis":"source","cve":"CVE-2000-0983","imported":true,"released":"2000-10-13","source":"2000-10-13","url":"https://www.exploit-db.com/exploits/20289"},

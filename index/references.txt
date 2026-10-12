@@ -91577,7 +91577,6 @@ CVE-2017-20279 - https://www.exploit-db.com/exploits/42113
 CVE-2017-20280 - https://www.exploit-db.com/exploits/41930
 CVE-2017-20281 - https://www.exploit-db.com/exploits/41663
 CVE-2017-20282 - https://www.exploit-db.com/exploits/41642
-CVE-2017-3881 - https://www.exploit-db.com/exploits/41874/
 CVE-2017-5206 - http://www.openwall.com/lists/oss-security/2017/01/07/5
 CVE-2017-5207 - http://www.openwall.com/lists/oss-security/2017/01/07/6
 CVE-2017-5594 - https://securelayer7.net/download/poc/password-reset-vulnerability-exploit-ruby-pagekit-cms.rb.txt
