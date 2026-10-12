@@ -992,6 +992,7 @@
 "CVE-2014-3934 https://www.exploit-db.com/exploits/39200":{"basis":"source","cve":"CVE-2014-3934","imported":true,"released":"2014-05-24","source":"2014-05-24","url":"https://www.exploit-db.com/exploits/39200"},
 "CVE-2014-3935 https://www.exploit-db.com/exploits/39188":{"basis":"source","cve":"CVE-2014-3935","imported":true,"released":"2014-05-19","source":"2014-05-19","url":"https://www.exploit-db.com/exploits/39188"},
 "CVE-2014-3936 github:rapid7/metasploit-framework/blob/master/modules/exploits/linux/http/dlink_hnap_bof.rb?#":{"basis":"unknown","cve":"CVE-2014-3936","imported":true,"released":null,"url":"https://github.com/rapid7/metasploit-framework/blob/master/modules/exploits/linux/http/dlink_hnap_bof.rb"},
+"CVE-2014-3936 github:walnut1337/dir-505_backdoor?#":{"basis":"unknown","cve":"CVE-2014-3936","released":null,"seen":"2026-10-12T09:28:02Z","url":"https://github.com/Walnut1337/DIR-505_backdoor"},
 "CVE-2014-3936 https://www.exploit-db.com/exploits/34064":{"basis":"source","cve":"CVE-2014-3936","imported":true,"released":"2014-07-14","source":"2014-07-14","url":"https://www.exploit-db.com/exploits/34064"},
 "CVE-2014-3961 http://www.exploit-db.com/exploits/33613":{"basis":"source","cve":"CVE-2014-3961","imported":true,"released":"2014-06-02","source":"2014-06-02","url":"http://www.exploit-db.com/exploits/33613"},
 "CVE-2014-3961 https://www.exploit-db.com/exploits/33613":{"basis":"source","cve":"CVE-2014-3961","imported":true,"released":"2014-06-02","source":"2014-06-02","url":"https://www.exploit-db.com/exploits/33613"},
