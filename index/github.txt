@@ -27348,3 +27348,6 @@ CVE-2026-28943 - https://github.com/keepantidev/18.7.8-exploit
 CVE-2026-28972 - https://github.com/keepantidev/18.7.8-exploit
 CVE-2026-29000 - https://github.com/Erikgavs/CVE-2026-29000
 CVE-2026-43668 - https://github.com/keepantidev/18.7.8-exploit
+CVE-2026-21962 - https://github.com/2sangmin/Wins9_CVE_Practice
+CVE-2026-60137 - https://github.com/0xCyp1337/CVE-2026-63030-CVE-2026-60137-WP2SHELL
+CVE-2026-63030 - https://github.com/0xCyp1337/CVE-2026-63030-CVE-2026-60137-WP2SHELL
