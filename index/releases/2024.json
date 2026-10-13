@@ -8680,6 +8680,7 @@
 "CVE-2024-54772 github:caster0x00/sara?#":{"basis":"unknown","cve":"CVE-2024-54772","imported":true,"released":null,"url":"https://github.com/caster0x00/Sara"},
 "CVE-2024-54772 github:casterbyte/sara?#":{"basis":"unknown","cve":"CVE-2024-54772","imported":true,"released":null,"url":"https://github.com/casterbyte/Sara"},
 "CVE-2024-54772 github:deauther890/cve-2024-54772?#":{"basis":"unknown","cve":"CVE-2024-54772","imported":true,"released":null,"url":"https://github.com/deauther890/CVE-2024-54772"},
+"CVE-2024-54772 github:projectdiscovery/nuclei-templates/blob/main/network/cves/2024/CVE-2024-54772.yaml?#":{"basis":"unknown","cve":"CVE-2024-54772","released":null,"seen":"2026-10-13T11:57:39Z","url":"https://github.com/projectdiscovery/nuclei-templates/blob/main/network/cves/2024/CVE-2024-54772.yaml"},
 "CVE-2024-54772 github:seven11eleven/cve-2024-54772?#":{"basis":"unknown","cve":"CVE-2024-54772","imported":true,"released":null,"url":"https://github.com/Seven11Eleven/CVE-2024-54772"},
 "CVE-2024-54774 github:taynes-llllzt/taynes/issues/4?#":{"basis":"unknown","cve":"CVE-2024-54774","imported":true,"released":null,"url":"https://github.com/taynes-llllzt/taynes/issues/4"},
 "CVE-2024-54792 github:mariotesoro/cve-2024-54792?#":{"basis":"unknown","cve":"CVE-2024-54792","imported":true,"released":null,"url":"https://github.com/MarioTesoro/CVE-2024-54792"},

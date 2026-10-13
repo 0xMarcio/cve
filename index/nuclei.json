@@ -17542,6 +17542,14 @@
 "severity": "high",
 "url": "https://github.com/linuxadi/40k-nuclei-templates/blob/main/aditya/folder4/CVE-2022-28090.yaml"
 },
+"CVE-2022-28108": {
+"cvss": 9.8,
+"cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+"cwe": "CWE-352",
+"name": "Selenium Grid < 4.0.0-alpha-7 - Remote Code Execution",
+"severity": "critical",
+"url": "https://github.com/projectdiscovery/nuclei-templates/blob/main/http/cves/2022/CVE-2022-28108.yaml"
+},
 "CVE-2022-28117": {
 "cvss": 4.9,
 "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:U/C:N/I:H/A:N",
@@ -28295,6 +28303,14 @@
 "severity": "high",
 "url": "https://github.com/projectdiscovery/nuclei-templates/blob/main/http/cves/2024/CVE-2024-54767.yaml"
 },
+"CVE-2024-54772": {
+"cvss": 5.3,
+"cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+"cwe": "CWE-203",
+"name": "MikroTik WinBox <= 6.49.17 - Username Enumeration",
+"severity": "medium",
+"url": "https://github.com/projectdiscovery/nuclei-templates/blob/main/network/cves/2024/CVE-2024-54772.yaml"
+},
 "CVE-2024-5483": {
 "cvss": 5.3,
 "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:N/A:N",
@@ -35319,6 +35335,14 @@
 "severity": "medium",
 "url": "https://github.com/projectdiscovery/nuclei-templates/blob/main/http/cves/2026/CVE-2026-54236.yaml"
 },
+"CVE-2026-54617": {
+"cvss": 9.8,
+"cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+"cwe": "CWE-22",
+"name": "GravitLauncher LaunchServer <=5.7.11 - Unauthenticated Path Traversal to Arbitrary File Read",
+"severity": "critical",
+"url": "https://github.com/projectdiscovery/nuclei-templates/blob/main/http/cves/2026/CVE-2026-54617.yaml"
+},
 "CVE-2026-54836": {
 "cvss": 9.3,
 "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:N/A:L",
@@ -35692,6 +35716,22 @@
 "name": "JetBrains TeamCity < 2026.1.3, 2025.11.7 - Remote Code Execution",
 "severity": "critical",
 "url": "https://github.com/projectdiscovery/nuclei-templates/blob/main/http/cves/2026/CVE-2026-63077.yaml"
+},
+"CVE-2026-63358": {
+"cvss": 7.3,
+"cvss_vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:L",
+"cwe": "CWE-732",
+"name": "FileGator < 7.14.2 - Privilege Escalation",
+"severity": "high",
+"url": "https://github.com/projectdiscovery/nuclei-templates/blob/main/http/cves/2026/CVE-2026-63358.yaml"
+},
+"CVE-2026-6377": {
+"cvss": 8.6,
+"cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:N/A:N",
+"cwe": "CWE-22",
+"name": "Next4Biz CSM - Arbitrary File Read via DownloadFileHandler",
+"severity": "high",
+"url": "https://github.com/projectdiscovery/nuclei-templates/blob/main/http/cves/2026/CVE-2026-6377.yaml"
 },
 "CVE-2026-6433": {
 "cvss": 9.8,
@@ -36161,6 +36201,12 @@
 "severity": "critical",
 "url": "https://github.com/projectdiscovery/nuclei-templates/blob/main/http/cves/2026/CVE-2026-9082.yaml"
 },
+"CVE-2026-90898": {
+"cwe": "CWE-78",
+"name": "Bifrost < 2.1.0 - Unauthenticated MCP Stdio Command Execution",
+"severity": "critical",
+"url": "https://github.com/projectdiscovery/nuclei-templates/blob/main/http/cves/2026/CVE-2026-90898.yaml"
+},
 "CVE-2026-9103": {
 "cvss": 9.8,
 "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
@@ -36168,6 +36214,14 @@
 "name": "Langflow OSS - Superuser Token Issuance",
 "severity": "critical",
 "url": "https://github.com/projectdiscovery/nuclei-templates/blob/main/http/cves/2026/CVE-2026-9103.yaml"
+},
+"CVE-2026-91136": {
+"cvss": 7.5,
+"cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+"cwe": "CWE-22",
+"name": "Divi Plus <= 2.4.0 - Unauthenticated Arbitrary File Read",
+"severity": "high",
+"url": "https://github.com/projectdiscovery/nuclei-templates/blob/main/http/cves/2026/CVE-2026-91136.yaml"
 },
 "CVE-2026-9133": {
 "cvss": 7.7,
@@ -36231,5 +36285,13 @@
 "name": ">",
 "severity": "critical",
 "url": "https://github.com/topscoder/nuclei-wordfence-cve/blob/main/nuclei-templates/2026/CVE-2026-97670-fusion_builder-e2c00795-c49b-4b0a-8f0a-4ed18c966c6b.yaml"
+},
+"CVE-2026-9833": {
+"cvss": 7.1,
+"cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:L/I:L/A:L",
+"cwe": "CWE-79",
+"name": "WordPress Tag Groups < 2.2.0 - Reflected Cross-Site Scripting",
+"severity": "high",
+"url": "https://github.com/projectdiscovery/nuclei-templates/blob/main/http/cves/2026/CVE-2026-9833.yaml"
 }
 }
