@@ -1,8 +1,8 @@
 <div align="center">
 
-<a href="https://pocindex.io/"><img src="https://raw.githubusercontent.com/0xMarcio/pocindex/main/docs/hero.svg?v=174196-84754-1230" alt="PoC Index" width="100%"></a>
+<a href="https://pocindex.io/"><img src="https://raw.githubusercontent.com/0xMarcio/pocindex/main/docs/hero.svg?v=174198-84756-1230" alt="PoC Index" width="100%"></a>
 
-[![last sync](https://img.shields.io/badge/last%20sync-13%20Oct%202026%2019%3A09%20UTC-2f81f7?style=flat-square&labelColor=161b22)](https://github.com/0xMarcio/pocindex/commits/main)&nbsp;[![CI](https://img.shields.io/github/actions/workflow/status/0xMarcio/pocindex/hot_cves.yml?style=flat-square&label=CI&color=2f81f7&labelColor=161b22&_=202610131909)](https://github.com/0xMarcio/pocindex/actions/workflows/hot_cves.yml)&nbsp;[![CVEs with PoCs](https://img.shields.io/badge/CVEs%20with%20PoCs-84%2C754-2f81f7?style=flat-square&labelColor=161b22)](https://pocindex.io/)&nbsp;[![known exploited](https://img.shields.io/badge/known%20exploited-1%2C230-f85149?style=flat-square&labelColor=161b22)](https://pocindex.io/)&nbsp;[![stars](https://img.shields.io/github/stars/0xMarcio/pocindex?style=flat-square&label=stars&color=e3b341&labelColor=161b22&_=202610131909)](https://github.com/0xMarcio/pocindex/stargazers)
+[![last sync](https://img.shields.io/badge/last%20sync-13%20Oct%202026%2021%3A08%20UTC-2f81f7?style=flat-square&labelColor=161b22)](https://github.com/0xMarcio/pocindex/commits/main)&nbsp;[![CI](https://img.shields.io/github/actions/workflow/status/0xMarcio/pocindex/hot_cves.yml?style=flat-square&label=CI&color=2f81f7&labelColor=161b22&_=202610132108)](https://github.com/0xMarcio/pocindex/actions/workflows/hot_cves.yml)&nbsp;[![CVEs with PoCs](https://img.shields.io/badge/CVEs%20with%20PoCs-84%2C756-2f81f7?style=flat-square&labelColor=161b22)](https://pocindex.io/)&nbsp;[![known exploited](https://img.shields.io/badge/known%20exploited-1%2C230-f85149?style=flat-square&labelColor=161b22)](https://pocindex.io/)&nbsp;[![stars](https://img.shields.io/github/stars/0xMarcio/pocindex?style=flat-square&label=stars&color=e3b341&labelColor=161b22&_=202610132108)](https://github.com/0xMarcio/pocindex/stargazers)
 
 <a href="https://pocindex.io/"><img src="https://raw.githubusercontent.com/0xMarcio/pocindex/8dec6181e823d641132e0ee8a52a1612c2b5dd37/docs/search.svg" alt="Search PoC Index" width="100%"></a>
 
@@ -14,16 +14,16 @@
 
 | Stars | Released | PoC | Description |
 | --- | --- | --- | --- |
-| 0⭐ | 1h ago | [CVE-2026-104944](https://github.com/anaskalt/CVE-2026-104944) | TP-Link Tapo C500 v2.0 contains an out-of-bounds function-pointer dispatch in its TDP (TP-Link Device… |
-| 0⭐ | 1h ago | [CVE-2026-104945](https://github.com/anaskalt/CVE-2026-104945) | TP-Link Tapo C500 v2.0 contains an out-of-bounds stack write vulnerability in its ONVIF PTZ SOAP handlers. An… |
-| 2⭐ | 3h ago | [CVE-2026-97229-PoC](https://github.com/jburgess-r7/CVE-2026-97229-PoC) | GitLab CI lint integer-overflow RCE PoC for CVE-2026-97229, validated against the official 19.4.1 CE amd64… |
-| 0⭐ | 3h ago | [CVE-2026-76268](https://github.com/murrez/CVE-2026-76268) | CVE-2026-76268 PoC: Splunk Enterprise SHC Patroni REST unauth RCE - PATCH /config archive_command + POST… |
-| 0⭐ | 3h ago | [POC-for-CVE-2026-104711---New](https://github.com/pochunter/POC-for-CVE-2026-104711---New) | POC for CVE-2026-104711 - New |
-| 0⭐ | 5h ago | [CVE-2026-105950](https://github.com/capivara-research/CVE-2026-105950) | Bilingual PoC and technical analysis for CVE-2026-105950 - Formwork formaction URI sanitizer bypass |
-| 0⭐ | 5h ago | [POC-EXPLOIT-CVE-2026-104711](https://github.com/pochunter/POC-EXPLOIT-CVE-2026-104711) | POC EXPLOIT CVE-2026-104711 |
-| 0⭐ | 7h ago | [CVE-2026-68582-PoC](https://github.com/comradezephyr/CVE-2026-68582-PoC) | PoC for CVE-2026-68582 / GHSA-rj9j-8772-4h6c - Vikunja link-share BOLA |
-|  | 7h ago | [CVE-2022-23222_cos](https://github.com/google/security-research/tree/master/pocs/linux/kernelctf/CVE-2022-23222_cos) | kernel/bpf/verifier.c in the Linux kernel through 5.15.14 allows local users to gain privileges because of… |
-|  | 7h ago | [CVE-2024-26800_cos](https://github.com/google/security-research/tree/master/pocs/linux/kernelctf/CVE-2024-26800_cos) | In the Linux kernel, the following vulnerability has been resolved:tls: fix use-after-free on failed backlog… |
+| 0⭐ | 1h ago | [CVE-2026-85884](https://github.com/Beardhammer/CVE-2026-85884) | CVE-85884 POC |
+| 0⭐ | 3h ago | [CVE-2026-104944](https://github.com/anaskalt/CVE-2026-104944) | TP-Link Tapo C500 v2.0 contains an out-of-bounds function-pointer dispatch in its TDP (TP-Link Device… |
+| 0⭐ | 3h ago | [CVE-2026-104945](https://github.com/anaskalt/CVE-2026-104945) | TP-Link Tapo C500 v2.0 contains an out-of-bounds stack write vulnerability in its ONVIF PTZ SOAP handlers. An… |
+| 4⭐ | 5h ago | [CVE-2026-97229-PoC](https://github.com/jburgess-r7/CVE-2026-97229-PoC) | GitLab CI lint integer-overflow RCE PoC for CVE-2026-97229, validated against the official 19.4.1 CE amd64… |
+| 0⭐ | 5h ago | [CVE-2026-76268](https://github.com/murrez/CVE-2026-76268) | CVE-2026-76268 PoC: Splunk Enterprise SHC Patroni REST unauth RCE - PATCH /config archive_command + POST… |
+| 0⭐ | 5h ago | [POC-for-CVE-2026-104711---New](https://github.com/pochunter/POC-for-CVE-2026-104711---New) | POC for CVE-2026-104711 - New |
+| 0⭐ | 7h ago | [CVE-2026-105950](https://github.com/capivara-research/CVE-2026-105950) | Bilingual PoC and technical analysis for CVE-2026-105950 - Formwork formaction URI sanitizer bypass |
+| 0⭐ | 7h ago | [POC-EXPLOIT-CVE-2026-104711](https://github.com/pochunter/POC-EXPLOIT-CVE-2026-104711) | POC EXPLOIT CVE-2026-104711 |
+| 0⭐ | 9h ago | [CVE-2026-68582-PoC](https://github.com/comradezephyr/CVE-2026-68582-PoC) | PoC for CVE-2026-68582 / GHSA-rj9j-8772-4h6c - Vikunja link-share BOLA |
+|  | 9h ago | [CVE-2022-23222_cos](https://github.com/google/security-research/tree/master/pocs/linux/kernelctf/CVE-2022-23222_cos) | kernel/bpf/verifier.c in the Linux kernel through 5.15.14 allows local users to gain privileges because of… |
 
 ## Trending in 2026
 
@@ -32,23 +32,23 @@
 | 477⭐ | 53d ago | [CVE-2026-9830](https://github.com/opaxial/CVE-2026-9830) | CVE-2026-9830 Proof of Concept |
 | 332⭐ | 78d ago | [CVE-2026-54121](https://github.com/aniqfakhrul/CVE-2026-54121) | Certighost POC |
 | 96⭐ | 14d ago | [CVE-2026-41096-PoC](https://github.com/ZeroDayEvil/CVE-2026-41096-PoC) | 🛡️ Official AI Security Tool module for CVE-2026-41096 (Windows DNSAPI.dll Heap Overflow / DNS-Mayhem Deep… |
-| 185⭐ | 52d ago | [CVE-2026-62911](https://github.com/hypnguyen1209/CVE-2026-62911) | POC pre-auth RCE on Exchange |
+| 186⭐ | 52d ago | [CVE-2026-62911](https://github.com/hypnguyen1209/CVE-2026-62911) | POC pre-auth RCE on Exchange |
 | 92⭐ | 32d ago | <img src="https://raw.githubusercontent.com/0xMarcio/pocindex/main/docs/kev.svg" alt="KEV" title="CISA known exploited" height="14"> [CVE-2026-20805-PoC](https://github.com/ZeroDayEvil/CVE-2026-20805-PoC) | 🛡️ Official AI Security Tool module for CVE-2026-20805 (Desktop Window Manager / dwm.exe Information… |
 | 88⭐ | 31d ago | [CVE-2026-21858-n8n-FullChain](https://github.com/ZeroDayEvil/CVE-2026-21858-n8n-FullChain) | 🛡️ Official AI Security Tool module for CVE-2026-21858 + CVE-2025-68613 (n8n "Ni8mare" Unauthenticated… |
-| 50⭐ | 14d ago | [CVE-2026-94545](https://github.com/EQSTLab/CVE-2026-94545) | Next.js RCE |
-| 106⭐ | 48d ago | [CVE-2026-75604-poc](https://github.com/rafabd1/CVE-2026-75604-poc) | CVE-2026-75604 Next.js Windows RCE poc |
-| 86⭐ | 39d ago | [CVE-2026-65343](https://github.com/ByteV0rtex/CVE-2026-65343) | CVE-2026-65343 PoC - AppleKeyStore OOB read → KASLR defeat (iOS 26.6 / 23G71) |
+| 51⭐ | 14d ago | [CVE-2026-94545](https://github.com/EQSTLab/CVE-2026-94545) | Next.js RCE |
+| 107⭐ | 48d ago | [CVE-2026-75604-poc](https://github.com/rafabd1/CVE-2026-75604-poc) | CVE-2026-75604 Next.js Windows RCE poc |
+| 86⭐ | 40d ago | [CVE-2026-65343](https://github.com/ByteV0rtex/CVE-2026-65343) | CVE-2026-65343 PoC - AppleKeyStore OOB read → KASLR defeat (iOS 26.6 / 23G71) |
 | 108⭐ | 71d ago | [SCCM-CVE-2026-47301-Remote-Code-Execution-Exploit](https://github.com/OmriBaso/SCCM-CVE-2026-47301-Remote-Code-Execution-Exploit) | Proof-of-concept exploit chain (CVE-2026-47301) for Microsoft Configuration Manager (SCCM), combining a… |
+| 15⭐ | 3d ago | [telegram-cve-2026-107181](https://github.com/SeanDishman/telegram-cve-2026-107181) | Telegram CVE-2026-107181 |
+| 110⭐ | 87d ago | [CVE-2026-43499-Poc-Analysis](https://github.com/Linuxoid-cn/CVE-2026-43499-Poc-Analysis) | Vulnerability analysis and Proof of Concept (PoC) for CVE-2026-43499 affecting Xiaomi devices. For… |
 | 40⭐ | 19d ago | [CVE-2026-84543](https://github.com/petermalone/CVE-2026-84543) | Technical disclosure and PoC for CVE-2026-84543, a macOS SMB kernel vulnerability |
-| 110⭐ | 86d ago | [CVE-2026-43499-Poc-Analysis](https://github.com/Linuxoid-cn/CVE-2026-43499-Poc-Analysis) | Vulnerability analysis and Proof of Concept (PoC) for CVE-2026-43499 affecting Xiaomi devices. For… |
-| 14⭐ | 3d ago | [telegram-cve-2026-107181](https://github.com/SeanDishman/telegram-cve-2026-107181) | Telegram CVE-2026-107181 |
-| 39⭐ | 20d ago | <img src="https://raw.githubusercontent.com/0xMarcio/pocindex/main/docs/kev.svg" alt="KEV" title="CISA known exploited" height="14"> [cve-2026-87902-poc](https://github.com/ressl/cve-2026-87902-poc) | PoC for CVE-2026-87902 - unauthenticated path traversal in WordPress page-template resolution (local PHP… |
-| 31⭐ | 15d ago | [CVE-2026-34990](https://github.com/predyy/CVE-2026-34990) | CVE-2026-34990 minimal PoC. CUPS <= 2.4.16 local privesc. |
+| 39⭐ | 21d ago | <img src="https://raw.githubusercontent.com/0xMarcio/pocindex/main/docs/kev.svg" alt="KEV" title="CISA known exploited" height="14"> [cve-2026-87902-poc](https://github.com/ressl/cve-2026-87902-poc) | PoC for CVE-2026-87902 - unauthenticated path traversal in WordPress page-template resolution (local PHP… |
+| 31⭐ | 16d ago | [CVE-2026-34990](https://github.com/predyy/CVE-2026-34990) | CVE-2026-34990 minimal PoC. CUPS <= 2.4.16 local privesc. |
 | 35⭐ | 6d ago | <img src="https://raw.githubusercontent.com/0xMarcio/pocindex/main/docs/kev.svg" alt="KEV" title="CISA known exploited" height="14"> [CVE-2026-87902](https://github.com/abraxas/CVE-2026-87902) | CVE-2026-87902 - WordPress - WordPress Core - Critical 9.2 - Unauthenticated Local File Inclusion… |
 | 43⭐ | 32d ago | <img src="https://raw.githubusercontent.com/0xMarcio/pocindex/main/docs/kev.svg" alt="KEV" title="CISA known exploited" height="14"> [cve-2026-85706](https://github.com/guneykabel/cve-2026-85706) | Exploit poc for CVE-2026-85706 an unauthenticated arbitrary file read on Gitlab CE-EE affecting versions:… |
 | 26⭐ | 15d ago | <img src="https://raw.githubusercontent.com/0xMarcio/pocindex/main/docs/kev.svg" alt="KEV" title="CISA known exploited" height="14"> [CVE-2026-85706](https://github.com/EQSTLab/CVE-2026-85706) | GitLab Unauthenticated Arbitrary File Read |
+| 4⭐ | 5h ago | [CVE-2026-97229-PoC](https://github.com/jburgess-r7/CVE-2026-97229-PoC) | GitLab CI lint integer-overflow RCE PoC for CVE-2026-97229, validated against the official 19.4.1 CE amd64… |
 | 44⭐ | 36d ago | [CVE-2026-28576-poc](https://github.com/mobilehackinglab/CVE-2026-28576-poc) | SQL injection vulnerability in Android 17 (AOSP) |
-| 31⭐ | 22d ago | [CVE-2026-43786](https://github.com/Malwation/CVE-2026-43786) | Proof of concept for CVE-2026-43786, a local privilege escalation vulnerability in macOS CoreServices that… |
 
 ## Trending in 2025
 
@@ -83,7 +83,7 @@
 
 | Stars | Updated | Repository | Description |
 | --- | --- | --- | --- |
-| 6⭐ | 82d ago | [CVE-2023-36003](https://github.com/johnnygreeme/CVE-2023-36003) | PoC for CVE-2023-36003: Windows Exploit Security Feature Bypass Vulnerability in Windows Defender. |
+| 6⭐ | 83d ago | [CVE-2023-36003](https://github.com/johnnygreeme/CVE-2023-36003) | PoC for CVE-2023-36003: Windows Exploit Security Feature Bypass Vulnerability in Windows Defender. |
 | 3⭐ | 78d ago | [CVE-2023-52076-PoC](https://github.com/Groppoxx/CVE-2023-52076-PoC) | PoC exploit for CVE-2023-52076 - zip-slip path traversal in Atril/Xreader (MATE/Cinnamon) enabling arbitrary… |
 
 ## Trending in 2022
