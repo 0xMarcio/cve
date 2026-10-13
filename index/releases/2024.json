@@ -50,6 +50,7 @@
 "CVE-2024-0044 github:scs-labrat/android_autorooter?#":{"basis":"unknown","cve":"CVE-2024-0044","imported":true,"released":null,"url":"https://github.com/scs-labrat/android_autorooter"},
 "CVE-2024-0044 github:thebl4ckph4nt0m/cve-2024-0044?#":{"basis":"unknown","cve":"CVE-2024-0044","imported":true,"released":null,"url":"https://github.com/TheBl4ckPh4nt0m/CVE-2024-0044"},
 "CVE-2024-0044 https://rtx.meta.security/exploitation/2024/03/04/Android-run-as-forgery.html":{"basis":"unknown","cve":"CVE-2024-0044","imported":true,"released":null,"url":"https://rtx.meta.security/exploitation/2024/03/04/Android-run-as-forgery.html"},
+"CVE-2024-0124 github:qcx526/cuda_poc_generator?#":{"basis":"unknown","cve":"CVE-2024-0124","released":null,"seen":"2026-10-13T09:40:21Z","url":"https://github.com/Qcx526/cuda_poc_generator"},
 "CVE-2024-0132 github:r0binak/cve-2024-0132?#":{"basis":"unknown","cve":"CVE-2024-0132","imported":true,"released":null,"url":"https://github.com/r0binak/CVE-2024-0132"},
 "CVE-2024-0132 github:ssst0n3/poc-cve-2024-0132?#":{"basis":"unknown","cve":"CVE-2024-0132","imported":true,"released":null,"url":"https://github.com/ssst0n3/poc-cve-2024-0132"},
 "CVE-2024-0132 https://www.exploit-db.com/exploits/52095":{"basis":"source","cve":"CVE-2024-0132","imported":true,"released":"2025-03-26","source":"2025-03-26","url":"https://www.exploit-db.com/exploits/52095"},
