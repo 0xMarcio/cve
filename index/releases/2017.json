@@ -4208,7 +4208,7 @@
 "CVE-2017-7921 github:201646613/cve-2017-7921?#":{"basis":"unknown","cve":"CVE-2017-7921","imported":true,"released":null,"url":"https://github.com/201646613/CVE-2017-7921"},
 "CVE-2017-7921 github:alkaid176/cve-2017-7921?#":{"basis":"unknown","cve":"CVE-2017-7921","imported":true,"released":null,"url":"https://github.com/alkaid176/CVE-2017-7921"},
 "CVE-2017-7921 github:b3pwn3d/cve-2017-7921?#":{"basis":"unknown","cve":"CVE-2017-7921","imported":true,"released":null,"url":"https://github.com/b3pwn3d/CVE-2017-7921"},
-"CVE-2017-7921 github:blacksheepstudio/cve-2017-7921-exp?#":{"basis":"unknown","cve":"CVE-2017-7921","imported":true,"released":null,"url":"https://github.com/blacksheepstudio/CVE-2017-7921-EXP"},
+"CVE-2017-7921 github:blacksheepstudio/cve-2017-7921-exp?#":{"basis":"unknown","cve":"CVE-2017-7921","gone":"2026-10-13T11:25:45Z","imported":true,"released":null,"url":"https://github.com/blacksheepstudio/CVE-2017-7921-EXP"},
 "CVE-2017-7921 github:blkgzs/camerahack?#":{"basis":"unknown","cve":"CVE-2017-7921","imported":true,"released":null,"url":"https://github.com/blkgzs/CameraHack"},
 "CVE-2017-7921 github:burnymcdull/cve-2017-7921?#":{"basis":"unknown","cve":"CVE-2017-7921","imported":true,"released":null,"url":"https://github.com/BurnyMcDull/CVE-2017-7921"},
 "CVE-2017-7921 github:chaitin/xray/blob/master/pocs/hikvision-cve-2017-7921.yml?#":{"basis":"unknown","cve":"CVE-2017-7921","imported":true,"released":null,"url":"https://github.com/chaitin/xray/blob/master/pocs/hikvision-cve-2017-7921.yml"},
