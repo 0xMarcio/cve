@@ -7184,6 +7184,7 @@
 "CVE-2024-4577 github:k3ystr0k3r/cve-2024-4577-exploit?#":{"basis":"unknown","cve":"CVE-2024-4577","gone":"2026-10-10T10:18:28Z","imported":true,"released":null,"url":"https://github.com/K3ysTr0K3R/CVE-2024-4577-EXPLOIT"},
 "CVE-2024-4577 github:kimjuhyeong95/cve-2024-4577?#":{"basis":"unknown","cve":"CVE-2024-4577","imported":true,"released":null,"url":"https://github.com/KimJuhyeong95/cve-2024-4577"},
 "CVE-2024-4577 github:l0n3m4n/cve-2024-4577-rce?#":{"basis":"unknown","cve":"CVE-2024-4577","imported":true,"released":null,"url":"https://github.com/l0n3m4n/CVE-2024-4577-RCE"},
+"CVE-2024-4577 github:lockbitblack-ai/cve-2024-4577-new?#":{"basis":"unknown","cve":"CVE-2024-4577","released":null,"seen":"2026-10-13T12:46:00Z","url":"https://github.com/lockbitblack-ai/CVE-2024-4577-new"},
 "CVE-2024-4577 github:longhoangth18/cve-2024-4577?#":{"basis":"unknown","cve":"CVE-2024-4577","imported":true,"released":null,"url":"https://github.com/longhoangth18/CVE-2024-4577"},
 "CVE-2024-4577 github:mananjain61/php-cgi-internal-rce?#":{"basis":"unknown","cve":"CVE-2024-4577","imported":true,"released":null,"url":"https://github.com/mananjain61/PHP-CGI-INTERNAL-RCE"},
 "CVE-2024-4577 github:manuelinfosec/cve-2024-4577?#":{"basis":"unknown","cve":"CVE-2024-4577","imported":true,"released":null,"url":"https://github.com/manuelinfosec/CVE-2024-4577"},
