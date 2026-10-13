@@ -27365,3 +27365,7 @@ CVE-2026-1357 - https://github.com/stj8703-web/CVE-2026-1357
 CVE-2026-85097 - https://github.com/Masriyan/CVE-2026-85097
 CVE-2024-53677 - https://github.com/choyj358/cve-2024-53677
 CVE-2026-104711 - https://github.com/uday952/CVE-2026-104711-Advanced-Variant
+CVE-2025-23339 - https://github.com/Qcx526/cuda_poc_generator
+CVE-2026-44825 - https://github.com/q0524/CVE-2026-44825_test
+CVE-2026-58222 - https://github.com/abdelaaziz0/KDSExtract
+CVE-2026-97229 - https://github.com/AmpedWasTaken/CVE-2026-97229-GitLab-CI-CD-Regex-Compiler-RCE

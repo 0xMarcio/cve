@@ -1,8 +1,8 @@
 <div align="center">
 
-<a href="https://pocindex.io/"><img src="https://raw.githubusercontent.com/0xMarcio/pocindex/main/docs/hero.svg?v=174063-84617-1230" alt="PoC Index" width="100%"></a>
+<a href="https://pocindex.io/"><img src="https://raw.githubusercontent.com/0xMarcio/pocindex/main/docs/hero.svg?v=174065-84619-1230" alt="PoC Index" width="100%"></a>
 
-[![last sync](https://img.shields.io/badge/last%20sync-13%20Oct%202026%2008%3A08%20UTC-2f81f7?style=flat-square&labelColor=161b22)](https://github.com/0xMarcio/pocindex/commits/main)&nbsp;[![CI](https://img.shields.io/github/actions/workflow/status/0xMarcio/pocindex/hot_cves.yml?style=flat-square&label=CI&color=2f81f7&labelColor=161b22&_=202610130808)](https://github.com/0xMarcio/pocindex/actions/workflows/hot_cves.yml)&nbsp;[![CVEs with PoCs](https://img.shields.io/badge/CVEs%20with%20PoCs-84%2C617-2f81f7?style=flat-square&labelColor=161b22)](https://pocindex.io/)&nbsp;[![known exploited](https://img.shields.io/badge/known%20exploited-1%2C230-f85149?style=flat-square&labelColor=161b22)](https://pocindex.io/)&nbsp;[![stars](https://img.shields.io/github/stars/0xMarcio/pocindex?style=flat-square&label=stars&color=e3b341&labelColor=161b22&_=202610130808)](https://github.com/0xMarcio/pocindex/stargazers)
+[![last sync](https://img.shields.io/badge/last%20sync-13%20Oct%202026%2009%3A08%20UTC-2f81f7?style=flat-square&labelColor=161b22)](https://github.com/0xMarcio/pocindex/commits/main)&nbsp;[![CI](https://img.shields.io/github/actions/workflow/status/0xMarcio/pocindex/hot_cves.yml?style=flat-square&label=CI&color=2f81f7&labelColor=161b22&_=202610130908)](https://github.com/0xMarcio/pocindex/actions/workflows/hot_cves.yml)&nbsp;[![CVEs with PoCs](https://img.shields.io/badge/CVEs%20with%20PoCs-84%2C619-2f81f7?style=flat-square&labelColor=161b22)](https://pocindex.io/)&nbsp;[![known exploited](https://img.shields.io/badge/known%20exploited-1%2C230-f85149?style=flat-square&labelColor=161b22)](https://pocindex.io/)&nbsp;[![stars](https://img.shields.io/github/stars/0xMarcio/pocindex?style=flat-square&label=stars&color=e3b341&labelColor=161b22&_=202610130908)](https://github.com/0xMarcio/pocindex/stargazers)
 
 <a href="https://pocindex.io/"><img src="https://raw.githubusercontent.com/0xMarcio/pocindex/8dec6181e823d641132e0ee8a52a1612c2b5dd37/docs/search.svg" alt="Search PoC Index" width="100%"></a>
 
@@ -14,16 +14,16 @@
 
 | Stars | Released | PoC | Description |
 | --- | --- | --- | --- |
-| 0⭐ | 39m ago | [CVE-2026-104711-Advanced-Variant](https://github.com/uday952/CVE-2026-104711-Advanced-Variant) | POC for CVE-2026-104711-Advanced-Variant |
-| 0⭐ | 1h ago | [CVE-2026-104711-exploit-payload-4](https://github.com/uday952/CVE-2026-104711-exploit-payload-4) | POC for the CVE-2026-104711 new variants |
-| 0⭐ | 1h ago | [cve-2024-53677](https://github.com/choyj358/cve-2024-53677) | File upload logic in Apache Struts is flawed. An attacker can manipulate file upload params to enable paths… |
-| 0⭐ | 1h ago | [CVE-2026-104711-POC-Variant3](https://github.com/uday952/CVE-2026-104711-POC-Variant3) | POC for the CVE-2026-104711 which is a new variant |
-| 0⭐ | 1h ago | [CVE-2026-85097](https://github.com/Masriyan/CVE-2026-85097) | POC CVE-2026-85097 |
-| 0⭐ | 2h ago | [CVE-2026-104711](https://github.com/uday952/CVE-2026-104711) | POC for the CVE-2026-104711 |
-| 0⭐ | 2h ago | [CVE-2026-41992-poc](https://github.com/uday952/CVE-2026-41992-poc) | POC for the CVE-2026-41992 |
-| 0⭐ | 9h ago | [CVE-2026-3888-PoC](https://github.com/alinpfan/CVE-2026-3888-PoC) | CVE-2026-3888 PoC; discovered by the Qualys Threat Research Unit (TRU). |
-| 0⭐ | 11h ago | <img src="https://raw.githubusercontent.com/0xMarcio/pocindex/main/docs/kev.svg" alt="KEV" title="CISA known exploited" height="14"> [CVE-2025-32432-craftcms-rce](https://github.com/l0lsuit/CVE-2025-32432-craftcms-rce) | Working PoC + debugging writeup for CVE-2025-32432 (Craft CMS pre-auth RCE) |
-| 0⭐ | 12h ago | [CVE-2026-84411-reproduction](https://github.com/Apiratchai/CVE-2026-84411-reproduction) | CVE-2026-84411 root cause notes and a non-destructive probe (RouterOS before 7.24) |
+| 0⭐ | 1h ago | [CVE-2026-104711-Advanced-Variant](https://github.com/uday952/CVE-2026-104711-Advanced-Variant) | POC for CVE-2026-104711-Advanced-Variant |
+| 0⭐ | 1h ago | [CVE-2026-44825_test](https://github.com/q0524/CVE-2026-44825_test) | Hardcoded credentials in the Basic Authentication setup tool (bin/solr auth enable) in Apache Solr versions… |
+| 0⭐ | 2h ago | [CVE-2026-104711-exploit-payload-4](https://github.com/uday952/CVE-2026-104711-exploit-payload-4) | POC for the CVE-2026-104711 new variants |
+| 0⭐ | 2h ago | [cve-2024-53677](https://github.com/choyj358/cve-2024-53677) | File upload logic in Apache Struts is flawed. An attacker can manipulate file upload params to enable paths… |
+| 0⭐ | 2h ago | [CVE-2026-104711-POC-Variant3](https://github.com/uday952/CVE-2026-104711-POC-Variant3) | POC for the CVE-2026-104711 which is a new variant |
+| 0⭐ | 2h ago | [CVE-2026-85097](https://github.com/Masriyan/CVE-2026-85097) | POC CVE-2026-85097 |
+| 0⭐ | 3h ago | [CVE-2026-104711](https://github.com/uday952/CVE-2026-104711) | POC for the CVE-2026-104711 |
+| 0⭐ | 3h ago | [CVE-2026-41992-poc](https://github.com/uday952/CVE-2026-41992-poc) | POC for the CVE-2026-41992 |
+| 0⭐ | 10h ago | [CVE-2026-3888-PoC](https://github.com/alinpfan/CVE-2026-3888-PoC) | CVE-2026-3888 PoC; discovered by the Qualys Threat Research Unit (TRU). |
+| 0⭐ | 12h ago | <img src="https://raw.githubusercontent.com/0xMarcio/pocindex/main/docs/kev.svg" alt="KEV" title="CISA known exploited" height="14"> [CVE-2025-32432-craftcms-rce](https://github.com/l0lsuit/CVE-2025-32432-craftcms-rce) | Working PoC + debugging writeup for CVE-2025-32432 (Craft CMS pre-auth RCE) |
 
 ## Trending in 2026
 
@@ -47,14 +47,14 @@
 | 35⭐ | 6d ago | <img src="https://raw.githubusercontent.com/0xMarcio/pocindex/main/docs/kev.svg" alt="KEV" title="CISA known exploited" height="14"> [CVE-2026-87902](https://github.com/abraxas/CVE-2026-87902) | CVE-2026-87902 - WordPress - WordPress Core - Critical 9.2 - Unauthenticated Local File Inclusion… |
 | 43⭐ | 31d ago | <img src="https://raw.githubusercontent.com/0xMarcio/pocindex/main/docs/kev.svg" alt="KEV" title="CISA known exploited" height="14"> [cve-2026-85706](https://github.com/guneykabel/cve-2026-85706) | Exploit poc for CVE-2026-85706 an unauthenticated arbitrary file read on Gitlab CE-EE affecting versions:… |
 | 26⭐ | 15d ago | <img src="https://raw.githubusercontent.com/0xMarcio/pocindex/main/docs/kev.svg" alt="KEV" title="CISA known exploited" height="14"> [CVE-2026-85706](https://github.com/EQSTLab/CVE-2026-85706) | GitLab Unauthenticated Arbitrary File Read |
-| 44⭐ | 35d ago | [CVE-2026-28576-poc](https://github.com/mobilehackinglab/CVE-2026-28576-poc) | SQL injection vulnerability in Android 17 (AOSP) |
+| 44⭐ | 36d ago | [CVE-2026-28576-poc](https://github.com/mobilehackinglab/CVE-2026-28576-poc) | SQL injection vulnerability in Android 17 (AOSP) |
 | 31⭐ | 21d ago | [CVE-2026-43786](https://github.com/Malwation/CVE-2026-43786) | Proof of concept for CVE-2026-43786, a local privilege escalation vulnerability in macOS CoreServices that… |
 
 ## Trending in 2025
 
 | Stars | Updated | Repository | Description |
 | --- | --- | --- | --- |
-| 5⭐ | 17h ago | <img src="https://raw.githubusercontent.com/0xMarcio/pocindex/main/docs/kev.svg" alt="KEV" title="CISA known exploited" height="14"> [CVE-2025-8110](https://github.com/Ghxstsec/CVE-2025-8110) | Improper Symbolic link handling in the PutContents API in Gogs allows Local Execution of Code. |
+| 5⭐ | 18h ago | <img src="https://raw.githubusercontent.com/0xMarcio/pocindex/main/docs/kev.svg" alt="KEV" title="CISA known exploited" height="14"> [CVE-2025-8110](https://github.com/Ghxstsec/CVE-2025-8110) | Improper Symbolic link handling in the PutContents API in Gogs allows Local Execution of Code. |
 | 22⭐ | 63d ago | [CVE-2025-7771](https://github.com/enessakircolak/CVE-2025-7771) | ThrottleStop.sys Arbitrary Physical Memory R/W |
 | 8⭐ | 26d ago | <img src="https://raw.githubusercontent.com/0xMarcio/pocindex/main/docs/kev.svg" alt="KEV" title="CISA known exploited" height="14"> [CVE-2025-32432-exploit-by-P34NUT](https://github.com/P34NUT2/CVE-2025-32432-exploit-by-P34NUT) | Reliable CVE-2025-32432 pre-auth RCE exploit for Craft CMS 3.x/4.x/5.x, works where other public PoCs fail |
 | 10⭐ | 47d ago | <img src="https://raw.githubusercontent.com/0xMarcio/pocindex/main/docs/kev.svg" alt="KEV" title="CISA known exploited" height="14"> [vivo_iqoo_neo_9_root_research_on_CVE-2025-21479](https://github.com/linux-tools/vivo_iqoo_neo_9_root_research_on_CVE-2025-21479) | Memory corruption due to unauthorized command execution in GPU micronode while executing specific sequence of… |
@@ -75,7 +75,7 @@
 
 | Stars | Updated | Repository | Description |
 | --- | --- | --- | --- |
-| 17⭐ | 9d ago | [CVE-2024-56426](https://github.com/Creeeeger/CVE-2024-56426) | A PoC of the CVE-2024-56426 vulnerability. |
+| 17⭐ | 10d ago | [CVE-2024-56426](https://github.com/Creeeeger/CVE-2024-56426) | A PoC of the CVE-2024-56426 vulnerability. |
 | 4⭐ | 59d ago | [CVE-2024-56426](https://github.com/xcracker000/CVE-2024-56426) | CVE-2024-56426 Exynos9830 Bootrom Exploit - SM-G985F |
 | 3⭐ | 75d ago | [CVE-2024-36104-PoC](https://github.com/Groppoxx/CVE-2024-36104-PoC) | PoC for CVE-2024-36104 - unauthenticated Groovy RCE in Apache OFBiz (<18.12.14) via /%2e/%2e/ view path… |
 
