@@ -27359,3 +27359,4 @@ CVE-2019-5420 - https://github.com/5t1ck/rails-doubletap-py
 CVE-2021-1675 - https://github.com/kairosart/VulnActive
 CVE-2024-0124 - https://github.com/Qcx526/cuda_poc_generator
 CVE-2026-72898 - https://github.com/gagaltotal/CVE-2026-72898-metabase
+CVE-2026-68582 - https://github.com/comradezephyr/CVE-2026-68582-PoC
