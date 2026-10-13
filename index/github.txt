@@ -27364,3 +27364,4 @@ CVE-2026-104711 - https://github.com/uday952/CVE-2026-104711-exploit-payload-4
 CVE-2026-1357 - https://github.com/stj8703-web/CVE-2026-1357
 CVE-2026-85097 - https://github.com/Masriyan/CVE-2026-85097
 CVE-2024-53677 - https://github.com/choyj358/cve-2024-53677
+CVE-2026-104711 - https://github.com/uday952/CVE-2026-104711-Advanced-Variant
