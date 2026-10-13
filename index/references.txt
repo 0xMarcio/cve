@@ -118901,3 +118901,8 @@ CVE-2026-9268 - https://hackerone.com/reports/3687442
 CVE-2026-92883 - https://hackerone.com/reports/3936831
 CVE-2026-97229 - https://hackerone.com/reports/4055749
 CVE-2026-97229 - https://hackerone.com/reports/4058589
+CVE-2026-104774 - https://github.com/advisories/GHSA-pc5q-qfxp-ggqv
+CVE-2026-41504 - https://github.com/advisories/GHSA-prpw-wwv7-xjjr
+CVE-2026-41508 - https://github.com/advisories/GHSA-r3rm-qphw-hh76
+CVE-2026-41510 - https://github.com/advisories/GHSA-6r3q-mjv7-xr8m
+CVE-2026-57143 - https://github.com/advisories/GHSA-4pcv-mg8v-vrgf
