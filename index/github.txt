@@ -27375,3 +27375,7 @@ CVE-2026-97229 - https://github.com/jburgess-r7/CVE-2026-97229-PoC
 CVE-2026-104935 - https://github.com/ApexBreach/CVE-2026-104935-Proof-of-concept
 CVE-2026-85884 - https://github.com/Beardhammer/CVE-2026-85884
 CVE-2026-41456 - https://github.com/lowlevelsec/Reflected-XSS-Bludit-CVE-2026-41456
+CVE-2026-108924 - https://github.com/capivara-research/CVE-2026-108924
+CVE-2026-109519 - https://github.com/0xgh0stri13y/CVE-2026-109519
+CVE-2026-37107 - https://github.com/KyrieKlay/CVE-2026-37107
+CVE-2026-84411 - https://github.com/MikroTikDojo/CVE-2026-84411
