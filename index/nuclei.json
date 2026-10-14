@@ -32758,6 +32758,14 @@
 "severity": "critical",
 "url": "https://github.com/projectdiscovery/nuclei-templates/blob/main/http/cves/2026/CVE-2026-0926.yaml"
 },
+"CVE-2026-104935": {
+"cvss": 10.0,
+"cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:H/A:H",
+"cwe": "CWE-306",
+"name": "Ivanti Connect Secure <= 22.8R2.4 - Authentication Bypass via X-DSCGI-PATH Header",
+"severity": "critical",
+"url": "https://github.com/projectdiscovery/nuclei-templates/blob/main/http/cves/2026/CVE-2026-104935.yaml"
+},
 "CVE-2026-10520": {
 "name": "Ivanti Sentry - OS Command Injection",
 "severity": "critical",
@@ -33802,6 +33810,14 @@
 "severity": "critical",
 "url": "https://github.com/projectdiscovery/nuclei-templates/blob/main/javascript/cves/2026/CVE-2026-27886.yaml"
 },
+"CVE-2026-27934": {
+"cvss": 8.7,
+"cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N",
+"cwe": "CWE-862",
+"name": "Discourse < 2026.1.2/2026.2.1/2026.3.0-latest.1 - Unauthenticated Private User Action Disclosure",
+"severity": "high",
+"url": "https://github.com/projectdiscovery/nuclei-templates/blob/main/http/cves/2026/CVE-2026-27934.yaml"
+},
 "CVE-2026-27944": {
 "cvss": 9.8,
 "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
@@ -34173,6 +34189,14 @@
 "name": "Canto <= 3.1.1 - Missing Authorization to Unauthenticated File Upload",
 "severity": "medium",
 "url": "https://github.com/projectdiscovery/nuclei-templates/blob/main/http/cves/2026/CVE-2026-3335.yaml"
+},
+"CVE-2026-33425": {
+"cvss": 5.3,
+"cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:N/A:N",
+"cwe": "CWE-203",
+"name": "Discourse - Private Group Membership Inference via exclude_groups",
+"severity": "medium",
+"url": "https://github.com/projectdiscovery/nuclei-templates/blob/main/http/cves/2026/CVE-2026-33425.yaml"
 },
 "CVE-2026-33439": {
 "cvss": 9.8,
@@ -35842,6 +35866,14 @@
 "severity": "critical",
 "url": "https://github.com/projectdiscovery/nuclei-templates/blob/main/http/cves/2026/CVE-2026-69085.yaml"
 },
+"CVE-2026-69137": {
+"cvss": 7.7,
+"cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:N/A:N",
+"cwe": "CWE-918",
+"name": "SuiteCRM <= 7.15.1, <= 8.10.1 - Authenticated SSRF",
+"severity": "high",
+"url": "https://github.com/projectdiscovery/nuclei-templates/blob/main/http/cves/2026/CVE-2026-69137.yaml"
+},
 "CVE-2026-69251": {
 "cvss": 9.0,
 "cvss_vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:L/UI:N/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H",
@@ -35935,10 +35967,26 @@
 "severity": "critical",
 "url": "https://github.com/projectdiscovery/nuclei-templates/blob/main/http/cves/2026/CVE-2026-8037.yaml"
 },
+"CVE-2026-80462": {
+"cvss": 10.0,
+"cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:H/A:H",
+"cwe": "CWE-306",
+"name": "Chef Automate API Gateway - Authentication Bypass",
+"severity": "critical",
+"url": "https://github.com/projectdiscovery/nuclei-templates/blob/main/http/cves/2026/CVE-2026-80462.yaml"
+},
 "CVE-2026-8054": {
 "name": "dotCMS Core Publish Audit API - Unauthenticated SQL Injection",
 "severity": "critical",
 "url": "https://github.com/projectdiscovery/nuclei-templates/blob/main/http/cves/2026/CVE-2026-8054.yaml"
+},
+"CVE-2026-8089": {
+"cvss": 7.1,
+"cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:L/I:L/A:L",
+"cwe": "CWE-79",
+"name": "WordPress weMail < 2.1.3 - Cross-Site Scripting",
+"severity": "high",
+"url": "https://github.com/projectdiscovery/nuclei-templates/blob/main/http/cves/2026/CVE-2026-8089.yaml"
 },
 "CVE-2026-81199": {
 "cvss": 5.3,
@@ -36255,6 +36303,14 @@
 "severity": "high",
 "url": "https://github.com/projectdiscovery/nuclei-templates/blob/main/http/cves/2026/CVE-2026-9290.yaml"
 },
+"CVE-2026-93616": {
+"cvss": 9.8,
+"cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+"cwe": "CWE-22",
+"name": "Check Point Security Management - Unauthenticated Directory Traversal to RCE",
+"severity": "critical",
+"url": "https://github.com/projectdiscovery/nuclei-templates/blob/main/http/cves/2026/CVE-2026-93616.yaml"
+},
 "CVE-2026-93674": {
 "cvss": 9.8,
 "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
@@ -36278,6 +36334,13 @@
 "name": "Sangoma Switchvox < 8.4.0.2 - Unauthenticated SQL Injection",
 "severity": "critical",
 "url": "https://github.com/projectdiscovery/nuclei-templates/blob/main/http/cves/2026/CVE-2026-9586.yaml"
+},
+"CVE-2026-97471": {
+"cvss": 5.3,
+"cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:N/A:N",
+"name": ">",
+"severity": "medium",
+"url": "https://github.com/topscoder/nuclei-wordfence-cve/blob/main/nuclei-templates/2026/CVE-2026-97471-fusion_builder-ebbd41a8-b9ff-4afe-bcfd-1df52d8d3b5f.yaml"
 },
 "CVE-2026-97670": {
 "cvss": 9.1,
