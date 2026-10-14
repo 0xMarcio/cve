@@ -2,7 +2,7 @@
 
 <a href="https://pocindex.io/"><img src="https://raw.githubusercontent.com/0xMarcio/pocindex/main/docs/hero.svg?v=174204-84761-1230" alt="PoC Index" width="100%"></a>
 
-[![last sync](https://img.shields.io/badge/last%20sync-14%20Oct%202026%2005%3A07%20UTC-2f81f7?style=flat-square&labelColor=161b22)](https://github.com/0xMarcio/pocindex/commits/main)&nbsp;[![CI](https://img.shields.io/github/actions/workflow/status/0xMarcio/pocindex/hot_cves.yml?style=flat-square&label=CI&color=2f81f7&labelColor=161b22&_=202610140507)](https://github.com/0xMarcio/pocindex/actions/workflows/hot_cves.yml)&nbsp;[![CVEs with PoCs](https://img.shields.io/badge/CVEs%20with%20PoCs-84%2C761-2f81f7?style=flat-square&labelColor=161b22)](https://pocindex.io/)&nbsp;[![known exploited](https://img.shields.io/badge/known%20exploited-1%2C230-f85149?style=flat-square&labelColor=161b22)](https://pocindex.io/)&nbsp;[![stars](https://img.shields.io/github/stars/0xMarcio/pocindex?style=flat-square&label=stars&color=e3b341&labelColor=161b22&_=202610140507)](https://github.com/0xMarcio/pocindex/stargazers)
+[![last sync](https://img.shields.io/badge/last%20sync-14%20Oct%202026%2006%3A08%20UTC-2f81f7?style=flat-square&labelColor=161b22)](https://github.com/0xMarcio/pocindex/commits/main)&nbsp;[![CI](https://img.shields.io/github/actions/workflow/status/0xMarcio/pocindex/hot_cves.yml?style=flat-square&label=CI&color=2f81f7&labelColor=161b22&_=202610140608)](https://github.com/0xMarcio/pocindex/actions/workflows/hot_cves.yml)&nbsp;[![CVEs with PoCs](https://img.shields.io/badge/CVEs%20with%20PoCs-84%2C761-2f81f7?style=flat-square&labelColor=161b22)](https://pocindex.io/)&nbsp;[![known exploited](https://img.shields.io/badge/known%20exploited-1%2C230-f85149?style=flat-square&labelColor=161b22)](https://pocindex.io/)&nbsp;[![stars](https://img.shields.io/github/stars/0xMarcio/pocindex?style=flat-square&label=stars&color=e3b341&labelColor=161b22&_=202610140608)](https://github.com/0xMarcio/pocindex/stargazers)
 
 <a href="https://pocindex.io/"><img src="https://raw.githubusercontent.com/0xMarcio/pocindex/8dec6181e823d641132e0ee8a52a1612c2b5dd37/docs/search.svg" alt="Search PoC Index" width="100%"></a>
 
@@ -14,16 +14,16 @@
 
 | Stars | Released | PoC | Description |
 | --- | --- | --- | --- |
-|  | 1h ago | [CVE-2026-18116](https://github.com/Zi1gotoon/CVE-2026-18116) | Concrete CMS 8.3.0 to 9.5.2 stored calendar event names without sanitization and rendered them without HTML… |
-| 0⭐ | 7h ago | [CVE-2026-84411](https://github.com/MikroTikDojo/CVE-2026-84411) | The web management service in affected RouterOS versions contains an integer underflow in its HTTP request… |
-| 0⭐ | 7h ago | [Reflected-XSS-Bludit-CVE-2026-41456](https://github.com/lowlevelsec/Reflected-XSS-Bludit-CVE-2026-41456) | Implementation of varios cross site scripting payloads to exploit CVE-2026-41456 |
-| 0⭐ | 9h ago | [CVE-2026-85884](https://github.com/Beardhammer/CVE-2026-85884) | CVE-85884 POC |
-| 0⭐ | 10h ago | [CVE-2026-104944](https://github.com/anaskalt/CVE-2026-104944) | TP-Link Tapo C500 v2.0 contains an out-of-bounds function-pointer dispatch in its TDP (TP-Link Device… |
-| 0⭐ | 10h ago | [CVE-2026-104945](https://github.com/anaskalt/CVE-2026-104945) | TP-Link Tapo C500 v2.0 contains an out-of-bounds stack write vulnerability in its ONVIF PTZ SOAP handlers. An… |
-| 11⭐ | 13h ago | [CVE-2026-97229-PoC](https://github.com/jburgess-r7/CVE-2026-97229-PoC) | GitLab CI lint integer-overflow RCE PoC for CVE-2026-97229, validated against the official 19.4.1 CE amd64… |
-| 0⭐ | 13h ago | [CVE-2026-76268](https://github.com/murrez/CVE-2026-76268) | CVE-2026-76268 PoC: Splunk Enterprise SHC Patroni REST unauth RCE - PATCH /config archive_command + POST… |
-| 1⭐ | 13h ago | [POC-for-CVE-2026-104711---New](https://github.com/pochunter/POC-for-CVE-2026-104711---New) | POC for CVE-2026-104711 - New |
-| 0⭐ | 15h ago | [CVE-2026-105950](https://github.com/capivara-research/CVE-2026-105950) | Bilingual PoC and technical analysis for CVE-2026-105950 - Formwork formaction URI sanitizer bypass |
+| 0⭐ | 37m ago | [CVE-2026-104711-POC---Brand-New](https://github.com/uday952/CVE-2026-104711-POC---Brand-New) | CVE-2026-104711 POC - Brand New |
+|  | 2h ago | [CVE-2026-18116](https://github.com/Zi1gotoon/CVE-2026-18116) | Concrete CMS 8.3.0 to 9.5.2 stored calendar event names without sanitization and rendered them without HTML… |
+| 0⭐ | 8h ago | [CVE-2026-84411](https://github.com/MikroTikDojo/CVE-2026-84411) | The web management service in affected RouterOS versions contains an integer underflow in its HTTP request… |
+| 0⭐ | 8h ago | [Reflected-XSS-Bludit-CVE-2026-41456](https://github.com/lowlevelsec/Reflected-XSS-Bludit-CVE-2026-41456) | Implementation of varios cross site scripting payloads to exploit CVE-2026-41456 |
+| 0⭐ | 10h ago | [CVE-2026-85884](https://github.com/Beardhammer/CVE-2026-85884) | CVE-85884 POC |
+| 0⭐ | 12h ago | [CVE-2026-104944](https://github.com/anaskalt/CVE-2026-104944) | TP-Link Tapo C500 v2.0 contains an out-of-bounds function-pointer dispatch in its TDP (TP-Link Device… |
+| 0⭐ | 12h ago | [CVE-2026-104945](https://github.com/anaskalt/CVE-2026-104945) | TP-Link Tapo C500 v2.0 contains an out-of-bounds stack write vulnerability in its ONVIF PTZ SOAP handlers. An… |
+| 12⭐ | 14h ago | [CVE-2026-97229-PoC](https://github.com/jburgess-r7/CVE-2026-97229-PoC) | GitLab CI lint integer-overflow RCE PoC for CVE-2026-97229, validated against the official 19.4.1 CE amd64… |
+| 0⭐ | 14h ago | [CVE-2026-76268](https://github.com/murrez/CVE-2026-76268) | CVE-2026-76268 PoC: Splunk Enterprise SHC Patroni REST unauth RCE - PATCH /config archive_command + POST… |
+|  | 14h ago | [POC-for-CVE-2026-104711---New](https://github.com/pochunter/POC-for-CVE-2026-104711---New) | Improper neutralization of special elements used in an expression language statement ('Expression Language… |
 
 ## Trending in 2026
 
@@ -33,7 +33,7 @@
 | 332⭐ | 78d ago | [CVE-2026-54121](https://github.com/aniqfakhrul/CVE-2026-54121) | Certighost POC |
 | 96⭐ | 14d ago | [CVE-2026-41096-PoC](https://github.com/ZeroDayEvil/CVE-2026-41096-PoC) | 🛡️ Official AI Security Tool module for CVE-2026-41096 (Windows DNSAPI.dll Heap Overflow / DNS-Mayhem Deep… |
 | 187⭐ | 53d ago | [CVE-2026-62911](https://github.com/hypnguyen1209/CVE-2026-62911) | POC pre-auth RCE on Exchange |
-| 11⭐ | 13h ago | [CVE-2026-97229-PoC](https://github.com/jburgess-r7/CVE-2026-97229-PoC) | GitLab CI lint integer-overflow RCE PoC for CVE-2026-97229, validated against the official 19.4.1 CE amd64… |
+| 12⭐ | 14h ago | [CVE-2026-97229-PoC](https://github.com/jburgess-r7/CVE-2026-97229-PoC) | GitLab CI lint integer-overflow RCE PoC for CVE-2026-97229, validated against the official 19.4.1 CE amd64… |
 | 92⭐ | 32d ago | <img src="https://raw.githubusercontent.com/0xMarcio/pocindex/main/docs/kev.svg" alt="KEV" title="CISA known exploited" height="14"> [CVE-2026-20805-PoC](https://github.com/ZeroDayEvil/CVE-2026-20805-PoC) | 🛡️ Official AI Security Tool module for CVE-2026-20805 (Desktop Window Manager / dwm.exe Information… |
 | 88⭐ | 32d ago | [CVE-2026-21858-n8n-FullChain](https://github.com/ZeroDayEvil/CVE-2026-21858-n8n-FullChain) | 🛡️ Official AI Security Tool module for CVE-2026-21858 + CVE-2025-68613 (n8n "Ni8mare" Unauthenticated… |
 | 51⭐ | 14d ago | [CVE-2026-94545](https://github.com/EQSTLab/CVE-2026-94545) | Next.js RCE |
@@ -47,7 +47,7 @@
 | 31⭐ | 16d ago | [CVE-2026-34990](https://github.com/predyy/CVE-2026-34990) | CVE-2026-34990 minimal PoC. CUPS <= 2.4.16 local privesc. |
 | 35⭐ | 7d ago | <img src="https://raw.githubusercontent.com/0xMarcio/pocindex/main/docs/kev.svg" alt="KEV" title="CISA known exploited" height="14"> [CVE-2026-87902](https://github.com/abraxas/CVE-2026-87902) | CVE-2026-87902 - WordPress - WordPress Core - Critical 9.2 - Unauthenticated Local File Inclusion… |
 | 43⭐ | 32d ago | <img src="https://raw.githubusercontent.com/0xMarcio/pocindex/main/docs/kev.svg" alt="KEV" title="CISA known exploited" height="14"> [cve-2026-85706](https://github.com/guneykabel/cve-2026-85706) | Exploit poc for CVE-2026-85706 an unauthenticated arbitrary file read on Gitlab CE-EE affecting versions:… |
-| 26⭐ | 15d ago | <img src="https://raw.githubusercontent.com/0xMarcio/pocindex/main/docs/kev.svg" alt="KEV" title="CISA known exploited" height="14"> [CVE-2026-85706](https://github.com/EQSTLab/CVE-2026-85706) | GitLab Unauthenticated Arbitrary File Read |
+| 26⭐ | 16d ago | <img src="https://raw.githubusercontent.com/0xMarcio/pocindex/main/docs/kev.svg" alt="KEV" title="CISA known exploited" height="14"> [CVE-2026-85706](https://github.com/EQSTLab/CVE-2026-85706) | GitLab Unauthenticated Arbitrary File Read |
 | 44⭐ | 36d ago | [CVE-2026-28576-poc](https://github.com/mobilehackinglab/CVE-2026-28576-poc) | SQL injection vulnerability in Android 17 (AOSP) |
 
 ## Trending in 2025
