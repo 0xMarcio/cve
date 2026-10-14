@@ -27378,3 +27378,4 @@ CVE-2026-107821 - https://github.com/pinebudweiser/CVE-2026-107821-PoC
 CVE-2026-18116 - https://github.com/Zi1gotoon/CVE-2026-18116
 CVE-2026-18116 - https://github.com/EndlssNightmare/CVE-2026-18116
 CVE-2026-104711 - https://github.com/uday952/CVE-2026-104711-POC---Brand-New
+CVE-2026-43499 - https://github.com/jxlarrea/portal-root-kiosk-satellite
