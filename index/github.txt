@@ -27392,3 +27392,14 @@ CVE-2024-2887 - https://github.com/jamezx32/CVE-2024-2887
 CVE-2026-97657 - https://github.com/murrez/CVE-2026-97657
 CVE-2026-54121 - https://github.com/ushst/CVE-2026-54121-adcs-chase-nxc
 CVE-2026-5460 - https://github.com/louis-126/pqc-vuln-assessor
+CVE-2026-103572 - https://github.com/themsquared/agent-config-guard-bypass
+CVE-2026-104748 - https://github.com/MrjHaxcore/CVE-2026-104748
+CVE-2026-105133 - https://github.com/horizon3ai/AhsayCBS-Auth-Bypass-RCE
+CVE-2026-105134 - https://github.com/horizon3ai/AhsayCBS-Auth-Bypass-RCE
+CVE-2026-107181 - https://github.com/abdugafforov-bobur/cve-2026-107181-poc
+CVE-2026-67281 - https://github.com/sohel160/Webfig-jsproxy-unauthenticated-file-read-CVE-2026-67281-
+CVE-2026-74580 - https://github.com/ABC00012345/CVE-2026-74580
+CVE-2026-76519 - https://github.com/Mickysalivan/CVE-2026-76519-POC
+CVE-2026-92392 - https://github.com/ashu7ank/CVE-2026-92392
+CVE-2017-7921 - https://github.com/m7arm4n/CVE-2017-7921
+CVE-2021-4034 - https://github.com/SerhiiMaruniak/CVE-2021-4034
