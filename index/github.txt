@@ -17695,7 +17695,6 @@ CVE-2025-31161 - https://github.com/0xDTC/CrushFTP-auth-bypass-CVE-2025-31161
 CVE-2025-31161 - https://github.com/0xgh057r3c0n/CVE-2025-31161
 CVE-2025-31161 - https://github.com/f4dee-backup/CVE-2025-31161
 CVE-2025-31161 - https://github.com/ghostsec420/ShatteredFTP
-CVE-2025-31161 - https://github.com/gvincenti/Soulmate
 CVE-2025-31161 - https://github.com/Immersive-Labs-Sec/CVE-2025-31161
 CVE-2025-31161 - https://github.com/r0otk3r/CVE-2025-31161
 CVE-2025-31161 - https://github.com/SUPRAAA-1337/CVE-2025-31161_exploit
@@ -19110,7 +19109,6 @@ CVE-2026-24061 - https://github.com/hackingyseguridad/root
 CVE-2026-24061 - https://github.com/harygovind/CVE-2026-24061
 CVE-2026-24061 - https://github.com/iLokaas/CVE-2026-24061-payload
 CVE-2026-24061 - https://github.com/infat0x/CVE-2026-24061
-CVE-2026-24061 - https://github.com/jacubes/CVE-2026-24061
 CVE-2026-24061 - https://github.com/kyukazamiqq/CVE-2026-24061
 CVE-2026-24061 - https://github.com/mbanyamer/CVE-2026-24061-GNU-Inetutils-telnetd-Remote-Authentication-Bypass-Root-Shell-
 CVE-2026-24061 - https://github.com/midox008/CVE-2026-24061
@@ -23446,7 +23444,6 @@ CVE-2025-55182 - https://github.com/gagaltotal/tot-react-rce-CVE-2025-55182
 CVE-2025-55182 - https://github.com/garux-sec/PoC-react2shell-CVE-2025-55182
 CVE-2025-55182 - https://github.com/gguatit/React2Shell--korean-
 CVE-2025-55182 - https://github.com/git0xLai/React2ShellPoC
-CVE-2025-55182 - https://github.com/greenheadHQ/CVE-2025-55182
 CVE-2025-55182 - https://github.com/grejh0t/CVE-2025-55182
 CVE-2025-55182 - https://github.com/gunyakit/CVE-2025-55182-PoC-exploit
 CVE-2025-55182 - https://github.com/gwangwon0807/whs_kr
@@ -25388,7 +25385,6 @@ CVE-2020-0796 - https://github.com/thai1012/cve-2020-0796
 CVE-2020-10148 - https://github.com/horrister/solarwinds-sunburst-cve-2020-10148
 CVE-2020-10567 - https://github.com/PierreAdams/CVE-2020-10567
 CVE-2020-11022 - https://github.com/LSP1025923/CVE
-CVE-2020-11022 - https://github.com/ibnurusdianto/CVE-2020-11022
 CVE-2020-11023 - https://github.com/LSP1025923/CVE
 CVE-2020-11107 - https://github.com/Mohnad-AL-saif/Mohnad-AL-saif-CVE-2020-11107-XAMPP-Local-Privilege-Escalation
 CVE-2020-11651 - https://github.com/s1lentf00thold/CVE-2020-11651-Poc
@@ -26878,7 +26874,6 @@ CVE-2026-60137 - https://github.com/pedroMPMartins/wordpress_exploit
 CVE-2026-63030 - https://github.com/pedroMPMartins/wordpress_exploit
 CVE-2026-94545 - https://github.com/EQSTLab/CVE-2026-94545
 CVE-2026-94545 - https://github.com/mhtsec/CVE-2026-94545
-CVE-2026-18143 - https://github.com/ghannyxploit404/CVE-2026-18143
 CVE-2026-94545 - https://github.com/MRdark-ops/CVE-2026-94545-
 CVE-2025-59528 - https://github.com/Amoru-Bek/CVE-2025-59528-Poc
 CVE-2025-29927 - https://github.com/vulnace/CVE-2025-29927
