@@ -2775,6 +2775,7 @@
 "CVE-2024-23897 github:jopraveen/cve-2024-23897?#":{"basis":"unknown","cve":"CVE-2024-23897","imported":true,"released":null,"url":"https://github.com/jopraveen/CVE-2024-23897"},
 "CVE-2024-23897 github:kaanatmacaa/cve-2024-23897?#":{"basis":"unknown","cve":"CVE-2024-23897","imported":true,"released":null,"url":"https://github.com/kaanatmacaa/CVE-2024-23897"},
 "CVE-2024-23897 github:kwekre/poc?#":{"basis":"unknown","cve":"CVE-2024-23897","imported":true,"released":null,"url":"https://github.com/kwekre/poc"},
+"CVE-2024-23897 github:maalfer/cve-2024-23897-exploit?#":{"basis":"unknown","cve":"CVE-2024-23897","released":null,"seen":"2026-10-14T10:12:30Z","url":"https://github.com/Maalfer/CVE-2024-23897-exploit"},
 "CVE-2024-23897 github:maalfer/cve-2024-23897?#":{"basis":"unknown","cve":"CVE-2024-23897","imported":true,"released":null,"url":"https://github.com/Maalfer/CVE-2024-23897"},
 "CVE-2024-23897 github:machiavelliii/cve-2024-23897?#":{"basis":"unknown","cve":"CVE-2024-23897","imported":true,"released":null,"url":"https://github.com/MachiavelliII/CVE-2024-23897"},
 "CVE-2024-23897 github:murataydemir/cve-2024-23897?#":{"basis":"unknown","cve":"CVE-2024-23897","imported":true,"released":null,"url":"https://github.com/murataydemir/CVE-2024-23897"},
