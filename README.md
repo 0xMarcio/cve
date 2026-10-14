@@ -1,8 +1,8 @@
 <div align="center">
 
-<a href="https://pocindex.io/"><img src="https://raw.githubusercontent.com/0xMarcio/pocindex/main/docs/hero.svg?v=174216-84774-1231" alt="PoC Index" width="100%"></a>
+<a href="https://pocindex.io/"><img src="https://raw.githubusercontent.com/0xMarcio/pocindex/main/docs/hero.svg?v=174217-84775-1231" alt="PoC Index" width="100%"></a>
 
-[![last sync](https://img.shields.io/badge/last%20sync-14%20Oct%202026%2012%3A08%20UTC-2f81f7?style=flat-square&labelColor=161b22)](https://github.com/0xMarcio/pocindex/commits/main)&nbsp;[![CI](https://img.shields.io/github/actions/workflow/status/0xMarcio/pocindex/hot_cves.yml?style=flat-square&label=CI&color=2f81f7&labelColor=161b22&_=202610141208)](https://github.com/0xMarcio/pocindex/actions/workflows/hot_cves.yml)&nbsp;[![CVEs with PoCs](https://img.shields.io/badge/CVEs%20with%20PoCs-84%2C774-2f81f7?style=flat-square&labelColor=161b22)](https://pocindex.io/)&nbsp;[![known exploited](https://img.shields.io/badge/known%20exploited-1%2C231-f85149?style=flat-square&labelColor=161b22)](https://pocindex.io/)&nbsp;[![stars](https://img.shields.io/github/stars/0xMarcio/pocindex?style=flat-square&label=stars&color=e3b341&labelColor=161b22&_=202610141208)](https://github.com/0xMarcio/pocindex/stargazers)
+[![last sync](https://img.shields.io/badge/last%20sync-14%20Oct%202026%2013%3A09%20UTC-2f81f7?style=flat-square&labelColor=161b22)](https://github.com/0xMarcio/pocindex/commits/main)&nbsp;[![CI](https://img.shields.io/github/actions/workflow/status/0xMarcio/pocindex/hot_cves.yml?style=flat-square&label=CI&color=2f81f7&labelColor=161b22&_=202610141309)](https://github.com/0xMarcio/pocindex/actions/workflows/hot_cves.yml)&nbsp;[![CVEs with PoCs](https://img.shields.io/badge/CVEs%20with%20PoCs-84%2C775-2f81f7?style=flat-square&labelColor=161b22)](https://pocindex.io/)&nbsp;[![known exploited](https://img.shields.io/badge/known%20exploited-1%2C231-f85149?style=flat-square&labelColor=161b22)](https://pocindex.io/)&nbsp;[![stars](https://img.shields.io/github/stars/0xMarcio/pocindex?style=flat-square&label=stars&color=e3b341&labelColor=161b22&_=202610141309)](https://github.com/0xMarcio/pocindex/stargazers)
 
 <a href="https://pocindex.io/"><img src="https://raw.githubusercontent.com/0xMarcio/pocindex/8dec6181e823d641132e0ee8a52a1612c2b5dd37/docs/search.svg" alt="Search PoC Index" width="100%"></a>
 
@@ -14,23 +14,23 @@
 
 | Stars | Released | PoC | Description |
 | --- | --- | --- | --- |
-| 1⭐ | 1h ago | [CVE-2026-97657](https://github.com/murrez/CVE-2026-97657) | CVE-2026-97657 - Authentication Bypass & Account Takeover / Pocbit |
-| 0⭐ | 1h ago | [CVE-2024-2887](https://github.com/jamezx32/CVE-2024-2887) | V8 Wasm GC type confusion - two PoCs (kExtern / kNone paths) |
-| 0⭐ | 2h ago | <img src="https://raw.githubusercontent.com/0xMarcio/pocindex/main/docs/kev.svg" alt="KEV" title="CISA known exploited" height="14"> [CVE-2016-5195](https://github.com/Mr-Ochobot/CVE-2016-5195) | Race condition in mm/gup.c in the Linux kernel 2.x through 4.x before 4.8.3 allows local users to gain… |
-| 2⭐ | 2h ago | [CVE-2026-104748](https://github.com/joshuavanderpoll/CVE-2026-104748) | Unauthenticated privilege escalation in SimpleForm WordPress plugin <= 3.10.0. Registers an administrator… |
-| 0⭐ | 6h ago | [CVE-2026-104711-POC---Brand-New](https://github.com/uday952/CVE-2026-104711-POC---Brand-New) | CVE-2026-104711 POC - Brand New |
-|  | 8h ago | [CVE-2026-18116](https://github.com/Zi1gotoon/CVE-2026-18116) | Concrete CMS 8.3.0 to 9.5.2 stored calendar event names without sanitization and rendered them without HTML… |
-| 0⭐ | 14h ago | [CVE-2026-84411](https://github.com/MikroTikDojo/CVE-2026-84411) | The web management service in affected RouterOS versions contains an integer underflow in its HTTP request… |
-| 0⭐ | 14h ago | [Reflected-XSS-Bludit-CVE-2026-41456](https://github.com/lowlevelsec/Reflected-XSS-Bludit-CVE-2026-41456) | Implementation of varios cross site scripting payloads to exploit CVE-2026-41456 |
-| 3⭐ | 16h ago | [CVE-2026-85884](https://github.com/Beardhammer/CVE-2026-85884) | CVE-85884 POC |
-| 0⭐ | 18h ago | [CVE-2026-104944](https://github.com/anaskalt/CVE-2026-104944) | TP-Link Tapo C500 v2.0 contains an out-of-bounds function-pointer dispatch in its TDP (TP-Link Device… |
+| 0⭐ | 57m ago | [CVE-2026-54121-adcs-chase-nxc](https://github.com/ushst/CVE-2026-54121-adcs-chase-nxc) | Improper authorization in Active Directory Certificate Services (AD CS) allows an authorized attacker to… |
+| 1⭐ | 2h ago | [CVE-2026-97657](https://github.com/murrez/CVE-2026-97657) | CVE-2026-97657 - Authentication Bypass & Account Takeover / Pocbit |
+| 0⭐ | 2h ago | [CVE-2024-2887](https://github.com/jamezx32/CVE-2024-2887) | V8 Wasm GC type confusion - two PoCs (kExtern / kNone paths) |
+| 0⭐ | 3h ago | <img src="https://raw.githubusercontent.com/0xMarcio/pocindex/main/docs/kev.svg" alt="KEV" title="CISA known exploited" height="14"> [CVE-2016-5195](https://github.com/Mr-Ochobot/CVE-2016-5195) | Race condition in mm/gup.c in the Linux kernel 2.x through 4.x before 4.8.3 allows local users to gain… |
+| 2⭐ | 3h ago | [CVE-2026-104748](https://github.com/joshuavanderpoll/CVE-2026-104748) | Unauthenticated privilege escalation in SimpleForm WordPress plugin <= 3.10.0. Registers an administrator… |
+| 0⭐ | 7h ago | [CVE-2026-104711-POC---Brand-New](https://github.com/uday952/CVE-2026-104711-POC---Brand-New) | CVE-2026-104711 POC - Brand New |
+|  | 9h ago | [CVE-2026-18116](https://github.com/Zi1gotoon/CVE-2026-18116) | Concrete CMS 8.3.0 to 9.5.2 stored calendar event names without sanitization and rendered them without HTML… |
+| 0⭐ | 15h ago | [CVE-2026-84411](https://github.com/MikroTikDojo/CVE-2026-84411) | The web management service in affected RouterOS versions contains an integer underflow in its HTTP request… |
+| 0⭐ | 15h ago | [Reflected-XSS-Bludit-CVE-2026-41456](https://github.com/lowlevelsec/Reflected-XSS-Bludit-CVE-2026-41456) | Implementation of varios cross site scripting payloads to exploit CVE-2026-41456 |
+| 3⭐ | 17h ago | [CVE-2026-85884](https://github.com/Beardhammer/CVE-2026-85884) | CVE-85884 POC |
 
 ## Trending in 2026
 
 | Stars | Updated | Repository | Description |
 | --- | --- | --- | --- |
 | 477⭐ | 54d ago | [CVE-2026-9830](https://github.com/opaxial/CVE-2026-9830) | CVE-2026-9830 Proof of Concept |
-| 36⭐ | 20h ago | [CVE-2026-97229-PoC](https://github.com/jburgess-r7/CVE-2026-97229-PoC) | GitLab CI lint integer-overflow RCE PoC for CVE-2026-97229, validated against the official 19.4.1 CE amd64… |
+| 38⭐ | 21h ago | [CVE-2026-97229-PoC](https://github.com/jburgess-r7/CVE-2026-97229-PoC) | GitLab CI lint integer-overflow RCE PoC for CVE-2026-97229, validated against the official 19.4.1 CE amd64… |
 | 332⭐ | 78d ago | [CVE-2026-54121](https://github.com/aniqfakhrul/CVE-2026-54121) | Certighost POC |
 | 96⭐ | 15d ago | [CVE-2026-41096-PoC](https://github.com/ZeroDayEvil/CVE-2026-41096-PoC) | 🛡️ Official AI Security Tool module for CVE-2026-41096 (Windows DNSAPI.dll Heap Overflow / DNS-Mayhem Deep… |
 | 187⭐ | 53d ago | [CVE-2026-62911](https://github.com/hypnguyen1209/CVE-2026-62911) | POC pre-auth RCE on Exchange |

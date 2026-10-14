@@ -27390,3 +27390,5 @@ CVE-2026-85046 - https://github.com/jamezx32/CVE-2026-85046
 CVE-2016-5195 - https://github.com/Mr-Ochobot/CVE-2016-5195
 CVE-2024-2887 - https://github.com/jamezx32/CVE-2024-2887
 CVE-2026-97657 - https://github.com/murrez/CVE-2026-97657
+CVE-2026-54121 - https://github.com/ushst/CVE-2026-54121-adcs-chase-nxc
+CVE-2026-5460 - https://github.com/louis-126/pqc-vuln-assessor
