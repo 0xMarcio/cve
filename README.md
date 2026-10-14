@@ -2,7 +2,7 @@
 
 <a href="https://pocindex.io/"><img src="https://raw.githubusercontent.com/0xMarcio/pocindex/main/docs/hero.svg?v=174222-84780-1231" alt="PoC Index" width="100%"></a>
 
-[![last sync](https://img.shields.io/badge/last%20sync-14%20Oct%202026%2022%3A08%20UTC-2f81f7?style=flat-square&labelColor=161b22)](https://github.com/0xMarcio/pocindex/commits/main)&nbsp;[![CI](https://img.shields.io/github/actions/workflow/status/0xMarcio/pocindex/hot_cves.yml?style=flat-square&label=CI&color=2f81f7&labelColor=161b22&_=202610142208)](https://github.com/0xMarcio/pocindex/actions/workflows/hot_cves.yml)&nbsp;[![CVEs with PoCs](https://img.shields.io/badge/CVEs%20with%20PoCs-84%2C780-2f81f7?style=flat-square&labelColor=161b22)](https://pocindex.io/)&nbsp;[![known exploited](https://img.shields.io/badge/known%20exploited-1%2C231-f85149?style=flat-square&labelColor=161b22)](https://pocindex.io/)&nbsp;[![stars](https://img.shields.io/github/stars/0xMarcio/pocindex?style=flat-square&label=stars&color=e3b341&labelColor=161b22&_=202610142208)](https://github.com/0xMarcio/pocindex/stargazers)
+[![last sync](https://img.shields.io/badge/last%20sync-14%20Oct%202026%2023%3A08%20UTC-2f81f7?style=flat-square&labelColor=161b22)](https://github.com/0xMarcio/pocindex/commits/main)&nbsp;[![CI](https://img.shields.io/github/actions/workflow/status/0xMarcio/pocindex/hot_cves.yml?style=flat-square&label=CI&color=2f81f7&labelColor=161b22&_=202610142308)](https://github.com/0xMarcio/pocindex/actions/workflows/hot_cves.yml)&nbsp;[![CVEs with PoCs](https://img.shields.io/badge/CVEs%20with%20PoCs-84%2C780-2f81f7?style=flat-square&labelColor=161b22)](https://pocindex.io/)&nbsp;[![known exploited](https://img.shields.io/badge/known%20exploited-1%2C231-f85149?style=flat-square&labelColor=161b22)](https://pocindex.io/)&nbsp;[![stars](https://img.shields.io/github/stars/0xMarcio/pocindex?style=flat-square&label=stars&color=e3b341&labelColor=161b22&_=202610142308)](https://github.com/0xMarcio/pocindex/stargazers)
 
 <a href="https://pocindex.io/"><img src="https://raw.githubusercontent.com/0xMarcio/pocindex/8dec6181e823d641132e0ee8a52a1612c2b5dd37/docs/search.svg" alt="Search PoC Index" width="100%"></a>
 
@@ -14,16 +14,16 @@
 
 | Stars | Released | PoC | Description |
 | --- | --- | --- | --- |
-| 0⭐ | 52m ago | <img src="https://raw.githubusercontent.com/0xMarcio/pocindex/main/docs/kev.svg" alt="KEV" title="CISA known exploited" height="14"> [CVE-2021-4034](https://github.com/SerhiiMaruniak/CVE-2021-4034) | CVE-2021-4034 (PwnKit) - Python PoC |
-| 0⭐ | 5h ago | [CVE-2026-104748](https://github.com/MrjHaxcore/CVE-2026-104748) | CVE-2026-104748 POC |
-| 2⭐ | 6h ago | [cve-2026-107181-poc](https://github.com/abdugafforov-bobur/cve-2026-107181-poc) | Telegram Desktop before 7.2.9 contains an IPC record-separator injection vulnerability in Core::Sandbox that… |
-| 0⭐ | 7h ago | <img src="https://raw.githubusercontent.com/0xMarcio/pocindex/main/docs/kev.svg" alt="KEV" title="CISA known exploited" height="14"> [CVE-2017-7921](https://github.com/m7arm4n/CVE-2017-7921) | A Python-based tool for security assessment of Hikvision devices affected by CVE-2017-7921. |
-| 0⭐ | 7h ago | [CVE-2026-92392](https://github.com/ashu7ank/CVE-2026-92392) | Defensive exposure checker and poc for cURL CVE-2026-92392 |
-| 1⭐ | 7h ago | [CVE-2026-74580](https://github.com/ABC00012345/CVE-2026-74580) | In the Linux kernel, the following vulnerability has been resolved: vhost: reset the vring metadata cache on… |
-| 0⭐ | 9h ago | [CVE-2026-54121-adcs-chase-nxc](https://github.com/ushst/CVE-2026-54121-adcs-chase-nxc) | Improper authorization in Active Directory Certificate Services (AD CS) allows an authorized attacker to… |
-| 1⭐ | 11h ago | [CVE-2026-97657](https://github.com/murrez/CVE-2026-97657) | CVE-2026-97657 - Authentication Bypass & Account Takeover / Pocbit |
-| 0⭐ | 11h ago | [CVE-2024-2887](https://github.com/jamezx32/CVE-2024-2887) | V8 Wasm GC type confusion - two PoCs (kExtern / kNone paths) |
-| 0⭐ | 12h ago | <img src="https://raw.githubusercontent.com/0xMarcio/pocindex/main/docs/kev.svg" alt="KEV" title="CISA known exploited" height="14"> [CVE-2016-5195](https://github.com/Mr-Ochobot/CVE-2016-5195) | Race condition in mm/gup.c in the Linux kernel 2.x through 4.x before 4.8.3 allows local users to gain… |
+| 0⭐ | 1h ago | <img src="https://raw.githubusercontent.com/0xMarcio/pocindex/main/docs/kev.svg" alt="KEV" title="CISA known exploited" height="14"> [CVE-2021-4034](https://github.com/SerhiiMaruniak/CVE-2021-4034) | CVE-2021-4034 (PwnKit) - Python PoC |
+| 0⭐ | 6h ago | [CVE-2026-104748](https://github.com/MrjHaxcore/CVE-2026-104748) | CVE-2026-104748 POC |
+| 2⭐ | 7h ago | [cve-2026-107181-poc](https://github.com/abdugafforov-bobur/cve-2026-107181-poc) | Telegram Desktop before 7.2.9 contains an IPC record-separator injection vulnerability in Core::Sandbox that… |
+| 0⭐ | 8h ago | <img src="https://raw.githubusercontent.com/0xMarcio/pocindex/main/docs/kev.svg" alt="KEV" title="CISA known exploited" height="14"> [CVE-2017-7921](https://github.com/m7arm4n/CVE-2017-7921) | A Python-based tool for security assessment of Hikvision devices affected by CVE-2017-7921. |
+| 0⭐ | 8h ago | [CVE-2026-92392](https://github.com/ashu7ank/CVE-2026-92392) | Defensive exposure checker and poc for cURL CVE-2026-92392 |
+| 1⭐ | 8h ago | [CVE-2026-74580](https://github.com/ABC00012345/CVE-2026-74580) | In the Linux kernel, the following vulnerability has been resolved: vhost: reset the vring metadata cache on… |
+| 0⭐ | 10h ago | [CVE-2026-54121-adcs-chase-nxc](https://github.com/ushst/CVE-2026-54121-adcs-chase-nxc) | Improper authorization in Active Directory Certificate Services (AD CS) allows an authorized attacker to… |
+| 1⭐ | 12h ago | [CVE-2026-97657](https://github.com/murrez/CVE-2026-97657) | CVE-2026-97657 - Authentication Bypass & Account Takeover / Pocbit |
+| 0⭐ | 12h ago | [CVE-2024-2887](https://github.com/jamezx32/CVE-2024-2887) | V8 Wasm GC type confusion - two PoCs (kExtern / kNone paths) |
+| 0⭐ | 13h ago | <img src="https://raw.githubusercontent.com/0xMarcio/pocindex/main/docs/kev.svg" alt="KEV" title="CISA known exploited" height="14"> [CVE-2016-5195](https://github.com/Mr-Ochobot/CVE-2016-5195) | Race condition in mm/gup.c in the Linux kernel 2.x through 4.x before 4.8.3 allows local users to gain… |
 
 ## Trending in 2026
 
