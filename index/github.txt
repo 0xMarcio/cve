@@ -27380,3 +27380,4 @@ CVE-2026-109519 - https://github.com/0xgh0stri13y/CVE-2026-109519
 CVE-2026-37107 - https://github.com/KyrieKlay/CVE-2026-37107
 CVE-2026-84411 - https://github.com/MikroTikDojo/CVE-2026-84411
 CVE-2026-107821 - https://github.com/pinebudweiser/CVE-2026-107821-PoC
+CVE-2026-18116 - https://github.com/Zi1gotoon/CVE-2026-18116
