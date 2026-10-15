@@ -27419,3 +27419,5 @@ CVE-2026-77770 - https://github.com/gmh5225/CVE-2026-77770
 CVE-2026-86950 - https://github.com/java99999/CVE-2026-86950-POC
 CVE-2026-89026 - https://github.com/im-hanzou/CVE-2026-89026
 CVE-2026-43499 - https://github.com/y896406256-lang/ghostlock-brt-w09
+CVE-2026-18963 - https://github.com/orevim/CVE-2026-18963-PoC
+CVE-2026-77521 - https://github.com/InertFluid/cve-2026-77521-lab

@@ -1,8 +1,8 @@
 <div align="center">
 
-<a href="https://pocindex.io/"><img src="https://raw.githubusercontent.com/0xMarcio/pocindex/main/docs/hero.svg?v=174350-84909-1235" alt="PoC Index" width="100%"></a>
+<a href="https://pocindex.io/"><img src="https://raw.githubusercontent.com/0xMarcio/pocindex/main/docs/hero.svg?v=174351-84910-1235" alt="PoC Index" width="100%"></a>
 
-[![last sync](https://img.shields.io/badge/last%20sync-15%20Oct%202026%2011%3A08%20UTC-2f81f7?style=flat-square&labelColor=161b22)](https://github.com/0xMarcio/pocindex/commits/main)&nbsp;[![CI](https://img.shields.io/github/actions/workflow/status/0xMarcio/pocindex/hot_cves.yml?style=flat-square&label=CI&color=2f81f7&labelColor=161b22&_=202610151108)](https://github.com/0xMarcio/pocindex/actions/workflows/hot_cves.yml)&nbsp;[![CVEs with PoCs](https://img.shields.io/badge/CVEs%20with%20PoCs-84%2C909-2f81f7?style=flat-square&labelColor=161b22)](https://pocindex.io/)&nbsp;[![known exploited](https://img.shields.io/badge/known%20exploited-1%2C235-f85149?style=flat-square&labelColor=161b22)](https://pocindex.io/)&nbsp;[![stars](https://img.shields.io/github/stars/0xMarcio/pocindex?style=flat-square&label=stars&color=e3b341&labelColor=161b22&_=202610151108)](https://github.com/0xMarcio/pocindex/stargazers)
+[![last sync](https://img.shields.io/badge/last%20sync-15%20Oct%202026%2012%3A08%20UTC-2f81f7?style=flat-square&labelColor=161b22)](https://github.com/0xMarcio/pocindex/commits/main)&nbsp;[![CI](https://img.shields.io/github/actions/workflow/status/0xMarcio/pocindex/hot_cves.yml?style=flat-square&label=CI&color=2f81f7&labelColor=161b22&_=202610151208)](https://github.com/0xMarcio/pocindex/actions/workflows/hot_cves.yml)&nbsp;[![CVEs with PoCs](https://img.shields.io/badge/CVEs%20with%20PoCs-84%2C910-2f81f7?style=flat-square&labelColor=161b22)](https://pocindex.io/)&nbsp;[![known exploited](https://img.shields.io/badge/known%20exploited-1%2C235-f85149?style=flat-square&labelColor=161b22)](https://pocindex.io/)&nbsp;[![stars](https://img.shields.io/github/stars/0xMarcio/pocindex?style=flat-square&label=stars&color=e3b341&labelColor=161b22&_=202610151208)](https://github.com/0xMarcio/pocindex/stargazers)
 
 <a href="https://pocindex.io/"><img src="https://raw.githubusercontent.com/0xMarcio/pocindex/8dec6181e823d641132e0ee8a52a1612c2b5dd37/docs/search.svg" alt="Search PoC Index" width="100%"></a>
 
@@ -14,16 +14,16 @@
 
 | Stars | Released | PoC | Description |
 | --- | --- | --- | --- |
-| 0⭐ | 3h ago | [CVE-2026-12118-POC-](https://github.com/uday952/CVE-2026-12118-POC-) | CVE-2026-12118 POC |
-| 0⭐ | 3h ago | [CVE-2026-110912](https://github.com/dreamfast/CVE-2026-110912) | A PoC for CVE-2026-110912 'arpbleed' |
-| 0⭐ | 3h ago | [CVE-2026-104711-POC-NEW-VARIANT](https://github.com/uday952/CVE-2026-104711-POC-NEW-VARIANT) | POC for the CVE-2026-104711 - New Variant |
-| 0⭐ | 13h ago | <img src="https://raw.githubusercontent.com/0xMarcio/pocindex/main/docs/kev.svg" alt="KEV" title="CISA known exploited" height="14"> [CVE-2021-4034](https://github.com/SerhiiMaruniak/CVE-2021-4034) | CVE-2021-4034 (PwnKit) - Python PoC |
-| 0⭐ | 18h ago | [CVE-2026-104748](https://github.com/MrjHaxcore/CVE-2026-104748) | CVE-2026-104748 POC |
-| 5⭐ | 19h ago | [cve-2026-107181-poc](https://github.com/abdugafforov-bobur/cve-2026-107181-poc) | Telegram Desktop before 7.2.9 contains an IPC record-separator injection vulnerability in Core::Sandbox that… |
-| 0⭐ | 20h ago | <img src="https://raw.githubusercontent.com/0xMarcio/pocindex/main/docs/kev.svg" alt="KEV" title="CISA known exploited" height="14"> [CVE-2017-7921](https://github.com/m7arm4n/CVE-2017-7921) | A Python-based tool for security assessment of Hikvision devices affected by CVE-2017-7921. |
-| 0⭐ | 20h ago | [CVE-2026-92392](https://github.com/ashu7ank/CVE-2026-92392) | Defensive exposure checker and poc for cURL CVE-2026-92392 |
-| 1⭐ | 20h ago | [CVE-2026-74580](https://github.com/ABC00012345/CVE-2026-74580) | In the Linux kernel, the following vulnerability has been resolved: vhost: reset the vring metadata cache on… |
-| 0⭐ | 22h ago | [CVE-2026-54121-adcs-chase-nxc](https://github.com/ushst/CVE-2026-54121-adcs-chase-nxc) | Improper authorization in Active Directory Certificate Services (AD CS) allows an authorized attacker to… |
+| 0⭐ | 58m ago | [cve-2026-77521-lab](https://github.com/InertFluid/cve-2026-77521-lab) | Benign, self-contained reproduction of CVE-2026-77521 (MaxKB prompt-injectable command execution) |
+| 0⭐ | 1h ago | [CVE-2026-18963-PoC](https://github.com/orevim/CVE-2026-18963-PoC) | Proof of concept and vulnerability checker for CVE-2026-18963, the Keycloak reset-credentials flow bypass |
+| 0⭐ | 4h ago | [CVE-2026-12118-POC-](https://github.com/uday952/CVE-2026-12118-POC-) | CVE-2026-12118 POC |
+| 0⭐ | 4h ago | [CVE-2026-110912](https://github.com/dreamfast/CVE-2026-110912) | A PoC for CVE-2026-110912 'arpbleed' |
+| 0⭐ | 4h ago | [CVE-2026-104711-POC-NEW-VARIANT](https://github.com/uday952/CVE-2026-104711-POC-NEW-VARIANT) | POC for the CVE-2026-104711 - New Variant |
+| 0⭐ | 14h ago | <img src="https://raw.githubusercontent.com/0xMarcio/pocindex/main/docs/kev.svg" alt="KEV" title="CISA known exploited" height="14"> [CVE-2021-4034](https://github.com/SerhiiMaruniak/CVE-2021-4034) | CVE-2021-4034 (PwnKit) - Python PoC |
+| 0⭐ | 19h ago | [CVE-2026-104748](https://github.com/MrjHaxcore/CVE-2026-104748) | CVE-2026-104748 POC |
+| 5⭐ | 20h ago | [cve-2026-107181-poc](https://github.com/abdugafforov-bobur/cve-2026-107181-poc) | Telegram Desktop before 7.2.9 contains an IPC record-separator injection vulnerability in Core::Sandbox that… |
+| 0⭐ | 21h ago | <img src="https://raw.githubusercontent.com/0xMarcio/pocindex/main/docs/kev.svg" alt="KEV" title="CISA known exploited" height="14"> [CVE-2017-7921](https://github.com/m7arm4n/CVE-2017-7921) | A Python-based tool for security assessment of Hikvision devices affected by CVE-2017-7921. |
+| 0⭐ | 21h ago | [CVE-2026-92392](https://github.com/ashu7ank/CVE-2026-92392) | Defensive exposure checker and poc for cURL CVE-2026-92392 |
 
 ## Trending in 2026
 
@@ -35,10 +35,10 @@
 | 96⭐ | 16d ago | [CVE-2026-41096-PoC](https://github.com/ZeroDayEvil/CVE-2026-41096-PoC) | 🛡️ Official AI Security Tool module for CVE-2026-41096 (Windows DNSAPI.dll Heap Overflow / DNS-Mayhem Deep… |
 | 187⭐ | 54d ago | [CVE-2026-62911](https://github.com/hypnguyen1209/CVE-2026-62911) | POC pre-auth RCE on Exchange |
 | 92⭐ | 33d ago | <img src="https://raw.githubusercontent.com/0xMarcio/pocindex/main/docs/kev.svg" alt="KEV" title="CISA known exploited" height="14"> [CVE-2026-20805-PoC](https://github.com/ZeroDayEvil/CVE-2026-20805-PoC) | 🛡️ Official AI Security Tool module for CVE-2026-20805 (Desktop Window Manager / dwm.exe Information… |
+| 15⭐ | 1d ago | [CVE-2026-85884](https://github.com/Beardhammer/CVE-2026-85884) | CVE-85884 POC |
 | 88⭐ | 33d ago | [CVE-2026-21858-n8n-FullChain](https://github.com/ZeroDayEvil/CVE-2026-21858-n8n-FullChain) | 🛡️ Official AI Security Tool module for CVE-2026-21858 + CVE-2025-68613 (n8n "Ni8mare" Unauthenticated… |
 | 51⭐ | 16d ago | [CVE-2026-94545](https://github.com/EQSTLab/CVE-2026-94545) | Next.js RCE |
 | 107⭐ | 50d ago | [CVE-2026-75604-poc](https://github.com/rafabd1/CVE-2026-75604-poc) | CVE-2026-75604 Next.js Windows RCE poc |
-| 13⭐ | 1d ago | [CVE-2026-85884](https://github.com/Beardhammer/CVE-2026-85884) | CVE-85884 POC |
 | 86⭐ | 41d ago | [CVE-2026-65343](https://github.com/ByteV0rtex/CVE-2026-65343) | CVE-2026-65343 PoC - AppleKeyStore OOB read → KASLR defeat (iOS 26.6 / 23G71) |
 | 108⭐ | 72d ago | [SCCM-CVE-2026-47301-Remote-Code-Execution-Exploit](https://github.com/OmriBaso/SCCM-CVE-2026-47301-Remote-Code-Execution-Exploit) | Proof-of-concept exploit chain (CVE-2026-47301) for Microsoft Configuration Manager (SCCM), combining a… |
 | 18⭐ | 5d ago | [telegram-cve-2026-107181](https://github.com/SeanDishman/telegram-cve-2026-107181) | Telegram CVE-2026-107181 |
