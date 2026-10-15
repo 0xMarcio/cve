@@ -27421,3 +27421,4 @@ CVE-2026-89026 - https://github.com/im-hanzou/CVE-2026-89026
 CVE-2026-43499 - https://github.com/y896406256-lang/ghostlock-brt-w09
 CVE-2026-18963 - https://github.com/orevim/CVE-2026-18963-PoC
 CVE-2026-77521 - https://github.com/InertFluid/cve-2026-77521-lab
+CVE-2026-85097 - https://github.com/BlackHatExploitation/CVE-2026-85097
