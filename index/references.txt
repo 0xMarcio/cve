@@ -119028,3 +119028,8 @@ CVE-2026-96537 - https://wpscan.com/vulnerability/e25ac9a8-a29d-4573-9d04-402a14
 CVE-2026-96900 - https://wpscan.com/vulnerability/67918de2-afc0-468d-8a66-290dc60fe8ec/
 CVE-2026-96904 - https://wpscan.com/vulnerability/b3df7272-9b79-4a3c-b230-6c3e97c4bbe5/
 CVE-2026-97315 - https://wpscan.com/vulnerability/83713678-7efc-4cfc-ba24-c624a1ef8622/
+CVE-2026-101895 - https://github.com/advisories/GHSA-f67j-2jqw-jpq7
+CVE-2026-101896 - https://github.com/advisories/GHSA-ff3f-86qr-9cv3
+CVE-2026-107381 - https://github.com/advisories/GHSA-m9xh-6747-9r6f
+CVE-2026-55786 - https://github.com/advisories/GHSA-h9f9-h6gm-wc85
+CVE-2026-59180 - https://github.com/advisories/GHSA-856c-92hv-3vxx
