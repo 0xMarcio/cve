@@ -27407,3 +27407,5 @@ CVE-2024-5274 - https://github.com/jamezx32/CVE-2024-5274
 CVE-2026-104711 - https://github.com/uday952/CVE-2026-104711-POC-NEW-VARIANT
 CVE-2026-20329 - https://github.com/ekacs/predicted-CVE-2026-20329
 CVE-2026-76519 - https://github.com/Mickysalivan/CVE-2026-76519-Proof-of-concept
+CVE-2026-110912 - https://github.com/dreamfast/CVE-2026-110912
+CVE-2026-12118 - https://github.com/uday952/CVE-2026-12118-POC-
