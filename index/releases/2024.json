@@ -1878,7 +1878,7 @@
 "CVE-2024-14042 github:open5gs/open5gs/files/15051218/capture.pcap.gz?#":{"basis":"unknown","cve":"CVE-2024-14042","imported":true,"released":null,"url":"https://github.com/open5gs/open5gs/files/15051218/capture.pcap.gz"},
 "CVE-2024-14043 github:open5gs/open5gs/files/15051238/capture.pcap.gz?#":{"basis":"unknown","cve":"CVE-2024-14043","imported":true,"released":null,"url":"https://github.com/open5gs/open5gs/files/15051238/capture.pcap.gz"},
 "CVE-2024-14044 github:open5gs/open5gs/files/15051247/capture.pcap.gz?#":{"basis":"unknown","cve":"CVE-2024-14044","imported":true,"released":null,"url":"https://github.com/open5gs/open5gs/files/15051247/capture.pcap.gz"},
-"CVE-2024-14045 github:nedlir/security-research?#":{"basis":"unknown","cve":"CVE-2024-14045","imported":true,"released":null,"url":"https://github.com/nedlir/Security-Research"},
+"CVE-2024-14045 github:nedlir/security-research?#":{"basis":"unknown","cve":"CVE-2024-14045","gone":"2026-10-15T08:40:20Z","imported":true,"released":null,"url":"https://github.com/nedlir/Security-Research"},
 "CVE-2024-14045 https://gist.github.com/nedlir/22cf2f1e5dd337ebba12a1be6ee83150":{"basis":"unknown","cve":"CVE-2024-14045","imported":true,"released":null,"url":"https://gist.github.com/nedlir/22cf2f1e5dd337ebba12a1be6ee83150"},
 "CVE-2024-14046 https://gist.github.com/nedlir/744e55b267daab6f74b76bdc6f0d711d":{"basis":"unknown","cve":"CVE-2024-14046","imported":true,"released":null,"url":"https://gist.github.com/nedlir/744e55b267daab6f74b76bdc6f0d711d"},
 "CVE-2024-1405 github:leetsun/hints/tree/main/linksys-wrt54gl/2?#":{"basis":"unknown","cve":"CVE-2024-1405","imported":true,"released":null,"url":"https://github.com/leetsun/Hints/tree/main/linksys-wrt54gl/2"},

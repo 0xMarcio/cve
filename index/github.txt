@@ -13379,7 +13379,6 @@ CVE-2023-32428 - https://github.com/gergelykalman/CVE-2023-32428-a-macOS-LPE-via
 CVE-2023-32434 - https://github.com/alfiecg24/Trigon
 CVE-2023-32434 - https://github.com/Balistic123/Iphone11IOS16.1KFDFONT
 CVE-2023-32434 - https://github.com/larrybml/test1
-CVE-2023-32434 - https://github.com/myaccount20232828/kfd
 CVE-2023-32434 - https://github.com/staturnzz/oob_entry
 CVE-2023-3244 - https://github.com/drnull03/POC-CVE-2023-3244
 CVE-2023-32560 - https://github.com/idkwastaken/CVE-2023-32560
@@ -19195,7 +19194,6 @@ CVE-2026-25526 - https://github.com/av4nth1ka/jinjava-cve-2026-25526-poc
 CVE-2026-25546 - https://github.com/mbanyamer/CVE-2026-25546-godot-mcp-0.1.1-OS-Command-Injection
 CVE-2026-25548 - https://github.com/lagathos/CVE-2026-25548
 CVE-2026-25589 - https://github.com/berabuddies/redis-poc
-CVE-2026-25589 - https://github.com/mgiay/CVE-2026-25589-25588-25243-23631-23479-REDIS
 CVE-2026-25594 - https://github.com/lagathos/CVE-2026-25594
 CVE-2026-25595 - https://github.com/lagathos/CVE-2026-25595
 CVE-2026-25596 - https://github.com/lagathos/CVE-2026-25596
@@ -21290,7 +21288,6 @@ CVE-2022-0847 - https://github.com/bluedragonsecurity/Linux-Kernel-Dirty-Pipe-Ex
 CVE-2022-0847 - https://github.com/bluedragonsecurity/exploits
 CVE-2022-0847 - https://github.com/h4ckm310n/Container-Vulnerability-Exploit
 CVE-2022-0847 - https://github.com/hackingyseguridad/root
-CVE-2022-0847 - https://github.com/lilshimu/Expl220847
 CVE-2022-0847 - https://github.com/ramahmdr/DirtyPipe
 CVE-2022-0847 - https://github.com/renaudbako/Web-Exploitation-Scenario-7
 CVE-2022-0847 - https://github.com/snowflakeovo/internal-privesc-poc
@@ -22000,7 +21997,6 @@ CVE-2024-13513 - https://github.com/0axz-tools/CVE-2024-13513.py
 CVE-2024-13918 - https://github.com/kwdlab/2603-KAWAKATSU.Ryota
 CVE-2024-13985 - https://github.com/CrimsonfiedOfficial/CVE-2024-13985
 CVE-2024-14027 - https://github.com/lcfr-eth/CVE-2024-14027_slop
-CVE-2024-14045 - https://github.com/nedlir/Security-Research
 CVE-2024-1698 - https://github.com/Dhananjayasj/CVE-2024-1698-NotificationX-WordPress-Plugin-SQL-Injection-to-Admin-Credential-Extraction
 CVE-2024-1708 - https://github.com/razureink/cve-2024-1708-connectwise_rce_reproduction
 CVE-2024-1709 - https://github.com/razureink/cve-2024-1708-connectwise_rce_reproduction
@@ -22665,7 +22661,6 @@ CVE-2025-14998 - https://github.com/KTN1990/CVE-2025-14998
 CVE-2025-15001 - https://github.com/r00thex/CVE-2025-15001-Exploit
 CVE-2025-15260 - https://github.com/d3kc4rt1/CVE-2025-15260
 CVE-2025-15276 - https://github.com/ahmedreda38/CVE-2025-15276-poc
-CVE-2025-15368 - https://github.com/kazehere4you/CVE-2025-15368-Exploit
 CVE-2025-15403 - https://github.com/Nxploited/CVE-2025-15403
 CVE-2025-15467 - https://github.com/guiimoraes/CVE-2025-15467
 CVE-2025-15467 - https://github.com/lyducanh/atmnc
@@ -27167,9 +27162,6 @@ CVE-2022-0185 - https://github.com/secjuhl/CVE-2022-0185
 CVE-2026-33439 - https://github.com/amis13/openam-clean
 CVE-2026-59358 - https://github.com/abraxas/CVE-2026-59358
 CVE-2026-102422 - https://github.com/DevVaibhav07/CVE-2026-102422
-CVE-2026-40369 - https://github.com/kwpwn/mtgt
-CVE-2026-85046 - https://github.com/kwpwn/mtgt
-CVE-2026-87491 - https://github.com/kwpwn/mtgt
 CVE-2013-3660 - https://github.com/kikozz/CVE-2013-3660-win32k.sys
 CVE-2015-1328 - https://github.com/saqibnet/blackbox-pentesting-infsecos
 CVE-2024-14027 - https://github.com/lcfr-hax/CVE-2024-14027_slop
@@ -27200,8 +27192,6 @@ CVE-2026-102253 - https://github.com/Ravi-lk/CVE-2026-102253-POC
 CVE-2026-102782 - https://github.com/murrez/CVE-2026-102782
 CVE-2026-105844 - https://github.com/murrez/CVE-2026-105844
 CVE-2026-24061 - https://github.com/Yoksulcvt/CVE-2026-24061-Telnet-Authentication-Bypass
-CVE-2026-60137 - https://github.com/manpisetsu/wp2shell
-CVE-2026-63030 - https://github.com/manpisetsu/wp2shell
 CVE-2026-76555 - https://github.com/Hasyros/CVE-2026-76555-path-traversal-wp-import-export-lite
 CVE-2026-88771 - https://github.com/watchtowrlabs/citrix-netscaler-cve-2026-88771-iocs
 CVE-2026-93661 - https://github.com/Hasyros/CVE-2026-93661-idor-events-manager
