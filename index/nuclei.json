@@ -577,6 +577,14 @@
 "severity": "medium",
 "url": "https://github.com/projectdiscovery/nuclei-templates/blob/main/http/cves/2010/CVE-2010-0696.yaml"
 },
+"CVE-2010-0738": {
+"cvss": 9.8,
+"cvss_vector": "CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+"cwe": "CWE-288",
+"name": "JBoss JMX/Web Console - Authentication Bypass via HTTP Verb Tampering",
+"severity": "critical",
+"url": "https://github.com/projectdiscovery/nuclei-templates/blob/main/http/cves/2010/CVE-2010-0738.yaml"
+},
 "CVE-2010-0759": {
 "cvss": 7.5,
 "cvss_vector": "CVSS:2.0/AV:N/AC:L/Au:N/C:P/I:P/A:P",
@@ -32881,6 +32889,14 @@
 "severity": "high",
 "url": "https://github.com/projectdiscovery/nuclei-templates/blob/main/http/cves/2026/CVE-2026-12609.yaml"
 },
+"CVE-2026-12741": {
+"cvss": 7.5,
+"cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+"cwe": "CWE-89",
+"name": "WP Fast Total Search <= 1.80.280 - Unauthenticated Time-Based Blind SQL Injection",
+"severity": "high",
+"url": "https://github.com/projectdiscovery/nuclei-templates/blob/main/http/cves/2026/CVE-2026-12741.yaml"
+},
 "CVE-2026-1277": {
 "cvss": 4.7,
 "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:N/I:L/A:N",
@@ -33160,6 +33176,14 @@
 "name": "Advanced Responsive Video Embedder 10.8.7/10.8.8 - Hardcoded Backdoor Authentication Bypass",
 "severity": "critical",
 "url": "https://github.com/projectdiscovery/nuclei-templates/blob/main/http/cves/2026/CVE-2026-18072.yaml"
+},
+"CVE-2026-18143": {
+"cvss": 9.8,
+"cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+"cwe": "CWE-434",
+"name": "Request Quote for WooCommerce <= 2.9.2 - Unauthenticated Arbitrary File Upload",
+"severity": "critical",
+"url": "https://github.com/projectdiscovery/nuclei-templates/blob/main/http/cves/2026/CVE-2026-18143.yaml"
 },
 "CVE-2026-1830": {
 "cvss": 9.8,
