@@ -209,6 +209,7 @@
 "CVE-2020-0688 github:1337-llama/cve-2020-0688-python3?#":{"basis":"unknown","cve":"CVE-2020-0688","imported":true,"released":null,"url":"https://github.com/1337-llama/CVE-2020-0688-Python3"},
 "CVE-2020-0688 github:7heknight/cve-2020-0688?#":{"basis":"unknown","cve":"CVE-2020-0688","imported":true,"released":null,"url":"https://github.com/7heKnight/CVE-2020-0688"},
 "CVE-2020-0688 github:cert-lv/cve-2020-0688?#":{"basis":"unknown","cve":"CVE-2020-0688","imported":true,"released":null,"url":"https://github.com/cert-lv/CVE-2020-0688"},
+"CVE-2020-0688 github:chudamax/cve-2020-0688-exchange2010?#":{"basis":"unknown","cve":"CVE-2020-0688","released":null,"seen":"2026-10-15T09:55:58Z","url":"https://github.com/chudamax/CVE-2020-0688-Exchange2010"},
 "CVE-2020-0688 github:jumbo-wjb/cve-2020-0688?#":{"basis":"unknown","cve":"CVE-2020-0688","imported":true,"released":null,"url":"https://github.com/Jumbo-WJB/CVE-2020-0688"},
 "CVE-2020-0688 github:justin-p/psforgot2keyxchange?#":{"basis":"unknown","cve":"CVE-2020-0688","imported":true,"released":null,"url":"https://github.com/justin-p/PSForgot2kEyXCHANGE"},
 "CVE-2020-0688 github:ken-abruzzi/cve_2020_0688?#":{"basis":"unknown","cve":"CVE-2020-0688","imported":true,"released":null,"url":"https://github.com/Ken-Abruzzi/cve_2020_0688"},
