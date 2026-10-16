@@ -27421,3 +27421,6 @@ CVE-2026-78850 - https://github.com/SLO-CYBER-SEC/CVE-2026-78850
 CVE-2026-78851 - https://github.com/SLO-CYBER-SEC/CVE-2026-78851
 CVE-2026-89079 - https://github.com/murrez/CVE-2026-89079
 CVE-2026-97229 - https://github.com/OppositDeer/Gitlab-RCE-CVE-2026-97229
+CVE-2026-110896 - https://github.com/azqzazq1/CVE-2026-110896
+CVE-2026-94134 - https://github.com/MosesOX/POC-CVE-2026-94134
+CVE-2021-22204 - https://github.com/cyfrowesny/exiftool-7.44-12.23-exploit-CVE-2021-22204
