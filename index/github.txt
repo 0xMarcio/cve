@@ -27419,3 +27419,5 @@ CVE-2026-57155 - https://github.com/babyshen/CVE-2026-57155
 CVE-2026-59310 - https://github.com/zgsfsec/CVE-2026-59310-POC
 CVE-2026-78850 - https://github.com/SLO-CYBER-SEC/CVE-2026-78850
 CVE-2026-78851 - https://github.com/SLO-CYBER-SEC/CVE-2026-78851
+CVE-2026-89079 - https://github.com/murrez/CVE-2026-89079
+CVE-2026-97229 - https://github.com/OppositDeer/Gitlab-RCE-CVE-2026-97229
