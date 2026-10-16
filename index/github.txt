@@ -27432,3 +27432,4 @@ CVE-2026-64507 - https://github.com/manalejandro/CVE-2026-64507
 CVE-2026-110958 - https://github.com/shlln/CVE-2026-110958
 CVE-2026-53365 - https://github.com/hoodoer/VsockDrop-Adapted-CVE-2026-53365
 CVE-2024-2961 - https://github.com/Sib1110/cve-2024-2961
+CVE-2026-24849 - https://github.com/exposelabniu/AMENDER-pipeline
