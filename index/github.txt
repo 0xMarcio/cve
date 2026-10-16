@@ -27434,3 +27434,5 @@ CVE-2026-53365 - https://github.com/hoodoer/VsockDrop-Adapted-CVE-2026-53365
 CVE-2024-2961 - https://github.com/Sib1110/cve-2024-2961
 CVE-2026-24849 - https://github.com/exposelabniu/AMENDER-pipeline
 CVE-2026-111444 - https://github.com/Syscallh00k/CVE-2026-111444
+CVE-2026-43499 - https://github.com/saltlyfish666/magicpad3-root-research
+CVE-2026-96889 - https://github.com/lion9453/CVE-2026-96889-nextjs-rce
