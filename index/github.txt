@@ -27426,3 +27426,8 @@ CVE-2026-94134 - https://github.com/MosesOX/POC-CVE-2026-94134
 CVE-2021-22204 - https://github.com/cyfrowesny/exiftool-7.44-12.23-exploit-CVE-2021-22204
 CVE-2026-20817 - https://github.com/ZeroDayEvil/CVE-2026-20817
 CVE-2026-40369 - https://github.com/ZeroDayEvil/CVE-2026-40369-EXPLOIT
+CVE-2026-102764 - https://github.com/Worthes/CVE-2026-102764-Proof-of-concept
+CVE-2026-19607 - https://github.com/7Ragnarok7/CVE-2026-19607
+CVE-2026-60137 - https://github.com/BIBILZERODAY/CVE-2026-60137---WordPress-Core-Critical-SQL-Injection-SQLi-PoC
+CVE-2026-61979 - https://github.com/BIBILZERODAY/CVE-2026-61979-miniOrange-SAML-Auth-Bypass-Exploit
+CVE-2026-75604 - https://github.com/ZeroDayEvil/CVE-2026-75604-PoC
