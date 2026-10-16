@@ -27424,3 +27424,5 @@ CVE-2026-97229 - https://github.com/OppositDeer/Gitlab-RCE-CVE-2026-97229
 CVE-2026-110896 - https://github.com/azqzazq1/CVE-2026-110896
 CVE-2026-94134 - https://github.com/MosesOX/POC-CVE-2026-94134
 CVE-2021-22204 - https://github.com/cyfrowesny/exiftool-7.44-12.23-exploit-CVE-2021-22204
+CVE-2026-20817 - https://github.com/ZeroDayEvil/CVE-2026-20817
+CVE-2026-40369 - https://github.com/ZeroDayEvil/CVE-2026-40369-EXPLOIT
