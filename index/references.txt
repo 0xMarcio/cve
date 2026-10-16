@@ -87947,8 +87947,6 @@ CVE-1999-1309 - http://www.dataguard.no/bugtraq/1994_1/0078.html
 CVE-1999-1340 - http://marc.info/?l=bugtraq&m=94173799532589&w=2
 CVE-1999-1342 - http://marc.info/?l=ntbugtraq&m=94042342010662&w=2
 CVE-1999-1385 - http://marc.info/?l=bugtraq&m=87602167420332&w=2
-CVE-1999-1400 - http://archives.indenial.com/hypermail/ntbugtraq/1999/June1999/0007.html
-CVE-1999-1400 - http://archives.indenial.com/hypermail/ntbugtraq/1999/June1999/0009.html
 CVE-1999-1439 - http://marc.info/?l=bugtraq&m=88524071002939&w=2
 CVE-1999-1448 - http://marc.info/?l=bugtraq&m=90221104526168&w=2
 CVE-1999-1477 - http://www.securityfocus.com/archive/1/28717
