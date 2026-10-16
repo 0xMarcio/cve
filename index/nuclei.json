@@ -35954,6 +35954,14 @@
 "severity": "high",
 "url": "https://github.com/projectdiscovery/nuclei-templates/blob/main/http/cves/2026/CVE-2026-7467.yaml"
 },
+"CVE-2026-76268": {
+"cvss": 9.8,
+"cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+"cwe": "CWE-306",
+"name": "Splunk Enterprise Patroni REST API - Missing Authentication RCE",
+"severity": "critical",
+"url": "https://github.com/projectdiscovery/nuclei-templates/blob/main/http/cves/2026/CVE-2026-76268.yaml"
+},
 "CVE-2026-76904": {
 "cvss": 9.8,
 "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
