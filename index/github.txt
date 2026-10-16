@@ -27429,3 +27429,4 @@ CVE-2026-60137 - https://github.com/gichirimaku/wp2shell-PoC
 CVE-2026-63030 - https://github.com/gichirimaku/wp2shell-PoC
 CVE-2026-64560 - https://github.com/feiguang-ai/plz110-6.12.69-cve-2026-64560-ksu
 CVE-2026-64507 - https://github.com/manalejandro/CVE-2026-64507
+CVE-2026-110958 - https://github.com/shlln/CVE-2026-110958
