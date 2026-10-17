@@ -115,7 +115,6 @@ CVE-2006-4304 - https://github.com/Skwalker416/pppwn-850
 CVE-2006-4304 - https://github.com/Skywalker416/pppwn-850
 CVE-2006-4304 - https://github.com/TheOfficialFloW/PPPwn
 CVE-2006-4304 - https://github.com/vineshgoyal/SISTR0-PPPwn
-CVE-2006-4304 - https://github.com/vvsx87/PPPwn
 CVE-2006-4304 - https://github.com/zacke0815/PPPwn-master
 CVE-2006-4777 - https://github.com/Mario1234/js-driveby-download-CVE-2006-4777
 CVE-2006-4814 - https://github.com/tagatac/linux-CVE-2006-4814
@@ -18777,7 +18776,6 @@ CVE-2026-20253 - https://github.com/HORKimhab/CVE-2026-20253
 CVE-2026-20253 - https://github.com/Het-Kalariya/CVE-2026-20253
 CVE-2026-20253 - https://github.com/fevar54/CVE-2026-20253-Splunk-Enterprise-Pre-Auth-RCE-
 CVE-2026-20253 - https://github.com/pssec-io/CVE-2026-20253
-CVE-2026-20253 - https://github.com/shunfeng8421/exploit-library
 CVE-2026-20253 - https://github.com/watchtowrlabs/watchTowr-vs-Splunk-CVE-2026-20253
 CVE-2026-20262 - https://github.com/HORKimhab/CVE-2026-20262
 CVE-2026-20262 - https://github.com/fevar54/CVE-2026-20262-Cisco-Catalyst-SD-WAN-Manager-Arbitrary-File-Write-
@@ -21254,7 +21252,6 @@ CVE-2022-0441 - https://github.com/DappaNISM/CVE-2022-0441
 CVE-2022-0492 - https://github.com/bytemomo/container_escape_iso
 CVE-2022-0492 - https://github.com/h4ckm310n/Container-Vulnerability-Exploit
 CVE-2022-0543 - https://github.com/OpsCipher/CVE-2022-0543
-CVE-2022-0543 - https://github.com/shunfeng8421/exploit-library
 CVE-2022-0543 - https://github.com/trongdaong24/labs
 CVE-2022-0543 - https://github.com/xC0D3F4TH3R/Redis-RCE-x-HTB
 CVE-2022-0739 - https://github.com/Manjen1218/CVE-2022-0739-Exploitation
@@ -21939,7 +21936,6 @@ CVE-2024-0582 - https://github.com/nanabingies/CVE-2024-0582
 CVE-2024-0670 - https://github.com/dfdxarjy/HTB-NanoCorp-CVE-2024-0670
 CVE-2024-0670 - https://github.com/elsevar11/CVE-2024-0670-CheckMK-Agent-Local-Privilege-Escalation-Exploit
 CVE-2024-0670 - https://github.com/magicrc/CVE-2024-0670
-CVE-2024-0670 - https://github.com/tralsesec/CVE-2024-0670
 CVE-2024-0684 - https://github.com/mczimmermann/cs263
 CVE-2024-0692 - https://github.com/machevalia/CVE-2024-0692-SolarWinds-SEM-RCE
 CVE-2024-10224 - https://github.com/sychikov/CVE-2024-11003-POC
@@ -22358,7 +22354,6 @@ CVE-2024-48990 - https://github.com/kikechans/-Linux-PrivEsc-CVE-2024-48990
 CVE-2024-48990 - https://github.com/mladicstefan/CVE-2024-48990
 CVE-2024-48990 - https://github.com/o-sec/CVE-2024-48990
 CVE-2024-48990 - https://github.com/sobbing333/CVE-2024-48990-POC
-CVE-2024-48990 - https://github.com/tahsinunluturk/needrestart-privesc-cve-2024-48990
 CVE-2024-49039 - https://github.com/razureink/cve-2024-49039-task_scheduler_eop_reproduction
 CVE-2024-49112 - https://github.com/HyperionGray/a-pocs-upon-you
 CVE-2024-49113 - https://github.com/0xMetr0/metasploit-ldapnightmare
@@ -26549,7 +26544,6 @@ CVE-2026-77078 - https://github.com/wtfkimi/CVE-2026-77078
 CVE-2026-29057 - https://github.com/learnerxuan/CVE-2026-29057-POC
 CVE-2026-49049 - https://github.com/6ickzone/Helix3-Mass-Exploiter
 CVE-2026-43786 - https://github.com/Malwation/CVE-2026-43786
-CVE-2026-41940 - https://github.com/yasouxken/cve-2026-41940-PoC
 CVE-2026-43499 - https://github.com/MKE84/neo8-ghostlock-adaptation
 CVE-2026-64638 - https://github.com/madfxr/xss2shell-poc
 CVE-2026-42978 - https://github.com/coactionbrittlemaidenhair51/CVE-2026-42978-PoC-Research
@@ -27307,13 +27301,9 @@ CVE-2025-32432 - https://github.com/l0lsuit/CVE-2025-32432-craftcms-rce
 CVE-2026-3888 - https://github.com/alinpfan/CVE-2026-3888-PoC
 CVE-2026-41316 - https://github.com/5t1ck/rails-doubletap-py
 CVE-2026-104711 - https://github.com/uday952/CVE-2026-104711
-CVE-2026-41992 - https://github.com/uday952/CVE-2026-41992-poc
-CVE-2026-104711 - https://github.com/uday952/CVE-2026-104711-POC-Variant3
-CVE-2026-104711 - https://github.com/uday952/CVE-2026-104711-exploit-payload-4
 CVE-2026-1357 - https://github.com/stj8703-web/CVE-2026-1357
 CVE-2026-85097 - https://github.com/Masriyan/CVE-2026-85097
 CVE-2024-53677 - https://github.com/choyj358/cve-2024-53677
-CVE-2026-104711 - https://github.com/uday952/CVE-2026-104711-Advanced-Variant
 CVE-2025-23339 - https://github.com/Qcx526/cuda_poc_generator
 CVE-2026-58222 - https://github.com/abdelaaziz0/KDSExtract
 CVE-2026-97229 - https://github.com/AmpedWasTaken/CVE-2026-97229-GitLab-CI-CD-Regex-Compiler-RCE
@@ -27345,7 +27335,6 @@ CVE-2026-84411 - https://github.com/MikroTikDojo/CVE-2026-84411
 CVE-2026-107821 - https://github.com/pinebudweiser/CVE-2026-107821-PoC
 CVE-2026-18116 - https://github.com/Zi1gotoon/CVE-2026-18116
 CVE-2026-18116 - https://github.com/EndlssNightmare/CVE-2026-18116
-CVE-2026-104711 - https://github.com/uday952/CVE-2026-104711-POC---Brand-New
 CVE-2026-43499 - https://github.com/jxlarrea/portal-root-kiosk-satellite
 CVE-2000-0979 - https://github.com/Z6543/CVE-2000-0979
 CVE-2020-0041 - https://github.com/hiratazx/CVE-2020-0041

@@ -2208,7 +2208,7 @@
 "CVE-2006-4304 github:skywalker416/pppwn-850?#":{"basis":"unknown","cve":"CVE-2006-4304","imported":true,"released":null,"url":"https://github.com/Skywalker416/pppwn-850"},
 "CVE-2006-4304 github:theofficialflow/pppwn?#":{"basis":"unknown","cve":"CVE-2006-4304","imported":true,"released":null,"url":"https://github.com/TheOfficialFloW/PPPwn"},
 "CVE-2006-4304 github:vineshgoyal/sistr0-pppwn?#":{"basis":"unknown","cve":"CVE-2006-4304","imported":true,"released":null,"url":"https://github.com/vineshgoyal/SISTR0-PPPwn"},
-"CVE-2006-4304 github:vvsx87/pppwn?#":{"basis":"unknown","cve":"CVE-2006-4304","imported":true,"released":null,"url":"https://github.com/vvsx87/PPPwn"},
+"CVE-2006-4304 github:vvsx87/pppwn?#":{"basis":"unknown","cve":"CVE-2006-4304","gone":"2026-10-17T08:29:31Z","imported":true,"released":null,"url":"https://github.com/vvsx87/PPPwn"},
 "CVE-2006-4304 github:zacke0815/pppwn-master?#":{"basis":"unknown","cve":"CVE-2006-4304","imported":true,"released":null,"url":"https://github.com/zacke0815/PPPwn-master"},
 "CVE-2006-4305 github:rapid7/metasploit-framework/blob/master/modules/exploits/windows/http/maxdb_webdbm_database.rb?#":{"basis":"unknown","cve":"CVE-2006-4305","imported":true,"released":null,"url":"https://github.com/rapid7/metasploit-framework/blob/master/modules/exploits/windows/http/maxdb_webdbm_database.rb"},
 "CVE-2006-4305 https://www.exploit-db.com/exploits/16765":{"basis":"source","cve":"CVE-2006-4305","imported":true,"released":"2010-09-20","source":"2010-09-20","url":"https://www.exploit-db.com/exploits/16765"},
