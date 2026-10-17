@@ -27457,3 +27457,5 @@ CVE-2026-96654 - https://github.com/BoredHackerBlog/plex2shell_pcap
 CVE-2026-96655 - https://github.com/BoredHackerBlog/plex2shell_pcap
 CVE-2026-96656 - https://github.com/BoredHackerBlog/plex2shell_pcap
 CVE-2026-97229 - https://github.com/gandli/cve-2026-97229-lab
+CVE-2026-110447 - https://github.com/adriyansyah-mf/cve-2026-110447
+CVE-2026-48907 - https://github.com/0xCyp1337/CVE-2026-48907-RCE
