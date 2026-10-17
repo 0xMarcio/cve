@@ -1221,6 +1221,7 @@
 "CVE-2022-1388 github:iveresk/cve-2022-1388-iveresk-command-shell?#":{"basis":"unknown","cve":"CVE-2022-1388","imported":true,"released":null,"url":"https://github.com/iveresk/cve-2022-1388-iveresk-command-shell"},
 "CVE-2022-1388 github:j-baines/tippa-my-tongue?#":{"basis":"unknown","cve":"CVE-2022-1388","imported":true,"released":null,"url":"https://github.com/j-baines/tippa-my-tongue"},
 "CVE-2022-1388 github:jbharucha05/cve-2022-1388?#":{"basis":"unknown","cve":"CVE-2022-1388","imported":true,"released":null,"url":"https://github.com/jbharucha05/CVE-2022-1388"},
+"CVE-2022-1388 github:jermainlaforce/cve-2022-1388-poc?#":{"basis":"unknown","cve":"CVE-2022-1388","released":null,"seen":"2026-10-17T09:20:09Z","url":"https://github.com/jermainlaforce/CVE-2022-1388-POC"},
 "CVE-2022-1388 github:justakazh/cve-2022-1388?#":{"basis":"unknown","cve":"CVE-2022-1388","imported":true,"released":null,"url":"https://github.com/justakazh/CVE-2022-1388"},
 "CVE-2022-1388 github:li8u99/cve-2022-1388?#":{"basis":"unknown","cve":"CVE-2022-1388","imported":true,"released":null,"url":"https://github.com/li8u99/CVE-2022-1388"},
 "CVE-2022-1388 github:linjacck/cve-2022-1388-exp?#":{"basis":"unknown","cve":"CVE-2022-1388","imported":true,"released":null,"url":"https://github.com/LinJacck/CVE-2022-1388-EXP"},
