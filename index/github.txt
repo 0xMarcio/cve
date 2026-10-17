@@ -27431,3 +27431,5 @@ CVE-2026-19607 - https://github.com/7Ragnarok7/CVE-2026-19607
 CVE-2026-60137 - https://github.com/BIBILZERODAY/CVE-2026-60137---WordPress-Core-Critical-SQL-Injection-SQLi-PoC
 CVE-2026-61979 - https://github.com/BIBILZERODAY/CVE-2026-61979-miniOrange-SAML-Auth-Bypass-Exploit
 CVE-2026-75604 - https://github.com/ZeroDayEvil/CVE-2026-75604-PoC
+CVE-2026-104715 - https://github.com/M3aCulpa/CVE-2026-104715
+CVE-2026-106030 - https://github.com/4337/NordOst
