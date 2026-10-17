@@ -27452,3 +27452,7 @@ CVE-2026-64560 - https://github.com/ChaYeWuu/prague-CVE-2026-64560-OS4.0
 CVE-2026-64560 - https://github.com/totsiaw/cve-2026-64560-rmx6699
 CVE-2026-82270 - https://github.com/swordBone/portkey-security-research
 CVE-2024-32507 - https://github.com/4minx/CVE-2024-32507
+CVE-2026-96652 - https://github.com/BoredHackerBlog/plex2shell_pcap
+CVE-2026-96654 - https://github.com/BoredHackerBlog/plex2shell_pcap
+CVE-2026-96655 - https://github.com/BoredHackerBlog/plex2shell_pcap
+CVE-2026-96656 - https://github.com/BoredHackerBlog/plex2shell_pcap
