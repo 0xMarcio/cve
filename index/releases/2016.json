@@ -1421,6 +1421,7 @@
 "CVE-2016-4437 github:vulhub/vulhub/tree/master/shiro/CVE-2016-4437?#":{"basis":"unknown","cve":"CVE-2016-4437","imported":true,"released":null,"url":"https://github.com/vulhub/vulhub/tree/master/shiro/CVE-2016-4437"},
 "CVE-2016-4437 github:xk-mt/cve-2016-4437?#":{"basis":"unknown","cve":"CVE-2016-4437","imported":true,"released":null,"url":"https://github.com/xk-mt/CVE-2016-4437"},
 "CVE-2016-4437 github:xunjinghan/bounty-forge?#":{"basis":"unknown","cve":"CVE-2016-4437","released":null,"seen":"2026-10-13T09:40:21Z","url":"https://github.com/xunjinghan/bounty-forge"},
+"CVE-2016-4437 github:xunwmw/vuln-xiuxian?#":{"basis":"unknown","cve":"CVE-2016-4437","released":null,"seen":"2026-10-17T07:11:28Z","url":"https://github.com/xunwmw/vuln-xiuxian"},
 "CVE-2016-4437 http://packetstormsecurity.com/files/157497/Apache-Shiro-1.2.4-Remote-Code-Execution.html":{"basis":"unknown","cve":"CVE-2016-4437","imported":true,"released":null,"url":"http://packetstormsecurity.com/files/157497/Apache-Shiro-1.2.4-Remote-Code-Execution.html"},
 "CVE-2016-4437 https://www.exploit-db.com/exploits/48410":{"basis":"source","cve":"CVE-2016-4437","imported":true,"released":"2020-05-01","source":"2020-05-01","url":"https://www.exploit-db.com/exploits/48410"},
 "CVE-2016-4438 github:jason3e7/cve-2016-4438?#":{"basis":"unknown","cve":"CVE-2016-4438","imported":true,"released":null,"url":"https://github.com/jason3e7/CVE-2016-4438"},

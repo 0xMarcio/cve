@@ -6676,6 +6676,7 @@
 "CVE-2021-41773 github:excanear/escanearcpl-exploit-tools?#":{"basis":"unknown","cve":"CVE-2021-41773","released":null,"seen":"2026-10-10T08:41:38Z","url":"https://github.com/excanear/Escanearcpl-Exploit-Tools"},
 "CVE-2021-41773 github:fa1c0n35/cve-2021-41773?#":{"basis":"unknown","cve":"CVE-2021-41773","imported":true,"released":null,"url":"https://github.com/Fa1c0n35/CVE-2021-41773"},
 "CVE-2021-41773 github:fakesitesecurity/cve-2021-41773?#":{"basis":"unknown","cve":"CVE-2021-41773","imported":true,"released":null,"url":"https://github.com/FakesiteSecurity/CVE-2021-41773"},
+"CVE-2021-41773 github:floatingdreamhy/vulnerability-poc-dev?#":{"basis":"unknown","cve":"CVE-2021-41773","released":null,"seen":"2026-10-17T07:11:28Z","url":"https://github.com/floatingdreamhy/Vulnerability-POC-Dev"},
 "CVE-2021-41773 github:fnatalucci/cve-2021-41773-rce?#":{"basis":"unknown","cve":"CVE-2021-41773","imported":true,"released":null,"url":"https://github.com/fnatalucci/CVE-2021-41773-RCE"},
 "CVE-2021-41773 github:fxdyx-a/cve-2021-41773-poc?#":{"basis":"unknown","cve":"CVE-2021-41773","imported":true,"released":null,"url":"https://github.com/fxdyx-a/CVE-2021-41773-POC"},
 "CVE-2021-41773 github:gagaltotal/cve-2021-41773-apache?#":{"basis":"unknown","cve":"CVE-2021-41773","imported":true,"released":null,"url":"https://github.com/gagaltotal/CVE-2021-41773-apache"},

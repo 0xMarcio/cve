@@ -27436,3 +27436,16 @@ CVE-2026-106030 - https://github.com/4337/NordOst
 CVE-2026-8933 - https://github.com/songzzzz/CVE-2026-8933
 CVE-2026-59970 - https://github.com/asvorg/CVE-2026-59970-poc
 CVE-2026-43499 - https://github.com/MSEDGE-CORE/GhostLock-HonorFne
+CVE-2016-4437 - https://github.com/xunwmw/vuln-xiuxian
+CVE-2017-12615 - https://github.com/xunwmw/vuln-xiuxian
+CVE-2018-15142 - https://github.com/exposelabniu/AMENDER-pipeline
+CVE-2018-15149 - https://github.com/exposelabniu/AMENDER-pipeline
+CVE-2019-5736 - https://github.com/clementnuss/copyfail-cve-exploits
+CVE-2021-41773 - https://github.com/floatingdreamhy/Vulnerability-POC-Dev
+CVE-2024-30542 - https://github.com/ElenaViewSynthesis/GymSIEGE
+CVE-2024-36412 - https://github.com/ElenaViewSynthesis/GymSIEGE
+CVE-2024-36858 - https://github.com/ElenaViewSynthesis/GymSIEGE
+CVE-2024-4701 - https://github.com/ElenaViewSynthesis/GymSIEGE
+CVE-2024-54772 - https://github.com/deauther890/RouterOS-RADIUS-InfoLeak
+CVE-2026-104736 - https://github.com/BIBILZERODAY/CVE-2026-104736---Proof-of-Concept-PoC-Exploit-Details
+CVE-2026-89282 - https://github.com/dorkerdevil/CVE-2026-89282
