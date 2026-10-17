@@ -27447,3 +27447,6 @@ CVE-2026-33017 - https://github.com/1337or420/CVE-2026-33017-Langflow-RCE
 CVE-2026-36213 - https://github.com/NT2DEV/CVE-2026-36213-poc
 CVE-2026-55781 - https://github.com/NT2DEV/CVE-2026-55781-poc
 CVE-2026-111823 - https://github.com/murrez/CVE-2026-111823
+CVE-2025-43529 - https://github.com/mingxian947/ios
+CVE-2026-64560 - https://github.com/ChaYeWuu/prague-CVE-2026-64560-OS4.0
+CVE-2026-64560 - https://github.com/totsiaw/cve-2026-64560-rmx6699
