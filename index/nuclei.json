@@ -32819,6 +32819,14 @@
 "severity": "high",
 "url": "https://github.com/projectdiscovery/nuclei-templates/blob/main/http/cves/2026/CVE-2026-10823.yaml"
 },
+"CVE-2026-108578": {
+"cvss": 5.3,
+"cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:N/A:N",
+"cwe": "CWE-200",
+"name": "Neterbit NW-431F - Unauthenticated SMS Disclosure",
+"severity": "medium",
+"url": "https://github.com/projectdiscovery/nuclei-templates/blob/main/http/cves/2026/CVE-2026-108578.yaml"
+},
 "CVE-2026-1115": {
 "cvss": 9.0,
 "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:R/S:C/C:H/I:H/A:H",
