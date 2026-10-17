@@ -27438,3 +27438,4 @@ CVE-2024-4701 - https://github.com/ElenaViewSynthesis/GymSIEGE
 CVE-2024-54772 - https://github.com/deauther890/RouterOS-RADIUS-InfoLeak
 CVE-2026-104736 - https://github.com/BIBILZERODAY/CVE-2026-104736---Proof-of-Concept-PoC-Exploit-Details
 CVE-2026-89282 - https://github.com/dorkerdevil/CVE-2026-89282
+CVE-2026-99999 - https://github.com/PeronGH/CVE-2026-99999
