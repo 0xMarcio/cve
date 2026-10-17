@@ -27435,3 +27435,4 @@ CVE-2026-104715 - https://github.com/M3aCulpa/CVE-2026-104715
 CVE-2026-106030 - https://github.com/4337/NordOst
 CVE-2026-8933 - https://github.com/songzzzz/CVE-2026-8933
 CVE-2026-59970 - https://github.com/asvorg/CVE-2026-59970-poc
+CVE-2026-43499 - https://github.com/MSEDGE-CORE/GhostLock-HonorFne
