@@ -2,7 +2,7 @@
 
 <a href="https://pocindex.io/"><img src="https://raw.githubusercontent.com/0xMarcio/pocindex/main/docs/hero.svg?v=174523-85079-1237" alt="PoC Index" width="100%"></a>
 
-[![last sync](https://img.shields.io/badge/last%20sync-18%20Oct%202026%2015%3A07%20UTC-2f81f7?style=flat-square&labelColor=161b22)](https://github.com/0xMarcio/pocindex/commits/main)&nbsp;[![CI](https://img.shields.io/github/actions/workflow/status/0xMarcio/pocindex/hot_cves.yml?style=flat-square&label=CI&color=2f81f7&labelColor=161b22&_=202610181507)](https://github.com/0xMarcio/pocindex/actions/workflows/hot_cves.yml)&nbsp;[![CVEs with PoCs](https://img.shields.io/badge/CVEs%20with%20PoCs-85%2C079-2f81f7?style=flat-square&labelColor=161b22)](https://pocindex.io/)&nbsp;[![known exploited](https://img.shields.io/badge/known%20exploited-1%2C237-f85149?style=flat-square&labelColor=161b22)](https://pocindex.io/)&nbsp;[![stars](https://img.shields.io/github/stars/0xMarcio/pocindex?style=flat-square&label=stars&color=e3b341&labelColor=161b22&_=202610181507)](https://github.com/0xMarcio/pocindex/stargazers)
+[![last sync](https://img.shields.io/badge/last%20sync-18%20Oct%202026%2016%3A07%20UTC-2f81f7?style=flat-square&labelColor=161b22)](https://github.com/0xMarcio/pocindex/commits/main)&nbsp;[![CI](https://img.shields.io/github/actions/workflow/status/0xMarcio/pocindex/hot_cves.yml?style=flat-square&label=CI&color=2f81f7&labelColor=161b22&_=202610181607)](https://github.com/0xMarcio/pocindex/actions/workflows/hot_cves.yml)&nbsp;[![CVEs with PoCs](https://img.shields.io/badge/CVEs%20with%20PoCs-85%2C079-2f81f7?style=flat-square&labelColor=161b22)](https://pocindex.io/)&nbsp;[![known exploited](https://img.shields.io/badge/known%20exploited-1%2C237-f85149?style=flat-square&labelColor=161b22)](https://pocindex.io/)&nbsp;[![stars](https://img.shields.io/github/stars/0xMarcio/pocindex?style=flat-square&label=stars&color=e3b341&labelColor=161b22&_=202610181607)](https://github.com/0xMarcio/pocindex/stargazers)
 
 <a href="https://pocindex.io/"><img src="https://raw.githubusercontent.com/0xMarcio/pocindex/8dec6181e823d641132e0ee8a52a1612c2b5dd37/docs/search.svg" alt="Search PoC Index" width="100%"></a>
 
@@ -14,14 +14,14 @@
 
 | Stars | Released | PoC | Description |
 | --- | --- | --- | --- |
-| 0⭐ | 59m ago | [CVE-2020-36847](https://github.com/K52-ai/CVE-2020-36847) | PoC for CVE-2020-36847: unauthenticated file upload to RCE in WordPress Simple File List <=4.2.2. Uploads PHP… |
-| 0⭐ | 1h ago | [CVE-2024-25600](https://github.com/K52-ai/CVE-2024-25600) | PoC for CVE-2024-25600: unauthenticated RCE in WordPress Bricks Builder <=1.9.6. Extracts the render_element… |
-| 0⭐ | 1h ago | [CVE-2026-99999](https://github.com/01luyicheng/CVE-2026-99999) | CVE-2026-99999 PwnEscape PoC - Linux kernel IPv4 csum_start validation bug guest-to-host memory leak (CVSS… |
-| 1⭐ | 7h ago | [CVE-2025-6440-BypassExt](https://github.com/0xCyp1337/CVE-2025-6440-BypassExt) | The WooCommerce Designer Pro plugin for WordPress, used by the Pricom - Printing Company & Design Services… |
-| 0⭐ | 15h ago | [CVE-2026-50229](https://github.com/flvzx/CVE-2026-50229) | Improper Neutralization of Script-Related HTML Tags in a Web Page (Basic XSS) vulnerability in the number… |
-| 1⭐ | 20h ago | <img src="https://raw.githubusercontent.com/0xMarcio/pocindex/main/docs/kev.svg" alt="KEV" title="CISA known exploited" height="14"> [CVE-2026-48907-RCE](https://github.com/0xCyp1337/CVE-2026-48907-RCE) | A vulnerability in the JCE editor extension for Joomla allows the creation of new editor profiles for… |
-| 0⭐ | 20h ago | [cve-2026-110447](https://github.com/adriyansyah-mf/cve-2026-110447) | Collabora Online Built-in CODE Server before 26.4.303 (richdocumentscode), a Nextcloud app, allows remote… |
-| 0⭐ | 21h ago | [cve-2026-97229-lab](https://github.com/gandli/cve-2026-97229-lab) | CVE-2026-97229 GitLab CI lint regex integer overflow RCE - InstaBox version matrix reproduction & libruby… |
+| 0⭐ | 1h ago | [CVE-2020-36847](https://github.com/K52-ai/CVE-2020-36847) | PoC for CVE-2020-36847: unauthenticated file upload to RCE in WordPress Simple File List <=4.2.2. Uploads PHP… |
+| 0⭐ | 2h ago | [CVE-2024-25600](https://github.com/K52-ai/CVE-2024-25600) | PoC for CVE-2024-25600: unauthenticated RCE in WordPress Bricks Builder <=1.9.6. Extracts the render_element… |
+| 0⭐ | 2h ago | [CVE-2026-99999](https://github.com/01luyicheng/CVE-2026-99999) | CVE-2026-99999 PwnEscape PoC - Linux kernel IPv4 csum_start validation bug guest-to-host memory leak (CVSS… |
+| 1⭐ | 8h ago | [CVE-2025-6440-BypassExt](https://github.com/0xCyp1337/CVE-2025-6440-BypassExt) | The WooCommerce Designer Pro plugin for WordPress, used by the Pricom - Printing Company & Design Services… |
+| 0⭐ | 16h ago | [CVE-2026-50229](https://github.com/flvzx/CVE-2026-50229) | Improper Neutralization of Script-Related HTML Tags in a Web Page (Basic XSS) vulnerability in the number… |
+| 1⭐ | 21h ago | <img src="https://raw.githubusercontent.com/0xMarcio/pocindex/main/docs/kev.svg" alt="KEV" title="CISA known exploited" height="14"> [CVE-2026-48907-RCE](https://github.com/0xCyp1337/CVE-2026-48907-RCE) | A vulnerability in the JCE editor extension for Joomla allows the creation of new editor profiles for… |
+| 0⭐ | 21h ago | [cve-2026-110447](https://github.com/adriyansyah-mf/cve-2026-110447) | Collabora Online Built-in CODE Server before 26.4.303 (richdocumentscode), a Nextcloud app, allows remote… |
+| 0⭐ | 22h ago | [cve-2026-97229-lab](https://github.com/gandli/cve-2026-97229-lab) | CVE-2026-97229 GitLab CI lint regex integer overflow RCE - InstaBox version matrix reproduction & libruby… |
 | 0⭐ | 1d ago | [CVE-2024-32507](https://github.com/4minx/CVE-2024-32507) | CVE-2024-32507: login-with-phone-number Unauthenticated Password Reset (Account Takeover) |
 | 2⭐ | 1d ago | [prague-CVE-2026-64560-OS4.0](https://github.com/ChaYeWuu/prague-CVE-2026-64560-OS4.0) | REDMI K90 Max在OS4.0.0.14.XAACNXM利用CVE-2026-64560获取ROOT权限。 |
 
@@ -29,9 +29,9 @@
 
 | Stars | Updated | Repository | Description |
 | --- | --- | --- | --- |
-| 320⭐ | 22h ago | <img src="https://raw.githubusercontent.com/0xMarcio/pocindex/main/docs/kev.svg" alt="KEV" title="CISA known exploited" height="14"> [CVE-2026-41940-PoC](https://github.com/sakidekin/CVE-2026-41940-PoC) | cPanel & WHM Authentication Bypass via CVE-2026-41940 explotation |
+| 327⭐ | 23h ago | <img src="https://raw.githubusercontent.com/0xMarcio/pocindex/main/docs/kev.svg" alt="KEV" title="CISA known exploited" height="14"> [CVE-2026-41940-PoC](https://github.com/sakidekin/CVE-2026-41940-PoC) | cPanel & WHM Authentication Bypass via CVE-2026-41940 explotation |
 | 477⭐ | 58d ago | [CVE-2026-9830](https://github.com/opaxial/CVE-2026-9830) | CVE-2026-9830 Proof of Concept |
-| 59⭐ | 4d ago | [CVE-2026-97229-PoC](https://github.com/jburgess-r7/CVE-2026-97229-PoC) | GitLab CI lint integer-overflow RCE PoC for CVE-2026-97229, validated against the official 19.4.1 CE amd64… |
+| 59⭐ | 5d ago | [CVE-2026-97229-PoC](https://github.com/jburgess-r7/CVE-2026-97229-PoC) | GitLab CI lint integer-overflow RCE PoC for CVE-2026-97229, validated against the official 19.4.1 CE amd64… |
 | 333⭐ | 82d ago | [CVE-2026-54121](https://github.com/aniqfakhrul/CVE-2026-54121) | Certighost POC |
 | 26⭐ | 1d ago | [CVE-2026-75604-PoC](https://github.com/ZeroDayEvil/CVE-2026-75604-PoC) | 🛡️ Official AI Security Tool module for CVE-2026-75604 (Next.js Unauthenticated RCE PoC in Windows-Hosted… |
 | 96⭐ | 19d ago | [CVE-2026-41096-PoC](https://github.com/ZeroDayEvil/CVE-2026-41096-PoC) | 🛡️ Official AI Security Tool module for CVE-2026-41096 (Windows DNSAPI.dll Heap Overflow / DNS-Mayhem Deep… |
@@ -45,10 +45,10 @@
 | 53⭐ | 19d ago | [CVE-2026-94545](https://github.com/EQSTLab/CVE-2026-94545) | Next.js RCE |
 | 105⭐ | 53d ago | [CVE-2026-75604-poc](https://github.com/rafabd1/CVE-2026-75604-poc) | CVE-2026-75604 Next.js Windows RCE poc |
 | 86⭐ | 44d ago | [CVE-2026-65343](https://github.com/ByteV0rtex/CVE-2026-65343) | CVE-2026-65343 PoC - AppleKeyStore OOB read → KASLR defeat (iOS 26.6 / 23G71) |
-| 108⭐ | 75d ago | [SCCM-CVE-2026-47301-Remote-Code-Execution-Exploit](https://github.com/OmriBaso/SCCM-CVE-2026-47301-Remote-Code-Execution-Exploit) | Proof-of-concept exploit chain (CVE-2026-47301) for Microsoft Configuration Manager (SCCM), combining a… |
+| 108⭐ | 76d ago | [SCCM-CVE-2026-47301-Remote-Code-Execution-Exploit](https://github.com/OmriBaso/SCCM-CVE-2026-47301-Remote-Code-Execution-Exploit) | Proof-of-concept exploit chain (CVE-2026-47301) for Microsoft Configuration Manager (SCCM), combining a… |
 | 40⭐ | 24d ago | [CVE-2026-84543](https://github.com/petermalone/CVE-2026-84543) | Technical disclosure and PoC for CVE-2026-84543, a macOS SMB kernel vulnerability |
-| 19⭐ | 8d ago | [telegram-cve-2026-107181](https://github.com/SeanDishman/telegram-cve-2026-107181) | Telegram CVE-2026-107181 |
 | 39⭐ | 25d ago | <img src="https://raw.githubusercontent.com/0xMarcio/pocindex/main/docs/kev.svg" alt="KEV" title="CISA known exploited" height="14"> [cve-2026-87902-poc](https://github.com/ressl/cve-2026-87902-poc) | PoC for CVE-2026-87902 - unauthenticated path traversal in WordPress page-template resolution (local PHP… |
+| 19⭐ | 8d ago | [telegram-cve-2026-107181](https://github.com/SeanDishman/telegram-cve-2026-107181) | Telegram CVE-2026-107181 |
 
 ## Trending in 2025
 
@@ -87,7 +87,7 @@
 
 | Stars | Updated | Repository | Description |
 | --- | --- | --- | --- |
-| 6⭐ | 9d ago | [CVE-2022-22077](https://github.com/grisuno/CVE-2022-22077) | CVE-2022-22077 is a high-severity vulnerability (CVSS score 7.8) affecting the RTCore64.sys driver… |
+| 6⭐ | 10d ago | [CVE-2022-22077](https://github.com/grisuno/CVE-2022-22077) | CVE-2022-22077 is a high-severity vulnerability (CVSS score 7.8) affecting the RTCore64.sys driver… |
 
 </details>
 
