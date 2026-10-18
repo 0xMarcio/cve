@@ -27460,3 +27460,6 @@ CVE-2015-2291 - https://github.com/antoniorauso/NalCaller
 CVE-2021-41773 - https://github.com/wservices/skill-exploit-research
 CVE-2026-64560 - https://github.com/imkidz0/exploit-CVE-2026-64560
 CVE-2025-6440 - https://github.com/0xCyp1337/CVE-2025-6440-BypassExt
+CVE-2025-30208 - https://github.com/L15B04/Exploit-VITE-CVE-2025-30208-CVE-2025-31125
+CVE-2025-31125 - https://github.com/L15B04/Exploit-VITE-CVE-2025-30208-CVE-2025-31125
+CVE-2026-33017 - https://github.com/HackfutSecRoot/LangFlow-Rce
