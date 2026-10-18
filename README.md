@@ -2,7 +2,7 @@
 
 <a href="https://pocindex.io/"><img src="https://raw.githubusercontent.com/0xMarcio/pocindex/main/docs/hero.svg?v=174499-85056-1236" alt="PoC Index" width="100%"></a>
 
-[![last sync](https://img.shields.io/badge/last%20sync-18%20Oct%202026%2000%3A07%20UTC-2f81f7?style=flat-square&labelColor=161b22)](https://github.com/0xMarcio/pocindex/commits/main)&nbsp;[![CI](https://img.shields.io/github/actions/workflow/status/0xMarcio/pocindex/hot_cves.yml?style=flat-square&label=CI&color=2f81f7&labelColor=161b22&_=202610180007)](https://github.com/0xMarcio/pocindex/actions/workflows/hot_cves.yml)&nbsp;[![CVEs with PoCs](https://img.shields.io/badge/CVEs%20with%20PoCs-85%2C056-2f81f7?style=flat-square&labelColor=161b22)](https://pocindex.io/)&nbsp;[![known exploited](https://img.shields.io/badge/known%20exploited-1%2C236-f85149?style=flat-square&labelColor=161b22)](https://pocindex.io/)&nbsp;[![stars](https://img.shields.io/github/stars/0xMarcio/pocindex?style=flat-square&label=stars&color=e3b341&labelColor=161b22&_=202610180007)](https://github.com/0xMarcio/pocindex/stargazers)
+[![last sync](https://img.shields.io/badge/last%20sync-18%20Oct%202026%2001%3A07%20UTC-2f81f7?style=flat-square&labelColor=161b22)](https://github.com/0xMarcio/pocindex/commits/main)&nbsp;[![CI](https://img.shields.io/github/actions/workflow/status/0xMarcio/pocindex/hot_cves.yml?style=flat-square&label=CI&color=2f81f7&labelColor=161b22&_=202610180107)](https://github.com/0xMarcio/pocindex/actions/workflows/hot_cves.yml)&nbsp;[![CVEs with PoCs](https://img.shields.io/badge/CVEs%20with%20PoCs-85%2C056-2f81f7?style=flat-square&labelColor=161b22)](https://pocindex.io/)&nbsp;[![known exploited](https://img.shields.io/badge/known%20exploited-1%2C236-f85149?style=flat-square&labelColor=161b22)](https://pocindex.io/)&nbsp;[![stars](https://img.shields.io/github/stars/0xMarcio/pocindex?style=flat-square&label=stars&color=e3b341&labelColor=161b22&_=202610180107)](https://github.com/0xMarcio/pocindex/stargazers)
 
 <a href="https://pocindex.io/"><img src="https://raw.githubusercontent.com/0xMarcio/pocindex/8dec6181e823d641132e0ee8a52a1612c2b5dd37/docs/search.svg" alt="Search PoC Index" width="100%"></a>
 
@@ -14,22 +14,22 @@
 
 | Stars | Released | PoC | Description |
 | --- | --- | --- | --- |
-| 0⭐ | 8m ago | [CVE-2026-50229](https://github.com/flvzx/CVE-2026-50229) | Improper Neutralization of Script-Related HTML Tags in a Web Page (Basic XSS) vulnerability in the number… |
-| 0⭐ | 5h ago | <img src="https://raw.githubusercontent.com/0xMarcio/pocindex/main/docs/kev.svg" alt="KEV" title="CISA known exploited" height="14"> [CVE-2026-48907-RCE](https://github.com/0xCyp1337/CVE-2026-48907-RCE) | A vulnerability in the JCE editor extension for Joomla allows the creation of new editor profiles for… |
-| 0⭐ | 5h ago | [cve-2026-110447](https://github.com/adriyansyah-mf/cve-2026-110447) | Collabora Online Built-in CODE Server before 26.4.303 (richdocumentscode), a Nextcloud app, allows remote… |
-| 0⭐ | 6h ago | [cve-2026-97229-lab](https://github.com/gandli/cve-2026-97229-lab) | CVE-2026-97229 GitLab CI lint regex integer overflow RCE - InstaBox version matrix reproduction & libruby… |
-| 0⭐ | 9h ago | [CVE-2024-32507](https://github.com/4minx/CVE-2024-32507) | CVE-2024-32507: login-with-phone-number Unauthenticated Password Reset (Account Takeover) |
-| 2⭐ | 11h ago | [prague-CVE-2026-64560-OS4.0](https://github.com/ChaYeWuu/prague-CVE-2026-64560-OS4.0) | REDMI K90 Max在OS4.0.0.14.XAACNXM利用CVE-2026-64560获取ROOT权限。 |
-| 0⭐ | 14h ago | [CVE-2026-111823](https://github.com/murrez/CVE-2026-111823) | PoC for CVE-2026-111823 - Mage AI OAuth session auth bypass (POST /api/sessions). Check + exploit modes.… |
-| 1⭐ | 17h ago | [CVE-2026-99999](https://github.com/PeronGH/CVE-2026-99999) | PoC for CVE-2026-99999 (PwnEscape) on a prepared TAP. |
-| 0⭐ | 21h ago | [CVE-2026-59970-poc](https://github.com/asvorg/CVE-2026-59970-poc) | PoC for CVE-2026-59970 Blind SSRF in Tandoor Recipes, CWE-918 |
-| 0⭐ | 22h ago | [CVE-2026-8933](https://github.com/songzzzz/CVE-2026-8933) | A local privilege escalation vulnerability exists in snap-confine, a set-capabilities core component used… |
+| 0⭐ | 1h ago | [CVE-2026-50229](https://github.com/flvzx/CVE-2026-50229) | Improper Neutralization of Script-Related HTML Tags in a Web Page (Basic XSS) vulnerability in the number… |
+| 0⭐ | 6h ago | <img src="https://raw.githubusercontent.com/0xMarcio/pocindex/main/docs/kev.svg" alt="KEV" title="CISA known exploited" height="14"> [CVE-2026-48907-RCE](https://github.com/0xCyp1337/CVE-2026-48907-RCE) | A vulnerability in the JCE editor extension for Joomla allows the creation of new editor profiles for… |
+| 0⭐ | 6h ago | [cve-2026-110447](https://github.com/adriyansyah-mf/cve-2026-110447) | Collabora Online Built-in CODE Server before 26.4.303 (richdocumentscode), a Nextcloud app, allows remote… |
+|  | 7h ago | [cve-2026-97229-lab](https://github.com/gandli/cve-2026-97229-lab) | GitLab has remediated an issue in GitLab CE/EE affecting all versions from 19.2 before 19.2.8, 19.3 before… |
+| 0⭐ | 10h ago | [CVE-2024-32507](https://github.com/4minx/CVE-2024-32507) | CVE-2024-32507: login-with-phone-number Unauthenticated Password Reset (Account Takeover) |
+| 2⭐ | 12h ago | [prague-CVE-2026-64560-OS4.0](https://github.com/ChaYeWuu/prague-CVE-2026-64560-OS4.0) | REDMI K90 Max在OS4.0.0.14.XAACNXM利用CVE-2026-64560获取ROOT权限。 |
+| 0⭐ | 15h ago | [CVE-2026-111823](https://github.com/murrez/CVE-2026-111823) | PoC for CVE-2026-111823 - Mage AI OAuth session auth bypass (POST /api/sessions). Check + exploit modes.… |
+| 1⭐ | 18h ago | [CVE-2026-99999](https://github.com/PeronGH/CVE-2026-99999) | PoC for CVE-2026-99999 (PwnEscape) on a prepared TAP. |
+| 0⭐ | 22h ago | [CVE-2026-59970-poc](https://github.com/asvorg/CVE-2026-59970-poc) | PoC for CVE-2026-59970 Blind SSRF in Tandoor Recipes, CWE-918 |
+| 0⭐ | 23h ago | [CVE-2026-8933](https://github.com/songzzzz/CVE-2026-8933) | A local privilege escalation vulnerability exists in snap-confine, a set-capabilities core component used… |
 
 ## Trending in 2026
 
 | Stars | Updated | Repository | Description |
 | --- | --- | --- | --- |
-| 203⭐ | 7h ago | <img src="https://raw.githubusercontent.com/0xMarcio/pocindex/main/docs/kev.svg" alt="KEV" title="CISA known exploited" height="14"> [CVE-2026-41940-PoC](https://github.com/sakidekin/CVE-2026-41940-PoC) | cPanel & WHM Authentication Bypass via CVE-2026-41940 explotation |
+| 209⭐ | 8h ago | <img src="https://raw.githubusercontent.com/0xMarcio/pocindex/main/docs/kev.svg" alt="KEV" title="CISA known exploited" height="14"> [CVE-2026-41940-PoC](https://github.com/sakidekin/CVE-2026-41940-PoC) | cPanel & WHM Authentication Bypass via CVE-2026-41940 explotation |
 | 477⭐ | 58d ago | [CVE-2026-9830](https://github.com/opaxial/CVE-2026-9830) | CVE-2026-9830 Proof of Concept |
 | 59⭐ | 4d ago | [CVE-2026-97229-PoC](https://github.com/jburgess-r7/CVE-2026-97229-PoC) | GitLab CI lint integer-overflow RCE PoC for CVE-2026-97229, validated against the official 19.4.1 CE amd64… |
 | 26⭐ | 1d ago | [CVE-2026-75604-PoC](https://github.com/ZeroDayEvil/CVE-2026-75604-PoC) | 🛡️ Official AI Security Tool module for CVE-2026-75604 (Next.js Unauthenticated RCE PoC in Windows-Hosted… |
