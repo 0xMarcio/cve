@@ -27462,3 +27462,7 @@ CVE-2026-48907 - https://github.com/0xCyp1337/CVE-2026-48907-RCE
 CVE-2026-46633 - https://github.com/vladko312/extras
 CVE-2026-50229 - https://github.com/flvzx/CVE-2026-50229
 CVE-2026-43499 - https://github.com/AuroraMythweaver/iqoo-neo9-ghostlock-pc
+CVE-2002-0082 - https://github.com/cYb3rHeist/Kioptrix-Level-1-POC
+CVE-2015-2291 - https://github.com/antoniorauso/NalCaller
+CVE-2021-41773 - https://github.com/wservices/skill-exploit-research
+CVE-2026-64560 - https://github.com/imkidz0/exploit-CVE-2026-64560

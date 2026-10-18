@@ -602,6 +602,7 @@
 "CVE-2015-2284 github:rapid7/metasploit-framework/blob/master/modules/exploits/windows/http/solarwinds_fsm_userlogin.rb?#":{"basis":"unknown","cve":"CVE-2015-2284","imported":true,"released":null,"url":"https://github.com/rapid7/metasploit-framework/blob/master/modules/exploits/windows/http/solarwinds_fsm_userlogin.rb"},
 "CVE-2015-2284 https://www.exploit-db.com/exploits/36679":{"basis":"source","cve":"CVE-2015-2284","imported":true,"released":"2015-04-08","source":"2015-04-08","url":"https://www.exploit-db.com/exploits/36679"},
 "CVE-2015-2285 https://www.exploit-db.com/exploits/41765":{"basis":"source","cve":"CVE-2015-2285","imported":true,"released":"2015-03-12","source":"2015-03-12","url":"https://www.exploit-db.com/exploits/41765"},
+"CVE-2015-2291 github:antoniorauso/nalcaller?#":{"basis":"unknown","cve":"CVE-2015-2291","released":null,"seen":"2026-10-18T07:24:41Z","url":"https://github.com/antoniorauso/NalCaller"},
 "CVE-2015-2291 github:ethanedits/iqvw64e-privilege-escalation?#":{"basis":"unknown","cve":"CVE-2015-2291","imported":true,"released":null,"url":"https://github.com/ethanedits/iqvw64e-privilege-escalation"},
 "CVE-2015-2291 github:gmh5225/cve-2015-2291?#":{"basis":"unknown","cve":"CVE-2015-2291","imported":true,"released":null,"url":"https://github.com/gmh5225/CVE-2015-2291"},
 "CVE-2015-2291 github:tare05/intel-cve-2015-2291?#":{"basis":"unknown","cve":"CVE-2015-2291","imported":true,"released":null,"url":"https://github.com/Tare05/Intel-CVE-2015-2291"},

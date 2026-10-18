@@ -24,6 +24,7 @@
 "CVE-2002-0079 https://www.exploit-db.com/exploits/21371":{"basis":"source","cve":"CVE-2002-0079","imported":true,"released":"2002-04-24","source":"2002-04-24","url":"https://www.exploit-db.com/exploits/21371"},
 "CVE-2002-0081 http://marc.info/?l=bugtraq&m=101537076619812&w=2":{"basis":"unknown","cve":"CVE-2002-0081","imported":true,"released":null,"url":"http://marc.info/?l=bugtraq&m=101537076619812&w=2"},
 "CVE-2002-0082 github:anilkashyap01/binary-exploitation-and-kernel-escalation?#":{"basis":"unknown","cve":"CVE-2002-0082","imported":true,"released":null,"url":"https://github.com/anilkashyap01/Binary-Exploitation-and-Kernel-Escalation"},
+"CVE-2002-0082 github:cyb3rheist/kioptrix-level-1-poc?#":{"basis":"unknown","cve":"CVE-2002-0082","released":null,"seen":"2026-10-18T07:24:41Z","url":"https://github.com/cYb3rHeist/Kioptrix-Level-1-POC"},
 "CVE-2002-0082 github:nishant-pall/kioptrix-exploit?#":{"basis":"unknown","cve":"CVE-2002-0082","imported":true,"released":null,"url":"https://github.com/Nishant-Pall/Kioptrix-exploit"},
 "CVE-2002-0082 github:ratiros01/cve-2002-0082?#":{"basis":"unknown","cve":"CVE-2002-0082","imported":true,"released":null,"url":"https://github.com/ratiros01/CVE-2002-0082"},
 "CVE-2002-0082 https://www.exploit-db.com/exploits/21671":{"basis":"source","cve":"CVE-2002-0082","imported":true,"released":"2002-07-30","source":"2002-07-30","url":"https://www.exploit-db.com/exploits/21671"},
