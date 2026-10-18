@@ -27461,3 +27461,4 @@ CVE-2026-110447 - https://github.com/adriyansyah-mf/cve-2026-110447
 CVE-2026-48907 - https://github.com/0xCyp1337/CVE-2026-48907-RCE
 CVE-2026-46633 - https://github.com/vladko312/extras
 CVE-2026-50229 - https://github.com/flvzx/CVE-2026-50229
+CVE-2026-43499 - https://github.com/AuroraMythweaver/iqoo-neo9-ghostlock-pc
