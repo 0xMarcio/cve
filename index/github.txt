@@ -27470,3 +27470,4 @@ CVE-2026-53787 - https://github.com/MRdark-ops/CVE-2026-53787-poc
 CVE-2026-53787 - https://github.com/elitexspam/Def4cer
 CVE-2026-50229 - https://github.com/qsuv/CVE-2026-50229
 CVE-2026-92262 - https://github.com/SeanDishman/mariadb-cve-2026-92262
+CVE-2026-104736 - https://github.com/murrez/CVE-2026-104736
