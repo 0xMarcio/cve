@@ -2,7 +2,7 @@
 
 <a href="https://pocindex.io/"><img src="https://raw.githubusercontent.com/0xMarcio/pocindex/main/docs/hero.svg?v=174499-85056-1236" alt="PoC Index" width="100%"></a>
 
-[![last sync](https://img.shields.io/badge/last%20sync-18%20Oct%202026%2006%3A07%20UTC-2f81f7?style=flat-square&labelColor=161b22)](https://github.com/0xMarcio/pocindex/commits/main)&nbsp;[![CI](https://img.shields.io/github/actions/workflow/status/0xMarcio/pocindex/hot_cves.yml?style=flat-square&label=CI&color=2f81f7&labelColor=161b22&_=202610180607)](https://github.com/0xMarcio/pocindex/actions/workflows/hot_cves.yml)&nbsp;[![CVEs with PoCs](https://img.shields.io/badge/CVEs%20with%20PoCs-85%2C056-2f81f7?style=flat-square&labelColor=161b22)](https://pocindex.io/)&nbsp;[![known exploited](https://img.shields.io/badge/known%20exploited-1%2C236-f85149?style=flat-square&labelColor=161b22)](https://pocindex.io/)&nbsp;[![stars](https://img.shields.io/github/stars/0xMarcio/pocindex?style=flat-square&label=stars&color=e3b341&labelColor=161b22&_=202610180607)](https://github.com/0xMarcio/pocindex/stargazers)
+[![last sync](https://img.shields.io/badge/last%20sync-18%20Oct%202026%2007%3A07%20UTC-2f81f7?style=flat-square&labelColor=161b22)](https://github.com/0xMarcio/pocindex/commits/main)&nbsp;[![CI](https://img.shields.io/github/actions/workflow/status/0xMarcio/pocindex/hot_cves.yml?style=flat-square&label=CI&color=2f81f7&labelColor=161b22&_=202610180707)](https://github.com/0xMarcio/pocindex/actions/workflows/hot_cves.yml)&nbsp;[![CVEs with PoCs](https://img.shields.io/badge/CVEs%20with%20PoCs-85%2C056-2f81f7?style=flat-square&labelColor=161b22)](https://pocindex.io/)&nbsp;[![known exploited](https://img.shields.io/badge/known%20exploited-1%2C236-f85149?style=flat-square&labelColor=161b22)](https://pocindex.io/)&nbsp;[![stars](https://img.shields.io/github/stars/0xMarcio/pocindex?style=flat-square&label=stars&color=e3b341&labelColor=161b22&_=202610180707)](https://github.com/0xMarcio/pocindex/stargazers)
 
 <a href="https://pocindex.io/"><img src="https://raw.githubusercontent.com/0xMarcio/pocindex/8dec6181e823d641132e0ee8a52a1612c2b5dd37/docs/search.svg" alt="Search PoC Index" width="100%"></a>
 
@@ -14,14 +14,14 @@
 
 | Stars | Released | PoC | Description |
 | --- | --- | --- | --- |
-| 0⭐ | 6h ago | [CVE-2026-50229](https://github.com/flvzx/CVE-2026-50229) | Improper Neutralization of Script-Related HTML Tags in a Web Page (Basic XSS) vulnerability in the number… |
-| 0⭐ | 11h ago | <img src="https://raw.githubusercontent.com/0xMarcio/pocindex/main/docs/kev.svg" alt="KEV" title="CISA known exploited" height="14"> [CVE-2026-48907-RCE](https://github.com/0xCyp1337/CVE-2026-48907-RCE) | A vulnerability in the JCE editor extension for Joomla allows the creation of new editor profiles for… |
-| 0⭐ | 11h ago | [cve-2026-110447](https://github.com/adriyansyah-mf/cve-2026-110447) | Collabora Online Built-in CODE Server before 26.4.303 (richdocumentscode), a Nextcloud app, allows remote… |
-| 0⭐ | 12h ago | [cve-2026-97229-lab](https://github.com/gandli/cve-2026-97229-lab) | CVE-2026-97229 GitLab CI lint regex integer overflow RCE - InstaBox version matrix reproduction & libruby… |
-| 0⭐ | 15h ago | [CVE-2024-32507](https://github.com/4minx/CVE-2024-32507) | CVE-2024-32507: login-with-phone-number Unauthenticated Password Reset (Account Takeover) |
-| 2⭐ | 17h ago | [prague-CVE-2026-64560-OS4.0](https://github.com/ChaYeWuu/prague-CVE-2026-64560-OS4.0) | REDMI K90 Max在OS4.0.0.14.XAACNXM利用CVE-2026-64560获取ROOT权限。 |
-| 0⭐ | 20h ago | [CVE-2026-111823](https://github.com/murrez/CVE-2026-111823) | PoC for CVE-2026-111823 - Mage AI OAuth session auth bypass (POST /api/sessions). Check + exploit modes.… |
-| 2⭐ | 23h ago | [CVE-2026-99999](https://github.com/PeronGH/CVE-2026-99999) | PoC for CVE-2026-99999 (PwnEscape) on a prepared TAP. |
+| 0⭐ | 7h ago | [CVE-2026-50229](https://github.com/flvzx/CVE-2026-50229) | Improper Neutralization of Script-Related HTML Tags in a Web Page (Basic XSS) vulnerability in the number… |
+| 0⭐ | 12h ago | <img src="https://raw.githubusercontent.com/0xMarcio/pocindex/main/docs/kev.svg" alt="KEV" title="CISA known exploited" height="14"> [CVE-2026-48907-RCE](https://github.com/0xCyp1337/CVE-2026-48907-RCE) | A vulnerability in the JCE editor extension for Joomla allows the creation of new editor profiles for… |
+| 0⭐ | 12h ago | [cve-2026-110447](https://github.com/adriyansyah-mf/cve-2026-110447) | Collabora Online Built-in CODE Server before 26.4.303 (richdocumentscode), a Nextcloud app, allows remote… |
+| 0⭐ | 13h ago | [cve-2026-97229-lab](https://github.com/gandli/cve-2026-97229-lab) | CVE-2026-97229 GitLab CI lint regex integer overflow RCE - InstaBox version matrix reproduction & libruby… |
+| 0⭐ | 16h ago | [CVE-2024-32507](https://github.com/4minx/CVE-2024-32507) | CVE-2024-32507: login-with-phone-number Unauthenticated Password Reset (Account Takeover) |
+| 2⭐ | 18h ago | [prague-CVE-2026-64560-OS4.0](https://github.com/ChaYeWuu/prague-CVE-2026-64560-OS4.0) | REDMI K90 Max在OS4.0.0.14.XAACNXM利用CVE-2026-64560获取ROOT权限。 |
+| 0⭐ | 21h ago | [CVE-2026-111823](https://github.com/murrez/CVE-2026-111823) | PoC for CVE-2026-111823 - Mage AI OAuth session auth bypass (POST /api/sessions). Check + exploit modes.… |
+| 2⭐ | 1d ago | [CVE-2026-99999](https://github.com/PeronGH/CVE-2026-99999) | PoC for CVE-2026-99999 (PwnEscape) on a prepared TAP. |
 | 0⭐ | 1d ago | [CVE-2026-59970-poc](https://github.com/asvorg/CVE-2026-59970-poc) | PoC for CVE-2026-59970 Blind SSRF in Tandoor Recipes, CWE-918 |
 | 0⭐ | 1d ago | [CVE-2026-8933](https://github.com/songzzzz/CVE-2026-8933) | A local privilege escalation vulnerability exists in snap-confine, a set-capabilities core component used… |
 
@@ -29,14 +29,14 @@
 
 | Stars | Updated | Repository | Description |
 | --- | --- | --- | --- |
-| 252⭐ | 13h ago | <img src="https://raw.githubusercontent.com/0xMarcio/pocindex/main/docs/kev.svg" alt="KEV" title="CISA known exploited" height="14"> [CVE-2026-41940-PoC](https://github.com/sakidekin/CVE-2026-41940-PoC) | cPanel & WHM Authentication Bypass via CVE-2026-41940 explotation |
+| 264⭐ | 14h ago | <img src="https://raw.githubusercontent.com/0xMarcio/pocindex/main/docs/kev.svg" alt="KEV" title="CISA known exploited" height="14"> [CVE-2026-41940-PoC](https://github.com/sakidekin/CVE-2026-41940-PoC) | cPanel & WHM Authentication Bypass via CVE-2026-41940 explotation |
 | 477⭐ | 58d ago | [CVE-2026-9830](https://github.com/opaxial/CVE-2026-9830) | CVE-2026-9830 Proof of Concept |
 | 59⭐ | 4d ago | [CVE-2026-97229-PoC](https://github.com/jburgess-r7/CVE-2026-97229-PoC) | GitLab CI lint integer-overflow RCE PoC for CVE-2026-97229, validated against the official 19.4.1 CE amd64… |
 | 333⭐ | 82d ago | [CVE-2026-54121](https://github.com/aniqfakhrul/CVE-2026-54121) | Certighost POC |
 | 26⭐ | 1d ago | [CVE-2026-75604-PoC](https://github.com/ZeroDayEvil/CVE-2026-75604-PoC) | 🛡️ Official AI Security Tool module for CVE-2026-75604 (Next.js Unauthenticated RCE PoC in Windows-Hosted… |
 | 24⭐ | 1d ago | [CVE-2026-20817](https://github.com/ZeroDayEvil/CVE-2026-20817) | 🛡️ Official AI Security Tool module for CVE-2026-20817 (Windows Error Reporting WER ALPC Local Privilege… |
 | 24⭐ | 1d ago | [CVE-2026-40369-EXPLOIT](https://github.com/ZeroDayEvil/CVE-2026-40369-EXPLOIT) | 🛡️ Official AI Security Tool module for CVE-2026-40369 (Windows NtQuerySystemInformation Class 253 Arbitrary… |
-| 96⭐ | 18d ago | [CVE-2026-41096-PoC](https://github.com/ZeroDayEvil/CVE-2026-41096-PoC) | 🛡️ Official AI Security Tool module for CVE-2026-41096 (Windows DNSAPI.dll Heap Overflow / DNS-Mayhem Deep… |
+| 96⭐ | 19d ago | [CVE-2026-41096-PoC](https://github.com/ZeroDayEvil/CVE-2026-41096-PoC) | 🛡️ Official AI Security Tool module for CVE-2026-41096 (Windows DNSAPI.dll Heap Overflow / DNS-Mayhem Deep… |
 | 187⭐ | 57d ago | [CVE-2026-62911](https://github.com/hypnguyen1209/CVE-2026-62911) | POC pre-auth RCE on Exchange |
 | 33⭐ | 4d ago | [CVE-2026-85884](https://github.com/Beardhammer/CVE-2026-85884) | CVE-85884 POC |
 | 92⭐ | 36d ago | <img src="https://raw.githubusercontent.com/0xMarcio/pocindex/main/docs/kev.svg" alt="KEV" title="CISA known exploited" height="14"> [CVE-2026-20805-PoC](https://github.com/ZeroDayEvil/CVE-2026-20805-PoC) | 🛡️ Official AI Security Tool module for CVE-2026-20805 (Desktop Window Manager / dwm.exe Information… |
@@ -58,7 +58,7 @@
 | 22⭐ | 68d ago | [CVE-2025-7771](https://github.com/enessakircolak/CVE-2025-7771) | ThrottleStop.sys Arbitrary Physical Memory R/W |
 | 8⭐ | 31d ago | <img src="https://raw.githubusercontent.com/0xMarcio/pocindex/main/docs/kev.svg" alt="KEV" title="CISA known exploited" height="14"> [CVE-2025-32432-exploit-by-P34NUT](https://github.com/P34NUT2/CVE-2025-32432-exploit-by-P34NUT) | Reliable CVE-2025-32432 pre-auth RCE exploit for Craft CMS 3.x/4.x/5.x, works where other public PoCs fail |
 | 10⭐ | 51d ago | <img src="https://raw.githubusercontent.com/0xMarcio/pocindex/main/docs/kev.svg" alt="KEV" title="CISA known exploited" height="14"> [vivo_iqoo_neo_9_root_research_on_CVE-2025-21479](https://github.com/linux-tools/vivo_iqoo_neo_9_root_research_on_CVE-2025-21479) | Memory corruption due to unauthorized command execution in GPU micronode while executing specific sequence of… |
-| 9⭐ | 76d ago | <img src="https://raw.githubusercontent.com/0xMarcio/pocindex/main/docs/kev.svg" alt="KEV" title="CISA known exploited" height="14"> [SELinux-Permissive-Only-CVE-2025-21479](https://github.com/CamsShaft/SELinux-Permissive-Only-CVE-2025-21479) | This is an SELinux permissive version of the Cheese exploit also known as CVE-2025-21479 which affected the… |
+| 9⭐ | 77d ago | <img src="https://raw.githubusercontent.com/0xMarcio/pocindex/main/docs/kev.svg" alt="KEV" title="CISA known exploited" height="14"> [SELinux-Permissive-Only-CVE-2025-21479](https://github.com/CamsShaft/SELinux-Permissive-Only-CVE-2025-21479) | This is an SELinux permissive version of the Cheese exploit also known as CVE-2025-21479 which affected the… |
 | 7⭐ | 72d ago | [CVE-2025-8045](https://github.com/kuzeyardabulut/CVE-2025-8045) | Dirty Pagetable Exploit for CVE-2025-8045 |
 | 6⭐ | 59d ago | <img src="https://raw.githubusercontent.com/0xMarcio/pocindex/main/docs/kev.svg" alt="KEV" title="CISA known exploited" height="14"> [cve-2025-21479_iqooneo8](https://github.com/Qingizi7/cve-2025-21479_iqooneo8) | Local root exploit for CVE-2025-21479 (Adreno KGSL) on iQOO Neo8 (SM8475) - physical memory r/w, disables… |
 | 5⭐ | 88d ago | <img src="https://raw.githubusercontent.com/0xMarcio/pocindex/main/docs/kev.svg" alt="KEV" title="CISA known exploited" height="14"> [CVE-2025-32432](https://github.com/c0gnit00/CVE-2025-32432) | Exploit, POC for CVE-2025-32432, CraftCMS2Shell |
@@ -73,7 +73,7 @@
 | Stars | Updated | Repository | Description |
 | --- | --- | --- | --- |
 | 17⭐ | 14d ago | [CVE-2024-56426](https://github.com/Creeeeger/CVE-2024-56426) | A PoC of the CVE-2024-56426 vulnerability. |
-| 4⭐ | 63d ago | [CVE-2024-56426](https://github.com/xcracker000/CVE-2024-56426) | CVE-2024-56426 Exynos9830 Bootrom Exploit - SM-G985F |
+| 4⭐ | 64d ago | [CVE-2024-56426](https://github.com/xcracker000/CVE-2024-56426) | CVE-2024-56426 Exynos9830 Bootrom Exploit - SM-G985F |
 | 3⭐ | 80d ago | [CVE-2024-36104-PoC](https://github.com/Groppoxx/CVE-2024-36104-PoC) | PoC for CVE-2024-36104 - unauthenticated Groovy RCE in Apache OFBiz (<18.12.14) via /%2e/%2e/ view path… |
 
 ## Trending in 2023
@@ -81,7 +81,7 @@
 | Stars | Updated | Repository | Description |
 | --- | --- | --- | --- |
 | 6⭐ | 87d ago | [CVE-2023-36003](https://github.com/johnnygreeme/CVE-2023-36003) | PoC for CVE-2023-36003: Windows Exploit Security Feature Bypass Vulnerability in Windows Defender. |
-| 3⭐ | 82d ago | [CVE-2023-52076-PoC](https://github.com/Groppoxx/CVE-2023-52076-PoC) | PoC exploit for CVE-2023-52076 - zip-slip path traversal in Atril/Xreader (MATE/Cinnamon) enabling arbitrary… |
+| 3⭐ | 83d ago | [CVE-2023-52076-PoC](https://github.com/Groppoxx/CVE-2023-52076-PoC) | PoC exploit for CVE-2023-52076 - zip-slip path traversal in Atril/Xreader (MATE/Cinnamon) enabling arbitrary… |
 
 ## Trending in 2022
 
