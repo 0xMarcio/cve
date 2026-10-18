@@ -27463,3 +27463,5 @@ CVE-2025-6440 - https://github.com/0xCyp1337/CVE-2025-6440-BypassExt
 CVE-2025-30208 - https://github.com/L15B04/Exploit-VITE-CVE-2025-30208-CVE-2025-31125
 CVE-2025-31125 - https://github.com/L15B04/Exploit-VITE-CVE-2025-30208-CVE-2025-31125
 CVE-2026-33017 - https://github.com/HackfutSecRoot/LangFlow-Rce
+CVE-2026-99999 - https://github.com/01luyicheng/CVE-2026-99999
+CVE-2024-25600 - https://github.com/K52-ai/CVE-2024-25600
