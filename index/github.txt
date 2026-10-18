@@ -27471,3 +27471,4 @@ CVE-2026-53787 - https://github.com/elitexspam/Def4cer
 CVE-2026-50229 - https://github.com/qsuv/CVE-2026-50229
 CVE-2026-92262 - https://github.com/SeanDishman/mariadb-cve-2026-92262
 CVE-2026-104736 - https://github.com/murrez/CVE-2026-104736
+CVE-2025-3248 - https://github.com/cpwjdgh/CVE-2025-3248-CTF-Lab
