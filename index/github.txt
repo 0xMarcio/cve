@@ -27465,3 +27465,5 @@ CVE-2025-21298 - https://github.com/mohamedbrek/LetsDefend-SOC-Labs
 CVE-2026-24191 - https://github.com/Qcx526/cuda_poc_generator
 CVE-2026-41940 - https://github.com/ZeroDayEvil/CVE-2026-41940-PoC
 CVE-2023-54391 - https://github.com/Lewis1766/CVE-2023-54391-POC
+CVE-2026-23111 - https://github.com/kinokopio/CVE-2026-23111
+CVE-2026-99999 - https://github.com/shizuku198411/CVE-2026-99999-KVM-checksum-metadata-non-destructive-PoC

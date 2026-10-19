@@ -2,7 +2,7 @@
 
 <a href="https://pocindex.io/"><img src="https://raw.githubusercontent.com/0xMarcio/pocindex/main/docs/hero.svg?v=174525-85080-1235" alt="PoC Index" width="100%"></a>
 
-[![last sync](https://img.shields.io/badge/last%20sync-19%20Oct%202026%2008%3A08%20UTC-2f81f7?style=flat-square&labelColor=161b22)](https://github.com/0xMarcio/pocindex/commits/main)&nbsp;[![CI](https://img.shields.io/github/actions/workflow/status/0xMarcio/pocindex/hot_cves.yml?style=flat-square&label=CI&color=2f81f7&labelColor=161b22&_=202610190808)](https://github.com/0xMarcio/pocindex/actions/workflows/hot_cves.yml)&nbsp;[![CVEs with PoCs](https://img.shields.io/badge/CVEs%20with%20PoCs-85%2C080-2f81f7?style=flat-square&labelColor=161b22)](https://pocindex.io/)&nbsp;[![known exploited](https://img.shields.io/badge/known%20exploited-1%2C235-f85149?style=flat-square&labelColor=161b22)](https://pocindex.io/)&nbsp;[![stars](https://img.shields.io/github/stars/0xMarcio/pocindex?style=flat-square&label=stars&color=e3b341&labelColor=161b22&_=202610190808)](https://github.com/0xMarcio/pocindex/stargazers)
+[![last sync](https://img.shields.io/badge/last%20sync-19%20Oct%202026%2010%3A09%20UTC-2f81f7?style=flat-square&labelColor=161b22)](https://github.com/0xMarcio/pocindex/commits/main)&nbsp;[![CI](https://img.shields.io/github/actions/workflow/status/0xMarcio/pocindex/hot_cves.yml?style=flat-square&label=CI&color=2f81f7&labelColor=161b22&_=202610191009)](https://github.com/0xMarcio/pocindex/actions/workflows/hot_cves.yml)&nbsp;[![CVEs with PoCs](https://img.shields.io/badge/CVEs%20with%20PoCs-85%2C080-2f81f7?style=flat-square&labelColor=161b22)](https://pocindex.io/)&nbsp;[![known exploited](https://img.shields.io/badge/known%20exploited-1%2C235-f85149?style=flat-square&labelColor=161b22)](https://pocindex.io/)&nbsp;[![stars](https://img.shields.io/github/stars/0xMarcio/pocindex?style=flat-square&label=stars&color=e3b341&labelColor=161b22&_=202610191009)](https://github.com/0xMarcio/pocindex/stargazers)
 
 <a href="https://pocindex.io/"><img src="https://raw.githubusercontent.com/0xMarcio/pocindex/8dec6181e823d641132e0ee8a52a1612c2b5dd37/docs/search.svg" alt="Search PoC Index" width="100%"></a>
 
@@ -14,24 +14,24 @@
 
 | Stars | Released | PoC | Description |
 | --- | --- | --- | --- |
-| 0⭐ | 8m ago | [CVE-2023-54391-POC](https://github.com/Lewis1766/CVE-2023-54391-POC) | Proxmox Virtual Environment (VE) 7.0 through 8.0 contains an authentication bypass vulnerability in… |
-| 0⭐ | 4h ago | <img src="https://raw.githubusercontent.com/0xMarcio/pocindex/main/docs/kev.svg" alt="KEV" title="CISA known exploited" height="14"> [CVE-2025-55182](https://github.com/0xRAM-bit/CVE-2025-55182) | A pre-authentication remote code execution vulnerability exists in React Server Components versions 19.0.0,… |
-| 0⭐ | 8h ago | [InfinityCore-Android-CVE-2026-97941](https://github.com/ylh440104/InfinityCore-Android-CVE-2026-97941) | Android/ARM64 port |
-| 0⭐ | 10h ago | <img src="https://raw.githubusercontent.com/0xMarcio/pocindex/main/docs/kev.svg" alt="KEV" title="CISA known exploited" height="14"> [CVE-2025-3248-CTF-Lab](https://github.com/cpwjdgh/CVE-2025-3248-CTF-Lab) | Langflow 미인증 RCE 취약점(CVE-2025-3248) 기반 경량화 웹 해킹 CTF 문제 및 PoC 실습 환경 |
-| 0⭐ | 11h ago | [CVE-2026-104736](https://github.com/murrez/CVE-2026-104736) | PoC for CVE-2026-104736 - LearnPress ≤4.4.10 unauthenticated PHP object injection via checkout-email… |
-| 0⭐ | 12h ago | [mariadb-cve-2026-92262](https://github.com/SeanDishman/mariadb-cve-2026-92262) | PoC for CVE-2026-92262, CVE-2026-85746, CVE-2026-85748 against MariaDB 13.0.1 |
-| 0⭐ | 14h ago | [CVE-2026-53787-poc](https://github.com/MRdark-ops/CVE-2026-53787-poc) | CVE-2026-53787 Amasty Order Attribute (AOA) file upload exploit, modified to support the upload of HTML files… |
-| 0⭐ | 18h ago | [CVE-2020-36847](https://github.com/K52-ai/CVE-2020-36847) | PoC for CVE-2020-36847: unauthenticated file upload to RCE in WordPress Simple File List <=4.2.2. Uploads PHP… |
-| 0⭐ | 18h ago | [CVE-2024-25600](https://github.com/K52-ai/CVE-2024-25600) | PoC for CVE-2024-25600: unauthenticated RCE in WordPress Bricks Builder <=1.9.6. Extracts the render_element… |
-| 1⭐ | 18h ago | [CVE-2026-99999](https://github.com/01luyicheng/CVE-2026-99999) | CVE-2026-99999 PwnEscape PoC - Linux kernel IPv4 csum_start validation bug guest-to-host memory leak (CVSS… |
+| 0⭐ | 27m ago | [CVE-2026-99999-KVM-checksum-metadata-non-destructive-PoC](https://github.com/shizuku198411/CVE-2026-99999-KVM-checksum-metadata-non-destructive-PoC) | In the Linux kernel, the following vulnerability has been resolved: ipv4: validate checksum_start before… |
+| 3⭐ | 1h ago | [CVE-2026-23111](https://github.com/kinokopio/CVE-2026-23111) | CVE-2026-23111 nf_tables UAF exploit for Ubuntu 6.8.0-101-generic: unprivileged user → host root, plus… |
+| 0⭐ | 2h ago | [CVE-2023-54391-POC](https://github.com/Lewis1766/CVE-2023-54391-POC) | Proxmox Virtual Environment (VE) 7.0 through 8.0 contains an authentication bypass vulnerability in… |
+| 0⭐ | 6h ago | <img src="https://raw.githubusercontent.com/0xMarcio/pocindex/main/docs/kev.svg" alt="KEV" title="CISA known exploited" height="14"> [CVE-2025-55182](https://github.com/0xRAM-bit/CVE-2025-55182) | A pre-authentication remote code execution vulnerability exists in React Server Components versions 19.0.0,… |
+| 0⭐ | 10h ago | [InfinityCore-Android-CVE-2026-97941](https://github.com/ylh440104/InfinityCore-Android-CVE-2026-97941) | Android/ARM64 port |
+| 0⭐ | 12h ago | <img src="https://raw.githubusercontent.com/0xMarcio/pocindex/main/docs/kev.svg" alt="KEV" title="CISA known exploited" height="14"> [CVE-2025-3248-CTF-Lab](https://github.com/cpwjdgh/CVE-2025-3248-CTF-Lab) | Langflow 미인증 RCE 취약점(CVE-2025-3248) 기반 경량화 웹 해킹 CTF 문제 및 PoC 실습 환경 |
+| 0⭐ | 13h ago | [CVE-2026-104736](https://github.com/murrez/CVE-2026-104736) | PoC for CVE-2026-104736 - LearnPress ≤4.4.10 unauthenticated PHP object injection via checkout-email… |
+| 0⭐ | 14h ago | [mariadb-cve-2026-92262](https://github.com/SeanDishman/mariadb-cve-2026-92262) | PoC for CVE-2026-92262, CVE-2026-85746, CVE-2026-85748 against MariaDB 13.0.1 |
+| 0⭐ | 16h ago | [CVE-2026-53787-poc](https://github.com/MRdark-ops/CVE-2026-53787-poc) | CVE-2026-53787 Amasty Order Attribute (AOA) file upload exploit, modified to support the upload of HTML files… |
+| 0⭐ | 20h ago | [CVE-2020-36847](https://github.com/K52-ai/CVE-2020-36847) | PoC for CVE-2020-36847: unauthenticated file upload to RCE in WordPress Simple File List <=4.2.2. Uploads PHP… |
 
 ## Trending in 2026
 
 | Stars | Updated | Repository | Description |
 | --- | --- | --- | --- |
-| 421⭐ | 1d ago | <img src="https://raw.githubusercontent.com/0xMarcio/pocindex/main/docs/kev.svg" alt="KEV" title="CISA known exploited" height="14"> [CVE-2026-41940-PoC](https://github.com/sakidekin/CVE-2026-41940-PoC) | cPanel & WHM Authentication Bypass via CVE-2026-41940 explotation |
-| 28⭐ | 27m ago | <img src="https://raw.githubusercontent.com/0xMarcio/pocindex/main/docs/kev.svg" alt="KEV" title="CISA known exploited" height="14"> [CVE-2026-41940-PoC](https://github.com/ZeroDayEvil/CVE-2026-41940-PoC) | cPanel and WHM versions after 11.40 contain an authentication bypass vulnerability in the login flow that… |
+| 425⭐ | 1d ago | <img src="https://raw.githubusercontent.com/0xMarcio/pocindex/main/docs/kev.svg" alt="KEV" title="CISA known exploited" height="14"> [CVE-2026-41940-PoC](https://github.com/sakidekin/CVE-2026-41940-PoC) | cPanel & WHM Authentication Bypass via CVE-2026-41940 explotation |
 | 477⭐ | 59d ago | [CVE-2026-9830](https://github.com/opaxial/CVE-2026-9830) | CVE-2026-9830 Proof of Concept |
+| 28⭐ | 2h ago | <img src="https://raw.githubusercontent.com/0xMarcio/pocindex/main/docs/kev.svg" alt="KEV" title="CISA known exploited" height="14"> [CVE-2026-41940-PoC](https://github.com/ZeroDayEvil/CVE-2026-41940-PoC) | cPanel and WHM versions after 11.40 contain an authentication bypass vulnerability in the login flow that… |
 | 59⭐ | 5d ago | [CVE-2026-97229-PoC](https://github.com/jburgess-r7/CVE-2026-97229-PoC) | GitLab CI lint integer-overflow RCE PoC for CVE-2026-97229, validated against the official 19.4.1 CE amd64… |
 | 334⭐ | 83d ago | [CVE-2026-54121](https://github.com/aniqfakhrul/CVE-2026-54121) | Certighost POC |
 | 96⭐ | 20d ago | [CVE-2026-41096-PoC](https://github.com/ZeroDayEvil/CVE-2026-41096-PoC) | 🛡️ Official AI Security Tool module for CVE-2026-41096 (Windows DNSAPI.dll Heap Overflow / DNS-Mayhem Deep… |
@@ -71,7 +71,7 @@
 
 | Stars | Updated | Repository | Description |
 | --- | --- | --- | --- |
-| 17⭐ | 15d ago | [CVE-2024-56426](https://github.com/Creeeeger/CVE-2024-56426) | A PoC of the CVE-2024-56426 vulnerability. |
+| 17⭐ | 16d ago | [CVE-2024-56426](https://github.com/Creeeeger/CVE-2024-56426) | A PoC of the CVE-2024-56426 vulnerability. |
 | 4⭐ | 65d ago | [CVE-2024-56426](https://github.com/xcracker000/CVE-2024-56426) | CVE-2024-56426 Exynos9830 Bootrom Exploit - SM-G985F |
 | 3⭐ | 81d ago | [CVE-2024-36104-PoC](https://github.com/Groppoxx/CVE-2024-36104-PoC) | PoC for CVE-2024-36104 - unauthenticated Groovy RCE in Apache OFBiz (<18.12.14) via /%2e/%2e/ view path… |
 
