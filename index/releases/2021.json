@@ -217,7 +217,7 @@
 "CVE-2021-1810 http://packetstormsecurity.com/files/164375/Gatekeeper-Bypass-Proof-Of-Concept.html":{"basis":"unknown","cve":"CVE-2021-1810","imported":true,"released":null,"url":"http://packetstormsecurity.com/files/164375/Gatekeeper-Bypass-Proof-Of-Concept.html"},
 "CVE-2021-1879 github:nazky/ps4cve20211879?#":{"basis":"unknown","cve":"CVE-2021-1879","imported":true,"released":null,"url":"https://github.com/Nazky/PS4CVE20211879"},
 "CVE-2021-1883 github:gabe-k/cve-2021-1883?#":{"basis":"unknown","cve":"CVE-2021-1883","imported":true,"released":null,"url":"https://github.com/gabe-k/CVE-2021-1883"},
-"CVE-2021-1905 github:gonvar/movistar-home-root-?#":{"basis":"unknown","cve":"CVE-2021-1905","released":null,"seen":"2026-10-15T07:45:35Z","url":"https://github.com/Gonvar/movistar-home-root-"},
+"CVE-2021-1905 github:gonvar/movistar-home-root-?#":{"basis":"unknown","cve":"CVE-2021-1905","gone":"2026-10-19T09:23:25Z","released":null,"seen":"2026-10-15T07:45:35Z","url":"https://github.com/Gonvar/movistar-home-root-"},
 "CVE-2021-1931 github:aomsin2526/xperia_5_bl_unlocker_poc?#":{"basis":"unknown","cve":"CVE-2021-1931","imported":true,"released":null,"url":"https://github.com/aomsin2526/xperia_5_bl_unlocker_poc"},
 "CVE-2021-1931 github:fakeshell/cve-2021-1931-bbry-key2?#":{"basis":"unknown","cve":"CVE-2021-1931","imported":true,"released":null,"url":"https://github.com/FakeShell/CVE-2021-1931-BBRY-KEY2"},
 "CVE-2021-1931 github:stanw47/blackberry-key2-research?#":{"basis":"unknown","cve":"CVE-2021-1931","imported":true,"released":null,"url":"https://github.com/stanw47/Blackberry-Key2-Research"},
