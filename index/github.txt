@@ -27478,3 +27478,9 @@ CVE-2026-79985 - https://github.com/oscerd/CVE-2026-79985
 CVE-2026-79986 - https://github.com/oscerd/CVE-2026-79986
 CVE-2026-43499 - https://github.com/Escosis/V2463A-LPE
 CVE-2026-43499 - https://github.com/Romk-a/CVE-2026-43499-ghostlock-vivo-x100-ultra-root
+CVE-2026-103663 - https://github.com/striga-ai/CVE-2026-103663
+CVE-2026-105105 - https://github.com/Mothra-1/CVE-2026-105105
+CVE-2026-112195 - https://github.com/jasonbernier/Dialplan-Escape-RCE
+CVE-2026-52856 - https://github.com/lisbickq/CVE-2026-52856-PoC
+CVE-2026-63030 - https://github.com/K52-ai/CVE-2026-63030
+CVE-2026-99999 - https://github.com/alvaroguzmancode/CVE-2026-99999
