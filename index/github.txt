@@ -27475,3 +27475,7 @@ CVE-2025-3248 - https://github.com/cpwjdgh/CVE-2025-3248-CTF-Lab
 CVE-2026-97941 - https://github.com/ylh440104/InfinityCore-Android-CVE-2026-97941
 CVE-2025-55182 - https://github.com/0xRAM-bit/CVE-2025-55182
 CVE-2026-64560 - https://github.com/Feng1586/CVE-2026-64560-public
+CVE-2025-21298 - https://github.com/mohamedbrek/LetsDefend-SOC-Labs
+CVE-2026-24191 - https://github.com/Qcx526/cuda_poc_generator
+CVE-2026-41940 - https://github.com/ZeroDayEvil/CVE-2026-41940-PoC
+CVE-2023-54391 - https://github.com/Lewis1766/CVE-2023-54391-POC
