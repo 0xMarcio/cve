@@ -27474,3 +27474,4 @@ CVE-2026-104736 - https://github.com/murrez/CVE-2026-104736
 CVE-2025-3248 - https://github.com/cpwjdgh/CVE-2025-3248-CTF-Lab
 CVE-2026-97941 - https://github.com/ylh440104/InfinityCore-Android-CVE-2026-97941
 CVE-2025-55182 - https://github.com/0xRAM-bit/CVE-2025-55182
+CVE-2026-64560 - https://github.com/Feng1586/CVE-2026-64560-public
