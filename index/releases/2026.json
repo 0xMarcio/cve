@@ -6050,6 +6050,7 @@
 "CVE-2026-31431 github:themalwareguardian/cve-2026-31431?#":{"basis":"unknown","cve":"CVE-2026-31431","imported":true,"released":null,"url":"https://github.com/TheMalwareGuardian/CVE-2026-31431"},
 "CVE-2026-31431 github:themursalin/cve-2026-31431?#":{"basis":"unknown","cve":"CVE-2026-31431","imported":true,"released":null,"url":"https://github.com/TheMursalin/CVE-2026-31431"},
 "CVE-2026-31431 github:theori-io/copy-fail-cve-2026-31431?#":{"basis":"unknown","cve":"CVE-2026-31431","imported":true,"released":null,"url":"https://github.com/theori-io/copy-fail-CVE-2026-31431"},
+"CVE-2026-31431 github:toxy4ny/copy-fail-exploit-on-c-redteam?#":{"basis":"unknown","cve":"CVE-2026-31431","released":null,"seen":"2026-10-20T10:06:14Z","url":"https://github.com/toxy4ny/copy-fail-exploit-on-c-redteam"},
 "CVE-2026-31431 github:trevocastles/cve-2026-31431-copy-fail?#":{"basis":"unknown","cve":"CVE-2026-31431","imported":true,"released":null,"url":"https://github.com/TrevoCastles/CVE-2026-31431-copy-fail"},
 "CVE-2026-31431 github:trex1e/copyfail-cve-2026-31431?#":{"basis":"unknown","cve":"CVE-2026-31431","imported":true,"released":null,"url":"https://github.com/Trex1e/copyfail-CVE-2026-31431"},
 "CVE-2026-31431 github:twowb/cve-2026-31431-?#":{"basis":"unknown","cve":"CVE-2026-31431","imported":true,"released":null,"url":"https://github.com/twowb/CVE-2026-31431-"},
