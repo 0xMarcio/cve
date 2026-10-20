@@ -27516,3 +27516,4 @@ CVE-2026-85312 - https://github.com/oscerd/CVE-2026-85312
 CVE-2026-43499 - https://github.com/zxsos/root-my-s23
 CVE-2026-85313 - https://github.com/oscerd/CVE-2026-85313
 CVE-2026-85314 - https://github.com/oscerd/CVE-2026-85314
+CVE-2026-106173 - https://github.com/0xBlackash/CVE-2026-106173
