@@ -27525,3 +27525,4 @@ CVE-2026-87690 - https://github.com/h00die/CVE-2026-87690-POC
 CVE-2025-8110 - https://github.com/kur0bai/CVE-2025-8110
 CVE-2026-64638 - https://github.com/alisalive/xss2shell
 CVE-2026-72867 - https://github.com/Lulztigre/CVE-2026-72867
+CVE-2026-86950 - https://github.com/jpdagostin0/CVE-2026-86950-POC
