@@ -532,6 +532,7 @@
 "CVE-2026-102569 https://hackmd.io/@leediay/two-blind-sqli-clickbucketv5-version_5_5_3_197":{"basis":"unknown","cve":"CVE-2026-102569","imported":true,"released":null,"url":"https://hackmd.io/@leediay/two-blind-sqli-clickbucketv5-version_5_5_3_197"},
 "CVE-2026-10257 github:zorinman/cve/issues/1?#":{"basis":"unknown","cve":"CVE-2026-10257","imported":true,"released":null,"url":"https://github.com/Zorinman/cve/issues/1"},
 "CVE-2026-102570 https://hackmd.io/@leediay/two-blind-sqli-clickbucketv5-version_5_5_3_197":{"basis":"unknown","cve":"CVE-2026-102570","imported":true,"released":null,"url":"https://hackmd.io/@leediay/two-blind-sqli-clickbucketv5-version_5_5_3_197"},
+"CVE-2026-102578 github:caveeroo/cve-2026-102578?#":{"basis":"unknown","cve":"CVE-2026-102578","released":null,"seen":"2026-10-20T11:12:00Z","url":"https://github.com/caveeroo/CVE-2026-102578"},
 "CVE-2026-10258 github:ltranquility/vuln_submit/issues/5?#":{"basis":"unknown","cve":"CVE-2026-10258","imported":true,"released":null,"url":"https://github.com/ltranquility/vuln_submit/issues/5"},
 "CVE-2026-10259 github:666324/h3c-magic-b0-vuln/tree/main/H3C-Magic%20B0-vuln?#":{"basis":"unknown","cve":"CVE-2026-10259","imported":true,"released":null,"url":"https://github.com/666324/H3C-Magic-B0-vuln/tree/main/H3C-Magic%20B0-vuln"},
 "CVE-2026-10260 github:6justdododo6/cve/issues/18?#":{"basis":"unknown","cve":"CVE-2026-10260","imported":true,"released":null,"url":"https://github.com/6Justdododo6/CVE/issues/18"},
