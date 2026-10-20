@@ -12742,7 +12742,6 @@ CVE-2009-1240 - http://blog.zoller.lu/2009/04/ibm-proventia-evasion-limited-deta
 CVE-2009-1241 - http://blog.zoller.lu/2009/04/clamav-094-and-below-evasion-and-bypass.html
 CVE-2009-1242 - http://www.globalsecuritymag.com/Vigil-nce-Linux-kernel-denial-of%2C20090402%2C8311
 CVE-2009-1242 - http://www.globalsecuritymag.com/Vigil-nce-Linux-kernel-denial-of,20090402,8311
-CVE-2009-1243 - http://vigilance.fr/vulnerability/Linux-kernel-denial-of-service-via-proc-net-udp-8586
 CVE-2009-1246 - https://www.exploit-db.com/exploits/8290
 CVE-2009-1247 - https://www.exploit-db.com/exploits/8291
 CVE-2009-1248 - https://www.exploit-db.com/exploits/8291
@@ -14462,8 +14461,6 @@ CVE-2010-1723 - http://www.exploit-db.com/exploits/12289
 CVE-2010-1725 - http://packetstormsecurity.org/1004-exploits/alibabacloneplatinum-sql.txt
 CVE-2010-1726 - http://packetstormsecurity.org/1004-exploits/ec21clone-sql.txt
 CVE-2010-1727 - http://packetstormsecurity.org/1004-exploits/jobpost-sql.txt
-CVE-2010-1734 - http://vigilance.fr/vulnerability/Windows-denials-of-service-of-win32k-sys-9607
-CVE-2010-1735 - http://vigilance.fr/vulnerability/Windows-denials-of-service-of-win32k-sys-9607
 CVE-2010-1736 - http://packetstormsecurity.org/1004-exploits/krmhaber-disclose.txt
 CVE-2010-1737 - http://packetstormsecurity.org/1005-exploits/gallo-rfi.txt
 CVE-2010-1737 - http://www.exploit-db.com/exploits/12488
@@ -16671,7 +16668,6 @@ CVE-2011-5075 - http://www.exploit-db.com/exploits/18132/
 CVE-2011-5075 - http://www.openwall.com/lists/oss-security/2011/11/22/3
 CVE-2011-5081 - http://seclists.org/bugtraq/2011/Apr/266
 CVE-2011-5083 - http://cxsecurity.com/issue/WLB-2011090012
-CVE-2011-5083 - http://vigilance.fr/vulnerability/Dotclear-file-upload-via-swfupload-swf-11396
 CVE-2011-5094 - http://vincent.bernat.im/en/blog/2011-ssl-dos-mitigation.html
 CVE-2011-5094 - http://www.ietf.org/mail-archive/web/tls/current/msg07553.html
 CVE-2011-5098 - http://tickets.opscode.com/browse/CHEF-2649
@@ -102282,7 +102278,6 @@ CVE-2009-3072 - https://bugzilla.mozilla.org/show_bug.cgi?id=501900
 CVE-2009-3120 - http://bigace.cvs.sourceforge.net/viewvc/bigace/BIGACE/CORE/public/index.php?revision=1.22&view=markup
 CVE-2009-3585 - http://bestpractical.typepad.com/files/rt-3.0.7-3.6.1-session_fixation.v3.patch
 CVE-2009-3624 - http://twitter.com/spendergrsec/statuses/4916661870
-CVE-2009-3625 - http://sourceforge.net/mailarchive/forum.php?thread_name=5d9043b70910191044l4bb0178fs563a5128a0f5db01%40mail.gmail.com&forum_name=sahana-maindev
 CVE-2009-3696 - http://freshmeat.net/projects/phpmyadmin/releases/306667
 CVE-2009-3697 - http://freshmeat.net/projects/phpmyadmin/releases/306667
 CVE-2009-3994 - http://sourceforge.net/tracker/download.php?group_id=4470&atid=304470&file_id=353841&aid=2908728

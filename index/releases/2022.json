@@ -1237,7 +1237,7 @@
 "CVE-2022-1388 github:oncyberwar/cve-2022-1388?#":{"basis":"unknown","cve":"CVE-2022-1388","imported":true,"released":null,"url":"https://github.com/OnCyberWar/CVE-2022-1388"},
 "CVE-2022-1388 github:pauloink/cve-2022-1388?#":{"basis":"unknown","cve":"CVE-2022-1388","imported":true,"released":null,"url":"https://github.com/pauloink/CVE-2022-1388"},
 "CVE-2022-1388 github:projectdiscovery/nuclei-templates/blob/main/http/cves/2022/CVE-2022-1388.yaml?#":{"basis":"unknown","cve":"CVE-2022-1388","imported":true,"released":null,"url":"https://github.com/projectdiscovery/nuclei-templates/blob/main/http/cves/2022/CVE-2022-1388.yaml"},
-"CVE-2022-1388 github:psychosec2/cve-2022-1388-poc?#":{"basis":"unknown","cve":"CVE-2022-1388","imported":true,"released":null,"url":"https://github.com/PsychoSec2/CVE-2022-1388-POC"},
+"CVE-2022-1388 github:psychosec2/cve-2022-1388-poc?#":{"basis":"unknown","cve":"CVE-2022-1388","gone":"2026-10-20T08:57:06Z","imported":true,"released":null,"url":"https://github.com/PsychoSec2/CVE-2022-1388-POC"},
 "CVE-2022-1388 github:qusaialhaddad/f5-bigip-cve-2022-1388?#":{"basis":"unknown","cve":"CVE-2022-1388","imported":true,"released":null,"url":"https://github.com/qusaialhaddad/F5-BigIP-CVE-2022-1388"},
 "CVE-2022-1388 github:r0otk3r/cve-2022-1388?#":{"basis":"unknown","cve":"CVE-2022-1388","imported":true,"released":null,"url":"https://github.com/r0otk3r/CVE-2022-1388"},
 "CVE-2022-1388 github:rapid7/metasploit-framework/blob/master/modules/exploits/linux/http/f5_icontrol_rce.rb?#":{"basis":"unknown","cve":"CVE-2022-1388","imported":true,"released":null,"url":"https://github.com/rapid7/metasploit-framework/blob/master/modules/exploits/linux/http/f5_icontrol_rce.rb"},

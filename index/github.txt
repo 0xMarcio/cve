@@ -10482,7 +10482,6 @@ CVE-2022-1388 - https://github.com/omnigodz/CVE-2022-1388
 CVE-2022-1388 - https://github.com/On-Cyber-War/CVE-2022-1388
 CVE-2022-1388 - https://github.com/OnCyberWar/CVE-2022-1388
 CVE-2022-1388 - https://github.com/pauloink/CVE-2022-1388
-CVE-2022-1388 - https://github.com/PsychoSec2/CVE-2022-1388-POC
 CVE-2022-1388 - https://github.com/qusaialhaddad/F5-BigIP-CVE-2022-1388
 CVE-2022-1388 - https://github.com/r0otk3r/CVE-2022-1388
 CVE-2022-1388 - https://github.com/sashka3076/F5-BIG-IP-exploit
@@ -13221,7 +13220,6 @@ CVE-2023-29489 - https://github.com/SynixCyberCrimeMy/CVE-2023-29489
 CVE-2023-29489 - https://github.com/Thuankobtcode/CVE-2023-29489
 CVE-2023-29489 - https://github.com/ViperM4sk/cpanel-xss-177
 CVE-2023-29489 - https://github.com/whalebone7/EagleEye
-CVE-2023-2951 - https://github.com/Spr1te76/CVE-2023-2951
 CVE-2023-29528 - https://github.com/shoucheng3/xwiki__xwiki-commons_CVE-2023-29528_14-9-rc-1
 CVE-2023-29808 - https://github.com/zPrototype/CVE-2023-29808
 CVE-2023-29809 - https://github.com/zPrototype/CVE-2023-29809
@@ -13789,7 +13787,6 @@ CVE-2023-38646 - https://github.com/LazyySec/CVE-2023-38646
 CVE-2023-38646 - https://github.com/m3m0o/metabase-pre-auth-rce-poc
 CVE-2023-38646 - https://github.com/massco99/Analytics-htb-Rce
 CVE-2023-38646 - https://github.com/Micky1warrior/metabase-pre-auth-rce-poc
-CVE-2023-38646 - https://github.com/Mrunalkaran/CVE-2023-38646
 CVE-2023-38646 - https://github.com/nickswink/CVE-2023-38646
 CVE-2023-38646 - https://github.com/passwa11/CVE-2023-38646
 CVE-2023-38646 - https://github.com/Pumpkin-Garden/POC_Metabase_CVE-2023-38646
@@ -13800,7 +13797,6 @@ CVE-2023-38646 - https://github.com/robotmikhro/CVE-2023-38646
 CVE-2023-38646 - https://github.com/samurai411/toolbox
 CVE-2023-38646 - https://github.com/securezeron/CVE-2023-38646
 CVE-2023-38646 - https://github.com/shamo0/CVE-2023-38646-PoC
-CVE-2023-38646 - https://github.com/Shisones/MetabaseRCE_CVE-2023-38646
 CVE-2023-38646 - https://github.com/threatHNTR/CVE-2023-38646
 CVE-2023-38646 - https://github.com/UserConnecting/Exploit-CVE-2023-38646-Metabase
 CVE-2023-38646 - https://github.com/Xuxfff/CVE-2023-38646-Poc
@@ -20166,7 +20162,6 @@ CVE-2026-43499 - https://github.com/NothingFumo/ghostlock-aresin
 CVE-2026-43499 - https://github.com/Petalrain224/CVE-2026-43499-Redmi-Turbo5
 CVE-2026-43499 - https://github.com/R0rt1z2/GhostLock-5.10
 CVE-2026-43499 - https://github.com/Sulisong/violin-6.6.77-POC
-CVE-2026-43499 - https://github.com/Thiasap/oppo-pgem10-ghostlock
 CVE-2026-43499 - https://github.com/WitAqua-tools/Root-My-Device
 CVE-2026-43499 - https://github.com/WitAqua-tools/Root-My-Device-Payloads
 CVE-2026-43499 - https://github.com/Wtrwx/smt878u-ionstack-poc
@@ -22849,7 +22844,6 @@ CVE-2025-31133 - https://github.com/skynet-f-nvidia/CVE-2025-31133
 CVE-2025-31161 - https://github.com/0xBlackash/CVE-2025-31161
 CVE-2025-31161 - https://github.com/Dairrow/CVE-2025-31161
 CVE-2025-31161 - https://github.com/Drelinss/Blackash-CVE-2025-31161
-CVE-2025-31161 - https://github.com/Shisones/CVE-2025-31161
 CVE-2025-31161 - https://github.com/cesarbtakeda/CVE-2025-31161
 CVE-2025-31161 - https://github.com/ch3m1cl/CVE-2025-31161
 CVE-2025-31161 - https://github.com/eserror/CVE-2025-31161
@@ -23076,7 +23070,6 @@ CVE-2025-46819 - https://github.com/dwisiswant0/CVE-2025-46819
 CVE-2025-46822 - https://github.com/HORKimhab/CVE-2024-8068-CVE-2024-8069
 CVE-2025-46822 - https://github.com/HORKimhab/CVE-2025-46822
 CVE-2025-46822 - https://github.com/HORKimhab/CVE-2026-50522
-CVE-2025-47227 - https://github.com/Outs1d3r-Net/CVE-2025-47227
 CVE-2025-47273 - https://github.com/AliElKhatteb/CVE-2025-47273-POC
 CVE-2025-47273 - https://github.com/Andy-you/CVE-Reproducer-System
 CVE-2025-47273 - https://github.com/InzegoSec/CVE-2024-25081_2025-47273
@@ -27189,7 +27182,6 @@ CVE-2026-42945 - https://github.com/porcumarcooo/THM-CVE-2026-42945-Nginx-Rift-E
 CVE-2026-46300 - https://github.com/porcumarcooo/THM-CVE-2026-46300-Fragnesia-Exploit
 CVE-2026-21589 - https://github.com/renzi25031469/CVE-2026-21589
 CVE-2026-92555 - https://github.com/Enay-Project/CVE-2026-92555
-CVE-2026-43499 - https://github.com/Muchyutaka/Root-My-GalaxyA075F-Payloads
 CVE-2026-67279 - https://github.com/shmaki4/CVE-2026-67279-Mikrotik-6.42-POC
 CVE-2026-91940 - https://github.com/BiiTts/CVE-2026-91940-crawl4ai-Arbitrary-File-Write
 CVE-2023-54391 - https://github.com/alexandrov666/CVE-2023-54391-RCE
@@ -27249,7 +27241,6 @@ CVE-2025-24813 - https://github.com/toyplan/cve-2025-24813
 CVE-2025-57819 - https://github.com/Wayang1337/CVE-2025-57819
 CVE-2026-104335 - https://github.com/Farih123/CVE-2026-104335
 CVE-2025-57819 - https://github.com/HexBytee/FreePBX-SQLi-RCE
-CVE-2026-27626 - https://github.com/Shisones/CVE-2026-27626
 CVE-2026-106446 - https://github.com/shift-left-test-org2/auto-pr-demo
 CVE-2025-55182 - https://github.com/M4rc3l08/ReactorWriteUp-HackTheBox
 CVE-2026-104286 - https://github.com/0xREBYTE/CVE-2026-104286-PoC
