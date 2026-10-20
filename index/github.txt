@@ -27505,3 +27505,5 @@ CVE-2024-35250 - https://github.com/m01000xd/CVE-2024-35250
 CVE-2024-49138 - https://github.com/mohamedbrek/LetsDefend-SOC-Labs
 CVE-2024-58299 - https://github.com/CyberWarrior10101/CVE-2024-58299
 CVE-2025-5548 - https://github.com/jonbondani/CVE-2025-5548
+CVE-2025-31324 - https://github.com/CyberGramps007/CYB-403
+CVE-2026-105484 - https://github.com/xiaobai718-ab/CVE-2026-105484
