@@ -1413,6 +1413,7 @@
 "CVE-2016-4401 github:dineshkumarc987/exploits?#":{"basis":"unknown","cve":"CVE-2016-4401","imported":true,"released":null,"url":"https://github.com/dineshkumarc987/Exploits"},
 "CVE-2016-4401 github:r3p3r/1n3-exploits?#":{"basis":"unknown","cve":"CVE-2016-4401","imported":true,"released":null,"url":"https://github.com/r3p3r/1N3-Exploits"},
 "CVE-2016-4437 github:jas502n/shiro_xray?#":{"basis":"unknown","cve":"CVE-2016-4437","imported":true,"released":null,"url":"https://github.com/jas502n/Shiro_Xray"},
+"CVE-2016-4437 github:kblackmeow/matrix?#":{"basis":"unknown","cve":"CVE-2016-4437","released":null,"seen":"2026-10-20T07:52:30Z","url":"https://github.com/KBlackMeow/Matrix"},
 "CVE-2016-4437 github:n0tod2y/penforge?#":{"basis":"unknown","cve":"CVE-2016-4437","imported":true,"released":null,"url":"https://github.com/N0tOd2y/PenForge"},
 "CVE-2016-4437 github:pensa31/hacker?#":{"basis":"unknown","cve":"CVE-2016-4437","imported":true,"released":null,"url":"https://github.com/Pensa31/Hacker"},
 "CVE-2016-4437 github:pizza-power/cve-2016-4437?#":{"basis":"unknown","cve":"CVE-2016-4437","imported":true,"released":null,"url":"https://github.com/pizza-power/CVE-2016-4437"},

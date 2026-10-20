@@ -4005,6 +4005,7 @@
 "CVE-2018-20027 github:lisa-lab/pylearn2/issues/1593?#":{"basis":"unknown","cve":"CVE-2018-20027","imported":true,"released":null,"url":"https://github.com/lisa-lab/pylearn2/issues/1593"},
 "CVE-2018-20050 github:iamweifan/jooan/blob/master/es_poc.py?#":{"basis":"unknown","cve":"CVE-2018-20050","imported":true,"released":null,"url":"https://github.com/iamweifan/jooan/blob/master/es_poc.py"},
 "CVE-2018-20062 github:jasper2018/cve-2018-20062?#":{"basis":"unknown","cve":"CVE-2018-20062","imported":true,"released":null,"url":"https://github.com/Jasper2018/CVE-2018-20062"},
+"CVE-2018-20062 github:kblackmeow/matrix?#":{"basis":"unknown","cve":"CVE-2018-20062","released":null,"seen":"2026-10-20T07:52:30Z","url":"https://github.com/KBlackMeow/Matrix"},
 "CVE-2018-20062 github:nangge/nonecms/issues/21?#":{"basis":"unknown","cve":"CVE-2018-20062","imported":true,"released":null,"url":"https://github.com/nangge/noneCms/issues/21"},
 "CVE-2018-20062 github:projectdiscovery/nuclei-templates/blob/main/http/cves/2018/CVE-2018-20062.yaml?#":{"basis":"unknown","cve":"CVE-2018-20062","imported":true,"released":null,"url":"https://github.com/projectdiscovery/nuclei-templates/blob/main/http/cves/2018/CVE-2018-20062.yaml"},
 "CVE-2018-20062 github:rapid7/metasploit-framework/blob/master/modules/exploits/unix/webapp/thinkphp_rce.rb?#":{"basis":"unknown","cve":"CVE-2018-20062","imported":true,"released":null,"url":"https://github.com/rapid7/metasploit-framework/blob/master/modules/exploits/unix/webapp/thinkphp_rce.rb"},

@@ -3486,6 +3486,7 @@
 "CVE-2021-29441 github:galact-byte/dddd-next?#":{"basis":"unknown","cve":"CVE-2021-29441","imported":true,"released":null,"url":"https://github.com/galact-byte/dddd-next"},
 "CVE-2021-29441 github:hh-hunter/nacos-cve-2021-29441?#":{"basis":"unknown","cve":"CVE-2021-29441","imported":true,"released":null,"url":"https://github.com/hh-hunter/nacos-cve-2021-29441"},
 "CVE-2021-29441 github:k3ystr0k3r/cve-2021-29441?#":{"basis":"unknown","cve":"CVE-2021-29441","gone":"2026-10-10T10:18:28Z","imported":true,"released":null,"url":"https://github.com/K3ysTr0K3R/CVE-2021-29441"},
+"CVE-2021-29441 github:kblackmeow/matrix?#":{"basis":"unknown","cve":"CVE-2021-29441","released":null,"seen":"2026-10-20T07:52:30Z","url":"https://github.com/KBlackMeow/Matrix"},
 "CVE-2021-29441 github:projectdiscovery/nuclei-templates/blob/main/http/cves/2021/CVE-2021-29441.yaml?#":{"basis":"unknown","cve":"CVE-2021-29441","imported":true,"released":null,"url":"https://github.com/projectdiscovery/nuclei-templates/blob/main/http/cves/2021/CVE-2021-29441.yaml"},
 "CVE-2021-29441 github:vulhub/vulhub/tree/master/nacos/CVE-2021-29441?#":{"basis":"unknown","cve":"CVE-2021-29441","imported":true,"released":null,"url":"https://github.com/vulhub/vulhub/tree/master/nacos/CVE-2021-29441"},
 "CVE-2021-29441 github:whoopsunix/nacosscan?#":{"basis":"unknown","cve":"CVE-2021-29441","imported":true,"released":null,"url":"https://github.com/Whoopsunix/nacosScan"},

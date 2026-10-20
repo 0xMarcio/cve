@@ -641,6 +641,7 @@
 "CVE-2011-2523 github:aboubacar70/lab1-metasploitable?#":{"basis":"unknown","cve":"CVE-2011-2523","imported":true,"released":null,"url":"https://github.com/aboubacar70/LAB1-metasploitable"},
 "CVE-2011-2523 github:abu-siddiq518/vapt-cybersecurity-projects-?#":{"basis":"unknown","cve":"CVE-2011-2523","imported":true,"released":null,"url":"https://github.com/Abu-Siddiq518/VAPT-Cybersecurity-Projects-"},
 "CVE-2011-2523 github:aeg-hit/pwngpt?#":{"basis":"unknown","cve":"CVE-2011-2523","imported":true,"released":null,"url":"https://github.com/aeg-hit/PwnGPT"},
+"CVE-2011-2523 github:afikhaviv/avpa?#":{"basis":"unknown","cve":"CVE-2011-2523","released":null,"seen":"2026-10-20T07:52:30Z","url":"https://github.com/AfikHaviv/AVPA"},
 "CVE-2011-2523 github:atiwitch15101/vsftpd-2.3.4-exploit?#":{"basis":"unknown","cve":"CVE-2011-2523","imported":true,"released":null,"url":"https://github.com/Atiwitch15101/vsftpd-2.3.4-Exploit"},
 "CVE-2011-2523 github:bobberto99/mtd-with-sdn?#":{"basis":"unknown","cve":"CVE-2011-2523","imported":true,"released":null,"url":"https://github.com/bobberto99/MTD-with-SDN"},
 "CVE-2011-2523 github:bolivarj/cve-2011-2523?#":{"basis":"unknown","cve":"CVE-2011-2523","imported":true,"released":null,"url":"https://github.com/BolivarJ/CVE-2011-2523"},

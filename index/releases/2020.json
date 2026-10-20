@@ -1767,6 +1767,7 @@
 "CVE-2020-14882 github:hyderpwn/weblogic?#":{"basis":"unknown","cve":"CVE-2020-14882","imported":true,"released":null,"url":"https://github.com/hyderpwn/weblogic"},
 "CVE-2020-14882 github:jas502n/cve-2020-14882?#":{"basis":"unknown","cve":"CVE-2020-14882","imported":true,"released":null,"url":"https://github.com/jas502n/CVE-2020-14882"},
 "CVE-2020-14882 github:katherinehuangg/metasploit-poc?#":{"basis":"unknown","cve":"CVE-2020-14882","imported":true,"released":null,"url":"https://github.com/KatherineHuangg/metasploit-POC"},
+"CVE-2020-14882 github:kblackmeow/matrix?#":{"basis":"unknown","cve":"CVE-2020-14882","released":null,"seen":"2026-10-20T07:52:30Z","url":"https://github.com/KBlackMeow/Matrix"},
 "CVE-2020-14882 github:kk98kk0/cve-2020-14882?#":{"basis":"unknown","cve":"CVE-2020-14882","imported":true,"released":null,"url":"https://github.com/kk98kk0/CVE-2020-14882"},
 "CVE-2020-14882 github:kkc73/weblogic-cve-2020-14882?#":{"basis":"unknown","cve":"CVE-2020-14882","imported":true,"released":null,"url":"https://github.com/KKC73/weblogic-cve-2020-14882"},
 "CVE-2020-14882 github:lucaspdiniz/cve-2020-14882?#":{"basis":"unknown","cve":"CVE-2020-14882","imported":true,"released":null,"url":"https://github.com/LucasPDiniz/CVE-2020-14882"},
