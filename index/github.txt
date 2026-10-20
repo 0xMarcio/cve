@@ -27510,3 +27510,4 @@ CVE-2026-105484 - https://github.com/xiaobai718-ab/CVE-2026-105484
 CVE-2026-31431 - https://github.com/toxy4ny/copy-fail-exploit-on-c-redteam
 CVE-2026-64560 - https://github.com/Yunnijian/OnePlus16-Jailbreak
 CVE-2026-102578 - https://github.com/caveeroo/CVE-2026-102578
+CVE-2026-93300 - https://github.com/Datxzzz/CVE-2026-93300

@@ -1,8 +1,8 @@
 <div align="center">
 
-<a href="https://pocindex.io/"><img src="https://raw.githubusercontent.com/0xMarcio/pocindex/main/docs/hero.svg?v=174685-85243-1235" alt="PoC Index" width="100%"></a>
+<a href="https://pocindex.io/"><img src="https://raw.githubusercontent.com/0xMarcio/pocindex/main/docs/hero.svg?v=174686-85244-1235" alt="PoC Index" width="100%"></a>
 
-[![last sync](https://img.shields.io/badge/last%20sync-20%20Oct%202026%2011%3A07%20UTC-2f81f7?style=flat-square&labelColor=161b22)](https://github.com/0xMarcio/pocindex/commits/main)&nbsp;[![CI](https://img.shields.io/github/actions/workflow/status/0xMarcio/pocindex/hot_cves.yml?style=flat-square&label=CI&color=2f81f7&labelColor=161b22&_=202610201107)](https://github.com/0xMarcio/pocindex/actions/workflows/hot_cves.yml)&nbsp;[![CVEs with PoCs](https://img.shields.io/badge/CVEs%20with%20PoCs-85%2C243-2f81f7?style=flat-square&labelColor=161b22)](https://pocindex.io/)&nbsp;[![known exploited](https://img.shields.io/badge/known%20exploited-1%2C235-f85149?style=flat-square&labelColor=161b22)](https://pocindex.io/)&nbsp;[![stars](https://img.shields.io/github/stars/0xMarcio/pocindex?style=flat-square&label=stars&color=e3b341&labelColor=161b22&_=202610201107)](https://github.com/0xMarcio/pocindex/stargazers)
+[![last sync](https://img.shields.io/badge/last%20sync-20%20Oct%202026%2012%3A09%20UTC-2f81f7?style=flat-square&labelColor=161b22)](https://github.com/0xMarcio/pocindex/commits/main)&nbsp;[![CI](https://img.shields.io/github/actions/workflow/status/0xMarcio/pocindex/hot_cves.yml?style=flat-square&label=CI&color=2f81f7&labelColor=161b22&_=202610201209)](https://github.com/0xMarcio/pocindex/actions/workflows/hot_cves.yml)&nbsp;[![CVEs with PoCs](https://img.shields.io/badge/CVEs%20with%20PoCs-85%2C244-2f81f7?style=flat-square&labelColor=161b22)](https://pocindex.io/)&nbsp;[![known exploited](https://img.shields.io/badge/known%20exploited-1%2C235-f85149?style=flat-square&labelColor=161b22)](https://pocindex.io/)&nbsp;[![stars](https://img.shields.io/github/stars/0xMarcio/pocindex?style=flat-square&label=stars&color=e3b341&labelColor=161b22&_=202610201209)](https://github.com/0xMarcio/pocindex/stargazers)
 
 <a href="https://pocindex.io/"><img src="https://raw.githubusercontent.com/0xMarcio/pocindex/8dec6181e823d641132e0ee8a52a1612c2b5dd37/docs/search.svg" alt="Search PoC Index" width="100%"></a>
 
@@ -14,11 +14,11 @@
 
 | Stars | Released | PoC | Description |
 | --- | --- | --- | --- |
-| 0⭐ | 6h ago | [CVE-2026-111058-CVE-2026-111057-mercury-rce](https://github.com/ExDev994/CVE-2026-111058-CVE-2026-111057-mercury-rce) | Mercury unauth RCE combo: CVE-2026-111058 (kernels) + CVE-2026-111057 (terminals). By 0xNuts (@ExDev994).… |
-| 0⭐ | 14h ago | [CVE-2026-103663](https://github.com/striga-ai/CVE-2026-103663) | Ollama is vulnerable to path traversal in the `/api/pull` endpoint due to insufficient validation of layer… |
-| 0⭐ | 14h ago | <img src="https://raw.githubusercontent.com/0xMarcio/pocindex/main/docs/kev.svg" alt="KEV" title="CISA known exploited" height="14"> [CVE-2026-63030](https://github.com/K52-ai/CVE-2026-63030) | WordPress 6.9.x before 6.9.5 and 7.0.x before 7.0.2 is affected by a REST API batch endpoint route confusion… |
-| 0⭐ | 19h ago | [CVE-2026-52856-PoC](https://github.com/lisbickq/CVE-2026-52856-PoC) | PoC For CVE-2026-52856 |
-| 0⭐ | 20h ago | [CVE-2026-105105](https://github.com/Mothra-1/CVE-2026-105105) | CVE-2026-105105 - NASA-AMMOS AIT-Core unauthenticated ZeroMQ command/telemetry bus (CWE-306, CVSS 9.8).… |
+| 0⭐ | 7h ago | [CVE-2026-111058-CVE-2026-111057-mercury-rce](https://github.com/ExDev994/CVE-2026-111058-CVE-2026-111057-mercury-rce) | Mercury unauth RCE combo: CVE-2026-111058 (kernels) + CVE-2026-111057 (terminals). By 0xNuts (@ExDev994).… |
+| 0⭐ | 15h ago | [CVE-2026-103663](https://github.com/striga-ai/CVE-2026-103663) | Ollama is vulnerable to path traversal in the `/api/pull` endpoint due to insufficient validation of layer… |
+| 0⭐ | 15h ago | <img src="https://raw.githubusercontent.com/0xMarcio/pocindex/main/docs/kev.svg" alt="KEV" title="CISA known exploited" height="14"> [CVE-2026-63030](https://github.com/K52-ai/CVE-2026-63030) | WordPress 6.9.x before 6.9.5 and 7.0.x before 7.0.2 is affected by a REST API batch endpoint route confusion… |
+| 0⭐ | 20h ago | [CVE-2026-52856-PoC](https://github.com/lisbickq/CVE-2026-52856-PoC) | PoC For CVE-2026-52856 |
+| 0⭐ | 21h ago | [CVE-2026-105105](https://github.com/Mothra-1/CVE-2026-105105) | CVE-2026-105105 - NASA-AMMOS AIT-Core unauthenticated ZeroMQ command/telemetry bus (CWE-306, CVSS 9.8).… |
 | 0⭐ | 1d ago | [CVE-2026-99999-KVM-checksum-metadata-non-destructive-PoC](https://github.com/shizuku198411/CVE-2026-99999-KVM-checksum-metadata-non-destructive-PoC) | In the Linux kernel, the following vulnerability has been resolved: ipv4: validate checksum_start before… |
 | 0⭐ | 1d ago | [CVE-2026-84178](https://github.com/oscerd/CVE-2026-84178) | Reproducer for CVE-2026-84178 (Apache Camel camel-oauth): the authorization-code callback redeems the code… |
 | 5⭐ | 1d ago | [CVE-2026-23111](https://github.com/kinokopio/CVE-2026-23111) | CVE-2026-23111 nf_tables UAF exploit for Ubuntu 6.8.0-101-generic: unprivileged user → host root, plus… |
@@ -29,8 +29,8 @@
 
 | Stars | Updated | Repository | Description |
 | --- | --- | --- | --- |
-| 456⭐ | 2d ago | <img src="https://raw.githubusercontent.com/0xMarcio/pocindex/main/docs/kev.svg" alt="KEV" title="CISA known exploited" height="14"> [CVE-2026-41940-PoC](https://github.com/sakidekin/CVE-2026-41940-PoC) | cPanel & WHM Authentication Bypass via CVE-2026-41940 explotation |
-| 64⭐ | 21h ago | [CVE-2026-20817](https://github.com/ZeroDayEvil/CVE-2026-20817) | 🛡️ Official AI Security Tool module for CVE-2026-20817 (Windows Error Reporting WER ALPC Local Privilege… |
+| 463⭐ | 2d ago | <img src="https://raw.githubusercontent.com/0xMarcio/pocindex/main/docs/kev.svg" alt="KEV" title="CISA known exploited" height="14"> [CVE-2026-41940-PoC](https://github.com/sakidekin/CVE-2026-41940-PoC) | cPanel & WHM Authentication Bypass via CVE-2026-41940 explotation |
+| 65⭐ | 22h ago | [CVE-2026-20817](https://github.com/ZeroDayEvil/CVE-2026-20817) | 🛡️ Official AI Security Tool module for CVE-2026-20817 (Windows Error Reporting WER ALPC Local Privilege… |
 | 477⭐ | 60d ago | [CVE-2026-9830](https://github.com/opaxial/CVE-2026-9830) | CVE-2026-9830 Proof of Concept |
 | 28⭐ | 1d ago | <img src="https://raw.githubusercontent.com/0xMarcio/pocindex/main/docs/kev.svg" alt="KEV" title="CISA known exploited" height="14"> [CVE-2026-41940-PoC](https://github.com/ZeroDayEvil/CVE-2026-41940-PoC) | cPanel and WHM versions after 11.40 contain an authentication bypass vulnerability in the login flow that… |
 | 335⭐ | 84d ago | [CVE-2026-54121](https://github.com/aniqfakhrul/CVE-2026-54121) | Certighost POC |
