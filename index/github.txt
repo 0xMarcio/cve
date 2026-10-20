@@ -27493,3 +27493,4 @@ CVE-2026-80344 - https://github.com/oscerd/CVE-2026-80344
 CVE-2026-83531 - https://github.com/oscerd/CVE-2026-83531
 CVE-2026-84178 - https://github.com/oscerd/CVE-2026-84178
 CVE-2025-23340 - https://github.com/Qcx526/cuda_poc_generator
+CVE-2026-35273 - https://github.com/rayo0009/CVE-2026-35273-Oracle-PeopleSoft-PeopleTools-Zero-Day-
