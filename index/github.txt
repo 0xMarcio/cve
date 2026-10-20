@@ -27522,3 +27522,6 @@ CVE-2026-112071 - https://github.com/yuwkaaa/CVE-2026-112071
 CVE-2026-113468 - https://github.com/yuwkaaa/CVE-2026-113468
 CVE-2026-23744 - https://github.com/wvverez/CVE-2026-23744
 CVE-2026-87690 - https://github.com/h00die/CVE-2026-87690-POC
+CVE-2025-8110 - https://github.com/kur0bai/CVE-2025-8110
+CVE-2026-64638 - https://github.com/alisalive/xss2shell
+CVE-2026-72867 - https://github.com/Lulztigre/CVE-2026-72867
