@@ -3191,6 +3191,7 @@
 "CVE-2025-23266 github:r0binak/cve-2025-23266?#":{"basis":"unknown","cve":"CVE-2025-23266","imported":true,"released":null,"url":"https://github.com/r0binak/CVE-2025-23266"},
 "CVE-2025-23339 github:qcx526/cuda_poc_generator?#":{"basis":"unknown","cve":"CVE-2025-23339","released":null,"seen":"2026-10-13T09:13:19Z","url":"https://github.com/Qcx526/cuda_poc_generator"},
 "CVE-2025-23339 github:spiralbl0ck/ce-for-cve-2025-23339?#":{"basis":"unknown","cve":"CVE-2025-23339","imported":true,"released":null,"url":"https://github.com/SpiralBL0CK/ce-for-CVE-2025-23339"},
+"CVE-2025-23340 github:qcx526/cuda_poc_generator?#":{"basis":"unknown","cve":"CVE-2025-23340","released":null,"seen":"2026-10-20T02:11:47Z","url":"https://github.com/Qcx526/cuda_poc_generator"},
 "CVE-2025-2336 https://codepen.io/herodevs/pen/bNGYaXx/412a3a4218387479898912f60c269c6c":{"basis":"unknown","cve":"CVE-2025-2336","imported":true,"released":null,"url":"https://codepen.io/herodevs/pen/bNGYaXx/412a3a4218387479898912f60c269c6c"},
 "CVE-2025-23368 https://www.gruppotim.it/it/footer/red-team.html":{"basis":"unknown","cve":"CVE-2025-23368","imported":true,"released":null,"url":"https://www.gruppotim.it/it/footer/red-team.html"},
 "CVE-2025-23369 github:arian91/cve-2025-23369_saml_bypass?#":{"basis":"unknown","cve":"CVE-2025-23369","imported":true,"released":null,"url":"https://github.com/Arian91/CVE-2025-23369_SAML_bypass"},
