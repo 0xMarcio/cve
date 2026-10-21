@@ -36,7 +36,9 @@ KEV_FILE = INDEX / "kev.json"
 DATES_FILE = INDEX / "cve_dates.json"
 RECORD_STATE_FILE = INDEX / "cve_record_state.json"
 DISCOVERY_STATE_FILE = INDEX / "github_discovery_state.json"
-RECORD_RETRY_DAYS = 1
+RECORD_RETRY_INTERVAL = timedelta(minutes=30)
+RECORD_STATUS_RE = re.compile(r"^<!-- CVE record: ([A-Z]+) -->\r?$", re.MULTILINE)
+PENDING_DESCRIPTION = "Public proof-of-concept links are available. Official CVE details are pending."
 
 GITHUB_GRAPHQL_URL = "https://api.github.com/graphql"
 CVE_API_URL = "https://cveawg.mitre.org/api/cve/{cve_id}"
@@ -112,6 +114,7 @@ class CVEDetails:
     vulnerabilities: list[str]
     title: str = ""
     vendors: list[str] = field(default_factory=list)
+    record_status: str = "PUBLISHED"
 
 
 @dataclass
@@ -688,12 +691,15 @@ def discover_github_pocs(
     window_end: date | None = None,
     checkpoints: dict[str, str] | None = None,
     artifact_cache_write: bool = True,
+    failures: list[str] | None = None,
+    completed_years: set[int] | None = None,
 ) -> dict[str, list[str]]:
     client = GitHubClient(token)
     blacklist = load_blacklist()
     discovered: dict[str, list[str]] = defaultdict(list)
     repositories: dict[str, dict[str, Any]] = {}
     target_years = list(years)
+    failed_years: set[int] = set()
     if cve_filter:
         target_years = sorted({int(cve_id.split("-")[1]) for cve_id in cve_filter})
 
@@ -740,8 +746,14 @@ def discover_github_pocs(
                 anchor = min(end, date.fromisoformat(previous)) if previous else end
                 start = anchor - timedelta(days=max(1, lookback_days))
             for terms in search_terms(f"CVE-{year}"):
-                for repo in search_range(client, terms, qualifier, start, end):
-                    remember(repo)
+                try:
+                    for repo in search_range(client, terms, qualifier, start, end):
+                        remember(repo)
+                except (RuntimeError, error.URLError, TimeoutError, http.client.HTTPException) as exc:
+                    if failures is None:
+                        raise
+                    failures.append(f"GitHub {terms}: {exc}")
+                    failed_years.add(year)
 
     # Deferred reviewed work survives the moving search window. Refresh its HEAD
     # before resuming so a stale candidate cache cannot approve changed bytes.
@@ -772,6 +784,7 @@ def discover_github_pocs(
     batches = [names[offset : offset + 10] for offset in range(0, len(names), 10)]
     completed = 0
     existing_names: set[str] = set()
+    unavailable_names: set[str] = set()
     with ThreadPoolExecutor(max_workers=4) as executor:
         futures = {executor.submit(client.fetch_readmes, batch): batch for batch in batches}
         for future in as_completed(futures):
@@ -779,6 +792,11 @@ def discover_github_pocs(
             try:
                 existing, readmes, roots = future.result()
             except Exception as exc:
+                if failures is not None:
+                    failures.append(f"README batch starting with {batch[0]}: {exc}")
+                    failed_years.update(target_years)
+                    unavailable_names.update(batch)
+                    continue
                 for pending in futures:
                     pending.cancel()
                 raise RuntimeError(f"README batch starting with {batch[0]} failed: {exc}") from exc
@@ -791,8 +809,8 @@ def discover_github_pocs(
             if completed % 500 < len(batch):
                 print(f"Fetched README data for {completed} of {len(names)} repositories")
 
-    removed = set(repositories) - existing_names
-    for full_name in removed:
+    removed = set(repositories) - existing_names - unavailable_names
+    for full_name in removed | unavailable_names:
         del repositories[full_name]
     if removed:
         print(f"Discarded {len(removed)} repositories removed during discovery")
@@ -802,9 +820,18 @@ def discover_github_pocs(
         wanted = {c for c in (source_artifacts.identity_cves(str(repo.get("nameWithOwner") or ""))
                             | source_artifacts.reviewed_cves(str(repo.get("nameWithOwner") or "")))
                   if int(c.split("-")[1]) in target_years and (not cve_filter or c in cve_filter)}
-        attach_source_artifacts(repo, client.headers, blacklist, cves=wanted, persist=artifact_cache_write)
+        try:
+            attach_source_artifacts(repo, client.headers, blacklist, cves=wanted, persist=artifact_cache_write)
+        except (RuntimeError, error.URLError, TimeoutError, http.client.HTTPException) as exc:
+            if failures is None:
+                raise
+            failures.append(f"Source artifacts for {repo.get('nameWithOwner')}: {exc}")
+            failed_years.update(target_years)
+            continue
         for year in target_years:
             collect(repo, year)
+    if completed_years is not None:
+        completed_years.update(set(target_years) - failed_years)
     return discovered
 
 
@@ -1207,9 +1234,11 @@ def load_catch_up_records(snapshot: Path) -> tuple[dict[str, dict[str, Any]], di
     return records, references, checkpoint
 
 
-def fetch_records(urls: dict[str, str], *, allow_not_found: bool) -> dict[str, dict[str, Any]]:
+def fetch_records(
+    urls: dict[str, str], *, allow_not_found: bool, failures: list[str] | None = None,
+) -> dict[str, dict[str, Any]]:
     records: dict[str, dict[str, Any]] = {}
-    failures: list[str] = []
+    errors: list[str] = []
 
     def fetch(cve_id: str, url: str) -> tuple[str, dict[str, Any] | None]:
         result = http_json(url, allow_not_found=allow_not_found)
@@ -1232,13 +1261,15 @@ def fetch_records(urls: dict[str, str], *, allow_not_found: bool) -> dict[str, d
             try:
                 fetched_cve, record = future.result()
             except Exception as exc:
-                failures.append(f"{cve_id}: {exc}")
+                errors.append(f"{cve_id}: {exc}")
                 continue
             if record:
                 records[fetched_cve] = record
 
-    if failures:
-        raise RuntimeError("Failed to fetch CVE records: " + "; ".join(failures[:10]))
+    if errors:
+        if failures is None:
+            raise RuntimeError("Failed to fetch CVE records: " + "; ".join(errors[:10]))
+        failures.extend(errors)
     return records
 
 
@@ -1265,6 +1296,7 @@ def load_incremental_records(
 def fetch_missing_records(
     cve_ids: Iterable[str],
     records: dict[str, dict[str, Any]],
+    *, failures: list[str] | None = None,
 ) -> None:
     urls = {
         cve_id: CVE_API_URL.format(cve_id=cve_id)
@@ -1272,7 +1304,7 @@ def fetch_missing_records(
         if cve_id not in records
     }
     if urls:
-        records.update(fetch_records(urls, allow_not_found=True))
+        records.update(fetch_records(urls, allow_not_found=True, failures=failures))
 
 
 def record_dates(records: dict[str, dict[str, Any]], *, dry_run: bool) -> int:
@@ -1313,7 +1345,8 @@ def cvelist_record_path(cvelist_dir: Path, cve_id: str) -> Path:
     return base / year / bucket / f"{cve_id}.json"
 
 
-def load_record_state(path: Path = RECORD_STATE_FILE) -> dict[str, dict[str, str]]:
+def load_record_state(path: Path | None = None) -> dict[str, dict[str, str]]:
+    path = path or RECORD_STATE_FILE
     try:
         payload = json.loads(path.read_text(encoding="utf-8"))
     except (OSError, json.JSONDecodeError):
@@ -1321,14 +1354,37 @@ def load_record_state(path: Path = RECORD_STATE_FILE) -> dict[str, dict[str, str
     return payload if isinstance(payload, dict) else {}
 
 
-def retry_record(entry: dict[str, str], today: date) -> bool:
+def retry_record(entry: dict[str, str], now: datetime) -> bool:
     if str(entry.get("status") or "").upper() == "REJECTED":
         return False
     try:
-        checked = date.fromisoformat(str(entry.get("checked") or ""))
+        checked = datetime.fromisoformat(str(entry.get("checked") or "").replace("Z", "+00:00"))
     except ValueError:
         return True
-    return (today - checked).days >= RECORD_RETRY_DAYS
+    if checked.tzinfo is None:
+        checked = checked.replace(tzinfo=timezone.utc)
+    return now - checked >= RECORD_RETRY_INTERVAL
+
+
+def markdown_record_status(text: str) -> str:
+    match = RECORD_STATUS_RE.search(text.split("### Description", 1)[0])
+    return match.group(1) if match else "PUBLISHED"
+
+
+def pending_details(status: str = "UNAVAILABLE") -> CVEDetails:
+    return CVEDetails(PENDING_DESCRIPTION, [], [], [], record_status=status)
+
+
+def mark_rejected(path: Path, *, dry_run: bool) -> None:
+    if not path.exists() or dry_run:
+        return
+    with path.open("r", encoding="utf-8", newline="") as handle:
+        text = handle.read()
+    if markdown_record_status(text) != "REJECTED":
+        newline = "\r\n" if "\r\n" in text else "\n"
+        text = RECORD_STATUS_RE.sub("", text).lstrip("\r\n")
+        with path.open("w", encoding="utf-8", newline="") as handle:
+            handle.write("<!-- CVE record: REJECTED -->" + newline + text)
 
 
 def ensure_cve_entries(
@@ -1336,24 +1392,22 @@ def ensure_cve_entries(
     *,
     dry_run: bool,
     cvelist_dir: Path | None = None,
+    records: dict[str, dict[str, Any]] | None = None,
+    fetch_missing: bool = True,
+    failures: list[str] | None = None,
 ) -> tuple[set[str], set[str]]:
-    """Create base markdown for published source CVEs missing from the index.
+    """Publish source CVEs immediately and enrich pending records when due.
 
     A local CVE List checkout is the efficient path for a large backfill. The
     normal scheduled jobs ask the CVE Services API only for new gaps.
     """
-    wanted = {
-        cve_id.upper()
-        for cve_id in cve_ids
-        if is_valid_cve(cve_id.upper())
-        and not (CVES / cve_id.split("-")[1] / f"{cve_id.upper()}.md").exists()
-    }
+    wanted = {cve_id.upper() for cve_id in cve_ids if is_valid_cve(cve_id.upper())}
     state = load_record_state()
-    state = {
-        cve_id: value
-        for cve_id, value in state.items()
-        if not (CVES / cve_id.split("-")[1] / f"{cve_id}.md").exists()
-    }
+    records = records if records is not None else {}
+    for cve_id in list(state):
+        path = CVES / cve_id.split("-")[1] / f"{cve_id}.md"
+        if path.exists() and markdown_record_status(path.read_text(encoding="utf-8")) == "PUBLISHED":
+            state.pop(cve_id)
     if not wanted:
         if not dry_run and RECORD_STATE_FILE.exists():
             RECORD_STATE_FILE.write_text(
@@ -1364,35 +1418,55 @@ def ensure_cve_entries(
     if cvelist_dir is not None and not cvelist_dir.is_dir():
         raise ValueError(f"CVE List directory does not exist: {cvelist_dir}")
 
-    today = datetime.now(timezone.utc).date()
-    due = wanted if cvelist_dir is not None else {
-        cve_id for cve_id in wanted if retry_record(state.get(cve_id, {}), today)
+    now = datetime.now(timezone.utc)
+    needed = {
+        cve_id for cve_id in wanted
+        if cve_id in state or not (CVES / cve_id.split("-")[1] / f"{cve_id}.md").exists()
+        or markdown_record_status((CVES / cve_id.split("-")[1] / f"{cve_id}.md").read_text(encoding="utf-8")) != "PUBLISHED"
     }
-    records: dict[str, dict[str, Any]] = {}
+    due = needed if cvelist_dir is not None else {
+        cve_id for cve_id in needed if retry_record(state.get(cve_id, {}), now)
+    }
     if cvelist_dir is not None:
         for cve_id in sorted(due):
             path = cvelist_record_path(cvelist_dir, cve_id)
             if record := read_record(path):
                 records[cve_id] = record
 
-    fetch_missing_records(due, records)
+    errors = failures if failures is not None else []
+    if fetch_missing:
+        fetch_missing_records(due, records, failures=errors)
+    if failures is None:
+        for failure in errors:
+            print(f"CVE metadata deferred: {failure}")
     created: set[str] = set()
-    unavailable: set[str] = wanted - due
+    unavailable: set[str] = set()
     kev = load_kev()
-    for cve_id in sorted(due):
+    for cve_id in sorted(wanted):
         record = records.get(cve_id) or {}
-        details = details_from_record(record)
-        if details is None:
-            unavailable.add(cve_id)
-            status = str((record.get("cveMetadata") or {}).get("state") or "UNAVAILABLE").upper()
-            state[cve_id] = {"status": status, "checked": today.isoformat()}
-            continue
         path = CVES / cve_id.split("-")[1] / f"{cve_id}.md"
-        if not dry_run:
-            path.parent.mkdir(parents=True, exist_ok=True)
-            path.write_text(build_markdown(cve_id, details, [], [], kev), encoding="utf-8")
-        created.add(cve_id)
-        state.pop(cve_id, None)
+        existing_status = markdown_record_status(path.read_text(encoding="utf-8")) if path.exists() else "UNAVAILABLE"
+        status = str((record.get("cveMetadata") or {}).get("state")
+                     or state.get(cve_id, {}).get("status") or existing_status).upper()
+        details = details_from_record(record)
+        if status == "REJECTED":
+            unavailable.add(cve_id)
+            mark_rejected(path, dry_run=dry_run)
+        elif not path.exists():
+            if not dry_run:
+                path.parent.mkdir(parents=True, exist_ok=True)
+                path.write_text(build_markdown(cve_id, details or pending_details(status), [], [], kev), encoding="utf-8")
+            created.add(cve_id)
+        elif details:
+            refresh_record_header(path, details, kev, dry_run=dry_run)
+        elif cve_id not in needed:
+            continue
+        if details:
+            state.pop(cve_id, None)
+        else:
+            previous = state.get(cve_id, {})
+            state[cve_id] = {"status": status, "checked": now.isoformat()
+                             if cve_id in due or cve_id in records else previous.get("checked", now.isoformat())}
 
     record_dates(records, dry_run=dry_run)
     if not dry_run:
@@ -1437,6 +1511,8 @@ def record_preamble(cve_id: str, details: CVEDetails, kev: dict[str, list] | Non
     injection as a result of arbitrary file creation".
     """
     lines = [f"### [{cve_id}](https://www.cve.org/CVERecord?id={cve_id})"]
+    if details.record_status != "PUBLISHED":
+        lines.insert(0, f"<!-- CVE record: {details.record_status} -->")
     if details.title:
         lines.append(f"**{details.title}**")
     products = details.products or ["n/a"]
@@ -1464,6 +1540,13 @@ def refresh_record_header(path: Path, details: CVEDetails, kev: dict[str, list],
     with path.open("r", encoding="utf-8", newline="") as handle:
         text = handle.read()
     newline = "\r\n" if "\r\n" in text else "\n"
+    if markdown_record_status(text) != "PUBLISHED":
+        # Replace only our provisional description; preserve every source link.
+        text = re.sub(
+            SECTION_RE_TEMPLATE.format(header=re.escape("### Description")),
+            lambda match: match.group(1) + newline + details.description.strip().replace("\n", newline) + newline,
+            text, flags=re.DOTALL,
+        )
     lines = text.split(newline)
     anchor = next((i for i, line in enumerate(lines) if line.strip() == "### Description"), None)
     if anchor is None:
@@ -1484,6 +1567,9 @@ def refresh_record_headers(records: dict[str, dict[str, Any]], *, dry_run: bool)
     for cve_id, record in records.items():
         path = CVES / cve_id.split("-")[1] / f"{cve_id}.md"
         if not path.exists():
+            continue
+        if str((record.get("cveMetadata") or {}).get("state") or "").upper() == "REJECTED":
+            mark_rejected(path, dry_run=dry_run)
             continue
         details = details_from_record(record or {})
         if details is None:
@@ -1634,6 +1720,7 @@ def sync_markdown(
     kev = load_kev()
     accepted_github: dict[str, list[str]] = {}
     accepted_references: dict[str, list[str]] = {}
+    record_states = load_record_state()
     cve_ids = sorted(set(github) | set(references))
 
     for cve_id in cve_ids:
@@ -1645,8 +1732,14 @@ def sync_markdown(
                            if cve_id not in source_artifacts.excluded_cves(github_repo_from_url(url))]
         record = records.get(cve_id)
 
-        if record and not record_is_published(record):
-            stats.skipped.append(f"{cve_id}: CVE is not published")
+        status = str((record or {}).get("cveMetadata", {}).get("state")
+                     or record_states.get(cve_id, {}).get("status") or "UNAVAILABLE").upper()
+        if status == "REJECTED":
+            mark_rejected(path, dry_run=dry_run)
+            stats.skipped.append(f"{cve_id}: CVE is rejected")
+            continue
+        if path.exists() and markdown_record_status(path.read_text(encoding="utf-8")) == "REJECTED":
+            stats.skipped.append(f"{cve_id}: CVE is rejected")
             continue
 
         if path.exists():
@@ -1660,8 +1753,8 @@ def sync_markdown(
         else:
             details = details_from_record(record or {})
             if not details:
-                stats.skipped.append(f"{cve_id}: published CVE metadata is unavailable")
-                continue
+                status = str((record or {}).get("cveMetadata", {}).get("state") or "UNAVAILABLE").upper()
+                details = pending_details(status)
             if not dry_run:
                 path.parent.mkdir(parents=True, exist_ok=True)
                 path.write_text(
@@ -1786,6 +1879,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--cve", action="append", default=[], help="Process one CVE ID")
     parser.add_argument("--skip-github", action="store_true", help="Skip GitHub repository discovery")
     parser.add_argument("--skip-cvelist", action="store_true", help="Skip CVE List V5 references")
+    parser.add_argument("--pending-only", action="store_true", help="Publish saved candidates and enrich pending metadata without GitHub discovery")
     parser.add_argument("--dry-run", action="store_true", help="Report changes without writing files")
     parser.add_argument("--cvelist-dir", type=Path, help="Local CVE List V5 checkout")
     parser.add_argument(
@@ -1794,6 +1888,10 @@ def parse_args() -> argparse.Namespace:
         help="Rewrite the title and badges of every record from --cvelist-dir, and do nothing else",
     )
     args = parser.parse_args()
+    if args.pending_only:
+        if args.backfill_dir or args.catch_up_dir or args.refresh_headers or args.bootstrap_delta:
+            parser.error("--pending-only cannot be combined with backfill, catch-up or header refresh")
+        args.skip_github = args.skip_cvelist = True
     if args.bootstrap_delta and (args.catch_up_dir or args.backfill_dir or args.cve or args.skip_cvelist or args.refresh_headers):
         parser.error("--bootstrap-delta cannot be filtered, skipped, or combined with catch-up/backfill/header refresh")
     if bool(args.backfill_dir) != bool(args.year):
@@ -1823,8 +1921,12 @@ def main() -> int:
     references: dict[str, list[str]] = {}
     record_paths: dict[str, Path] = {}
     checkpoint = ""
-    discovery_end = datetime.now(timezone.utc).date()
-    discovery_state = load_discovery_state() if not args.skip_github and not cve_filter else None
+    discovery_now = datetime.now(timezone.utc)
+    discovery_end = discovery_now.date()
+    pending_only = getattr(args, "pending_only", False)
+    discovery_state = load_discovery_state() if pending_only or (not args.skip_github and not cve_filter) else None
+    failures: list[str] = []
+    completed_years: set[int] = set()
     years: list[int] = []
 
     if not args.skip_cvelist:
@@ -1839,8 +1941,14 @@ def main() -> int:
             )
             print(f"CVE List V5 backfill: {len(references)} CVEs with PoC references")
         else:
-            records, references, checkpoint = load_incremental_records(cve_filter, bootstrap=getattr(args, "bootstrap_delta", False))
-            references = filter_live_references(references)
+            try:
+                records, references, checkpoint = load_incremental_records(cve_filter, bootstrap=getattr(args, "bootstrap_delta", False))
+                references = filter_live_references(references)
+            except (RuntimeError, error.URLError, TimeoutError, http.client.HTTPException) as exc:
+                if getattr(args, "bootstrap_delta", False):
+                    raise
+                checkpoint = ""
+                failures.append(f"CVE List refresh: {exc}")
 
     github: dict[str, list[str]] = {}
     if not args.skip_github:
@@ -1861,6 +1969,8 @@ def main() -> int:
             window_end=discovery_end,
             checkpoints=discovery_state["years"] if discovery_state else None,
             artifact_cache_write=not args.dry_run,
+            failures=failures,
+            completed_years=completed_years,
         )
         print(f"GitHub discovery: {sum(len(urls) for urls in github.values())} links for {len(github)} CVEs")
 
@@ -1869,18 +1979,27 @@ def main() -> int:
             path = record_paths.get(cve_id)
             if path and (record := read_record(path)):
                 records[cve_id] = record
-    deferred: set[str] = set()
     if discovery_state is not None:
         for cve_id, pending in discovery_state["pending"].items():
+            if cve_filter and cve_id not in cve_filter:
+                continue
             if backfill and int(cve_id.split("-")[1]) not in years:
                 continue
             for mappings, field in ((github, "github"), (references, "references")):
                 if pending[field]:
                     mappings[cve_id] = stable_unique([*mappings.get(cve_id, []), *pending[field]])
-            if not retry_record(pending, discovery_end):
-                deferred.add(cve_id)
     candidates = set(github) | set(references)
-    fetch_missing_records(candidates - deferred, records)
+    # Source-specific importers also create provisional entries. Enrich them
+    # even when their repositories are no longer in the GitHub search window.
+    pending_metadata = {
+        cve_id for cve_id, entry in load_record_state().items()
+        if entry.get("status") != "REJECTED"
+        and (not cve_filter or cve_id in cve_filter)
+        and (CVES / cve_id.split("-")[1] / f"{cve_id}.md").exists()
+    }
+    created, rejected = ensure_cve_entries(
+        candidates | pending_metadata, dry_run=args.dry_run, records=records, failures=failures,
+    )
 
     stats, accepted_github, accepted_references = sync_markdown(
         records,
@@ -1888,6 +2007,7 @@ def main() -> int:
         references,
         dry_run=args.dry_run,
     )
+    stats.created = sorted(set(stats.created) | created)
     github_additions, github_removals = reconcile_inventory(
         GITHUB_LIST,
         "#### Github",
@@ -1915,18 +2035,20 @@ def main() -> int:
     if discovery_state is not None and not args.dry_run:
         for cve_id in candidates:
             record = records.get(cve_id) or {}
-            status = str((record.get("cveMetadata") or {}).get("state") or "UNAVAILABLE").upper()
-            if cve_id in accepted_github or cve_id in accepted_references or status == "REJECTED":
+            path = CVES / cve_id.split("-")[1] / f"{cve_id}.md"
+            status = ("REJECTED" if cve_id in rejected else
+                      markdown_record_status(path.read_text(encoding="utf-8")) if path.exists() else
+                      str((record.get("cveMetadata") or {}).get("state") or "UNAVAILABLE").upper())
+            if status in {"PUBLISHED", "REJECTED"}:
                 discovery_state["pending"].pop(cve_id, None)
             else:
-                previous = discovery_state["pending"].get(cve_id, {})
                 discovery_state["pending"][cve_id] = {
                     "github": github.get(cve_id, []),
                     "references": references.get(cve_id, []),
-                    "status": previous.get("status", status) if cve_id in deferred else status,
-                    "checked": previous["checked"] if cve_id in deferred else discovery_end.isoformat(),
+                    "status": status,
+                    "checked": discovery_now.isoformat(),
                 }
-        discovery_state["years"].update({str(year): discovery_end.isoformat() for year in years})
+        discovery_state["years"].update({str(year): discovery_end.isoformat() for year in completed_years})
         write_discovery_state(discovery_state)
 
     print(
@@ -1944,7 +2066,9 @@ def main() -> int:
             print(f"Skipped {entry}")
         if len(stats.skipped) > 20:
             print(f"Skipped {len(stats.skipped) - 20} additional CVEs")
-    return 0
+    for failure in failures:
+        print(f"::warning::{failure}")
+    return 1 if failures else 0
 
 
 if __name__ == "__main__":

@@ -24,6 +24,11 @@ class DeltaRecoveryTests(unittest.TestCase):
         self.patcher = patch.object(updater, 'STATE_FILE', self.state)
         self.patcher.start()
         self.addCleanup(self.patcher.stop)
+        for name, value in {'CVES': self.root / 'cves', 'RECORD_STATE_FILE': self.root / 'records.json',
+                            'DISCOVERY_STATE_FILE': self.root / 'discovery.json'}.items():
+            patcher = patch.object(updater, name, value)
+            patcher.start()
+            self.addCleanup(patcher.stop)
         self.log = [dict(fetchTime=t, new=[], updated=[]) for t in
                     ['2026-10-06T22:00:00Z', '2026-09-06T22:07:00Z']]
 

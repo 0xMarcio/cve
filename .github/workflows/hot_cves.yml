@@ -29,11 +29,18 @@ jobs:
         with:
           python-version: '3.13'
 
+      - name: Publish saved candidates and refresh pending CVE metadata
+        id: pending
+        continue-on-error: true
+        run: python3 scripts/update_cves.py --pending-only
+
       # Every repository pushed in the last day that names a CVE of this year
       # or last, with its README read and the classifier applied, so a PoC
       # published this morning is on the site within the hour. The daily run
       # keeps covering every year and the CVE record references.
       - name: Discover this year's PoCs pushed in the last day
+        id: discovery
+        continue-on-error: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: python3 scripts/update_cves.py --lookback-days 1 --years 2 --skip-cvelist
@@ -46,6 +53,8 @@ jobs:
         run: python3 .github/getTrending.py
 
       - name: Ingest the current candidates
+        id: ingest
+        continue-on-error: true
         if: steps.trending.outcome == 'success'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -112,6 +121,6 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: gh workflow run site.yml --ref main
 
-      - name: Report trending refresh failure
-        if: steps.trending.outcome == 'failure'
+      - name: Report incomplete refresh
+        if: steps.pending.outcome == 'failure' || steps.discovery.outcome == 'failure' || steps.trending.outcome == 'failure' || steps.ingest.outcome == 'failure'
         run: exit 1

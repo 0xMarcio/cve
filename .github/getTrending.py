@@ -757,6 +757,9 @@ Advisory rows are `[URL, NVD reference tags]`.
 
 ## Sources
 
+Public PoCs are indexed as soon as they pass source checks. CVE and NVD metadata
+enrich the listing when available; pending CVE records do not hide PoC links.
+
 | Source | What it contributes |
 | --- | --- |
 | GitHub | Repositories naming a CVE, checked for code before they are linked |

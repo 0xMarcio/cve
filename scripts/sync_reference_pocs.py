@@ -10,7 +10,6 @@ import json
 import os
 import re
 import signal
-import tempfile
 import time
 from datetime import datetime, timedelta, timezone
 from html.parser import HTMLParser
@@ -320,39 +319,36 @@ def published_entries(accepted: dict, previous: dict, args, budget: Budget) -> d
     statuses = load_json(args.record_states, {}) if args.record_states else {}
     if args.record_states and (not isinstance(statuses, dict) or any(cve not in statuses for cve in accepted)):
         raise ValueError("Incomplete official CVE state snapshot")
-    with tempfile.TemporaryDirectory(prefix="pocindex-reference-records-") as directory:
-        local = Path(directory)
-        for cve in accepted:
-            budget.remaining()
-            path = update_cves.CVES / cve.split("-")[1] / f"{cve}.md"
-            if not args.record_states and cve in previous and path.exists():
-                # Previously admitted records retain their official publication
-                # evidence; metadata sync handles later rejections.
-                statuses[cve] = "PUBLISHED"
-            if statuses.get(cve) in {"RESERVED", "REJECTED"} or (cve in statuses and path.exists()):
+    records = {}
+    for cve in accepted:
+        budget.remaining()
+        path = update_cves.CVES / cve.split("-")[1] / f"{cve}.md"
+        if not args.record_states and cve in previous and path.exists():
+            statuses[cve] = update_cves.markdown_record_status(path.read_text(encoding="utf-8"))
+        if cve in statuses:
+            if statuses[cve] in {"RESERVED", "REJECTED"}:
+                records[cve] = {"cveMetadata": {"cveId": cve, "state": statuses[cve]}}
+            if statuses[cve] != "PUBLISHED" or path.exists():
                 continue
-            record = None
-            if args.cvelist_dir:
-                record = update_cves.read_record(update_cves.cvelist_record_path(args.cvelist_dir, cve))
-            if record is None:
-                req = request.Request(update_cves.CVE_API_URL.format(cve_id=cve), headers={"User-Agent": "pocindex-reference-pocs"})
-                try:
-                    record = json.loads(budget.read(req))
-                except error.HTTPError as problem:
-                    if problem.code != 404:
-                        raise
-                    statuses[cve] = "UNAVAILABLE"
-                    continue
-            status = (record.get("cveMetadata") or {}).get("state")
-            if update_cves.record_cve_id(record) != cve or status not in {"PUBLISHED", "RESERVED", "REJECTED"} or (status == "PUBLISHED" and update_cves.details_from_record(record) is None):
-                raise ValueError(f"Incomplete or mismatched official record: {cve}")
-            statuses[cve] = status
-            if not path.exists():
-                save_json(update_cves.cvelist_record_path(local, cve), record)
-        accepted = {cve: urls for cve, urls in accepted.items() if statuses.get(cve) == "PUBLISHED"}
-        # Every missing record is now local: the shared helper cannot start
-        # unbounded network retries after this command's budget expires.
-        _, unavailable = update_cves.ensure_cve_entries(accepted, dry_run=args.dry_run, cvelist_dir=local)
+        record = None
+        if args.cvelist_dir:
+            record = update_cves.read_record(update_cves.cvelist_record_path(args.cvelist_dir, cve))
+        if record is None:
+            req = request.Request(update_cves.CVE_API_URL.format(cve_id=cve), headers={"User-Agent": "pocindex-reference-pocs"})
+            try:
+                record = json.loads(budget.read(req))
+            except (error.URLError, TimeoutError) as problem:
+                print(f"CVE metadata deferred for {cve}: {problem}")
+                continue
+        status = (record.get("cveMetadata") or {}).get("state")
+        if update_cves.record_cve_id(record) != cve or status not in {"PUBLISHED", "RESERVED", "REJECTED"} or (status == "PUBLISHED" and update_cves.details_from_record(record) is None):
+            raise ValueError(f"Incomplete or mismatched official record: {cve}")
+        records[cve] = record
+    # The shared helper must not start network retries outside this command's
+    # budget. Missing metadata is enriched later by the hourly refresh.
+    _, unavailable = update_cves.ensure_cve_entries(
+        accepted, dry_run=args.dry_run, records=records, fetch_missing=False,
+    )
     return {cve: urls for cve, urls in accepted.items() if cve not in unavailable}
 
 
@@ -395,7 +391,7 @@ def main() -> int:
             save_json(QUEUE, state)
             save_json(VERIFIED, accepted)
         pairs = sum(len(urls) for urls in accepted.values())
-        print(f"Reference PoCs: {pairs} reviewed links for {len(accepted)} published CVEs; {len(state['checks'])} URLs checked")
+        print(f"Reference PoCs: {pairs} reviewed links for {len(accepted)} CVEs; {len(state['checks'])} URLs checked")
         if failures:
             raise RuntimeError(f"{failures} reference fetches failed; prior approvals and retry work preserved")
     except BudgetExpired:

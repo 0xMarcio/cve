@@ -9,7 +9,7 @@ const { MessageChannel } = require('node:worker_threads');
 
 const script = fs.readFileSync(path.join(__dirname, '../docs/logic.js'), 'utf8');
 
-function startPage(t, { search = '', trending, kev = {}, indexError = false }) {
+function startPage(t, { search = '', trending, kev = {}, indexError = false, entries }) {
   const elements = new Map();
   const calls = [];
   const document = {
@@ -34,7 +34,7 @@ function startPage(t, { search = '', trending, kev = {}, indexError = false }) {
       if (url === '/CVE_list.json' && indexError) throw new Error('Index unavailable');
       const data = url === '/trending_poc.json' ? await trending
         : url === '/kev.json' ? await kev
-        : url === '/CVE_list.json' ? [{ cve: 'CVE-2026-1234', desc: 'widget', poc: ['https://github.com/owner/poc'] }]
+        : url === '/CVE_list.json' ? entries || [{ cve: 'CVE-2026-1234', desc: 'widget', poc: ['https://github.com/owner/poc'] }]
           : {};
       return { ok: true, json: async () => data };
     }
@@ -43,6 +43,21 @@ function startPage(t, { search = '', trending, kev = {}, indexError = false }) {
   t.after(() => vm.runInContext('yieldPort.port1.close(); yieldPort.port2.close();', context));
   return { elements, calls, context };
 }
+
+test('pending CVEs are searchable by identifier and PoC name without NVD metadata', async t => {
+  const entries = ['CVE-2026-109618', 'CVE-2026-109619'].map(cve => ({
+    cve, desc: 'Official CVE details are pending.', metadata_pending: true,
+    poc: ['https://github.com/example/php2shell-poc']
+  }));
+  for (const query of ['CVE-2026-109618', 'CVE-2026-109619', 'php2shell']) {
+    const { elements } = startPage(t, { search: `?q=${query}`, entries, trending: new Promise(() => {}) });
+    await new Promise(setImmediate);
+    const html = elements.get('[data-results]').innerHTML;
+    assert.match(html, /CVE metadata pending/);
+    assert.match(html, /https:\/\/github.com\/example\/php2shell-poc/);
+    assert.match(html, new RegExp(query === 'php2shell' ? 'CVE-2026-109618' : query));
+  }
+});
 
 test('repository security advisories have GHSA filtering without repository stars or dates', async t => {
   const { context } = startPage(t, { trending: new Promise(() => {}) });
