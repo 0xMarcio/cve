@@ -27648,3 +27648,4 @@ CVE-2026-109619 - https://github.com/kuwoo/php2shell-Lab
 CVE-2026-109619 - https://github.com/rizkyriann/php2shell-lab
 CVE-2026-88771 - https://github.com/evenomn/actions-test
 CVE-2026-88772 - https://github.com/evenomn/actions-test
+CVE-2026-109619 - https://github.com/unlimit0118/CVE-2026-109619-php2shell-poc
