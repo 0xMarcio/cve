@@ -1,8 +1,8 @@
 <div align="center">
 
-<a href="https://pocindex.io/"><img src="https://raw.githubusercontent.com/0xMarcio/pocindex/main/docs/hero.svg?v=174853-85410-1241" alt="PoC Index" width="100%"></a>
+<a href="https://pocindex.io/"><img src="https://raw.githubusercontent.com/0xMarcio/pocindex/main/docs/hero.svg?v=174855-85412-1241" alt="PoC Index" width="100%"></a>
 
-[![last sync](https://img.shields.io/badge/last%20sync-21%20Oct%202026%2015%3A09%20UTC-2f81f7?style=flat-square&labelColor=161b22)](https://github.com/0xMarcio/pocindex/commits/main)&nbsp;[![CI](https://img.shields.io/github/actions/workflow/status/0xMarcio/pocindex/hot_cves.yml?style=flat-square&label=CI&color=2f81f7&labelColor=161b22&_=202610211509)](https://github.com/0xMarcio/pocindex/actions/workflows/hot_cves.yml)&nbsp;[![CVEs with PoCs](https://img.shields.io/badge/CVEs%20with%20PoCs-85%2C410-2f81f7?style=flat-square&labelColor=161b22)](https://pocindex.io/)&nbsp;[![known exploited](https://img.shields.io/badge/known%20exploited-1%2C241-f85149?style=flat-square&labelColor=161b22)](https://pocindex.io/)&nbsp;[![stars](https://img.shields.io/github/stars/0xMarcio/pocindex?style=flat-square&label=stars&color=e3b341&labelColor=161b22&_=202610211509)](https://github.com/0xMarcio/pocindex/stargazers)
+[![last sync](https://img.shields.io/badge/last%20sync-21%20Oct%202026%2016%3A10%20UTC-2f81f7?style=flat-square&labelColor=161b22)](https://github.com/0xMarcio/pocindex/commits/main)&nbsp;[![CI](https://img.shields.io/github/actions/workflow/status/0xMarcio/pocindex/hot_cves.yml?style=flat-square&label=CI&color=2f81f7&labelColor=161b22&_=202610211610)](https://github.com/0xMarcio/pocindex/actions/workflows/hot_cves.yml)&nbsp;[![CVEs with PoCs](https://img.shields.io/badge/CVEs%20with%20PoCs-85%2C412-2f81f7?style=flat-square&labelColor=161b22)](https://pocindex.io/)&nbsp;[![known exploited](https://img.shields.io/badge/known%20exploited-1%2C241-f85149?style=flat-square&labelColor=161b22)](https://pocindex.io/)&nbsp;[![stars](https://img.shields.io/github/stars/0xMarcio/pocindex?style=flat-square&label=stars&color=e3b341&labelColor=161b22&_=202610211610)](https://github.com/0xMarcio/pocindex/stargazers)
 
 <a href="https://pocindex.io/"><img src="https://raw.githubusercontent.com/0xMarcio/pocindex/8dec6181e823d641132e0ee8a52a1612c2b5dd37/docs/search.svg" alt="Search PoC Index" width="100%"></a>
 
@@ -14,39 +14,39 @@
 
 | Stars | Released | PoC | Description |
 | --- | --- | --- | --- |
-| 0⭐ | 4m ago | [CVE-2026-75045-PoC](https://github.com/LHeiakim/CVE-2026-75045-PoC) | CVE-2026-75045 - JetBrains YouTrack unauthenticated database backup download via shared draft signature (CVSS… |
-| 0⭐ | 41m ago | [CVE-2026-109619](https://github.com/santihabib/CVE-2026-109619) | Cross-request use-after-free in PHP session.upload_progress (CVE-2026-109619) - root-cause analysis and… |
-| 0⭐ | 48m ago | [CVE-2025-69413-PoC](https://github.com/fuad00/CVE-2025-69413-PoC) | CVE-2025-69413 - Gitea API user enumeration PoC via auth error differentiation |
-| 1⭐ | 51m ago | [CVE-2026-109618-poc](https://github.com/enactive-systems/CVE-2026-109618-poc) | PHP uses longjmp() for out-of-memory (OOM) errors to exit the current context and abort handling of the… |
-| 0⭐ | 53m ago | [CVE-2026-109618-109619-PHP-session.upload_progress-Exploit-](https://github.com/adriyansyah-mf/CVE-2026-109618-109619-PHP-session.upload_progress-Exploit-) | PHP uses longjmp() for out-of-memory (OOM) errors to exit the current context and abort handling of the… |
-| 0⭐ | 1h ago | [CVE-2026-109618](https://github.com/Okymi-X/CVE-2026-109618) | php2shell - CVE-2026-109618 / CVE-2026-109619 PoC / Pre-auth RCE in PHP session.upload_progress (CVSS 9.2) |
-| 0⭐ | 2h ago | <img src="https://raw.githubusercontent.com/0xMarcio/pocindex/main/docs/kev.svg" alt="KEV" title="CISA known exploited" height="14"> [CVE-2023-46604](https://github.com/Theocyg/CVE-2023-46604) | The Java OpenWire protocol marshaller is vulnerable to Remote Code Execution. This vulnerability may allow a… |
-| 24⭐ | 3h ago | [CVE-2026-109618-exploit](https://github.com/junaire/CVE-2026-109618-exploit) | PHP uses longjmp() for out-of-memory (OOM) errors to exit the current context and abort handling of the… |
-| 0⭐ | 3h ago | <img src="https://raw.githubusercontent.com/0xMarcio/pocindex/main/docs/kev.svg" alt="KEV" title="CISA known exploited" height="14"> [PoC-for-CVE-2026-63030](https://github.com/Githu836/PoC-for-CVE-2026-63030) | WordPress 6.9.x before 6.9.5 and 7.0.x before 7.0.2 is affected by a REST API batch endpoint route confusion… |
-|  | 3h ago | [php2shell-CVE-2026-109618](https://github.com/richardmongler/php2shell-CVE-2026-109618) | PHP uses longjmp() for out-of-memory (OOM) errors to exit the current context and abort handling of the… |
+| 1⭐ | 25m ago | [CVE-2026-111497-POC](https://github.com/CaterMaoZi/CVE-2026-111497-POC) | Nodejs漏洞 CVE-2026-111497 POC |
+| 0⭐ | 30m ago | [CVE-2026-105482-POC](https://github.com/CaterMaoZi/CVE-2026-105482-POC) | Nodejs漏洞 CVE-2026-105482 POC |
+| 1⭐ | 41m ago | [CVE-2026-109618-PHP2Shell-poc](https://github.com/lzz0403/CVE-2026-109618-PHP2Shell-poc) | PHP 8.2.6 + Apache mod_php |
+| 0⭐ | 1h ago | [CVE-2026-75045-PoC](https://github.com/LHeiakim/CVE-2026-75045-PoC) | CVE-2026-75045 - JetBrains YouTrack unauthenticated database backup download via shared draft signature (CVSS… |
+| 0⭐ | 1h ago | [CVE-2026-109619](https://github.com/santihabib/CVE-2026-109619) | Cross-request use-after-free in PHP session.upload_progress (CVE-2026-109619) - root-cause analysis and… |
+| 0⭐ | 1h ago | [CVE-2025-69413-PoC](https://github.com/fuad00/CVE-2025-69413-PoC) | CVE-2025-69413 - Gitea API user enumeration PoC via auth error differentiation |
+| 2⭐ | 1h ago | [CVE-2026-109618-poc](https://github.com/enactive-systems/CVE-2026-109618-poc) | PHP uses longjmp() for out-of-memory (OOM) errors to exit the current context and abort handling of the… |
+| 0⭐ | 1h ago | [CVE-2026-109618-109619-PHP-session.upload_progress-Exploit-](https://github.com/adriyansyah-mf/CVE-2026-109618-109619-PHP-session.upload_progress-Exploit-) | PHP uses longjmp() for out-of-memory (OOM) errors to exit the current context and abort handling of the… |
+| 0⭐ | 2h ago | [CVE-2026-109618](https://github.com/Okymi-X/CVE-2026-109618) | php2shell - CVE-2026-109618 / CVE-2026-109619 PoC / Pre-auth RCE in PHP session.upload_progress (CVSS 9.2) |
+| 0⭐ | 3h ago | <img src="https://raw.githubusercontent.com/0xMarcio/pocindex/main/docs/kev.svg" alt="KEV" title="CISA known exploited" height="14"> [CVE-2023-46604](https://github.com/Theocyg/CVE-2023-46604) | The Java OpenWire protocol marshaller is vulnerable to Remote Code Execution. This vulnerability may allow a… |
 
 ## Trending in 2026
 
 | Stars | Updated | Repository | Description |
 | --- | --- | --- | --- |
-| 233⭐ | 38m ago | [php2shell-CVE-2026-109618-CVE-2026-109619-PoC](https://github.com/eness/php2shell-CVE-2026-109618-CVE-2026-109619-PoC) | Proof-of-Concept (PoC) exploit for php2shell (CVE-2026-109618 / CVE-2026-109619), demonstrating remote code… |
-| 532⭐ | 21h ago | <img src="https://raw.githubusercontent.com/0xMarcio/pocindex/main/docs/kev.svg" alt="KEV" title="CISA known exploited" height="14"> [CVE-2026-41940-PoC](https://github.com/sakidekin/CVE-2026-41940-PoC) | cPanel & WHM Authentication Bypass via CVE-2026-41940 explotation |
-| 48⭐ | 12h ago | [CVE-2026-109618](https://github.com/Zer061/CVE-2026-109618) | PoC CVE-2026-109618 / -109619 (PHP session.upload_progress heap UAF) |
+| 314⭐ | 1h ago | [php2shell-CVE-2026-109618-CVE-2026-109619-PoC](https://github.com/eness/php2shell-CVE-2026-109618-CVE-2026-109619-PoC) | Proof-of-Concept (PoC) exploit for php2shell (CVE-2026-109618 / CVE-2026-109619), demonstrating remote code… |
+| 532⭐ | 22h ago | <img src="https://raw.githubusercontent.com/0xMarcio/pocindex/main/docs/kev.svg" alt="KEV" title="CISA known exploited" height="14"> [CVE-2026-41940-PoC](https://github.com/sakidekin/CVE-2026-41940-PoC) | cPanel & WHM Authentication Bypass via CVE-2026-41940 explotation |
+| 50⭐ | 48m ago | [CVE-2026-109618](https://github.com/Zer061/CVE-2026-109618) | PoC CVE-2026-109618 / -109619 (PHP session.upload_progress heap UAF) |
+| 36⭐ | 4h ago | [CVE-2026-109618-exploit](https://github.com/junaire/CVE-2026-109618-exploit) | PHP uses longjmp() for out-of-memory (OOM) errors to exit the current context and abort handling of the… |
 | 69⭐ | 2d ago | [CVE-2026-20817](https://github.com/ZeroDayEvil/CVE-2026-20817) | 🛡️ Official AI Security Tool module for CVE-2026-20817 (Windows Error Reporting WER ALPC Local Privilege… |
 | 477⭐ | 61d ago | [CVE-2026-9830](https://github.com/opaxial/CVE-2026-9830) | CVE-2026-9830 Proof of Concept |
-| 24⭐ | 3h ago | [CVE-2026-109618-exploit](https://github.com/junaire/CVE-2026-109618-exploit) | PHP uses longjmp() for out-of-memory (OOM) errors to exit the current context and abort handling of the… |
 | 335⭐ | 85d ago | [CVE-2026-54121](https://github.com/aniqfakhrul/CVE-2026-54121) | Certighost POC |
-| 60⭐ | 7d ago | [CVE-2026-97229-PoC](https://github.com/jburgess-r7/CVE-2026-97229-PoC) | GitLab CI lint integer-overflow RCE PoC for CVE-2026-97229, validated against the official 19.4.1 CE amd64… |
+| 60⭐ | 8d ago | [CVE-2026-97229-PoC](https://github.com/jburgess-r7/CVE-2026-97229-PoC) | GitLab CI lint integer-overflow RCE PoC for CVE-2026-97229, validated against the official 19.4.1 CE amd64… |
 | 28⭐ | 2d ago | <img src="https://raw.githubusercontent.com/0xMarcio/pocindex/main/docs/kev.svg" alt="KEV" title="CISA known exploited" height="14"> [CVE-2026-41940-PoC](https://github.com/ZeroDayEvil/CVE-2026-41940-PoC) | cPanel and WHM versions after 11.40 contain an authentication bypass vulnerability in the login flow that… |
 | 189⭐ | 60d ago | [CVE-2026-62911](https://github.com/hypnguyen1209/CVE-2026-62911) | POC pre-auth RCE on Exchange |
 | 96⭐ | 22d ago | [CVE-2026-41096-PoC](https://github.com/ZeroDayEvil/CVE-2026-41096-PoC) | 🛡️ Official AI Security Tool module for CVE-2026-41096 (Windows DNSAPI.dll Heap Overflow / DNS-Mayhem Deep… |
-| 19⭐ | 2d ago | [CVE-2026-64560-public](https://github.com/Feng1586/CVE-2026-64560-public) | CVE-2026-64560 staged security research package |
+| 20⭐ | 2d ago | [CVE-2026-64560-public](https://github.com/Feng1586/CVE-2026-64560-public) | CVE-2026-64560 staged security research package |
 | 35⭐ | 7d ago | [CVE-2026-85884](https://github.com/Beardhammer/CVE-2026-85884) | CVE-85884 POC |
 | 24⭐ | 4d ago | [CVE-2026-40369-EXPLOIT](https://github.com/ZeroDayEvil/CVE-2026-40369-EXPLOIT) | 🛡️ Official AI Security Tool module for CVE-2026-40369 (Windows NtQuerySystemInformation Class 253 Arbitrary… |
 | 27⭐ | 6d ago | [plz110-6.12.69-cve-2026-64560-ksu](https://github.com/feiguang-ai/plz110-6.12.69-cve-2026-64560-ksu) | 一加 15T（PLZ110）临时 root + KernelSU per-boot 接管：CVE-2026-64560 移植，不写分区、重启即失效。内核… |
 | 92⭐ | 39d ago | <img src="https://raw.githubusercontent.com/0xMarcio/pocindex/main/docs/kev.svg" alt="KEV" title="CISA known exploited" height="14"> [CVE-2026-20805-PoC](https://github.com/ZeroDayEvil/CVE-2026-20805-PoC) | 🛡️ Official AI Security Tool module for CVE-2026-20805 (Desktop Window Manager / dwm.exe Information… |
-| 8⭐ | 7h ago | [CVE-2026-109618-php2shell-lab](https://github.com/0x4148/CVE-2026-109618-php2shell-lab) | PHP2Shell (CVE-2026-109618 / CVE-2026-109619) Docker lab and PoC. Use-After-Free in PHP's… |
 | 88⭐ | 39d ago | [CVE-2026-21858-n8n-FullChain](https://github.com/ZeroDayEvil/CVE-2026-21858-n8n-FullChain) | 🛡️ Official AI Security Tool module for CVE-2026-21858 + CVE-2025-68613 (n8n "Ni8mare" Unauthenticated… |
+| 8⭐ | 8h ago | [CVE-2026-109618-php2shell-lab](https://github.com/0x4148/CVE-2026-109618-php2shell-lab) | PHP2Shell (CVE-2026-109618 / CVE-2026-109619) Docker lab and PoC. Use-After-Free in PHP's… |
 | 105⭐ | 56d ago | [CVE-2026-75604-poc](https://github.com/rafabd1/CVE-2026-75604-poc) | CVE-2026-75604 Next.js Windows RCE poc |
 | 52⭐ | 22d ago | [CVE-2026-94545](https://github.com/EQSTLab/CVE-2026-94545) | Next.js RCE |
 
@@ -85,7 +85,7 @@
 
 | Stars | Updated | Repository | Description |
 | --- | --- | --- | --- |
-| 7⭐ | 12d ago | [CVE-2022-22077](https://github.com/grisuno/CVE-2022-22077) | CVE-2022-22077 is a high-severity vulnerability (CVSS score 7.8) affecting the RTCore64.sys driver… |
+| 7⭐ | 13d ago | [CVE-2022-22077](https://github.com/grisuno/CVE-2022-22077) | CVE-2022-22077 is a high-severity vulnerability (CVSS score 7.8) affecting the RTCore64.sys driver… |
 
 </details>
 
