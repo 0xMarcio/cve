@@ -493,7 +493,7 @@
 "CVE-2015-20121 https://www.exploit-db.com/exploits/38497":{"basis":"source","cve":"CVE-2015-20121","imported":true,"released":"2015-10-19","source":"2015-10-19","url":"https://www.exploit-db.com/exploits/38497"},
 "CVE-2015-20122 https://www.ddpoc.com/poc/DVB-2021-2211.html":{"basis":"unknown","cve":"CVE-2015-20122","imported":true,"released":null,"url":"https://www.ddpoc.com/poc/DVB-2021-2211.html"},
 "CVE-2015-20123 https://packetstorm.news/files/id/131167":{"basis":"unknown","cve":"CVE-2015-20123","released":null,"seen":"2026-10-21T07:54:42Z","url":"https://packetstorm.news/files/id/131167/"},
-"CVE-2015-20123 https://www.exploit-db.com/exploits/36559":{"basis":"unknown","cve":"CVE-2015-20123","released":null,"seen":"2026-10-21T07:54:42Z","url":"https://www.exploit-db.com/exploits/36559"},
+"CVE-2015-20123 https://www.exploit-db.com/exploits/36559":{"basis":"source","cve":"CVE-2015-20123","released":"2015-03-30","seen":"2026-10-21T07:54:42Z","source":"2015-03-30","url":"https://www.exploit-db.com/exploits/36559"},
 "CVE-2015-20124 https://packetstorm.news/files/id/131162":{"basis":"unknown","cve":"CVE-2015-20124","released":null,"seen":"2026-10-21T07:54:42Z","url":"https://packetstorm.news/files/id/131162/"},
 "CVE-2015-20125 https://packetstorm.news/files/id/131161":{"basis":"unknown","cve":"CVE-2015-20125","released":null,"seen":"2026-10-21T07:54:42Z","url":"https://packetstorm.news/files/id/131161/"},
 "CVE-2015-20128 https://www.cnblogs.com/rebeyond/p/4951418.html":{"basis":"unknown","cve":"CVE-2015-20128","released":null,"seen":"2026-10-21T07:54:42Z","url":"https://www.cnblogs.com/rebeyond/p/4951418.html"},
