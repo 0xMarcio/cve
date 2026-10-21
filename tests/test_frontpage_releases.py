@@ -14,6 +14,8 @@ class FrontpageReleaseTests(unittest.TestCase):
         self.assertEqual(build_site.normalise_block('<p>A &amp; B</p><p><strong>Example:</strong> '
                                                    '&lt;script&gt;alert(1)&lt;/script&gt;</p>'),
                          'A & B\nExample: <script>alert(1)</script>')
+        literal = 'A filter can be bypassed with <a href="javascript:example">link</a>.'
+        self.assertEqual(build_site.normalise_block(literal), literal)
 
     def test_trending_score_uses_the_same_current_stars_it_displays(self):
         cve = 'CVE-2026-1234'

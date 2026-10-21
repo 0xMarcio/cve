@@ -70,8 +70,9 @@ def load_blacklist() -> set[str]:
 def normalise_block(text: str) -> str:
     # CNA descriptions sometimes contain formatting HTML. Keep their text,
     # including encoded payload examples, rather than displaying markup.
-    text = re.sub(r"</?(?:p|div|br|ul|ol|li|h[1-6])(?:\s[^>]*)?/?>", "\n", text, flags=re.I)
-    text = re.sub(r"</?(?:a|strong|em|b|i|code|span)(?:\s[^>]*)?>", "", text, flags=re.I)
+    if re.match(r"\s*<(?:p|div|ul|ol|h[1-6])(?:\s|>)", text, flags=re.I):
+        text = re.sub(r"</?(?:p|div|br|ul|ol|li|h[1-6])(?:\s[^>]*)?/?>", "\n", text, flags=re.I)
+        text = re.sub(r"</?(?:a|strong|em|b|i|code|span)(?:\s[^>]*)?>", "", text, flags=re.I)
     text = html.unescape(text)
     text = text.replace("\r\n", "\n")
     text = re.sub(r"\n{2,}", "\n", text.strip())
