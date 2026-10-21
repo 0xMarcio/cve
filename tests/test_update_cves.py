@@ -380,6 +380,55 @@ No PoCs found on GitHub currently.
 
 
 class DiscoveryFailureTests(unittest.TestCase):
+    @staticmethod
+    def rest_repo(number: int) -> dict:
+        return {"full_name": f"owner/poc-{number}", "html_url": f"https://github.com/owner/poc-{number}",
+                "private": False, "fork": False, "topics": ["poc"]}
+
+    def test_server_failure_restarts_query_without_translating_graphql_cursor(self) -> None:
+        first = {"data": {"search": {"repositoryCount": 3, "nodes": [{"nameWithOwner": "owner/poc-0"}],
+                 "pageInfo": {"hasNextPage": True, "endCursor": "graphql-cursor"}}, "rateLimit": {"remaining": 100}}}
+        failure = update_cves.error.HTTPError("url", 502, "bad gateway", {}, None)
+        rest = {"total_count": 3, "incomplete_results": False, "items": [self.rest_repo(n) for n in range(3)]}
+        client = update_cves.GitHubClient("test")
+        with patch.object(update_cves, "http_json", side_effect=[first, failure, rest]) as fetch, \
+                patch.object(update_cves.time, "sleep"):
+            rows = list(update_cves.search_without_range(client, "CVE-2026"))
+        self.assertEqual({row["nameWithOwner"] for row in rows}, {f"owner/poc-{n}" for n in range(3)})
+        self.assertIn("page=1", fetch.call_args.args[0])
+        self.assertNotIn("graphql-cursor", fetch.call_args.args[0])
+        self.assertEqual(rows[-1]["repositoryTopics"]["nodes"], [{"topic": {"name": "poc"}}])
+        self.assertNotIn("defaultBranchRef", rows[-1])
+
+    def test_rest_fallback_reads_every_page(self) -> None:
+        failure = update_cves.error.HTTPError("url", 503, "unavailable", {}, None)
+        pages = [{"total_count": 101, "incomplete_results": False,
+                  "items": [self.rest_repo(n) for n in range(start, end)]} for start, end in ((0, 100), (100, 101))]
+        with patch.object(update_cves, "http_json", side_effect=[failure, *pages]) as fetch, \
+                patch.object(update_cves.time, "sleep"):
+            rows = list(update_cves.search_without_range(update_cves.GitHubClient("test"), "CVE-2026"))
+        self.assertEqual(len(rows), 101)
+        self.assertEqual(rows[-1]["nameWithOwner"], "owner/poc-100")
+        self.assertIn("page=2", fetch.call_args.args[0])
+
+    def test_rest_fallback_never_accepts_incomplete_or_short_results(self) -> None:
+        for payload in [
+            {"total_count": 1, "incomplete_results": True, "items": [self.rest_repo(0)]},
+            {"total_count": 2, "incomplete_results": False, "items": [self.rest_repo(0)]},
+        ]:
+            failure = update_cves.error.HTTPError("url", 502, "bad gateway", {}, None)
+            with self.subTest(payload=payload), patch.object(update_cves, "http_json", side_effect=[failure, payload]), \
+                    patch.object(update_cves.time, "sleep"):
+                with self.assertRaisesRegex(RuntimeError, "incomplete response"):
+                    update_cves.GitHubClient("test").search_page("CVE-2026")
+
+    def test_authentication_failure_does_not_trigger_rest_fallback(self) -> None:
+        failure = update_cves.error.HTTPError("url", 403, "forbidden", {}, None)
+        with patch.object(update_cves, "http_json", side_effect=failure) as fetch:
+            with self.assertRaises(update_cves.error.HTTPError):
+                update_cves.GitHubClient("test").search_page("CVE-2026")
+        self.assertEqual(fetch.call_count, 1)
+
     def test_search_does_not_accept_partial_graphql_results(self) -> None:
         payload = {
             "data": {"search": {"repositoryCount": 1, "nodes": []}, "rateLimit": {"remaining": 100}},

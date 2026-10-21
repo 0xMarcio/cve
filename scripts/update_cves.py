@@ -19,7 +19,7 @@ from datetime import date, datetime, timedelta, timezone
 from pathlib import Path
 from typing import Any, Callable, Collection, Iterable, Iterator
 from urllib import error, request
-from urllib.parse import quote, urlparse
+from urllib.parse import quote, urlencode, urlparse
 
 import source_artifacts
 
@@ -564,13 +564,50 @@ class GitHubClient:
         if not token:
             raise ValueError("GITHUB_TOKEN is required for GitHub PoC discovery")
         self.headers = {"Authorization": f"Bearer {token}"}
+        self.rest_queries: set[str] = set()
+        self.rest_not_before = 0.0
+
+    def rest_search_page(self, query_text: str, page: int) -> dict[str, Any]:
+        time.sleep(max(0, self.rest_not_before - time.monotonic()))
+        self.rest_not_before = time.monotonic() + 2.1
+        url = "https://api.github.com/search/repositories?" + urlencode({
+            "q": query_text, "per_page": 100, "page": page, "sort": "updated", "order": "desc",
+        })
+        payload = http_json(url, headers=self.headers)
+        total, items = payload.get("total_count"), payload.get("items")
+        if (payload.get("incomplete_results") is not False or not isinstance(total, int)
+                or not isinstance(items, list) or any(not isinstance(row, dict) or not row.get("full_name") for row in items)
+                or len(items) != min(100, max(0, total - (page - 1) * 100))):
+            raise RuntimeError("GitHub REST search returned incomplete response data")
+        nodes = [{
+            "nameWithOwner": row["full_name"], "url": row.get("html_url"),
+            "description": row.get("description"), "isFork": row.get("fork"),
+            "isArchived": row.get("archived"), "isPrivate": row.get("private"),
+            "visibility": row.get("visibility"), "pushedAt": row.get("pushed_at"),
+            "repositoryTopics": {"nodes": [{"topic": {"name": topic}} for topic in row.get("topics") or []]},
+        } for row in items]
+        more = page * 100 < total
+        return {"repositoryCount": total, "nodes": nodes,
+                "pageInfo": {"hasNextPage": more, "endCursor": f"rest:{page + 1}" if more else None}}
 
     def search_page(self, query_text: str, cursor: str | None = None) -> dict[str, Any]:
-        payload = http_json(
-            GITHUB_GRAPHQL_URL,
-            headers=self.headers,
-            data={"query": GITHUB_SEARCH_QUERY, "variables": {"query": query_text, "cursor": cursor}},
-        )
+        if query_text in self.rest_queries:
+            return self.rest_search_page(query_text, int(cursor.split(":")[1]) if cursor else 1)
+        try:
+            payload = http_json(
+                GITHUB_GRAPHQL_URL,
+                headers=self.headers,
+                data={"query": GITHUB_SEARCH_QUERY, "variables": {"query": query_text, "cursor": cursor}},
+            )
+        except error.HTTPError as exc:
+            if exc.code not in {500, 502, 503, 504}:
+                raise
+            # GraphQL search can fail repeatedly while REST remains available.
+            # Restart this query, never translate a GraphQL cursor into a REST
+            # page. Discovery deduplicates already-seen repositories by name.
+            print(f"GitHub GraphQL search HTTP {exc.code}; retrying complete query through REST")
+            self.rest_queries.add(query_text)
+            return self.rest_search_page(query_text, 1)
         data = payload.get("data") or {}
         search = data.get("search")
         if payload.get("errors") or not search:
@@ -693,6 +730,8 @@ def search_range(
             raise RuntimeError("GitHub search returned an invalid pagination cursor")
         cursors.add(cursor)
         page = client.search_page(query_text, cursor)
+        if int(page.get("repositoryCount") or 0) > 1000:
+            raise RuntimeError(f"GitHub search grew beyond 1000 repositories for {query_text}")
     if received < count:
         raise RuntimeError(f"GitHub search returned only {received} of {count} repositories")
 
