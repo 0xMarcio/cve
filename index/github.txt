@@ -27560,3 +27560,5 @@ CVE-2026-11645 - https://github.com/emlinhax/CVE-2026-11645-poc
 CVE-2026-88900 - https://github.com/oscerd/CVE-2026-88900
 CVE-2026-88901 - https://github.com/oscerd/CVE-2026-88901
 CVE-2026-91858 - https://github.com/oscerd/CVE-2026-91858
+CVE-2026-63030 - https://github.com/Githu836/PoC-for-CVE-2026-63030
+CVE-2026-74843 - https://github.com/Bethelhem-Yirga/WAVLINK-Router

@@ -2,7 +2,7 @@
 
 <a href="https://pocindex.io/"><img src="https://raw.githubusercontent.com/0xMarcio/pocindex/main/docs/hero.svg?v=174832-85390-1241" alt="PoC Index" width="100%"></a>
 
-[![last sync](https://img.shields.io/badge/last%20sync-21%20Oct%202026%2011%3A08%20UTC-2f81f7?style=flat-square&labelColor=161b22)](https://github.com/0xMarcio/pocindex/commits/main)&nbsp;[![CI](https://img.shields.io/github/actions/workflow/status/0xMarcio/pocindex/hot_cves.yml?style=flat-square&label=CI&color=2f81f7&labelColor=161b22&_=202610211108)](https://github.com/0xMarcio/pocindex/actions/workflows/hot_cves.yml)&nbsp;[![CVEs with PoCs](https://img.shields.io/badge/CVEs%20with%20PoCs-85%2C390-2f81f7?style=flat-square&labelColor=161b22)](https://pocindex.io/)&nbsp;[![known exploited](https://img.shields.io/badge/known%20exploited-1%2C241-f85149?style=flat-square&labelColor=161b22)](https://pocindex.io/)&nbsp;[![stars](https://img.shields.io/github/stars/0xMarcio/pocindex?style=flat-square&label=stars&color=e3b341&labelColor=161b22&_=202610211108)](https://github.com/0xMarcio/pocindex/stargazers)
+[![last sync](https://img.shields.io/badge/last%20sync-21%20Oct%202026%2012%3A09%20UTC-2f81f7?style=flat-square&labelColor=161b22)](https://github.com/0xMarcio/pocindex/commits/main)&nbsp;[![CI](https://img.shields.io/github/actions/workflow/status/0xMarcio/pocindex/hot_cves.yml?style=flat-square&label=CI&color=2f81f7&labelColor=161b22&_=202610211209)](https://github.com/0xMarcio/pocindex/actions/workflows/hot_cves.yml)&nbsp;[![CVEs with PoCs](https://img.shields.io/badge/CVEs%20with%20PoCs-85%2C390-2f81f7?style=flat-square&labelColor=161b22)](https://pocindex.io/)&nbsp;[![known exploited](https://img.shields.io/badge/known%20exploited-1%2C241-f85149?style=flat-square&labelColor=161b22)](https://pocindex.io/)&nbsp;[![stars](https://img.shields.io/github/stars/0xMarcio/pocindex?style=flat-square&label=stars&color=e3b341&labelColor=161b22&_=202610211209)](https://github.com/0xMarcio/pocindex/stargazers)
 
 <a href="https://pocindex.io/"><img src="https://raw.githubusercontent.com/0xMarcio/pocindex/8dec6181e823d641132e0ee8a52a1612c2b5dd37/docs/search.svg" alt="Search PoC Index" width="100%"></a>
 
@@ -14,22 +14,22 @@
 
 | Stars | Released | PoC | Description |
 | --- | --- | --- | --- |
-| 1⭐ | 53m ago | [CVE-2026-23744](https://github.com/wvverez/CVE-2026-23744) | exploit RCE (MCPJam Inspector) <= v1.4.2 |
-| 0⭐ | 1h ago | [CVE-2026-88900](https://github.com/oscerd/CVE-2026-88900) | Reproducer for CVE-2026-88900 - Apache Camel camel-jgroups unsafe Java deserialization of cluster messages… |
-| 0⭐ | 1h ago | [CVE-2026-91858](https://github.com/oscerd/CVE-2026-91858) | Reproducer for CVE-2026-91858 - Apache Camel camel-fop XML External Entity (XXE) via a third-party… |
-| 0⭐ | 1h ago | [CVE-2026-88901](https://github.com/oscerd/CVE-2026-88901) | Reproducer for CVE-2026-88901 - Apache Camel camel-smooks XML External Entity (XXE) processing (CWE-611,… |
-| 0⭐ | 2h ago | [CVE-2026-85317](https://github.com/oscerd/CVE-2026-85317) | Reproducer for CVE-2026-85317 - Apache Camel camel-http OAuth2 token cache confusion (CWE-524). Camel Spring… |
-| 4⭐ | 9h ago | [CVE-2026-98260-android](https://github.com/yanoo1222/CVE-2026-98260-android) | a complete exploit chain for CVE-2026-982600, |
-| 0⭐ | 11h ago | [cve-2018-16763](https://github.com/fahise/cve-2018-16763) | cve-2018-16763-exploit |
-| 1⭐ | 11h ago | [cve-2026-62911](https://github.com/fahise/cve-2026-62911) | cve-2026-62911-exploit |
-| 0⭐ | 15h ago | [CVE-2026-87690-POC](https://github.com/h00die/CVE-2026-87690-POC) | Exploit and writeup for CVE-2026-87690 |
-| 0⭐ | 16h ago | [CVE-2026-113468](https://github.com/yuwkaaa/CVE-2026-113468) | forgeable PayPal payment callback in TYPO3 EXT:shop |
+| 0⭐ | 39m ago | <img src="https://raw.githubusercontent.com/0xMarcio/pocindex/main/docs/kev.svg" alt="KEV" title="CISA known exploited" height="14"> [PoC-for-CVE-2026-63030](https://github.com/Githu836/PoC-for-CVE-2026-63030) | WordPress 6.9.x before 6.9.5 and 7.0.x before 7.0.2 is affected by a REST API batch endpoint route confusion… |
+| 0⭐ | 1h ago | [CVE-2026-110899](https://github.com/synapes620/CVE-2026-110899) | Improper Neutralization of Input During Web Page Generation ('Cross-site Scripting') vulnerability in Kevin… |
+| 1⭐ | 1h ago | [CVE-2026-23744](https://github.com/wvverez/CVE-2026-23744) | exploit RCE (MCPJam Inspector) <= v1.4.2 |
+| 0⭐ | 2h ago | [CVE-2026-88900](https://github.com/oscerd/CVE-2026-88900) | Reproducer for CVE-2026-88900 - Apache Camel camel-jgroups unsafe Java deserialization of cluster messages… |
+| 0⭐ | 2h ago | [CVE-2026-91858](https://github.com/oscerd/CVE-2026-91858) | Reproducer for CVE-2026-91858 - Apache Camel camel-fop XML External Entity (XXE) via a third-party… |
+| 0⭐ | 2h ago | [CVE-2026-88901](https://github.com/oscerd/CVE-2026-88901) | Reproducer for CVE-2026-88901 - Apache Camel camel-smooks XML External Entity (XXE) processing (CWE-611,… |
+| 0⭐ | 3h ago | [CVE-2026-85317](https://github.com/oscerd/CVE-2026-85317) | Reproducer for CVE-2026-85317 - Apache Camel camel-http OAuth2 token cache confusion (CWE-524). Camel Spring… |
+| 5⭐ | 10h ago | [CVE-2026-98260-android](https://github.com/yanoo1222/CVE-2026-98260-android) | a complete exploit chain for CVE-2026-982600, |
+| 0⭐ | 12h ago | [cve-2018-16763](https://github.com/fahise/cve-2018-16763) | cve-2018-16763-exploit |
+| 1⭐ | 12h ago | [cve-2026-62911](https://github.com/fahise/cve-2026-62911) | cve-2026-62911-exploit |
 
 ## Trending in 2026
 
 | Stars | Updated | Repository | Description |
 | --- | --- | --- | --- |
-| 532⭐ | 17h ago | <img src="https://raw.githubusercontent.com/0xMarcio/pocindex/main/docs/kev.svg" alt="KEV" title="CISA known exploited" height="14"> [CVE-2026-41940-PoC](https://github.com/sakidekin/CVE-2026-41940-PoC) | cPanel & WHM Authentication Bypass via CVE-2026-41940 explotation |
+| 532⭐ | 18h ago | <img src="https://raw.githubusercontent.com/0xMarcio/pocindex/main/docs/kev.svg" alt="KEV" title="CISA known exploited" height="14"> [CVE-2026-41940-PoC](https://github.com/sakidekin/CVE-2026-41940-PoC) | cPanel & WHM Authentication Bypass via CVE-2026-41940 explotation |
 | 69⭐ | 1d ago | [CVE-2026-20817](https://github.com/ZeroDayEvil/CVE-2026-20817) | 🛡️ Official AI Security Tool module for CVE-2026-20817 (Windows Error Reporting WER ALPC Local Privilege… |
 | 477⭐ | 61d ago | [CVE-2026-9830](https://github.com/opaxial/CVE-2026-9830) | CVE-2026-9830 Proof of Concept |
 | 335⭐ | 85d ago | [CVE-2026-54121](https://github.com/aniqfakhrul/CVE-2026-54121) | Certighost POC |
@@ -48,7 +48,7 @@
 | 86⭐ | 47d ago | [CVE-2026-65343](https://github.com/ByteV0rtex/CVE-2026-65343) | CVE-2026-65343 PoC - AppleKeyStore OOB read → KASLR defeat (iOS 26.6 / 23G71) |
 | 108⭐ | 78d ago | [SCCM-CVE-2026-47301-Remote-Code-Execution-Exploit](https://github.com/OmriBaso/SCCM-CVE-2026-47301-Remote-Code-Execution-Exploit) | Proof-of-concept exploit chain (CVE-2026-47301) for Microsoft Configuration Manager (SCCM), combining a… |
 | 15⭐ | 4d ago | [CVE-2026-99999](https://github.com/PeronGH/CVE-2026-99999) | PoC for CVE-2026-99999 (PwnEscape) on a prepared TAP. |
-| 7⭐ | 22h ago | [CVE-2026-106173](https://github.com/horizon3ai/CVE-2026-106173) | Proof of concept exploit for CVE-2026-106173, a path traversal file write leading to RCE for Fortinet… |
+| 7⭐ | 23h ago | [CVE-2026-106173](https://github.com/horizon3ai/CVE-2026-106173) | Proof of concept exploit for CVE-2026-106173, a path traversal file write leading to RCE for Fortinet… |
 
 ## Trending in 2025
 
