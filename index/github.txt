@@ -27529,3 +27529,5 @@ CVE-2026-86950 - https://github.com/jpdagostin0/CVE-2026-86950-POC
 CVE-2026-107692 - https://github.com/thewhatdohe/CVE-2026-107692
 CVE-2026-62911 - https://github.com/fahise/cve-2026-62911
 CVE-2018-16763 - https://github.com/fahise/cve-2018-16763
+CVE-2026-0073 - https://github.com/ko456123mo-jpg/zero-x-deploy
+CVE-2026-98260 - https://github.com/yanoo1222/CVE-2026-98260-android
