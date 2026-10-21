@@ -392,6 +392,8 @@ def page(entry: dict, data: dict) -> str:
     affected = list(dict.fromkeys([*(entry.get("vendor") or [])[:3], *(entry.get("product") or [])[:6]]))
 
     chips = []
+    if entry.get("metadata_pending"):
+        chips.append('<span class="chip">CVE metadata pending</span>')
     if flagged:
         ransom = " RANSOMWARE" if flagged[1] else ""
         chips.append(f'<span class="chip chip-kev">KEV{ransom}</span>')

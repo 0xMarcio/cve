@@ -933,6 +933,9 @@ function resultRow(entry) {
     ? `<span class="chip chip-kev" title="Listed in CISA's Known Exploited Vulnerabilities catalogue on ${escapeHTML(flagged[0])}${flagged[1] ? ', used in ransomware campaigns' : ''}">` +
       `KEV${flagged[1] ? ' RANSOMWARE' : ''}</span>`
     : '';
+  const metadataChip = entry.metadata_pending
+    ? '<span class="chip">CVE metadata pending</span>'
+    : '';
 
   const dates = [];
   if (entry.published) dates.push(`published ${entry.published}`);
@@ -946,7 +949,7 @@ function resultRow(entry) {
     <a class="result-id" href="/${encodeURIComponent(id)}">${escapeHTML(id)}</a>
     <div class="result-pocs">${formatCount(links.length)} linked PoC${links.length === 1 ? '' : 's'}</div>
     ${dateHtml}
-    <div class="chips">${kevChip}${severityChip}${epssChip}
+    <div class="chips">${metadataChip}${kevChip}${severityChip}${epssChip}
       <a class="chip" href="https://nvd.nist.gov/vuln/detail/${encodeURIComponent(id)}" target="_blank" rel="noopener">NVD ↗</a>
       <a class="chip" href="https://www.cve.org/CVERecord?id=${encodeURIComponent(id)}" target="_blank" rel="noopener">CVE.ORG ↗</a>
     </div>

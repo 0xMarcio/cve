@@ -30,6 +30,8 @@ jobs:
           python-version: '3.13'
 
       - name: Discover and ingest CVE PoCs
+        id: discovery
+        continue-on-error: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: python3 scripts/update_cves.py --lookback-days 3 --all-years
@@ -96,3 +98,7 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: gh workflow run site.yml --ref main
+
+      - name: Report incomplete discovery
+        if: steps.discovery.outcome == 'failure'
+        run: exit 1

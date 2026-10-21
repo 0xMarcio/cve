@@ -188,6 +188,17 @@ class HomepageTests(unittest.TestCase):
 
 
 class AssessmentRenderingTests(unittest.TestCase):
+    def test_pending_record_page_keeps_public_pocs_visible(self) -> None:
+        entry = {"cve": "CVE-2026-109618", "desc": "Official CVE details are pending.",
+                 "metadata_pending": True, "poc": ["https://github.com/example/php2shell-poc"]}
+        data = {"cves": [entry], "meta": {}, "epss": {}, "kev": {}, "nuclei": {},
+                "repo_meta": {}, "related": {}, "lastmod": {entry["cve"]: "2026-10-21"}}
+        markup = build_pages.page(entry, data)
+        self.assertIn("CVE metadata pending</span>", markup)
+        self.assertIn('href="https://github.com/example/php2shell-poc"', markup)
+        del entry["metadata_pending"]
+        self.assertNotIn("CVE metadata pending", build_pages.page(entry, data))
+
     def test_zero_cvss_score_is_visible_in_chip_and_assessment(self) -> None:
         entry = {"cve": "CVE-1999-0497", "poc": ["https://example.com/poc"]}
         data = {

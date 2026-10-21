@@ -265,7 +265,7 @@ class ReferencePoCTests(unittest.TestCase):
             build_site.load_verified_references.cache_clear()
             self.assertEqual(shared.read_text(), f"{CVE} - {URL}\n")
 
-    def test_main_does_not_admit_reserved_cve_or_write_during_dry_run(self):
+    def test_main_admits_reserved_cve_without_writing_during_dry_run(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
             statuses = root / "states.json"
@@ -281,8 +281,9 @@ class ReferencePoCTests(unittest.TestCase):
                     patch.object(update_cves, "ensure_cve_entries", return_value=(set(), set())) as ensure, \
                     patch.object(update_cves, "append_inventory") as append:
                 self.assertEqual(sync.main(), 0)
-                self.assertEqual(ensure.call_args.args[0], {})
-                self.assertEqual(append.call_args.args[1], {})
+                self.assertEqual(ensure.call_args.args[0], {CVE: [URL]})
+                self.assertFalse(ensure.call_args.kwargs["fetch_missing"])
+                self.assertEqual(append.call_args.args[1], {CVE: [URL]})
             self.assertEqual(queue.read_bytes(), original)
             self.assertFalse(ledger.exists())
 

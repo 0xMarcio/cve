@@ -13,6 +13,8 @@ from pathlib import Path
 from typing import Collection, Dict, Iterable, List, Optional
 from urllib.parse import unquote, urlparse
 
+from update_cves import markdown_record_status
+
 ROOT = Path(__file__).resolve().parents[1]
 CVES = ROOT / "cves"
 INDEX = ROOT / "index"
@@ -390,6 +392,10 @@ def build_cve_list(blacklist: Collection[str]) -> tuple[List[Dict[str, object]],
             continue
         total += 1
         content = md_path.read_text(encoding="utf-8")
+        record_status = markdown_record_status(content)
+        if record_status == "REJECTED":
+            total -= 1
+            continue
         sections = parse_sections(content)
         description = normalise_block(sections.get("### Description", ""))
         references = collect_links(sections.get("#### Reference", ""), blacklist=blacklist)
@@ -431,6 +437,8 @@ def build_cve_list(blacklist: Collection[str]) -> tuple[List[Dict[str, object]],
             "desc": description,
             "poc": poc_entries,
         }
+        if record_status != "PUBLISHED":
+            entry["metadata_pending"] = True
         title, vendors, products = parse_preamble(content)
         if title:
             entry["title"] = title

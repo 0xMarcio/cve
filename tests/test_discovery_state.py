@@ -12,6 +12,7 @@ from unittest.mock import patch
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "scripts"))
 import update_cves
+import build_site
 
 
 class DiscoveryStateTests(unittest.TestCase):
@@ -22,6 +23,7 @@ class DiscoveryStateTests(unittest.TestCase):
         for name, path in {
             "CVES": self.root / "cves", "STATE_FILE": self.root / "delta.json",
             "DISCOVERY_STATE_FILE": self.root / "discovery.json",
+            "RECORD_STATE_FILE": self.root / "records.json", "DATES_FILE": self.root / "dates.json",
         }.items():
             self.stack.enter_context(patch.object(update_cves, name, path, create=True))
 
@@ -84,7 +86,10 @@ class DiscoveryStateTests(unittest.TestCase):
                 update_cves.GitHubClient("token").search_page("query")
 
     def test_checkpoint_commits_after_ingestion_only(self):
-        with patch.object(update_cves, "discover_github_pocs", return_value={}) as discover:
+        def complete(*args, **kwargs):
+            kwargs["completed_years"].update(kwargs["years"])
+            return {}
+        with patch.object(update_cves, "discover_github_pocs", side_effect=complete) as discover:
             self.main()
         state = json.loads(update_cves.DISCOVERY_STATE_FILE.read_text())
         end = discover.call_args.kwargs["window_end"].isoformat()
@@ -113,7 +118,7 @@ class DiscoveryStateTests(unittest.TestCase):
             with self.assertRaisesRegex(RuntimeError, "only 1 of 2"):
                 list(update_cves.search_range(client, "CVE", "pushed", date(2026, 9, 1), date(2026, 10, 6)))
 
-    def test_reserved_candidate_waits_until_due_and_rejection_clears_it(self):
+    def test_reserved_candidate_is_visible_before_enrichment_and_rejection_withdraws_it(self):
         cve = "CVE-2026-1234"
         link = "https://github.com/example/CVE-2026-1234"
         record = {"cveMetadata": {"cveId": cve, "state": "RESERVED"}}
@@ -126,14 +131,19 @@ class DiscoveryStateTests(unittest.TestCase):
             fetch.assert_not_called()
         state = json.loads(update_cves.DISCOVERY_STATE_FILE.read_text())
         self.assertEqual(state["pending"][cve]["status"], "RESERVED")
-        state["pending"][cve]["checked"] = "2020-01-01"
-        update_cves.DISCOVERY_STATE_FILE.write_text(json.dumps(state))
+        path = update_cves.CVES / "2026" / f"{cve}.md"
+        self.assertIn(link, path.read_text())
+        self.assertIn(update_cves.PENDING_DESCRIPTION, path.read_text())
+        records = json.loads(update_cves.RECORD_STATE_FILE.read_text())
+        records[cve]["checked"] = "2020-01-01"
+        update_cves.RECORD_STATE_FILE.write_text(json.dumps(records))
         record["cveMetadata"]["state"] = "REJECTED"
         with patch.object(update_cves, "discover_github_pocs", return_value={}), \
                 patch.object(update_cves, "http_json", return_value=record):
             self.main()
         self.assertEqual(json.loads(update_cves.DISCOVERY_STATE_FILE.read_text())["pending"], {})
-        self.assertFalse((update_cves.CVES / "2026" / f"{cve}.md").exists())
+        self.assertEqual(update_cves.markdown_record_status(path.read_text()), "REJECTED")
+        self.assertIn(link, path.read_text())
 
     def test_unpublished_links_retry_after_checkpoint_has_advanced(self):
         cve = "CVE-2026-1234"
@@ -143,17 +153,20 @@ class DiscoveryStateTests(unittest.TestCase):
             self.main()
         state = json.loads(update_cves.DISCOVERY_STATE_FILE.read_text())
         self.assertEqual(state["pending"][cve]["github"], [link])
-        state["pending"][cve]["checked"] = "2020-01-01"
-        update_cves.DISCOVERY_STATE_FILE.write_text(json.dumps(state))
+        records = json.loads(update_cves.RECORD_STATE_FILE.read_text())
+        records[cve]["checked"] = "2020-01-01"
+        update_cves.RECORD_STATE_FILE.write_text(json.dumps(records))
         record = {"cveMetadata": {"cveId": cve, "state": "PUBLISHED"},
                   "containers": {"cna": {"descriptions": [{"lang": "en", "value": "A vulnerability"}]}}}
         with patch.object(update_cves, "discover_github_pocs", return_value={}), \
                 patch.object(update_cves, "http_json", return_value=record):
             self.main()
         self.assertIn(link, (update_cves.CVES / "2026" / f"{cve}.md").read_text())
+        self.assertIn("A vulnerability", (update_cves.CVES / "2026" / f"{cve}.md").read_text())
+        self.assertNotIn(update_cves.PENDING_DESCRIPTION, (update_cves.CVES / "2026" / f"{cve}.md").read_text())
         self.assertEqual(json.loads(update_cves.DISCOVERY_STATE_FILE.read_text())["pending"], {})
 
-    def test_local_backfill_uses_the_workflow_utc_retry_day(self):
+    def test_local_backfill_records_a_utc_timestamp(self):
         record_state = self.root / "records.json"
         with patch.object(update_cves, "RECORD_STATE_FILE", record_state), \
                 patch.object(update_cves, "load_record_state", return_value={}), \
@@ -164,7 +177,136 @@ class DiscoveryStateTests(unittest.TestCase):
             local_date.today.return_value = date(2026, 10, 7)
             utc_clock.now.return_value = datetime(2026, 10, 6, 22, 15, tzinfo=timezone.utc)
             update_cves.ensure_cve_entries(["CVE-2026-1234"], dry_run=False)
-        self.assertEqual(json.loads(record_state.read_text())["CVE-2026-1234"]["checked"], "2026-10-06")
+        self.assertEqual(json.loads(record_state.read_text())["CVE-2026-1234"]["checked"], "2026-10-06T22:15:00+00:00")
+
+    def test_pending_metadata_retries_within_the_same_utc_day(self):
+        now = datetime(2026, 10, 21, 14, 5, tzinfo=timezone.utc)
+        for checked, due in (("2026-10-21", True), ("2026-10-21T13:00:00Z", True),
+                             ("2026-10-21T13:45:00+00:00", False), ("2026-10-21T15:00:00+02:00", True)):
+            with self.subTest(checked=checked):
+                self.assertEqual(update_cves.retry_record({"checked": checked, "status": "UNAVAILABLE"}, now), due)
+        self.assertFalse(update_cves.retry_record({"status": "REJECTED"}, now))
+
+    def test_php2shell_pending_candidates_are_published_without_github_or_nvd(self):
+        ids = ["CVE-2026-109618", "CVE-2026-109619"]
+        link = "https://github.com/example/php2shell-poc"
+        update_cves.DISCOVERY_STATE_FILE.write_text(json.dumps({"years": {"2026": "2026-10-20"}, "pending": {
+            cve: {"github": [link], "references": [], "status": "UNAVAILABLE", "checked": "2026-10-21"}
+            for cve in ids
+        }}))
+        with patch.object(update_cves, "discover_github_pocs") as search, \
+                patch.object(update_cves, "http_json", return_value=None):
+            self.assertEqual(self.main(skip_github=True, pending_only=True), 0)
+        search.assert_not_called()
+        with patch.object(build_site, "CVES", update_cves.CVES), \
+                patch.object(build_site, "load_metadata", return_value={}), \
+                patch.object(build_site, "load_dates", return_value={}), \
+                patch.object(build_site, "load_verified_references", return_value=set()):
+            entries, _ = build_site.build_cve_list(set())
+        self.assertEqual({row["cve"] for row in entries}, set(ids))
+        self.assertTrue(all(row["metadata_pending"] and row["poc"] == [link] for row in entries))
+        self.assertEqual(json.loads(update_cves.DISCOVERY_STATE_FILE.read_text())["years"], {"2026": "2026-10-20"})
+
+    def test_metadata_outage_preserves_successful_records_and_publishes_pending_links(self):
+        ready, pending = "CVE-2026-109618", "CVE-2026-109619"
+        record = {"cveMetadata": {"cveId": ready, "state": "PUBLISHED"},
+                  "containers": {"cna": {"descriptions": [{"lang": "en", "value": "Official details"}]}}}
+        def fetch(url, **kwargs):
+            if url.endswith(ready):
+                return record
+            raise TimeoutError("CVE service unavailable")
+        with patch.object(update_cves, "discover_github_pocs", return_value={
+            cve: [f"https://github.com/example/{cve}"] for cve in [ready, pending]
+        }), patch.object(update_cves, "http_json", side_effect=fetch):
+            self.assertEqual(self.main(), 1)
+        self.assertIn("Official details", (update_cves.CVES / "2026" / f"{ready}.md").read_text())
+        self.assertIn(update_cves.PENDING_DESCRIPTION, (update_cves.CVES / "2026" / f"{pending}.md").read_text())
+        self.assertEqual(set(json.loads(update_cves.DISCOVERY_STATE_FILE.read_text())["pending"]), {pending})
+
+    def test_partial_discovery_publishes_links_without_advancing_failed_year(self):
+        cve = "CVE-2026-109618"
+        update_cves.DISCOVERY_STATE_FILE.write_text('{"years":{"2026":"2026-10-20"},"pending":{}}')
+        def discover(*args, **kwargs):
+            kwargs["failures"].append("GitHub search: HTTP 502")
+            kwargs["completed_years"].add(2025)
+            return {cve: [f"https://github.com/example/{cve}"]}
+        with patch.object(update_cves, "discover_github_pocs", side_effect=discover), \
+                patch.object(update_cves, "http_json", return_value=None):
+            self.assertEqual(self.main(), 1)
+        state = json.loads(update_cves.DISCOVERY_STATE_FILE.read_text())
+        self.assertEqual(state["years"]["2026"], "2026-10-20")
+        self.assertIn("2025", state["years"])
+        self.assertIn(cve, state["pending"])
+        self.assertTrue((update_cves.CVES / "2026" / f"{cve}.md").exists())
+
+    def test_one_failed_search_does_not_discard_other_queries(self):
+        cve = "CVE-2026-109618"
+        name = f"example/{cve}"
+        repo = {"nameWithOwner": name, "url": f"https://github.com/{name}", "description": "PoC"}
+        def search(client, terms, *args):
+            if '"CVE-2026" exploit' in terms:
+                raise RuntimeError("HTTP 502")
+            return [repo] if "2026" in terms else []
+        failures, completed = [], set()
+        with patch.object(update_cves, "search_range", side_effect=search), \
+                patch.object(update_cves.source_artifacts, "load_reviews", return_value=[]), \
+                patch.object(update_cves.source_artifacts, "pending_reviewed_names", return_value=[]), \
+                patch.object(update_cves, "attach_source_artifacts"), \
+                patch.object(update_cves.GitHubClient, "fetch_readmes", return_value=(
+                    {name}, {name: f"Proof of concept for {cve}"}, {name: [{"name": "poc.py"}]})):
+            links = update_cves.discover_github_pocs("token", years=[2026, 2025], lookback_days=1,
+                backfill=False, cve_filter=set(), failures=failures, completed_years=completed)
+        self.assertEqual(links, {cve: [repo["url"]]})
+        self.assertEqual(completed, {2025})
+        self.assertEqual(len(failures), 1)
+
+    def test_enrichment_preserves_curated_links_and_updates_placeholder(self):
+        cve = "CVE-2026-109618"
+        path = update_cves.CVES / "2026" / f"{cve}.md"
+        path.parent.mkdir(parents=True)
+        path.write_text(update_cves.build_markdown(cve, update_cves.pending_details(),
+            ["https://github.com/example/php2shell"], []) + "\n#### Nuclei\n- https://example.com/template.yaml\n")
+        with patch.object(update_cves, "http_json", return_value=None):
+            update_cves.ensure_cve_entries([cve], dry_run=False)
+        details = update_cves.CVEDetails("Official description", ["PHP"], [], [], title="PHP vulnerability")
+        update_cves.refresh_record_header(path, details, {}, dry_run=False)
+        text = path.read_text()
+        self.assertIn("Official description", text)
+        self.assertIn("https://github.com/example/php2shell", text)
+        self.assertIn("#### Nuclei\n- https://example.com/template.yaml", text)
+        self.assertNotIn(update_cves.PENDING_DESCRIPTION, text)
+        self.assertEqual(update_cves.markdown_record_status(text), "PUBLISHED")
+
+    def test_cached_rejected_identifier_is_not_republished(self):
+        cve = "CVE-2026-109618"
+        update_cves.RECORD_STATE_FILE.write_text(json.dumps({cve: {"status": "REJECTED", "checked": "2026-10-21"}}))
+        with patch.object(update_cves, "discover_github_pocs", return_value={cve: ["https://github.com/example/poc"]}), \
+                patch.object(update_cves, "http_json") as fetch:
+            self.main()
+        fetch.assert_not_called()
+        self.assertFalse((update_cves.CVES / "2026" / f"{cve}.md").exists())
+        self.assertEqual(json.loads(update_cves.DISCOVERY_STATE_FILE.read_text())["pending"], {})
+
+    def test_filtered_pending_recovery_leaves_other_candidates_queued(self):
+        wanted, other = "CVE-2026-109618", "CVE-2026-109619"
+        pending = {c: {"github": ["https://github.com/example/poc"], "references": [],
+                       "status": "UNAVAILABLE", "checked": "2026-10-21"} for c in [wanted, other]}
+        update_cves.DISCOVERY_STATE_FILE.write_text(json.dumps({"years": {}, "pending": pending}))
+        with patch.object(update_cves, "http_json", return_value=None):
+            self.main(skip_github=True, pending_only=True, cve=[wanted])
+        self.assertTrue((update_cves.CVES / "2026" / f"{wanted}.md").exists())
+        self.assertFalse((update_cves.CVES / "2026" / f"{other}.md").exists())
+        self.assertEqual(json.loads(update_cves.DISCOVERY_STATE_FILE.read_text())["pending"][other], pending[other])
+
+    def test_cve_feed_outage_does_not_block_github_publication_or_advance_delta(self):
+        cve = "CVE-2026-109618"
+        update_cves.STATE_FILE.write_text('{"cvelist_fetch_time":"2026-10-20T00:00:00Z"}')
+        with patch.object(update_cves, "load_incremental_records", side_effect=TimeoutError("CVE feed unavailable")), \
+                patch.object(update_cves, "discover_github_pocs", return_value={cve: ["https://github.com/example/poc"]}), \
+                patch.object(update_cves, "http_json", return_value=None):
+            self.assertEqual(self.main(skip_cvelist=False), 1)
+        self.assertTrue((update_cves.CVES / "2026" / f"{cve}.md").exists())
+        self.assertEqual(json.loads(update_cves.STATE_FILE.read_text())["cvelist_fetch_time"], "2026-10-20T00:00:00Z")
 
 
 if __name__ == "__main__":

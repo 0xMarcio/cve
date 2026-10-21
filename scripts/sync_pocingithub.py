@@ -207,7 +207,7 @@ def main() -> int:
     )
     if created or unavailable:
         verb = "would create" if args.dry_run else "created"
-        print(f"base entries: {len(created):,} {verb}, {len(unavailable):,} unpublished or unavailable")
+        print(f"base entries: {len(created):,} {verb}, {len(unavailable):,} rejected")
     for cve in created:
         path = CVES / cve.split("-")[1] / f"{cve}.md"
         if path.exists():
