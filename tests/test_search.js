@@ -117,6 +117,17 @@ test('repository and file names outrank matching owners and GitHub routing segme
   assert.deepEqual(search('main'), search('main', true));
 });
 
+test('collection routing and category folders stay searchable without outranking the subject', async t => {
+  const search = await searchFixture(t, [
+    { cve: 'CVE-2026-1000', desc: 'Pending details', nuclei: ['https://github.com/projectdiscovery/nuclei-templates/blob/main/http/cves/2026/example.yaml'] },
+    { cve: 'CVE-2026-2000', desc: 'HTTP request smuggling', poc: ['https://github.com/owner/poc'] },
+    { cve: 'CVE-2026-3000', desc: 'Pending details', nuclei: ['https://github.com/projectdiscovery/nuclei-templates/blob/main/misc/http-smuggling.yaml'] }
+  ]);
+  assert.deepEqual(search('http'), ['CVE-2026-3000', 'CVE-2026-2000', 'CVE-2026-1000']);
+  assert.deepEqual(search('http'), search('http', true));
+  assert.equal(search('nuclei').length, 2);
+});
+
 test('aliases, phrases, negatives, named vulnerabilities and typo correction remain usable', async t => {
   const search = await searchFixture(t, [
     { cve: 'CVE-2026-1000', desc: 'WordPress SQL injection', poc: ['https://github.com/owner/wp-poc'] },
@@ -137,10 +148,14 @@ test('homepage relative ages advance without refreshing or changing the active s
   const { context } = startPage(t, { trending: new Promise(() => {}) });
   await new Promise(setImmediate);
   vm.runInContext("state.query = 'php2shell'; Date.now = () => Date.parse('2026-10-21T20:00:00Z')", context);
-  const cell = { getAttribute: () => '2026-10-21T19:00:00Z', outerHTML: '' };
+  let writes = 0, markup = '';
+  const cell = { getAttribute: () => '2026-10-21T19:00:00Z',
+    get outerHTML() { return markup; }, set outerHTML(value) { markup = value; writes++; } };
   context.document.querySelectorAll = selector => selector === 'time.trend-age' ? [cell] : [];
   vm.runInContext('refreshTrendAges()', context);
   assert.match(cell.outerHTML, />1 hour ago<\/time>/);
+  vm.runInContext('refreshTrendAges()', context);
+  assert.equal(writes, 1);
   vm.runInContext("Date.now = () => Date.parse('2026-10-21T21:00:00Z'); refreshTrendAges()", context);
   assert.match(cell.outerHTML, />2 hours ago<\/time>/);
   assert.equal(vm.runInContext('state.query', context), 'php2shell');

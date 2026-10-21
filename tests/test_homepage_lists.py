@@ -164,6 +164,7 @@ class HomepageListTests(unittest.TestCase):
         cases = [(None, "N/A"), ("invalid", "N/A"), ("2026-02-30", "N/A"), ("2026-10-08T00:00:00Z", "just now"),
                  ("2026-10-07T08:59:01Z", "just now"), ("2026-10-07T08:59:00Z", "1 minute ago"),
                  ("2026-10-07T08:01:00", "59 minutes ago"), ("2026-10-07T08:00:00Z", "1 hour ago"),
+                 ("2026-10-07 08:00:00", "1 hour ago"),
                  ("2026-10-06T09:00:00Z", "1 day ago"), ("2026-10-07", "today"),
                  ("2026-10-06", "1 day ago")]
         items = [{**LANDED[0], "released": value} for value, _ in cases]

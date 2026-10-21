@@ -83,7 +83,7 @@ function utcDay(value) {
   if (typeof value !== 'string' || !/^\d{4}-\d{2}-\d{2}/.test(value)) return '';
   const calendar = Date.parse(value.slice(0, 10) + 'T00:00:00Z');
   if (Number.isNaN(calendar) || new Date(calendar).toISOString().slice(0, 10) !== value.slice(0, 10)) return '';
-  const time = Date.parse(/T[\d:.]+$/.test(value) ? value + 'Z' : value);
+  const time = Date.parse(/[T ][\d:.]+$/.test(value) ? value.replace(' ', 'T') + 'Z' : value);
   return Number.isNaN(time) ? '' : new Date(time).toISOString().slice(0, 10);
 }
 
@@ -91,7 +91,7 @@ function utcDay(value) {
 function trendAge(value, now = Date.now()) {
   if (!utcDay(value)) return '<span class="trend-age">N/A</span>';
   const dayOnly = value.length === 10;
-  const time = Date.parse(/T[\d:.]+$/.test(value) ? value + 'Z' : value);
+  const time = Date.parse(/[T ][\d:.]+$/.test(value) ? value.replace(' ', 'T') + 'Z' : value);
   const age = Math.max(0, now - time);
   let count, unit, label;
   if (dayOnly) {
@@ -102,7 +102,7 @@ function trendAge(value, now = Date.now()) {
   else if (age < 36e5) { count = Math.floor(age / 6e4); unit = 'minute'; }
   else if (age < 864e5) { count = Math.floor(age / 36e5); unit = 'hour'; }
   else { count = Math.floor(age / 864e5); unit = 'day'; }
-  label ||= `${formatCount(count)} ${unit}${count === 1 ? '' : 's'} ago`;
+  if (!label) label = `${formatCount(count)} ${unit}${count === 1 ? '' : 's'} ago`;
   const iso = dayOnly ? value : new Date(time).toISOString();
   const title = dayOnly ? `${value} UTC (time unavailable)` : iso.replace('T', ' ').replace('Z', ' UTC');
   return `<time class="trend-age" datetime="${iso}" title="${title}">${label}</time>`;
@@ -111,7 +111,8 @@ function trendAge(value, now = Date.now()) {
 function refreshTrendAges() {
   if (document.hidden) return;
   for (const cell of document.querySelectorAll('time.trend-age')) {
-    cell.outerHTML = trendAge(cell.getAttribute('datetime'));
+    const next = trendAge(cell.getAttribute('datetime'));
+    if (next !== cell.outerHTML) cell.outerHTML = next;
   }
 }
 
@@ -119,7 +120,7 @@ function tickTrendAges() {
   refreshTrendAges();
   setTimeout(tickTrendAges, 60000);
 }
-setTimeout(tickTrendAges, 60000);
+setTimeout(tickTrendAges, 0);
 document.addEventListener('visibilitychange', refreshTrendAges);
 
 /** Compact age for the PoC columns: 3h, 3d, 2w, 5mo, 2y. */
@@ -239,6 +240,7 @@ function descSpace(entry) {
 
 function identityText(entry) {
   if (entry._identityText === undefined) {
+    const artifacts = new Set(POC_FIELDS.slice(1).flatMap(field => entry[field] || []));
     entry._identityText = entryLinks(entry).map(url => {
       const repo = repoFromUrl(url);
       if (!repo) return '';
@@ -246,7 +248,10 @@ function identityText(entry) {
       // and GitHub's routing/ref segments stay in the lower URL tier.
       const path = url.replace(/^https?:\/\/(?:www\.)?github\.com\/[^/]+\/[^/?#]+/i, '').split(/[?#]/)[0];
       const artifact = /^\/(?:blob|tree)\/[^/]+\/(.+)/i.exec(path);
-      return repo.repo + (artifact ? '/' + artifact[1] : '');
+      const leaf = artifact ? artifact[1].replace(/\/$/, '').split('/').pop() : '';
+      // A collection's repository and category folders describe the catalogue,
+      // not this exploit. They are still searchable through the full URL.
+      return artifacts.has(url) ? leaf : [repo.repo, leaf].filter(Boolean).join('\n');
     }).join('\n').toLowerCase();
   }
   return entry._identityText;
@@ -275,11 +280,11 @@ function scoreEntry(entry, matcher) {
     const phrase = matcher.phrase;
     if (!phrase) return 0;
     if (entry._titleSpace && wordStart(entry._titleSpace, phrase) >= 0) return 400;
-    if (wordStart(identitySpace(entry), phrase) >= 0) return 350;
+    const inLinks = wordStart(pocSpace(entry), phrase) >= 0;
+    if (inLinks && wordStart(identitySpace(entry), phrase) >= 0) return 350;
     const at = wordStart(descSpace(entry), phrase);
     if (at >= 0) return 240 + leadBonus(at);
-    if (wordStart(pocSpace(entry), phrase) >= 0) return 80;
-    return 0;
+    return inLinks ? 80 : 0;
   }
 
   const raw = matcher.raw;
@@ -289,11 +294,11 @@ function scoreEntry(entry, matcher) {
   // The record's own title, vendor and product name what it is about; a hit
   // there outranks any position in the prose.
   if (entry._titleText && matchAt(entry._titleText, matcher) >= 0) return 400;
-  if (matchAt(identityText(entry), matcher) >= 0) return 350;
+  const inLinks = matchAt(pocText(entry), matcher) >= 0;
+  if (inLinks && matchAt(identityText(entry), matcher) >= 0) return 350;
   const at = matchAt(entry._descText, matcher);
   if (at >= 0) return 240 + leadBonus(at);
-  if (matchAt(pocText(entry), matcher) >= 0) return 80;
-  return 0;
+  return inLinks ? 80 : 0;
 }
 
 /** How many of an entry's links carry every search term. */
@@ -394,7 +399,7 @@ function matchesFilters(entry) {
 // word list and the scan only touches the candidates. It is built in slices
 // after the index loads so typing never waits on it; until then the scan does
 // the work exactly as before.
-const wordIndex = { words: null, postings: new Map(), ready: false, built: 0 };
+const wordIndex = { words: null, postings: new Map(), buckets: new Map(), ready: false, built: 0 };
 
 function tokensOf(text) {
   return text ? text.match(/[a-z0-9]+/g) || [] : [];
@@ -423,8 +428,13 @@ function indexSlice(budget) {
       // last id on the list and needs no set to catch it.
       for (const word of words) {
         const list = postings.get(word);
-        if (!list) postings.set(word, [at]);
-        else if (list[list.length - 1] !== at) list.push(at);
+        if (!list) {
+          postings.set(word, [at]);
+          const prefix = word.slice(0, 2);
+          const bucket = wordIndex.buckets.get(prefix);
+          if (bucket) bucket.push(word);
+          else wordIndex.buckets.set(prefix, [word]);
+        } else if (list[list.length - 1] !== at) list.push(at);
       }
     }
     wordIndex.built += 1;
@@ -434,10 +444,33 @@ function indexSlice(budget) {
     yieldThen(() => indexSlice(budget));
     return;
   }
-  wordIndex.words = [...postings.keys()].sort();
-  wordIndex.ready = true;
-  wordIndex.elapsed = Math.round(performance.now() - wordIndex.startedAt);
-  if (state.ready && state.query.length >= MIN_QUERY && !state.results.length) render();
+  sortWordIndex(budget);
+}
+
+function sortWordIndex(budget) {
+  // Sorting the expanded vocabulary in one pass paused typing for ~130 ms.
+  // Prefix buckets retain lexicographic order and let us yield between sorts.
+  const buckets = wordIndex.buckets;
+  const prefixes = [...buckets.keys()].sort();
+  const words = [];
+  let next = 0;
+  function slice() {
+    const started = performance.now();
+    while (next < prefixes.length) {
+      const prefix = prefixes[next++];
+      for (const word of buckets.get(prefix).sort()) words.push(word);
+      buckets.delete(prefix);
+      if (performance.now() - started > budget) {
+        yieldThen(slice);
+        return;
+      }
+    }
+    wordIndex.words = words;
+    wordIndex.ready = true;
+    wordIndex.elapsed = Math.round(performance.now() - wordIndex.startedAt);
+    if (state.ready && state.query.length >= MIN_QUERY && !state.results.length) render();
+  }
+  slice();
 }
 
 // Hands the thread back between slices. A timer would do, except that a
@@ -457,6 +490,7 @@ function yieldThen(fn) {
 
 function buildWordIndex() {
   wordIndex.postings = new Map();
+  wordIndex.buckets = new Map();
   wordIndex.words = null;
   wordIndex.built = 0;
   wordIndex.ready = false;
@@ -713,7 +747,7 @@ function runSearch(query, scan = false, corrected = false) {
       if (termScore === 350 || termScore === 80) linked = true;
       score += termScore;
     }
-    const compoundScore = compound ? scoreEntry(entry, compound) : 0;
+    const compoundScore = compound && (!compoundCounts || compoundCounts[at]) ? scoreEntry(entry, compound) : 0;
     if (compoundScore >= 350 && (!matched || compoundScore * groups.length > score)) {
       score = compoundScore * groups.length;
       matched = true;
