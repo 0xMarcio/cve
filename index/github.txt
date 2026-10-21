@@ -27658,3 +27658,10 @@ CVE-2026-109619 - https://github.com/cbovin/php2shell-poc
 CVE-2026-109619 - https://github.com/david-alvarez-rosa/php-rce
 CVE-2026-109619 - https://github.com/mejustbox-byte/CVE-2026-109618-CVE-2026-109619
 CVE-2026-59774 - https://github.com/asvorg/CVE-2026-59774-poc
+CVE-2026-109618 - https://github.com/Whackermelon/Php2Shell-POC
+CVE-2026-109618 - https://github.com/kernelkill/PoC_f5_php2shell.sh
+CVE-2026-109618 - https://github.com/zenzue/CVE-2026-109618_19
+CVE-2026-109619 - https://github.com/LordX404/php2shell-exploit
+CVE-2026-109619 - https://github.com/Whackermelon/Php2Shell-POC
+CVE-2026-109619 - https://github.com/kernelkill/PoC_f5_php2shell.sh
+CVE-2026-63030 - https://github.com/0xdeadbeefnetwork/PHP-HEAP-ASLR
