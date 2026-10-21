@@ -708,9 +708,38 @@ def star_label(stars: int) -> str:
     return f"{Decimal(stars / 1000).quantize(Decimal('0.1'), ROUND_HALF_UP)}k"
 
 
-def trend_rows(items: object, landed: bool) -> str:
+def trend_age(value: object, now: datetime) -> str:
+    """Relative age and exact UTC tooltip, matching logic.js's trendAge."""
+    if not utc_day(value):
+        return '<span class="trend-age">N/A</span>'
+    moment = datetime.fromisoformat(value.replace("Z", "+00:00"))
+    moment = moment.replace(tzinfo=timezone.utc) if moment.tzinfo is None else moment.astimezone(timezone.utc)
+    day_only = len(value) == 10
+    seconds = max(0, (now - moment).total_seconds())
+    label = ""
+    if day_only:
+        count, unit = max(0, (now.astimezone(timezone.utc).date() - moment.date()).days), "day"
+        if not count:
+            label = "today"
+    elif seconds < 60:
+        label = "just now"
+    elif seconds < 3600:
+        count, unit = int(seconds // 60), "minute"
+    elif seconds < 86400:
+        count, unit = int(seconds // 3600), "hour"
+    else:
+        count, unit = int(seconds // 86400), "day"
+    if not label:
+        label = f"{count:,} {unit}{'' if count == 1 else 's'} ago"
+    iso = value if day_only else moment.isoformat(timespec="milliseconds").replace("+00:00", "Z")
+    title = f"{value} UTC (time unavailable)" if day_only else iso.replace("T", " ").replace("Z", " UTC")
+    return f'<time class="trend-age" datetime="{iso}" title="{title}">{label}</time>'
+
+
+def trend_rows(items: object, landed: bool, now: datetime | None = None) -> str:
     """A front-page list as logic.js renders it, in feed order. Just landed is
     dated by first release, Trending by latest artifact commit."""
+    now = now or datetime.now(timezone.utc)
     rows = []
     for item in (items if isinstance(items, list) else [])[:TREND_ROWS]:
         repository = repo_of(str(item.get("url") or ""))
@@ -729,7 +758,7 @@ def trend_rows(items: object, landed: bool) -> str:
                   if item.get("page") else "")
         rows.append(
             f'<div class="trend-row"><span class="trend-stars{popular}" title="{esc(star_title)}">{star_cell}</span>'
-            f'<span class="trend-age">{utc_day(item.get("released" if landed else "pushed")) or "N/A"}</span>'
+            f'{trend_age(item.get("released" if landed else "pushed"), now)}'
             f'<span class="trend-name-cell">{flagged}<a class="trend-name" href="{esc(item.get("url"))}" '
             f'target="_blank" rel="nofollow noopener">{esc(name)}</a>{detail}</span>'
             f'<span class="trend-desc">{esc(item.get("desc") or "Description unavailable")}</span></div>'
@@ -737,7 +766,7 @@ def trend_rows(items: object, landed: bool) -> str:
     return "".join(rows) or '<div class="empty">No recent PoCs.</div>'
 
 
-def homepage(cves: list, kev: dict, trending: dict) -> str:
+def homepage(cves: list, kev: dict, trending: dict, now: datetime | None = None) -> str:
     """Publish the same content before JavaScript or a crawler render runs."""
     indexed = {entry["cve"] for entry in cves}
     if trending["with_pocs"] != len(indexed) or trending["total_cves"] < len(indexed):
@@ -763,7 +792,7 @@ def homepage(cves: list, kev: dict, trending: dict) -> str:
         stylesheet_url=asset_url("style.css"), script_url=asset_url("logic.js"),
         sources_line=SOURCES_LINE, project_links=project_links(), website_schema=json_ld(website),
         total_cves=f"{trending['total_cves']:,}", with_pocs=f"{len(indexed):,}", kev=f"{len(kev):,}",
-        landed_rows=trend_rows(trending.get("landed"), True),
+        landed_rows=trend_rows(trending.get("landed"), True, now),
         generated=esc(generated.strftime("%Y-%m-%d %H:%M UTC")),
         year_links=" ".join(f'<a href="/{esc(year)}">{esc(year)}</a>' for year in years),
     )

@@ -13,6 +13,7 @@ import shutil
 import subprocess
 import sys
 import unittest
+from datetime import datetime
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -47,6 +48,7 @@ TRENDING = [
 ]
 FEED = {"generated": "2026-10-07T09:00:00+00:00", "total_cves": 5, "with_pocs": 4,
         "items": TRENDING, "landed": LANDED, "ranking": "stars_weighted_by_artifact_release_age"}
+NOW = datetime.fromisoformat(FEED["generated"])
 INDEXED = [{"cve": cve} for cve in ("CVE-2024-26642", "CVE-2026-21589", "CVE-2021-44228", "CVE-2026-24061")]
 
 HARNESS = r"""
@@ -70,6 +72,7 @@ const document = {
   }
 };
 const context = vm.createContext({
+  Date: class extends Date { static now() { return Date.parse(input.now); } },
   console: { warn() {} }, document, performance, MessageChannel, URLSearchParams, URL,
   location: { pathname: '/', search: '' },
   window: { matchMedia: () => ({ matches: false }) },
@@ -102,7 +105,7 @@ def browser(feed: dict) -> dict:
     node = shutil.which("node")
     if node is None:
         raise unittest.SkipTest("node renders the browser lists")
-    payload = {"script": str(ROOT / "docs" / "logic.js"), "feed": feed}
+    payload = {"script": str(ROOT / "docs" / "logic.js"), "feed": feed, "now": NOW.isoformat()}
     done = subprocess.run([node, "-e", HARNESS], input=json.dumps(payload), capture_output=True,
                           text=True, timeout=60)
     if done.returncode:
@@ -118,11 +121,11 @@ def as_browser(markup: str) -> str:
 def cells(markup: str) -> list[dict]:
     rows = []
     for row in re.findall(r'<div class="trend-row">(.*?)</div>', markup):
-        stars = re.search(r'<span class="trend-stars[^"]*"[^>]*>(.*?)</span><span class="trend-age">', row).group(1)
+        stars = re.search(r'<span class="trend-stars[^"]*"[^>]*>(.*?)</span><(?:span|time) class="trend-age"', row).group(1)
         href, name = re.search(r'<a class="trend-name" href="([^"]*)"[^>]*>([^<]*)</a>', row).groups()
         rows.append({"href": html.unescape(href), "name": html.unescape(name),
                      "stars": re.sub(r"<[^>]+>", "", stars), "kev": 'class="trend-kev"' in row,
-                     "date": re.search(r'<span class="trend-age">([^<]*)</span>', row).group(1)})
+                     "date": re.search(r'<(?:span|time) class="trend-age"[^>]*>([^<]*)</(?:span|time)>', row).group(1)})
     return rows
 
 
@@ -132,12 +135,12 @@ class HomepageListTests(unittest.TestCase):
         cls.views = browser(FEED)
 
     def test_browser_and_prerendered_homepage_render_the_same_rows(self) -> None:
-        landed, trending = build_pages.trend_rows(LANDED, True), build_pages.trend_rows(TRENDING, False)
+        landed, trending = build_pages.trend_rows(LANDED, True, NOW), build_pages.trend_rows(TRENDING, False, NOW)
         for mode in ("initial", "LANDED", "RECENT"):
             with self.subTest(mode=mode):
                 self.assertEqual(self.views[mode]["rows"], as_browser(landed))
         self.assertEqual(self.views["TRENDING"]["rows"], as_browser(trending))
-        page = build_pages.homepage(INDEXED, {}, FEED)
+        page = build_pages.homepage(INDEXED, {}, FEED, NOW)
         self.assertIn(landed, page)
         self.assertNotIn("telnetd", page)
 
@@ -148,13 +151,25 @@ class HomepageListTests(unittest.TestCase):
         self.assertIn(SHARED, [row["href"] for row in landed])
         self.assertIn(SHARED, [row["href"] for row in trending])
 
-    def test_dates_are_utc_days_and_unknown_dates_are_explicit(self) -> None:
+    def test_relative_dates_preserve_release_update_and_timestamp_precision(self) -> None:
         landed, trending = cells(self.views["LANDED"]["rows"]), cells(self.views["TRENDING"]["rows"])
-        self.assertEqual([row["date"] for row in landed], ["2026-10-07", "2026-10-06", "2026-10-05"])
-        self.assertEqual([row["date"] for row in trending], ["2026-10-06", "2026-10-03", "N/A"])
+        self.assertEqual([row["date"] for row in landed], ["7 hours ago", "17 hours ago", "2 days ago"])
+        self.assertEqual([row["date"] for row in trending], ["17 hours ago", "3 days ago", "N/A"])
         self.assertEqual([self.views[mode]["date"] for mode in ("initial", "TRENDING", "RECENT")],
                          ["RELEASED", "UPDATED", "RELEASED"])
-        self.assertNotIn(" ago", self.views["LANDED"]["rows"] + self.views["TRENDING"]["rows"])
+        self.assertIn('title="2026-10-07 01:30:00.000 UTC"', self.views["LANDED"]["rows"])
+        self.assertIn('title="2026-10-05 UTC (time unavailable)"', self.views["LANDED"]["rows"])
+
+    def test_relative_age_boundaries_match_in_browser_and_prerender(self) -> None:
+        cases = [(None, "N/A"), ("invalid", "N/A"), ("2026-02-30", "N/A"), ("2026-10-08T00:00:00Z", "just now"),
+                 ("2026-10-07T08:59:01Z", "just now"), ("2026-10-07T08:59:00Z", "1 minute ago"),
+                 ("2026-10-07T08:01:00", "59 minutes ago"), ("2026-10-07T08:00:00Z", "1 hour ago"),
+                 ("2026-10-06T09:00:00Z", "1 day ago"), ("2026-10-07", "today"),
+                 ("2026-10-06", "1 day ago")]
+        items = [{**LANDED[0], "released": value} for value, _ in cases]
+        markup = browser({**FEED, "landed": items})["initial"]["rows"]
+        self.assertEqual(markup, as_browser(build_pages.trend_rows(items, True, NOW)))
+        self.assertEqual([row["date"] for row in cells(markup)], [label for _, label in cases])
 
     def test_artifacts_show_host_repository_stars_and_keep_their_variant_or_host(self) -> None:
         landed = cells(self.views["LANDED"]["rows"])

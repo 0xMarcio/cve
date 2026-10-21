@@ -46,6 +46,106 @@ function startPage(t, { search = '', trending, kev = {}, repositories = {}, inde
   return { elements, calls, context };
 }
 
+async function searchFixture(t, entries, options = {}) {
+  const { context } = startPage(t, { entries, trending: new Promise(() => {}), ...options });
+  while (!vm.runInContext('wordIndex.ready', context)) await new Promise(setImmediate);
+  return (query, scan = false) => {
+    context.query = query;
+    return Array.from(vm.runInContext(`runSearch(query, ${scan})`, context), row => row.cve);
+  };
+}
+
+test('repository name prefixes beat incidental prose without joining numbered filenames', async t => {
+  const search = await searchFixture(t, [
+    { cve: 'CVE-2004-0660', desc: 'XSS in (1) show_archives.php, (2) show_news.php', edb: ['https://www.exploit-db.com/exploits/24238'] },
+    { cve: 'CVE-2026-109618', desc: 'RCE via OOM corruption', poc: ['https://github.com/researcher/php2shell-poc'] },
+    { cve: 'CVE-2026-1000', desc: 'A report mentions php2shell in passing.', poc: ['https://github.com/researcher/unrelated'] },
+    { cve: 'CVE-2026-2000', desc: 'Unrelated', poc: ['https://github.com/myphp2shell/unrelated'] }
+  ]);
+  for (const query of ['php2sh', 'php2shell']) {
+    assert.deepEqual(search(query), ['CVE-2026-109618', 'CVE-2026-1000']);
+    assert.deepEqual(search(query), search(query, true));
+  }
+});
+
+test('separator variants have complete indexed results even when more than five records match', async t => {
+  const entries = Array.from({ length: 8 }, (_, i) => ({ cve: `CVE-2026-${1000 + i}`,
+    desc: `${i < 6 ? 'PANOS' : 'PAN-OS'} vulnerability`, poc: [`https://github.com/owner/poc-${i}`] }));
+  entries.push({ cve: 'CVE-2026-2000', desc: 'Pending details', poc: ['https://github.com/owner/lab-pan_os-poc'] });
+  const search = await searchFixture(t, entries);
+  for (const query of ['panos', 'pan-os', 'pan_os', 'pan.os']) {
+    assert.equal(search(query).length, 9);
+    assert.deepEqual(search(query), search(query, true));
+    assert.deepEqual(search(query), search('panos'));
+  }
+});
+
+test('an exact CVE beats a longer numeric prefix and supports pasted identifier spellings', async t => {
+  const entries = ['CVE-2026-1234', 'CVE-2026-12345', 'CVE-2026-9876'].map(cve => ({
+    cve, desc: 'Related issue CVE-2026-1234', poc: ['https://github.com/owner/CVE-2026-1234']
+  }));
+  const search = await searchFixture(t, entries, { kev: { 'CVE-2026-12345': ['2026-10-21', false] } });
+  for (const query of ['CVE-2026-1234', 'cve20261234', 'CVE 2026 1234', 'cve_2026_1234']) {
+    assert.equal(search(query)[0], 'CVE-2026-1234');
+    assert.deepEqual(search(query), search(query, true));
+  }
+});
+
+test('multiword identifier names outrank scattered terms and respect exclusions', async t => {
+  const search = await searchFixture(t, [
+    { cve: 'CVE-2026-1000', desc: 'PHP 2 allows users to execute shell commands', poc: ['https://github.com/owner/unrelated'] },
+    { cve: 'CVE-2026-109618', desc: 'RCE via OOM corruption', poc: ['https://github.com/owner/php2shell-poc'] },
+    { cve: 'CVE-2026-109619', desc: 'RCE via stale global state', poc: ['https://github.com/owner/lab-php-2-shell'] }
+  ]);
+  assert.deepEqual(new Set(search('php 2 shell').slice(0, 2)), new Set(['CVE-2026-109618', 'CVE-2026-109619']));
+  assert.deepEqual(search('php 2 shell'), search('php 2 shell', true));
+  assert.deepEqual(search('php 2 shell -oom'), ['CVE-2026-109619', 'CVE-2026-1000']);
+  assert.deepEqual(search('php 2 shell -"stale global"'), ['CVE-2026-109618', 'CVE-2026-1000']);
+  assert.deepEqual(search('"php 2 shell"'), ['CVE-2026-109619']);
+});
+
+test('repository and file names outrank matching owners and GitHub routing segments', async t => {
+  const search = await searchFixture(t, [
+    { cve: 'CVE-2026-1000', desc: 'Pending details', poc: ['https://github.com/owner/project/blob/main/issue.py'] },
+    { cve: 'CVE-2026-2000', desc: 'An issue in the main component', poc: ['https://github.com/owner/unrelated'] },
+    { cve: 'CVE-2026-3000', desc: 'Pending details', poc: ['https://github.com/owner/main-poc'] },
+    { cve: 'CVE-2026-4000', desc: 'Pending details', poc: ['https://github.com/owner/project/blob/ref/main.py'] },
+    { cve: 'CVE-2026-5000', desc: 'Pending details', poc: ['https://github.com/main/unrelated'] }
+  ]);
+  assert.deepEqual(new Set(search('main').slice(0, 2)), new Set(['CVE-2026-3000', 'CVE-2026-4000']));
+  assert.equal(search('main')[2], 'CVE-2026-2000');
+  assert.deepEqual(search('main'), search('main', true));
+});
+
+test('aliases, phrases, negatives, named vulnerabilities and typo correction remain usable', async t => {
+  const search = await searchFixture(t, [
+    { cve: 'CVE-2026-1000', desc: 'WordPress SQL injection', poc: ['https://github.com/owner/wp-poc'] },
+    { cve: 'CVE-2026-2000', desc: 'Widget SQL injection', poc: ['https://github.com/owner/widget-poc'] },
+    { cve: 'CVE-2026-3000', desc: 'SQL database error with command injection', poc: ['https://github.com/owner/mixed'] },
+    { cve: 'CVE-2021-44228', desc: 'Apache Log4j remote code execution', poc: ['https://github.com/owner/log4j-poc'] }
+  ]);
+  assert.deepEqual(search('"sql injection" -wordpress'), ['CVE-2026-2000']);
+  assert.deepEqual(new Set(search('sqli')), new Set(['CVE-2026-1000', 'CVE-2026-2000']));
+  assert.deepEqual(search('rce'), ['CVE-2021-44228']);
+  assert.deepEqual(search('wordprss'), ['CVE-2026-1000']);
+  for (const query of ['"sql injection" -wordpress', 'sqli', 'rce', 'log4shell', 'log-4j']) {
+    assert.deepEqual(search(query), search(query, true));
+  }
+});
+
+test('homepage relative ages advance without refreshing or changing the active search', async t => {
+  const { context } = startPage(t, { trending: new Promise(() => {}) });
+  await new Promise(setImmediate);
+  vm.runInContext("state.query = 'php2shell'; Date.now = () => Date.parse('2026-10-21T20:00:00Z')", context);
+  const cell = { getAttribute: () => '2026-10-21T19:00:00Z', outerHTML: '' };
+  context.document.querySelectorAll = selector => selector === 'time.trend-age' ? [cell] : [];
+  vm.runInContext('refreshTrendAges()', context);
+  assert.match(cell.outerHTML, />1 hour ago<\/time>/);
+  vm.runInContext("Date.now = () => Date.parse('2026-10-21T21:00:00Z'); refreshTrendAges()", context);
+  assert.match(cell.outerHTML, />2 hours ago<\/time>/);
+  assert.equal(vm.runInContext('state.query', context), 'php2shell');
+});
+
 test('pending CVEs are searchable by identifier and PoC name without NVD metadata', async t => {
   const entries = ['CVE-2026-109618', 'CVE-2026-109619'].map(cve => ({
     cve, desc: 'Official CVE details are pending.', metadata_pending: true,

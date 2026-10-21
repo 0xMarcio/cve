@@ -81,9 +81,46 @@ function hoursSince(iso) {
  *  time without a zone is UTC. Empty when there is no readable date. */
 function utcDay(value) {
   if (typeof value !== 'string' || !/^\d{4}-\d{2}-\d{2}/.test(value)) return '';
+  const calendar = Date.parse(value.slice(0, 10) + 'T00:00:00Z');
+  if (Number.isNaN(calendar) || new Date(calendar).toISOString().slice(0, 10) !== value.slice(0, 10)) return '';
   const time = Date.parse(/T[\d:.]+$/.test(value) ? value + 'Z' : value);
   return Number.isNaN(time) ? '' : new Date(time).toISOString().slice(0, 10);
 }
+
+/** Keep day-only sources honest: they cannot tell us how many hours ago. */
+function trendAge(value, now = Date.now()) {
+  if (!utcDay(value)) return '<span class="trend-age">N/A</span>';
+  const dayOnly = value.length === 10;
+  const time = Date.parse(/T[\d:.]+$/.test(value) ? value + 'Z' : value);
+  const age = Math.max(0, now - time);
+  let count, unit, label;
+  if (dayOnly) {
+    count = Math.max(0, Math.floor(now / 864e5) - Math.floor(time / 864e5));
+    unit = 'day';
+    if (!count) label = 'today';
+  } else if (age < 6e4) label = 'just now';
+  else if (age < 36e5) { count = Math.floor(age / 6e4); unit = 'minute'; }
+  else if (age < 864e5) { count = Math.floor(age / 36e5); unit = 'hour'; }
+  else { count = Math.floor(age / 864e5); unit = 'day'; }
+  label ||= `${formatCount(count)} ${unit}${count === 1 ? '' : 's'} ago`;
+  const iso = dayOnly ? value : new Date(time).toISOString();
+  const title = dayOnly ? `${value} UTC (time unavailable)` : iso.replace('T', ' ').replace('Z', ' UTC');
+  return `<time class="trend-age" datetime="${iso}" title="${title}">${label}</time>`;
+}
+
+function refreshTrendAges() {
+  if (document.hidden) return;
+  for (const cell of document.querySelectorAll('time.trend-age')) {
+    cell.outerHTML = trendAge(cell.getAttribute('datetime'));
+  }
+}
+
+function tickTrendAges() {
+  refreshTrendAges();
+  setTimeout(tickTrendAges, 60000);
+}
+setTimeout(tickTrendAges, 60000);
+document.addEventListener('visibilitychange', refreshTrendAges);
 
 /** Compact age for the PoC columns: 3h, 3d, 2w, 5mo, 2y. */
 function shortAge(hours) {
@@ -128,7 +165,9 @@ function buildLooseRegex(value) {
   const compact = value.toLowerCase().replace(/[^a-z0-9]+/g, '');
   if (compact.length < 4) return null;
   const escaped = compact.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-  return new RegExp(escaped.split('').join('[^a-z0-9]*'));
+  // Identifier separators may vary; unrelated prose must not join up into a
+  // name. In particular, "php, (2) show" is not a match for "php2sh".
+  return new RegExp('(?:^|[^a-z0-9])' + escaped.split('').join('[-_.]*'));
 }
 
 function buildMatcher(term) {
@@ -138,6 +177,7 @@ function buildMatcher(term) {
   const normalized = raw.replace(/[^a-z0-9]+/g, '');
   return {
     raw,
+    compact: normalized,
     isPhrase,
     phrase: isPhrase ? normalizeToSpaces(raw) : '',
     loose: !isPhrase && normalized.length >= 4 ? buildLooseRegex(raw) : null
@@ -197,31 +237,62 @@ function descSpace(entry) {
   return entry._descSpace;
 }
 
+function identityText(entry) {
+  if (entry._identityText === undefined) {
+    entry._identityText = entryLinks(entry).map(url => {
+      const repo = repoFromUrl(url);
+      if (!repo) return '';
+      // Repository and artifact names identify the PoC; its owner and host
+      // and GitHub's routing/ref segments stay in the lower URL tier.
+      const path = url.replace(/^https?:\/\/(?:www\.)?github\.com\/[^/]+\/[^/?#]+/i, '').split(/[?#]/)[0];
+      const artifact = /^\/(?:blob|tree)\/[^/]+\/(.+)/i.exec(path);
+      return repo.repo + (artifact ? '/' + artifact[1] : '');
+    }).join('\n').toLowerCase();
+  }
+  return entry._identityText;
+}
+
+function identitySpace(entry) {
+  if (entry._identitySpace === undefined) {
+    // A quoted phrase cannot run from the end of one repository name into the next.
+    entry._identitySpace = identityText(entry).split('\n').map(normalizeToSpaces).join('\n');
+  }
+  return entry._identitySpace;
+}
+
+function matchAt(text, matcher) {
+  const at = wordStart(matcher.isPhrase ? normalizeToSpaces(text) : text,
+    matcher.isPhrase ? matcher.phrase : matcher.raw);
+  if (at >= 0 || !matcher.loose) return at;
+  const loose = matcher.loose.exec(text);
+  return loose ? loose.index : -1;
+}
+
 function scoreEntry(entry, matcher) {
   if (!matcher || !matcher.raw) return 0;
 
   if (matcher.isPhrase) {
     const phrase = matcher.phrase;
     if (!phrase) return 0;
-    if (entry._titleSpace && wordStart(entry._titleSpace, phrase) >= 0) return 300;
+    if (entry._titleSpace && wordStart(entry._titleSpace, phrase) >= 0) return 400;
+    if (wordStart(identitySpace(entry), phrase) >= 0) return 350;
     const at = wordStart(descSpace(entry), phrase);
-    if (at >= 0) return 200 + leadBonus(at);
+    if (at >= 0) return 240 + leadBonus(at);
     if (wordStart(pocSpace(entry), phrase) >= 0) return 80;
     return 0;
   }
 
   const raw = matcher.raw;
-  if (entry._cveText.includes(raw)) return 600;
+  if (entry._cveCompact === matcher.compact) return 1000;
+  if (wordStart(entry._cveText, raw) >= 0 ||
+      (matcher.loose && entry._cveCompact.startsWith(matcher.compact))) return 600;
   // The record's own title, vendor and product name what it is about; a hit
   // there outranks any position in the prose.
-  if (entry._titleText && wordStart(entry._titleText, raw) >= 0) return 400;
-  const at = wordStart(entry._descText, raw);
+  if (entry._titleText && matchAt(entry._titleText, matcher) >= 0) return 400;
+  if (matchAt(identityText(entry), matcher) >= 0) return 350;
+  const at = matchAt(entry._descText, matcher);
   if (at >= 0) return 240 + leadBonus(at);
-  if (wordStart(pocText(entry), raw) >= 0) return 80;
-  if (matcher.loose) {
-    if (matcher.loose.test(entry._descText)) return 160;
-    if (matcher.loose.test(pocText(entry))) return 60;
-  }
+  if (matchAt(pocText(entry), matcher) >= 0) return 80;
   return 0;
 }
 
@@ -230,7 +301,7 @@ function countLinkHits(entry, matchers) {
   let hits = 0;
   for (const url of entryLinks(entry)) {
     const text = url.toLowerCase();
-    if (matchers.every(m => wordStart(text, m.raw) >= 0 || (m.loose && m.loose.test(text)))) {
+    if (matchers.every(m => matchAt(text, m) >= 0)) {
       hits += 1;
       if (hits >= 999) break;
     }
@@ -329,13 +400,24 @@ function tokensOf(text) {
   return text ? text.match(/[a-z0-9]+/g) || [] : [];
 }
 
+function indexWords(text) {
+  const words = tokensOf(text);
+  // Every suffix is needed: "php-2-shell" inside "lab-php-2-shell-poc"
+  // must be a candidate for "php2sh", just as it is in the scoring pass.
+  for (const compound of text.match(/[a-z0-9]+(?:[-_.]+[a-z0-9]+)+/g) || []) {
+    const parts = tokensOf(compound);
+    for (let i = 0; i < parts.length - 1; i++) words.push(parts.slice(i).join(''));
+  }
+  return words;
+}
+
 function indexSlice(budget) {
   const started = performance.now();
   const postings = wordIndex.postings;
   while (wordIndex.built < dataset.length) {
     const at = wordIndex.built;
     const entry = dataset[at];
-    const words = (entry._descText + ' ' + entry._titleText + ' ' + pocSpace(entry)).match(/[a-z0-9]+/g);
+    const words = indexWords(entry._cveText + ' ' + entry._descText + ' ' + entry._titleText + ' ' + pocText(entry));
     if (words) {
       // Entries arrive in order, so a repeat within one entry is always the
       // last id on the list and needs no set to catch it.
@@ -437,10 +519,14 @@ function candidateCounts(groups) {
           for (const at of wordIndex.postings.get(part) || []) bump(at);
         }
       });
-      // A CVE id is not a word in anybody's description, so it is checked apart.
-      const raw = matcher.raw;
+      if (matcher.loose && matcher.compact !== matcher.raw) {
+        const [start, end] = wordRange(matcher.compact);
+        for (let i = start; i < end; i++) {
+          for (const at of wordIndex.postings.get(wordIndex.words[i])) hit[at] = 1;
+        }
+      }
       for (let at = 0; at < size; at++) {
-        if (partCount[at] === parts.length || dataset[at]._cveText.includes(raw)) hit[at] = 1;
+        if (partCount[at] === parts.length) hit[at] = 1;
       }
     }
     for (let at = 0; at < size; at++) if (hit[at]) total[at] += 1;
@@ -588,6 +674,8 @@ function comparePocs(a, b) {
 }
 
 function runSearch(query, scan = false, corrected = false) {
+  // Pasted CVE identifiers also commonly arrive without hyphens or with spaces.
+  query = query.trim().replace(/^cve[\s_-]*(\d{4})[\s_-]*(\d{4,})$/i, 'CVE-$1-$2');
   const terms = query.match(/-?"[^"]+"|-?\S+/g) || [];
   const cleaned = terms.map(t => t.replace(/^(-?)"/, '$1').replace(/"$/, ''));
   const positive = cleaned.filter(t => t && t[0] !== '-');
@@ -597,6 +685,10 @@ function runSearch(query, scan = false, corrected = false) {
   // description holding "active session" and "working directory". Reward the
   // words appearing together to keep those below real matches.
   const adjacent = positive.length > 1 ? positive.join(' ').toLowerCase() : '';
+  const adjacentSpace = normalizeToSpaces(adjacent);
+  const compound = positive.length > 1 && positive.length <= 4 &&
+    positive.every(term => /^[a-z0-9]+$/i.test(term)) && !terms.some(term => term[0] !== '-' && term.includes('"'))
+    ? buildMatcher(positive.join('')) : null;
   const negatives = cleaned
     .filter(t => t && t[0] === '-')
     .map(t => t.slice(1))
@@ -605,43 +697,49 @@ function runSearch(query, scan = false, corrected = false) {
     .filter(Boolean);
 
   const counts = !scan && wordIndex.ready && groups.length ? candidateCounts(groups) : null;
+  const compoundCounts = counts && compound ? candidateCounts([[compound]]) : null;
   const results = [];
   results.pocTotal = 0;
   for (let at = 0; at < dataset.length; at++) {
-    if (counts && counts[at] !== groups.length) continue;
+    if (counts && counts[at] !== groups.length && !compoundCounts?.[at]) continue;
     const entry = dataset[at];
     if (!matchesFilters(entry)) continue;
     let score = 0;
     let matched = true;
-    let describes = false;
+    let linked = false;
     for (const group of groups) {
       const termScore = scoreGroup(entry, group);
       if (termScore === 0) { matched = false; break; }
-      if (termScore >= 160) describes = true;
+      if (termScore === 350 || termScore === 80) linked = true;
       score += termScore;
+    }
+    const compoundScore = compound ? scoreEntry(entry, compound) : 0;
+    if (compoundScore >= 350 && (!matched || compoundScore * groups.length > score)) {
+      score = compoundScore * groups.length;
+      matched = true;
+      linked = compoundScore === 350;
     }
     if (!matched) continue;
     if (negatives.some(m => scoreEntry(entry, m) > 0)) continue;
 
     if (adjacent) {
-      const at = wordStart(entry._descText, adjacent);
-      if (at >= 0) { score += 300 + leadBonus(at); describes = true; }
-      else if (wordStart(pocText(entry), adjacent) >= 0) score += 100;
+      if (wordStart(identitySpace(entry), adjacentSpace) >= 0) score += 400;
+      else {
+        const at = wordStart(descSpace(entry), adjacentSpace);
+        if (at >= 0) score += 300 + leadBonus(at);
+        else if (wordStart(pocSpace(entry), adjacentSpace) >= 0) score += 100;
+      }
+      if (compoundScore >= 350) score += 400;
     }
     entry._score = score;
-    // A term nobody's advisory text uses, "log4shell" for one, leaves every match tied
-    // at the weakest tier, where newest-first is meaningless. How many of the
-    // linked PoCs carry the term says far more than which CVE is newer.
-    entry._hits = describes ? 0 : countLinkHits(entry, matchers);
+    // Within the same match tier, several PoCs using a name are stronger
+    // evidence than a single link mentioning it on an unrelated, newer CVE.
+    entry._hits = linked ? countLinkHits(entry, compoundScore >= 350 ? [compound] : matchers) : 0;
     results.pocTotal += entryLinks(entry).length;
     results.push(entry);
   }
 
-  // The index finds a term where it starts a word. Its loose form, "log-4j"
-  // for log4j, can only be found by the full pass, which is worth paying for
-  // when the indexed pass came back nearly empty and not otherwise.
-  let out = results;
-  if (counts && results.length < 5 && matchers.some(m => m.loose)) out = runSearch(query, true, corrected);
+  const out = results;
 
   if (!out.length && !scan && !corrected && wordIndex.ready) {
     const fix = correctTerms(terms);
@@ -652,7 +750,7 @@ function runSearch(query, scan = false, corrected = false) {
     }
   }
 
-  const star = scan || corrected ? null : namedCve(query);
+  const star = namedCve(query);
   if (star) {
     let entry = out.find(e => e.cve === star);
     if (!entry) {
@@ -683,6 +781,7 @@ function prepareDataset(raw) {
     if (!entryLinks(entry).length) continue;
     const parts = cve.split('-');
     entry._cveText = cve.toLowerCase();
+    entry._cveCompact = entry._cveText.replace(/-/g, '');
     entry._descText = REPLACE_STRINGS
       .reduce((desc, str) => desc.replace(str, ''), entry.desc || '')
       .toLowerCase();
@@ -1049,7 +1148,7 @@ function trendRow(item, landed) {
     ? `<a class="trend-detail" href="${escapeHTML(item.page)}">${escapeHTML(item.cve)} details</a>`
     : '';
   return `<div class="trend-row"><span class="trend-stars${stars >= 500 ? ' is-popular' : ''}" title="${escapeHTML(title)}">${starCell}</span>` +
-    `<span class="trend-age">${utcDay(landed ? item.released : item.pushed) || 'N/A'}</span>` +
+    trendAge(landed ? item.released : item.pushed) +
     `<span class="trend-name-cell">${flagged}<a class="trend-name" href="${escapeHTML(item.url)}" target="_blank" rel="nofollow noopener">${escapeHTML(name)}</a>${detail}</span>` +
     `<span class="trend-desc">${escapeHTML(item.desc || 'Description unavailable')}</span></div>`;
 }

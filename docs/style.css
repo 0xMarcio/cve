@@ -384,7 +384,7 @@ a.chip:hover { color: var(--fg); border-color: var(--fg-muted); }
 .switch-sort button { padding: 5px 9px; font-size: 10px; }
 
 .trending .col-head, .trend-row {
-  grid-template-columns: 74px 96px 300px minmax(0, 1fr);
+  grid-template-columns: 74px 112px 300px minmax(0, 1fr);
   gap: 18px;
 }
 .trend-row {
@@ -466,12 +466,13 @@ a.chip:hover { color: var(--fg); border-color: var(--fg-muted); }
   .results .col-head { display: none; }
   .result-row { grid-template-columns: 1fr; }
   .result-meta { border-right: 0; border-bottom: 1px solid var(--border-muted); }
-  .trending .col-head, .trend-row { grid-template-columns: 70px 92px minmax(0, 1fr); }
+  .trending .col-head, .trend-row { grid-template-columns: 70px 112px minmax(0, 1fr); }
   .col-desc, .trend-desc { display: none; }
 }
 
 @media (max-width: 620px) {
-  .trending .col-head, .trend-row { grid-template-columns: 56px 80px minmax(0, 1fr); gap: 12px; }
+  .trending .col-head, .trend-row { grid-template-columns: 56px 96px minmax(0, 1fr); gap: 12px; }
+  .trend-age { white-space: normal; line-height: 1.4; }
   .trend-name-cell { white-space: normal; overflow-wrap: anywhere; }
   /* Artifact names wrap while repository stars stay visible on small screens. */
   .poc-row:has(.plain) { grid-template-columns: minmax(0, 1fr); }
