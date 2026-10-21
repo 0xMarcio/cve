@@ -5409,6 +5409,7 @@
 "CVE-2018-5759 https://www.exploit-db.com/exploits/43904":{"basis":"source","cve":"CVE-2018-5759","imported":true,"released":"2018-01-28","source":"2018-01-28","url":"https://www.exploit-db.com/exploits/43904"},
 "CVE-2018-5766 https://bugzilla.libav.org/show_bug.cgi?id=1112":{"basis":"unknown","cve":"CVE-2018-5766","imported":true,"released":null,"url":"https://bugzilla.libav.org/show_bug.cgi?id=1112"},
 "CVE-2018-5767 github:db44k/cve-2018-5767-ac9?#":{"basis":"unknown","cve":"CVE-2018-5767","imported":true,"released":null,"url":"https://github.com/db44k/CVE-2018-5767-AC9"},
+"CVE-2018-5767 github:e76f01z/tenda-ac15-httpd-rce?#":{"basis":"unknown","cve":"CVE-2018-5767","released":null,"seen":"2026-10-21T07:54:42Z","url":"https://github.com/e76f01z/tenda-ac15-httpd-rce"},
 "CVE-2018-5767 github:scorpion-security-labs/cve-2018-5767-ac9?#":{"basis":"unknown","cve":"CVE-2018-5767","imported":true,"released":null,"url":"https://github.com/Scorpion-Security-Labs/CVE-2018-5767-AC9"},
 "CVE-2018-5767 https://www.exploit-db.com/exploits/44253":{"basis":"source","cve":"CVE-2018-5767","imported":true,"released":"2018-02-14","source":"2018-02-14","url":"https://www.exploit-db.com/exploits/44253"},
 "CVE-2018-5767 https://www.fidusinfosec.com/remote-code-execution-cve-2018-5767":{"basis":"unknown","cve":"CVE-2018-5767","imported":true,"released":null,"url":"https://www.fidusinfosec.com/remote-code-execution-cve-2018-5767/"},

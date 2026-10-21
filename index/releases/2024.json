@@ -7189,6 +7189,7 @@
 "CVE-2024-4577 github:fa-rrel/cve-2024-4577-rce?#":{"basis":"unknown","cve":"CVE-2024-4577","imported":true,"released":null,"url":"https://github.com/fa-rrel/CVE-2024-4577-RCE"},
 "CVE-2024-4577 github:ggfzx/cve-2024-4577?#":{"basis":"unknown","cve":"CVE-2024-4577","imported":true,"released":null,"url":"https://github.com/ggfzx/CVE-2024-4577"},
 "CVE-2024-4577 github:gh-ost00/cve-2024-4577-rce?#":{"basis":"unknown","cve":"CVE-2024-4577","imported":true,"released":null,"url":"https://github.com/gh-ost00/CVE-2024-4577-RCE"},
+"CVE-2024-4577 github:ghostinthecable/php-hunting?#":{"basis":"unknown","cve":"CVE-2024-4577","released":null,"seen":"2026-10-21T07:54:42Z","url":"https://github.com/ghostinthecable/php-hunting"},
 "CVE-2024-4577 github:gill-singh-a/cve-2024-4577-exploit?#":{"basis":"unknown","cve":"CVE-2024-4577","imported":true,"released":null,"url":"https://github.com/Gill-Singh-A/CVE-2024-4577-Exploit"},
 "CVE-2024-4577 github:gmh5225/cve-2024-4577-php-rce?#":{"basis":"unknown","cve":"CVE-2024-4577","imported":true,"released":null,"url":"https://github.com/gmh5225/CVE-2024-4577-PHP-RCE"},
 "CVE-2024-4577 github:gotr00t0day/cve-2024-4577?#":{"basis":"unknown","cve":"CVE-2024-4577","imported":true,"released":null,"url":"https://github.com/gotr00t0day/CVE-2024-4577"},

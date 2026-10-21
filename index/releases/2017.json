@@ -68,6 +68,7 @@
 "CVE-2017-0143 github:h3xcr4ck3r/ms17-010_cve-2017-0143?#":{"basis":"unknown","cve":"CVE-2017-0143","imported":true,"released":null,"url":"https://github.com/h3xcr4ck3r/MS17-010_CVE-2017-0143"},
 "CVE-2017-0143 github:h3xl00m/ms17-010_cve-2017-0143?#":{"basis":"unknown","cve":"CVE-2017-0143","imported":true,"released":null,"url":"https://github.com/H3xL00m/MS17-010_CVE-2017-0143"},
 "CVE-2017-0143 github:hackingyseguridad/smb?#":{"basis":"unknown","cve":"CVE-2017-0143","imported":true,"released":null,"url":"https://github.com/hackingyseguridad/smb"},
+"CVE-2017-0143 github:jacked-cpu/samba?#":{"basis":"unknown","cve":"CVE-2017-0143","released":null,"seen":"2026-10-21T07:54:42Z","url":"https://github.com/Jacked-cpu/samba"},
 "CVE-2017-0143 github:k4u5h41/ms17-010_cve-2017-0143?#":{"basis":"unknown","cve":"CVE-2017-0143","imported":true,"released":null,"url":"https://github.com/k4u5h41/MS17-010_CVE-2017-0143"},
 "CVE-2017-0143 github:n3rdh4x0r/ms17-010?#":{"basis":"unknown","cve":"CVE-2017-0143","imported":true,"released":null,"url":"https://github.com/n3rdh4x0r/MS17-010"},
 "CVE-2017-0143 github:n3rdh4x0r/ms17-010_cve-2017-0143?#":{"basis":"unknown","cve":"CVE-2017-0143","imported":true,"released":null,"url":"https://github.com/n3rdh4x0r/MS17-010_CVE-2017-0143"},

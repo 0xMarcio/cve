@@ -1373,6 +1373,7 @@
 "CVE-2010-2075 github:fredbrave/cve-2010-2075-unrealircd-3.2.8.1?#":{"basis":"unknown","cve":"CVE-2010-2075","imported":true,"released":null,"url":"https://github.com/FredBrave/CVE-2010-2075-UnrealIRCd-3.2.8.1"},
 "CVE-2010-2075 github:glumgam/unrealircd-3.2.8.1-exploit-python?#":{"basis":"unknown","cve":"CVE-2010-2075","imported":true,"released":null,"url":"https://github.com/Glumgam/UnrealiRCd-3.2.8.1-exploit-python"},
 "CVE-2010-2075 github:ivanefibiger/laboratoriohackingetico?#":{"basis":"unknown","cve":"CVE-2010-2075","imported":true,"released":null,"url":"https://github.com/IvanEFibiger/LaboratorioHackingEtico"},
+"CVE-2010-2075 github:jacked-cpu/samba?#":{"basis":"unknown","cve":"CVE-2010-2075","released":null,"seen":"2026-10-21T07:54:42Z","url":"https://github.com/Jacked-cpu/samba"},
 "CVE-2010-2075 github:kevinpdicks/unrealircd-3.2.8.1-rce?#":{"basis":"unknown","cve":"CVE-2010-2075","imported":true,"released":null,"url":"https://github.com/kevinpdicks/UnrealIRCD-3.2.8.1-RCE"},
 "CVE-2010-2075 github:mfernstrom/offensivepascal-cve-2010-2075?#":{"basis":"unknown","cve":"CVE-2010-2075","imported":true,"released":null,"url":"https://github.com/MFernstrom/OffensivePascal-CVE-2010-2075"},
 "CVE-2010-2075 github:rapid7/metasploit-framework/blob/master/modules/exploits/unix/irc/unreal_ircd_3281_backdoor.rb?#":{"basis":"unknown","cve":"CVE-2010-2075","imported":true,"released":null,"url":"https://github.com/rapid7/metasploit-framework/blob/master/modules/exploits/unix/irc/unreal_ircd_3281_backdoor.rb"},

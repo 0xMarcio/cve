@@ -1890,6 +1890,7 @@
 "CVE-2009-3099 https://www.exploit-db.com/exploits/33210":{"basis":"source","cve":"CVE-2009-3099","imported":true,"released":"2009-09-03","source":"2009-09-03","url":"https://www.exploit-db.com/exploits/33210"},
 "CVE-2009-3103 github:afifudinmtop/cve-2009-3103?#":{"basis":"unknown","cve":"CVE-2009-3103","imported":true,"released":null,"url":"https://github.com/afifudinmtop/CVE-2009-3103"},
 "CVE-2009-3103 github:ankh2054/python-exploits?#":{"basis":"unknown","cve":"CVE-2009-3103","imported":true,"released":null,"url":"https://github.com/ankh2054/python-exploits"},
+"CVE-2009-3103 github:jacked-cpu/samba?#":{"basis":"unknown","cve":"CVE-2009-3103","released":null,"seen":"2026-10-21T07:54:42Z","url":"https://github.com/Jacked-cpu/samba"},
 "CVE-2009-3103 github:joshchalabi/smbv2-exploit-privesc?#":{"basis":"unknown","cve":"CVE-2009-3103","imported":true,"released":null,"url":"https://github.com/joshchalabi/SMBv2-Exploit-PrivEsc"},
 "CVE-2009-3103 github:nicolasdamians/ms09-050-cve-2009-3103-exploit?#":{"basis":"unknown","cve":"CVE-2009-3103","imported":true,"released":null,"url":"https://github.com/nicolasdamians/ms09-050-CVE-2009-3103-exploit"},
 "CVE-2009-3103 github:rapid7/metasploit-framework/blob/master/modules/auxiliary/dos/windows/smb/ms09_050_smb2_negotiate_pidhigh.rb?#":{"basis":"unknown","cve":"CVE-2009-3103","imported":true,"released":null,"url":"https://github.com/rapid7/metasploit-framework/blob/master/modules/auxiliary/dos/windows/smb/ms09_050_smb2_negotiate_pidhigh.rb"},
