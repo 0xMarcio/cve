@@ -152,6 +152,9 @@ Advisory rows are `[URL, NVD reference tags]`.
 Repository metadata rows are `[stars, last_push_UTC_date]`. Repo stars describe
 the hosting GitHub repository, including links to individual files. `N/A`
 means that no public repository reading is available; a measured zero is `0`.
+`published` is the CVE record publication date. When it is unavailable,
+`poc_observed` records the earliest retained observation of a listed PoC.
+Newest uses that fallback and labels it separately as “PoC observed”.
 
 ## Sources
 

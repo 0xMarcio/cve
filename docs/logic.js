@@ -303,12 +303,13 @@ function matchesMultiFilter(values, filter) {
 }
 
 function matchesFilters(entry) {
-  if (state.kevOnly && !kev[entry.cve]) return false;
+  if (state.kevOnly && !enrichmentNotices.has('KEV filter unavailable') && !kev[entry.cve]) return false;
   if (!matchesMultiFilter(entrySources(entry), state.filters.source)) return false;
   // ALL has to mean all. The options list only names the four scored bands, so
   // testing membership hid every CVE nobody has scored yet even with nothing
   // filtered: 41 of them were unreachable by search, including by exact ID.
-  if (state.filters.severity.size === FILTER_OPTIONS.severity.length) return true;
+  if (state.filters.severity.size === FILTER_OPTIONS.severity.length ||
+      enrichmentNotices.has('severity filter unavailable')) return true;
   const severity = entrySeverity(entry);
   return severity ? matchesMultiFilter(new Set([severity]), state.filters.severity) : false;
 }
@@ -687,7 +688,7 @@ function prepareDataset(raw) {
       .toLowerCase();
     entry._year = parseInt(parts[1], 10) || 0;
     entry._num = parseInt(parts[2], 10) || 0;
-    entry._published = Date.parse(entry.published || '') || 0;
+    entry._published = Date.parse(entry.published || entry.poc_observed || '') || 0;
     // Title, vendor and product, once the records carry them.
     const named = [entry.title || '', ...(entry.vendor || []), ...(entry.product || [])].join(' ');
     entry._titleText = named.toLowerCase();
@@ -702,6 +703,7 @@ function prepareDataset(raw) {
 const el = {
   input: document.querySelector('[data-search]'),
   status: document.querySelector('[data-status]'),
+  notices: document.querySelector('[data-notices]'),
   results: document.querySelector('[data-results]'),
   trending: document.querySelector('[data-trending]'),
   trendDate: document.querySelector('[data-trend-date]'),
@@ -827,9 +829,10 @@ function rankedLinks(entry) {
       stars: meta ? meta[0] : -1
     };
   });
-  scored.sort((a, b) =>
-    (b.stars - a.stars) ||
-    a.url.toLowerCase().localeCompare(b.url.toLowerCase()) || (a.index - b.index));
+  scored.sort((a, b) => {
+    const left = a.url.toLowerCase(), right = b.url.toLowerCase();
+    return (b.stars - a.stars) || (left < right ? -1 : left > right ? 1 : 0) || (a.index - b.index);
+  });
   entry._ranked = scored.map(item => item.url);
   return entry._ranked;
 }
@@ -938,6 +941,7 @@ function resultRow(entry) {
 
   const dates = [];
   if (entry.published) dates.push(`published ${entry.published}`);
+  else if (entry.poc_observed) dates.push(`PoC observed ${entry.poc_observed}`);
   if (entry.modified) dates.push(`modified ${entry.modified}`);
   const dateHtml = dates.length
     ? `<div class="result-dates">${dates.map(d => `<span>${escapeHTML(d)}</span>`).join('')}</div>`
@@ -1021,8 +1025,7 @@ function renderResults(elapsed) {
     const note = results.corrected
       ? results.corrected.map(([typed, used]) => `${used} for ${typed}`).join(', ') + ' · '
       : '';
-    el.status.textContent = `${formatCount(results.length)} CVE${results.length === 1 ? '' : 's'} · ${note}matched in ${Math.max(1, Math.round(elapsed))}ms` +
-      (enrichmentNotices.size ? ' · ' + [...enrichmentNotices].join(' · ') : '');
+    el.status.textContent = `${formatCount(results.length)} CVE${results.length === 1 ? '' : 's'} · ${note}matched in ${Math.max(1, Math.round(elapsed))}ms`;
   }
 }
 
@@ -1087,7 +1090,7 @@ function paintHeroStats() {
 
 function idleStatus() {
   // The hero carries the totals now, so the field keeps its slot for timings.
-  return [...enrichmentNotices].join(' · ');
+  return '';
 }
 
 /* ---- url state --------------------------------------------------------- */
@@ -1137,6 +1140,8 @@ function syncURL() {
 
 function render() {
   syncURL();
+  el.notices.textContent = [...enrichmentNotices].join(' · ');
+  el.notices.hidden = !enrichmentNotices.size;
   if (state.query.length < MIN_QUERY && !hasActiveFilters()) {
     el.status.textContent = state.ready ? idleStatus() : state.loadFailed ? 'index unavailable' : 'loading index…';
     renderTrending();
@@ -1328,10 +1333,8 @@ function enrichmentUnavailable(kind, error) {
   console.warn(error.message);
   if (dataEpoch) return;
   if (kind === 'kev') {
-    state.kevOnly = false;
     enrichmentNotices.add('KEV filter unavailable');
   } else if (kind === 'severity') {
-    state.filters.severity = new Set(FILTER_OPTIONS.severity.map(([value]) => value));
     enrichmentNotices.add('severity filter unavailable');
   } else {
     enrichmentNotices.add(`${kind} unavailable`);
@@ -1396,6 +1399,7 @@ async function refreshData(force = false) {
     enableFilter('severity');
     enableFilter('source');
     el.kevOnly.disabled = false;
+    syncFilterControls();
     document.querySelectorAll('.trend-controls .switch button').forEach(button => { button.disabled = false; });
     paintHeroStats();
     paintRefreshTime(feed);

@@ -138,6 +138,11 @@ a:hover { color: var(--accent-hover); }
   font: 400 11.5px/1 var(--mono);
   color: var(--fg-muted);
 }
+.data-notices {
+  margin-top: 10px;
+  font: 400 12px/1.5 var(--mono);
+  color: var(--fg-subtle);
+}
 .filters {
   display: flex;
   align-items: center;

@@ -441,6 +441,8 @@ def page(entry: dict, data: dict) -> str:
         facts.append(f"<dt>Nuclei</dt><dd>{esc(tpl.get('severity'))}{cwe}</dd>")
     if entry.get("published"):
         facts.append(f"<dt>Published</dt><dd>{esc(entry['published'])}</dd>")
+    elif entry.get("poc_observed"):
+        facts.append(f"<dt>PoC observed</dt><dd>{esc(entry['poc_observed'])}</dd>")
     if entry.get("modified"):
         facts.append(f"<dt>Updated</dt><dd>{esc(entry['modified'])}</dd>")
 

@@ -73,7 +73,7 @@ def normalise_block(text: str) -> str:
     if re.match(r"\s*<(?:p|div|ul|ol|h[1-6])(?:\s|>)", text, flags=re.I):
         text = re.sub(r"</?(?:p|div|br|ul|ol|li|h[1-6])(?:\s[^>]*)?/?>", "\n", text, flags=re.I)
         text = re.sub(r"</?(?:a|strong|em|b|i|code|span)(?:\s[^>]*)?>", "", text, flags=re.I)
-    text = html.unescape(text)
+        text = html.unescape(text)
     text = text.replace("\r\n", "\n")
     text = re.sub(r"\n{2,}", "\n", text.strip())
     lines = [
@@ -471,6 +471,21 @@ def build_cve_list(blacklist: Collection[str]) -> tuple[List[Dict[str, object]],
     return cve_entries, total
 
 
+def add_observed_dates(cve_entries: list[dict], ledger: dict) -> None:
+    """Date undated CVEs by their earliest retained PoC observation, explicitly."""
+    import releases
+    for entry in cve_entries:
+        if entry.get("published"):
+            continue
+        stamps = [
+            stamp for field in ["poc", *(field for _, field in CURATED)]
+            for url in entry.get(field, [])
+            if (stamp := releases.timestamp((ledger.get(releases.key(entry["cve"], url)) or {}).get("seen")))
+        ]
+        if stamps:
+            entry["poc_observed"] = min(stamps).strftime("%Y-%m-%d")
+
+
 def build_repo_meta(cve_entries: List[Dict[str, object]]) -> Dict[str, object]:
     """Star count and last-push date for the repositories the index actually links."""
     stored = json.loads(REPO_META.read_text(encoding="utf-8"))
@@ -662,7 +677,10 @@ def main() -> int:
     DOCS_DIR.mkdir(parents=True, exist_ok=True)
     blacklist = load_blacklist()
 
+    import releases
+    ledger = releases.load_ledger()
     cve_payload, total_cves = build_cve_list(blacklist)
+    add_observed_dates(cve_payload, ledger)
     write_json(CVE_OUTPUT, cve_payload)
 
     repo_meta = build_repo_meta(cve_payload)
@@ -685,7 +703,7 @@ def main() -> int:
     indexed = {entry["cve"] for entry in cve_payload}
     frontpage_candidates = build_trending(blacklist)
     trending_items = enrich_trending(frontpage_candidates, repo_meta, kev, indexed)
-    landed_items = build_landed(cve_payload, repo_meta, kev, candidates=frontpage_candidates)
+    landed_items = build_landed(cve_payload, repo_meta, kev, ledger, candidates=frontpage_candidates)
     write_json(
         TRENDING_OUTPUT,
         {

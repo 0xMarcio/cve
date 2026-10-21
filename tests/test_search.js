@@ -171,11 +171,44 @@ test('failed enrichment cannot silently apply bookmarked filters against empty d
     kev: Promise.reject(new Error('KEV unavailable')), trending: new Promise(() => {})
   });
   await new Promise(setImmediate);
-  assert.equal(vm.runInContext('state.kevOnly', context), false);
-  assert.equal(vm.runInContext('state.filters.severity.size', context), 4);
+  assert.equal(vm.runInContext('state.kevOnly', context), true);
+  assert.equal(vm.runInContext('state.filters.severity.size', context), 1);
   assert.match(elements.get('[data-results]').innerHTML, /href="\/CVE-2026-1234"/);
-  assert.match(elements.get('[data-status]').textContent, /KEV filter unavailable/);
-  assert.match(elements.get('[data-status]').textContent, /severity filter unavailable/);
+  assert.match(elements.get('[data-notices]').textContent, /KEV filter unavailable/);
+  assert.match(elements.get('[data-notices]').textContent, /severity filter unavailable/);
+  assert.equal(elements.get('[data-notices]').hidden, false);
+});
+
+test('requested filters recover after an outage without losing the bookmark or ignoring a clear', async t => {
+  for (const cleared of [false, true]) {
+    const entries = ['CVE-2026-1234', 'CVE-2026-1235'].map(cve => ({ cve, desc: 'widget', poc: ['https://github.com/owner/' + cve] }));
+    const feed = { generated: '2026-10-21T10:00:00Z', with_pocs: 2, total_cves: 2, items: [], landed: [] };
+    const { context, elements } = startPage(t, { search: '?q=widget&kev=1&sev=critical', entries, cvssError: true,
+      kev: Promise.reject(new Error('Unavailable')), trending: feed });
+    await new Promise(setImmediate);
+    assert.match(elements.get('[data-results]').innerHTML, /href="\/CVE-2026-1235"/);
+    if (cleared) vm.runInContext('state.kevOnly = false; state.filters.severity = new Set(FILTER_OPTIONS.severity.map(([value]) => value))', context);
+    context.fetch = async url => ({ ok: true, json: async () => {
+      const file = url.split('?')[0];
+      return file === '/trending_poc.json' ? feed : file === '/CVE_list.json' ? entries
+        : file === '/kev.json' ? { 'CVE-2026-1234': ['2026-10-21', false] }
+        : file === '/cvss.json' ? { 'CVE-2026-1234': [['3.1', 9.8, 'CRITICAL', '', 'nvd', 'Primary']] } : {};
+    }});
+    assert.equal(await vm.runInContext('refreshData(true)', context), true);
+    assert.equal(vm.runInContext('state.kevOnly', context), !cleared);
+    assert.equal(vm.runInContext('state.filters.severity.size', context), cleared ? 4 : 1);
+    assert.equal(elements.get('[data-results]').innerHTML.includes('href="/CVE-2026-1235"'), cleared);
+    assert.equal(elements.get('[data-notices]').hidden, true);
+  }
+});
+
+test('equal-star links use the same code-point ordering as static CVE pages', async t => {
+  const urls = ['poc_1', 'poc1', 'poc-1'].map(name => 'https://github.com/owner/' + name);
+  const entries = [{ cve: 'CVE-2026-1234', desc: 'widget', poc: urls }];
+  const repositories = Object.fromEntries(urls.map(url => [url.slice('https://github.com/'.length), [10, '2026-10-21']]));
+  const { context } = startPage(t, { entries, repositories, trending: new Promise(() => {}) });
+  await new Promise(setImmediate);
+  assert.deepEqual(Array.from(vm.runInContext('rankedLinks(dataset[0])', context)), [...urls].sort());
 });
 
 test('missing repository metadata is visible and retried even without a newer publication', async t => {
@@ -184,7 +217,7 @@ test('missing repository metadata is visible and retried even without a newer pu
   const { context, elements } = startPage(t, { search: '?q=widget', entries, trending: feed,
     repositories: Promise.reject(new Error('Metadata temporarily unavailable')) });
   await new Promise(setImmediate);
-  assert.match(elements.get('[data-status]').textContent, /repository metadata unavailable/);
+  assert.match(elements.get('[data-notices]').textContent, /repository metadata unavailable/);
   context.fetch = async url => ({ ok: true, json: async () => {
     const file = url.split('?')[0];
     return file === '/trending_poc.json' ? feed : file === '/CVE_list.json' ? entries
@@ -192,7 +225,7 @@ test('missing repository metadata is visible and retried even without a newer pu
   }});
   assert.equal(await vm.runInContext('refreshData(true)', context), true);
   assert.match(elements.get('[data-results]').innerHTML, /0 <span class="star">★/);
-  assert.doesNotMatch(elements.get('[data-status]').textContent, /repository metadata unavailable/);
+  assert.doesNotMatch(elements.get('[data-notices]').textContent, /repository metadata unavailable/);
 });
 
 test('curated artifact paths survive search rendering without duplicate repository roots', async t => {
@@ -245,15 +278,17 @@ test('a bookmarked typo is corrected when indexing finishes without changing fil
 
 test('newest sorts by publication date rather than identifier allocation order', async t => {
   const entries = [
-    { cve: 'CVE-2026-99999', published: '2026-01-01' },
+    { cve: 'CVE-2026-99999', published: '2026-01-01', poc_observed: '2026-10-23' },
     { cve: 'CVE-2025-1234', published: '2026-10-21' },
     { cve: 'CVE-2026-88888', published: '2026-10-20' },
-    { cve: 'CVE-2026-99998' }
+    { cve: 'CVE-2026-99998' },
+    { cve: 'CVE-2026-1234', metadata_pending: true, poc_observed: '2026-10-22' }
   ].map(row => ({ ...row, desc: 'widget', poc: ['https://github.com/owner/' + row.cve] }));
   const { elements } = startPage(t, { search: '?q=widget&sort=newest', entries, trending: new Promise(() => {}) });
   await new Promise(setImmediate);
   const ids = [...elements.get('[data-results]').innerHTML.matchAll(/class="result-id" href="\/([^"]+)"/g)].map(match => match[1]);
-  assert.deepEqual(ids, ['CVE-2025-1234', 'CVE-2026-88888', 'CVE-2026-99999', 'CVE-2026-99998']);
+  assert.deepEqual(ids, ['CVE-2026-1234', 'CVE-2025-1234', 'CVE-2026-88888', 'CVE-2026-99999', 'CVE-2026-99998']);
+  assert.match(elements.get('[data-results]').innerHTML, /PoC observed 2026-10-22/);
 });
 
 test('a failed trending feed preserves the published homepage rows', async t => {

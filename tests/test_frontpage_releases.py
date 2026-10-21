@@ -16,6 +16,25 @@ class FrontpageReleaseTests(unittest.TestCase):
                          'A & B\nExample: <script>alert(1)</script>')
         literal = 'A filter can be bypassed with <a href="javascript:example">link</a>.'
         self.assertEqual(build_site.normalise_block(literal), literal)
+        encoded = 'The bypass uses &#x6A;avascript: and the literal &lt;script&gt;.'
+        self.assertEqual(build_site.normalise_block(encoded), encoded)
+
+    def test_undated_cves_use_real_poc_observations_without_inventing_publication_dates(self):
+        cve, url = 'CVE-2026-1234', 'https://github.com/owner/poc'
+        other = 'https://github.com/owner/other'
+        entry = {'cve': cve, 'poc': [url], 'collections': [other]}
+        dated = {**entry, 'published': '2026-01-01'}
+        unknown = {'cve': 'CVE-2026-1235', 'poc': [url]}
+        ledger = {
+            releases.key(cve, url): {'seen': '2026-10-21T00:30:00+02:00'},
+            releases.key(cve, other): {'seen': '2026-10-21T10:00:00Z'},
+            releases.key(unknown['cve'], url): {'imported': True}
+        }
+        build_site.add_observed_dates([entry, dated, unknown], ledger)
+        self.assertEqual(entry['poc_observed'], '2026-10-20')
+        self.assertNotIn('published', entry)
+        self.assertNotIn('poc_observed', dated)
+        self.assertNotIn('poc_observed', unknown)
 
     def test_trending_score_uses_the_same_current_stars_it_displays(self):
         cve = 'CVE-2026-1234'
