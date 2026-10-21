@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import copy
 import io
+import json
 import sys
 import tempfile
 import unittest
@@ -20,6 +21,45 @@ import update_cves
 CVE = "CVE-2026-12345"
 URL = "https://github.com/advisories/GHSA-abcd-efgh-2345"
 SCORE = ["3.1", 8.1, "HIGH", "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:N", "CNA", "CVE Program CNA"]
+
+
+class DiscoveryEnrichmentTests(unittest.TestCase):
+    def test_new_record_scores_publish_without_waiting_for_nvd(self):
+        record = {"cveMetadata": {"cveId": CVE, "state": "PUBLISHED"}, "containers": {"cna": {
+            "descriptions": [{"lang": "en", "value": "A new vulnerability"}],
+            "providerMetadata": {"shortName": "CNA"},
+            "metrics": [{"cvssV3_1": {"baseScore": 8.1, "vectorString": SCORE[3]}}],
+        }}}
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            (root / "index").mkdir()
+            with patch.multiple(update_cves, CVES=root / "cves", INDEX=root / "index",
+                                RECORD_STATE_FILE=root / "index/state.json", DATES_FILE=root / "index/dates.json"):
+                created, unavailable = update_cves.ensure_cve_entries(
+                    {CVE}, dry_run=False, records={CVE: record}, fetch_missing=False)
+            self.assertEqual((created, unavailable), ({CVE}, set()))
+            saved = json.loads((root / "index/metadata/2026.json").read_text())
+            self.assertEqual(saved[CVE]["cvss"], [SCORE])
+
+    def test_cna_correction_preserves_other_providers_and_pending_does_not_erase(self):
+        nvd = [*SCORE[:4], "nvd@nist.gov", "Primary"]
+        record = {"cveMetadata": {"cveId": CVE, "state": "PUBLISHED"}, "containers": {"cna": {
+            "providerMetadata": {"shortName": "CNA"},
+            "metrics": [{"cvssV3_1": {"baseScore": 0.0, "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:N"}}],
+        }}}
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / "2026.json"
+            path.write_text(json.dumps({CVE: {"cvss": [SCORE, nvd], "advisories": [[URL, ["Vendor Advisory"]]]}}))
+            metadata.record_metrics({CVE: record}, dry_run=False, output=Path(directory))
+            saved = path.read_text()
+            entry = json.loads(saved)[CVE]
+            self.assertIn(nvd, entry["cvss"])
+            self.assertNotIn(SCORE, entry["cvss"])
+            self.assertEqual(entry["cvss"][1][1:3], [0.0, "NONE"])
+            self.assertEqual(entry["advisories"], [[URL, ["Vendor Advisory"]]])
+            record["cveMetadata"]["state"] = "RESERVED"
+            self.assertEqual(metadata.record_metrics({CVE: record}, dry_run=False, output=Path(directory)), 0)
+            self.assertEqual(path.read_text(), saved)
 
 
 class AdvisoryLifecycleTests(unittest.TestCase):

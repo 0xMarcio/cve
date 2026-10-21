@@ -1576,6 +1576,9 @@ def ensure_cve_entries(
                              if (fetch_missing and cve_id in due) or cve_id in records else previous.get("checked", "")}
 
     record_dates(records, dry_run=dry_run)
+    from sync_cve_metadata import record_metrics
+    record_metrics({cve: record for cve, record in records.items() if cve in wanted},
+                   dry_run=dry_run, output=INDEX / "metadata")
     if not dry_run:
         RECORD_STATE_FILE.write_text(
             json.dumps(state, separators=(",", ":"), sort_keys=True) + "\n",
@@ -1684,6 +1687,10 @@ def refresh_record_headers(records: dict[str, dict[str, Any]], *, dry_run: bool)
             continue
         if refresh_record_header(path, details, kev, dry_run=dry_run):
             refreshed += 1
+    from sync_cve_metadata import record_metrics
+    record_metrics({cve: record for cve, record in records.items()
+                    if (CVES / cve.split("-")[1] / f"{cve}.md").exists()},
+                   dry_run=dry_run, output=INDEX / "metadata")
     return refreshed
 
 

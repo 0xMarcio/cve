@@ -698,6 +698,42 @@ def cve_program_metrics(record: dict[str, Any]) -> list[list[Any]]:
     return merge_metrics(rows)
 
 
+def record_metrics(records: dict[str, dict[str, Any]], *, dry_run: bool,
+                   output: Path | None = None) -> int:
+    """Publish CVE Program scores from records discovery already downloaded.
+
+    Replace only that provider's assessments; keep NVD and other providers.
+    Reserved records and failed lookups never withdraw a known assessment.
+    """
+    output = OUTPUT if output is None else output
+    by_year: dict[str, dict] = {}
+    changed = 0
+    for cve_id, record in records.items():
+        if (not update_cves.is_valid_cve(cve_id) or update_cves.record_cve_id(record) != cve_id
+                or not update_cves.record_is_published(record)
+                or not isinstance((record.get("containers") or {}).get("cna"), dict)):
+            continue
+        year = cve_id.split("-")[1]
+        if year not in by_year:
+            path = output / f"{year}.json"
+            by_year[year] = json.loads(path.read_text(encoding="utf-8")) if path.exists() else {}
+        stored = by_year[year]
+        previous = stored.get(cve_id, {})
+        entry = merge_entry(without_assessments(previous, {"CVE Program CNA", "CVE Program ADP"}),
+                            {"cvss": cve_program_metrics(record)})
+        if entry != previous:
+            changed += 1
+            if entry:
+                stored[cve_id] = entry
+            else:
+                stored.pop(cve_id, None)
+    if changed and not dry_run:
+        from sync_repo_metadata import save
+        for year, entries in by_year.items():
+            save(output / f"{year}.json", entries)
+    return changed
+
+
 def cisa_metrics(record: dict[str, Any]) -> list[list[Any]]:
     containers = record.get("containers") or {}
     rows: list[list[Any]] = []

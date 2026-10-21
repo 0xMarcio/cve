@@ -24,7 +24,7 @@ KERNELCTF = "https://github.com/google/security-research/tree/master/pocs/linux/
 SHARED = "https://github.com/owner/CVE-2026-21589"
 # Published order. Sorting either list by stars or by date would change it.
 LANDED = [
-    {"cve": "CVE-2024-26642", "url": KERNELCTF + "mitigation", "name": "CVE-2024-26642_mitigation", "stars": None,
+    {"cve": "CVE-2024-26642", "url": KERNELCTF + "mitigation", "name": "CVE-2024-26642_mitigation", "stars": 5000,
      "desc": "nf_tables", "released": "2026-10-06T23:30:00-02:00", "basis": "commit", "kev": False,
      "page": "/CVE-2024-26642", "landed": True, "source": "github.com", "artifact": True},
     {"cve": "CVE-2026-21589", "url": SHARED, "name": "CVE-2026-21589", "stars": 5,
@@ -118,7 +118,7 @@ def as_browser(markup: str) -> str:
 def cells(markup: str) -> list[dict]:
     rows = []
     for row in re.findall(r'<div class="trend-row">(.*?)</div>', markup):
-        stars = re.search(r'<span class="trend-stars[^"]*">(.*?)</span><span class="trend-age">', row).group(1)
+        stars = re.search(r'<span class="trend-stars[^"]*"[^>]*>(.*?)</span><span class="trend-age">', row).group(1)
         href, name = re.search(r'<a class="trend-name" href="([^"]*)"[^>]*>([^<]*)</a>', row).groups()
         rows.append({"href": html.unescape(href), "name": html.unescape(name),
                      "stars": re.sub(r"<[^>]+>", "", stars), "kev": 'class="trend-kev"' in row,
@@ -148,19 +148,20 @@ class HomepageListTests(unittest.TestCase):
         self.assertIn(SHARED, [row["href"] for row in landed])
         self.assertIn(SHARED, [row["href"] for row in trending])
 
-    def test_dates_are_utc_days_and_unknown_dates_stay_blank(self) -> None:
+    def test_dates_are_utc_days_and_unknown_dates_are_explicit(self) -> None:
         landed, trending = cells(self.views["LANDED"]["rows"]), cells(self.views["TRENDING"]["rows"])
         self.assertEqual([row["date"] for row in landed], ["2026-10-07", "2026-10-06", "2026-10-05"])
-        self.assertEqual([row["date"] for row in trending], ["2026-10-06", "2026-10-03", ""])
+        self.assertEqual([row["date"] for row in trending], ["2026-10-06", "2026-10-03", "N/A"])
         self.assertEqual([self.views[mode]["date"] for mode in ("initial", "TRENDING", "RECENT")],
                          ["RELEASED", "UPDATED", "RELEASED"])
         self.assertNotIn(" ago", self.views["LANDED"]["rows"] + self.views["TRENDING"]["rows"])
 
-    def test_artifacts_drop_collection_stars_and_keep_their_variant_or_host(self) -> None:
+    def test_artifacts_show_host_repository_stars_and_keep_their_variant_or_host(self) -> None:
         landed = cells(self.views["LANDED"]["rows"])
         self.assertEqual([(row["name"], row["stars"], row["kev"]) for row in landed], [
-            ("CVE-2024-26642_mitigation", "", False), ("CVE-2026-21589", "5 ★", True),
-            ("exploit-db.com/50592", "", True)])
+            ("CVE-2024-26642_mitigation", "5.0k ★", False), ("CVE-2026-21589", "5 ★", True),
+            ("exploit-db.com/50592", "N/A", True)])
+        self.assertIn('title="Repository stars: google/security-research"', self.views["LANDED"]["rows"])
         self.assertEqual(cells(self.views["TRENDING"]["rows"])[1]["stars"], "1.3k ★")
         self.assertIn("Atlassian&#39;s &lt;b&gt;file read&lt;/b&gt;", self.views["LANDED"]["rows"])
 

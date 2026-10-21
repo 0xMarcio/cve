@@ -112,7 +112,7 @@ def search_rows(entry: dict) -> dict[str, dict]:
     for row in re.findall(r'<div class="poc-row">(.*?)</div>', json.loads(done.stdout), re.S):
         tag = re.search(r'<span class="poc-tag[^"]*"[^>]*>([^<]*)</span>', row)
         href, label = re.search(r'<a href="([^"]*)"[^>]*>([^<]*)</a>', row).groups()
-        stars, age = re.search(r'<span class="poc-stars[^"]*">(.*?)</span><span class="poc-age">([^<]*)</span>',
+        stars, age = re.search(r'<span class="poc-stars[^"]*"[^>]*>(.*?)</span><span class="poc-age"[^>]*>([^<]*)</span>',
                                row, re.S).groups()
         rows[html.unescape(href)] = {"tag": tag[1] if tag else "", "label": html.unescape(label),
                                      "stars": stars, "age": age}
@@ -141,28 +141,32 @@ class ArtifactLabelTests(unittest.TestCase):
 
 
 class CvePageTests(unittest.TestCase):
-    def test_kernelctf_variants_are_distinct_and_carry_no_repository_stars_or_dates(self) -> None:
+    def test_kernelctf_variants_keep_identity_and_label_repository_metadata(self) -> None:
         rows = page_blocks(VARIANT_ENTRY)["Exploit collections"]
         self.assertEqual(rows, [
-            (KERNELCTF + "cos", "linux/kernelctf/CVE-2024-26642_cos", "google/security-research"),
-            (KERNELCTF + "lts", "linux/kernelctf/CVE-2024-26642_lts", "google/security-research"),
-            (KERNELCTF + "mitigation", "linux/kernelctf/CVE-2024-26642_mitigation", "google/security-research"),
+            (KERNELCTF + target, "linux/kernelctf/CVE-2024-26642_" + target,
+             "google/security-research · Repo stars 4682★ · pushed 2026-10-01")
+            for target in ("cos", "lts", "mitigation")
         ])
 
-    def test_every_collection_names_its_repository_in_place_of_its_stars(self) -> None:
+    def test_every_collection_names_its_repository_and_metadata_availability(self) -> None:
         self.assertEqual(page_blocks(SOURCE_ENTRY)["Exploit collections"],
-                         [(url, label, repository) for url, (_, label, repository) in COLLECTION_PATHS.items()])
+                         [(url, label, repository + " · " +
+                           (f"Repo stars {REPO_META[repository.lower()][0]}★ · pushed {REPO_META[repository.lower()][1]}"
+                            if repository.lower() in REPO_META else "Repo metadata unavailable"))
+                          for url, (_, label, repository) in sorted(COLLECTION_PATHS.items(), key=lambda item:
+                              (-REPO_META.get(item[1][2].lower(), [-1])[0], item[0].lower()))])
 
-    def test_other_curated_paths_keep_their_label_and_lose_repository_metadata(self) -> None:
+    def test_other_curated_paths_keep_their_label_and_repository_metadata(self) -> None:
         self.assertEqual(page_blocks(ROOT_ENTRY)["Nuclei templates"],
-                         [(TEMPLATE, TEMPLATE[len(build_pages.GITHUB):], "")])
+                         [(TEMPLATE, TEMPLATE[len(build_pages.GITHUB):], "Repo stars 13023★ · pushed 2026-09-26")])
 
     def test_repository_roots_and_repository_links_keep_stars_and_push_dates(self) -> None:
-        root = [(ROOT_LINK, "owner/dedicated", "120★ · 2026-09-29")]
+        root = [(ROOT_LINK, "owner/dedicated", "Repo stars 120★ · pushed 2026-09-29")]
         self.assertEqual(page_blocks(ROOT_ENTRY)["Exploit collections"], root)
         self.assertEqual(page_blocks(VARIANT_ENTRY)["Proof-of-concept exploits"], root)
         self.assertEqual(page_blocks(POC_ENTRY)["Proof-of-concept exploits"],
-                         [(ADVISORY_TEXT, ADVISORY_TEXT[len(build_pages.GITHUB):], "861★ · 2025-04-16")])
+                         [(ADVISORY_TEXT, ADVISORY_TEXT[len(build_pages.GITHUB):], "Repo stars 861★ · pushed 2025-04-16")])
 
 
 class SearchAgreementTests(unittest.TestCase):
@@ -172,7 +176,11 @@ class SearchAgreementTests(unittest.TestCase):
             rows = search_rows(entry)
             for href, label, _ in page_blocks(entry)["Exploit collections"]:
                 with self.subTest(href=href):
-                    self.assertEqual(rows[href], {"tag": tags[href], "label": label, "stars": "", "age": ""})
+                    self.assertEqual((rows[href]["tag"], rows[href]["label"]), (tags[href], label))
+                    meta = REPO_META.get(build_pages.repo_of(href))
+                    self.assertEqual(rows[href]["stars"],
+                                     f'{build_pages.star_label(meta[0])} <span class="star">★</span>' if meta else 'N/A')
+                    self.assertTrue(rows[href]["age"])
 
     def test_search_keeps_repository_columns_outside_curated_paths(self) -> None:
         for entry, url, label in ((VARIANT_ENTRY, ROOT_LINK, "dedicated"), (ROOT_ENTRY, ROOT_LINK, "dedicated"),
@@ -183,7 +191,8 @@ class SearchAgreementTests(unittest.TestCase):
                 self.assertRegex(row["stars"], r"^\d+ <span class=\"star\">★</span>$")
                 self.assertTrue(row["age"])
         template = search_rows(ROOT_ENTRY)[TEMPLATE]
-        self.assertEqual((template["tag"], template["stars"], template["age"]), ("NUCLEI", "", ""))
+        self.assertEqual((template["tag"], template["stars"]), ("NUCLEI", '13.0k <span class="star">★</span>'))
+        self.assertTrue(template["age"])
 
 
 if __name__ == "__main__":

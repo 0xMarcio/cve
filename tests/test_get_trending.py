@@ -21,6 +21,7 @@ SPEC.loader.exec_module(trending)
 sys.path.insert(0, str(ROOT / "scripts"))
 
 import sync_collections
+import build_site
 
 NOW = datetime.now(timezone.utc)
 CVE = f"CVE-{NOW.year}-21589"
@@ -350,6 +351,11 @@ class ReleaseEvidenceTests(unittest.TestCase):
 
 
 class MainTests(unittest.TestCase):
+    def setUp(self):
+        patcher = patch.object(trending, "remember_repository_metadata")
+        self.remember = patcher.start()
+        self.addCleanup(patcher.stop)
+
     def test_reviewed_payload_link_and_stars_match_in_readme_and_feed(self):
         row = repo(f"example/{CVE}", stamp(0.3), stars=500)
         payload = row["html_url"] + "/blob/" + "a" * 40 + "/poc/exploit.py"
@@ -372,11 +378,37 @@ class MainTests(unittest.TestCase):
             items = json.loads(output.read_text())
         self.assertEqual(text.count(f"]({payload})"), 2)
         self.assertNotIn(f"]({row['html_url']})", text)
-        self.assertNotIn("500\u2b50", text)
+        self.assertIn("500\u2b50", text)
+        self.assertIn("| Repo stars |", text)
         self.assertEqual(len(items), 1)
         self.assertEqual(items[0]["url"], payload)
-        self.assertIsNone(items[0]["stars"])
+        self.assertEqual(items[0]["stars"], 500)
+        self.remember.assert_called_once()
         self.assertTrue(items[0]["artifact"] and items[0]["landed"] and items[0]["trending"])
+
+    def test_ledger_only_rows_carry_cached_zero_and_artifact_stars_into_readme_and_feed(self):
+        root = 'https://github.com/owner/new'
+        artifact = 'https://github.com/owner/lab/blob/main/poc.py'
+        entries = [{'cve': CVE, 'desc': 'Research demonstration', 'poc': [root, artifact]}]
+        ledger = {}
+        for url in (root, artifact):
+            trending.releases.record(ledger, CVE, url, {'commit': stamp(0.1), 'commit_verified': True},
+                                     observed_at=stamp(0), import_mode=True)
+        with tempfile.TemporaryDirectory() as directory:
+            readme, output, cache = [Path(directory, name) for name in ('README.md', 'trending.json', 'repo_meta.json')]
+            cache.write_text(json.dumps({'owner/new': [0, '2026-10-21'], 'owner/lab': [145, '2026-10-21']}))
+            with patch.multiple(trending, README=str(readme), TRENDING=str(output), YEARS=1,
+                                figures=lambda: {'total_cves': 2, 'with_pocs': 1, 'kev': 1},
+                                known_exploited=lambda: set(), just_landed=lambda *args: [],
+                                search_year=lambda *args: (0, [])), \
+                    patch.multiple(build_site, REPO_META=cache, build_cve_list=lambda blocked: (entries, 1)), \
+                    patch.multiple(trending.releases, load_ledger=lambda: ledger, save_ledger=lambda ledger: None), \
+                    redirect_stdout(io.StringIO()):
+                self.assertEqual(trending.main(), 0)
+            self.assertEqual({row['url']: row['stars'] for row in json.loads(output.read_text())},
+                             {root: 0, artifact: 145})
+            self.assertIn('| 0\u2b50 |', readme.read_text())
+            self.assertIn('| 145\u2b50 |', readme.read_text())
 
     def test_new_trending_repository_is_in_both_sections_and_written_once(self) -> None:
         both = repo(f"MarcusProgram/{CVE}", stamp(0.3), stars=5)

@@ -44,6 +44,8 @@ let ratings = {};
 let metadata = {};
 let epss = {};
 let indexMeta = null;
+let dataEpoch = 0;
+const enrichmentNotices = new Set();
 
 /* ---- formatting -------------------------------------------------------- */
 
@@ -762,24 +764,40 @@ function artifactPath(url) {
   return root && path.startsWith(root) && path.length > root.length ? path.slice(root.length) : path;
 }
 
+function repositoryCells(url) {
+  const parsed = repoFromUrl(url);
+  const name = parsed ? (parsed.owner + '/' + parsed.repo).toLowerCase() : '';
+  const meta = repoMeta[name];
+  const stars = meta ? meta[0] : null;
+  const starCell = stars == null ? 'N/A' : `${formatStars(stars)} <span class="star">★</span>`;
+  const title = parsed ? `Repository stars: ${name}${stars == null ? ' (unavailable)' : ''}` : 'No GitHub repository';
+  const pushed = meta && meta[1];
+  const hours = pushed ? hoursSince(pushed) : null;
+  // The repository cache stores UTC dates, not exact push times.
+  const age = hours == null ? 'N/A' : /^\d{4}-\d{2}-\d{2}$/.test(pushed)
+    ? hours < 24 ? 'today' : shortAge(Math.floor(hours / 24) * 24)
+    : shortAge(hours);
+  return `<span class="poc-stars${stars >= 500 ? ' is-popular' : ''}" title="${escapeHTML(title)}">${starCell}</span>` +
+    `<span class="poc-age" title="Repository last push${meta && meta[1] ? ': ' + escapeHTML(meta[1]) + ' UTC' : ' unavailable'}">${escapeHTML(age)}</span>`;
+}
+
 function pocRow(url, artifact = false) {
   const curated = CURATED.find(source => url.includes(source.match));
   if (curated) {
     return '<div class="poc-row"><span class="poc-name">' +
       `<span class="poc-tag is-${curated.tag.toLowerCase()}" title="${escapeHTML(curated.hint)}">${curated.tag}</span>` +
       `<a href="${escapeHTML(url)}" target="_blank" rel="noopener">${escapeHTML(curated.label(url))}</a>` +
-      '</span><span class="poc-stars"></span><span class="poc-age"></span></div>';
+      '</span>' + repositoryCells(url) + '</div>';
   }
   const parsed = repoFromUrl(url);
   const href = escapeHTML(url);
-  // A gist or an advisory has no owner and no stars; the star and age columns
-  // stay empty rather than inventing a repository shape for it.
+  // Gists and advisories do not inherit a project's repository metadata.
   if (!parsed) {
     return '<div class="poc-row"><span class="poc-name">' +
       `<a class="plain" href="${href}" target="_blank" rel="nofollow noopener">${escapeHTML(plainLinkLabel(url))}</a>` +
-      '</span><span class="poc-stars"></span><span class="poc-age"></span></div>';
+      '</span>' + repositoryCells(url) + '</div>';
   }
-  // One exploit in a shared repository: the repository's stars and push date are not its own.
+  // Keep artifact identity while labelling stars and pushes as repository metadata.
   const path = artifact ? artifactPath(url) : '';
   if (path) {
     const name = `${parsed.owner}/${parsed.repo}`;
@@ -787,51 +805,31 @@ function pocRow(url, artifact = false) {
     return '<div class="poc-row"><span class="poc-name">' +
       `<span class="poc-tag is-${escapeHTML(source.tag.toLowerCase())}" title="${escapeHTML(source.hint)}">${escapeHTML(source.tag)}</span>` +
       `<a href="${href}" target="_blank" rel="noopener">${escapeHTML(path)}</a>` +
-      '</span><span class="poc-stars"></span><span class="poc-age"></span></div>';
+      '</span>' + repositoryCells(url) + '</div>';
   }
-  const meta = repoMeta[(parsed.owner + '/' + parsed.repo).toLowerCase()];
-  const stars = meta ? meta[0] : null;
-  const hours = meta ? hoursSince(meta[1]) : null;
-  const popular = stars != null && stars >= 500 ? ' is-popular' : '';
-  // The glyph stays dim at every value so the column reads as numbers.
-  const starCell = stars == null ? '' : `${formatStars(stars)} <span class="star">★</span>`;
   return '<div class="poc-row">' +
     `<span class="poc-name">${escapeHTML(parsed.owner)}<span class="poc-sep"> / </span>` +
     `<a href="${href}" target="_blank" rel="nofollow noopener">${escapeHTML(parsed.repo)}</a></span>` +
-    `<span class="poc-stars${popular}">${starCell}</span>` +
-    `<span class="poc-age">${escapeHTML(shortAge(hours))}</span></div>`;
+    repositoryCells(url) + '</div>';
 }
 
-function compact(value) {
-  return value.toLowerCase().replace(/[^a-z0-9]/g, '');
-}
-
-/** Best links first. A repository named after the CVE is a proof of concept for
- *  it; a 5k-star scanner that merely mentions it is not, so stars only order
- *  repositories that are already about this CVE. Links with no star count keep
- *  their original order behind both: a reference has no repository to rank. */
+/** Published links are already scoped to the CVE. Rank their repositories by
+ *  stars regardless of naming, with unknown readings after measured zeroes. */
 function rankedLinks(entry) {
   if (entry._ranked) return entry._ranked;
-  const id = compact(entry.cve);
-  const scored = (entry.poc || []).map((url, index) => {
+  const scored = entryLinks(entry).map((url, index) => {
     const parsed = repoFromUrl(url);
     const meta = parsed && repoMeta[(parsed.owner + '/' + parsed.repo).toLowerCase()];
     return {
       url,
       index,
-      dedicated: compact(url).includes(id) ? 1 : 0,
       stars: meta ? meta[0] : -1
     };
   });
   scored.sort((a, b) =>
-    (b.dedicated - a.dedicated) || (b.stars - a.stars) || (a.index - b.index));
-  // Curated entries lead: templates, exploit archives, modules and runnable
-  // environments can be used as they stand without first reading a repository.
-  entry._ranked = uniqueSourceLinks([
-    ...(entry.nuclei || []), ...(entry.msf || []), ...(entry.edb || []), ...(entry.vulhub || []),
-    ...(entry.collections || []),
-    ...scored.map(item => item.url)
-  ], POC_FIELDS.slice(1).flatMap(field => entry[field] || []));
+    (b.stars - a.stars) ||
+    a.url.toLowerCase().localeCompare(b.url.toLowerCase()) || (a.index - b.index));
+  entry._ranked = scored.map(item => item.url);
   return entry._ranked;
 }
 
@@ -1022,7 +1020,8 @@ function renderResults(elapsed) {
     const note = results.corrected
       ? results.corrected.map(([typed, used]) => `${used} for ${typed}`).join(', ') + ' · '
       : '';
-    el.status.textContent = `${formatCount(results.length)} CVE${results.length === 1 ? '' : 's'} · ${note}matched in ${Math.max(1, Math.round(elapsed))}ms`;
+    el.status.textContent = `${formatCount(results.length)} CVE${results.length === 1 ? '' : 's'} · ${note}matched in ${Math.max(1, Math.round(elapsed))}ms` +
+      (enrichmentNotices.size ? ' · ' + [...enrichmentNotices].join(' · ') : '');
   }
 }
 
@@ -1031,9 +1030,11 @@ function renderResults(elapsed) {
 const TREND_LISTS = { LANDED: 'landed', TRENDING: 'items', RECENT: 'landed' };
 
 function trendRow(item, landed) {
-  // A path in a collection does not have the collection's stars.
-  const stars = item.artifact ? null : item.stars;
-  const starCell = stars == null ? '' : `${formatStars(stars)} <span class="star">★</span>`;
+  const parsed = repoFromUrl(item.url);
+  const repository = parsed ? (parsed.owner + '/' + parsed.repo).toLowerCase() : '';
+  const stars = repository ? item.stars : null;
+  const starCell = stars == null ? 'N/A' : `${formatStars(stars)} <span class="star">★</span>`;
+  const title = repository ? `Repository stars: ${repository}${stars == null ? ' (unavailable)' : ''}` : 'No GitHub repository';
   // Off GitHub the last path segment is a bare id, so it keeps its host.
   const host = String(item.source || '').replace(/^www\./, '');
   const name = item.artifact && host && host !== 'github.com' ? `${host}/${item.name || ''}` : item.name;
@@ -1043,10 +1044,10 @@ function trendRow(item, landed) {
   const detail = item.page
     ? `<a class="trend-detail" href="${escapeHTML(item.page)}">${escapeHTML(item.cve)} details</a>`
     : '';
-  return `<div class="trend-row"><span class="trend-stars${stars >= 500 ? ' is-popular' : ''}">${starCell}</span>` +
-    `<span class="trend-age">${utcDay(landed ? item.released : item.pushed)}</span>` +
+  return `<div class="trend-row"><span class="trend-stars${stars >= 500 ? ' is-popular' : ''}" title="${escapeHTML(title)}">${starCell}</span>` +
+    `<span class="trend-age">${utcDay(landed ? item.released : item.pushed) || 'N/A'}</span>` +
     `<span class="trend-name-cell">${flagged}<a class="trend-name" href="${escapeHTML(item.url)}" target="_blank" rel="nofollow noopener">${escapeHTML(name)}</a>${detail}</span>` +
-    `<span class="trend-desc">${escapeHTML(item.desc)}</span></div>`;
+    `<span class="trend-desc">${escapeHTML(item.desc || 'Description unavailable')}</span></div>`;
 }
 
 function renderTrending() {
@@ -1085,7 +1086,7 @@ function paintHeroStats() {
 
 function idleStatus() {
   // The hero carries the totals now, so the field keeps its slot for timings.
-  return '';
+  return [...enrichmentNotices].join(' · ');
 }
 
 /* ---- url state --------------------------------------------------------- */
@@ -1322,6 +1323,99 @@ async function loadJSON(url, options) {
   return response.json();
 }
 
+function enrichmentUnavailable(kind, error) {
+  console.warn(error.message);
+  if (dataEpoch) return;
+  if (kind === 'kev') {
+    state.kevOnly = false;
+    enrichmentNotices.add('KEV filter unavailable');
+  } else if (kind === 'severity') {
+    state.filters.severity = new Set(FILTER_OPTIONS.severity.map(([value]) => value));
+    enrichmentNotices.add('severity filter unavailable');
+  } else {
+    enrichmentNotices.add(`${kind} unavailable`);
+  }
+  syncFilterControls();
+  render();
+}
+
+function paintRefreshTime(meta) {
+  const minutes = Math.max(0, Math.round((Date.now() - Date.parse(meta.generated)) / 60000));
+  el.refreshed.textContent = minutes < 60
+    ? `index refreshed ${minutes} minute${minutes === 1 ? '' : 's'} ago`
+    : `index refreshed ${Math.round(minutes / 60)} hour${Math.round(minutes / 60) === 1 ? '' : 's'} ago`;
+}
+
+const DATA_REFRESH_MS = 5 * 60 * 1000;
+let lastDataCheck = Date.now();
+let refreshingData = false;
+
+async function refreshData(force = false) {
+  if (refreshingData || (!state.ready && !state.loadFailed) || document.hidden ||
+      (!force && Date.now() - lastDataCheck < DATA_REFRESH_MS)) return false;
+  refreshingData = true;
+  lastDataCheck = Date.now();
+  try {
+    const feed = await loadJSON(`/trending_poc.json?refresh=${lastDataCheck}`, { cache: 'no-store' });
+    if (!feed.generated) throw new Error('Refresh has no publication timestamp');
+    if (feed.generated === indexMeta?.generated && state.ready && !enrichmentNotices.size) {
+      paintRefreshTime(feed);
+      return false;
+    }
+    const names = ['CVE_list', 'repo_meta', 'cvss', 'advisories', 'nuclei', 'kev', 'epss'];
+    const [entries, repositories, scores, advisories, templates, exploited, probabilities] =
+      await Promise.all(names.map(name => loadJSON(`/${name}.json?v=${encodeURIComponent(feed.generated)}`, { cache: 'no-store' })));
+    if (!Array.isArray(entries) || entries.length !== feed.with_pocs ||
+        [repositories, scores, advisories, templates, exploited, probabilities].some(value =>
+          !value || typeof value !== 'object' || Array.isArray(value))) {
+      throw new Error('Incomplete index refresh');
+    }
+    const current = await loadJSON(`/trending_poc.json?refresh=${Date.now()}`, { cache: 'no-store' });
+    if (current.generated !== feed.generated) throw new Error('Publication changed during refresh');
+    const nextMetadata = {};
+    for (const [id, rows] of Object.entries(scores)) (nextMetadata[id] || (nextMetadata[id] = {})).cvss = rows;
+    for (const [id, rows] of Object.entries(advisories)) (nextMetadata[id] || (nextMetadata[id] = {})).advisories = rows;
+    // Swap one complete snapshot. A failed optional download keeps the current
+    // search, ordering and expanded rows intact, and is retried on the next check.
+    dataset = prepareDataset(entries);
+    dataEpoch += 1;
+    repoMeta = repositories;
+    metadata = nextMetadata;
+    ratings = templates;
+    kev = exploited;
+    epss = probabilities;
+    indexMeta = feed;
+    severityEpoch += 1;
+    state.results = [];
+    state.ready = true;
+    state.loadFailed = false;
+    enrichmentNotices.clear();
+    yieldNext = null;
+    buildWordIndex();
+    enableFilter('severity');
+    enableFilter('source');
+    el.kevOnly.disabled = false;
+    document.querySelectorAll('.trend-controls .switch button').forEach(button => { button.disabled = false; });
+    paintHeroStats();
+    paintRefreshTime(feed);
+    render();
+    return true;
+  } catch (err) {
+    console.warn(`Index refresh deferred: ${err.message}`);
+    return false;
+  } finally {
+    refreshingData = false;
+  }
+}
+
+async function checkForUpdates() {
+  await refreshData();
+  setTimeout(checkForUpdates, DATA_REFRESH_MS);
+}
+setTimeout(checkForUpdates, DATA_REFRESH_MS);
+document.addEventListener('visibilitychange', () => { if (!document.hidden) refreshData(); });
+window.addEventListener?.('focus', () => { refreshData(); });
+
 (async () => {
   readURLState();
   syncFilterControls();
@@ -1329,65 +1423,70 @@ async function loadJSON(url, options) {
 
   // Trending is optional. A slow feed must not hold up a bookmarked search.
   loadJSON('/trending_poc.json', { cache: 'no-store' }).then(meta => {
+    if (dataEpoch) return;
     indexMeta = meta;
-    const minutes = Math.max(0, Math.round((Date.now() - Date.parse(meta.generated)) / 60000));
-    el.refreshed.textContent = minutes < 60
-      ? `index refreshed ${minutes} minute${minutes === 1 ? '' : 's'} ago`
-      : `index refreshed ${Math.round(minutes / 60)} hour${Math.round(minutes / 60) === 1 ? '' : 's'} ago`;
+    paintRefreshTime(meta);
     document.querySelectorAll('.trend-controls .switch button').forEach(button => { button.disabled = false; });
     paintHeroStats();
     render();
   }).catch(err => console.warn(err.message));
 
-  // The repository metadata is optional: without it the PoC rows simply lose
-  // their star and age columns, which is the documented fallback.
+  // Optional enrichment must not block discovery; unavailable values are explicit.
   loadJSON('/kev.json', { cache: 'no-cache' }).then(data => {
+    if (dataEpoch) return;
     kev = data || {};
     el.kevOnly.disabled = false;
     paintHeroStats();
     render();
-  }).catch(err => console.warn(err.message));
+  }).catch(err => enrichmentUnavailable('kev', err));
 
   // The metadata comes in two halves. The CVSS rows are small and gate the
   // severity filter, so they load with everything else; the advisories are
   // 2.4 MB on the wire and only show inside a rendered row, so they follow
   // the index rather than compete with it.
   loadJSON('/cvss.json', { cache: 'no-cache' }).then(data => {
+    if (dataEpoch) return;
     for (const [id, rows] of Object.entries(data || {})) (metadata[id] || (metadata[id] = {})).cvss = rows;
     severityEpoch += 1;
     enableFilter('severity');
     if (state.ready && (state.query || hasActiveFilters())) render();
-  }).catch(err => console.warn(err.message));
+  }).catch(err => enrichmentUnavailable('severity', err));
   const loadAdvisories = () => loadJSON('/advisories.json', { cache: 'no-cache' }).then(data => {
+    if (dataEpoch) return;
     for (const [id, rows] of Object.entries(data || {})) (metadata[id] || (metadata[id] = {})).advisories = rows;
     if (state.ready && (state.query || hasActiveFilters())) renderResults(null);
-  }).catch(err => console.warn(err.message));
+  }).catch(err => enrichmentUnavailable('advisories', err));
 
   loadJSON('/nuclei.json', { cache: 'no-cache' }).then(data => {
+    if (dataEpoch) return;
     ratings = data || {};
     severityEpoch += 1;
-    enableFilter('severity');
     if (state.ready && (state.query || hasActiveFilters())) render();
-  }).catch(err => console.warn(err.message));
+  }).catch(err => enrichmentUnavailable('template ratings', err));
 
   loadJSON('/epss.json', { cache: 'no-cache' }).then(data => {
+    if (dataEpoch) return;
     epss = data || {};
     if (state.ready && (state.query || hasActiveFilters())) render();
-  }).catch(err => console.warn(err.message));
+  }).catch(err => enrichmentUnavailable('EPSS', err));
 
   loadJSON('/repo_meta.json', { cache: 'no-cache' }).then(data => {
+    if (dataEpoch) return;
     repoMeta = data || {};
     for (const entry of dataset) entry._ranked = null;
     if (state.ready && (state.query || hasActiveFilters())) renderResults(null);
-  }).catch(err => console.warn(err.message));
+  }).catch(err => enrichmentUnavailable('repository metadata', err));
 
   try {
-    dataset = prepareDataset(await loadJSON('/CVE_list.json', { cache: 'no-cache' }));
+    const entries = await loadJSON('/CVE_list.json', { cache: 'no-cache' });
+    if (dataEpoch) return;
+    dataset = prepareDataset(entries);
     state.ready = true;
     enableFilter('source');
     render();
     buildWordIndex();
   } catch (err) {
+    if (dataEpoch) return;
     console.warn(err.message);
     state.loadFailed = true;
     render();

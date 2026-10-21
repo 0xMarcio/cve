@@ -27554,7 +27554,6 @@ CVE-2026-109618 - https://github.com/daffa001/php-CVE-2026-109618-CVE-2026-10961
 CVE-2026-109618 - https://github.com/ecomyseo/ecom_blockrceflaws
 CVE-2026-109618 - https://github.com/gputier/php-rfc1867-guard
 CVE-2026-109618 - https://github.com/orbitron-ai/php2shell-response-kit
-CVE-2026-109618 - https://github.com/richardmongler/php2shell-CVE-2026-109618
 CVE-2026-109618 - https://github.com/zenzue/PoC-CVE-2026-109618_19
 CVE-2026-109619 - https://github.com/AmpedWasTaken/PHP2Shell-CVE-2026-109618-CVE-2026-109619
 CVE-2026-109619 - https://github.com/BIBILZERODAY/PHP2Shell-CVE-2026-109618-CVE-2026-109619-Mass-Exploit
@@ -27617,7 +27616,6 @@ CVE-2026-109618 - https://github.com/alvaroguzmancode/CVE-2026-109618
 CVE-2026-109618 - https://github.com/anmolksachan/php2shell-nuclei
 CVE-2026-109618 - https://github.com/hirokidaichi/php56-cve-2026-backport-experiment
 CVE-2026-109618 - https://github.com/lzz0403/CVE-2026-109618-PHP2Shell-poc
-CVE-2026-109618 - https://github.com/mostlygino/PHP2SHELL
 CVE-2026-109618 - https://github.com/scallydima/php2shell-poc
 CVE-2026-109619 - https://github.com/ZabirAsnawi/testofPOC
 CVE-2026-109619 - https://github.com/Zer061/php2shell-poc
@@ -27649,3 +27647,6 @@ CVE-2026-109619 - https://github.com/rizkyriann/php2shell-lab
 CVE-2026-88771 - https://github.com/evenomn/actions-test
 CVE-2026-88772 - https://github.com/evenomn/actions-test
 CVE-2026-109619 - https://github.com/unlimit0118/CVE-2026-109619-php2shell-poc
+CVE-2026-109618 - https://github.com/NullAura/php2shell-poc
+CVE-2026-109618 - https://github.com/al4n4n/php2shell
+CVE-2026-109618 - https://github.com/lushinshang/php2shell-cve-2026-109618

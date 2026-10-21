@@ -63,17 +63,21 @@ def collect_repositories() -> tuple[dict[str, list[tuple[Path, str]]], set[str]]
     """
     prunable: dict[str, list[tuple[Path, str]]] = {}
     referenced: set[str] = set()
+    from build_site import CURATED, repo_from_url
     for path in sorted(CVES.glob("[12][0-9][0-9][0-9]/CVE-*.md")):
         text = path.read_text(encoding="utf-8", errors="replace")
         for url in section_links(text, GITHUB_SECTION):
-            full_name = github_repo_from_url(url)
+            full_name = repo_from_url(url)
             if full_name and "/" in full_name:
                 prunable.setdefault(full_name, []).append((path, url))
                 referenced.add(full_name)
         for url in section_links(text, REFERENCE_SECTION):
-            full_name = github_repo_from_url(url)
+            full_name = repo_from_url(url)
             if full_name and "/" in full_name:
                 referenced.add(full_name)
+        for section, _ in CURATED:
+            referenced.update(name for url in section_links(text, section)
+                              if (name := repo_from_url(url)))
     return prunable, referenced
 
 

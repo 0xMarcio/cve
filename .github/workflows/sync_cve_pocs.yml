@@ -39,7 +39,7 @@ jobs:
       - name: Verify the generated index
         run: |
           python3 -m unittest discover -s tests
-          python3 scripts/build_site.py
+          python3 scripts/build_site.py --offline
 
       - name: Record published artifact releases
         run: python3 scripts/releases.py --record
@@ -62,6 +62,7 @@ jobs:
             index/reference_pocs.txt \
             index/cve_dates.json \
             index/cve_record_state.json \
+            index/metadata/ \
             index/github_discovery_state.json \
             index/source_artifact_reviews.json \
             index/source_artifact_candidates.json \

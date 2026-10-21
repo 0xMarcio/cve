@@ -45,6 +45,13 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: python3 scripts/update_cves.py --lookback-days 1 --years 2 --skip-cvelist
 
+      - name: Refresh repository stars and push dates
+        id: repository_metadata
+        continue-on-error: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: python3 scripts/sync_repo_metadata.py
+
       - name: Rebuild the trending PoC table
         id: trending
         continue-on-error: true
@@ -80,6 +87,9 @@ jobs:
           git config user.email 'bot@pocindex.io'
           git add --all -- \
             README.md \
+            .github/repo_metadata_state.json \
+            index/repo_meta.json \
+            index/metadata/ \
             index/trending.json \
             index/github.txt \
             index/references.txt \
@@ -122,5 +132,5 @@ jobs:
         run: gh workflow run site.yml --ref main
 
       - name: Report incomplete refresh
-        if: steps.pending.outcome == 'failure' || steps.discovery.outcome == 'failure' || steps.trending.outcome == 'failure' || steps.ingest.outcome == 'failure'
+        if: steps.pending.outcome == 'failure' || steps.discovery.outcome == 'failure' || steps.repository_metadata.outcome == 'failure' || steps.trending.outcome == 'failure' || steps.ingest.outcome == 'failure'
         run: exit 1

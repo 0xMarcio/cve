@@ -60,7 +60,7 @@ jobs:
       - name: Verify the generated index
         run: |
           python3 -m unittest discover -s tests
-          python3 scripts/build_site.py
+          python3 scripts/build_site.py --offline
 
       - name: Record published artifact releases
         run: python3 scripts/releases.py --record

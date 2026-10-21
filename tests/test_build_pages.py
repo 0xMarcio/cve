@@ -219,6 +219,17 @@ class AssessmentRenderingTests(unittest.TestCase):
 
 
 class RepositoryMetadataTests(unittest.TestCase):
+    def test_repository_links_sort_by_stars_without_name_priority(self) -> None:
+        named = "https://github.com/owner/CVE-2021-1675"
+        alias = "https://github.com/nemo-wq/PrintNightmare-CVE-2021-34527"
+        unknown = "https://github.com/owner/unknown"
+        row = build_pages.link_rows([named, unknown, alias], {
+            "owner/cve-2021-1675": [0, "2026-10-21"],
+            "nemo-wq/printnightmare-cve-2021-34527": [177, "2021-06-29"],
+        })
+        self.assertLess(row.index(alias), row.index(named))
+        self.assertLess(row.index(named), row.index(unknown))
+
     def test_repository_advisories_do_not_inherit_repository_metadata(self) -> None:
         url = "https://github.com/vendor/project/security/advisories/GHSA-1234"
         row = build_pages.link_rows([url], {"vendor/project": [5000, "2026-10-06"]})
@@ -233,7 +244,7 @@ class RepositoryMetadataTests(unittest.TestCase):
             with self.subTest(url=url):
                 row = build_pages.link_rows([url], metadata)
                 self.assertIn(f'href="{url}"', row)
-                self.assertIn("123★ · 2026-10-06", row)
+                self.assertIn("Repo stars 123★ · pushed 2026-10-06", row)
 
     def test_links_without_repository_metadata_are_still_rendered(self) -> None:
         url = "https://example.com/advisory"

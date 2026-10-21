@@ -468,10 +468,10 @@ a.chip:hover { color: var(--fg); border-color: var(--fg-muted); }
 @media (max-width: 620px) {
   .trending .col-head, .trend-row { grid-template-columns: 56px 80px minmax(0, 1fr); gap: 12px; }
   .trend-name-cell { white-space: normal; overflow-wrap: anywhere; }
-  /* Links without star or age cells take the row and wrap, so a variant's suffix stays visible. */
-  .poc-row:has(.poc-tag, .plain) { grid-template-columns: minmax(0, 1fr); }
+  /* Artifact names wrap while repository stars stay visible on small screens. */
+  .poc-row:has(.plain) { grid-template-columns: minmax(0, 1fr); }
   .poc-row:has(.poc-tag, .plain) .poc-name { white-space: normal; overflow-wrap: anywhere; line-height: 1.5; }
-  .poc-row:has(.poc-tag, .plain) :is(.poc-stars, .poc-age) { display: none; }
+  .poc-row:has(.plain) :is(.poc-stars, .poc-age) { display: none; }
   .search-status { display: none; }
   .filter-group { flex-wrap: wrap; }
   .filter-sep { display: none; }
@@ -518,7 +518,7 @@ a.chip:hover { color: var(--fg); border-color: var(--fg-muted); }
   padding: 8px 0; border-bottom: 1px solid var(--border-muted);
   font: 400 13px/1.5 var(--mono);
 }
-.cve-links li span { flex: none; font-size: 11px; color: var(--neutral); white-space: nowrap; }
+.cve-links li span { flex: 0 1 auto; font-size: 11px; color: var(--neutral); text-align: right; }
 .cve-links a { word-break: break-all; }
 
 .crumbs { display: flex; gap: 8px; margin: 0 0 14px; font: 400 11.5px/1 var(--mono); color: var(--fg-muted); }

@@ -37,7 +37,7 @@ jobs:
       - name: Verify the generated index
         run: |
           python3 -m unittest discover -s tests
-          python3 scripts/build_site.py
+          python3 scripts/build_site.py --offline
 
       - name: Refresh published counts
         run: |
@@ -57,6 +57,7 @@ jobs:
             docs/kev.svg \
             index/cve_dates.json \
             index/cve_record_state.json \
+            index/metadata/ \
             index/collection_source_state.json \
             index/releases/ \
             cves/

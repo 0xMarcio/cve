@@ -38,7 +38,7 @@ jobs:
         run: python3 scripts/audit_poc_links.py --limit 4000 --references 3000
 
       - name: Verify the generated index
-        run: python3 scripts/build_site.py
+        run: python3 scripts/build_site.py --offline
 
       - name: Record published artifact releases
         run: python3 scripts/releases.py --record

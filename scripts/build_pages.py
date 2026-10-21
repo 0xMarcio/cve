@@ -172,14 +172,8 @@ def owner_of(url: str) -> str | None:
 
 def repo_of(url: str) -> str | None:
     """owner/repo, the key repo_meta is stored under."""
-    if not url.startswith(GITHUB):
-        return None
-    parts = [p for p in url[len(GITHUB):].split("/") if p]
-    if len(parts) < 2:
-        return None
-    if [p.lower() for p in parts[2:4]] == ["security", "advisories"]:
-        return None
-    return f"{parts[0].lower()}/{re.sub(r'[.]git$', '', parts[1], flags=re.I).lower()}"
+    from build_site import repo_from_url
+    return repo_from_url(url) or None
 
 
 def artifact_label(url: str) -> str:
@@ -314,20 +308,26 @@ def link_rows(urls: list, repo_meta: dict, *, trusted: bool = False, collection:
     index deliberately vouches for, and Google's guidance is to leave a link
     unqualified when the association is intended.
 
-    A curated path shows neither its repository's stars nor its push date.
-    Collection paths are labelled as search labels them, with the repository
-    as the note.
+    Stars and push dates describe the repository, including for file links.
+    Artifact release and update dates are kept separate on the homepage.
     """
     rel = "noopener" if trusted else "nofollow noopener"
     rows = []
-    for url in urls:
+    def rank(url: str) -> tuple:
+        meta = repo_meta.get(repo_of(url) or "")
+        return -(meta[0] if meta else -1), url.lower()
+
+    for url in sorted(urls, key=rank):
         label = url[len(GITHUB):] if url.startswith(GITHUB) else url
         path = artifact_label(url) if trusted else ""
-        meta = None if path else repo_meta.get(repo_of(url) or "")
-        note = f"<span>{meta[0]}★ · {esc(meta[1])}</span>" if meta else ""
+        repository = repo_of(url)
+        meta = repo_meta.get(repository or "")
+        detail = (f"Repo stars {meta[0]}★ · pushed {esc(meta[1]) or 'N/A'}" if meta
+                  else "Repo metadata unavailable" if repository else "")
         if path and collection:
-            repository = "/".join(url[len(GITHUB):].split("/")[:2])
-            label, note = path, f"<span>{esc(repository)}</span>"
+            repository = "/".join(urlsplit(url).path.strip("/").split("/")[:2])
+            label, detail = path, f"{esc(repository)} · {detail}"
+        note = f"<span>{detail}</span>" if detail else ""
         rows.append(
             f'<li><a href="{esc(url)}" rel="{rel}" target="_blank">'
             f"{esc(short(label, 90))}</a>{note}</li>"
@@ -711,9 +711,12 @@ def trend_rows(items: object, landed: bool) -> str:
     dated by first release, Trending by latest artifact commit."""
     rows = []
     for item in (items if isinstance(items, list) else [])[:TREND_ROWS]:
-        # A path in a collection does not have the collection's stars.
-        stars = None if item.get("artifact") else item.get("stars")
-        star_cell = "" if stars is None else f'{star_label(stars)} <span class="star">★</span>'
+        repository = repo_of(str(item.get("url") or ""))
+        stars = item.get("stars") if repository else None
+        star_cell = "N/A" if stars is None else f'{star_label(stars)} <span class="star">★</span>'
+        star_title = f"Repository stars: {repository}" if repository else "No GitHub repository"
+        if repository and stars is None:
+            star_title += " (unavailable)"
         popular = " is-popular" if stars is not None and stars >= 500 else ""
         # Off GitHub the last path segment is a bare id, so it keeps its host.
         source = str(item.get("source") or "").removeprefix("www.")
@@ -723,11 +726,11 @@ def trend_rows(items: object, landed: bool) -> str:
         detail = (f'<a class="trend-detail" href="{esc(item["page"])}">{esc(item.get("cve"))} details</a>'
                   if item.get("page") else "")
         rows.append(
-            f'<div class="trend-row"><span class="trend-stars{popular}">{star_cell}</span>'
-            f'<span class="trend-age">{utc_day(item.get("released" if landed else "pushed"))}</span>'
+            f'<div class="trend-row"><span class="trend-stars{popular}" title="{esc(star_title)}">{star_cell}</span>'
+            f'<span class="trend-age">{utc_day(item.get("released" if landed else "pushed")) or "N/A"}</span>'
             f'<span class="trend-name-cell">{flagged}<a class="trend-name" href="{esc(item.get("url"))}" '
             f'target="_blank" rel="nofollow noopener">{esc(name)}</a>{detail}</span>'
-            f'<span class="trend-desc">{esc(item.get("desc"))}</span></div>'
+            f'<span class="trend-desc">{esc(item.get("desc") or "Description unavailable")}</span></div>'
         )
     return "".join(rows) or '<div class="empty">No recent PoCs.</div>'
 

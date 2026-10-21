@@ -16,6 +16,20 @@ from update_cves import GitHubClient
 
 
 class RepositorySurveyTests(unittest.TestCase):
+    def test_inventory_excludes_advisories_and_canonicalizes_all_source_repositories(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            (root / '2026').mkdir()
+            (root / '2026/CVE-2026-1234.md').write_text(
+                '#### Github\n- https://github.com/Owner/Repo.git\n'
+                '#### Reference\n- https://github.com/advisories/GHSA-abcd\n'
+                '- https://github.com/vendor/project/security/advisories/GHSA-abcd\n'
+                '#### Collections\n- https://github.com/Other/Collection/blob/main/file.py\n')
+            with patch.object(audit_poc_links, 'CVES', root):
+                prunable, referenced = audit_poc_links.collect_repositories()
+            self.assertEqual(set(prunable), {'owner/repo'})
+            self.assertEqual(referenced, {'owner/repo', 'other/collection'})
+
     def repo(self, filename: str = "README.md") -> dict:
         return {
             "nameWithOwner": "owner/poc",

@@ -56,6 +56,7 @@ from update_cves import (load_blacklist, qualifying_repo_cves, attach_source_art
                          root_has_cve_artifact, is_valid_cve)
 import releases
 from source_artifacts import reviewed_artifacts, reviewed_cves, load_reviews, identity_cves
+from sync_repo_metadata import remember as remember_repository_metadata
 
 README = os.path.join(ROOT, "README.md")
 TRENDING = os.path.join(ROOT, "index", "trending.json")
@@ -346,7 +347,7 @@ def ledger_landed(ledger: dict, candidates: list[dict]) -> list[dict]:
 
 
 def star_cell(value: int | None) -> str:
-    return f"{value}\u2b50" if value is not None else ""
+    return f"{value}\u2b50" if value is not None else "N/A"
 
 
 def artifact_link(repo: dict) -> tuple[str, bool]:
@@ -515,6 +516,7 @@ def qualifying_repositories(
                 max(choices, key=lambda value: tuple(map(int, value.split("-")[1:]))),
             )
             repo["cve"] = cve
+            repo["_shared_repository"] = len(wanted) > 5 and cve not in identity_cves(full_name)
             entries = ((content.get("root") or {}).get("entries") or [])
             readme_path = next((path for field, path in (
                 ("readmeMd", "README.md"), ("readmeUpper", "README.MD"),
@@ -586,11 +588,9 @@ def code_pushed(
 
 
 def popularity(repo: dict) -> float:
-    stamp = releases.timestamp(repo.get("_released") or repo.get("_shipped"))
-    if stamp is None:
-        return 0.0
-    hours = max(0, (datetime.now(timezone.utc) - stamp).total_seconds() / 3600)
-    return int(repo.get("stargazers_count") or 0) / (hours + 24) ** 0.7
+    from build_site import trending_score
+    return trending_score({"stars": repo.get("stargazers_count"), "released": repo.get("_released"),
+                           "pushed": repo.get("_shipped"), "shared_repository": repo.get("_shared_repository")})
 
 
 def time_ago(timestamp: str) -> str:
@@ -807,7 +807,7 @@ jq -n --slurpfile kev kev.json --slurpfile epss epss.json \\
 | Endpoint | Holds |
 | --- | --- |
 | [`CVE_list.json`](@SITE@/CVE_list.json) | Every CVE with a linked PoC, its description and its `poc`, `nuclei`, `msf`, `edb`, `vulhub` and `collections` links |
-| [`cve_metadata.json`](@SITE@/cve_metadata.json) | NVD CVSS v2.0, v3.0, v3.1 and v4.0 assessments with vectors and vetted advisory links |
+| [`cve_metadata.json`](@SITE@/cve_metadata.json) | CVSS v2.0, v3.0, v3.1 and v4.0 assessments from NVD and the CVE Program, with vectors and vetted advisory links |
 | [`epss.json`](@SITE@/epss.json) | Exploitation probability and percentile, for nearly every CVE indexed |
 | [`nuclei.json`](@SITE@/nuclei.json) | Template metadata for the CVEs covered by a runnable Nuclei check |
 | [`kev.json`](@SITE@/kev.json) | CISA known exploited, keyed by CVE id |
@@ -817,6 +817,9 @@ jq -n --slurpfile kev kev.json --slurpfile epss epss.json \\
 
 CVSS rows are `[version, score, severity, vector, source, assessment type]`.
 Advisory rows are `[URL, NVD reference tags]`.
+Repository metadata rows are `[stars, last_push_UTC_date]`. Repo stars describe
+the hosting GitHub repository, including links to individual files. `N/A`
+means that no public repository reading is available; a measured zero is `0`.
 
 ## Sources
 
@@ -842,7 +845,7 @@ enrich the listing when available; pending CVE records do not hide PoC links.
 
 | Job | Cadence | Picks up |
 | --- | --- | --- |
-| [Trending sweep](.github/workflows/hot_cves.yml) | hourly | Front-page repositories, also added to the searchable index |
+| [Trending sweep](.github/workflows/hot_cves.yml) | hourly | Front-page repositories, new repository metadata, a rotating refresh of older repositories and CVE Program scores received during discovery |
 | [CVE sync](.github/workflows/sync_cve_pocs.yml) | daily | New CVEs, CNA references and recently pushed GitHub repositories for every CVE year |
 | [Metadata sync](.github/workflows/sync_metadata.yml) | daily plus weekly full pass | CVSS, advisories, rejected records, current CISA KEV status and reviewed Gist and mailing list reproducers |
 | [Nuclei sync](.github/workflows/sync_nuclei.yml) | daily | New templates and rating changes |
@@ -872,11 +875,13 @@ def main(*, history_limit: int = HISTORY_LIMIT, retry_history: bool = False) -> 
     token = github_token()
     ledger = releases.load_ledger()
     fresh = just_landed(token, ledger)
+    observations = list(fresh)
     for year in range(current_year, current_year - YEARS, -1):
         total, repositories = search_year(year, since)
         searched = len(repositories)
         repositories, paths = qualifying_repositories(repositories, token)
         repositories = published_repositories(repositories)
+        observations.extend(repositories)
         release_dates(repositories, token, paths, ledger)
         shipped = code_pushed(
             [str(r.get("full_name") or "") for r in repositories], token, paths
@@ -897,7 +902,7 @@ def main(*, history_limit: int = HISTORY_LIMIT, retry_history: bool = False) -> 
         block = [
             f"## Trending in {year}",
             "",
-            "| Stars | Updated | Repository | Description |",
+            "| Repo stars | Updated | Repository | Description |",
             "| --- | --- | --- | --- |",
         ]
         for repo in repositories:
@@ -907,7 +912,7 @@ def main(*, history_limit: int = HISTORY_LIMIT, retry_history: bool = False) -> 
             pushed = repo["_shipped"]
             cve = cve_of(repo)
             url, artifact = artifact_link(repo)
-            stars = None if artifact else repo.get("stargazers_count")
+            stars = repo.get("stargazers_count")
             exploited = cve in kev
             # Same fallback the landed lane uses. These CVEs are old enough to
             # be in the index already, so it costs nothing to ask.
@@ -918,6 +923,7 @@ def main(*, history_limit: int = HISTORY_LIMIT, retry_history: bool = False) -> 
                 "name": cell(repo.get("name")),
                 "url": url,
                 "artifact": artifact,
+                "shared_repository": bool(repo.get("_shared_repository")),
                 "source": parse.urlsplit(url).hostname,
                 "desc": summary,
                 "pushed": pushed,
@@ -936,6 +942,7 @@ def main(*, history_limit: int = HISTORY_LIMIT, retry_history: bool = False) -> 
             )
         sections.append(block)
 
+    remember_repository_metadata(observations)
     landed = ledger_landed(ledger, fresh)
 
     stamp = now.strftime("%Y%m%d%H%M")
@@ -945,13 +952,13 @@ def main(*, history_limit: int = HISTORY_LIMIT, retry_history: bool = False) -> 
     if landed:
         lines.append("## Just landed")
         lines.append("")
-        lines.append("| Stars | Released | PoC | Description |")
+        lines.append("| Repo stars | Released | PoC | Description |")
         lines.append("| --- | --- | --- | --- |")
         lookups = 0
         for repo in landed:
             cve = cve_of(repo)
             url, artifact = artifact_link(repo)
-            stars = None if artifact else repo.get("stargazers_count")
+            stars = repo.get("stargazers_count")
             exploited = cve in kev
             # A day-old repository often ships without a description; the CVE's
             # own summary says more than an empty cell.
@@ -966,6 +973,7 @@ def main(*, history_limit: int = HISTORY_LIMIT, retry_history: bool = False) -> 
                 "name": cell(repo.get("name")),
                 "url": url,
                 "artifact": artifact,
+                "shared_repository": bool(repo.get("_shared_repository")),
                 "source": parse.urlsplit(url).hostname,
                 "desc": summary,
                 "pushed": repo.get("_shipped"),

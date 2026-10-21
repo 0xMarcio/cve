@@ -3,6 +3,7 @@ from __future__ import annotations
 import argparse
 import csv
 import gzip
+import html
 import io
 import json
 import re
@@ -67,6 +68,11 @@ def load_blacklist() -> set[str]:
 
 
 def normalise_block(text: str) -> str:
+    # CNA descriptions sometimes contain formatting HTML. Keep their text,
+    # including encoded payload examples, rather than displaying markup.
+    text = re.sub(r"</?(?:p|div|br|ul|ol|li|h[1-6])(?:\s[^>]*)?/?>", "\n", text, flags=re.I)
+    text = re.sub(r"</?(?:a|strong|em|b|i|code|span)(?:\s[^>]*)?>", "", text, flags=re.I)
+    text = html.unescape(text)
     text = text.replace("\r\n", "\n")
     text = re.sub(r"\n{2,}", "\n", text.strip())
     lines = [
@@ -408,9 +414,8 @@ def build_cve_list(blacklist: Collection[str]) -> tuple[List[Dict[str, object]],
         description = normalise_block(sections.get("### Description", ""))
         references = collect_links(sections.get("#### Reference", ""), blacklist=blacklist)
         github_links = collect_links(sections.get("#### Github", ""), blacklist=blacklist)
-        # These stay in their own lists: a template, an ExploitDB entry and a
-        # Metasploit module are none of them somebody's repository, and should
-        # not be ranked, starred or credited as one.
+        # Keep artifact paths and their source attribution. Repository metadata
+        # describes the hosting project, not the individual artifact.
         curated = {
             field: dedupe_source_links(
                 collect_links(sections.get(header, ""), blacklist=blacklist),
@@ -467,14 +472,17 @@ def build_cve_list(blacklist: Collection[str]) -> tuple[List[Dict[str, object]],
 
 def build_repo_meta(cve_entries: List[Dict[str, object]]) -> Dict[str, object]:
     """Star count and last-push date for the repositories the index actually links."""
-    try:
-        stored = json.loads(REPO_META.read_text(encoding="utf-8"))
-    except (OSError, json.JSONDecodeError):
-        return {}
+    stored = json.loads(REPO_META.read_text(encoding="utf-8"))
+    if not isinstance(stored, dict) or any(
+        not isinstance(row, list) or len(row) < 2 or type(row[0]) is not int or row[0] < 0
+        or not isinstance(row[1], str) for row in stored.values()
+    ):
+        raise ValueError("Invalid repository metadata; refusing to publish missing star columns")
     linked = {
         repo_from_url(url)
         for entry in cve_entries
-        for url in entry["poc"]
+        for field in ["poc", *(field for _, field in CURATED)]
+        for url in entry.get(field, [])
         if repo_from_url(url)
     }
     return {name: value for name, value in stored.items() if name in linked}
@@ -482,28 +490,19 @@ def build_repo_meta(cve_entries: List[Dict[str, object]]) -> Dict[str, object]:
 
 def load_dates() -> Dict[str, list]:
     """When the CVE Program first published each record and last changed it."""
-    try:
-        return json.loads(DATES_INPUT.read_text(encoding="utf-8"))
-    except (OSError, json.JSONDecodeError):
-        return {}
+    return json.loads(DATES_INPUT.read_text(encoding="utf-8"))
 
 
 def build_kev(cve_entries: List[Dict[str, object]]) -> Dict[str, object]:
     """CISA's known-exploited entries, limited to CVEs the index carries."""
-    try:
-        stored = json.loads(KEV_INPUT.read_text(encoding="utf-8"))
-    except (OSError, json.JSONDecodeError):
-        return {}
+    stored = json.loads(KEV_INPUT.read_text(encoding="utf-8"))
     have = {str(entry["cve"]) for entry in cve_entries}
     return {cve: value for cve, value in stored.items() if cve in have}
 
 
 def build_nuclei(cve_entries: List[Dict[str, object]]) -> Dict[str, object]:
     """Severity, CVSS and CWE per CVE, limited to the ones indexed."""
-    try:
-        stored = json.loads(NUCLEI_INPUT.read_text(encoding="utf-8"))
-    except (OSError, json.JSONDecodeError):
-        return {}
+    stored = json.loads(NUCLEI_INPUT.read_text(encoding="utf-8"))
     have = {str(entry["cve"]) for entry in cve_entries}
     keep = ("severity", "cvss", "cvss_vector", "cwe")
     return {
@@ -574,15 +573,38 @@ def build_epss(cve_entries: List[Dict[str, object]]) -> Dict[str, object]:
 
 def build_trending(blacklist: Collection[str]) -> List[Dict[str, object]]:
     """The trending job's own output, minus anything the blacklist covers."""
-    try:
-        rows = json.loads(TRENDING_INPUT.read_text(encoding="utf-8"))
-    except (OSError, json.JSONDecodeError):
-        return []
+    rows = json.loads(TRENDING_INPUT.read_text(encoding="utf-8"))
     return [
         row for row in rows
         if row.get("url") and not is_blacklisted(str(row["url"]), blacklist)
         and (row.get("cve"), repo_from_url(str(row["url"]))) not in load_source_exclusions()
     ]
+
+
+def trending_score(row: dict, *, now: datetime | None = None) -> float:
+    import releases
+    stamp = releases.timestamp(row.get("released") or row.get("pushed"))
+    if stamp is None or row.get("shared_repository"):
+        return 0.0
+    hours = max(0, ((now or datetime.now(timezone.utc)) - stamp).total_seconds() / 3600)
+    return int(row.get("stars") or 0) / (hours + 24) ** 0.7
+
+
+def enrich_trending(rows: list[dict], repo_meta: dict, kev: dict, indexed: set[str]) -> list[dict]:
+    items = []
+    now = datetime.now(timezone.utc)
+    for original in rows:
+        if not original.get("trending", True) or original.get("cve") not in indexed:
+            continue
+        item = dict(original)
+        item["page"] = f"/{item['cve']}"
+        item["kev"] = item["cve"] in kev
+        repository = repo_from_url(item["url"])
+        if repository in repo_meta:
+            item["stars"] = repo_meta[repository][0]
+        item["score"] = trending_score(item, now=now)
+        items.append(item)
+    return sorted(items, key=lambda row: (-row["score"], row["url"].lower()))
 
 
 def build_landed(cve_payload: list[dict], repo_meta: dict, kev: dict,
@@ -601,13 +623,13 @@ def build_landed(cve_payload: list[dict], repo_meta: dict, kev: dict,
         parts = unquote(parsed.path).strip("/").split("/")
         repository = repo_from_url(url)
         root_link = parsed.hostname == "github.com" and len(parts) == 2
-        meta = repo_meta.get(repository or "") if root_link else None
+        meta = repo_meta.get(repository or "")
         current = candidates.get(releases.key(cve, url), {})
-        stars = current.get("stars", meta[0] if meta else None) if root_link else None
+        stars = meta[0] if meta else current.get("stars") if repository else None
         rows.append({
             "year": int(cve.split("-")[1]), "cve": cve, "url": url,
             "name": parts[-1] or cve, "stars": stars,
-            "desc": entries[cve].get("desc", ""), "released": artifact["released"],
+            "desc": current.get("desc") or entries[cve].get("desc", ""), "released": artifact["released"],
             "basis": artifact["basis"], "kev": cve in kev, "page": f"/{cve}",
             "landed": True, "source": parsed.hostname, "artifact": not root_link,
         })
@@ -622,7 +644,19 @@ def write_json(path: Path, data, *, indent: Optional[int] = None) -> None:
 
 
 def main() -> int:
-    argparse.ArgumentParser(description="Build the CVE PoC site data files").parse_args()
+    parser = argparse.ArgumentParser(description="Build the CVE PoC site data files")
+    parser.add_argument("--offline", action="store_true", help="Validate tracked inputs without network or output writes")
+    args = parser.parse_args()
+
+    if args.offline:
+        entries, total = build_cve_list(load_blacklist())
+        build_repo_meta(entries)
+        build_kev(entries)
+        build_nuclei(entries)
+        build_metadata(entries)
+        build_trending(load_blacklist())
+        print(f"Verified tracked data: {len(entries)} of {total} CVEs have public links")
+        return 0
 
     DOCS_DIR.mkdir(parents=True, exist_ok=True)
     blacklist = load_blacklist()
@@ -649,13 +683,8 @@ def main() -> int:
 
     indexed = {entry["cve"] for entry in cve_payload}
     frontpage_candidates = build_trending(blacklist)
-    trending_items = [row for row in frontpage_candidates
-                      if row.get("trending", True) and row.get("cve") in indexed]
-    trending_items.sort(key=lambda row: row.get("score", 0), reverse=True)
+    trending_items = enrich_trending(frontpage_candidates, repo_meta, kev, indexed)
     landed_items = build_landed(cve_payload, repo_meta, kev, candidates=frontpage_candidates)
-    for item in trending_items:
-        # Only link to detail pages that this build will actually publish.
-        item["page"] = f"/{item['cve']}" if item.get("cve") in indexed else None
     write_json(
         TRENDING_OUTPUT,
         {

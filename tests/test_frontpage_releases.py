@@ -10,6 +10,24 @@ import releases
 
 
 class FrontpageReleaseTests(unittest.TestCase):
+    def test_description_formatting_is_text_and_encoded_payloads_are_preserved(self):
+        self.assertEqual(build_site.normalise_block('<p>A &amp; B</p><p><strong>Example:</strong> '
+                                                   '&lt;script&gt;alert(1)&lt;/script&gt;</p>'),
+                         'A & B\nExample: <script>alert(1)</script>')
+
+    def test_trending_score_uses_the_same_current_stars_it_displays(self):
+        cve = 'CVE-2026-1234'
+        rows = [{'cve': cve, 'url': 'https://github.com/owner/' + name, 'released': '2026-10-21',
+                 'stars': stars, 'score': score, 'kev': True}
+                for name, stars, score in [('first', 100, 100), ('second', 1, 1)]]
+        refreshed = build_site.enrich_trending(rows, {'owner/first': [0, '2026-10-21'],
+                                                     'owner/second': [200, '2026-10-21']}, {}, {cve})
+        self.assertEqual([row['stars'] for row in refreshed], [200, 0])
+        self.assertTrue(refreshed[0]['url'].endswith('/second'))
+        self.assertFalse(any(row['kev'] for row in refreshed))
+        shared = {**refreshed[0], 'stars': 50000, 'shared_repository': True}
+        self.assertEqual(build_site.trending_score(shared), 0)
+
     def test_landed_uses_release_order_and_keeps_zero_star_and_collection_artifacts(self):
         cve = 'CVE-2024-26642'
         repo = 'https://github.com/owner/new-poc'
@@ -30,9 +48,15 @@ class FrontpageReleaseTests(unittest.TestCase):
                                                'google/security-research': [5000, '2026-10-06']},
                                       {cve: []}, ledger, now=now)
         self.assertEqual([row['url'] for row in rows], [repo, path])
-        self.assertEqual([row['stars'] for row in rows], [0, None])
+        self.assertEqual([row['stars'] for row in rows], [0, 5000])
         self.assertEqual([row['released'] for row in rows], ['2026-10-06T20:00:00Z', '2026-10-05T00:00:00Z'])
         self.assertTrue(all(row['page'] == '/' + cve and row['kev'] for row in rows))
+        # A null in yesterday's trending feed must not shadow a fresh zero.
+        rows = build_site.build_landed(entries, {'owner/new-poc': [0, '2026-10-06']}, {}, ledger,
+                                      now=now, candidates=[{'cve': cve, 'url': repo, 'stars': None,
+                                                            'desc': 'Repository summary'}])
+        self.assertEqual(rows[0]['stars'], 0)
+        self.assertEqual(rows[0]['desc'], 'Repository summary')
 
     def test_removed_rejected_or_copied_artifacts_cannot_leak_from_the_ledger(self):
         cve = 'CVE-2024-1234'

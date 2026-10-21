@@ -23,7 +23,7 @@ class DiscoveryStateTests(unittest.TestCase):
         self.addCleanup(self.stack.close)
         self.root = Path(self.stack.enter_context(tempfile.TemporaryDirectory()))
         for name, path in {
-            "CVES": self.root / "cves", "STATE_FILE": self.root / "delta.json",
+            "CVES": self.root / "cves", "INDEX": self.root / "index", "STATE_FILE": self.root / "delta.json",
             "DISCOVERY_STATE_FILE": self.root / "discovery.json",
             "RECORD_STATE_FILE": self.root / "records.json", "DATES_FILE": self.root / "dates.json",
         }.items():
