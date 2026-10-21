@@ -27547,3 +27547,7 @@ CVE-2022-22963 - https://github.com/Ameyuh0716/IS-lab1-CVE
 CVE-2023-24329 - https://github.com/UpWguyy/CVE-2023-24329-PoC
 CVE-2024-4577 - https://github.com/ghostinthecable/php-hunting
 CVE-2026-111943 - https://github.com/thiefadjacent/emudhra-poc
+CVE-2026-102764 - https://github.com/maxprog-svg/CVE-2026-102764
+CVE-2026-85315 - https://github.com/oscerd/CVE-2026-85315
+CVE-2026-85316 - https://github.com/oscerd/CVE-2026-85316
+CVE-2026-85317 - https://github.com/oscerd/CVE-2026-85317

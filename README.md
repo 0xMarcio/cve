@@ -1,8 +1,8 @@
 <div align="center">
 
-<a href="https://pocindex.io/"><img src="https://raw.githubusercontent.com/0xMarcio/pocindex/main/docs/hero.svg?v=174820-85378-1241" alt="PoC Index" width="100%"></a>
+<a href="https://pocindex.io/"><img src="https://raw.githubusercontent.com/0xMarcio/pocindex/main/docs/hero.svg?v=174823-85381-1241" alt="PoC Index" width="100%"></a>
 
-[![last sync](https://img.shields.io/badge/last%20sync-21%20Oct%202026%2008%3A08%20UTC-2f81f7?style=flat-square&labelColor=161b22)](https://github.com/0xMarcio/pocindex/commits/main)&nbsp;[![CI](https://img.shields.io/github/actions/workflow/status/0xMarcio/pocindex/hot_cves.yml?style=flat-square&label=CI&color=2f81f7&labelColor=161b22&_=202610210808)](https://github.com/0xMarcio/pocindex/actions/workflows/hot_cves.yml)&nbsp;[![CVEs with PoCs](https://img.shields.io/badge/CVEs%20with%20PoCs-85%2C378-2f81f7?style=flat-square&labelColor=161b22)](https://pocindex.io/)&nbsp;[![known exploited](https://img.shields.io/badge/known%20exploited-1%2C241-f85149?style=flat-square&labelColor=161b22)](https://pocindex.io/)&nbsp;[![stars](https://img.shields.io/github/stars/0xMarcio/pocindex?style=flat-square&label=stars&color=e3b341&labelColor=161b22&_=202610210808)](https://github.com/0xMarcio/pocindex/stargazers)
+[![last sync](https://img.shields.io/badge/last%20sync-21%20Oct%202026%2009%3A11%20UTC-2f81f7?style=flat-square&labelColor=161b22)](https://github.com/0xMarcio/pocindex/commits/main)&nbsp;[![CI](https://img.shields.io/github/actions/workflow/status/0xMarcio/pocindex/hot_cves.yml?style=flat-square&label=CI&color=2f81f7&labelColor=161b22&_=202610210911)](https://github.com/0xMarcio/pocindex/actions/workflows/hot_cves.yml)&nbsp;[![CVEs with PoCs](https://img.shields.io/badge/CVEs%20with%20PoCs-85%2C381-2f81f7?style=flat-square&labelColor=161b22)](https://pocindex.io/)&nbsp;[![known exploited](https://img.shields.io/badge/known%20exploited-1%2C241-f85149?style=flat-square&labelColor=161b22)](https://pocindex.io/)&nbsp;[![stars](https://img.shields.io/github/stars/0xMarcio/pocindex?style=flat-square&label=stars&color=e3b341&labelColor=161b22&_=202610210911)](https://github.com/0xMarcio/pocindex/stargazers)
 
 <a href="https://pocindex.io/"><img src="https://raw.githubusercontent.com/0xMarcio/pocindex/8dec6181e823d641132e0ee8a52a1612c2b5dd37/docs/search.svg" alt="Search PoC Index" width="100%"></a>
 
@@ -14,22 +14,22 @@
 
 | Stars | Released | PoC | Description |
 | --- | --- | --- | --- |
-| 3⭐ | 6h ago | [CVE-2026-98260-android](https://github.com/yanoo1222/CVE-2026-98260-android) | a complete exploit chain for CVE-2026-982600, |
-| 0⭐ | 8h ago | [cve-2018-16763](https://github.com/fahise/cve-2018-16763) | cve-2018-16763-exploit |
-| 0⭐ | 8h ago | [cve-2026-62911](https://github.com/fahise/cve-2026-62911) | cve-2026-62911-exploit |
-| 0⭐ | 12h ago | [CVE-2026-87690-POC](https://github.com/h00die/CVE-2026-87690-POC) | Exploit and writeup for CVE-2026-87690 |
-| 0⭐ | 13h ago | [CVE-2026-113468](https://github.com/yuwkaaa/CVE-2026-113468) | forgeable PayPal payment callback in TYPO3 EXT:shop |
-| 0⭐ | 13h ago | [CVE-2026-112071](https://github.com/yuwkaaa/CVE-2026-112071) | unauthenticated order cancellation in TYPO3 EXT:shop |
-| 2⭐ | 15h ago | [CVE-2026-105810](https://github.com/M0ud4/CVE-2026-105810) | CVE-2026-105810 TP-Link Tapo C320WS authenticated connectAp stack overflow (RCE as root) |
-| 0⭐ | 17h ago | [CVE-2026-106173](https://github.com/0xBlackash/CVE-2026-106173) | A improper limitation of a pathname to a restricted directory ('path traversal') vulnerability in Fortinet… |
-| 0⭐ | 19h ago | [CVE-2026-85313](https://github.com/oscerd/CVE-2026-85313) | Reproducer for CVE-2026-85313 - Apache Camel camel-jetty enableCORS credentialed any-origin CORS (CWE-942).… |
-| 6⭐ | 19h ago | [CVE-2026-106173](https://github.com/horizon3ai/CVE-2026-106173) | Proof of concept exploit for CVE-2026-106173, a path traversal file write leading to RCE for Fortinet… |
+| 0⭐ | 21m ago | [CVE-2026-85317](https://github.com/oscerd/CVE-2026-85317) | Reproducer for CVE-2026-85317 - Apache Camel camel-http OAuth2 token cache confusion (CWE-524). Camel Spring… |
+| 3⭐ | 7h ago | [CVE-2026-98260-android](https://github.com/yanoo1222/CVE-2026-98260-android) | a complete exploit chain for CVE-2026-982600, |
+| 0⭐ | 9h ago | [cve-2018-16763](https://github.com/fahise/cve-2018-16763) | cve-2018-16763-exploit |
+| 1⭐ | 9h ago | [cve-2026-62911](https://github.com/fahise/cve-2026-62911) | cve-2026-62911-exploit |
+| 0⭐ | 13h ago | [CVE-2026-87690-POC](https://github.com/h00die/CVE-2026-87690-POC) | Exploit and writeup for CVE-2026-87690 |
+| 0⭐ | 14h ago | [CVE-2026-113468](https://github.com/yuwkaaa/CVE-2026-113468) | forgeable PayPal payment callback in TYPO3 EXT:shop |
+| 0⭐ | 14h ago | [CVE-2026-112071](https://github.com/yuwkaaa/CVE-2026-112071) | unauthenticated order cancellation in TYPO3 EXT:shop |
+| 2⭐ | 16h ago | [CVE-2026-105810](https://github.com/M0ud4/CVE-2026-105810) | CVE-2026-105810 TP-Link Tapo C320WS authenticated connectAp stack overflow (RCE as root) |
+| 0⭐ | 18h ago | [CVE-2026-106173](https://github.com/0xBlackash/CVE-2026-106173) | A improper limitation of a pathname to a restricted directory ('path traversal') vulnerability in Fortinet… |
+| 0⭐ | 20h ago | [CVE-2026-85313](https://github.com/oscerd/CVE-2026-85313) | Reproducer for CVE-2026-85313 - Apache Camel camel-jetty enableCORS credentialed any-origin CORS (CWE-942).… |
 
 ## Trending in 2026
 
 | Stars | Updated | Repository | Description |
 | --- | --- | --- | --- |
-| 532⭐ | 14h ago | <img src="https://raw.githubusercontent.com/0xMarcio/pocindex/main/docs/kev.svg" alt="KEV" title="CISA known exploited" height="14"> [CVE-2026-41940-PoC](https://github.com/sakidekin/CVE-2026-41940-PoC) | cPanel & WHM Authentication Bypass via CVE-2026-41940 explotation |
+| 532⭐ | 15h ago | <img src="https://raw.githubusercontent.com/0xMarcio/pocindex/main/docs/kev.svg" alt="KEV" title="CISA known exploited" height="14"> [CVE-2026-41940-PoC](https://github.com/sakidekin/CVE-2026-41940-PoC) | cPanel & WHM Authentication Bypass via CVE-2026-41940 explotation |
 | 69⭐ | 1d ago | [CVE-2026-20817](https://github.com/ZeroDayEvil/CVE-2026-20817) | 🛡️ Official AI Security Tool module for CVE-2026-20817 (Windows Error Reporting WER ALPC Local Privilege… |
 | 477⭐ | 61d ago | [CVE-2026-9830](https://github.com/opaxial/CVE-2026-9830) | CVE-2026-9830 Proof of Concept |
 | 335⭐ | 85d ago | [CVE-2026-54121](https://github.com/aniqfakhrul/CVE-2026-54121) | Certighost POC |
@@ -48,7 +48,7 @@
 | 86⭐ | 47d ago | [CVE-2026-65343](https://github.com/ByteV0rtex/CVE-2026-65343) | CVE-2026-65343 PoC - AppleKeyStore OOB read → KASLR defeat (iOS 26.6 / 23G71) |
 | 108⭐ | 78d ago | [SCCM-CVE-2026-47301-Remote-Code-Execution-Exploit](https://github.com/OmriBaso/SCCM-CVE-2026-47301-Remote-Code-Execution-Exploit) | Proof-of-concept exploit chain (CVE-2026-47301) for Microsoft Configuration Manager (SCCM), combining a… |
 | 15⭐ | 4d ago | [CVE-2026-99999](https://github.com/PeronGH/CVE-2026-99999) | PoC for CVE-2026-99999 (PwnEscape) on a prepared TAP. |
-| 6⭐ | 19h ago | [CVE-2026-106173](https://github.com/horizon3ai/CVE-2026-106173) | Proof of concept exploit for CVE-2026-106173, a path traversal file write leading to RCE for Fortinet… |
+| 7⭐ | 20h ago | [CVE-2026-106173](https://github.com/horizon3ai/CVE-2026-106173) | Proof of concept exploit for CVE-2026-106173, a path traversal file write leading to RCE for Fortinet… |
 
 ## Trending in 2025
 
@@ -71,7 +71,7 @@
 
 | Stars | Updated | Repository | Description |
 | --- | --- | --- | --- |
-| 17⭐ | 17d ago | [CVE-2024-56426](https://github.com/Creeeeger/CVE-2024-56426) | A PoC of the CVE-2024-56426 vulnerability. |
+| 17⭐ | 18d ago | [CVE-2024-56426](https://github.com/Creeeeger/CVE-2024-56426) | A PoC of the CVE-2024-56426 vulnerability. |
 | 4⭐ | 67d ago | [CVE-2024-56426](https://github.com/xcracker000/CVE-2024-56426) | CVE-2024-56426 Exynos9830 Bootrom Exploit - SM-G985F |
 | 3⭐ | 83d ago | [CVE-2024-36104-PoC](https://github.com/Groppoxx/CVE-2024-36104-PoC) | PoC for CVE-2024-36104 - unauthenticated Groovy RCE in Apache OFBiz (<18.12.14) via /%2e/%2e/ view path… |
 
