@@ -243,6 +243,19 @@ test('a bookmarked typo is corrected when indexing finishes without changing fil
   assert.equal(vm.runInContext("[...state.filters.source].join(',')", context), 'GITHUB');
 });
 
+test('newest sorts by publication date rather than identifier allocation order', async t => {
+  const entries = [
+    { cve: 'CVE-2026-99999', published: '2026-01-01' },
+    { cve: 'CVE-2025-1234', published: '2026-10-21' },
+    { cve: 'CVE-2026-88888', published: '2026-10-20' },
+    { cve: 'CVE-2026-99998' }
+  ].map(row => ({ ...row, desc: 'widget', poc: ['https://github.com/owner/' + row.cve] }));
+  const { elements } = startPage(t, { search: '?q=widget&sort=newest', entries, trending: new Promise(() => {}) });
+  await new Promise(setImmediate);
+  const ids = [...elements.get('[data-results]').innerHTML.matchAll(/class="result-id" href="\/([^"]+)"/g)].map(match => match[1]);
+  assert.deepEqual(ids, ['CVE-2025-1234', 'CVE-2026-88888', 'CVE-2026-99999', 'CVE-2026-99998']);
+});
+
 test('a failed trending feed preserves the published homepage rows', async t => {
   const { elements } = startPage(t, { trending: Promise.reject(new Error('Feed unavailable')) });
   await new Promise(setImmediate);

@@ -578,7 +578,7 @@ function compareRelevance(a, b) {
 }
 
 function compareNewest(a, b) {
-  return (b._year - a._year) || (b._num - a._num) || (b._score - a._score);
+  return (b._published - a._published) || (b._year - a._year) || (b._num - a._num) || (b._score - a._score);
 }
 
 function comparePocs(a, b) {
@@ -687,6 +687,7 @@ function prepareDataset(raw) {
       .toLowerCase();
     entry._year = parseInt(parts[1], 10) || 0;
     entry._num = parseInt(parts[2], 10) || 0;
+    entry._published = Date.parse(entry.published || '') || 0;
     // Title, vendor and product, once the records carry them.
     const named = [entry.title || '', ...(entry.vendor || []), ...(entry.product || [])].join(' ');
     entry._titleText = named.toLowerCase();
