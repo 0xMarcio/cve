@@ -33048,6 +33048,14 @@
 "severity": "critical",
 "url": "https://github.com/projectdiscovery/nuclei-templates/blob/main/http/cves/2026/CVE-2026-1492.yaml"
 },
+"CVE-2026-15015": {
+"cvss": 9.8,
+"cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+"cwe": "CWE-862",
+"name": "MountDev AI MCP Connector <= 1.6.1 - Unauthenticated Admin OAuth Token Exposure",
+"severity": "critical",
+"url": "https://github.com/projectdiscovery/nuclei-templates/blob/main/http/cves/2026/CVE-2026-15015.yaml"
+},
 "CVE-2026-1509": {
 "cvss": 5.4,
 "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:L/I:L/A:N",
@@ -33200,6 +33208,14 @@
 "name": "Quick Playground <= 1.3.1 - Missing Authorization to Unauthenticated Arbitrary File Upload",
 "severity": "critical",
 "url": "https://github.com/projectdiscovery/nuclei-templates/blob/main/http/cves/2026/CVE-2026-1830.yaml"
+},
+"CVE-2026-18315": {
+"cvss": 9.8,
+"cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+"cwe": "CWE-639",
+"name": "TrueBooker <= 1.2.6 - Unauthenticated Authorization Bypass",
+"severity": "critical",
+"url": "https://github.com/projectdiscovery/nuclei-templates/blob/main/http/cves/2026/CVE-2026-18315.yaml"
 },
 "CVE-2026-18431": {
 "cvss": 9.8,
@@ -35166,6 +35182,14 @@
 "severity": "critical",
 "url": "https://github.com/projectdiscovery/nuclei-templates/blob/main/http/cves/2026/CVE-2026-49468.yaml"
 },
+"CVE-2026-49772": {
+"cvss": 9.3,
+"cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:N/A:L",
+"cwe": "CWE-89",
+"name": "The Events Calendar 6.15.12 - 6.16.2 - Unauthenticated Blind SQL Injection",
+"severity": "critical",
+"url": "https://github.com/projectdiscovery/nuclei-templates/blob/main/http/cves/2026/CVE-2026-49772.yaml"
+},
 "CVE-2026-49777": {
 "cvss": 10.0,
 "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:H/A:H",
@@ -35242,6 +35266,14 @@
 "name": "Check Point IKEv1 Remote-Access VPN - Certificate Authentication Bypass",
 "severity": "critical",
 "url": "https://github.com/projectdiscovery/nuclei-templates/blob/main/http/cves/2026/CVE-2026-50751.yaml"
+},
+"CVE-2026-52715": {
+"cvss": 9.3,
+"cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:N/A:L",
+"cwe": "CWE-89",
+"name": "GEO my WP <= 4.5.5 - Unauthenticated SQL Injection",
+"severity": "critical",
+"url": "https://github.com/projectdiscovery/nuclei-templates/blob/main/http/cves/2026/CVE-2026-52715.yaml"
 },
 "CVE-2026-52773": {
 "cvss": 6.1,
@@ -35500,6 +35532,14 @@
 "severity": "low",
 "url": "https://github.com/topscoder/nuclei-wordfence-cve/blob/main/nuclei-templates/2026/CVE-2026-56008-fusion_builder-5ca35c9d-a7e0-4442-82d5-5040a3443c2b.yaml"
 },
+"CVE-2026-56070": {
+"cvss": 9.3,
+"cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:N/A:L",
+"cwe": "CWE-89",
+"name": "Advance Product Search <= 1.4.4 - Unauthenticated Time-Based Blind SQL Injection",
+"severity": "critical",
+"url": "https://github.com/projectdiscovery/nuclei-templates/blob/main/http/cves/2026/CVE-2026-56070.yaml"
+},
 "CVE-2026-5615": {
 "cvss": 4.3,
 "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:N/I:L/A:N",
@@ -35753,9 +35793,10 @@
 "CVE-2026-6279": {
 "cvss": 9.8,
 "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
-"name": ">",
+"cwe": "CWE-74",
+"name": "Avada Builder (fusion-builder) <= 3.15.2 - Unauthenticated RCE via PHP Function Injection",
 "severity": "critical",
-"url": "https://github.com/topscoder/nuclei-wordfence-cve/blob/main/nuclei-templates/2026/CVE-2026-6279-fusion_builder-5dc72d78-d47c-4b36-8d69-8672e15ddf8c.yaml"
+"url": "https://github.com/projectdiscovery/nuclei-templates/blob/main/http/cves/2026/CVE-2026-6279.yaml"
 },
 "CVE-2026-63030": {
 "cvss": 9.8,
@@ -35811,6 +35852,14 @@
 "name": "MLflow Webhook SSRF - Unauthenticated Full-Read via Redirect Bypass",
 "severity": "critical",
 "url": "https://github.com/projectdiscovery/nuclei-templates/blob/main/http/cves/2026/CVE-2026-64849.yaml"
+},
+"CVE-2026-6495": {
+"cvss": 7.1,
+"cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:L/I:L/A:L",
+"cwe": "CWE-79",
+"name": "WordPress Ajax Load More < 7.8.4 - Reflected Cross-Site Scripting",
+"severity": "high",
+"url": "https://github.com/projectdiscovery/nuclei-templates/blob/main/http/cves/2026/CVE-2026-6495.yaml"
 },
 "CVE-2026-65442": {
 "cvss": 7.2,
@@ -35929,6 +35978,14 @@
 "name": "Adobe Commerce/Magento - Customer Session Identity Switch",
 "severity": "critical",
 "url": "https://github.com/projectdiscovery/nuclei-templates/blob/main/http/cves/2026/CVE-2026-71362.yaml"
+},
+"CVE-2026-72867": {
+"cvss": 9.9,
+"cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:H",
+"cwe": "CWE-78",
+"name": "Dokploy <= 0.29.12 - Authenticated RCE via Command Injection",
+"severity": "critical",
+"url": "https://github.com/projectdiscovery/nuclei-templates/blob/main/http/cves/2026/CVE-2026-72867.yaml"
 },
 "CVE-2026-72898": {
 "cvss": 10.0,
@@ -36051,6 +36108,14 @@
 "name": "WordPress Burst Statistics 3.4.0-3.4.1.1 - Authentication Bypass",
 "severity": "critical",
 "url": "https://github.com/projectdiscovery/nuclei-templates/blob/main/http/cves/2026/CVE-2026-8181.yaml"
+},
+"CVE-2026-82186": {
+"cvss": 4.1,
+"cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:C/C:L/I:N/A:N",
+"cwe": "CWE-89",
+"name": "WordPress WPLP Cookie Consent < 4.4.2 - SQL Injection",
+"severity": "medium",
+"url": "https://github.com/projectdiscovery/nuclei-templates/blob/main/http/cves/2026/CVE-2026-82186.yaml"
 },
 "CVE-2026-82222": {
 "cvss": 9.8,
@@ -36358,6 +36423,14 @@
 "name": "Langflow OSS <=1.12.2 - Unauthenticated RCE via Import Code Execution",
 "severity": "critical",
 "url": "https://github.com/projectdiscovery/nuclei-templates/blob/main/http/cves/2026/CVE-2026-93674.yaml"
+},
+"CVE-2026-94169": {
+"cvss": 10.0,
+"cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:H/A:H",
+"cwe": "CWE-94",
+"name": "The Grid <= 2.8.1 - Unauthenticated Code Injection",
+"severity": "critical",
+"url": "https://github.com/projectdiscovery/nuclei-templates/blob/main/http/cves/2026/CVE-2026-94169.yaml"
 },
 "CVE-2026-9506": {
 "cvss": 8.7,
