@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import argparse
+import io
 import json
 import sys
 import tempfile
@@ -9,6 +10,7 @@ from contextlib import ExitStack
 from datetime import date, datetime, timezone
 from pathlib import Path
 from unittest.mock import patch
+from urllib.error import HTTPError
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "scripts"))
 import update_cves
@@ -55,7 +57,8 @@ class DiscoveryStateTests(unittest.TestCase):
         def search(client, terms, qualifier, start, end):
             windows.append((terms, qualifier, start, end))
             return []
-        with patch.object(update_cves, "search_range", side_effect=search):
+        with patch.object(update_cves, "search_range", side_effect=search), \
+                patch.object(update_cves.source_artifacts, "pending_reviewed_names", return_value=[]):
             update_cves.discover_github_pocs("token", years=[2026, 2025], lookback_days=3,
                 backfill=False, cve_filter=set(), window_end=date(2026, 10, 6),
                 checkpoints={"2026": "2026-09-01", "2025": "2026-10-05"})
@@ -67,6 +70,91 @@ class DiscoveryStateTests(unittest.TestCase):
         with patch.object(update_cves, "http_json", side_effect=TimeoutError("API unavailable")):
             with self.assertRaisesRegex(RuntimeError, "API unavailable"):
                 update_cves.fetch_missing_records(["CVE-2026-1234"], {})
+
+    def test_missing_record_uses_real_identifier_status(self):
+        cve = "CVE-2026-104100"
+        for status in ("RESERVED", "REJECTED"):
+            with self.subTest(status=status), patch.object(update_cves, "http_json", side_effect=[
+                None, {"cve_id": cve, "state": status},
+            ]):
+                records = {}
+                created, unavailable = update_cves.ensure_cve_entries([cve], dry_run=False, records=records)
+            self.assertEqual(records[cve]["cveMetadata"]["state"], status)
+            path = update_cves.CVES / "2026" / f"{cve}.md"
+            self.assertEqual(update_cves.markdown_record_status(path.read_text()), status)
+            self.assertEqual(unavailable, {cve} if status == "REJECTED" else set())
+            update_cves.RECORD_STATE_FILE.unlink()
+
+    def test_unallocated_id_is_queued_without_page_and_retried_daily(self):
+        cve = "CVE-2025-4162026"
+        missing = HTTPError("url", 404, "not found", {}, io.BytesIO(b'{"error":"CVE_ID_NOT_FOUND"}'))
+        with patch.object(update_cves, "http_json", side_effect=[None, missing]):
+            created, unavailable = update_cves.ensure_cve_entries([cve], dry_run=False)
+        self.assertEqual(created, set())
+        self.assertEqual(unavailable, {cve})
+        self.assertFalse((update_cves.CVES / "2025" / f"{cve}.md").exists())
+        self.assertEqual(update_cves.load_record_state()[cve]["status"], "ABSENT")
+        now = datetime(2026, 10, 21, 15, tzinfo=timezone.utc)
+        self.assertFalse(update_cves.retry_record({"status": "ABSENT", "checked": "2026-10-21T12:00:00Z"}, now))
+        self.assertTrue(update_cves.retry_record({"status": "ABSENT", "checked": "2026-10-20T12:00:00Z"}, now))
+
+    def test_status_service_outage_still_publishes_source_links(self):
+        cve = "CVE-2026-104100"
+        with patch.object(update_cves, "http_json", side_effect=[None, TimeoutError("status outage")]):
+            created, unavailable = update_cves.ensure_cve_entries([cve], dry_run=False)
+        self.assertEqual(created, {cve})
+        self.assertEqual(unavailable, set())
+
+    def test_unfetched_provisional_metadata_is_due_immediately(self):
+        cve = "CVE-2026-104100"
+        update_cves.ensure_cve_entries([cve], dry_run=False, fetch_missing=False)
+        self.assertTrue(update_cves.retry_record(update_cves.load_record_state()[cve], datetime.now(timezone.utc)))
+
+    def test_invalid_zero_padded_identifiers_are_not_cves(self):
+        self.assertFalse(update_cves.is_valid_cve("CVE-2026-01234"))
+        self.assertTrue(update_cves.is_valid_cve("CVE-2026-0123"))
+
+    def test_hourly_metadata_enrichment_imports_new_cna_poc_references(self):
+        cve = "CVE-2026-104100"
+        url = "https://github.com/researcher/widget-poc"
+        record = {"cveMetadata": {"cveId": cve, "state": "PUBLISHED"}, "containers": {"cna": {
+            "descriptions": [{"lang": "en", "value": "Official details"}],
+            "references": [{"url": url, "tags": ["exploit"]}],
+        }}}
+        update_cves.ensure_cve_entries([cve], dry_run=False, fetch_missing=False)
+        with patch.object(update_cves, "discover_github_pocs", return_value={}), \
+                patch.object(update_cves, "reference_url_is_live", return_value=True), \
+                patch.object(update_cves, "http_json", return_value=record):
+            self.main()
+        text = (update_cves.CVES / "2026" / f"{cve}.md").read_text()
+        self.assertIn(url, update_cves.section_links(text, "#### Reference"))
+        self.assertNotIn("### Description\n\n\n", text)
+
+    def test_metadata_enrichment_does_not_restore_dead_delta_references(self):
+        cve = "CVE-2026-104100"
+        url = "https://github.com/researcher/removed-poc"
+        record = {"cveMetadata": {"cveId": cve, "state": "PUBLISHED"}, "containers": {"cna": {
+            "references": [{"url": url, "tags": ["exploit"]}],
+        }}}
+        with patch.object(update_cves, "load_incremental_records", return_value=({cve: record}, {cve: [url]}, "t")), \
+                patch.object(update_cves, "reference_url_is_live", return_value=False) as check:
+            self.main(skip_cvelist=False, skip_github=True)
+        check.assert_called_once_with(url)
+        self.assertFalse((update_cves.CVES / "2026" / f"{cve}.md").exists())
+
+    def test_hourly_enrichment_checks_new_references_before_publication(self):
+        cve = "CVE-2026-104100"
+        url = "https://github.com/researcher/removed-poc"
+        record = {"cveMetadata": {"cveId": cve, "state": "PUBLISHED"}, "containers": {"cna": {
+            "references": [{"url": url, "tags": ["exploit"]}],
+        }}}
+        update_cves.ensure_cve_entries([cve], dry_run=False, fetch_missing=False)
+        with patch.object(update_cves, "discover_github_pocs", return_value={}), \
+                patch.object(update_cves, "reference_url_is_live", return_value=False), \
+                patch.object(update_cves, "http_json", return_value=record):
+            self.main()
+        text = (update_cves.CVES / "2026" / f"{cve}.md").read_text()
+        self.assertNotIn(url, update_cves.section_links(text, "#### Reference"))
 
     def test_not_found_and_rejected_records_are_not_transient_failures(self):
         cve = "CVE-2026-1234"
@@ -259,6 +347,25 @@ class DiscoveryStateTests(unittest.TestCase):
         self.assertEqual(links, {cve: [repo["url"]]})
         self.assertEqual(completed, {2025})
         self.assertEqual(len(failures), 1)
+
+    def test_failed_reviewed_replay_keeps_successful_search_results(self):
+        cve, name = "CVE-2026-109618", "researcher/widget-poc"
+        candidate = {"nameWithOwner": name, "url": f"https://github.com/{name}",
+                     "description": f"PoC for {cve}"}
+        failures, completed = [], set()
+        with patch.object(update_cves, "search_range", return_value=[candidate]), \
+                patch.object(update_cves.source_artifacts, "load_reviews", return_value=[{"cve": cve}]), \
+                patch.object(update_cves.source_artifacts, "pending_reviewed_names", return_value=["other/reviewed"]), \
+                patch.object(update_cves.source_artifacts, "reviewed_cves", return_value={cve}), \
+                patch.object(update_cves, "http_json", side_effect=TimeoutError("replay unavailable")), \
+                patch.object(update_cves, "attach_source_artifacts"), \
+                patch.object(update_cves.GitHubClient, "fetch_readmes", return_value=(
+                    {name}, {name: f"PoC for {cve}"}, {name: [{"name": "poc.py"}]})):
+            found = update_cves.discover_github_pocs("token", years=[2026], lookback_days=1,
+                backfill=False, cve_filter=set(), failures=failures, completed_years=completed)
+        self.assertEqual(found, {cve: [candidate["url"]]})
+        self.assertEqual(completed, set())
+        self.assertIn("replay unavailable", failures[0])
 
     def test_enrichment_preserves_curated_links_and_updates_placeholder(self):
         cve = "CVE-2026-109618"

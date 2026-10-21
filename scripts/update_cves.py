@@ -42,6 +42,7 @@ PENDING_DESCRIPTION = "Public proof-of-concept links are available. Official CVE
 
 GITHUB_GRAPHQL_URL = "https://api.github.com/graphql"
 CVE_API_URL = "https://cveawg.mitre.org/api/cve/{cve_id}"
+CVE_ID_API_URL = "https://cveawg.mitre.org/api/cve-id/{cve_id}"
 CVELIST_DELTA_LOG_URL = (
     "https://raw.githubusercontent.com/CVEProject/cvelistV5/main/cves/deltaLog.json"
 )
@@ -51,7 +52,7 @@ CVE_RE = re.compile(r"\bCVE[-_ ](?P<year>\d{4})[-_ ](?P<number>\d{4,})\b", re.IG
 # an English-only vocabulary quietly reads every one of them as "not a PoC".
 # CJK terms sit outside the \b group because CJK has no word boundaries.
 POC_RE = re.compile(
-    r"\b(?:poc|exploit(?:ation)?|proof[ _-]*of[ _-]*concept|"
+    r"\b(?:pocs?|exploits?|exploitation|proof[ _-]*of[ _-]*concept|"
     r"repro(?:ducer|duction|duce)?|payload|"
     r"prueba[ _-]*de[ _-]*concepto|explotaci(?:on|ón)|"
     r"explora(?:cao|ção)|preuve[ _-]*de[ _-]*concept)\b"
@@ -64,13 +65,13 @@ CODE_FILE_RE = re.compile(
     re.IGNORECASE,
 )
 NON_POC_RE = re.compile(
-    r"(?:\b(?:advisory|aggregat(?:ion|or)|analysis|ansible|audits?|block(?:er|ing)?|blog|"
+    r"(?:\b(?:advisory|aggregat(?:ion|or)|analysis|ansible|audits?|block(?:s|ed|er|ing)?|blog|"
     r"bookmark|challenge|cheat[ _-]*sheets?|check(?:s|er|ing)?|collection|corpus|course|ctf|"
-    r"dataset|defen(?:ce|se|sive)|detect(?:ion|or)?|dfir|epss|exam(?:en)?|feed|finder|framework|"
+    r"dataset|defen(?:ce|se|sive)|detect(?:s|ed|ing|ion|or)?|dfir|dorks?|epss|exam(?:en)?|feed|finder|framework|"
     r"github[ _-]*stars|hardening|hub|investigation|"
-    r"honeypot|intelligence|ioc|lab|list|lookup|mitigat(?:e|ing|ion|or)|model(?:er|ing)|"
+    r"honeypot|intelligence|ioc|lab|list|lookup|mitigat(?:es?|ed|ing|ion|or)|model(?:er|ing)|"
     r"monitor(?:ing)?|notes?|oscp|papers?|patch(?:es|ed|ing)?|pentest|portfolio|prediction|"
-    r"pre[ _-]*checks?|prevent(?:ion|ive)?|profile|protect(?:ion|ive)|"
+    r"pre[ _-]*checks?|prevent(?:s|ed|ing|ion|ive)?|profile|protect(?:s|ed|ing|ion|ive)|"
     r"remediat(?:e|ion)|reports?|"
     r"resources?|rules?|scan(?:s|ner|ning)?|shield|signature|suggester|templates?|toolkit|"
     r"training|tutorial|validat(?:e|ion|or)|verif(?:y|ier|ication)|walkthrough|wazuh|"
@@ -158,7 +159,7 @@ def stable_unique_poc_links(values: Iterable[str]) -> list[str]:
 
 
 def is_valid_cve(cve_id: str) -> bool:
-    match = re.fullmatch(r"CVE-(\d{4})-(\d{4,})", cve_id, re.IGNORECASE)
+    match = re.fullmatch(r"CVE-(\d{4})-(\d{4}|[1-9]\d{4,})", cve_id, re.IGNORECASE)
     if not match:
         return False
     return 1999 <= int(match.group(1)) <= 2100
@@ -372,6 +373,23 @@ def readme_has_poc_context(readme: str, cve_id: str, full_name: str = "") -> boo
     return False
 
 
+def readme_has_poc_snippet(readme: str, cve_id: str, full_name: str) -> bool:
+    """A request or source snippet, rather than a command for an absent tool."""
+    blocks = re.finditer(r"```[^\n]*\n(.*?)```|<pre><code[^>]*>(.*?)</code></pre>", readme, re.S | re.I)
+    for block in blocks:
+        code = block.group(1) or block.group(2) or ""
+        if not re.search(
+            r"(?m)^\s*(?:#include\s*[<\"]|(?:from\s+\S+\s+)?import\s+\S+|"
+            r"(?:def|function)\s+\w+|<\?php|<script\b|"
+            r"(?:GET|POST|PUT|PATCH|DELETE)\s+/\S*\s+HTTP/|curl\b[^\n]*(?:--data\b|\s-d\s|\s-X\s))", code,
+        ):
+            continue
+        context = readme[max(0, block.start() - 350):block.end() + 350]
+        if readme_has_poc_context(context, cve_id, full_name):
+            return True
+    return False
+
+
 def repository_is_nonpublic(repo: dict[str, Any]) -> bool:
     return (repo.get("isPrivate") is True or repo.get("private") is True
             or str(repo.get("visibility") or "").lower() in {"private", "internal"})
@@ -424,10 +442,21 @@ def qualifying_repo_cves(
     metadata_has_poc = identity_has_poc or bool(POC_RE.search(topics))
     identity_is_non_poc = bool(NON_POC_RE.search(identity_text))
     has_code = root_has_code(repo)
-    if identity_is_non_poc and not (name_cves and identity_has_poc and has_code):
+    contextual_words = {match.group().lower() for match in NON_POC_RE.finditer(identity_text)}
+    artifact_context = {
+        cve for cve in identity_cves | readme_cves
+        if contextual_words <= {"analysis", "lab"} and has_code
+        and root_has_poc_artifact(repo, cve) and readme_has_poc_context(readme, cve, full_name)
+    }
+    if identity_is_non_poc and not (name_cves and identity_has_poc and has_code) and not artifact_context:
         return reviewed
-    if len(readme_cves) > 5 and not identity_cves:
-        readme_cves = set()
+    contextual_only = identity_is_non_poc and not (name_cves and identity_has_poc and has_code)
+    if len(extract_cves(readme)) > 5 and not all_identity_cves:
+        # A multi-year catalogue is still a collection when it mentions only
+        # one CVE from the requested year. Keep only explicit root code files;
+        # collection directories are imported through their path-level source.
+        named_code = " ".join(name for name in root_entry_names(repo) if CODE_FILE_RE.search(name))
+        readme_cves &= extract_cves(named_code, year)
     accepted: set[str] = set(reviewed)
     for cve_id in name_cves:
         has_context = readme_has_poc_context(readme, cve_id, full_name)
@@ -445,7 +474,7 @@ def qualifying_repo_cves(
         if all_name_cves and cve_id not in all_name_cves and not has_cve_artifact:
             continue
         if (
-            (not identity_is_non_poc or cve_id in name_cves)
+            (not identity_is_non_poc or cve_id in name_cves or cve_id in artifact_context)
             and (metadata_has_poc or has_context)
             and (has_context or has_cve_artifact or has_code)
         ):
@@ -461,9 +490,12 @@ def qualifying_repo_cves(
             continue
         if (
             readme_has_poc_context(readme, cve_id, full_name)
-            and (has_artifact or identity_has_poc)
+            and (has_artifact or readme_has_poc_snippet(readme, cve_id, full_name)
+                 or (identity_has_poc and cve_id in identity_cves))
         ):
             accepted.add(cve_id)
+    if contextual_only:
+        accepted &= artifact_context | reviewed
     return accepted - source_artifacts.excluded_cves(full_name)
 
 
@@ -681,6 +713,16 @@ def search_without_range(client: GitHubClient, search_terms: str) -> Iterator[di
         cursor = str(page_info.get("endCursor"))
 
 
+def discovery_search_terms(identifier: str) -> list[str]:
+    return [
+        f'"{identifier}" in:name,description',
+        f'"{identifier}" poc in:readme',
+        f'"{identifier}" exploit in:readme',
+        f'"{identifier}" "proof of concept" in:readme',
+        f'"{identifier}" reproducer in:readme',
+    ]
+
+
 def discover_github_pocs(
     token: str,
     *,
@@ -720,20 +762,17 @@ def discover_github_pocs(
                 if link not in discovered[cve_id]:
                     discovered[cve_id].append(link)
 
-    def search_terms(identifier: str) -> list[str]:
-        return [
-            f'"{identifier}" in:name,description',
-            f'"{identifier}" poc in:readme',
-            f'"{identifier}" exploit in:readme',
-            f'"{identifier}" "proof of concept" in:readme',
-            f'"{identifier}" reproducer in:readme',
-        ]
-
     if cve_filter:
         for cve_id in sorted(cve_filter):
-            for terms in search_terms(cve_id):
-                for repo in search_without_range(client, terms):
-                    remember(repo)
+            for terms in discovery_search_terms(cve_id):
+                try:
+                    for repo in search_without_range(client, terms):
+                        remember(repo)
+                except (RuntimeError, error.URLError, TimeoutError, http.client.HTTPException) as exc:
+                    if failures is None:
+                        raise
+                    failures.append(f"GitHub {terms}: {exc}")
+                    failed_years.add(int(cve_id.split("-")[1]))
     else:
         end = window_end or datetime.now(timezone.utc).date()
         for year in target_years:
@@ -745,7 +784,7 @@ def discover_github_pocs(
                 previous = (checkpoints or {}).get(str(year))
                 anchor = min(end, date.fromisoformat(previous)) if previous else end
                 start = anchor - timedelta(days=max(1, lookback_days))
-            for terms in search_terms(f"CVE-{year}"):
+            for terms in discovery_search_terms(f"CVE-{year}"):
                 try:
                     for repo in search_range(client, terms, qualifier, start, end):
                         remember(repo)
@@ -760,7 +799,7 @@ def discover_github_pocs(
     pending_cves = {row["cve"] for row in source_artifacts.load_reviews()
                     if int(row["cve"].split("-")[1]) in target_years
                     and (not cve_filter or row["cve"] in cve_filter)}
-    pending_names = source_artifacts.pending_reviewed_names(cves=pending_cves)
+    pending_names = source_artifacts.pending_reviewed_names(cves=pending_cves, blacklist=blacklist)
     missing = [name for name in pending_names if name.lower() not in {n.lower() for n in repositories}
                and any(int(c.split("-")[1]) in target_years and (not cve_filter or c in cve_filter)
                        for c in source_artifacts.reviewed_cves(name))
@@ -771,14 +810,20 @@ def discover_github_pocs(
             owner, name = full_name.split("/", 1)
             aliases.append(f"repo{index}: repository(owner: {json.dumps(owner)}, name: {json.dumps(name)}) "
                            "{ nameWithOwner url description isFork isPrivate visibility defaultBranchRef { target { oid } } }")
-        payload = http_json(GITHUB_GRAPHQL_URL, headers=client.headers,
-                            data={"query": "query { " + " ".join(aliases) + " rateLimit { remaining resetAt } }"})
-        replay = github_repository_data(payload, {f"repo{index}" for index in range(len(missing))})
-        for index in range(len(missing)):
-            if replay.get(f"repo{index}") is not None:
-                remember(replay[f"repo{index}"])
-        if artifact_cache_write:
-            source_artifacts.mark_pending_checked(missing)
+        try:
+            payload = http_json(GITHUB_GRAPHQL_URL, headers=client.headers,
+                                data={"query": "query { " + " ".join(aliases) + " rateLimit { remaining resetAt } }"})
+            replay = github_repository_data(payload, {f"repo{index}" for index in range(len(missing))})
+            for index in range(len(missing)):
+                if replay.get(f"repo{index}") is not None:
+                    remember(replay[f"repo{index}"])
+            if artifact_cache_write:
+                source_artifacts.mark_pending_checked(missing)
+        except (RuntimeError, error.URLError, TimeoutError, http.client.HTTPException) as exc:
+            if failures is None:
+                raise
+            failures.append(f"Reviewed repository refresh: {exc}")
+            failed_years.update(target_years)
 
     names = sorted(repositories)
     batches = [names[offset : offset + 10] for offset in range(0, len(names), 10)]
@@ -1234,6 +1279,26 @@ def load_catch_up_records(snapshot: Path) -> tuple[dict[str, dict[str, Any]], di
     return records, references, checkpoint
 
 
+def fetch_cve_id_status(cve_id: str) -> dict[str, Any] | None:
+    """A missing record can belong to a reserved, rejected, or unallocated ID."""
+    try:
+        identity = http_json(CVE_ID_API_URL.format(cve_id=cve_id))
+    except error.HTTPError as exc:
+        if exc.code != 404:
+            raise
+        identity = json.loads(exc.read())
+        if identity.get("error") != "CVE_ID_NOT_FOUND":
+            raise RuntimeError("Unrecognized CVE ID lookup response") from exc
+        return {"cveMetadata": {"cveId": cve_id, "state": "ABSENT"}}
+    if identity is None:
+        return None
+    if identity.get("cve_id") != cve_id or identity.get("state") not in {"RESERVED", "REJECTED", "PUBLISHED"}:
+        raise RuntimeError("Incomplete or mismatched CVE ID status")
+    if identity["state"] == "PUBLISHED":
+        return None  # Record replication can lag the identifier's status.
+    return {"cveMetadata": {"cveId": cve_id, "state": identity["state"]}}
+
+
 def fetch_records(
     urls: dict[str, str], *, allow_not_found: bool, failures: list[str] | None = None,
 ) -> dict[str, dict[str, Any]]:
@@ -1243,7 +1308,7 @@ def fetch_records(
     def fetch(cve_id: str, url: str) -> tuple[str, dict[str, Any] | None]:
         result = http_json(url, allow_not_found=allow_not_found)
         if result is None and allow_not_found:
-            return cve_id, None
+            return cve_id, fetch_cve_id_status(cve_id)
         if (
             not isinstance(result, dict)
             or record_cve_id(result) != cve_id
@@ -1363,7 +1428,8 @@ def retry_record(entry: dict[str, str], now: datetime) -> bool:
         return True
     if checked.tzinfo is None:
         checked = checked.replace(tzinfo=timezone.utc)
-    return now - checked >= RECORD_RETRY_INTERVAL
+    interval = timedelta(days=1) if entry.get("status") == "ABSENT" else RECORD_RETRY_INTERVAL
+    return now - checked >= interval
 
 
 def markdown_record_status(text: str) -> str:
@@ -1375,16 +1441,16 @@ def pending_details(status: str = "UNAVAILABLE") -> CVEDetails:
     return CVEDetails(PENDING_DESCRIPTION, [], [], [], record_status=status)
 
 
-def mark_rejected(path: Path, *, dry_run: bool) -> None:
+def mark_rejected(path: Path, *, dry_run: bool, status: str = "REJECTED") -> None:
     if not path.exists() or dry_run:
         return
     with path.open("r", encoding="utf-8", newline="") as handle:
         text = handle.read()
-    if markdown_record_status(text) != "REJECTED":
+    if markdown_record_status(text) != status:
         newline = "\r\n" if "\r\n" in text else "\n"
         text = RECORD_STATUS_RE.sub("", text).lstrip("\r\n")
         with path.open("w", encoding="utf-8", newline="") as handle:
-            handle.write("<!-- CVE record: REJECTED -->" + newline + text)
+            handle.write(f"<!-- CVE record: {status} -->" + newline + text)
 
 
 def ensure_cve_entries(
@@ -1449,9 +1515,9 @@ def ensure_cve_entries(
         status = str((record.get("cveMetadata") or {}).get("state")
                      or state.get(cve_id, {}).get("status") or existing_status).upper()
         details = details_from_record(record)
-        if status == "REJECTED":
+        if status in {"REJECTED", "ABSENT"}:
             unavailable.add(cve_id)
-            mark_rejected(path, dry_run=dry_run)
+            mark_rejected(path, dry_run=dry_run, status=status)
         elif not path.exists():
             if not dry_run:
                 path.parent.mkdir(parents=True, exist_ok=True)
@@ -1459,6 +1525,8 @@ def ensure_cve_entries(
             created.add(cve_id)
         elif details:
             refresh_record_header(path, details, kev, dry_run=dry_run)
+        elif existing_status in {"ABSENT", "REJECTED"}:
+            refresh_record_header(path, pending_details(status), kev, dry_run=dry_run)
         elif cve_id not in needed:
             continue
         if details:
@@ -1466,7 +1534,7 @@ def ensure_cve_entries(
         else:
             previous = state.get(cve_id, {})
             state[cve_id] = {"status": status, "checked": now.isoformat()
-                             if cve_id in due or cve_id in records else previous.get("checked", now.isoformat())}
+                             if (fetch_missing and cve_id in due) or cve_id in records else previous.get("checked", "")}
 
     record_dates(records, dry_run=dry_run)
     if not dry_run:
@@ -1544,7 +1612,7 @@ def refresh_record_header(path: Path, details: CVEDetails, kev: dict[str, list],
         # Replace only our provisional description; preserve every source link.
         text = re.sub(
             SECTION_RE_TEMPLATE.format(header=re.escape("### Description")),
-            lambda match: match.group(1) + newline + details.description.strip().replace("\n", newline) + newline,
+            lambda match: match.group(1) + details.description.strip().replace("\n", newline) + newline,
             text, flags=re.DOTALL,
         )
     lines = text.split(newline)
@@ -1568,8 +1636,9 @@ def refresh_record_headers(records: dict[str, dict[str, Any]], *, dry_run: bool)
         path = CVES / cve_id.split("-")[1] / f"{cve_id}.md"
         if not path.exists():
             continue
-        if str((record.get("cveMetadata") or {}).get("state") or "").upper() == "REJECTED":
-            mark_rejected(path, dry_run=dry_run)
+        status = str((record.get("cveMetadata") or {}).get("state") or "").upper()
+        if status in {"REJECTED", "ABSENT"}:
+            mark_rejected(path, dry_run=dry_run, status=status)
             continue
         details = details_from_record(record or {})
         if details is None:
@@ -1724,6 +1793,9 @@ def sync_markdown(
     cve_ids = sorted(set(github) | set(references))
 
     for cve_id in cve_ids:
+        if not is_valid_cve(cve_id):
+            stats.skipped.append(f"{cve_id}: invalid CVE identifier")
+            continue
         year = cve_id.split("-")[1]
         path = CVES / year / f"{cve_id}.md"
         github_links = [url for url in stable_unique(github.get(cve_id, []))
@@ -1734,12 +1806,12 @@ def sync_markdown(
 
         status = str((record or {}).get("cveMetadata", {}).get("state")
                      or record_states.get(cve_id, {}).get("status") or "UNAVAILABLE").upper()
-        if status == "REJECTED":
-            mark_rejected(path, dry_run=dry_run)
-            stats.skipped.append(f"{cve_id}: CVE is rejected")
+        if status in {"REJECTED", "ABSENT"}:
+            mark_rejected(path, dry_run=dry_run, status=status)
+            stats.skipped.append(f"{cve_id}: CVE is {status.lower()}")
             continue
-        if path.exists() and markdown_record_status(path.read_text(encoding="utf-8")) == "REJECTED":
-            stats.skipped.append(f"{cve_id}: CVE is rejected")
+        if path.exists() and markdown_record_status(path.read_text(encoding="utf-8")) in {"REJECTED", "ABSENT"}:
+            stats.skipped.append(f"{cve_id}: CVE is rejected or unallocated")
             continue
 
         if path.exists():
@@ -1997,9 +2069,18 @@ def main() -> int:
         and (not cve_filter or cve_id in cve_filter)
         and (CVES / cve_id.split("-")[1] / f"{cve_id}.md").exists()
     }
-    created, rejected = ensure_cve_entries(
+    known_records = set(records)
+    created, _ = ensure_cve_entries(
         candidates | pending_metadata, dry_run=args.dry_run, records=records, failures=failures,
     )
+    # An hourly metadata retry can be the first time a CNA's public PoC
+    # references become available. Publish them without waiting for the delta job.
+    blacklist = load_blacklist()
+    enriched_references = {cve_id: poc_references(records[cve_id], blacklist)
+                           for cve_id in set(records) - known_records}
+    for cve_id, selected in filter_live_references(enriched_references).items():
+        references[cve_id] = stable_unique([*references.get(cve_id, []), *selected])
+    candidates.update(references)
 
     stats, accepted_github, accepted_references = sync_markdown(
         records,
@@ -2036,9 +2117,9 @@ def main() -> int:
         for cve_id in candidates:
             record = records.get(cve_id) or {}
             path = CVES / cve_id.split("-")[1] / f"{cve_id}.md"
-            status = ("REJECTED" if cve_id in rejected else
-                      markdown_record_status(path.read_text(encoding="utf-8")) if path.exists() else
-                      str((record.get("cveMetadata") or {}).get("state") or "UNAVAILABLE").upper())
+            status = (markdown_record_status(path.read_text(encoding="utf-8")) if path.exists() else
+                      str((record.get("cveMetadata") or {}).get("state")
+                          or load_record_state().get(cve_id, {}).get("status") or "UNAVAILABLE").upper())
             if status in {"PUBLISHED", "REJECTED"}:
                 discovery_state["pending"].pop(cve_id, None)
             else:

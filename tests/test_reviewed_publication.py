@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import importlib.util
+import json
 import sys
 import tempfile
 import unittest
@@ -18,6 +19,17 @@ SPEC.loader.exec_module(trending)
 
 
 class ReviewedPublicationTests(unittest.TestCase):
+    def test_reviewed_exclusion_applies_to_stale_links_and_trending_rows(self):
+        cve, name = 'CVE-2026-109618', 'researcher/misattributed'
+        url = f'https://github.com/{name}'
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / 'trending.json'
+            path.write_text(json.dumps([{'cve': cve, 'url': url}, {'cve': 'CVE-2024-1234', 'url': url}]))
+            with patch.object(build_site, 'load_source_exclusions', return_value={(cve, name)}), \
+                    patch.object(build_site, 'TRENDING_INPUT', path):
+                self.assertEqual(build_site.dedupe_source_links([url, url + '/blob/main/poc.py'], cve), [])
+                self.assertEqual([row['cve'] for row in build_site.build_trending([])], ['CVE-2024-1234'])
+
     def test_reviewed_pinned_artifact_wins_over_existing_repository_root(self):
         row = source_artifacts.load_reviews()[0]
         artifact = source_artifacts.ArtifactEvidence(row['cve'], row['repository'], row['path'],

@@ -51,9 +51,11 @@ ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), os.pardir)
 sys.path.insert(0, os.path.join(ROOT, "scripts"))
 
 from brand import BRAND, DESCRIPTION, SEARCH_GUIDE, SITE, SLUG
-from update_cves import load_blacklist, qualifying_repo_cves, attach_source_artifacts, ensure_cve_entries, repository_is_nonpublic
+from update_cves import (load_blacklist, qualifying_repo_cves, attach_source_artifacts, ensure_cve_entries,
+                         repository_is_nonpublic, discovery_search_terms, extract_cves, readme_text,
+                         root_has_cve_artifact, is_valid_cve)
 import releases
-from source_artifacts import reviewed_artifacts
+from source_artifacts import reviewed_artifacts, reviewed_cves, load_reviews, identity_cves
 
 README = os.path.join(ROOT, "README.md")
 TRENDING = os.path.join(ROOT, "index", "trending.json")
@@ -61,7 +63,8 @@ KEV = os.path.join(ROOT, "index", "kev.json")
 STATS = os.path.join(ROOT, "docs", "stats.json")
 DESC_LIMIT = 110   # a table cell, not a paragraph
 FOLDED_AFTER = 2   # years past the newest two are collapsed behind a summary
-CVE_ID = re.compile(r"CVE[-_](\d{4})[-_](\d{4,7})", re.IGNORECASE)
+CVE_ID = re.compile(r"(?<![A-Z0-9])CVE[-_](\d{4})[-_](\d{4,})(?![A-Z0-9])", re.IGNORECASE)
+SEARCH_NOT_BEFORE = 0.0
 RAW = f"https://raw.githubusercontent.com/{SLUG}/main/docs"
 HERO_URL = f"{RAW}/hero.svg"
 SEARCH_CTA_REV = "8dec6181e823d641132e0ee8a52a1612c2b5dd37"
@@ -69,7 +72,7 @@ SEARCH_CTA_URL = f"https://raw.githubusercontent.com/{SLUG}/{SEARCH_CTA_REV}/doc
 KEV_MARK = f'<img src="{RAW}/kev.svg" alt="KEV" title="CISA known exploited" height="14"> '
 
 
-def search(query: str) -> tuple[int, list[dict]]:
+def search(query: str, *, limit: int = SEARCH_LIMIT) -> tuple[int, list[dict]]:
     """How many repositories a search matches, and every one it exposes, most
     recently updated first."""
     if "is:public" not in query.split():
@@ -83,7 +86,9 @@ def search(query: str) -> tuple[int, list[dict]]:
     found: list[dict] = []
     seen: set[str] = set()
     total = 0
-    for page in range(1, SEARCH_LIMIT // SEARCH_PAGE + 1):
+    global SEARCH_NOT_BEFORE
+    limit = min(limit, SEARCH_LIMIT)
+    for page in range(1, (limit + SEARCH_PAGE - 1) // SEARCH_PAGE + 1):
         # The REST API reads sort and order. The website's s and o are ignored
         # and leave the results in best-match order.
         url = SEARCH_URL + "?" + parse.urlencode({
@@ -94,12 +99,26 @@ def search(query: str) -> tuple[int, list[dict]]:
             "page": page,
         })
         for attempt in range(3):
+            delay = 5 * (attempt + 1)
+            time.sleep(max(0, SEARCH_NOT_BEFORE - time.monotonic()))
+            SEARCH_NOT_BEFORE = time.monotonic() + (2.1 if token else 6.1)
             try:
                 with request.urlopen(request.Request(url, headers=headers), timeout=30) as response:
                     payload = json.load(response)
             except error.HTTPError as problem:
                 if problem.code not in {403, 429, 500, 502, 503, 504} or attempt == 2:
                     raise
+                if problem.code in {403, 429}:
+                    limits = problem.headers or {}
+                    try:
+                        if limits.get("Retry-After"):
+                            delay = max(delay, float(limits["Retry-After"]))
+                        elif str(limits.get("X-RateLimit-Remaining")) == "0" and limits.get("X-RateLimit-Reset"):
+                            delay = max(delay, float(limits["X-RateLimit-Reset"]) - time.time() + 1)
+                        else:
+                            delay = max(delay, 60 * 2 ** attempt)
+                    except (TypeError, ValueError):
+                        delay = max(delay, 60)
             except (error.URLError, TimeoutError, json.JSONDecodeError):
                 if attempt == 2:
                     raise
@@ -110,7 +129,7 @@ def search(query: str) -> tuple[int, list[dict]]:
                     break
                 if attempt == 2:
                     raise RuntimeError(f"GitHub returned incomplete results for {query}")
-            time.sleep(5 * (attempt + 1))
+            time.sleep(delay)
         total = int(payload.get("total_count") or 0)
         items = payload.get("items") or []
         for repo in items:
@@ -120,9 +139,9 @@ def search(query: str) -> tuple[int, list[dict]]:
             if name and name not in seen and not repository_is_nonpublic(repo):
                 seen.add(name)
                 found.append(repo)
-        if not items or len(found) >= min(total, SEARCH_LIMIT):
+        if not items or len(found) >= min(total, limit):
             break
-    return total, found
+    return total, found[:limit]
 
 
 def nvd_description(cve: str) -> str:
@@ -225,22 +244,47 @@ def release_dates(repositories: list[dict], token: str, paths: dict[str, list[st
                     _copy=bool(row.get("copy")), _bulk=bool(row.get("bulk")))
 
 
+def search_candidates(identifier: str, filters: str) -> tuple[int, list[dict]]:
+    """Use the same discovery scope as the index, including README-only CVEs."""
+    found = {}
+    queries = discovery_search_terms(identifier)
+    aliases = {row["repository"] for row in load_reviews()
+               if row["cve"].startswith(identifier + "-") and not identity_cves(row["repository"])}
+    for name in sorted(aliases):
+        owner, repository = name.split("/", 1)
+        queries.append(f'"{repository}" in:name user:{owner}')
+    for terms in queries:
+        query = f"{terms} {filters} fork:false archived:false"
+        # The landed README lane can judge at most this many recent rows.
+        # Keep the full search window for per-year trending candidates.
+        _, rows = search(query, limit=LANDED_LIMIT) if identifier == "CVE" and "in:readme" in terms else search(query)
+        print(f"Discovery {terms}: {len(rows)} candidates")
+        for repo in rows:
+            name = str(repo.get("full_name") or "").lower()
+            if name:
+                found.setdefault(name, repo)
+    return len(found), list(found.values())
+
+
 def just_landed(token: str, ledger: dict | None = None) -> list[dict]:
     """First qualifying artifact releases, independently of stars or Trending."""
     ledger = releases.load_ledger() if ledger is None else ledger
     cutoff = datetime.now(timezone.utc) - timedelta(days=LANDED_DAYS)
     since = cutoff.date().isoformat()
-    _, rows = search(f"CVE in:name pushed:>={since}")
+    _, rows = search_candidates("CVE", f"pushed:>={since}")
     candidates, seen = [], set()
     for repo in rows:
         name = str(repo.get("full_name") or "")
-        if (not name or name.lower() in seen
-                or not CVE_ID.search(str(repo.get("name") or ""))):
+        if not name or name.lower() in seen:
             continue
         seen.add(name.lower())
         candidates.append(repo)
     candidates.sort(key=lambda repo: str(repo.get("pushed_at") or ""), reverse=True)
-    pool = candidates[:LANDED_LIMIT]
+    # README matches include many general repositories. Give that lane its
+    # own budget so it cannot displace the name/description candidates.
+    pool = [repo for repo in candidates if cve_of(repo)][:LANDED_LIMIT]
+    pool += [repo for repo in candidates if not cve_of(repo)][:LANDED_LIMIT]
+    pool.sort(key=lambda repo: str(repo.get("pushed_at") or ""), reverse=True)
     fresh: list[dict] = []
     judged = rejected = undated = 0
     for start in range(0, len(pool), LANDED_BATCH):
@@ -316,10 +360,10 @@ def search_year(year: int, since: str) -> tuple[int, list[dict]]:
     """Return how many PoC repositories for one CVE year were pushed since a
     date, and every result GitHub exposes for the final artifact-date sort.
     """
-    query = " ".join(
-        [f'"CVE-{year}" in:name', f"stars:>{MIN_STARS}", f"pushed:>{since}"]
-    )
-    return search(query)
+    total, rows = search_candidates(f"CVE-{year}", f"stars:>{MIN_STARS} pushed:>{since}")
+    for row in rows:
+        row["_year"] = year
+    return total, rows
 
 
 def github_token() -> str:
@@ -413,8 +457,9 @@ def qualifying_repositories(
         ... on Tree { entries { name type oid } }
       }
     """
-    for start in range(0, len(repositories), 20):
-        batch = repositories[start : start + 20]
+    batches = [repositories[start:start + 20] for start in range(0, len(repositories), 20)]
+
+    def describe(batch: list[dict]) -> dict:
         query = "query { " + " ".join(
             repository_alias(i, str(repo.get("full_name") or ""), fields)
             for i, repo in enumerate(batch)
@@ -422,6 +467,11 @@ def qualifying_repositories(
         data = graphql(query, token)
         if not data:
             raise RuntimeError("GitHub returned no repository content for the PoC gate")
+        return data
+
+    with ThreadPoolExecutor(max_workers=4) as pool:
+        contents = list(pool.map(describe, batches))
+    for batch, data in zip(batches, contents):
         for index, repo in enumerate(batch):
             content = data.get(f"r{index}")
             if content is None:
@@ -441,13 +491,25 @@ def qualifying_repositories(
                 "visibility": content.get("visibility") or repo.get("visibility"),
                 "repositoryTopics": {"nodes": topics},
             }
-            cve = cve_of(repo)
-            if cve:
-                attach_source_artifacts(candidate, {"Authorization": f"Bearer {token}"}, blacklist, cves={cve})
-            if not cve or cve not in qualifying_repo_cves(
-                candidate, int(cve.split("-")[1]), blacklist
-            ):
+            wanted = (extract_cves(f"{full_name.replace('_', ' ')} {candidate['description']} {readme_text(candidate)}")
+                      | reviewed_cves(full_name))
+            years = {int(cve.split("-")[1]) for cve in wanted}
+            if repo.get("_year"):
+                years &= {repo["_year"]}
+            attach_source_artifacts(candidate, {"Authorization": f"Bearer {token}"}, blacklist, cves=wanted)
+            qualified = {cve for year in years for cve in qualifying_repo_cves(candidate, year, blacklist)}
+            if not qualified:
                 continue
+            specific = {cve for cve in qualified if root_has_cve_artifact(candidate, cve)}
+            specific.update(item.cve for item in reviewed_artifacts(candidate) if item.cve in qualified)
+            choices = specific or qualified
+            preferred = cve_of(repo)
+            mentions = [f"CVE-{year}-{number}" for year, number in CVE_ID.findall(readme_text(candidate))]
+            cve = preferred if preferred in choices else next(
+                (mention for mention in mentions if mention in choices),
+                max(choices, key=lambda value: tuple(map(int, value.split("-")[1:]))),
+            )
+            repo["cve"] = cve
             entries = ((content.get("root") or {}).get("entries") or [])
             readme_path = next((path for field, path in (
                 ("readmeMd", "README.md"), ("readmeUpper", "README.MD"),
@@ -479,11 +541,8 @@ def code_pushed(
     """
     paths = paths if paths is not None else code_paths(full_names, token)
     latest: dict[str, str] = {}
-    batch: list[str] = []
-
-    def flush(names: list[str]) -> None:
-        if not names:
-            return
+    def fetch_dates(names: list[str]) -> dict[str, str]:
+        found = {}
         parts = []
         for index, full_name in enumerate(names):
             history = " ".join(
@@ -510,16 +569,14 @@ def code_pushed(
                 ceiling = min(repository.get("pushedAt") or now, now)
                 valid = [value for value in dates if value <= ceiling]
                 if valid:
-                    latest[full_name] = max(valid)
+                    found[full_name] = max(valid)
+        return found
 
-    for full_name in full_names:
-        if not paths.get(full_name):
-            continue
-        batch.append(full_name)
-        if len(batch) == 6:
-            flush(batch)
-            batch = []
-    flush(batch)
+    names = [name for name in full_names if paths.get(name)]
+    batches = [names[start:start + 6] for start in range(0, len(names), 6)]
+    with ThreadPoolExecutor(max_workers=4) as pool:
+        for found in pool.map(fetch_dates, batches):
+            latest.update(found)
     return latest
 
 
@@ -563,8 +620,9 @@ def known_exploited() -> set[str]:
 
 
 def cve_of(repo: dict) -> str:
-    match = CVE_ID.search(f"{repo.get('cve') or ''} {repo.get('name') or ''} {repo.get('description') or ''}")
-    return f"CVE-{match.group(1)}-{match.group(2)}" if match else ""
+    text = f"{repo.get('cve') or ''} {repo.get('name') or ''} {repo.get('description') or ''}"
+    return next((cve for year, number in CVE_ID.findall(text)
+                 if is_valid_cve(cve := f"CVE-{year}-{number}")), "")
 
 
 def repository_summary(repo: dict, cve: str) -> str:
@@ -768,7 +826,7 @@ enrich the listing when available; pending CVE records do not hide PoC links.
 | [ExploitDB](https://gitlab.com/exploit-database/exploitdb) | Archived exploits, mapped by their own CVE column |
 | [Metasploit](https://github.com/rapid7/metasploit-framework) | Modules, best ranked first |
 | [Vulhub](https://github.com/vulhub/vulhub) | Runnable vulnerable environments and reproduction steps |
-| [afrog](https://github.com/zan8in/afrog), [Vulnerability](https://github.com/tzwlhack/Vulnerability), [0day](https://github.com/helloexp/0day), [xray](https://github.com/chaitin/xray), [Google Security Research](https://github.com/google/security-research), [GitHub Security Lab](https://github.com/github/securitylab), [Tenable](https://github.com/tenable/poc), [pedrib](https://github.com/pedrib/PoC) | CVE-specific templates, code and reproduction guides inside multi-CVE repositories |
+| [afrog](https://github.com/zan8in/afrog), [Vulnerability](https://github.com/tzwlhack/Vulnerability), [0day](https://github.com/helloexp/0day), [xray](https://github.com/chaitin/xray), [Google Security Research](https://github.com/google/security-research), [GitHub Security Lab](https://github.com/github/securitylab), [Rhino Security Labs](https://github.com/RhinoSecurityLabs/CVEs), [Tenable](https://github.com/tenable/poc), [pedrib](https://github.com/pedrib/PoC) | CVE-specific templates, code and reproduction guides inside multi-CVE repositories |
 | [Openwall](https://www.openwall.com/lists/), [SecLists](https://seclists.org/) and [Gist](https://gist.github.com/) | Reproducers from disclosure posts and Gists that NVD references, linked only after review |
 | [EPSS](https://www.first.org/epss/) | Daily exploitation probability from FIRST |
 | [CISA KEV](https://www.cisa.gov/known-exploited-vulnerabilities-catalog) | What is being exploited in the wild |

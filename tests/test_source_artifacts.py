@@ -370,6 +370,15 @@ class ArtifactGateTests(unittest.TestCase):
         rows = json.loads(self.candidates.read_text())["repositories"]
         self.assertTrue(all(row["scan_complete"] is False for row in rows.values()))
 
+    def test_new_alias_review_replays_without_search_or_prior_candidate(self):
+        name = "researcher/widget-exploit"
+        self.write_reviews([review(repository=name)])
+        with patch.object(artifacts, "REVIEWS", self.reviews), patch.object(artifacts, "CANDIDATES", self.candidates):
+            self.assertEqual(artifacts.pending_reviewed_names(cves={CVE}), [name])
+            artifacts.mark_pending_checked([name])
+            row = json.loads(self.candidates.read_text())["repositories"][name]
+            self.assertFalse(row["scan_complete"])
+
     def test_pending_limit_applies_after_cve_scope_filter(self):
         names = ["older/CVE-2020-1234", "current/" + CVE]
         self.write_reviews([review("CVE-2020-1234", names[0]), review(repository=names[1])])
@@ -377,6 +386,12 @@ class ArtifactGateTests(unittest.TestCase):
             artifacts._save_candidate(self.candidates, name, {"scan_complete": False, "last_checked_at": str(index)})
         with patch.object(artifacts, "REVIEWS", self.reviews), patch.object(artifacts, "CANDIDATES", self.candidates):
             self.assertEqual(artifacts.pending_reviewed_names(1, cves={CVE}), [names[1].lower()])
+
+    def test_blacklisted_review_does_not_take_a_replay_slot(self):
+        names = ["blocked/alias", "pending/alias"]
+        self.write_reviews([review(repository=name) for name in names])
+        with patch.object(artifacts, "REVIEWS", self.reviews), patch.object(artifacts, "CANDIDATES", self.candidates):
+            self.assertEqual(artifacts.pending_reviewed_names(1, blacklist={"Blocked/Alias"}), [names[1]])
 
     def test_dry_run_preserves_candidate_state(self):
         self.inspect(repository(), self.fetcher({"expl/main.go": SOURCE}), persist=False)

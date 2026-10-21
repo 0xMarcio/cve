@@ -45,12 +45,13 @@ class RepositoryClassificationTests(unittest.TestCase):
         repo["root"] = {"entries": [{"name": "index.js"}]}
         self.assertEqual(update_cves.qualifying_repo_cves(repo, 2026, []), set())
 
-    def test_accepts_readme_poc_with_repository_intent(self) -> None:
+    def test_accepts_readme_poc_with_repository_intent_and_artifact(self) -> None:
         repo = self.repo(
             "AcmeSecurity/kernel-exploits",
             "Linux exploit research",
             "Proof of concept for CVE-2026-31431 with reproduction steps.",
         )
+        repo["root"] = {"entries": [{"name": "poc.py", "type": "blob"}]}
         self.assertEqual(
             update_cves.qualifying_repo_cves(repo, 2026, []),
             {"CVE-2026-31431"},
@@ -163,6 +164,57 @@ class RepositoryClassificationTests(unittest.TestCase):
         blacklist = ["mirror-org/poc-corpus"]
         self.assertTrue(update_cves.is_blacklisted_repo("mirror-org/poc-corpus", blacklist))
         self.assertFalse(update_cves.is_blacklisted_repo("source-org/poc-corpus", blacklist))
+
+    def test_analysis_and_lab_repositories_can_carry_specific_pocs(self) -> None:
+        for name, description in [("researcher/widget-poc", "Exploit research and analysis"),
+                                  ("researcher/widget-lab", "Vulnerable lab")]:
+            candidate = self.repo(name, description + " for CVE-2026-31431",
+                                  "PoCs for CVE-2026-31431. Run poc.py to reproduce the issue.")
+            candidate["root"] = {"entries": [{"name": "poc.py", "type": "blob"}]}
+            self.assertEqual(update_cves.qualifying_repo_cves(candidate, 2026, []), {"CVE-2026-31431"})
+            candidate["root"] = {"entries": [{"name": "README.md", "type": "blob"}]}
+            self.assertEqual(update_cves.qualifying_repo_cves(candidate, 2026, []), set())
+
+    def test_defensive_verbs_do_not_claim_exploit_intent(self) -> None:
+        for verb in ("Blocks", "Detects", "Mitigates", "Protects", "Prevents"):
+            candidate = self.repo("researcher/widget-guard", f"{verb} exploitation of CVE-2026-31431",
+                                  "CVE-2026-31431 exploit traffic is blocked.")
+            candidate["root"] = {"entries": [{"name": "guard.py", "type": "blob"}]}
+            self.assertEqual(update_cves.qualifying_repo_cves(candidate, 2026, []), set())
+
+    def test_analysis_exception_does_not_approve_unrelated_readme_cves(self) -> None:
+        candidate = self.repo("researcher/widget-analysis", "Exploit analysis",
+                              "PoC for CVE-2026-1111, run CVE-2026-1111.py.\n\nNotes on the CVE-2026-2222 exploit chain.")
+        candidate["root"] = {"entries": [{"name": "CVE-2026-1111.py", "type": "blob"}]}
+        self.assertEqual(update_cves.qualifying_repo_cves(candidate, 2026, []), {"CVE-2026-1111"})
+
+    def test_search_queries_are_not_a_poc(self) -> None:
+        candidate = self.repo("researcher/CVE-2026-109618-Dorks", "Search queries for PHP hosts",
+                              "CVE-2026-109618 exploitation research.\n```\nshodan search product:PHP\n```")
+        candidate["root"] = {"entries": [{"name": "README.md", "type": "blob"}]}
+        self.assertEqual(update_cves.qualifying_repo_cves(candidate, 2026, []), set())
+
+    def test_readme_example_cve_does_not_make_a_general_tool_a_poc(self) -> None:
+        candidate = self.repo("researcher/tool", "Search and download public exploits",
+                              "Find exploits for CVE-2024-1234 using the tool.")
+        candidate["root"] = {"entries": [{"name": "src", "type": "tree"}, {"name": "setup.py", "type": "blob"}]}
+        self.assertEqual(update_cves.qualifying_repo_cves(candidate, 2024, []), set())
+
+    def test_readme_only_reproducer_is_kept_without_a_cve_in_metadata(self) -> None:
+        candidate = self.repo("researcher/widget-repro", "Widget research",
+                              "PoC for CVE-2026-1234:\n```http\nPOST /vulnerable HTTP/1.1\nHost: localhost\n\npayload\n```")
+        candidate["root"] = {"entries": [{"name": "README.md", "type": "blob"}]}
+        self.assertEqual(update_cves.qualifying_repo_cves(candidate, 2026, []), {"CVE-2026-1234"})
+        candidate["readmeMd"]["text"] = "PoC for CVE-2026-1234:\n```sh\npython absent_exploit.py localhost\n```"
+        self.assertEqual(update_cves.qualifying_repo_cves(candidate, 2026, []), set())
+
+    def test_multi_year_collection_is_not_reclassified_as_one_cve_per_year(self) -> None:
+        candidate = self.repo("researcher/POC", "Proof of concept exploits",
+                              "PoCs: " + " ".join(f"CVE-{year}-1234" for year in range(2020, 2027)))
+        candidate["root"] = {"entries": [{"name": "pocs", "type": "tree"}]}
+        self.assertEqual(update_cves.qualifying_repo_cves(candidate, 2026, []), set())
+        candidate["root"]["entries"].append({"name": "CVE-2026-1234.py", "type": "blob"})
+        self.assertEqual(update_cves.qualifying_repo_cves(candidate, 2026, []), {"CVE-2026-1234"})
 
 
 class ReferenceAndMarkdownTests(unittest.TestCase):
@@ -342,7 +394,8 @@ class DiscoveryFailureTests(unittest.TestCase):
             "nameWithOwner": "owner/CVE-2026-1234-poc",
             "url": "https://github.com/owner/CVE-2026-1234-poc",
         }
-        with patch.object(update_cves, "search_range", return_value=[repo]), patch.object(
+        with patch.object(update_cves.source_artifacts, "pending_reviewed_names", return_value=[]), \
+                patch.object(update_cves, "search_range", return_value=[repo]), patch.object(
             update_cves.GitHubClient, "fetch_readmes", side_effect=RuntimeError("API unavailable")
         ):
             with self.assertRaisesRegex(RuntimeError, "API unavailable"):

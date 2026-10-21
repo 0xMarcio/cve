@@ -21947,7 +21947,6 @@ CVE-2024-12029 - https://github.com/apostolovd/PoCs
 CVE-2024-12084 - https://github.com/InkeyP/CVE-2024-12084
 CVE-2024-12227 - https://github.com/HI0U/POC-CVE-2024-12227
 CVE-2024-1234 - https://github.com/32BitZ-Studio/Total-POC-CVE
-CVE-2024-1234 - https://github.com/Netw0rkNoob/VulnClaw
 CVE-2024-1234 - https://github.com/danilo1992-sys/exploit-search
 CVE-2024-1234 - https://github.com/j0rdan0/nomi-sec-bot
 CVE-2024-1234 - https://github.com/mayanklau/exploitation-agent
@@ -22936,9 +22935,6 @@ CVE-2025-3248 - https://github.com/bambooqj/cve-2025-3248
 CVE-2025-3248 - https://github.com/drackyjr/cve-2025-3248-exploit
 CVE-2025-3248 - https://github.com/paniby/kr-vulhub
 CVE-2025-32711 - https://github.com/TreRB/markdown-exfil-tester
-CVE-2025-32813 - https://github.com/RhinoSecurityLabs/CVEs
-CVE-2025-32814 - https://github.com/RhinoSecurityLabs/CVEs
-CVE-2025-32815 - https://github.com/RhinoSecurityLabs/CVEs
 CVE-2025-33053 - https://github.com/Cyberw1ng/CVE-2025-33053-POC
 CVE-2025-33073 - https://github.com/EgCupCake/cupntlm-Automated-Exploit-For-CVE-2025-33073-
 CVE-2025-33073 - https://github.com/SFRDevelopment/windows-smb-vulnerability-framework-cve-2025-33073
@@ -23618,7 +23614,6 @@ CVE-2025-5688 - https://github.com/mbanyamer/CVE-2025-5688-FreeRTOS-Plus-TCP-Out
 CVE-2025-57389 - https://github.com/amalcew/CVE-2025-57389
 CVE-2025-57457 - https://github.com/restdone/CVE-2025-57457
 CVE-2025-57489 - https://github.com/graypixel2121/CVE-2025-57489
-CVE-2025-5777 - https://github.com/MaikCyberSec/Threat-Hunting-
 CVE-2025-5777 - https://github.com/Sheep-Hunter/CVE-2025-5777-POC
 CVE-2025-5777 - https://github.com/cybertechajju/cve-2025-5755
 CVE-2025-5777 - https://github.com/nicecopy/POC-CVE-2025-5777
@@ -24480,7 +24475,6 @@ CVE-2026-5118 - https://github.com/Yucaerin/CVE-2026-5118
 CVE-2026-52480 - https://github.com/AshtonKopelevich/SJ-GPS-PRO-F11-Vulnerability
 CVE-2026-52481 - https://github.com/AshtonKopelevich/SJ-GPS-PRO-F11-Vulnerability
 CVE-2026-52680 - https://github.com/0xdak/CVE-2026-52680_exploit
-CVE-2026-52815 - https://github.com/eeeeeeeeee-code/POC
 CVE-2026-52815 - https://github.com/ifannote/poc
 CVE-2026-52887 - https://github.com/BiiTts/CVE-2026-52887-NocoBase-SQLi-RCE
 CVE-2026-53359 - https://github.com/V4bel/Januscape
@@ -26225,11 +26219,9 @@ CVE-2026-65540 - https://github.com/testardou/CVE-2026-65540
 CVE-2026-78224 - https://github.com/abhinavagarwal07/mirth-connect-security-poc
 CVE-2026-82578 - https://github.com/abhinavagarwal07/mirth-connect-security-poc
 CVE-2026-82583 - https://github.com/abhinavagarwal07/mirth-connect-security-poc
-CVE-2026-20805 - https://github.com/ZeroDayEvil/CVE-2026-20805-PoC
 CVE-2026-39987 - https://github.com/julichaan/CVE-2026-39987_POC
 CVE-2026-89012 - https://github.com/Faceless0x7/CVE-2026-89012
 CVE-2026-89013 - https://github.com/Faceless0x7/CVE-2026-89013
-CVE-2026-21858 - https://github.com/ZeroDayEvil/CVE-2026-21858-n8n-FullChain
 CVE-2026-49049 - https://github.com/MataKucing-OFC/CVE-2026-49049
 CVE-2026-85706 - https://github.com/guneykabel/cve-2026-85706
 CVE-2026-85706 - https://github.com/mhtsec/CVE-2026-85706
@@ -26299,17 +26291,11 @@ CVE-2026-88899 - https://github.com/uziii2208/CVE-2026-88899
 CVE-2026-43499 - https://github.com/k-o-n-t-o-r/ghostlock-sabrina
 CVE-2026-25057 - https://github.com/ustr/CVE-2026-25057
 CVE-2026-33017 - https://github.com/Oieua/CVE-2026-33017
-CVE-2026-34606 - https://github.com/RhinoSecurityLabs/CVEs
-CVE-2026-39405 - https://github.com/RhinoSecurityLabs/CVEs
-CVE-2026-46546 - https://github.com/RhinoSecurityLabs/CVEs
 CVE-2026-69328 - https://github.com/0xf9b6a41ec/CVE-2026-69328
 CVE-2026-52910 - https://github.com/yolkfull/cve-2026-52910-poc
 CVE-2025-64512 - https://github.com/Jinook-Kim/CVE-2025-64512_PoC
 CVE-2026-24733 - https://github.com/Darabium/CVE-2026-24733
-CVE-2016-3053 - https://github.com/RhinoSecurityLabs/CVEs
 CVE-2016-5195 - https://github.com/vudangducminh/CVE-2016-5195
-CVE-2016-6079 - https://github.com/RhinoSecurityLabs/CVEs
-CVE-2016-8972 - https://github.com/RhinoSecurityLabs/CVEs
 CVE-2017-5638 - https://github.com/ajhaigh/struts2-rce
 CVE-2021-4034 - https://github.com/r00t-byte/Pwnkit-CVE-2021-4034-LPE
 CVE-2021-3156 - https://github.com/wangqian06/CVE-2021-3156
@@ -26841,7 +26827,6 @@ CVE-2026-103585 - https://github.com/BomboBombone/CVE-2026-103585
 CVE-2026-48500 - https://github.com/rimbadirgantara/CVE-2026-48500
 CVE-2026-96349 - https://github.com/murrez/CVE-2026-96349
 CVE-2026-58138 - https://github.com/Ez4rd1x1/CVE-2026-58138-Research
-CVE-2026-16723 - https://github.com/Ares-X/VulWiki
 CVE-2026-43499 - https://github.com/MaheshSharan/MT6989-ghostlock
 CVE-2026-43499 - https://github.com/YUE546/IQOO-neo7-ghostlock-43499
 CVE-2026-92966 - https://github.com/murrez/CVE-2026-92966
@@ -27186,7 +27171,6 @@ CVE-2026-67279 - https://github.com/shmaki4/CVE-2026-67279-Mikrotik-6.42-POC
 CVE-2026-91940 - https://github.com/BiiTts/CVE-2026-91940-crawl4ai-Arbitrary-File-Write
 CVE-2023-54391 - https://github.com/alexandrov666/CVE-2023-54391-RCE
 CVE-2026-55450 - https://github.com/0xBlackash/CVE-2026-55450
-CVE-2026-44034 - https://github.com/Ares-X/VulWiki
 CVE-2026-21589 - https://github.com/zseeu1/CVEHOT
 CVE-2026-43499 - https://github.com/d16ug-a1l/REDMI_Root
 CVE-2025-26466 - https://github.com/K0n9-log/cve-2025-26466-canvas
@@ -27382,8 +27366,6 @@ CVE-2026-97229 - https://github.com/OppositDeer/Gitlab-RCE-CVE-2026-97229
 CVE-2026-110896 - https://github.com/azqzazq1/CVE-2026-110896
 CVE-2026-94134 - https://github.com/MosesOX/POC-CVE-2026-94134
 CVE-2021-22204 - https://github.com/cyfrowesny/exiftool-7.44-12.23-exploit-CVE-2021-22204
-CVE-2026-20817 - https://github.com/ZeroDayEvil/CVE-2026-20817
-CVE-2026-40369 - https://github.com/ZeroDayEvil/CVE-2026-40369-EXPLOIT
 CVE-2026-102764 - https://github.com/Worthes/CVE-2026-102764-Proof-of-concept
 CVE-2026-19607 - https://github.com/7Ragnarok7/CVE-2026-19607
 CVE-2026-60137 - https://github.com/BIBILZERODAY/CVE-2026-60137---WordPress-Core-Critical-SQL-Injection-SQLi-PoC
@@ -27453,7 +27435,6 @@ CVE-2025-55182 - https://github.com/0xRAM-bit/CVE-2025-55182
 CVE-2026-64560 - https://github.com/Feng1586/CVE-2026-64560-public
 CVE-2025-21298 - https://github.com/mohamedbrek/LetsDefend-SOC-Labs
 CVE-2026-24191 - https://github.com/Qcx526/cuda_poc_generator
-CVE-2026-41940 - https://github.com/ZeroDayEvil/CVE-2026-41940-PoC
 CVE-2023-54391 - https://github.com/Lewis1766/CVE-2023-54391-POC
 CVE-2026-23111 - https://github.com/kinokopio/CVE-2026-23111
 CVE-2026-99999 - https://github.com/shizuku198411/CVE-2026-99999-KVM-checksum-metadata-non-destructive-PoC
@@ -27562,7 +27543,6 @@ CVE-2026-88901 - https://github.com/oscerd/CVE-2026-88901
 CVE-2026-91858 - https://github.com/oscerd/CVE-2026-91858
 CVE-2026-63030 - https://github.com/Githu836/PoC-for-CVE-2026-63030
 CVE-2026-74843 - https://github.com/Bethelhem-Yirga/WAVLINK-Router
-CVE-2026-109618 - https://github.com/0x4148/CVE-2026-109618-php2shell-lab
 CVE-2026-109618 - https://github.com/0xBlackash/CVE-2026-109618
 CVE-2026-109618 - https://github.com/19h/CVE-2026-109618
 CVE-2026-109618 - https://github.com/AmpedWasTaken/PHP2Shell-CVE-2026-109618-CVE-2026-109619
@@ -27570,12 +27550,9 @@ CVE-2026-109618 - https://github.com/BIBILZERODAY/PHP2Shell-CVE-2026-109618-CVE-
 CVE-2026-109618 - https://github.com/Gi1gamesh123/php-unserialize-uaf-rce
 CVE-2026-109618 - https://github.com/HackSpeak/CVE-2026-109618
 CVE-2026-109618 - https://github.com/Masriyan/php2shell
-CVE-2026-109618 - https://github.com/Zer061/CVE-2026-109618
 CVE-2026-109618 - https://github.com/daffa001/php-CVE-2026-109618-CVE-2026-109619
 CVE-2026-109618 - https://github.com/ecomyseo/ecom_blockrceflaws
-CVE-2026-109618 - https://github.com/eness/php2shell-CVE-2026-109618-CVE-2026-109619-PoC
 CVE-2026-109618 - https://github.com/gputier/php-rfc1867-guard
-CVE-2026-109618 - https://github.com/junaire/CVE-2026-109618-exploit
 CVE-2026-109618 - https://github.com/orbitron-ai/php2shell-response-kit
 CVE-2026-109618 - https://github.com/richardmongler/php2shell-CVE-2026-109618
 CVE-2026-109618 - https://github.com/zenzue/PoC-CVE-2026-109618_19
@@ -27584,7 +27561,6 @@ CVE-2026-109619 - https://github.com/BIBILZERODAY/PHP2Shell-CVE-2026-109618-CVE-
 CVE-2026-109619 - https://github.com/Masriyan/php2shell
 CVE-2026-109619 - https://github.com/daffa001/php-CVE-2026-109618-CVE-2026-109619
 CVE-2026-109619 - https://github.com/ecomyseo/ecom_blockrceflaws
-CVE-2026-109619 - https://github.com/eness/php2shell-CVE-2026-109618-CVE-2026-109619-PoC
 CVE-2026-109619 - https://github.com/gputier/php-rfc1867-guard
 CVE-2026-109619 - https://github.com/orbitron-ai/php2shell-response-kit
 CVE-2026-104100 - https://github.com/Saku0512/CVE-2026-104100-poc
@@ -27623,7 +27599,6 @@ CVE-2026-109618 - https://github.com/grupooruss/php2shell-assessment-global
 CVE-2026-109618 - https://github.com/jaiswalakshansh/Reversing-Vulnerabilities
 CVE-2026-109618 - https://github.com/jf0x3f/php2shell-pocs
 CVE-2026-109618 - https://github.com/syrex1013/php2shell
-CVE-2026-109618 - https://github.com/zerbaliy3v/php2shell-CVE-2026-109618-CVE-2026-109619-Dorks
 CVE-2026-109618 - https://github.com/zhaoboy9692/CVE-2026-109618_
 CVE-2026-109619 - https://github.com/Bazskillz/php2shell_PoC
 CVE-2026-109619 - https://github.com/EkaterinaMarchetti/php2shell-assessment-global
@@ -27631,7 +27606,6 @@ CVE-2026-109619 - https://github.com/baka9moe/php2shell-exploit
 CVE-2026-109619 - https://github.com/grupooruss/php2shell-assessment-global
 CVE-2026-109619 - https://github.com/jf0x3f/php2shell-pocs
 CVE-2026-109619 - https://github.com/santihabib/CVE-2026-109619
-CVE-2026-109619 - https://github.com/zerbaliy3v/php2shell-CVE-2026-109618-CVE-2026-109619-Dorks
 CVE-2026-75045 - https://github.com/LHeiakim/CVE-2026-75045-PoC
 CVE-2023-46604 - https://github.com/Theocyg/CVE-2023-46604
 CVE-2026-105482 - https://github.com/CaterMaoZi/CVE-2026-105482-POC
@@ -27651,3 +27625,9 @@ CVE-2026-109619 - https://github.com/hirokidaichi/php56-cve-2026-backport-experi
 CVE-2026-109619 - https://github.com/scallydima/php2shell-poc
 CVE-2026-111497 - https://github.com/CaterMaoZi/CVE-2026-111497-POC
 CVE-2026-52887 - https://github.com/pentrestion/nocobase-cve-2026-52887
+CVE-2024-1234 - https://github.com/MaximeBonneton/TreeVuln
+CVE-2025-7771 - https://github.com/zer0matt/Milan0day2026
+CVE-2026-109618 - https://github.com/dinosn/php-cve-2026-10961x-lab-poc/blob/eb8558b04a1bbbd85d2b3a7a64780ab17cccc951/scripts/reproduce.py
+CVE-2026-109619 - https://github.com/9bie/php2shell-bypass-aslr-exp/blob/4586f5cc120c82fd468b17469202bac629810ad9/exploit.py
+CVE-2026-109619 - https://github.com/dinosn/php-cve-2026-10961x-lab-poc/blob/eb8558b04a1bbbd85d2b3a7a64780ab17cccc951/e2e/nb_send.py
+CVE-2026-43284 - https://github.com/snothin/GhostSam

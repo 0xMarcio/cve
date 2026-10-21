@@ -214,7 +214,8 @@ def feed_candidates(payload: dict) -> dict[str, list[str]]:
     return found
 
 
-def load_feeds(directory: Path | None, *, budget: Budget | None = None) -> dict[str, list[str]]:
+def load_feeds(directory: Path | None, *, budget: Budget | None = None,
+               failures: list[str] | None = None) -> dict[str, list[str]]:
     found = {}
     budget = budget or Budget(180)
     if directory is not None:
@@ -228,7 +229,14 @@ def load_feeds(directory: Path | None, *, budget: Budget | None = None) -> dict[
     else:
         for name in ("recent", "modified"):
             req = request.Request(f"{FEED_ROOT}/nvdcve-2.0-{name}.json.gz", headers={"User-Agent": "pocindex-reference-pocs"})
-            found.update(feed_candidates(json.loads(gzip.decompress(budget.read(req)))))
+            try:
+                found.update(feed_candidates(json.loads(gzip.decompress(budget.read(req)))))
+            except (OSError, ValueError, EOFError, http.client.HTTPException, BudgetExpired) as problem:
+                if failures is None:
+                    raise
+                failures.append(f"NVD {name} feed: {problem or 'time budget reached'}")
+                if isinstance(problem, BudgetExpired):
+                    break
     return found
 
 
@@ -321,7 +329,6 @@ def published_entries(accepted: dict, previous: dict, args, budget: Budget) -> d
         raise ValueError("Incomplete official CVE state snapshot")
     records = {}
     for cve in accepted:
-        budget.remaining()
         path = update_cves.CVES / cve.split("-")[1] / f"{cve}.md"
         if not args.record_states and cve in previous and path.exists():
             statuses[cve] = update_cves.markdown_record_status(path.read_text(encoding="utf-8"))
@@ -337,12 +344,19 @@ def published_entries(accepted: dict, previous: dict, args, budget: Budget) -> d
             req = request.Request(update_cves.CVE_API_URL.format(cve_id=cve), headers={"User-Agent": "pocindex-reference-pocs"})
             try:
                 record = json.loads(budget.read(req))
-            except (error.URLError, TimeoutError) as problem:
+            except BudgetExpired:
+                print("CVE metadata deferred: time budget reached")
+                break
+            except (OSError, ValueError, http.client.HTTPException) as problem:
                 print(f"CVE metadata deferred for {cve}: {problem}")
                 continue
-        status = (record.get("cveMetadata") or {}).get("state")
+        if not isinstance(record, dict) or not isinstance(record.get("cveMetadata"), dict):
+            print(f"CVE metadata deferred for {cve}: malformed record")
+            continue
+        status = record["cveMetadata"].get("state")
         if update_cves.record_cve_id(record) != cve or status not in {"PUBLISHED", "RESERVED", "REJECTED"} or (status == "PUBLISHED" and update_cves.details_from_record(record) is None):
-            raise ValueError(f"Incomplete or mismatched official record: {cve}")
+            print(f"CVE metadata deferred for {cve}: incomplete or mismatched record")
+            continue
         records[cve] = record
     # The shared helper must not start network retries outside this command's
     # budget. Missing metadata is enriched later by the hourly refresh.
@@ -370,37 +384,37 @@ def main() -> int:
     reviews = [row for row in load_reviews() if (row["cve"], update_cves.poc_link_key(row["url"])) not in excluded]
     state = load_json(QUEUE, {"candidates": {}, "checks": {}})
     previous = load_json(VERIFIED, {})
+    feed_failures: list[str] = []
     try:
-        candidates = load_feeds(args.feed_dir, budget=budget)
+        candidates = load_feeds(args.feed_dir, budget=budget, failures=feed_failures)
         for cve, urls in candidates.items():
             if urls:
                 state["candidates"][cve] = urls
             else:
                 state["candidates"].pop(cve, None)
-        failures = refresh_checks(state, reviews, limit=args.limit, days=args.recheck_days,
-                                  cache=args.cache_dir, dry_run=args.dry_run, budget=budget)
-        accepted = approvals(reviews, state["candidates"], state["checks"], previous)
-        retain_previous(accepted, previous, dry_run=args.dry_run)
-        accepted = published_entries(accepted, previous, args, budget)
-        for cve, urls in accepted.items():
-            path = update_cves.CVES / cve.split("-")[1] / f"{cve}.md"
-            if path.exists():
-                update_cves.update_existing_markdown(path, [], urls, dry_run=args.dry_run)
-        update_cves.append_inventory(update_cves.REFERENCE_LIST, accepted, dry_run=args.dry_run)
-        if not args.dry_run:
-            save_json(QUEUE, state)
-            save_json(VERIFIED, accepted)
-        pairs = sum(len(urls) for urls in accepted.values())
-        print(f"Reference PoCs: {pairs} reviewed links for {len(accepted)} CVEs; {len(state['checks'])} URLs checked")
-        if failures:
-            raise RuntimeError(f"{failures} reference fetches failed; prior approvals and retry work preserved")
+        refresh_checks(state, reviews, limit=args.limit, days=args.recheck_days,
+                       cache=args.cache_dir, dry_run=args.dry_run, budget=budget)
     except BudgetExpired:
-        if not args.dry_run:
-            save_json(QUEUE, state)
-            retain_previous(approvals(reviews, state["candidates"], state["checks"], previous), previous, dry_run=False)
         print(f"Reference PoCs: time budget reached; {len(state['checks'])} URLs checked, remaining work pending")
-        if budget.failures:
-            raise RuntimeError(f"{budget.failures} reference fetches failed before the budget expired") from None
+    # Publication is local and must survive an unavailable discovery feed or
+    # exhausted network budget after a source has already passed review.
+    accepted = approvals(reviews, state["candidates"], state["checks"], previous)
+    retain_previous(accepted, previous, dry_run=args.dry_run)
+    accepted = published_entries(accepted, previous, args, budget)
+    for cve, urls in accepted.items():
+        path = update_cves.CVES / cve.split("-")[1] / f"{cve}.md"
+        if path.exists():
+            update_cves.update_existing_markdown(path, [], urls, dry_run=args.dry_run)
+    update_cves.append_inventory(update_cves.REFERENCE_LIST, accepted, dry_run=args.dry_run)
+    if not args.dry_run:
+        save_json(QUEUE, state)
+        save_json(VERIFIED, accepted)
+    pairs = sum(len(urls) for urls in accepted.values())
+    print(f"Reference PoCs: {pairs} reviewed links for {len(accepted)} CVEs; {len(state['checks'])} URLs checked")
+    if feed_failures or budget.failures:
+        for failure in feed_failures:
+            print(failure)
+        raise RuntimeError(f"{len(feed_failures) + budget.failures} reference fetches failed; successful publications and retry work preserved")
     return 0
 
 

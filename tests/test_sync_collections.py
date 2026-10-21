@@ -209,6 +209,12 @@ class ResearchCollectionTests(unittest.TestCase):
             with self.subTest(payload=payload), self.assertRaises(ValueError):
                 sync_collections.collect_research_tree("google/security-research", "master", "pocs/", payload)
 
+    def test_rhino_collection_keeps_cve_paths_with_code(self) -> None:
+        found = sync_collections.collect_research_tree("RhinoSecurityLabs/CVEs", "master", "", self.tree(
+            "CVE-2026-34606/poc.ps1", "CVE-2026-39405/README.md", "CVE-2026-46546/docs/helper.py"))
+        self.assertEqual(found, {"CVE-2026-34606": [
+            "https://github.com/RhinoSecurityLabs/CVEs/tree/master/CVE-2026-34606"]})
+
     def test_reviewed_exploit_patches_qualify_but_generic_text_does_not(self) -> None:
         payload = self.tree(
             "SecurityExploits/libssh/pubkey-auth-bypass-CVE-2023-2283/attacker/home/diff.txt",

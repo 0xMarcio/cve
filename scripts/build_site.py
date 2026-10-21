@@ -265,6 +265,12 @@ def reviewed_artifact_keys() -> Dict[str, set[str]]:
     return result
 
 
+@lru_cache(maxsize=1)
+def load_source_exclusions() -> set[tuple[str, str]]:
+    from source_artifacts import excluded_pairs
+    return excluded_pairs()
+
+
 def dedupe_source_links(urls: Iterable[str], cve_id: str, *, preserve_paths: bool = False) -> List[str]:
     selected: Dict[str, tuple[int, str]] = {}
     order: Dict[str, int] = {}
@@ -276,6 +282,8 @@ def dedupe_source_links(urls: Iterable[str], cve_id: str, *, preserve_paths: boo
         return (0, poc_link_rank(url, cve_id), "")
 
     for index, url in enumerate(urls):
+        if (cve_id, repo_from_url(url)) in load_source_exclusions():
+            continue
         key = link_key(url) if preserve_paths else source_key(url)
         order.setdefault(key, index)
         current = selected.get(key)
@@ -393,7 +401,7 @@ def build_cve_list(blacklist: Collection[str]) -> tuple[List[Dict[str, object]],
         total += 1
         content = md_path.read_text(encoding="utf-8")
         record_status = markdown_record_status(content)
-        if record_status == "REJECTED":
+        if record_status in {"REJECTED", "ABSENT"}:
             total -= 1
             continue
         sections = parse_sections(content)
@@ -573,6 +581,7 @@ def build_trending(blacklist: Collection[str]) -> List[Dict[str, object]]:
     return [
         row for row in rows
         if row.get("url") and not is_blacklisted(str(row["url"]), blacklist)
+        and (row.get("cve"), repo_from_url(str(row["url"]))) not in load_source_exclusions()
     ]
 
 

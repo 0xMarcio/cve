@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import gzip
 import hashlib
 import http.client
 import json
@@ -207,11 +208,71 @@ class ReferencePoCTests(unittest.TestCase):
                     patch.object(sync, "load_reviews", return_value=[REVIEW]), \
                     patch.object(sync, "load_feeds", return_value={}), \
                     patch.object(sync, "fetch_artifacts", side_effect=sync.BudgetExpired), \
-                    patch.object(update_cves, "ensure_cve_entries") as ensure:
+                    patch.object(sync.Budget, "read", side_effect=sync.BudgetExpired), \
+                    patch.object(update_cves, "CVES", root / "cves"), \
+                    patch.object(update_cves, "append_inventory"), \
+                    patch.object(update_cves, "ensure_cve_entries", return_value=(set(), set())) as ensure:
                 self.assertEqual(sync.main(), 0)
             self.assertEqual(json.loads(queue.read_text()), state)
             self.assertEqual(json.loads(ledger.read_text()), {CVE: [URL]})
-            ensure.assert_not_called()
+            self.assertFalse(ensure.call_args.kwargs["fetch_missing"])
+
+    def test_feed_timeout_keeps_successful_sibling_candidates(self):
+        budget = sync.Budget(180)
+        failures = []
+        body = gzip.compress(json.dumps(feed([{"url": URL, "tags": ["Exploit"]}])).encode())
+        with patch.object(budget, "read", side_effect=[TimeoutError("NVD timeout"), body]):
+            candidates = sync.load_feeds(None, budget=budget, failures=failures)
+        self.assertEqual(candidates, {CVE: [URL]})
+        self.assertEqual(len(failures), 1)
+
+    def test_expired_metadata_budget_publishes_reviewed_link_provisionally(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            args = SimpleNamespace(record_states=None, cvelist_dir=None, dry_run=False)
+            budget = sync.Budget(180)
+            with patch.object(update_cves, "CVES", root / "cves"), \
+                    patch.object(update_cves, "DATES_FILE", root / "dates.json"), \
+                    patch.object(update_cves, "RECORD_STATE_FILE", root / "states.json"), \
+                    patch.object(update_cves, "load_kev", return_value={}), \
+                    patch.object(budget, "read", side_effect=sync.BudgetExpired), \
+                    patch.object(update_cves, "fetch_records", side_effect=AssertionError("unbounded retry")):
+                self.assertEqual(sync.published_entries({CVE: [URL]}, {}, args, budget), {CVE: [URL]})
+                path = root / "cves" / "2020" / f"{CVE}.md"
+                self.assertEqual(update_cves.markdown_record_status(path.read_text()), "UNAVAILABLE")
+
+    def test_failed_feed_does_not_block_saved_reviewed_candidates(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            state = {"candidates": {CVE: [URL]}, "checks": {URL: {
+                "checked": datetime.now(timezone.utc).date().isoformat(), "digests": {"file:poc.yaml": DIGEST}}}}
+            queue, verified = root / "queue.json", root / "verified.json"
+            queue.write_text(json.dumps(state))
+            def failed_feed(*args, failures, **kwargs):
+                failures.append("NVD timeout")
+                return {}
+            with patch.object(sys, "argv", ["sync"]), \
+                    patch.object(sync, "QUEUE", queue), patch.object(sync, "VERIFIED", verified), \
+                    patch.object(sync, "load_reviews", return_value=[REVIEW]), \
+                    patch.object(sync, "load_feeds", side_effect=failed_feed), \
+                    patch.object(sync.Budget, "read", side_effect=sync.BudgetExpired), \
+                    patch.object(update_cves, "CVES", root / "cves"), \
+                    patch.object(update_cves, "append_inventory") as append, \
+                    patch.object(update_cves, "ensure_cve_entries", return_value=(set(), set())):
+                with self.assertRaisesRegex(RuntimeError, "successful publications"):
+                    sync.main()
+            self.assertEqual(json.loads(verified.read_text()), {CVE: [URL]})
+            self.assertEqual(json.loads(queue.read_text()), state)
+            self.assertEqual(append.call_args.args[1], {CVE: [URL]})
+
+    def test_malformed_metadata_does_not_block_reviewed_links(self):
+        args = SimpleNamespace(record_states=None, cvelist_dir=None, dry_run=True)
+        for record in ([], None, {"cveMetadata": []}):
+            budget = sync.Budget(180)
+            with self.subTest(record=record), patch.object(budget, "read", return_value=json.dumps(record).encode()), \
+                    patch.object(update_cves, "ensure_cve_entries", return_value=(set(), set())) as ensure:
+                self.assertEqual(sync.published_entries({CVE: [URL]}, {}, args, budget), {CVE: [URL]})
+                self.assertFalse(ensure.call_args.kwargs["fetch_missing"])
 
     def test_network_read_is_bounded_and_clears_alarm(self):
         from unittest.mock import MagicMock

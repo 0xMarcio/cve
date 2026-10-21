@@ -35,6 +35,8 @@ jobs:
       # minutes. Daily because the collection keeps finding repositories our
       # own search missed.
       - name: Judge upstream PoC candidates
+        id: candidates
+        continue-on-error: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: python3 scripts/sync_pocingithub.py
@@ -96,3 +98,7 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: gh workflow run site.yml --ref main
+
+      - name: Report incomplete candidate refresh
+        if: steps.candidates.outcome == 'failure'
+        run: exit 1

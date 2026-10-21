@@ -1053,6 +1053,45 @@
       "official_record_revision": "175f025e7534761f3e4eb3a1d79c825785bd682d",
       "official_record_sha256": "bed7183972f8e53ca3cca09152054d385db715db6d2be49f8eaa6351999994cd",
       "released_at": null
+    },
+    {
+      "id": "817db52b00d15b4a13527082",
+      "cve": "CVE-2026-109619",
+      "repository": "9bie/php2shell-bypass-aslr-exp",
+      "path": "exploit.py",
+      "revision": "4586f5cc120c82fd468b17469202bac629810ad9",
+      "sha256": "c1e81cfbaf7e4cccad7d7f43c1a624b791ba1b7f1d176e224455138604837b4c",
+      "review_basis": "Static source review: the multipart producer deliberately exhausts memory during session initialization; a later request consumes the retained PS(http_session_vars) and PS(id). This matches the published stale-global-state mechanism. Runtime success was not independently tested.",
+      "official_record_revision": "d0d046ab890124d58e24177cfbc993ff369ec13f",
+      "official_record_sha256": "768a318898ac226cdbccd250c88e61880955b2a824fbebb84a730469d9a6490e",
+      "released_at": null,
+      "official_state": "PUBLISHED"
+    },
+    {
+      "id": "63249febedebf29279b60099",
+      "cve": "CVE-2026-109618",
+      "repository": "dinosn/php-cve-2026-10961x-lab-poc",
+      "path": "scripts/reproduce.py",
+      "revision": "eb8558b04a1bbbd85d2b3a7a64780ab17cccc951",
+      "sha256": "42a25288bc315a2fe3d3d2e8f78d39e2e7158fc9d08a0bbcdc83d34b940734cf",
+      "review_basis": "Static source review: this driver builds the nested multipart allocation-failure fixture through generate_template.py and build_body.py, then checks shutdown behavior with negative and abort controls. The uninitialized HashTable bucket consumed during OOM cleanup matches the published allocation-failure mechanism. Runtime success was not independently tested.",
+      "official_record_revision": "d0d046ab890124d58e24177cfbc993ff369ec13f",
+      "official_record_sha256": "4ce4424ea2243aae982014d5a3c6d547bdc8b3e74bfb9a96ee616af77dd9e8b4",
+      "released_at": null,
+      "official_state": "PUBLISHED"
+    },
+    {
+      "id": "2dba0bdcb2b07aa237700a1a",
+      "cve": "CVE-2026-109619",
+      "repository": "dinosn/php-cve-2026-10961x-lab-poc",
+      "path": "e2e/nb_send.py",
+      "revision": "eb8558b04a1bbbd85d2b3a7a64780ab17cccc951",
+      "sha256": "11fe1d00a0cf4bea141c6d0b2fcd40a80616a6974e372fc5f25537a8f78c6af2",
+      "review_basis": "Static source review: request A initializes upload progress and forces pre-RINIT OOM; request B reuses the dangling session reference. The cross-request PS(http_session_vars) lifetime matches the published stale-global-state mechanism. Runtime success was not independently tested.",
+      "official_record_revision": "d0d046ab890124d58e24177cfbc993ff369ec13f",
+      "official_record_sha256": "768a318898ac226cdbccd250c88e61880955b2a824fbebb84a730469d9a6490e",
+      "released_at": null,
+      "official_state": "PUBLISHED"
     }
   ],
   "exclusions": [
@@ -1095,6 +1134,120 @@
       "actual_cve": "CVE-2026-14378",
       "reason": "Source targets DevKit Pro original_user_id/revert_switch (CVE-2026-14378), not Divi Membership paypal_param (CVE-2026-19660).",
       "official_record_revision": "175f025e7534761f3e4eb3a1d79c825785bd682d"
+    },
+    {
+      "cve": "CVE-2026-109618",
+      "repository": "ikow/php2shell-poc",
+      "revision": "6143dcbab9b92aa4238fcb4512ecd3556734f738",
+      "reason": "The reviewed public scripts implement session-file injection with LFI, per-directory serializer mismatch, and destructor reentry during unserialize. They do not demonstrate the disclosed OOM cleanup or stale request-global mechanisms; the CVE labels alone do not establish this mapping."
+    },
+    {
+      "cve": "CVE-2026-109619",
+      "repository": "ikow/php2shell-poc",
+      "revision": "6143dcbab9b92aa4238fcb4512ecd3556734f738",
+      "reason": "The reviewed public scripts implement session-file injection with LFI, per-directory serializer mismatch, and destructor reentry during unserialize. They do not demonstrate the disclosed OOM cleanup or stale request-global mechanisms; the CVE labels alone do not establish this mapping."
+    },
+    {
+      "cve": "CVE-2026-109618",
+      "repository": "junaire/CVE-2026-109618-exploit",
+      "revision": "074b9142471f08d9f5075bb913a011ed389c08cc",
+      "reason": "The reviewed exploit seeds a session under php_serialize and decodes it under php using an application-defined destructor gadget. This demonstrates serializer mismatch and object injection, not the disclosed OOM cleanup or stale request-global mechanisms."
+    },
+    {
+      "cve": "CVE-2026-109619",
+      "repository": "junaire/CVE-2026-109618-exploit",
+      "revision": "074b9142471f08d9f5075bb913a011ed389c08cc",
+      "reason": "The reviewed exploit seeds a session under php_serialize and decodes it under php using an application-defined destructor gadget. This demonstrates serializer mismatch and object injection, not the disclosed OOM cleanup or stale request-global mechanisms."
+    },
+    {
+      "cve": "CVE-2026-109618",
+      "repository": "eness/php2shell-CVE-2026-109618-CVE-2026-109619-PoC",
+      "revision": "4730f74fe9141ac895ce24f459179c747ce08de9",
+      "reason": "The reviewed poc_109618.py targets cached upload-progress bucket pointers within one stalled multipart request. It does not implement the OOM bailout or cross-request stale-global mechanisms described by these official CVE records."
+    },
+    {
+      "cve": "CVE-2026-109619",
+      "repository": "eness/php2shell-CVE-2026-109618-CVE-2026-109619-PoC",
+      "revision": "4730f74fe9141ac895ce24f459179c747ce08de9",
+      "reason": "The reviewed poc_109618.py targets cached upload-progress bucket pointers within one stalled multipart request. It does not implement the OOM bailout or cross-request stale-global mechanisms described by these official CVE records."
+    },
+    {
+      "cve": "CVE-2026-109618",
+      "repository": "Zer061/CVE-2026-109618",
+      "revision": "53624b2c61df9339329d994a98195bda52614a23",
+      "reason": "The reviewed public scripts and validation notes label their assignment as presumed and target inner/outer cached progress bucket pointers within a multipart request. They do not establish the official OOM bailout or cross-request stale-global CVE mapping."
+    },
+    {
+      "cve": "CVE-2026-109619",
+      "repository": "Zer061/CVE-2026-109618",
+      "revision": "53624b2c61df9339329d994a98195bda52614a23",
+      "reason": "The reviewed public scripts and validation notes label their assignment as presumed and target inner/outer cached progress bucket pointers within a multipart request. They do not establish the official OOM bailout or cross-request stale-global CVE mapping."
+    },
+    {
+      "cve": "CVE-2026-109618",
+      "repository": "0x4148/CVE-2026-109618-php2shell-lab",
+      "revision": "bc40fb2c96d5e92121e6bf8b996f7ba3ad057413",
+      "reason": "The reviewed scripts exercise cached progress-pointer updates during a stalled multipart upload and session monitoring. They do not demonstrate either official OOM cleanup or cross-request stale-global mechanism."
+    },
+    {
+      "cve": "CVE-2026-109619",
+      "repository": "0x4148/CVE-2026-109618-php2shell-lab",
+      "revision": "bc40fb2c96d5e92121e6bf8b996f7ba3ad057413",
+      "reason": "The reviewed scripts exercise cached progress-pointer updates during a stalled multipart upload and session monitoring. They do not demonstrate either official OOM cleanup or cross-request stale-global mechanism."
+    },
+    {
+      "cve": "CVE-2026-109618",
+      "repository": "wakemeiflose/php2shell",
+      "revision": "228960c8869945d4456c2e75e9f2c6dbf5a0adfe",
+      "reason": "The reviewed public scripts implement session-file injection, handler mismatch and within-request upload-progress pointer hypotheses. They do not establish the OOM bailout or cross-request stale-global CVE mapping."
+    },
+    {
+      "cve": "CVE-2026-109619",
+      "repository": "wakemeiflose/php2shell",
+      "revision": "228960c8869945d4456c2e75e9f2c6dbf5a0adfe",
+      "reason": "The reviewed public scripts implement session-file injection, handler mismatch and within-request upload-progress pointer hypotheses. They do not establish the OOM bailout or cross-request stale-global CVE mapping."
+    },
+    {
+      "cve": "CVE-2026-20817",
+      "repository": "ZeroDayEvil/CVE-2026-20817",
+      "revision": "a5361ef5fd8279baa3582d9bb5ffc410c0176118",
+      "reason": "The reviewed revision contains only README.md and banner.png. The README supplies a conceptual diagram and commands for a separate tool, but no ALPC request, source implementation, or standalone reproducer for this CVE."
+    },
+    {
+      "cve": "CVE-2026-40369",
+      "repository": "ZeroDayEvil/CVE-2026-40369-EXPLOIT",
+      "revision": "37e202dadd3f3eb858bb2d56ebd6dc38cc2a929c",
+      "reason": "The reviewed revision contains only README.md and banner.png. The README has incomplete decompiler pseudocode with ellipses and installation commands for a separate tool, without a supplied caller or reproducer for the claimed primitive."
+    },
+    {
+      "cve": "CVE-2026-20805",
+      "repository": "ZeroDayEvil/CVE-2026-20805-PoC",
+      "revision": "efa101b89e98fdab6b6bb797584d410c8f0d6ae1",
+      "reason": "The reviewed revision contains only README.md and banner.png. Its claimed poc/dumper.py and scripts/setup_env.ps1 files do not exist in the repository; the diagram and references do not supply a reproducer."
+    },
+    {
+      "cve": "CVE-2026-41940",
+      "repository": "ZeroDayEvil/CVE-2026-41940-PoC",
+      "revision": "bf16bb90e3ffe12f5eef59115f8e2697f30a1212",
+      "reason": "The reviewed revision contains only README.md. The public content consists of conceptual explanation, defensive log queries and commands for a separately installed tool, without the claimed authentication-bypass request or implementation."
+    },
+    {
+      "cve": "CVE-2026-21858",
+      "repository": "ZeroDayEvil/CVE-2026-21858-n8n-FullChain",
+      "revision": "336e58ef06717ce6046beaa7973916fe840815ce",
+      "reason": "The reviewed revision contains only README.md and banner.png; the exploit.py referenced by its usage commands is absent. The embedded expression-injection snippet concerns the separate authenticated stage, not a reproducer for this CVE's unauthenticated file-read mechanism."
+    },
+    {
+      "cve": "CVE-2026-109618",
+      "repository": "zerbaliy3v/php2shell-CVE-2026-109618-CVE-2026-109619-Dorks",
+      "revision": "7b274a30b039059fd1bb9cb9827a2f4086d81b8a",
+      "reason": "The reviewed revision contains only a README with Censys/Shodan search queries, session-file/LFI diagrams and links to other repositories. It provides no OOM cleanup or cross-request stale-global reproducer for these CVEs."
+    },
+    {
+      "cve": "CVE-2026-109619",
+      "repository": "zerbaliy3v/php2shell-CVE-2026-109618-CVE-2026-109619-Dorks",
+      "revision": "7b274a30b039059fd1bb9cb9827a2f4086d81b8a",
+      "reason": "The reviewed revision contains only a README with Censys/Shodan search queries, session-file/LFI diagrams and links to other repositories. It provides no OOM cleanup or cross-request stale-global reproducer for these CVEs."
     }
   ]
 }

@@ -172,6 +172,7 @@ def main() -> int:
     token = os.environ.get("GITHUB_TOKEN") or os.environ.get("GH_TOKEN") or ""
     client = GitHubClient(token)
     accepted: dict[str, set[str]] = {}
+    failures = []
     judged = kept = 0
 
     batches = [names[i : i + BATCH] for i in range(0, len(names), BATCH)]
@@ -182,15 +183,18 @@ def main() -> int:
             try:
                 described = future.result()
             except Exception as problem:
-                for pending_future in futures:
-                    pending_future.cancel()
-                raise RuntimeError(f"Repository batch starting at {batch[0]} failed: {problem}") from problem
+                failures.append(f"Repository batch starting at {batch[0]} failed: {problem}")
+                continue
             for full_name in batch:
                 judged += 1
                 repo = described.get(full_name)
                 if repo is None:
                     continue
-                attach_source_artifacts(repo, client.headers, blacklist, cves=pending[full_name], persist=not args.dry_run)
+                try:
+                    attach_source_artifacts(repo, client.headers, blacklist, cves=pending[full_name], persist=not args.dry_run)
+                except Exception as problem:
+                    failures.append(f"Source artifacts for {full_name} failed: {problem}")
+                    continue
                 for cve in pending[full_name]:
                     year = int(cve.split("-")[1])
                     if cve in qualifying_repo_cves(repo, year, blacklist):
@@ -215,7 +219,7 @@ def main() -> int:
 
     written = 0
     for cve, urls in sorted(accepted.items()):
-        if cve not in held:
+        if cve not in held or cve in unavailable:
             continue
         path, existing = held[cve]
         merged = section_links(path.read_text(encoding="utf-8", errors="replace"), SECTION)
@@ -228,7 +232,7 @@ def main() -> int:
                 handle.write(updated)
         written += bool(changed)
 
-    indexed = {cve: urls for cve, urls in accepted.items() if cve in held}
+    indexed = {cve: urls for cve, urls in accepted.items() if cve in held and cve not in unavailable}
     inventory_added, inventory_removed = reconcile_inventory(
         GITHUB_LIST,
         SECTION,
@@ -239,7 +243,9 @@ def main() -> int:
     print(f"accepted {kept:,} links for {len(accepted):,} CVEs | {written:,} entries updated")
     print(f"GitHub inventory changes: +{inventory_added:,}/-{inventory_removed:,}")
     print(f"rejected {sum(len(pending[n]) for n in names) - kept:,} candidates that did not pass the gate")
-    return 0
+    for failure in failures:
+        print(f"::warning::{failure}")
+    return 1 if failures else 0
 
 
 if __name__ == "__main__":

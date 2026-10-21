@@ -11,6 +11,7 @@ import json
 import re
 import threading
 import time
+from collections.abc import Collection
 from dataclasses import dataclass
 from datetime import datetime, timezone
 from pathlib import Path
@@ -77,7 +78,7 @@ def reviewed_cves(repository: str) -> set[str]:
     return {row["cve"] for row in load_reviews() if row["repository"].lower() == repository.lower()}
 
 
-def excluded_cves(repository: str) -> set[str]:
+def excluded_pairs() -> set[tuple[str, str]]:
     payload = json.loads(REVIEWS.read_text(encoding="utf-8"))
     rows = payload.get("exclusions", [])
     if not isinstance(rows, list):
@@ -87,7 +88,11 @@ def excluded_cves(repository: str) -> set[str]:
                 or not row.get("repository") or not row.get("reason")
                 or not re.fullmatch(r"[0-9a-f]{40}", str(row.get("revision", "")))):
             raise ValueError("Incomplete source artifact exclusion")
-    return {row["cve"] for row in rows if row["repository"].lower() == repository.lower()}
+    return {(row["cve"], row["repository"].lower()) for row in rows}
+
+
+def excluded_cves(repository: str) -> set[str]:
+    return {cve for cve, name in excluded_pairs() if name == repository.lower()}
 
 
 def approved_cves_for_artifact(repository: str, path: str, source: bytes, *,
@@ -155,13 +160,22 @@ class InspectionDeferred(Exception):
     pass
 
 
-def pending_reviewed_names(limit: int = 16, *, cves: set[str] | None = None) -> list[str]:
-    known = {row["repository"].lower() for row in load_reviews()
-             if cves is None or row["cve"] in cves}
+def pending_reviewed_names(limit: int = 16, *, cves: set[str] | None = None,
+                           blacklist: Collection[str] = ()) -> list[str]:
+    reviews = load_reviews()
+    known = {row["repository"].lower() for row in reviews if cves is None or row["cve"] in cves}
     with _LOCK:
         rows = _load_candidates(CANDIDATES)["repositories"]
-    pending = [(row.get("last_checked_at") or row.get("last_attempt_at") or "", name) for name, row in rows.items()
-               if name in known and row.get("scan_complete") is False]
+    pending = []
+    blocked = {value.lower() for value in blacklist}
+    for name in known:
+        if name in blocked:
+            continue
+        row = rows.get(name, {})
+        rules = [review for review in reviews if review["repository"].lower() == name]
+        digest = hashlib.sha256(json.dumps(rules, sort_keys=True).encode()).hexdigest()
+        if not row or row.get("scan_complete") is False or row.get("review_set_sha256") != digest:
+            pending.append((row.get("last_checked_at") or row.get("last_attempt_at") or "", name))
     return [name for _, name in sorted(pending)[:limit]]
 
 
@@ -171,9 +185,8 @@ def mark_pending_checked(names: list[str]) -> None:
         rows = _load_candidates(CANDIDATES)["repositories"]
     now = datetime.now(timezone.utc).isoformat()
     for name in names:
-        row = rows.get(name.lower())
-        if row and row.get("scan_complete") is False:
-            _save_candidate(CANDIDATES, name, {**row, "last_checked_at": now})
+        row = rows.get(name.lower(), {})
+        _save_candidate(CANDIDATES, name, {**row, "scan_complete": False, "last_checked_at": now})
 
 
 class InspectionBudget:

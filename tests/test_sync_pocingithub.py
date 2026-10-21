@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import os
 import sys
+import tempfile
 import unittest
 from pathlib import Path
 from unittest.mock import patch
@@ -76,7 +77,7 @@ class GitHubResponseTests(unittest.TestCase):
                 with self.assertRaises(RuntimeError):
                     read()
 
-    def test_batch_transport_failure_aborts_before_writes(self) -> None:
+    def test_batch_transport_failure_reports_incomplete_refresh(self) -> None:
         with patch.object(sys, "argv", ["sync_pocingithub.py"]), patch.dict(
             os.environ, {"GITHUB_TOKEN": "test"}
         ), patch.object(
@@ -87,10 +88,32 @@ class GitHubResponseTests(unittest.TestCase):
         ), patch.object(sync_pocingithub, "ensure_cve_entries", return_value=(set(), set())) as ensure, patch.object(
             sync_pocingithub, "reconcile_inventory", return_value=(0, 0)
         ) as reconcile:
-            with self.assertRaisesRegex(RuntimeError, "API unavailable"):
-                sync_pocingithub.main()
-            ensure.assert_not_called()
-            reconcile.assert_not_called()
+            self.assertEqual(sync_pocingithub.main(), 1)
+            self.assertEqual(ensure.call_args.args[0], {})
+            self.assertEqual(reconcile.call_args.args[2], {})
+
+    def test_failed_batch_keeps_successful_sibling_publication(self) -> None:
+        cve = "CVE-2026-1234"
+        name = "healthy/widget-poc"
+        url = f"https://github.com/{name}"
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / f"{cve}.md"
+            path.write_text("#### Github\nNo PoCs found on GitHub currently.\n")
+            def describe(client, names):
+                if names == ["failed/widget-poc"]:
+                    raise TimeoutError("API unavailable")
+                return {name: {"nameWithOwner": name, "url": url, "description": f"PoC for {cve}",
+                               "root": {"entries": [{"name": "poc.py"}]},
+                               "readmeMd": {"text": f"Reproducer for {cve}"}}}
+            with patch.object(sys, "argv", ["sync"]), patch.dict(os.environ, {"GITHUB_TOKEN": "test"}), \
+                    patch.object(sync_pocingithub, "BATCH", 1), \
+                    patch.object(sync_pocingithub, "candidates", return_value={cve: {url, "https://github.com/failed/widget-poc"}}), \
+                    patch.object(sync_pocingithub, "already_linked", return_value={cve: (path, set())}), \
+                    patch.object(sync_pocingithub, "describe", side_effect=describe), \
+                    patch.object(sync_pocingithub, "ensure_cve_entries", return_value=(set(), set())), \
+                    patch.object(sync_pocingithub, "reconcile_inventory", return_value=(1, 0)):
+                self.assertEqual(sync_pocingithub.main(), 1)
+            self.assertIn(url, path.read_text())
 
 
 if __name__ == "__main__":

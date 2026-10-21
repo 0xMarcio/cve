@@ -23,7 +23,7 @@ SECTION = "#### Collections"
 USER_AGENT = "0xMarcio-cve-collections"
 SOURCE_STATE_FILE = INDEX / "collection_source_state.json"
 # Bump when collection selection or the cached mapping format changes.
-SOURCE_CACHE_VERSION = 2
+SOURCE_CACHE_VERSION = 3
 CVE = re.compile(r"(?i)CVE[-_](\d{4})[-_](\d{4,7})")
 AFROG_PASSIVE = re.compile(
     r"(?im)^\s{2}name:\s*.*\b(?:version|protocol|service)\s+detection\b"
@@ -40,8 +40,9 @@ SOURCES = (
 TREE_SOURCES = (
     ("google-research", "google/security-research", "master", "pocs/"),
     ("github-securitylab", "github/securitylab", "main", "SecurityExploits/"),
+    ("rhino-research", "RhinoSecurityLabs/CVEs", "master", ""),
 )
-CODE_SUFFIXES = {".c", ".cc", ".cpp", ".py", ".js", ".html", ".sh", ".rb", ".go", ".rs"}
+CODE_SUFFIXES = {".c", ".cc", ".cpp", ".py", ".js", ".html", ".sh", ".rb", ".go", ".rs", ".ps1"}
 CODE_CONTENT = re.compile(
     r"(?m)^\s*(?:#include\s*[<\"]|(?:from\s+\S+\s+)?import\s+\S+|require\s+['\"]|"
     r"(?:def|class|function)\s+\w+|(?:int|void)\s+\w+\s*\(|<(?:form|script)\b|"
@@ -120,7 +121,7 @@ def reviewed_rule_fingerprint(repo: str, reviews: list[dict]) -> str | None:
 
 
 def collect_research_tree(repo: str, branch: str, prefix: str, payload: dict) -> dict[str, list[str]]:
-    """CVE directories with reproduction artifacts in two research collections."""
+    """CVE directories with reproduction artifacts in research collections."""
     if not isinstance(payload, dict) or payload.get("truncated") is not False or not isinstance(payload.get("tree"), list):
         raise ValueError(f"{repo}: missing or incomplete repository tree")
     rows: dict[str, set[str]] = defaultdict(set)
