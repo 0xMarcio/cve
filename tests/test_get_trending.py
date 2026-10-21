@@ -174,6 +174,42 @@ class JustLandedTests(unittest.TestCase):
             accepted, _ = trending.qualifying_repositories([candidate], "test")
         self.assertEqual(accepted, [])
 
+    def test_collection_metadata_cannot_assign_shared_stars_to_one_cve(self) -> None:
+        candidate = repo("researcher/mixed-pocs", stamp(1), stars=900,
+                         description=f"Research PoCs including {CVE}")
+        content = {"readmeMd": {"text": f"PoCs for {CVE}. " + " ".join(
+            f"CVE-{year}-1234" for year in range(2019, 2025))},
+            "root": {"entries": [{"name": "exploit.py", "type": "blob"}]}}
+        with patch.object(trending, "graphql", return_value={"r0": content}):
+            accepted, paths = trending.qualifying_repositories([candidate], "test")
+        self.assertEqual((accepted, paths), ([], {}))
+
+    def test_dedicated_cve_with_related_references_keeps_its_homepage_row(self) -> None:
+        candidate = repo(f"researcher/{CVE}", stamp(1), stars=900)
+        content = {"readmeMd": {"text": f"PoC for {CVE}. Related: " + " ".join(
+            f"CVE-{year}-1234" for year in range(2019, 2025))},
+            "root": {"entries": [{"name": "exploit.py", "type": "blob"}]}}
+        with patch.object(trending, "graphql", return_value={"r0": content}):
+            accepted, _ = trending.qualifying_repositories([candidate], "test")
+        self.assertEqual([row["cve"] for row in accepted], [CVE])
+
+    def test_collection_can_publish_a_reviewed_artifact_without_shared_stars(self) -> None:
+        from source_artifacts import ArtifactEvidence
+        candidate = repo("researcher/mixed-pocs", stamp(1), stars=900)
+        artifact = ArtifactEvidence(CVE, candidate["full_name"], "specific/reproduce.py",
+                                    "a" * 40, "b" * 64, "test-review")
+        content = {"readmeMd": {"text": f"PoCs for {CVE}. " + " ".join(
+            f"CVE-{year}-1234" for year in range(2019, 2025))},
+            "root": {"entries": [{"name": "specific", "type": "tree"}]}}
+        def attach(target, *args, **kwargs):
+            target["_source_artifacts"] = (artifact,)
+        with patch.object(trending, "graphql", return_value={"r0": content}), \
+                patch.object(trending, "attach_source_artifacts", side_effect=attach):
+            accepted, paths = trending.qualifying_repositories([candidate], "test")
+        self.assertEqual(accepted[0]["cve"], CVE)
+        self.assertEqual(accepted[0]["_artifact_url"], artifact.url)
+        self.assertEqual(paths[candidate["full_name"]], [artifact.path])
+
     def test_landed_readme_cve_follows_artifact_then_first_mention(self) -> None:
         candidate = repo("researcher/widget-poc", stamp(1), stars=100)
         for path, expected in [("poc.py", CVE), ("CVE-2025-9999.py", "CVE-2025-9999")]:

@@ -498,6 +498,11 @@ def qualifying_repositories(
                 years &= {repo["_year"]}
             attach_source_artifacts(candidate, {"Authorization": f"Bearer {token}"}, blacklist, cves=wanted)
             qualified = {cve for year in years for cve in qualifying_repo_cves(candidate, year, blacklist)}
+            if len(wanted) > 5:
+                # A collection's stars and latest commit describe the whole
+                # repository. Only a dedicated CVE name or a reviewed artifact
+                # can supply a single-CVE homepage row; retain its index links.
+                qualified &= identity_cves(full_name) | {item.cve for item in reviewed_artifacts(candidate)}
             if not qualified:
                 continue
             specific = {cve for cve in qualified if root_has_cve_artifact(candidate, cve)}
