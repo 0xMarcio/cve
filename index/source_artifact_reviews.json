@@ -1248,6 +1248,38 @@
       "repository": "zerbaliy3v/php2shell-CVE-2026-109618-CVE-2026-109619-Dorks",
       "revision": "7b274a30b039059fd1bb9cb9827a2f4086d81b8a",
       "reason": "The reviewed revision contains only a README with Censys/Shodan search queries, session-file/LFI diagrams and links to other repositories. It provides no OOM cleanup or cross-request stale-global reproducer for these CVEs."
+    },
+    {
+      "cve": "CVE-2021-1675",
+      "repository": "bartimus-primed/CVE-2021-1675-Yara",
+      "revision": "ffd0b58c9cb2d67f4c52ccc482502bdf0accd9ea",
+      "path": "printnm.yara",
+      "sha256": "9388e6f36b11a072504900e4d9d9fccb87b5dbf143bf1ffb77e7dbb70cf53b10",
+      "reason": "The repository contains only a YARA detection rule for PrintNightmare indicators, not a vulnerability trigger or reproduction."
+    },
+    {
+      "cve": "CVE-2021-1675",
+      "repository": "bartimusprimed/CVE-2021-1675-Yara",
+      "revision": "ffd0b58c9cb2d67f4c52ccc482502bdf0accd9ea",
+      "path": "printnm.yara",
+      "sha256": "9388e6f36b11a072504900e4d9d9fccb87b5dbf143bf1ffb77e7dbb70cf53b10",
+      "reason": "The repository contains only a YARA detection rule for PrintNightmare indicators, not a vulnerability trigger or reproduction."
+    },
+    {
+      "cve": "CVE-2021-1675",
+      "repository": "corelight/CVE-2021-1675",
+      "revision": "f84970e64e3f490e4438c8628083bdc04559667d",
+      "path": "README.md",
+      "sha256": "d699ef43ff8a897ca9ea27fec9c828163fa5e0e1e94aa40f0a5d899fa34d5f84",
+      "reason": "Zeek and Suricata detection package whose tests replay Lares Lab exploit captures; the detector is not a separate vulnerability trigger."
+    },
+    {
+      "cve": "CVE-2021-1675",
+      "repository": "mrezqi/CVE-2021-1675_CarbonBlack_HuntingQuery",
+      "revision": "99d9ff32f57de97d5dd4513de8a5acfa2ea755b9",
+      "path": "README.md",
+      "sha256": "00012a1de2150e02b5afaca46805d27e876fc667644204fe193b5c56c7f2a31a",
+      "reason": "The repository contains Carbon Black hunting queries for existing exploit indicators, not a vulnerability trigger or reproduction."
     }
   ]
 }
