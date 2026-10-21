@@ -2,7 +2,7 @@
 
 <a href="https://pocindex.io/"><img src="https://raw.githubusercontent.com/0xMarcio/pocindex/main/docs/hero.svg?v=174698-85256-1235" alt="PoC Index" width="100%"></a>
 
-[![last sync](https://img.shields.io/badge/last%20sync-21%20Oct%202026%2004%3A07%20UTC-2f81f7?style=flat-square&labelColor=161b22)](https://github.com/0xMarcio/pocindex/commits/main)&nbsp;[![CI](https://img.shields.io/github/actions/workflow/status/0xMarcio/pocindex/hot_cves.yml?style=flat-square&label=CI&color=2f81f7&labelColor=161b22&_=202610210407)](https://github.com/0xMarcio/pocindex/actions/workflows/hot_cves.yml)&nbsp;[![CVEs with PoCs](https://img.shields.io/badge/CVEs%20with%20PoCs-85%2C256-2f81f7?style=flat-square&labelColor=161b22)](https://pocindex.io/)&nbsp;[![known exploited](https://img.shields.io/badge/known%20exploited-1%2C235-f85149?style=flat-square&labelColor=161b22)](https://pocindex.io/)&nbsp;[![stars](https://img.shields.io/github/stars/0xMarcio/pocindex?style=flat-square&label=stars&color=e3b341&labelColor=161b22&_=202610210407)](https://github.com/0xMarcio/pocindex/stargazers)
+[![last sync](https://img.shields.io/badge/last%20sync-21%20Oct%202026%2005%3A07%20UTC-2f81f7?style=flat-square&labelColor=161b22)](https://github.com/0xMarcio/pocindex/commits/main)&nbsp;[![CI](https://img.shields.io/github/actions/workflow/status/0xMarcio/pocindex/hot_cves.yml?style=flat-square&label=CI&color=2f81f7&labelColor=161b22&_=202610210507)](https://github.com/0xMarcio/pocindex/actions/workflows/hot_cves.yml)&nbsp;[![CVEs with PoCs](https://img.shields.io/badge/CVEs%20with%20PoCs-85%2C256-2f81f7?style=flat-square&labelColor=161b22)](https://pocindex.io/)&nbsp;[![known exploited](https://img.shields.io/badge/known%20exploited-1%2C235-f85149?style=flat-square&labelColor=161b22)](https://pocindex.io/)&nbsp;[![stars](https://img.shields.io/github/stars/0xMarcio/pocindex?style=flat-square&label=stars&color=e3b341&labelColor=161b22&_=202610210507)](https://github.com/0xMarcio/pocindex/stargazers)
 
 <a href="https://pocindex.io/"><img src="https://raw.githubusercontent.com/0xMarcio/pocindex/8dec6181e823d641132e0ee8a52a1612c2b5dd37/docs/search.svg" alt="Search PoC Index" width="100%"></a>
 
@@ -14,29 +14,29 @@
 
 | Stars | Released | PoC | Description |
 | --- | --- | --- | --- |
-| 3⭐ | 2h ago | [CVE-2026-98260-android](https://github.com/yanoo1222/CVE-2026-98260-android) | a complete exploit chain for CVE-2026-982600, |
-| 0⭐ | 4h ago | [cve-2018-16763](https://github.com/fahise/cve-2018-16763) | cve-2018-16763-exploit |
-| 0⭐ | 4h ago | [cve-2026-62911](https://github.com/fahise/cve-2026-62911) | cve-2026-62911-exploit |
+| 3⭐ | 3h ago | [CVE-2026-98260-android](https://github.com/yanoo1222/CVE-2026-98260-android) | a complete exploit chain for CVE-2026-982600, |
+| 0⭐ | 5h ago | [cve-2018-16763](https://github.com/fahise/cve-2018-16763) | cve-2018-16763-exploit |
+| 0⭐ | 5h ago | [cve-2026-62911](https://github.com/fahise/cve-2026-62911) | cve-2026-62911-exploit |
 | 0⭐ | 8h ago | [CVE-2026-87690-POC](https://github.com/h00die/CVE-2026-87690-POC) | Exploit and writeup for CVE-2026-87690 |
-| 0⭐ | 9h ago | [CVE-2026-113468](https://github.com/yuwkaaa/CVE-2026-113468) | forgeable PayPal payment callback in TYPO3 EXT:shop |
-| 0⭐ | 9h ago | [CVE-2026-112071](https://github.com/yuwkaaa/CVE-2026-112071) | unauthenticated order cancellation in TYPO3 EXT:shop |
-| 2⭐ | 11h ago | [CVE-2026-105810](https://github.com/M0ud4/CVE-2026-105810) | CVE-2026-105810 TP-Link Tapo C320WS authenticated connectAp stack overflow (RCE as root) |
-| 0⭐ | 13h ago | [CVE-2026-106173](https://github.com/0xBlackash/CVE-2026-106173) | A improper limitation of a pathname to a restricted directory ('path traversal') vulnerability in Fortinet… |
+| 0⭐ | 10h ago | [CVE-2026-113468](https://github.com/yuwkaaa/CVE-2026-113468) | forgeable PayPal payment callback in TYPO3 EXT:shop |
+| 0⭐ | 10h ago | [CVE-2026-112071](https://github.com/yuwkaaa/CVE-2026-112071) | unauthenticated order cancellation in TYPO3 EXT:shop |
+| 2⭐ | 12h ago | [CVE-2026-105810](https://github.com/M0ud4/CVE-2026-105810) | CVE-2026-105810 TP-Link Tapo C320WS authenticated connectAp stack overflow (RCE as root) |
+| 0⭐ | 14h ago | [CVE-2026-106173](https://github.com/0xBlackash/CVE-2026-106173) | A improper limitation of a pathname to a restricted directory ('path traversal') vulnerability in Fortinet… |
 | 0⭐ | 15h ago | [CVE-2026-85313](https://github.com/oscerd/CVE-2026-85313) | Reproducer for CVE-2026-85313 - Apache Camel camel-jetty enableCORS credentialed any-origin CORS (CWE-942).… |
-| 4⭐ | 15h ago | [CVE-2026-106173](https://github.com/horizon3ai/CVE-2026-106173) | Proof of concept exploit for CVE-2026-106173, a path traversal file write leading to RCE for Fortinet… |
+| 5⭐ | 16h ago | [CVE-2026-106173](https://github.com/horizon3ai/CVE-2026-106173) | Proof of concept exploit for CVE-2026-106173, a path traversal file write leading to RCE for Fortinet… |
 
 ## Trending in 2026
 
 | Stars | Updated | Repository | Description |
 | --- | --- | --- | --- |
-| 532⭐ | 10h ago | <img src="https://raw.githubusercontent.com/0xMarcio/pocindex/main/docs/kev.svg" alt="KEV" title="CISA known exploited" height="14"> [CVE-2026-41940-PoC](https://github.com/sakidekin/CVE-2026-41940-PoC) | cPanel & WHM Authentication Bypass via CVE-2026-41940 explotation |
+| 532⭐ | 11h ago | <img src="https://raw.githubusercontent.com/0xMarcio/pocindex/main/docs/kev.svg" alt="KEV" title="CISA known exploited" height="14"> [CVE-2026-41940-PoC](https://github.com/sakidekin/CVE-2026-41940-PoC) | cPanel & WHM Authentication Bypass via CVE-2026-41940 explotation |
 | 69⭐ | 1d ago | [CVE-2026-20817](https://github.com/ZeroDayEvil/CVE-2026-20817) | 🛡️ Official AI Security Tool module for CVE-2026-20817 (Windows Error Reporting WER ALPC Local Privilege… |
 | 477⭐ | 61d ago | [CVE-2026-9830](https://github.com/opaxial/CVE-2026-9830) | CVE-2026-9830 Proof of Concept |
 | 335⭐ | 85d ago | [CVE-2026-54121](https://github.com/aniqfakhrul/CVE-2026-54121) | Certighost POC |
 | 28⭐ | 1d ago | <img src="https://raw.githubusercontent.com/0xMarcio/pocindex/main/docs/kev.svg" alt="KEV" title="CISA known exploited" height="14"> [CVE-2026-41940-PoC](https://github.com/ZeroDayEvil/CVE-2026-41940-PoC) | cPanel and WHM versions after 11.40 contain an authentication bypass vulnerability in the login flow that… |
 | 59⭐ | 7d ago | [CVE-2026-97229-PoC](https://github.com/jburgess-r7/CVE-2026-97229-PoC) | GitLab CI lint integer-overflow RCE PoC for CVE-2026-97229, validated against the official 19.4.1 CE amd64… |
 | 96⭐ | 21d ago | [CVE-2026-41096-PoC](https://github.com/ZeroDayEvil/CVE-2026-41096-PoC) | 🛡️ Official AI Security Tool module for CVE-2026-41096 (Windows DNSAPI.dll Heap Overflow / DNS-Mayhem Deep… |
-| 188⭐ | 59d ago | [CVE-2026-62911](https://github.com/hypnguyen1209/CVE-2026-62911) | POC pre-auth RCE on Exchange |
+| 188⭐ | 60d ago | [CVE-2026-62911](https://github.com/hypnguyen1209/CVE-2026-62911) | POC pre-auth RCE on Exchange |
 | 18⭐ | 1d ago | [CVE-2026-64560-public](https://github.com/Feng1586/CVE-2026-64560-public) | CVE-2026-64560 staged security research package |
 | 35⭐ | 7d ago | [CVE-2026-85884](https://github.com/Beardhammer/CVE-2026-85884) | CVE-85884 POC |
 | 24⭐ | 4d ago | [CVE-2026-40369-EXPLOIT](https://github.com/ZeroDayEvil/CVE-2026-40369-EXPLOIT) | 🛡️ Official AI Security Tool module for CVE-2026-40369 (Windows NtQuerySystemInformation Class 253 Arbitrary… |
