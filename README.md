@@ -15,7 +15,6 @@
 | Repo stars | Released | PoC | Description |
 | --- | --- | --- | --- |
 | 0⭐ | 13m ago | [php2shell-poc](https://github.com/dexteon/php2shell-poc) | Refactored POC for CVE-2026-109618/109619 php2shell |
-| 1⭐ | 16m ago | [Partial-CVE-2026-110264-Reproduce](https://github.com/bigbluewhale111/Partial-CVE-2026-110264-Reproduce) | This is a partial CVE-2026-110264 reproduce due to the malicious regex is set by Admin, then be triggered… |
 | 0⭐ | 38m ago | [php2shell-education](https://github.com/agtt/php2shell-education) | PHP uses longjmp() for out-of-memory (OOM) errors to exit the current context and abort handling of the… |
 | 0⭐ | 47m ago | [php2shell_hunt_ispconfig](https://github.com/louzaonet/php2shell_hunt_ispconfig) | Quick and dirty hunting script for PHP2Shell (CVE-2026-109618 and CVE-2026-109619) on ISPConfig servers. |
 | 0⭐ | 56m ago | [CVE-2026-109618-CVE-2026-109619](https://github.com/seguridadentrerios/CVE-2026-109618-CVE-2026-109619) | php2shell |
