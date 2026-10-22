@@ -865,12 +865,40 @@ def feed_url(name: str) -> str:
 
 
 def load_feed(name: str, *, cache_dir: Path | None = None) -> list[dict[str, Any]]:
-    request = urllib.request.Request(feed_url(name), headers={"User-Agent": USER_AGENT})
+    data = bytearray()
+    etag = None
     for attempt in range(3):
         try:
+            headers = {"User-Agent": USER_AGENT}
+            if data and etag:
+                headers.update({"Range": f"bytes={len(data)}-", "If-Range": etag})
+            else:
+                data.clear()
+            request = urllib.request.Request(feed_url(name), headers=headers)
             with urllib.request.urlopen(request, timeout=900) as response:
-                with gzip.GzipFile(fileobj=response) as compressed:
-                    payload = json.load(compressed)
+                response_headers = getattr(response, "headers", {})
+                response_etag = response_headers.get("ETag")
+                if getattr(response, "status", 200) == 206:
+                    span = re.fullmatch(r"bytes (\d+)-(\d+)/(\d+)", response_headers.get("Content-Range", ""))
+                    if not span or not data or not etag or response_etag != etag:
+                        raise RuntimeError(f"{name}: invalid resumed NVD response")
+                    start, end, total = map(int, span.groups())
+                    if start != len(data) or end != total - 1:
+                        raise RuntimeError(f"{name}: mismatched NVD byte range")
+                else:
+                    data.clear()
+                    etag = response_etag if response_etag and not response_etag.startswith("W/") else None
+                    total = int(response_headers.get("Content-Length", "0"))
+                while chunk := response.read(64 * 1024):
+                    data.extend(chunk)
+                if total and len(data) != total:
+                    raise EOFError(f"{name}: received {len(data)} of {total} bytes")
+            try:
+                payload = json.loads(gzip.decompress(data))
+            except (OSError, EOFError, json.JSONDecodeError, zlib.error):
+                data.clear()
+                etag = None
+                raise
             break
         except urllib.error.HTTPError as problem:
             if problem.code < 500 or attempt == 2:
@@ -878,7 +906,7 @@ def load_feed(name: str, *, cache_dir: Path | None = None) -> list[dict[str, Any
         except (OSError, EOFError, http.client.HTTPException, json.JSONDecodeError, zlib.error):
             if attempt == 2:
                 raise
-        print(f"{name}: incomplete NVD download; retrying ({attempt + 2}/3)", flush=True)
+        print(f"{name}: incomplete NVD download; retrying ({attempt + 2}/3, {len(data)} bytes retained)", flush=True)
         time.sleep(2 ** attempt)
     if payload.get("format") != "NVD_CVE" or payload.get("version") != "2.0":
         raise RuntimeError(f"{name}: unexpected NVD feed format")
@@ -889,8 +917,7 @@ def load_feed(name: str, *, cache_dir: Path | None = None) -> list[dict[str, Any
         cache_dir.mkdir(parents=True, exist_ok=True)
         path = cache_dir / f"nvd-{name}.json.gz"
         temporary = path.with_suffix(".tmp")
-        with gzip.open(temporary, "wt", encoding="utf-8") as handle:
-            json.dump(payload, handle, separators=(",", ":"))
+        temporary.write_bytes(data)
         temporary.replace(path)
     return vulnerabilities
 

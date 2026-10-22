@@ -26,6 +26,13 @@ SCORE = ["3.1", 8.1, "HIGH", "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:N", "CN
 
 
 class FeedDownloadTests(unittest.TestCase):
+    @staticmethod
+    def response(body, headers, status=200):
+        response = io.BytesIO(body)
+        response.headers = headers
+        response.status = status
+        return response
+
     def setUp(self):
         self.feed = [{"cve": {"id": CVE}}]
         self.body = gzip.compress(json.dumps({"format": "NVD_CVE", "version": "2.0",
@@ -62,6 +69,58 @@ class FeedDownloadTests(unittest.TestCase):
         ]) as fetch, patch.object(metadata.time, "sleep"), redirect_stdout(io.StringIO()):
             self.assertEqual(metadata.load_feed("modified"), self.feed)
         self.assertEqual(fetch.call_count, 2)
+
+    def test_interrupted_transfer_resumes_only_the_same_feed_version(self):
+        offset = len(self.body) - 8
+        responses = [
+            self.response(self.body[:offset], {"Content-Length": str(len(self.body)), "ETag": '"v1"'}),
+            self.response(self.body[offset:], {"Content-Range": f"bytes {offset}-{len(self.body)-1}/{len(self.body)}", "ETag": '"v1"'}, 206),
+        ]
+        with patch.object(metadata.urllib.request, "urlopen", side_effect=responses) as fetch, \
+                patch.object(metadata.time, "sleep"), redirect_stdout(io.StringIO()):
+            self.assertEqual(metadata.load_feed("modified"), self.feed)
+        self.assertEqual(fetch.call_args_list[1].args[0].get_header("Range"), f"bytes={offset}-")
+        self.assertEqual(fetch.call_args_list[1].args[0].get_header("If-range"), '"v1"')
+
+    def test_changed_feed_replaces_partial_download(self):
+        rows = [{"cve": {"id": "CVE-2026-54321"}}]
+        newer = gzip.compress(json.dumps({"format": "NVD_CVE", "version": "2.0",
+                                         "totalResults": 1, "vulnerabilities": rows}).encode())
+        responses = [
+            self.response(self.body[:-8], {"Content-Length": str(len(self.body)), "ETag": '"v1"'}),
+            self.response(newer, {"Content-Length": str(len(newer)), "ETag": '"v2"'}),
+        ]
+        with tempfile.TemporaryDirectory() as directory:
+            cache = Path(directory)
+            with patch.object(metadata.urllib.request, "urlopen", side_effect=responses), \
+                    patch.object(metadata.time, "sleep"), redirect_stdout(io.StringIO()):
+                self.assertEqual(metadata.load_feed("modified", cache_dir=cache), rows)
+            self.assertEqual((cache / "nvd-modified.json.gz").read_bytes(), newer)
+
+    def test_mismatched_resumed_response_is_rejected(self):
+        offset = len(self.body) - 8
+        for span, etag in [(f"bytes 0-{len(self.body)-1}/{len(self.body)}", '"v1"'),
+                           (f"bytes {offset}-{len(self.body)-1}/{len(self.body)}", '"v2"')]:
+            responses = [
+                self.response(self.body[:offset], {"Content-Length": str(len(self.body)), "ETag": '"v1"'}),
+                self.response(self.body[offset:], {"Content-Range": span, "ETag": etag}, 206),
+            ]
+            with patch.object(metadata.urllib.request, "urlopen", side_effect=responses), \
+                    patch.object(metadata.time, "sleep"), redirect_stdout(io.StringIO()):
+                with self.assertRaises(RuntimeError):
+                    metadata.load_feed("modified")
+
+    def test_partial_feed_without_strong_validator_restarts(self):
+        for etag in (None, 'W/"v1"'):
+            headers = {"Content-Length": str(len(self.body))}
+            if etag:
+                headers["ETag"] = etag
+            responses = [self.response(self.body[:-8], headers), self.response(self.body, {})]
+            with patch.object(metadata.urllib.request, "urlopen", side_effect=responses) as fetch, \
+                    patch.object(metadata.time, "sleep"), redirect_stdout(io.StringIO()):
+                self.assertEqual(metadata.load_feed("modified"), self.feed)
+            self.assertIsNone(fetch.call_args_list[1].args[0].get_header("Range"))
+            self.assertIsNone(fetch.call_args_list[1].args[0].get_header("If-range"))
 
     def test_repeated_truncation_fails_instead_of_publishing_partial_feed(self):
         with patch.object(metadata.urllib.request, "urlopen", side_effect=[
