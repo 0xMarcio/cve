@@ -24,7 +24,8 @@ def repository(url: str) -> str:
     if parsed.hostname not in {"github.com", "www.github.com", "raw.githubusercontent.com"}:
         return ""
     parts = parsed.path.strip("/").split("/")
-    if len(parts) < 2 or parts[0].lower() in GITHUB_NON_REPOS:
+    if (len(parts) < 2 or not all(parts[:2]) or parts[0].lower() in GITHUB_NON_REPOS
+            or not parts[1].lower().removesuffix(".git")):
         return ""
     return "/".join(parts[:2]).lower().removesuffix(".git")
 
@@ -59,21 +60,27 @@ def load() -> dict:
         for field in ("repositories", "urls")
     ):
         raise ValueError("Invalid link health state; refusing to forget confirmed dead links")
+    if any(not name or repository(f"https://github.com/{name}") != name
+           for name in state["repositories"]):
+        raise ValueError("Invalid repository key in link health state")
     return state
 
 
 def unavailable(url: str) -> bool:
     state = load()
-    return repository(url) in state["repositories"] or url_key(url) in state["urls"]
+    name = repository(url)
+    return bool(name and name in state["repositories"]) or url_key(url) in state["urls"]
 
 
 def record(*, missing=(), healthy=(), dead_urls=(), live_urls=(), now: str | None = None) -> None:
     state = {field: dict(values) for field, values in load().items()}
     stamp = now or datetime.now(timezone.utc).isoformat()
     for name in healthy:
-        state["repositories"].pop(name.lower(), None)
+        if key := repository(f"https://github.com/{name}"):
+            state["repositories"].pop(key, None)
     for name in missing:
-        state["repositories"][name.lower()] = stamp
+        if key := repository(f"https://github.com/{name}"):
+            state["repositories"][key] = stamp
     for url in live_urls:
         state["urls"].pop(url_key(url), None)
     for url in dead_urls:
@@ -105,7 +112,8 @@ def check_url(url: str, timeout: int = 8) -> bool | None:
         req = request.Request(url, headers={"User-Agent": "pocindex-link-audit", "Accept": "*/*"})
         with request.urlopen(req, timeout=timeout) as response:
             response.read(1)
-            return True if 200 <= response.status < 300 else None
+            status = response.status
+            return True if isinstance(status, int) and 200 <= status < 300 else None
     except error.HTTPError as exc:
         code = exc.code
         exc.close()

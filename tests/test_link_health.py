@@ -7,7 +7,7 @@ import unittest
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 from threading import Thread
-from unittest.mock import patch
+from unittest.mock import MagicMock, patch
 from urllib.error import HTTPError, URLError
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "scripts"))
@@ -58,6 +58,23 @@ class LinkHealthTests(unittest.TestCase):
         health.record(live_urls={url})
         self.assertFalse(health.unavailable(url))
 
+    def test_repository_keys_are_normalized_without_recording_empty_identities(self):
+        health.record(missing={'Owner/Gone.git', '', 'topics/security', 'owner/.git', 'owner//poc'})
+        self.assertEqual(set(health.load()['repositories']), {'owner/gone'})
+        for url in ('https://example.com/poc', 'https://gist.github.com/owner/123',
+                    'https://github.com/topics/security'):
+            self.assertFalse(health.unavailable(url), url)
+        health.record(healthy={'OWNER/GONE.git'})
+        self.assertEqual(health.load()['repositories'], {})
+
+    def test_invalid_repository_state_is_rejected_before_survey_or_publication(self):
+        for key in ('', 'owner', 'topics/security', 'owner/.git'):
+            with self.subTest(key=key):
+                self.state.write_text(json.dumps({'repositories': {key: '2026-10-22'}, 'urls': {}}))
+                health.load.cache_clear()
+                with self.assertRaises(ValueError):
+                    health.load()
+
     def test_transient_http_and_network_errors_are_not_evidence_of_deletion(self):
         url = 'https://example.com/poc'
         failures = [HTTPError(url, code, 'Unavailable', {}, None)
@@ -90,6 +107,13 @@ class LinkHealthTests(unittest.TestCase):
             for url in ('https://[broken', 'file:///tmp/poc', '', 'https://'):
                 self.assertIsNone(health.check_url(url))
             fetch.assert_not_called()
+
+    def test_redirect_response_without_http_status_is_inconclusive(self):
+        response = MagicMock()
+        response.__enter__.return_value = response
+        response.status = None
+        with patch.object(health.request, 'urlopen', return_value=response):
+            self.assertEqual(health.survey_urls(['https://example.com/ftp-redirect']), (set(), set()))
 
     def test_redirects_follow_the_destination_without_losing_the_original_identity(self):
         class Handler(BaseHTTPRequestHandler):

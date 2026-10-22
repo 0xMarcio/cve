@@ -159,7 +159,7 @@ def main() -> int:
     # GET failure a visitor sees before withdrawing any existing public link.
     public_urls = [f"https://github.com/{name}" for name in sorted(unavailable)]
     confirmed, _ = link_health.survey_urls(public_urls, workers=2)
-    missing = {link_health.repository(url) for url in confirmed}
+    missing = {name for name in unavailable if f"https://github.com/{name}" in confirmed}
     failed |= unavailable - missing
     unavailable = missing
     link_health.record(missing=unavailable, healthy=readings)
