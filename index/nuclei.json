@@ -32774,6 +32774,14 @@
 "severity": "critical",
 "url": "https://github.com/projectdiscovery/nuclei-templates/blob/main/http/cves/2026/CVE-2026-104935.yaml"
 },
+"CVE-2026-105133": {
+"cvss": 7.3,
+"cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:L/A:L",
+"cwe": "CWE-287",
+"name": "AhsayCBS - JSON API Authentication Bypass",
+"severity": "medium",
+"url": "https://github.com/projectdiscovery/nuclei-templates/blob/main/http/cves/2026/CVE-2026-105133.yaml"
+},
 "CVE-2026-10520": {
 "name": "Ivanti Sentry - OS Command Injection",
 "severity": "critical",
@@ -32826,6 +32834,14 @@
 "name": "Neterbit NW-431F - Unauthenticated SMS Disclosure",
 "severity": "medium",
 "url": "https://github.com/projectdiscovery/nuclei-templates/blob/main/http/cves/2026/CVE-2026-108578.yaml"
+},
+"CVE-2026-109618": {
+"cvss": 9.2,
+"cvss_vector": "CVSS:4.0/AV:N/AC:H/AT:P/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N",
+"cwe": "CWE-416",
+"name": "PHP2Shell (CVE-2026-109618/CVE-2026-109619) - Vulnerable Version Detection",
+"severity": "critical",
+"url": "https://github.com/projectdiscovery/nuclei-templates/blob/main/http/cves/2026/CVE-2026-109618.yaml"
 },
 "CVE-2026-1115": {
 "cvss": 9.0,
@@ -33239,6 +33255,14 @@
 "name": "LeadConnector < 3.0.22 - Unauthenticated Arbitrary Data Write",
 "severity": "medium",
 "url": "https://github.com/projectdiscovery/nuclei-templates/blob/main/http/cves/2026/CVE-2026-1890.yaml"
+},
+"CVE-2026-18937": {
+"cvss": 9.0,
+"cvss_vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:C/C:H/I:H/A:H",
+"cwe": "CWE-94",
+"name": "WordPress Broken Link Checker < 2.4.12 - Remote Code Execution",
+"severity": "critical",
+"url": "https://github.com/projectdiscovery/nuclei-templates/blob/main/http/cves/2026/CVE-2026-18937.yaml"
 },
 "CVE-2026-18963": {
 "cvss": 9.1,
@@ -35118,6 +35142,14 @@
 "severity": "critical",
 "url": "https://github.com/projectdiscovery/nuclei-templates/blob/main/http/cves/2026/CVE-2026-48710.yaml"
 },
+"CVE-2026-4883": {
+"cvss": 9.8,
+"cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+"cwe": "CWE-434",
+"name": "Piotnet Forms Pro <= 2.1.40 - Unauthenticated Arbitrary File Upload RCE",
+"severity": "critical",
+"url": "https://github.com/projectdiscovery/nuclei-templates/blob/main/http/cves/2026/CVE-2026-4883.yaml"
+},
 "CVE-2026-48907": {
 "cvss": 10.0,
 "cvss_vector": "CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
@@ -36345,6 +36377,14 @@
 "name": "Bookly <=28.1 - IDOR Unauthenticated Sensitive Data Access",
 "severity": "high",
 "url": "https://github.com/projectdiscovery/nuclei-templates/blob/main/http/cves/2026/CVE-2026-89063.yaml"
+},
+"CVE-2026-90774": {
+"cvss": 7.5,
+"cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:H/A:N",
+"cwe": "CWE-22",
+"name": "rustypaste < 0.18.1 - Filename Header Path Traversal",
+"severity": "high",
+"url": "https://github.com/projectdiscovery/nuclei-templates/blob/main/http/cves/2026/CVE-2026-90774.yaml"
 },
 "CVE-2026-9082": {
 "cvss": 9.8,
