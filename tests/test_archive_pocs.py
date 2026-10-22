@@ -408,6 +408,32 @@ class ArchiveTests(unittest.TestCase):
             self.assertEqual(client.failure(str(i % 3), archive.ArchiveError('transport-ConnectionResetError')).cooldown, 0)
         self.assertEqual(client.failure('third', archive.ArchiveError('replay-URLError')).cooldown, 900)
 
+    def test_availability_breaker_does_not_pause_capture_api(self):
+        for operation in ('availability', 'replay'):
+            with self.subTest(operation=operation), tempfile.TemporaryDirectory() as directory:
+                self.client.operation = operation
+                self.client.lookup.side_effect = archive.ArchiveError('service-transport-failures', cooldown=900)
+                archive.lookup_pages({URL: self.target}, {}, self.client, Path(directory), 1, 10)
+                self.assertTrue((Path(directory) / 'lookup-control.json').exists())
+                self.assertEqual((Path(directory) / 'control.json').exists(), operation == 'replay')
+
+    def test_capture_limit_exits_without_waiting_for_an_unrelated_host_cooldown(self):
+        blocked = 'https://example.com/poc'
+        targets = {u: {**self.target, 'original': u} for u in (URL, URL + '-other', blocked)}
+        def process(key, target, rows, client, *, capture):
+            rows[key] = {**target, 'status': 'not-found'}
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory)
+            archive.save_records({blocked: {**targets[blocked], 'host_retry_after': archive.after(86400)}}, {blocked}, path)
+            with patch.object(archive, 'inventory', return_value=targets), \
+                    patch.object(archive, 'credentials', return_value=('dummy', 'dummy')), \
+                    patch.object(archive.Client, 'capacity', return_value=2), \
+                    patch.object(archive, 'process', side_effect=process) as visit, \
+                    patch.object(archive.time, 'sleep', side_effect=AssertionError('Unexpected idle wait')), \
+                    patch.object(sys, 'argv', ['archive_pocs', '--capture', '--directory', str(path), '--limit', '1']):
+                self.assertEqual(archive.main(), 0)
+                self.assertEqual(visit.call_count, 1)
+
     def test_capture_loop_serves_new_targets_and_keeps_candidate_backoff(self):
         pending = URL + '-pending'
         target = {**self.target, 'original': pending}
@@ -468,6 +494,14 @@ class ArchiveTests(unittest.TestCase):
         response.headers = {'Content-Encoding': 'gzip'}
         with self.assertRaisesRegex(archive.ArchiveError, 'too-large'):
             archive.response_bytes(response, 1000)
+
+    def test_corrupt_compressed_responses_are_target_errors(self):
+        for body in (b'not-gzip', gzip.compress(b'poc')[:-8], b'\x1f\x8b\x08\x00' + b'\x00' * 6 + b'\x07'):
+            with self.subTest(body=body):
+                response = io.BytesIO(body)
+                response.headers = {'Content-Encoding': 'gzip'}
+                with self.assertRaisesRegex(archive.ArchiveError, 'invalid-compressed-response'):
+                    archive.response_bytes(response, 1000)
 
 
 if __name__ == '__main__':

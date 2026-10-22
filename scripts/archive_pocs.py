@@ -12,6 +12,7 @@ import re
 import tempfile
 import threading
 import time
+import zlib
 from collections import Counter, defaultdict
 from concurrent.futures import ThreadPoolExecutor, wait, FIRST_COMPLETED
 from datetime import datetime, timedelta, timezone
@@ -177,8 +178,11 @@ def response_bytes(response, limit: int) -> bytes:
     if encoding in {'', 'identity'}:
         body = response.read(limit + 1)
     elif encoding == 'gzip':
-        with gzip.GzipFile(fileobj=response) as stream:
-            body = stream.read(limit + 1)
+        try:
+            with gzip.GzipFile(fileobj=response) as stream:
+                body = stream.read(limit + 1)
+        except (gzip.BadGzipFile, EOFError, zlib.error):
+            raise ArchiveError('invalid-compressed-response') from None
     else:
         raise ArchiveError('unsupported-response-encoding')
     if len(body) > limit:
@@ -723,7 +727,7 @@ def lookup_pages(targets: dict, rows: dict, client: Client, directory: Path, lim
                     stopped = True
                     fatal |= problem.fatal
                     control.write_text(json.dumps({'retry_after': after(problem.cooldown or 300), 'reason': str(problem)}) + '\n')
-                    if getattr(problem, 'operation', '') == 'replay' or str(problem) == 'service-transport-failures':
+                    if getattr(problem, 'operation', '') == 'replay':
                         (directory / 'control.json').write_text(control.read_text())
                     print(f'Archive lookup paused: {problem}', flush=True)
                 print(f'{completed}: {row["status"]} {row["original"]}', flush=True)
@@ -857,7 +861,7 @@ def main() -> int:
                 break
             time.sleep(5)
             continue
-        elif selected and hosts:
+        elif selected and hosts and completed < args.limit and room:
             time.sleep(5)
             continue
         else:
@@ -884,7 +888,7 @@ def main() -> int:
                 control.write_text(json.dumps({'retry_after': rows[key]['next_check_at'], 'reason': str(exc)}) + '\n')
                 print(f'Archive service requested backoff during {client.operation}: {exc}', flush=True)
                 break
-            if str(exc) in {'response-too-large', 'unsupported-response-encoding'}:
+            if str(exc) in {'response-too-large', 'unsupported-response-encoding', 'invalid-compressed-response'}:
                 rows[key].pop('candidate', None)
                 rows[key].pop('verify_attempts', None)
                 rows[key]['next_check_at'] = after(7 * 86400)
