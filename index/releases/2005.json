@@ -28,6 +28,7 @@
 "CVE-2005-0116 https://www.exploit-db.com/exploits/773":{"basis":"source","cve":"CVE-2005-0116","imported":true,"released":"2005-01-25","source":"2005-01-25","url":"https://www.exploit-db.com/exploits/773"},
 "CVE-2005-0116 https://www.exploit-db.com/exploits/9912":{"basis":"source","cve":"CVE-2005-0116","imported":true,"released":"2005-01-15","source":"2005-01-15","url":"https://www.exploit-db.com/exploits/9912"},
 "CVE-2005-0129 https://www.exploit-db.com/exploits/25054":{"basis":"source","cve":"CVE-2005-0129","imported":true,"released":"2005-01-19","source":"2005-01-19","url":"https://www.exploit-db.com/exploits/25054"},
+"CVE-2005-0153 https://www.exploit-db.com/exploits/25080":{"basis":"source","cve":"CVE-2005-0153","released":"2005-02-02","seen":"2026-10-22T09:42:33Z","source":"2005-02-02","url":"https://www.exploit-db.com/exploits/25080"},
 "CVE-2005-0155 https://www.exploit-db.com/exploits/792":{"basis":"source","cve":"CVE-2005-0155","imported":true,"released":"2005-02-07","source":"2005-02-07","url":"https://www.exploit-db.com/exploits/792"},
 "CVE-2005-0156 https://www.exploit-db.com/exploits/791":{"basis":"source","cve":"CVE-2005-0156","imported":true,"released":"2005-02-07","source":"2005-02-07","url":"https://www.exploit-db.com/exploits/791"},
 "CVE-2005-0161 https://www.exploit-db.com/exploits/25150":{"basis":"source","cve":"CVE-2005-0161","imported":true,"released":"2005-02-23","source":"2005-02-23","url":"https://www.exploit-db.com/exploits/25150"},

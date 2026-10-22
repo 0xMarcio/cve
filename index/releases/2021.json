@@ -3277,6 +3277,7 @@
 "CVE-2021-28060 https://fatihhcelik.github.io/posts/Group-Office-CRM-SSRF":{"basis":"unknown","cve":"CVE-2021-28060","imported":true,"released":null,"url":"https://fatihhcelik.github.io/posts/Group-Office-CRM-SSRF/"},
 "CVE-2021-28070 github:popojicms/popojicms/issues/31?#":{"basis":"unknown","cve":"CVE-2021-28070","imported":true,"released":null,"url":"https://github.com/PopojiCMS/PopojiCMS/issues/31"},
 "CVE-2021-28073 github:linuxadi/40k-nuclei-templates/blob/main/aditya/folder5/cve-2021-28073-5939.yaml?#":{"basis":"unknown","cve":"CVE-2021-28073","released":null,"seen":"2026-10-22T09:30:38Z","url":"https://github.com/linuxadi/40k-nuclei-templates/blob/main/aditya/folder5/cve-2021-28073-5939.yaml"},
+"CVE-2021-28073 github:vulhub/vulhub/tree/master/ntopng/CVE-2021-28073?#":{"basis":"unknown","cve":"CVE-2021-28073","released":null,"seen":"2026-10-22T09:42:33Z","url":"https://github.com/vulhub/vulhub/tree/master/ntopng/CVE-2021-28073"},
 "CVE-2021-28079 github:g33xter/cve-2021-28079?#":{"basis":"unknown","cve":"CVE-2021-28079","imported":true,"released":null,"url":"https://github.com/g33xter/CVE-2021-28079"},
 "CVE-2021-28079 github:theart42/cves/blob/master/CVE-2021-28079/CVE-2021-28079.md?#":{"basis":"unknown","cve":"CVE-2021-28079","imported":true,"released":null,"url":"https://github.com/theart42/cves/blob/master/CVE-2021-28079/CVE-2021-28079.md"},
 "CVE-2021-28088 https://anotepad.com/note/read/s3kkk6h7":{"basis":"unknown","cve":"CVE-2021-28088","imported":true,"released":null,"url":"https://anotepad.com/note/read/s3kkk6h7"},
