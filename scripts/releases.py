@@ -465,7 +465,8 @@ def published_pairs(entries: list[dict] | None = None) -> list[tuple[str, str]]:
                    for url in row.get(field, []) if url not in managed})
 
 
-def qualifying_content(repository: str, cve: str, path: str, source: bytes, reviews: list[dict]) -> bool:
+def qualifying_content(repository: str, cve: str, path: str, source: bytes, reviews: list[dict], *,
+                       related_cves=()) -> bool:
     """Confirm that a historical file contains reproduction material, not a stub.
 
     This only dates already accepted links. It is not a discovery/approval gate.
@@ -473,7 +474,7 @@ def qualifying_content(repository: str, cve: str, path: str, source: bytes, revi
     """
     if cve in source_artifacts.approved_cves_for_artifact(repository, path, source, reviews=reviews):
         return True
-    if source_artifacts.identity_cves(path) - {cve}:
+    if source_artifacts.identity_cves(path) - {cve, *related_cves}:
         return False
     if len(source.strip()) < 40:
         return False

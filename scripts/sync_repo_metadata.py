@@ -193,7 +193,17 @@ def main() -> int:
                  "checked": now.isoformat(), "retries": retries})
     print(f"Repository metadata: {len(names)} checked, {len(readings)} refreshed, "
           f"{len(unavailable)} unavailable, {len(failed)} deferred")
-    return int(bool(failed))
+    if failed:
+        print(f"::warning::{len(failed)} repository checks were inconclusive; cached data retained and retries scheduled")
+    summary = os.environ.get('GITHUB_STEP_SUMMARY')
+    if summary:
+        with open(summary, 'a', encoding='utf-8') as handle:
+            handle.write(f'### Repository metadata\n\n{len(readings)} refreshed, {len(unavailable)} confirmed unavailable, '
+                         f'{len(failed)} deferred with cached data retained.\n')
+    # Individual unavailable/ambiguous hosts are normal in a public corpus.
+    # Fail a service-wide outage, while durable per-target retries remain work
+    # for subsequent runs instead of making every hourly refresh look broken.
+    return int(bool(failed) and not readings and not unavailable)
 
 
 if __name__ == "__main__":

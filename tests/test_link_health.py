@@ -216,11 +216,12 @@ class LinkHealthTests(unittest.TestCase):
                 patch.dict(metadata.os.environ, {'GITHUB_TOKEN': 'test'}), \
                 patch.object(audit, 'prune_unavailable') as prune, \
                 patch.object(sys, 'argv', ['sync_repo_metadata', '--references', '0']):
-            self.assertEqual(metadata.main(), 1)
+            self.assertEqual(metadata.main(), 0)
             prune.assert_called_once()
         self.assertTrue(health.unavailable(url))
         self.assertEqual(json.loads(cache.read_text()), {'owner/flaky': [0, '2026-10-21']})
         self.assertIn('owner/gone', json.loads(state.read_text())['retries'])
+        self.assertIn('owner/flaky', json.loads(state.read_text())['retries'])
         # Still eligible after removal from the live index, unless cooling down.
         self.assertEqual(metadata.scope([], {}, [], '', 10)[0], ['owner/gone'])
         self.assertEqual(metadata.scope([], {}, [], '', 10, {'owner/gone'})[0], [])

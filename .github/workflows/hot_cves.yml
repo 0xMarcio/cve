@@ -17,8 +17,18 @@ concurrency:
 jobs:
   ScheduledRun:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    # Discovery, metadata and the trending refresh take about twenty minutes
+    # together. Trending is budgeted from whatever the earlier steps leave, so
+    # the publishing steps after it always keep their reserve.
+    timeout-minutes: 30
+    env:
+      # Print progress as it happens, so a slow or stopped step shows how far
+      # it got instead of an empty log.
+      PYTHONUNBUFFERED: '1'
     steps:
+      - name: Start the job clock
+        run: echo "JOB_STARTED=$(date +%s)" >> "$GITHUB_ENV"
+
       - name: Checkout repository
         uses: actions/checkout@v7
         with:
@@ -55,16 +65,39 @@ jobs:
       - name: Rebuild the trending PoC table
         id: trending
         continue-on-error: true
-        # Leave time to publish discoveries if this optional refresh stalls.
-        timeout-minutes: 4
+        # Backstop only. A step timeout signals the shell and leaves Python
+        # running into the commit, so the budget below always ends it first.
+        timeout-minutes: 15
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: python3 .github/getTrending.py
+        run: |
+          # Whatever the job's 30 minutes still hold after 6 for ingest, release
+          # records, the banner and the push, and never more than 12. A full
+          # refresh has taken 8 to 10.
+          left=$(( ${JOB_STARTED:?} + 30 * 60 - 6 * 60 - $(date +%s) ))
+          budget=$(( left < 12 * 60 ? left : 12 * 60 ))
+          if [ "$budget" -lt 240 ]; then
+            echo "::error title=Trending refresh skipped::Only ${left}s left before the publishing reserve; last hour's tables stay published"
+            exit 1
+          fi
+          # The script stops starting GitHub work in time to write within its
+          # budget. timeout only acts if that fails, and it kills Python itself.
+          status=0
+          timeout --kill-after=30 $(( budget + 60 )) \
+            python3 .github/getTrending.py --budget-seconds "$budget" || status=$?
+          case "$status" in
+            0) echo "written=true" >> "$GITHUB_OUTPUT" ;;
+            75) echo "written=true" >> "$GITHUB_OUTPUT"
+                echo "::warning title=Trending refresh incomplete::Tables written, but some lanes kept last hour's rows or judged fewer candidates; the step summary says which" ;;
+            124|137) echo "::error title=Trending refresh killed::Still running a minute past its ${budget}s budget; last hour's tables stay published" ;;
+          esac
+          exit "$status"
 
       - name: Ingest the current candidates
         id: ingest
         continue-on-error: true
-        if: steps.trending.outcome == 'success'
+        # A partial refresh still writes a whole table of gate-checked rows.
+        if: steps.trending.outputs.written == 'true'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: python3 scripts/sync_pocingithub.py --input index/trending.json
@@ -134,6 +167,29 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: gh workflow run site.yml --ref main
 
+      - name: Continue the archive queue
+        if: ${{ !cancelled() }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run archive_pocs.yml --ref main
+
       - name: Report incomplete refresh
         if: steps.pending.outcome == 'failure' || steps.discovery.outcome == 'failure' || steps.repository_metadata.outcome == 'failure' || steps.trending.outcome == 'failure' || steps.ingest.outcome == 'failure'
-        run: exit 1
+        env:
+          OUTCOMES: >-
+            pending=${{ steps.pending.outcome }}
+            discovery=${{ steps.discovery.outcome }}
+            repository_metadata=${{ steps.repository_metadata.outcome }}
+            trending=${{ steps.trending.outcome }}
+            ingest=${{ steps.ingest.outcome }}
+          PUSHED: ${{ steps.commit.outputs.pushed }}
+        run: |
+          failed=$(tr ' ' '\n' <<< "$OUTCOMES" | sed -n 's/=failure$//p' | paste -sd ' ' -)
+          if [ "$PUSHED" = true ]; then
+            published="What this run did produce was pushed."
+          else
+            published="Nothing new was pushed."
+          fi
+          echo "::error title=Incomplete hourly refresh::Failed: ${failed}. ${published} Each failed step's log says what it deferred."
+          echo "**Incomplete hourly refresh.** Failed: ${failed}. ${published}" >> "$GITHUB_STEP_SUMMARY"
+          exit 1

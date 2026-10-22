@@ -7,7 +7,9 @@ import json
 import os
 import re
 import sys
+import tempfile
 import time
+import traceback
 from datetime import datetime, timedelta, timezone
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
@@ -46,6 +48,18 @@ NVD_API = "https://services.nvd.nist.gov/rest/json/cves/2.0?cveId="
 # NVD allows five requests per thirty seconds unauthenticated, and only a
 # couple of rows per run ever need one.
 NVD_LOOKUPS = 4
+# The hourly job hands the refresh a time budget. GitHub work stops this long
+# before it runs out: one request still in flight, the corpus parse behind the
+# landed rows, and the writes.
+FINISH_SECONDS = 90
+# releases.current_repository_evidence bounds each repository's history read.
+HISTORY_SECONDS = 45
+# EX_TEMPFAIL: the tables were written, but a lane kept last run's rows or
+# judged fewer candidates. The next hourly run tries it again.
+PARTIAL_EXIT = 75
+DEADLINE: float | None = None
+INCOMPLETE: list[str] = []
+SUMMARY: list[str] = []
 USER_AGENT = "0xMarcio-cve-trending"
 ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), os.pardir)
 sys.path.insert(0, os.path.join(ROOT, "scripts"))
@@ -71,6 +85,39 @@ HERO_URL = f"{RAW}/hero.svg"
 SEARCH_CTA_REV = "8dec6181e823d641132e0ee8a52a1612c2b5dd37"
 SEARCH_CTA_URL = f"https://raw.githubusercontent.com/{SLUG}/{SEARCH_CTA_REV}/docs/search.svg"
 KEV_MARK = f'<img src="{RAW}/kev.svg" alt="KEV" title="CISA known exploited" height="14"> '
+
+
+class OutOfTime(RuntimeError):
+    """The run's budget cannot cover the next piece of GitHub work."""
+
+
+def time_left() -> float:
+    return float("inf") if DEADLINE is None else DEADLINE - time.monotonic()
+
+
+def pause(seconds: float, what: str) -> None:
+    """Wait before a GitHub call, or stop if the budget runs out first."""
+    seconds, left = max(0.0, seconds), time_left()
+    if left <= seconds:
+        raise OutOfTime(f"time budget spent before {what}" if left <= 0 else
+                        f"{what} needs a {seconds:.0f}s wait with {left:.0f}s of the budget left")
+    time.sleep(seconds)
+
+
+def note(line: str) -> None:
+    """A line for the log that also belongs in the run's summary."""
+    print(line)
+    SUMMARY.append(line)
+
+
+def incomplete(lane: str, problem: BaseException | str, kept: str) -> None:
+    """Report a lane this run could not finish; the other lanes still publish."""
+    if isinstance(problem, BaseException):
+        if not isinstance(problem, OutOfTime):
+            traceback.print_exception(problem)
+        problem = f"{type(problem).__name__}: {problem}"
+    INCOMPLETE.append(lane)
+    note(f"{lane} incomplete: {problem}; {kept}")
 
 
 def search(query: str, *, limit: int = SEARCH_LIMIT) -> tuple[int, list[dict]]:
@@ -101,7 +148,7 @@ def search(query: str, *, limit: int = SEARCH_LIMIT) -> tuple[int, list[dict]]:
         })
         for attempt in range(3):
             delay = 5 * (attempt + 1)
-            time.sleep(max(0, SEARCH_NOT_BEFORE - time.monotonic()))
+            pause(SEARCH_NOT_BEFORE - time.monotonic(), "a GitHub search")
             SEARCH_NOT_BEFORE = time.monotonic() + (2.1 if token else 6.1)
             try:
                 with request.urlopen(request.Request(url, headers=headers), timeout=30) as response:
@@ -130,7 +177,7 @@ def search(query: str, *, limit: int = SEARCH_LIMIT) -> tuple[int, list[dict]]:
                     break
                 if attempt == 2:
                     raise RuntimeError(f"GitHub returned incomplete results for {query}")
-            time.sleep(delay)
+            pause(delay, "a GitHub search retry")
         total = int(payload.get("total_count") or 0)
         items = payload.get("items") or []
         for repo in items:
@@ -225,6 +272,10 @@ def release_dates(repositories: list[dict], token: str, paths: dict[str, list[st
 
     def inspect(candidate):
         repo, url = candidate
+        # An inspection that might not finish in time waits for the next run
+        # like any other deferral, instead of holding the tables back.
+        if time_left() < HISTORY_SECONDS:
+            return repo, url, {"error": "History inspection deferred", "deferred": True}
         evidence = releases.current_repository_evidence(
             repo, paths.get(repo["full_name"], []), headers, cve=cve_of(repo),
         )
@@ -245,8 +296,13 @@ def release_dates(repositories: list[dict], token: str, paths: dict[str, list[st
                     _copy=bool(row.get("copy")), _bulk=bool(row.get("bulk")))
 
 
-def search_candidates(identifier: str, filters: str) -> tuple[int, list[dict]]:
-    """Use the same discovery scope as the index, including README-only CVEs."""
+def search_candidates(identifier: str, filters: str, *,
+                      failures: list[str] | None = None) -> tuple[int, list[dict]]:
+    """Use the same discovery scope as the index, including README-only CVEs.
+
+    With a failures list, a search GitHub cannot answer is recorded there and
+    the other searches still contribute their candidates.
+    """
     found = {}
     queries = discovery_search_terms(identifier)
     aliases = {row["repository"] for row in load_reviews()
@@ -258,7 +314,16 @@ def search_candidates(identifier: str, filters: str) -> tuple[int, list[dict]]:
         query = f"{terms} {filters} fork:false archived:false"
         # The landed README lane can judge at most this many recent rows.
         # Keep the full search window for per-year trending candidates.
-        _, rows = search(query, limit=LANDED_LIMIT) if identifier == "CVE" and "in:readme" in terms else search(query)
+        try:
+            _, rows = search(query, limit=LANDED_LIMIT) if identifier == "CVE" and "in:readme" in terms else search(query)
+        except OutOfTime:
+            raise
+        except Exception as problem:
+            if failures is None:
+                raise
+            traceback.print_exception(problem)
+            failures.append(f"{terms}: {type(problem).__name__}: {problem}")
+            continue
         print(f"Discovery {terms}: {len(rows)} candidates")
         for repo in rows:
             name = str(repo.get("full_name") or "").lower()
@@ -270,9 +335,17 @@ def search_candidates(identifier: str, filters: str) -> tuple[int, list[dict]]:
 def just_landed(token: str, ledger: dict | None = None) -> list[dict]:
     """First qualifying artifact releases, independently of stars or Trending."""
     ledger = releases.load_ledger() if ledger is None else ledger
+    started = time.monotonic()
     cutoff = datetime.now(timezone.utc) - timedelta(days=LANDED_DAYS)
     since = cutoff.date().isoformat()
-    _, rows = search_candidates("CVE", f"pushed:>={since}")
+    failures: list[str] = []
+    try:
+        _, rows = search_candidates("CVE", f"pushed:>={since}", failures=failures)
+    except OutOfTime as problem:
+        incomplete("just landed", problem, "listed from the release ledger alone")
+        return []
+    if failures:
+        incomplete("just landed", "; ".join(failures), "judged the other searches' candidates")
     candidates, seen = [], set()
     for repo in rows:
         name = str(repo.get("full_name") or "")
@@ -294,11 +367,15 @@ def just_landed(token: str, ledger: dict | None = None) -> list[dict]:
         ):
             break
         batch = pool[start:start + LANDED_BATCH]
+        try:
+            accepted, paths = qualifying_repositories(batch, token)
+            accepted = published_repositories(accepted)
+            release_dates(accepted, token, paths, ledger)
+        except Exception as problem:
+            incomplete("just landed", problem, f"kept {len(fresh)} rows from {judged} judged candidates")
+            break
         judged += len(batch)
-        accepted, paths = qualifying_repositories(batch, token)
-        accepted = published_repositories(accepted)
         rejected += len(batch) - len(accepted)
-        release_dates(accepted, token, paths, ledger)
         for repo in accepted:
             released = releases.timestamp(repo.get("_released"))
             if released is None:
@@ -306,8 +383,9 @@ def just_landed(token: str, ledger: dict | None = None) -> list[dict]:
             elif cutoff <= released <= datetime.now(timezone.utc) and not repo.get("_copy") and not repo.get("_bulk"):
                 fresh.append(repo)
         fresh.sort(key=lambda repo: repo["_released"], reverse=True)
-    print(f"just landed: {judged} of {len(candidates)} candidates judged, "
-          f"{len(fresh)} qualified, {rejected} rejected, {undated} awaiting release evidence")
+    note(f"just landed: {judged} of {len(candidates)} candidates judged, "
+         f"{len(fresh)} qualified, {rejected} rejected, {undated} awaiting release evidence "
+         f"in {time.monotonic() - started:.0f}s")
     return fresh[:LANDED_ROWS]
 
 
@@ -385,6 +463,7 @@ def graphql(query: str, token: str) -> dict:
     if token:
         headers["Authorization"] = f"Bearer {token}"
     for attempt in range(3):
+        pause(0, "a GitHub GraphQL query")
         try:
             with request.urlopen(
                 request.Request(GRAPHQL_URL, data=body, headers=headers, method="POST"),
@@ -415,7 +494,7 @@ def graphql(query: str, token: str) -> dict:
             if attempt == 2:
                 reason = (failed[0].get("message") or failed[0]) if failed else "missing repository data"
                 raise RuntimeError(f"GitHub GraphQL failed: {reason}")
-        time.sleep(4 * (attempt + 1))
+        pause(4 * (attempt + 1), "a GitHub GraphQL retry")
     return {}
 
 
@@ -653,6 +732,13 @@ def shorten(text: str) -> str:
     return text[:DESC_LIMIT].rsplit(" ", 1)[0] + "\u2026"
 
 
+def table_row(item: dict, when: str) -> str:
+    """One README row, drawn from the same item the feed publishes."""
+    return (f"| {star_cell(item.get('stars'))} | {time_ago(when)} "
+            f"| {KEV_MARK if item.get('kev') else ''}[{item.get('name')}]({item.get('url')}) "
+            f"| {shorten(item.get('desc'))} |")
+
+
 def figures() -> dict:
     """Index totals, written by hero.py from the same count the banner shows."""
     try:
@@ -867,15 +953,71 @@ repository URL.
 """.replace("@SITE@", SITE)
 
 
-def main(*, history_limit: int = HISTORY_LIMIT, retry_history: bool = False) -> int:
+def previous_items() -> list[dict]:
+    """The feed this run replaces, for any year it cannot refresh."""
+    try:
+        with open(TRENDING, encoding="utf-8") as handle:
+            rows = json.load(handle)
+    except (OSError, ValueError):
+        return []
+    return [row for row in rows if isinstance(row, dict)] if isinstance(rows, list) else []
+
+
+def carried_rows(previous: list[dict], year: int, kev: set[str]) -> list[dict]:
+    """Last run's Trending rows for a year, minus links that died since."""
     import link_health
-    global HISTORY_REMAINING, HISTORY_RETRY_HOURS
+    from build_site import trending_score
+    rows = []
+    for item in previous:
+        url = str(item.get("url") or "")
+        if item.get("trending") and item.get("year") == year and url and not link_health.unavailable(url):
+            # The landed lane decides its own rows afresh every run.
+            row = {key: value for key, value in item.items() if key != "landed"}
+            row.update(kev=row.get("cve") in kev, score=trending_score(row))
+            rows.append(row)
+    return sorted(rows, key=lambda row: row["score"], reverse=True)[:PER_YEAR]
+
+
+def replace_file(path: str, text: str) -> None:
+    """Swap in a complete file, so a stopped run never leaves half a table."""
+    with tempfile.NamedTemporaryFile("w", encoding="utf-8", dir=os.path.dirname(path),
+                                     delete=False) as handle:
+        handle.write(text)
+        temporary = Path(handle.name)
+    try:
+        temporary.replace(path)
+    finally:
+        temporary.unlink(missing_ok=True)
+
+
+def finish(seconds: float, budget: float | None) -> int:
+    """Close the log, and the Actions step summary, with what this run refreshed."""
+    status = "incomplete" if INCOMPLETE else "complete"
+    title = f"Trending refresh {status} in {seconds:.0f}s"
+    if budget is not None:
+        title += f" of a {budget:.0f}s budget"
+    print(title + (f"; incomplete: {', '.join(dict.fromkeys(INCOMPLETE))}" if INCOMPLETE else ""))
+    if path := os.environ.get("GITHUB_STEP_SUMMARY"):
+        with open(path, "a", encoding="utf-8") as handle:
+            handle.write(f"### {title}\n\n" + "".join(f"- {line}\n" for line in SUMMARY) + "\n")
+    return PARTIAL_EXIT if INCOMPLETE else 0
+
+
+def main(*, history_limit: int = HISTORY_LIMIT, retry_history: bool = False,
+         budget: float | None = None) -> int:
+    import link_health
+    global HISTORY_REMAINING, HISTORY_RETRY_HOURS, DEADLINE
+    began = time.monotonic()
+    DEADLINE = None if budget is None else began + budget - FINISH_SECONDS
+    INCOMPLETE.clear()
+    SUMMARY.clear()
     HISTORY_REMAINING = history_limit
     HISTORY_RETRY_HOURS = 0 if retry_history else 4
     now = datetime.now(timezone.utc)
     since = (now - timedelta(days=WINDOW_DAYS)).date().isoformat()
     current_year = now.year
     kev = known_exploited()
+    previous = previous_items()
     items: list[dict] = []
     sections: list[list[str]] = []
 
@@ -884,71 +1026,74 @@ def main(*, history_limit: int = HISTORY_LIMIT, retry_history: bool = False) -> 
     fresh = just_landed(token, ledger)
     observations = list(fresh)
     for year in range(current_year, current_year - YEARS, -1):
-        total, repositories = search_year(year, since)
-        searched = len(repositories)
-        repositories, paths = qualifying_repositories(repositories, token)
-        repositories = published_repositories(repositories)
-        repositories = [repo for repo in repositories if not link_health.unavailable(artifact_link(repo)[0])]
-        observations.extend(repositories)
-        release_dates(repositories, token, paths, ledger)
-        shipped = code_pushed(
-            [str(r.get("full_name") or "") for r in repositories], token, paths
-        )
-        for repo in repositories:
-            repo["_shipped"] = shipped.get(str(repo.get("full_name") or ""), "")
-        qualified = len(repositories)
-        repositories = [r for r in repositories if r["_shipped"][:10] >= since]
-        repositories.sort(key=popularity, reverse=True)
-        recent = len(repositories)
-        repositories = repositories[:PER_YEAR]
-        print(f"CVE-{year}: {total} pushed since {since}, "
-              f"{searched - qualified} rejected by artifact gate, "
-              f"{qualified - recent} without a recent artifact commit, "
-              f"{len(repositories)} published")
-        if not repositories:
+        started = time.monotonic()
+        try:
+            total, repositories = search_year(year, since)
+            searched = len(repositories)
+            repositories, paths = qualifying_repositories(repositories, token)
+            repositories = published_repositories(repositories)
+            repositories = [repo for repo in repositories if not link_health.unavailable(artifact_link(repo)[0])]
+            observations.extend(repositories)
+            release_dates(repositories, token, paths, ledger)
+            shipped = code_pushed(
+                [str(r.get("full_name") or "") for r in repositories], token, paths
+            )
+        except Exception as problem:
+            # A search or gate query GitHub could not answer, or a spent budget,
+            # must not blank a year that published fine an hour ago.
+            rows = carried_rows(previous, year, kev)
+            incomplete(f"CVE-{year}", problem, f"kept {len(rows)} rows from the previous run")
+        else:
+            for repo in repositories:
+                repo["_shipped"] = shipped.get(str(repo.get("full_name") or ""), "")
+            qualified = len(repositories)
+            repositories = [r for r in repositories if r["_shipped"][:10] >= since]
+            repositories.sort(key=popularity, reverse=True)
+            recent = len(repositories)
+            repositories = repositories[:PER_YEAR]
+            note(f"CVE-{year}: {total} pushed since {since}, "
+                 f"{searched - qualified} rejected by artifact gate, "
+                 f"{qualified - recent} without a recent artifact commit, "
+                 f"{len(repositories)} published in {time.monotonic() - started:.0f}s")
+            rows = []
+            for repo in repositories:
+                # The last commit that touched anything but paperwork. pushed_at counts
+                # a README tweak, which had the table claiming a year-old exploit was
+                # updated twenty-one hours ago.
+                pushed = repo["_shipped"]
+                cve = cve_of(repo)
+                url, artifact = artifact_link(repo)
+                # Same fallback the landed lane uses. These CVEs are old enough to
+                # be in the index already, so it costs nothing to ask.
+                summary = repository_summary(repo, cve)
+                rows.append({
+                    "year": year,
+                    "stars": repo.get("stargazers_count"),
+                    "name": cell(repo.get("name")),
+                    "url": url,
+                    "artifact": artifact,
+                    "shared_repository": bool(repo.get("_shared_repository")),
+                    "source": parse.urlsplit(url).hostname,
+                    "desc": summary,
+                    "pushed": pushed,
+                    "released": repo.get("_released"),
+                    "basis": repo.get("_basis"),
+                    "score": popularity(repo),
+                    "trending": True,
+                    "created": str(repo.get("created_at") or ""),
+                    "cve": cve,
+                    "kev": cve in kev,
+                })
+        if not rows:
             continue
-        block = [
+        items.extend(rows)
+        sections.append([
             f"## Trending in {year}",
             "",
             "| Repo stars | Updated | Repository | Description |",
             "| --- | --- | --- | --- |",
-        ]
-        for repo in repositories:
-            # The last commit that touched anything but paperwork. pushed_at counts
-            # a README tweak, which had the table claiming a year-old exploit was
-            # updated twenty-one hours ago.
-            pushed = repo["_shipped"]
-            cve = cve_of(repo)
-            url, artifact = artifact_link(repo)
-            stars = repo.get("stargazers_count")
-            exploited = cve in kev
-            # Same fallback the landed lane uses. These CVEs are old enough to
-            # be in the index already, so it costs nothing to ask.
-            summary = repository_summary(repo, cve)
-            items.append({
-                "year": year,
-                "stars": stars,
-                "name": cell(repo.get("name")),
-                "url": url,
-                "artifact": artifact,
-                "shared_repository": bool(repo.get("_shared_repository")),
-                "source": parse.urlsplit(url).hostname,
-                "desc": summary,
-                "pushed": pushed,
-                "released": repo.get("_released"),
-                "basis": repo.get("_basis"),
-                "score": popularity(repo),
-                "trending": True,
-                "created": str(repo.get("created_at") or ""),
-                "cve": cve,
-                "kev": exploited,
-            })
-            block.append(
-                f"| {star_cell(stars)} | {time_ago(pushed)} "
-                f"| {KEV_MARK if exploited else ''}[{cell(repo.get('name'))}]({url}) "
-                f"| {shorten(summary)} |"
-            )
-        sections.append(block)
+            *(table_row(row, row["pushed"]) for row in rows),
+        ])
 
     remember_repository_metadata(observations)
     landed = ledger_landed(ledger, fresh)
@@ -971,7 +1116,7 @@ def main(*, history_limit: int = HISTORY_LIMIT, retry_history: bool = False) -> 
             # A day-old repository often ships without a description; the CVE's
             # own summary says more than an empty cell.
             summary = repository_summary(repo, cve)
-            if not summary and cve and lookups < NVD_LOOKUPS:
+            if not summary and cve and lookups < NVD_LOOKUPS and time_left() > 0:
                 lookups += 1
                 summary = cell(nvd_lookup(cve))
                 time.sleep(6)
@@ -994,11 +1139,7 @@ def main(*, history_limit: int = HISTORY_LIMIT, retry_history: bool = False) -> 
                 "kev": exploited,
                 "landed": True,
             })
-            lines.append(
-                f"| {star_cell(stars)} | {time_ago(repo['_released'])} "
-                f"| {KEV_MARK if exploited else ''}[{cell(repo.get('name'))}]({url}) "
-                f"| {shorten(summary)} |"
-            )
+            lines.append(table_row(items[-1], repo["_released"]))
         lines.append("")
     for index, block in enumerate(sections):
         if index == FOLDED_AFTER and len(sections) > FOLDED_AFTER:
@@ -1023,13 +1164,10 @@ def main(*, history_limit: int = HISTORY_LIMIT, retry_history: bool = False) -> 
     releases.save_ledger(ledger)
     flagged = sum(1 for item in items if item["kev"])
 
-    with open(README, "w", encoding="utf-8") as handle:
-        handle.write("\n".join(lines).rstrip() + FOOTER)
-    with open(TRENDING, "w", encoding="utf-8") as handle:
-        json.dump(items, handle, ensure_ascii=False, indent=1)
-        handle.write("\n")
+    replace_file(README, "\n".join(lines).rstrip() + FOOTER)
+    replace_file(TRENDING, json.dumps(items, ensure_ascii=False, indent=1) + "\n")
     print(f"Wrote {README} and {TRENDING} ({len(items)} repositories, {flagged} known-exploited)")
-    return 0
+    return finish(time.monotonic() - began, budget)
 
 
 if __name__ == "__main__":
@@ -1039,7 +1177,13 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--history-limit", type=int, default=HISTORY_LIMIT)
     parser.add_argument("--retry-history", action="store_true")
+    parser.add_argument("--budget-seconds", type=float,
+                        help="Write the tables within this many seconds, keeping last run's rows "
+                             "for any year there was no time to refresh")
     args = parser.parse_args()
     if args.history_limit < 0:
         parser.error("--history-limit must not be negative")
-    raise SystemExit(main(history_limit=args.history_limit, retry_history=args.retry_history))
+    if args.budget_seconds is not None and args.budget_seconds <= FINISH_SECONDS:
+        parser.error(f"--budget-seconds must leave more than the {FINISH_SECONDS}s needed to write")
+    raise SystemExit(main(history_limit=args.history_limit, retry_history=args.retry_history,
+                          budget=args.budget_seconds))

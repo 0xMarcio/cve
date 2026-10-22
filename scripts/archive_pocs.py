@@ -10,8 +10,10 @@ import json
 import os
 import re
 import tempfile
+import threading
 import time
 from collections import Counter, defaultdict
+from concurrent.futures import ThreadPoolExecutor, wait, FIRST_COMPLETED
 from datetime import datetime, timedelta, timezone
 from email.utils import parsedate_to_datetime
 from http.client import HTTPException
@@ -25,6 +27,8 @@ DIRECTORY = ROOT / 'index' / 'archives'
 API = 'https://web.archive.org/save'
 AVAILABILITY = 'https://archive.org/wayback/available'
 AGENT = 'pocindex/1.0 (+https://pocindex.io)'
+REPLAY_LOCK = threading.Lock()
+LAST_REPLAY = 0.0
 
 
 def now() -> str:
@@ -104,12 +108,15 @@ def published_snapshots(records: dict | None = None, allowed: set | None = None)
     rows = load_records() if records is None else records
     result = {}
     for key, row in rows.items():
-        if not valid_snapshot(row) or allowed is not None and key not in allowed and row.get('parent') not in allowed:
+        parents = row.get('parents') or ({row['parent']: row.get('parent_original', row['parent'])} if row.get('parent') else {})
+        if not valid_snapshot(row) or allowed is not None and key not in allowed and not (parents.keys() & allowed):
             continue
         snap = {k: row['snapshot'][k] for k in ('url', 'timestamp')}
         result.setdefault(row['original'], {}).update(snap)
-        if row.get('parent'):
-            parent = rows.get(row['parent'], {}).get('original') or row.get('parent_original') or row['parent']
+        for parent_key, original in parents.items():
+            if allowed is not None and parent_key not in allowed:
+                continue
+            parent = rows.get(parent_key, {}).get('original') or original
             result.setdefault(parent, {}).setdefault('files', []).append({'original': row['original'], **snap})
     return result
 
@@ -118,14 +125,17 @@ def archived_fallbacks(records: dict | None = None, blacklist=(), exclusions=())
     """Recover the preserved artifact, never republish its unavailable original."""
     result = defaultdict(list)
     records = load_records() if records is None else records
-    rows = [row for row in records.values() if valid_snapshot(row)
-            and (not row.get('parent') or not valid_snapshot(records.get(row['parent'], {})))]
+    rows = [row for row in records.values() if valid_snapshot(row)]
     if not rows:
         return result
     eligible = {(row['cve'], identity(row['url'])): row for row in eligible_ledger()}
     for row in rows:
-        source = row.get('parent') or row['original']
-        if link_health.repository(source) not in blacklist:
+        sources = list(row.get('parents', {})) or [row.get('parent') or row['original']]
+        for source in sources:
+            if source != row['original'] and valid_snapshot(records.get(source, {})):
+                continue
+            if link_health.repository(source) in blacklist:
+                continue
             for cve in row.get('cves', []):
                 pair = eligible.get((cve, identity(source)))
                 if (re.fullmatch(r'CVE-\d{4}-\d{4,}', cve)
@@ -202,13 +212,36 @@ class Client:
         self.interval = max(10 if self.auth else 21, interval)
         self.last_submit = 0.0
         self.last_request = 0.0
+        self.request_lock = threading.Lock()
+        self.lookup_retry_after = ''
+        self.local = threading.local()
+        self.failures = []
+
+    @property
+    def operation(self):
+        return getattr(self.local, 'operation', 'request')
+
+    @operation.setter
+    def operation(self, value):
+        self.local.operation = value
+
+    def failure(self, key: str, problem: ArchiveError) -> ArchiveError:
+        if str(problem).startswith(('transport-', 'replay-URLError', 'replay-TimeoutError')):
+            with self.request_lock:
+                current = time.monotonic()
+                self.failures = [(t, k) for t, k in self.failures if current - t < 60]
+                self.failures.append((current, key))
+                if len(self.failures) >= 5 and len({k for _, k in self.failures}) >= 3:
+                    return ArchiveError('service-transport-failures', cooldown=900)
+        return problem
 
     def json(self, url: str, data: dict | None = None, *, auth: bool = False) -> dict:
         self.operation = ('capture' if data is not None else 'availability' if url.startswith(AVAILABILITY)
-                          else 'account' if '/status/user?' in url else 'capture-status')
+                          else 'account' if '/status/user' in url else 'capture-status')
         # Space lookups and status requests too, not just capture submissions.
-        time.sleep(max(0, 1 - (time.monotonic() - self.last_request)))
-        self.last_request = time.monotonic()
+        with self.request_lock:
+            time.sleep(max(0, 1 - (time.monotonic() - self.last_request)))
+            self.last_request = time.monotonic()
         headers = {'Accept': 'application/json', 'User-Agent': AGENT, 'Accept-Encoding': 'identity'}
         if auth and self.auth:
             if parse.urlsplit(url).netloc != 'web.archive.org':
@@ -219,7 +252,7 @@ class Client:
         try:
             # Busy-host captures can be queued before SPN returns a job ID.
             # Allow that delay without issuing duplicate submission requests.
-            with request.build_opener(NoRedirect).open(req, timeout=90) as response:
+            with request.build_opener(NoRedirect).open(req, timeout=90 if data is not None else 20) as response:
                 value = json.loads(response_bytes(response, 1_000_000))
             if not isinstance(value, dict):
                 raise ArchiveError('invalid-response', cooldown=600)
@@ -228,13 +261,29 @@ class Client:
             code = exc.code
             retry = exc.headers.get('Retry-After', '')
             exc.close()
+            if code in {401, 403} and parse.urlsplit(url).path != '/save/status/user' and auth:
+                # SPN can return the target's access failure at this endpoint.
+                # Confirm account access before declaring credentials invalid.
+                operation = self.operation
+                self.account()
+                self.operation = operation
+                raise ArchiveError(f'target-http-{code}') from None
             delay = retry_delay(retry) if code == 429 else 600 if code >= 500 else 0
-            raise ArchiveError(f'http-{code}', cooldown=delay, fatal=code in {401, 403}) from None
-        except (OSError, error.URLError, ValueError, HTTPException, EOFError) as exc:
-            raise ArchiveError(type(exc).__name__, cooldown=600) from None
+            raise ArchiveError(f'http-{code}', cooldown=delay or (900 if code in {401, 403} and not auth else 0),
+                               fatal=auth and code in {401, 403}) from None
+        except (ValueError, EOFError):
+            raise ArchiveError('invalid-response', cooldown=600) from None
+        except (OSError, error.URLError, HTTPException) as exc:
+            # A lost connection is not an account-wide rate limit. Preserve the
+            # job and retry this target, while unrelated work keeps moving.
+            cause = getattr(exc, 'reason', exc)
+            raise ArchiveError('transport-' + type(cause).__name__) from None
 
-    def lookup(self, url: str) -> dict | None:
-        result = self.json(AVAILABILITY + '?' + parse.urlencode({'url': parse.urldefrag(url).url}))
+    def lookup(self, url: str, timestamp: str = '') -> dict | None:
+        query = {'url': parse.urldefrag(url).url}
+        if timestamp:
+            query['timestamp'] = re.sub(r'\D', '', timestamp)[:14]
+        result = self.json(AVAILABILITY + '?' + parse.urlencode(query))
         if not isinstance(result.get('archived_snapshots'), dict):
             raise ArchiveError('invalid-availability-response', cooldown=600)
         row = result['archived_snapshots'].get('closest') or {}
@@ -254,16 +303,23 @@ class Client:
     def submit(self, url: str, *, retry: bool = False) -> dict:
         time.sleep(max(0, self.interval - (time.monotonic() - self.last_submit)))
         self.last_submit = time.monotonic()
+        pinned = parse.urlsplit(url).hostname == 'raw.githubusercontent.com' and bool(re.search(r'/[0-9a-f]{40}/', url))
         return self.json(API, {'url': parse.urldefrag(url).url, 'capture_all': '0', 'capture_outlinks': '0',
-                               'skip_first_archive': '1', 'if_not_archived_within': '1s' if retry else '30d'}, auth=True)
+                               'skip_first_archive': '1', 'if_not_archived_within': '1s' if retry else '36500d' if pinned else '30d'}, auth=True)
 
     def status(self, job: str) -> dict:
         if not re.fullmatch(r'[a-zA-Z0-9-]+', job):
             raise ArchiveError('invalid-job-id')
         return self.json(API + '/status/' + job, auth=True)
 
+    def account(self) -> dict:
+        row = self.json(API + '/status/user?' + parse.urlencode({'_t': int(time.time() * 1000)}), auth=True)
+        if not isinstance(row.get('available'), int):
+            raise ArchiveError('invalid-capacity-response', cooldown=300)
+        return row
+
     def capacity(self) -> int:
-        row = self.json(API + '/status/user?' + parse.urlencode({'_t': time.time_ns()}), auth=True)
+        row = self.account()
         for field in ('daily_captures', 'daily_status'):
             used, limit = row.get(field), row.get(field + '_limit')
             if isinstance(used, int) and isinstance(limit, int) and used >= limit:
@@ -276,14 +332,22 @@ class Client:
         return min(2, available)
 
 
-def verify_snapshot(snap: dict, original: str, expected_blobs=(), repo_id=None) -> bool:
+def verify_snapshot(snap: dict, original: str, expected_blobs=(), repo_id=None, *, strict_blobs=False) -> bool:
     """Replay must load content, not a login page or an archive error wrapper."""
     replay = snap['url'].replace('/' + snap['timestamp'] + '/', '/' + snap['timestamp'] + 'id_/', 1)
+    global LAST_REPLAY
+    with REPLAY_LOCK:
+        time.sleep(max(0, 1 - (time.monotonic() - LAST_REPLAY)))
+        LAST_REPLAY = time.monotonic()
     try:
         with request.build_opener(ReplayRedirect).open(request.Request(replay, headers={'User-Agent': AGENT}), timeout=30) as response:
             final = parse.urlsplit(response.url)
             if (response.status != 200 or final.hostname != 'web.archive.org'
                     or not final.path.startswith('/web/' + snap['timestamp'] + 'id_/')):
+                return False
+            final_original = (final.path + ('?' + final.query if final.query else '')).split(
+                '/web/' + snap['timestamp'] + 'id_/', 1)[1]
+            if not equivalent(final_original, original):
                 return False
             body = response_bytes(response, 2_000_000)
             mime = response.headers.get('Content-Type', '').lower()
@@ -291,7 +355,7 @@ def verify_snapshot(snap: dict, original: str, expected_blobs=(), repo_id=None) 
             return False
         raw = parse.urlsplit(original).hostname == 'raw.githubusercontent.com'
         verified_raw = False
-        if raw and expected_blobs and len(body) >= 256:
+        if raw and expected_blobs and (strict_blobs or len(body) >= 256):
             digest = hashlib.sha1(b'blob ' + str(len(body)).encode() + b'\0' + body).hexdigest()
             if digest not in expected_blobs:
                 return False
@@ -373,12 +437,8 @@ def inventory(min_year: int = 2026) -> dict:
             target['not_before'] = min(target.get('not_before', bound), bound)
         if row.get('repo'):
             target['repo_id'] = str(row['repo'])
-        if re.fullmatch(r'/reports/\d+/?', parse.urlsplit(url).path) and parse.urlsplit(url).hostname in {'hackerone.com', 'www.hackerone.com'}:
-            report_json = url.rstrip('/') + '.json'
-            item = result.setdefault(identity(report_json), {'original': report_json, 'cves': [],
-                                      'priority': target['priority'], 'parent': key, 'parent_original': url})
-            if row['cve'] not in item['cves']:
-                item['cves'].append(row['cve'])
+        # Do not invent HackerOne .json URLs: the public report route does not
+        # establish public access to an authenticated API representation.
         # Pin actual code bytes when source inspection already identified a revision.
         sha = row.get('sha') if row.get('commit_verified') else None
         repo = link_health.repository(url)
@@ -393,10 +453,41 @@ def inventory(min_year: int = 2026) -> dict:
             item = result.setdefault(identity(raw), {'original': raw, 'cves': [],
                                                      'priority': target['priority'], 'parent': key,
                                                      'parent_original': url})
+            item.setdefault('parents', {})[key] = url
             if row.get('head') == revision and path in row.get('history_paths', []) and row.get('blobs'):
                 item['expected_blobs'] = row['blobs']
             if row['cve'] not in item['cves']:
                 item['cves'].append(row['cve'])
+    sources = DIRECTORY / 'sources.json'
+    manifests = json.loads(sources.read_text()).get('repositories', {}) if sources.exists() else {}
+    from archive_sources import repository_source
+    for parent, manifest in manifests.items():
+        if parent not in result or not repository_source(result[parent]['original']):
+            continue
+        target = result[parent]
+        repo, revision = manifest.get('repository', ''), manifest.get('revision', '')
+        if repo != link_health.repository(target['original']) or not re.fullmatch(r'[0-9a-f]{40}', revision):
+            continue
+        for entry in manifest.get('files', []):
+            path, oid = entry.get('path', ''), entry.get('oid', '')
+            revision = entry.get('revision') or manifest.get('revision', '')
+            if (not path or any(p in {'', '.', '..'} for p in path.split('/'))
+                    or not re.fullmatch(r'[0-9a-f]{40}', oid) or not re.fullmatch(r'[0-9a-f]{40}', revision)):
+                continue
+            raw = f'https://raw.githubusercontent.com/{repo}/{revision}/{parse.quote(path, safe="/")}'
+            cves = sorted(set(entry.get('cves', target['cves'])) & set(target['cves']))
+            if not cves:
+                continue
+            item = {'original': raw, 'cves': cves, 'priority': target['priority'],
+                                     'parent': parent, 'parent_original': target['original'], 'expected_blobs': [oid],
+                                     'strict_blobs': True}
+            previous = result.get(identity(raw), {})
+            parents = dict(previous.get('parents', {}))
+            if previous.get('parent'):
+                parents[previous['parent']] = previous.get('parent_original', previous['parent'])
+            parents[parent] = target['original']
+            item.update(cves=sorted(set(cves) | set(previous.get('cves', []))), parents=parents)
+            result[identity(raw)] = item
     return result
 
 
@@ -419,11 +510,11 @@ def verify_candidate(row: dict) -> None:
     upper = datetime.fromisoformat(row['unavailable_since'].replace('Z', '+00:00')) if row.get('unavailable_since') else None
     row['next_check_at'] = after(60)
     row['verify_attempts'] = row.get('verify_attempts', 0) + 1
-    if row['verify_attempts'] > 5:
-        row['next_check_at'] = after(3600)
+    row['next_check_at'] = after(min(3600, 60 * 2 ** min(row['verify_attempts'] - 1, 6)))
     valid = equivalent(captured, row['original']) and (lower is None or moment >= lower - timedelta(minutes=5))
     valid = valid and (upper is None or moment <= upper)
-    if valid and verify_snapshot(snap, row['original'], row.get('expected_blobs', ()), row.get('repo_id')):
+    if valid and verify_snapshot(snap, row['original'], row.get('expected_blobs', ()), row.get('repo_id'),
+                                 strict_blobs=bool(row.get('strict_blobs'))):
         snap['verified_at'] = now()
         if not valid_snapshot({'original': row['original'], 'snapshot': snap}):
             row.pop('candidate', None)
@@ -457,7 +548,7 @@ def capture_failure(row: dict, reason: str) -> None:
 
 def process(key: str, target: dict, rows: dict, client: Client, *, capture: bool) -> None:
     row = rows.setdefault(key, {**target, 'attempts': 0})
-    for field in ('not_before', 'repo_id', 'parent', 'parent_original', 'expected_blobs'):
+    for field in ('not_before', 'repo_id', 'parent', 'parent_original', 'parents', 'expected_blobs', 'strict_blobs'):
         row.pop(field, None)
     row.update(target)  # Drop corrected CVE associations; don't union stale ones.
     row.update(checked_at=now(), status='retry')
@@ -473,6 +564,7 @@ def process(key: str, target: dict, rows: dict, client: Client, *, capture: bool
     else:
         row.pop('unavailable_since', None)
     if row.get('candidate'):
+        client.operation = 'replay'
         verify_candidate(row)
         return
     recover_job = False
@@ -495,6 +587,7 @@ def process(key: str, target: dict, rows: dict, client: Client, *, capture: bool
             except (ValueError, TypeError, KeyError):
                 row.update(error='invalid-capture-response', next_check_at=after(3600))
                 return
+            client.operation = 'replay'
             verify_candidate(row)
             return  # Never resubmit a terminal job in the same run.
         if status.get('status') == 'error':
@@ -502,18 +595,27 @@ def process(key: str, target: dict, rows: dict, client: Client, *, capture: bool
             capture_failure(row, str(status.get('status_ext') or 'capture-error'))
             return
         recover_job = True
-    row['attempts'] = row.get('attempts', 0) + 1
-    row['next_check_at'] = after(min(7 * 86400, 3600 * 2 ** min(row['attempts'], 8)))
-    # Authenticated Save Page Now deduplicates live URLs itself; the public
-    # availability API is needed for removed URLs and expired status jobs.
-    if not capture or unavailable or recover_job:
-        snap = client.lookup(row['original'])
+    row['next_check_at'] = after(3600)
+    # Find existing captures before spending a capture slot, including live
+    # repositories. Keep negative lookups separate from submission retries.
+    needs_lookup = (not capture or unavailable or recover_job or
+                    not row.get('parent') and not valid_snapshot(row) and row.get('lookup_checked_at', '') < after(-30 * 86400))
+    lookup_blocked = isinstance(client.lookup_retry_after, str) and client.lookup_retry_after > now()
+    if needs_lookup and lookup_blocked and (not capture or unavailable or recover_job):
+        row.update(error='lookup-cooldown', next_check_at=client.lookup_retry_after)
+        return
+    if needs_lookup and not lookup_blocked:
+        snap = client.lookup(row['original'], row['unavailable_since']) if row.get('unavailable_since') else client.lookup(row['original'])
+        row['lookup_checked_at'] = now()
         if snap:
             row['candidate'] = snap
+            client.operation = 'replay'
             verify_candidate(row)
             return
     if not capture or unavailable:
         row['status'] = 'not-found'
+        if not unavailable:
+            row['next_check_at'] = ''  # A negative lookup is ready for capture now.
         return
     day = now()[:10]
     budget = row.setdefault('submissions', {'date': day, 'count': 0})
@@ -522,6 +624,8 @@ def process(key: str, target: dict, rows: dict, client: Client, *, capture: bool
     if budget['count'] >= 2:
         row['next_check_at'] = after(86400)
         return
+    row['attempts'] = row.get('attempts', 0) + 1
+    row['next_check_at'] = after(min(7 * 86400, 3600 * 2 ** min(row['attempts'], 8)))
     budget['count'] += 1
     row['submitted_at'] = now()
     try:
@@ -552,11 +656,104 @@ def credentials() -> tuple[str, str]:
     return access, secret
 
 
+def select_targets(targets: dict, rows: dict, *, capture=False) -> list[str]:
+    """Reserve work for new discoveries, the old backlog and actual source files."""
+    eligible = [key for key in targets if not rows.get(key, {}).get('job_id')
+                and not rows.get(key, {}).get('candidate')
+                and rows.get(key, {}).get('next_check_at', '') <= now()]
+    pages = [key for key in eligible if not targets[key].get('parent')]
+    checked = 'submitted_at' if capture else 'checked_at'
+    fresh = sorted(pages, key=lambda k: (valid_snapshot(rows.get(k, {})),
+                   bool(rows.get(k, {}).get(checked)), targets[k]['priority'], k))
+    recent = sorted(pages, key=lambda k: (not valid_snapshot(rows.get(k, {})),
+                    not bool(rows.get(k, {}).get(checked)), targets[k]['priority'], k), reverse=True)
+    files = sorted((k for k in eligible if targets[k].get('parent')),
+                   key=lambda k: (valid_snapshot(rows.get(k, {})), bool(rows.get(k, {}).get('submitted_at')),
+                                  rows.get(k, {}).get('checked_at', ''), k))
+    grouped = defaultdict(list)
+    for key in files:
+        grouped[targets[key]['parent']].append(key)
+    from itertools import zip_longest
+    files = [key for group in zip_longest(*grouped.values()) for key in group if key is not None]
+    result, seen = [], set()
+    # One recent page, one oldest/unseen page, then two source files per cycle.
+    file_queue = iter(files)
+    for group in zip_longest(iter(recent), iter(fresh), file_queue, file_queue):
+        for key in group:
+            if key is not None and key not in seen:
+                result.append(key)
+                seen.add(key)
+    return result
+
+
+def lookup_pages(targets: dict, rows: dict, client: Client, directory: Path, limit: int, seconds: int) -> int:
+    """Inventory existing page captures independently of the slower save queue.
+
+    Four outstanding reads hide slow replays, with a shared one-request/second
+    API gate. Stop scheduling on a service limit and save every in-flight result.
+    """
+    pages = {k: r for k, r in targets.items() if not r.get('parent')
+             and not valid_snapshot(rows.get(k, {}))
+             and rows.get(k, {}).get('lookup_checked_at', '') < after(-30 * 86400)}
+    selected = iter(select_targets(pages, rows)[:limit])
+    deadline = time.monotonic() + seconds
+    completed, stopped, fatal = 0, False, False
+    control = directory / 'lookup-control.json'
+    if control.exists() and json.loads(control.read_text()).get('retry_after', '') > now():
+        print('Archive lookup cooldown is still active', flush=True)
+        return 0
+
+    def read(key):
+        # Only the coordinator writes the shared records/shards.
+        local = {key: dict(rows.get(key, {}))} if key in rows else {}
+        problem = None
+        try:
+            process(key, targets[key], local, client, capture=False)
+        except ArchiveError as exc:
+            problem = client.failure(key, exc) if isinstance(client, Client) else exc
+            problem.operation = client.operation
+            local[key].update(error=str(problem), status='retry', next_check_at=max(local[key].get('next_check_at', ''), after(problem.cooldown or 3600)))
+        return local[key], problem
+
+    with ThreadPoolExecutor(max_workers=4) as pool:
+        pending = {}
+        while pending or not stopped:
+            while not stopped and len(pending) < 4 and time.monotonic() < deadline:
+                key = next(selected, None)
+                if key is None:
+                    stopped = True
+                    break
+                pending[pool.submit(read, key)] = key
+            if not pending:
+                break
+            done, _ = wait(pending, timeout=1, return_when=FIRST_COMPLETED)
+            for future in done:
+                key = pending.pop(future)
+                row, problem = future.result()
+                rows[key] = row
+                save_records(rows, {key}, directory)
+                completed += 1
+                if problem and (problem.cooldown or problem.fatal):
+                    stopped = True
+                    fatal |= problem.fatal
+                    control.write_text(json.dumps({'retry_after': after(problem.cooldown or 300), 'reason': str(problem)}) + '\n')
+                    if getattr(problem, 'operation', '') == 'replay' or str(problem) == 'service-transport-failures':
+                        (directory / 'control.json').write_text(control.read_text())
+                    print(f'Archive lookup paused: {problem}', flush=True)
+                print(f'{completed}: {row["status"]} {row["original"]}', flush=True)
+            if time.monotonic() >= deadline:
+                stopped = True
+    print(json.dumps({'looked_up': completed, 'snapshots': sum(valid_snapshot(r) for r in rows.values())}), flush=True)
+    return int(fatal)
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--limit', type=int, default=100)
     parser.add_argument('--max-seconds', type=int, default=1200)
     parser.add_argument('--capture', action='store_true')
+    parser.add_argument('--lookup-pages', action='store_true', help='Inventory existing page captures without submitting saves')
+    parser.add_argument('--files-only', action='store_true', help='Capture only identified source files')
     parser.add_argument('--directory', type=Path, default=DIRECTORY)
     parser.add_argument('--url', action='append', help='Only process these known inventory URLs')
     parser.add_argument('--merge-from', type=Path)
@@ -565,32 +762,58 @@ def main() -> int:
     args = parser.parse_args()
     if args.limit < 1 or args.max_seconds < 1 or args.min_year < 1999:
         parser.error('Run limits must be positive')
+    if args.capture and args.lookup_pages:
+        parser.error('Choose capture or page lookup')
     rows = load_records(args.directory)
     if args.merge_from:
         incoming = load_records(args.merge_from)
         for key, row in incoming.items():
             old = rows.get(key, {})
             if old.get('checked_at', '') > row.get('checked_at', ''):
+                if valid_snapshot(row) and not valid_snapshot(old):
+                    rows[key] = {**old, 'snapshot': row['snapshot']}
                 continue
             if valid_snapshot(old):
                 row['snapshot'] = old['snapshot']
             rows[key] = row
         save_records(rows, set(incoming), args.directory)
-        control = args.merge_from / 'control.json'
-        current = args.directory / 'control.json'
-        if control.exists():
-            incoming_control = json.loads(control.read_text())
-            existing = json.loads(current.read_text()) if current.exists() else {}
-            if incoming_control.get('retry_after', '') > existing.get('retry_after', ''):
-                current.write_text(json.dumps(incoming_control) + '\n')
+        for name in ('control.json', 'lookup-control.json'):
+            control = args.merge_from / name
+            current = args.directory / name
+            if control.exists():
+                incoming_control = json.loads(control.read_text())
+                existing = json.loads(current.read_text()) if current.exists() else {}
+                if incoming_control.get('retry_after', '') > existing.get('retry_after', ''):
+                    current.write_text(json.dumps(incoming_control) + '\n')
+        sources = args.merge_from / 'sources.json'
+        if sources.exists():
+            from archive_sources import save, repository_source
+            current = args.directory / 'sources.json'
+            merged = json.loads(current.read_text()) if current.exists() else {'version': 1, 'repositories': {}}
+            for key, row in json.loads(sources.read_text())['repositories'].items():
+                if repository_source(key) and row.get('checked_at', '') >= merged['repositories'].get(key, {}).get('checked_at', ''):
+                    merged['repositories'][key] = row
+            merged['repositories'] = {k: r for k, r in merged['repositories'].items() if repository_source(k)}
+            save(current, merged)
         return 0
     targets = inventory(args.min_year)
+    # A new HEAD must not orphan already submitted captures of the previous
+    # revision. Finish them while their published parent is still eligible.
+    for key, row in rows.items():
+        if key not in targets and (row.get('job_id') or row.get('candidate')) and row.get('parent') in targets:
+            cves = sorted(set(row.get('cves', [])) & set(targets[row['parent']]['cves']))
+            if cves:
+                targets[key] = {k: v for k, v in row.items() if k in
+                    {'original', 'priority', 'parent', 'parent_original', 'parents', 'expected_blobs', 'strict_blobs'}}
+                targets[key]['cves'] = cves
     if args.stats:
         print(json.dumps({'min_year': args.min_year, 'targets': len(targets),
                           'original_urls': sum(not r.get('parent') for r in targets.values()),
                           'source_files': sum(bool(r.get('parent')) for r in targets.values()),
                           'processed': sum(k in rows for k in targets),
                           'snapshots': sum(valid_snapshot(rows.get(k, {})) for k in targets),
+                          'verified_pages': sum(valid_snapshot(r) and not r.get('parent') for r in rows.values()),
+                          'verified_files': sum(valid_snapshot(r) and bool(r.get('parent')) for r in rows.values()),
                           'states': dict(Counter(rows[k].get('status') for k in targets if k in rows))}, indent=2))
         return 0
     if args.url:
@@ -598,7 +821,14 @@ def main() -> int:
         targets = {key: value for key, value in targets.items() if key in keys}
         if keys - targets.keys():
             parser.error('Requested URL is not in the published-artifact inventory')
+    if args.files_only:
+        targets = {key: value for key, value in targets.items() if value.get('parent')}
     client = Client(*credentials())
+    if args.lookup_pages:
+        return lookup_pages(targets, rows, client, args.directory, args.limit, args.max_seconds)
+    lookup_control = args.directory / 'lookup-control.json'
+    if lookup_control.exists():
+        client.lookup_retry_after = json.loads(lookup_control.read_text()).get('retry_after', '')
     if args.capture and not client.auth:
         parser.error('Authenticated captures require IA_ACCESS_KEY and IA_SECRET_KEY')
     submitted = max((row.get('submitted_at', '') for row in rows.values()), default='')
@@ -618,27 +848,31 @@ def main() -> int:
             control.write_text(json.dumps({'retry_after': after(exc.cooldown or 300), 'reason': str(exc)}) + '\n')
             print(f'Archive service requested backoff: {exc}', flush=True)
             return 1 if exc.fatal else 0
-    selected = [key for key in targets if not rows.get(key, {}).get('job_id') and not rows.get(key, {}).get('candidate')
-                and rows.get(key, {}).get('next_check_at', '') <= now()]
-    # New discoveries first, then unsuccessful attempts, then refreshes of
-    # already-preserved pages. Failed refreshes never discard a good snapshot.
-    selected.sort(key=lambda key: (not valid_snapshot(rows.get(key, {})), targets[key]['priority'], key), reverse=True)
+    selected = select_targets(targets, rows, capture=args.capture)
     start = time.monotonic()
     completed = 0
+    last_was_new = False
     while time.monotonic() - start < args.max_seconds:
         hosts = {parse.urlsplit(r['original']).hostname for r in rows.values() if r.get('host_retry_after', '') > now()}
-        selected = [key for key in selected if parse.urlsplit(targets[key]['original']).hostname not in hosts]
+        available = next((key for key in selected if parse.urlsplit(targets[key]['original']).hostname not in hosts), None)
         pending = [key for key in targets if rows.get(key, {}).get('job_id') or rows.get(key, {}).get('candidate')]
         due = [key for key in pending if rows[key].get('next_check_at', '') <= now()
                or rows[key].get('job_id') and not active_job(rows[key])]
-        if due:
-            key = min(due, key=lambda k: rows[k].get('next_check_at', ''))
-        elif selected and completed < args.limit and sum(active_job(rows[k]) for k in pending) < slots:
-            key = selected.pop(0)
+        room = sum(active_job(rows[k]) for k in pending) < slots
+        if due and (last_was_new or available is None or completed >= args.limit or not room):
+            key = min(due, key=lambda k: (not active_job(rows[k]), rows[k].get('next_check_at', '')))
+            last_was_new = False
+        elif available is not None and completed < args.limit and room:
+            key = available
+            selected.remove(key)
             completed += 1
+            last_was_new = True
         elif pending:
             if all(rows[k].get('next_check_at', '') > after(args.max_seconds - (time.monotonic() - start)) for k in pending):
                 break
+            time.sleep(5)
+            continue
+        elif selected and hosts:
             time.sleep(5)
             continue
         else:
@@ -647,6 +881,7 @@ def main() -> int:
         try:
             process(key, targets[key], rows, client, capture=args.capture)
         except ArchiveError as exc:
+            exc = client.failure(key, exc)
             rows[key]['error'] = str(exc)
             rows[key]['status'] = 'retry'
             if exc.fatal:
@@ -656,9 +891,22 @@ def main() -> int:
                 rows[key]['attempts'] = attempts
                 rows[key]['next_check_at'] = (datetime.now(timezone.utc) + timedelta(seconds=exc.cooldown)).strftime('%Y-%m-%dT%H:%M:%SZ')
                 save_records(rows, {key}, args.directory)
+                if client.operation == 'availability':
+                    client.lookup_retry_after = rows[key]['next_check_at']
+                    lookup_control.write_text(json.dumps({'retry_after': client.lookup_retry_after, 'reason': str(exc)}) + '\n')
+                    print(f'Archive lookups paused; capture jobs can continue: {exc}', flush=True)
+                    continue
                 control.write_text(json.dumps({'retry_after': rows[key]['next_check_at'], 'reason': str(exc)}) + '\n')
                 print(f'Archive service requested backoff during {client.operation}: {exc}', flush=True)
                 break
+            if str(exc) in {'response-too-large', 'unsupported-response-encoding'}:
+                rows[key].pop('candidate', None)
+                rows[key].pop('verify_attempts', None)
+                rows[key]['next_check_at'] = after(7 * 86400)
+            else:
+                rows[key]['next_check_at'] = max(rows[key].get('next_check_at', ''),
+                    after(60 if rows[key].get('job_id') or rows[key].get('candidate') else 3600))
+            print(f'Archive target deferred during {getattr(client, "operation", "replay")}: {exc}', flush=True)
         finally:
             save_records(rows, {key}, args.directory)
         print(f'{completed}: {rows[key]["status"]} {targets[key]["original"]}', flush=True)

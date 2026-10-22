@@ -7,7 +7,7 @@ import re
 import sys
 import tempfile
 import unittest
-from contextlib import redirect_stdout
+from contextlib import redirect_stderr, redirect_stdout
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from unittest.mock import patch
@@ -157,6 +157,49 @@ class JustLandedTests(unittest.TestCase):
         rows = pushed_rows("spam", 5000, trending.LANDED_LIMIT + 50, created=3, newest=0.001)
         self.assertEqual(run_landed(rows, {}), ([], [row["name"] for row in rows[:trending.LANDED_LIMIT]]))
 
+    def test_one_failed_search_keeps_the_other_searches_candidates(self) -> None:
+        rows = pushed_rows("acme", 1000, 3, created=3, newest=0.01)
+
+        def search(query: str, **kwargs) -> tuple[int, list[dict]]:
+            if "reproducer" in query:
+                raise RuntimeError("GitHub returned incomplete results")
+            return len(rows), rows
+
+        with patch.multiple(trending, search=search, load_reviews=lambda: [], graphql=gate, release_dates=released,
+                            published_repositories=lambda rows: rows, INCOMPLETE=[], SUMMARY=[]), \
+                redirect_stdout(io.StringIO()) as log, redirect_stderr(io.StringIO()) as errors:
+            listed = trending.just_landed("", {})
+            lanes = list(trending.INCOMPLETE)
+        self.assertCountEqual([row["full_name"] for row in listed], [row["full_name"] for row in rows])
+        self.assertEqual(lanes, ["just landed"])
+        self.assertIn("reproducer in:readme: RuntimeError: GitHub returned incomplete results", log.getvalue())
+        self.assertIn("Traceback", errors.getvalue())
+
+    def test_spent_budget_stops_judging_and_keeps_the_rows_already_found(self) -> None:
+        real = pushed_rows("acme", 1000, 5, created=3, newest=0.01)
+        empty = pushed_rows("spam", 5000, 30, created=1, newest=0.06)
+        asked: list[str] = []
+
+        def graphql(query: str, token: str) -> dict:
+            if asked:
+                raise trending.OutOfTime("time budget spent before a GitHub GraphQL query")
+            found = gate(query, token)
+            for alias, name in ALIAS.findall(query):
+                asked.append(name)
+                if name.startswith("CVE-2025-5"):
+                    found[alias] = EMPTY
+            return found
+
+        with patch.multiple(trending, search=lambda query, **kwargs: (35, real + empty), load_reviews=lambda: [],
+                            graphql=graphql, release_dates=released, published_repositories=lambda rows: rows,
+                            INCOMPLETE=[], SUMMARY=[]), \
+                redirect_stdout(io.StringIO()) as log:
+            listed = trending.just_landed("", {})
+            lanes = list(trending.INCOMPLETE)
+        self.assertCountEqual([row["name"] for row in listed], [row["name"] for row in real])
+        self.assertEqual((len(asked), lanes), (trending.LANDED_BATCH, ["just landed"]))
+        self.assertIn("kept 5 rows from 20 judged candidates", log.getvalue())
+
     def test_readme_only_cve_is_classified_for_the_requested_year(self) -> None:
         candidate = repo("researcher/widget-poc", stamp(1), stars=100)
         content = {"readmeMd": {"text": f"PoCs for {CVE}. Related CVE-2025-9999."},
@@ -275,6 +318,18 @@ class ReleaseEvidenceTests(unittest.TestCase):
                 trending.release_dates(rows, "test", paths, ledger)
             self.assertEqual(inspect.call_count, 2)
             self.assertTrue(all(row["released"] == stamp(1) for row in ledger.values()))
+
+    def test_history_that_cannot_finish_within_the_budget_waits_for_the_next_run(self):
+        row = dict(repo("owner/CVE-2024-1234", stamp(50)), revision="a" * 40)
+        ledger = trending.releases.Ledger()
+        with patch.object(trending.releases, "current_repository_evidence") as inspect, \
+                patch.multiple(trending, HISTORY_REMAINING=40,
+                               DEADLINE=trending.time.monotonic() + trending.HISTORY_SECONDS / 2):
+            trending.release_dates([row], "test", {row["full_name"]: ["exploit.py"]}, ledger)
+        inspect.assert_not_called()
+        held = ledger[trending.releases.key("CVE-2024-1234", row["html_url"])]
+        self.assertIsNone(held["released"])
+        self.assertNotIn("checked", held)
 
     def test_qualified_readd_clears_tombstone_without_resetting_release(self):
         row = dict(repo("owner/CVE-2024-1234", stamp(50)), revision="a" * 40)
@@ -448,6 +503,78 @@ class MainTests(unittest.TestCase):
         )
         self.assertIn("(3 repositories, 1 known-exploited)", log.getvalue())
 
+    def previous_row(self, year: int, name: str, **changes) -> dict:
+        cve = f"CVE-{year}-4242"
+        return {"year": year, "stars": 70, "name": name, "url": f"https://github.com/example/{name}",
+                "artifact": False, "shared_repository": False, "source": "github.com", "desc": "Exploit",
+                "pushed": stamp(2), "released": stamp(30), "basis": "commit", "score": 1.0, "trending": True,
+                "created": stamp(30), "cve": cve, "kev": False, **changes}
+
+    def test_year_github_cannot_answer_keeps_last_runs_rows_and_is_reported(self) -> None:
+        fresh = repo(f"example/{CVE}", stamp(0.3), stars=50)
+        kept = self.previous_row(NOW.year - 1, "kept-poc", landed=True)
+        replaced = self.previous_row(NOW.year, "replaced-poc")
+
+        def search_year(year: int, since: str) -> tuple[int, list[dict]]:
+            if year == NOW.year:
+                return 1, [dict(fresh)]
+            raise RuntimeError("GitHub returned incomplete results")
+
+        with tempfile.TemporaryDirectory() as tmp:
+            readme, output, summary = Path(tmp, "README.md"), Path(tmp, "trending.json"), Path(tmp, "summary.md")
+            output.write_text(json.dumps([kept, replaced]))
+            with patch.multiple(
+                trending, README=str(readme), TRENDING=str(output), YEARS=2,
+                figures=lambda: {"total_cves": 2, "with_pocs": 2, "kev": 1},
+                known_exploited=lambda: {kept["cve"]},
+                just_landed=lambda token, ledger: [],
+                search_year=search_year,
+                qualifying_repositories=lambda rows, token: (rows, {}),
+                published_repositories=lambda rows: rows,
+                release_dates=released, code_pushed=shipped,
+                ledger_landed=lambda ledger, rows: rows,
+            ), patch.multiple(trending.releases, load_ledger=lambda: {}, save_ledger=lambda ledger: None), \
+                    patch.dict(trending.os.environ, {"GITHUB_STEP_SUMMARY": str(summary)}), \
+                    redirect_stdout(io.StringIO()) as log, redirect_stderr(io.StringIO()) as errors:
+                self.assertEqual(trending.main(), trending.PARTIAL_EXIT)
+            text = readme.read_text(encoding="utf-8")
+            items = {item["url"]: item for item in json.loads(output.read_text(encoding="utf-8"))}
+            report = summary.read_text(encoding="utf-8")
+        self.assertIn(f"## Trending in {NOW.year - 1}", text)
+        self.assertIn(f"]({kept['url']})", text)
+        self.assertIn(f"]({fresh['html_url']})", text)
+        self.assertNotIn(replaced["url"], text)
+        self.assertEqual(set(items), {kept["url"], fresh["html_url"]})
+        self.assertNotIn("landed", items[kept["url"]])
+        self.assertTrue(items[kept["url"]]["kev"])
+        self.assertIn("RuntimeError: GitHub returned incomplete results", errors.getvalue())
+        self.assertIn(f"CVE-{NOW.year - 1} incomplete: RuntimeError", log.getvalue())
+        self.assertIn("### Trending refresh incomplete", report)
+        self.assertIn(f"- CVE-{NOW.year}: 1 pushed since", report)
+        self.assertIn(f"- CVE-{NOW.year - 1} incomplete", report)
+
+    def test_spent_budget_publishes_last_runs_rows_without_calling_github(self) -> None:
+        kept = self.previous_row(NOW.year, "kept-poc")
+        with tempfile.TemporaryDirectory() as tmp:
+            readme, output = Path(tmp, "README.md"), Path(tmp, "trending.json")
+            output.write_text(json.dumps([kept]))
+            with patch.multiple(
+                trending, README=str(readme), TRENDING=str(output), YEARS=1, FINISH_SECONDS=60, DEADLINE=None,
+                figures=lambda: {"total_cves": 2, "with_pocs": 1, "kev": 1},
+                known_exploited=lambda: set(), load_reviews=lambda: [],
+                ledger_landed=lambda ledger, rows: rows,
+            ), patch.multiple(trending.releases, load_ledger=lambda: {}, save_ledger=lambda ledger: None), \
+                    patch.object(trending.request, "urlopen") as fetch, redirect_stdout(io.StringIO()) as log:
+                self.assertEqual(trending.main(budget=60), trending.PARTIAL_EXIT)
+            text = readme.read_text(encoding="utf-8")
+            items = json.loads(output.read_text(encoding="utf-8"))
+        fetch.assert_not_called()
+        self.assertIn(f"]({kept['url']})", text)
+        self.assertEqual([item["url"] for item in items], [kept["url"]])
+        self.assertIn("just landed incomplete: OutOfTime", log.getvalue())
+        self.assertIn(f"CVE-{NOW.year} incomplete: OutOfTime", log.getvalue())
+        self.assertIn("incomplete: just landed, CVE-", log.getvalue())
+
     def test_every_ingested_collection_is_credited(self) -> None:
         for source in (*sync_collections.SOURCES, *sync_collections.TREE_SOURCES):
             self.assertIn(f"](https://github.com/{source[1]})", trending.FOOTER)
@@ -521,6 +648,13 @@ class GraphQLTests(unittest.TestCase):
             with self.assertRaisesRegex(RuntimeError, "rate limit"):
                 trending.code_pushed(["owner/repo"], "test", {"owner/repo": ["exploit.py"]})
 
+    def test_spent_budget_starts_no_query(self) -> None:
+        with patch.object(trending, "DEADLINE", trending.time.monotonic() - 1), \
+                patch.object(trending.request, "urlopen") as fetch:
+            with self.assertRaises(trending.OutOfTime):
+                trending.graphql(self.query(), "test")
+        fetch.assert_not_called()
+
     def test_deleted_repository_leaves_only_that_one_out(self) -> None:
         kept = {"pushedAt": stamp(1), "defaultBranchRef": {"target": {"p0": {"nodes": []}}}}
         payload = {
@@ -584,6 +718,15 @@ class SearchTests(unittest.TestCase):
                 self.sleep.reset_mock()
                 self.assertEqual(trending.search("CVE in:name"), (0, []))
                 self.sleep.assert_any_call(expected)
+
+    def test_rate_limit_wait_past_the_budget_stops_instead_of_sleeping(self) -> None:
+        limited = HTTPError("url", 403, "limited", {"Retry-After": "42"}, None)
+        with patch.object(trending, "DEADLINE", trending.time.monotonic() + 10), \
+                patch.object(trending.request, "urlopen", side_effect=[limited]) as fetch:
+            with self.assertRaisesRegex(trending.OutOfTime, "42s wait"):
+                trending.search("CVE in:name")
+        self.assertEqual(fetch.call_count, 1)
+        self.assertNotIn(42, [call.args[0] for call in self.sleep.call_args_list])
 
     def test_search_calls_are_paced_and_bounded(self) -> None:
         urls, urlopen = self.replies(*[

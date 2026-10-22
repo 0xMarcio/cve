@@ -1,0 +1,220 @@
+#!/usr/bin/env python3
+"""Discover immutable source files for already published 2026+ PoC links.
+
+This is an archive inventory, not a publication/classification override. Source
+is read and hashed, never executed. Partial scans resume from their checkpoint.
+"""
+from __future__ import annotations
+
+import argparse
+import hashlib
+import json
+import os
+import re
+import time
+from http.client import HTTPException
+from pathlib import Path
+from urllib import error, parse, request
+
+import archive_pocs as archive
+import releases
+import source_artifacts
+
+MANIFEST = archive.DIRECTORY / 'sources.json'
+SCAN_VERSION = 1
+IGNORE = {'.git', '.github', 'node_modules', 'vendor', 'third_party', '__pycache__', 'venv', '.venv'}
+
+
+def repository_source(url: str) -> bool:
+    parts = parse.urlsplit(url).path.strip('/').split('/')
+    return bool(archive.link_health.repository(url) and
+                (len(parts) == 2 or len(parts) >= 4 and parts[2] in {'blob', 'tree', 'raw'}))
+
+
+class Deferred(Exception):
+    pass
+
+
+class GitHub:
+    def __init__(self, token: str, requests: int, seconds: int):
+        self.token, self.remaining = token, requests
+        self.deadline = time.monotonic() + seconds
+        self.last_request = 0.0
+
+    def read(self, url: str, *, limit=2_000_000) -> bytes:
+        if self.remaining <= 0 or time.monotonic() >= self.deadline:
+            raise Deferred('run-budget')
+        time.sleep(max(0, .25 - (time.monotonic() - self.last_request)))
+        self.remaining -= 1
+        self.last_request = time.monotonic()
+        headers = {'User-Agent': archive.AGENT, 'Accept': 'application/vnd.github+json'}
+        if parse.urlsplit(url).netloc == 'api.github.com' and self.token:
+            headers['Authorization'] = 'Bearer ' + self.token
+        try:
+            with request.build_opener(archive.NoRedirect).open(request.Request(url, headers=headers), timeout=20) as response:
+                remaining = response.headers.get('X-RateLimit-Remaining')
+                if remaining is not None and int(remaining) < 300:
+                    raise Deferred('github-quota-reserve')
+                return archive.response_bytes(response, limit)
+        except error.HTTPError as exc:
+            code = exc.code
+            limited = bool(exc.headers.get('Retry-After')) or exc.headers.get('X-RateLimit-Remaining') == '0'
+            exc.close()
+            if code in {401, 429} or code == 403 and limited:
+                raise Deferred(f'github-http-{code}') from None
+            raise
+
+    def json(self, url: str):
+        return json.loads(self.read(url, limit=8_000_000))
+
+
+def candidate_paths(tree: list[dict], target: dict) -> list[dict]:
+    parsed = parse.urlsplit(target['original'])
+    parts = parse.unquote(parsed.path).strip('/').split('/')
+    scope = '/'.join(parts[4:]) if len(parts) > 4 and parts[2] in {'blob', 'tree', 'raw'} else ''
+    exact = len(parts) > 4 and parts[2] in {'blob', 'raw'}
+    result = []
+    for entry in tree:
+        path = entry.get('path', '')
+        if (entry.get('type') != 'blob' or entry.get('mode') not in {'100644', '100755'}
+                or not source_artifacts.valid_path(path)
+                or not 0 < entry.get('size', 0) <= 2_000_000
+                or any(part.lower() in IGNORE for part in path.split('/'))):
+            continue
+        if scope and (path != scope if exact else not path.startswith(scope.rstrip('/') + '/')):
+            continue
+        named = source_artifacts.identity_cves(path)
+        if named and not named.intersection(target['cves']):
+            continue
+        name = Path(path).name.lower()
+        if not (exact or releases.CODE_FILE_RE.search(path) or name.endswith(('.md', '.rst', '.html', '.asm', '.lua'))
+                or name == 'readme'):
+            continue
+        result.append(entry)
+    return sorted(result, key=lambda e: (not bool(releases.POC_RE.search(e['path'])), e['path']))
+
+
+def inspect(target: dict, old: dict, client: GitHub, *, file_limit=40) -> dict:
+    repo = archive.link_health.repository(target['original'])
+    base = f'https://api.github.com/repos/{repo}'
+    parts = parse.urlsplit(target['original']).path.strip('/').split('/')
+    ref = parts[3] if len(parts) > 3 and parts[2] in {'blob', 'tree', 'raw'} else 'HEAD'
+    revision = client.json(base + '/commits/' + parse.quote(ref, safe=''))['sha']
+    if not re.fullmatch(r'[0-9a-f]{40}', revision):
+        raise ValueError('invalid-revision')
+    compatible = old.get('scan_version') == SCAN_VERSION and old.get('cves') == sorted(target['cves'])
+    same = compatible and old.get('revision') == revision
+    row = {**old} if same else {'files': [], 'checked_paths': []}
+    row.update(repository=repo, original=target['original'], revision=revision,
+               cves=sorted(target['cves']), checked_at=archive.now(), scan_version=SCAN_VERSION)
+    if same and row.get('complete'):
+        row['next_check_at'] = archive.after(7 * 86400)
+        return row
+    tree = client.json(base + '/git/trees/' + revision + '?recursive=1')
+    if not isinstance(tree.get('tree'), list) or tree.get('truncated') is not False:
+        raise ValueError('incomplete-github-tree')
+    entries = candidate_paths(tree['tree'], target)
+    if compatible and not same:
+        previous = {f['path']: f for f in old.get('files', [])}
+        row['files'] = [{**previous[e['path']], 'revision': previous[e['path']].get('revision', old['revision'])}
+                        for e in entries if e['path'] in previous and previous[e['path']]['oid'] == e['sha']]
+        row['checked_paths'] = [f['path'] for f in row['files']]
+    checked = set(row.get('checked_paths', []))
+    failed = dict(row.get('failed_paths', {}))
+    remaining = [entry for entry in entries if entry['path'] not in checked]
+    reviews = source_artifacts.load_reviews()
+    for entry in remaining[:file_limit]:
+        path = entry['path']
+        raw = f'https://raw.githubusercontent.com/{repo}/{revision}/{parse.quote(path, safe="/")}'
+        try:
+            body = client.read(raw)
+        except Deferred as exc:
+            row.update(error=str(exc), complete=False, checked_paths=sorted(checked), next_check_at=archive.after(3600))
+            exc.partial = row
+            raise
+        except (OSError, HTTPException, EOFError, archive.ArchiveError) as exc:
+            failed[path] = type(exc).__name__
+            continue
+        oid = hashlib.sha1(b'blob ' + str(len(body)).encode() + b'\0' + body).hexdigest()
+        if oid != entry.get('sha'):
+            row.update(error='source-hash-mismatch', complete=False)
+            failed[path] = 'source-hash-mismatch'
+            continue
+        # Explicit published file links (including Nuclei YAML and binary test
+        # cases) are already scoped artifacts. Root repositories need content
+        # evidence to keep setup scripts and empty placeholders out.
+        explicit = len(parts) > 4 and parts[2] in {'blob', 'raw'}
+        named = source_artifacts.identity_cves(path)
+        scoped = set(target['cves']) & named if named else set(target['cves'])
+        cves = [cve for cve in scoped if explicit or
+                releases.qualifying_content(repo, cve, path, body, reviews, related_cves=named)]
+        if cves:
+            row['files'].append({'path': path, 'oid': oid, 'bytes': len(body), 'cves': sorted(cves)})
+        checked.add(path)
+        failed.pop(path, None)
+    row['checked_paths'] = sorted(checked)
+    row['failed_paths'] = failed
+    row['complete'] = not failed and all(entry['path'] in checked for entry in entries)
+    row['candidate_files'] = len(entries)
+    row['next_check_at'] = archive.after(7 * 86400 if row['complete'] else 3600 if failed else 300)
+    if row['complete']:
+        row.pop('error', None)
+    return row
+
+
+def save(path: Path, payload: dict):
+    from sync_repo_metadata import save as atomic_save
+    atomic_save(path, payload)
+
+
+def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--limit', type=int, default=100)
+    parser.add_argument('--requests', type=int, default=800)
+    parser.add_argument('--max-seconds', type=int, default=600)
+    parser.add_argument('--min-year', type=int, default=2026)
+    parser.add_argument('--manifest', type=Path, default=MANIFEST)
+    parser.add_argument('--url', action='append', help='Inspect specific published repository URLs')
+    args = parser.parse_args()
+    if min(args.limit, args.requests, args.max_seconds) < 1:
+        parser.error('Run limits must be positive')
+    token = os.environ.get('GITHUB_TOKEN') or os.environ.get('GH_TOKEN') or ''
+    if not token:
+        parser.error('GITHUB_TOKEN is required for bounded source discovery')
+    payload = json.loads(args.manifest.read_text()) if args.manifest.exists() else {'version': 1, 'repositories': {}}
+    manifests = payload['repositories']
+    payload['repositories'] = manifests = {k: r for k, r in manifests.items() if repository_source(k)}
+    targets = {k: r for k, r in archive.inventory(args.min_year).items()
+               if not r.get('parent') and repository_source(r['original'])
+               and not archive.link_health.unavailable(r['original'])}
+    if args.url:
+        keys = {archive.identity(url) for url in args.url}
+        if keys - targets.keys():
+            parser.error('Requested URL is not an available published repository')
+        targets = {key: targets[key] for key in keys}
+    queue = archive.select_targets(targets, manifests)
+    client = GitHub(token, args.requests, args.max_seconds)
+    for count, key in enumerate(queue[:args.limit], 1):
+        old = manifests.get(key, {})
+        try:
+            manifests[key] = inspect(targets[key], old, client)
+        except Deferred as exc:
+            manifests[key] = getattr(exc, 'partial', {**old, 'checked_at': archive.now(), 'error': str(exc),
+                                                      'next_check_at': archive.after(3600)})
+            save(args.manifest, payload)
+            print(f'Source discovery paused: {exc}', flush=True)
+            break
+        except (OSError, HTTPException, EOFError, ValueError, KeyError, archive.ArchiveError) as exc:
+            manifests[key] = {**old, 'checked_at': archive.now(), 'next_check_at': archive.after(86400),
+                              'error': type(exc).__name__}
+        save(args.manifest, payload)
+        print(f'{count}: {key}: {len(manifests[key].get("files", []))} source files; '
+              f'{"complete" if manifests[key].get("complete") else "pending"}', flush=True)
+        if client.remaining <= 0 or time.monotonic() >= client.deadline:
+            break
+    print(json.dumps({'repositories': len(manifests), 'files': sum(len(r.get('files', [])) for r in manifests.values())}))
+    return 0
+
+
+if __name__ == '__main__':
+    raise SystemExit(main())

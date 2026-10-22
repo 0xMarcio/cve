@@ -103,7 +103,7 @@ class ArchiveTests(unittest.TestCase):
         self.client.status.return_value = {'status': 'pending'}
         archive.process(URL, self.target, self.rows, self.client, capture=True)
         self.client.submit.assert_called_once()
-        self.client.lookup.assert_not_called()
+        self.client.lookup.assert_called_once_with(URL)
         self.assertEqual(self.rows[URL]['attempts'], 1)
 
     def test_success_requires_replay_verification(self):
@@ -301,6 +301,143 @@ class ArchiveTests(unittest.TestCase):
         self.assertEqual(payload['capture_all'], '0')
         self.assertEqual(payload['capture_outlinks'], '0')
         self.assertEqual(payload['if_not_archived_within'], '30d')
+
+    def test_live_page_reuses_existing_snapshot_in_capture_mode(self):
+        self.client.lookup.return_value = snapshot()
+        with patch.object(archive, 'verify_snapshot', return_value=True):
+            archive.process(URL, self.target, self.rows, self.client, capture=True)
+        self.assertTrue(archive.valid_snapshot(self.rows[URL]))
+        self.client.submit.assert_not_called()
+
+    def test_negative_lookup_is_immediately_ready_for_capture(self):
+        archive.process(URL, self.target, self.rows, self.client, capture=False)
+        self.assertEqual(self.rows[URL]['next_check_at'], '')
+        archive.process(URL, self.target, self.rows, self.client, capture=True)
+        self.client.lookup.assert_called_once()
+        self.client.submit.assert_called_once()
+
+    def test_transport_error_is_not_an_account_cooldown(self):
+        from urllib.error import URLError
+        opener = MagicMock()
+        opener.open.side_effect = URLError(ConnectionResetError())
+        with patch.object(archive.request, 'build_opener', return_value=opener):
+            with self.assertRaises(archive.ArchiveError) as result:
+                archive.Client().lookup(URL)
+        self.assertEqual(result.exception.cooldown, 0)
+        self.assertEqual(str(result.exception), 'transport-ConnectionResetError')
+
+    def test_old_unseen_pages_and_files_cannot_be_starved_by_new_pages(self):
+        targets = {f'{URL}/{i}': {**self.target, 'priority': '2026-10-22'} for i in range(100)}
+        targets[URL] = {**self.target, 'priority': ''}
+        targets['file'] = {**self.target, 'parent': URL, 'priority': '2026-01-01'}
+        selected = archive.select_targets(targets, {})
+        self.assertIn(URL, selected[:4])
+        self.assertIn('file', selected[:4])
+        self.assertEqual(len(selected), len(set(selected)))
+
+    def test_lookup_sweep_continues_after_one_connection_failure(self):
+        urls = [URL + str(i) for i in range(3)]
+        targets = {u: {**self.target, 'original': u} for u in urls}
+        def lookup(url):
+            if url == urls[0]:
+                raise archive.ArchiveError('transport-ConnectionResetError')
+            return snapshot(url)
+        self.client.lookup.side_effect = lookup
+        with tempfile.TemporaryDirectory() as directory, patch.object(archive, 'verify_snapshot', return_value=True):
+            archive.lookup_pages(targets, self.rows, self.client, Path(directory), 3, 10)
+            self.assertEqual(len(archive.load_records(Path(directory))), 3)
+            self.assertEqual(sum(archive.valid_snapshot(r) for r in self.rows.values()), 2)
+            self.assertFalse((Path(directory) / 'lookup-control.json').exists())
+
+    def test_capacity_uses_documented_millisecond_cache_buster(self):
+        client = archive.Client('dummy', 'dummy')
+        with patch.object(client, 'json', return_value={'available': 3}) as call, patch.object(archive.time, 'time', return_value=1234.5):
+            self.assertEqual(client.capacity(), 2)
+        call.assert_called_once_with(archive.API + '/status/user?_t=1234500', auth=True)
+
+    def test_target_access_failure_does_not_masquerade_as_bad_credentials(self):
+        client = archive.Client('dummy', 'dummy')
+        opener = MagicMock()
+        opener.open.side_effect = HTTPError(archive.API, 401, 'target access denied', {}, None)
+        with patch.object(archive.request, 'build_opener', return_value=opener), patch.object(client, 'account', return_value={'available': 0}):
+            with self.assertRaises(archive.ArchiveError) as result:
+                client.submit(URL)
+        self.assertFalse(result.exception.fatal)
+        self.assertEqual(str(result.exception), 'target-http-401')
+
+    def test_newer_negative_checkpoint_cannot_discard_a_verified_capture(self):
+        with tempfile.TemporaryDirectory() as directory:
+            source, destination = Path(directory) / 'source', Path(directory) / 'destination'
+            archive.save_records({URL: {**self.target, 'snapshot': snapshot(), 'checked_at': '2026-10-21T10:00:00Z'}}, {URL}, source)
+            archive.save_records({URL: {**self.target, 'status': 'retry', 'checked_at': '2026-10-21T11:00:00Z'}}, {URL}, destination)
+            with patch.object(sys, 'argv', ['archive_pocs', '--directory', str(destination), '--merge-from', str(source)]):
+                archive.main()
+            self.assertTrue(archive.valid_snapshot(archive.load_records(destination)[URL]))
+
+    def test_lookup_cooldown_does_not_block_pinned_source_submissions(self):
+        self.client.lookup_retry_after = archive.after(300)
+        target = {**self.target, 'parent': URL + '/parent'}
+        archive.process(URL, target, self.rows, self.client, capture=True)
+        self.client.submit.assert_called_once()
+        self.client.lookup.assert_not_called()
+
+    def test_replay_redirect_to_another_original_is_not_a_snapshot_of_this_poc(self):
+        snap = snapshot()
+        response = MagicMock()
+        response.__enter__.return_value = response
+        response.status = 200
+        response.url = snap['url'].replace(snap['timestamp'] + '/', snap['timestamp'] + 'id_/') + '-other'
+        opener = MagicMock()
+        opener.open.return_value = response
+        with patch.object(archive.request, 'build_opener', return_value=opener):
+            self.assertFalse(archive.verify_snapshot(snap, URL))
+
+    def test_looked_up_new_page_and_small_repositories_keep_capture_slots(self):
+        targets = {f'file-{i}': {**self.target, 'parent': 'large'} for i in range(70)}
+        targets['small'] = {**self.target, 'parent': 'small-repo'}
+        targets[URL] = self.target
+        targets['old'] = {**self.target, 'priority': ''}
+        rows = {URL: {**self.target, 'checked_at': archive.now(), 'lookup_checked_at': archive.now()}}
+        selected = archive.select_targets(targets, rows, capture=True)
+        self.assertIn(URL, selected[:4])
+        self.assertIn('small', selected[:4])
+
+    def test_repeated_transport_errors_trip_a_service_breaker(self):
+        client = archive.Client()
+        for i in range(4):
+            self.assertEqual(client.failure(str(i % 3), archive.ArchiveError('transport-ConnectionResetError')).cooldown, 0)
+        self.assertEqual(client.failure('third', archive.ArchiveError('replay-URLError')).cooldown, 900)
+
+    def test_capture_loop_serves_new_targets_and_keeps_candidate_backoff(self):
+        pending = URL + '-pending'
+        target = {**self.target, 'original': pending}
+        visited = []
+        def process(key, target, rows, client, *, capture):
+            visited.append(key)
+            if key == pending:
+                rows[key]['next_check_at'] = archive.after(3600)
+                raise archive.ArchiveError('replay-URLError')
+            rows[key] = {**target, 'status': 'not-found'}
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory)
+            archive.save_records({pending: {**target, 'candidate': snapshot(pending), 'next_check_at': ''}}, {pending}, path)
+            with patch.object(archive, 'inventory', return_value={URL: self.target, pending: target}), \
+                    patch.object(archive, 'credentials', return_value=('dummy', 'dummy')), \
+                    patch.object(archive.Client, 'capacity', return_value=2), \
+                    patch.object(archive, 'process', side_effect=process), \
+                    patch.object(sys, 'argv', ['archive_pocs', '--capture', '--directory', str(path), '--limit', '1', '--max-seconds', '2']):
+                self.assertEqual(archive.main(), 0)
+            saved = archive.load_records(path)[pending]
+        self.assertEqual(visited, [URL, pending])
+        self.assertGreater(saved['next_check_at'], archive.after(3500))
+
+    def test_shared_file_is_published_under_each_allowed_parent(self):
+        raw = 'https://raw.githubusercontent.com/owner/poc/' + 'a' * 40 + '/poc.py'
+        other = URL + '/blob/main/poc.py'
+        rows = {raw: {'original': raw, 'snapshot': snapshot(raw), 'parent': URL,
+                      'parents': {URL: URL, other: other}}}
+        published = archive.published_snapshots(rows, allowed={URL, other})
+        self.assertEqual(published[URL]['files'], published[other]['files'])
 
     def test_replay_rejects_login_shells_errors_and_external_redirects(self):
         snap = snapshot()

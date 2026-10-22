@@ -13,9 +13,6 @@ on:
         type: choice
         default: '2100'
         options: ['2100', '300']
-  workflow_run:
-    workflows: ['Hot CVEs List']
-    types: [completed]
   schedule:
     - cron: '47 */6 * * *'
 
@@ -31,9 +28,8 @@ concurrency:
 
 jobs:
   capture:
-    if: github.event_name != 'workflow_run' || github.event.workflow_run.head_branch == 'main'
     runs-on: ubuntu-latest
-    timeout-minutes: 55
+    timeout-minutes: 70
     permissions:
       contents: read
       actions: read
@@ -64,6 +60,18 @@ jobs:
       - name: Merge the recovered checkpoint
         if: steps.previous.outputs.artifact != ''
         run: python3 scripts/archive_pocs.py --merge-from /tmp/previous-archive-checkpoint
+      - name: Discover actual PoC source files at immutable revisions
+        id: sources
+        continue-on-error: true
+        timeout-minutes: 12
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: python3 -u scripts/archive_sources.py --limit 100 --requests 800 --max-seconds 600
+      - name: Find and verify existing captures across the 2026 backlog
+        id: lookup
+        continue-on-error: true
+        timeout-minutes: 12
+        run: python3 -u scripts/archive_pocs.py --lookup-pages --min-year 2026 --limit 500 --max-seconds 600
       - name: Resume 2026-onward captures within service limits
         timeout-minutes: 42
         env:
@@ -74,7 +82,7 @@ jobs:
         run: |
           case "$ARCHIVE_LIMIT" in 3|10|100) ;; *) exit 1 ;; esac
           case "$ARCHIVE_SECONDS" in 300|2100) ;; *) exit 1 ;; esac
-          python3 scripts/archive_pocs.py --capture --min-year 2026 --limit "$ARCHIVE_LIMIT" --max-seconds "$ARCHIVE_SECONDS"
+          python3 -u scripts/archive_pocs.py --capture --min-year 2026 --limit "$ARCHIVE_LIMIT" --max-seconds "$ARCHIVE_SECONDS"
       - name: Preserve checkpoints even after interruption
         if: always()
         uses: actions/upload-artifact@v6
@@ -84,6 +92,11 @@ jobs:
           if-no-files-found: error
           retention-days: 14
           overwrite: true
+      - name: Report incomplete archive discovery
+        if: steps.sources.outcome == 'failure' || steps.lookup.outcome == 'failure'
+        run: |
+          echo '::error::Source discovery or existing-capture lookup failed. Capture checkpoints were preserved.'
+          exit 1
 
   publish:
     if: always() && needs.capture.result != 'skipped'
