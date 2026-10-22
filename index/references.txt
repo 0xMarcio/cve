@@ -119437,3 +119437,4 @@ CVE-2026-113666 - https://github.com/advisories/GHSA-j5rq-xfvr-p969
 CVE-2026-113671 - https://github.com/advisories/GHSA-527g-ff96-x6wj
 CVE-2026-113712 - https://github.com/advisories/GHSA-x397-5hrv-j9m9
 CVE-2026-63209 - https://github.com/advisories/GHSA-259r-337f-4rfw
+CVE-2026-110264 - https://hackerone.com/reports/4093475

@@ -40429,3 +40429,4 @@ CVE-2026-92997 - https://wpscan.com/vulnerability/2b7edbc9-9562-46a7-95f6-fa4336
 CVE-2026-92998 - https://wpscan.com/vulnerability/60b9bf53-a78a-4c5b-ab7d-4d118be99ab7/
 CVE-2026-92999 - https://wpscan.com/vulnerability/9f3723c9-40e3-4eb6-b0f9-139fb2c9df52/
 CVE-2026-96901 - https://wpscan.com/vulnerability/f00e95a2-a5fb-49da-aa6c-8c0279b6df2d/
+CVE-2026-110264 - https://hackerone.com/reports/4093475

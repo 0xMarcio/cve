@@ -27710,3 +27710,9 @@ CVE-2026-109619 - https://github.com/4B3R4M4-607D/php2shell
 CVE-2026-109619 - https://github.com/open0x01/php2shell
 CVE-2026-109619 - https://github.com/segfo/php2shell-poc
 CVE-2026-111497 - https://github.com/dimasma0305/CVE-2026-111497-POC
+CVE-2026-109618 - https://github.com/jorgbot/PHP2Shell
+CVE-2026-109618 - https://github.com/kishwordulal2005/CVE-2026-109618-and-CVE-2026-109619-Exploit
+CVE-2026-109619 - https://github.com/kishwordulal2005/CVE-2026-109618-and-CVE-2026-109619-Exploit
+CVE-2026-110264 - https://github.com/OppositDeer/Gitlab-RCE-CVE-2026-110264
+CVE-2026-78845 - https://github.com/0xee9f00/AiDot-SSDP-UPnP-Vulnerabilities
+CVE-2026-78846 - https://github.com/0xee9f00/AiDot-SSDP-UPnP-Vulnerabilities
