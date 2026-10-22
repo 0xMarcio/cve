@@ -287,7 +287,7 @@ a.chip:hover { color: var(--fg); border-color: var(--fg-muted); }
 .poc-list { margin-top: 14px; border-top: 1px solid var(--border-muted); }
 .poc-row {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 78px 52px;
+  grid-template-columns: minmax(0, 1fr) auto 78px 52px;
   gap: 14px;
   align-items: center;
   padding: 9px 0;
@@ -324,10 +324,12 @@ a.chip:hover { color: var(--fg); border-color: var(--fg-muted); }
 .poc-tag.is-afrog, .poc-tag.is-xray, .poc-tag.is-0day, .poc-tag.is-poc { color: #a5d6ff; background: rgba(56, 139, 253, .1); border-color: rgba(56, 139, 253, .35); }
 .poc-tag.is-advisory { color: var(--fg-muted); background: rgba(110, 118, 129, .1); border-color: var(--border); }
 .poc-name a.plain:hover { color: var(--accent); }
-.poc-stars { text-align: right; font: 400 12px/1 var(--mono); color: var(--fg-muted); }
+/* Stars and age hold the last two tracks whether or not a Wayback control
+   precedes them, so the columns line up on advisory and archive rows too. */
+.poc-stars { grid-column: -3; text-align: right; font: 400 12px/1 var(--mono); color: var(--fg-muted); }
 .poc-stars.is-popular { color: var(--attention); }
 .star { color: var(--neutral); }
-.poc-age { text-align: right; font: 400 11.5px/1 var(--mono); color: var(--fg-muted); }
+.poc-age { grid-column: -2; text-align: right; font: 400 11.5px/1 var(--mono); color: var(--fg-muted); }
 .poc-more {
   display: block;
   width: 100%;
@@ -423,7 +425,9 @@ a.chip:hover { color: var(--fg); border-color: var(--fg-muted); }
   white-space: nowrap;
 }
 .trend-name { font: 500 12.5px/1 var(--mono); }
-.trend-detail { display: block; width: fit-content; margin-top: 5px; font: 400 10px/1.4 var(--mono); color: var(--fg-muted); }
+.trend-sub { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 12px; margin-top: 5px; }
+.trend-sub:empty { display: none; }
+.trend-detail { font: 400 10px/1.4 var(--mono); color: var(--fg-muted); }
 .index-intro { margin: 0 0 14px; max-width: 960px; font: 400 13px/1.7 var(--sans); color: var(--fg-muted); }
 .trend-desc {
   font: 400 13px/1.4 var(--sans);
@@ -431,6 +435,129 @@ a.chip:hover { color: var(--fg); border-color: var(--fg-muted); }
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+
+/* ---- wayback machine ---------------------------------------------------- */
+
+/* Beside every PoC link. A filled dot in a frame is a confirmed page snapshot,
+   an open ring a lookup that claims nothing, and the ARCHIVED stamp a row whose
+   own link is the snapshot, published in place of a lost original. */
+.wayback {
+  position: relative;
+  display: inline-block;
+  padding: 2px 6px 2px 5px;
+  border: 1px solid transparent;
+  border-radius: 3px;
+  font: 400 10.5px/1 var(--mono);
+  color: var(--neutral);
+  white-space: nowrap;
+}
+.wayback::before {
+  content: '';
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  margin-right: 5px;
+  border: 1px solid currentColor;
+  border-radius: 50%;
+}
+/* A fingertip-sized target without a bigger box; the focus ring stays inside
+   cells that clip their overflow. */
+a.wayback::after { content: ''; position: absolute; inset: -5px -3px; }
+a.wayback:hover { color: var(--accent); }
+.wayback:focus-visible { outline-offset: -2px; }
+.wayback.is-snapshot { color: var(--fg-muted); border-color: var(--border); }
+.wayback.is-snapshot:hover { color: var(--fg); border-color: var(--fg-muted); }
+.wayback.is-snapshot::before, .wayback.is-archived::before { border-color: #3fb950; background: #3fb950; }
+.wayback.is-archived {
+  padding: 2px 5px;
+  font: 600 9px/1 var(--mono);
+  letter-spacing: .08em;
+  color: var(--fg-subtle);
+  background: rgba(110, 118, 129, .12);
+  border-color: var(--border);
+}
+.wayback.is-archived::before { width: 5px; height: 5px; margin-right: 4px; }
+.trend-sub a.wayback { font-size: 10px; }
+.cve-links .wayback { word-break: normal; }
+
+/* Saved source files, disclosed beside the page's own control. Each line
+   opens the capture of one file's bytes at a pinned commit, or of a report's
+   JSON, and carries the dot of a confirmed capture. In the index the open
+   list fills room the disclosure reserves under its row, aligned with the
+   row, so nothing beside it moves. */
+.poc-row, .trend-name-cell { position: relative; }
+.poc-archive { display: flex; align-items: flex-start; gap: 6px; }
+.sources { flex: none; font: 400 10.5px/1 var(--mono); }
+.sources[open] { padding-bottom: calc(var(--files, 1) * 18px + 4px); }
+.sources > summary {
+  display: inline-block;
+  padding: 2px 6px 2px 5px;
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  list-style: none;
+  color: var(--fg-muted);
+  white-space: nowrap;
+  cursor: pointer;
+}
+.sources > summary::-webkit-details-marker { display: none; }
+/* A chevron where a snapshot has its dot, turning down while open. */
+.sources > summary::before {
+  content: '';
+  display: inline-block;
+  width: 4px;
+  height: 4px;
+  margin: 0 6px 0 1px;
+  border: solid currentColor;
+  border-width: 0 1px 1px 0;
+  vertical-align: 1px;
+  transform: rotate(-45deg);
+  transition: transform .15s ease;
+}
+.sources[open] > summary::before { transform: translateY(-1px) rotate(45deg); }
+.sources > summary:hover, .sources[open] > summary { color: var(--fg); border-color: var(--fg-muted); }
+.sources > summary:focus-visible { outline-offset: -2px; }
+.trend-sub .sources > summary { font-size: 10px; }
+.sources-list { position: absolute; left: 0; right: 0; margin-top: 4px; }
+.sources-list a {
+  position: relative;
+  display: block;
+  height: 18px;
+  padding-left: 16px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font: 400 11px/18px var(--mono);
+  color: var(--fg-subtle);
+}
+.sources-list a::before {
+  content: '';
+  position: absolute;
+  top: 6.5px;
+  left: 5px;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #3fb950;
+}
+.sources-list a:hover { color: var(--accent); }
+.sources-list a:focus-visible { outline-offset: -2px; }
+/* While a list is open its row's cells keep to the first line, above it. */
+.poc-row:has(.sources[open]), .trend-row:has(.sources[open]) { align-items: start; }
+.trend-sub:has(> .sources[open]) { align-items: flex-start; }
+@supports not selector(:has(*)) {
+  .poc-row, .trend-sub { align-items: start; }
+}
+/* On a CVE page the disclosure follows the note at the row's end. A label
+   there may wrap, so the list opens in flow under the disclosure, which keeps
+   its place at the end. */
+.cve-links li > a:first-child { margin-right: auto; }
+.cve-links li > .sources { margin-left: -8px; text-align: right; }
+.cve-links .sources[open] { padding-bottom: 0; }
+.cve-links .sources-list { position: static; text-align: left; }
+.cve-links .sources-list a { max-width: 48ch; }
+@media (prefers-reduced-motion: reduce) {
+  .sources > summary::before { transition: none; }
 }
 
 /* ---- footer ------------------------------------------------------------- */
@@ -474,6 +601,9 @@ a.chip:hover { color: var(--fg); border-color: var(--fg-muted); }
   .trending .col-head, .trend-row { grid-template-columns: 56px 96px minmax(0, 1fr); gap: 12px; }
   .trend-age { white-space: normal; line-height: 1.4; }
   .trend-name-cell { white-space: normal; overflow-wrap: anywhere; }
+  /* The Wayback control takes a line under the name rather than its width. */
+  .poc-row { grid-template-columns: minmax(0, 1fr) 78px 52px; row-gap: 6px; }
+  .poc-row > .wayback, .poc-row > .poc-archive { grid-area: 2 / 1 / 3 / -1; justify-self: start; }
   /* Artifact names wrap while repository stars stay visible on small screens. */
   .poc-row:has(.plain) { grid-template-columns: minmax(0, 1fr); }
   .poc-row:has(.poc-tag, .plain) .poc-name { white-space: normal; overflow-wrap: anywhere; line-height: 1.5; }
@@ -569,4 +699,5 @@ a.chip:hover { color: var(--fg); border-color: var(--fg-muted); }
   .cve-facts { grid-template-columns: 1fr; gap: 3px 0; }
   .cve-facts dd { margin-bottom: 10px; }
   .cve-links li { flex-direction: column; gap: 2px; }
+  .cve-links li > .sources { margin-left: 0; text-align: left; }
 }

@@ -72,6 +72,13 @@ def unavailable(url: str) -> bool:
     return bool(name and name in state["repositories"]) or url_key(url) in state["urls"]
 
 
+def unavailable_since(url: str) -> str:
+    state = load()
+    stamps = [value for value in (state['repositories'].get(repository(url)),
+                                  state['urls'].get(url_key(url))) if value]
+    return min(stamps, default='')
+
+
 def record(*, missing=(), healthy=(), dead_urls=(), live_urls=(), now: str | None = None) -> None:
     state = {field: dict(values) for field, values in load().items()}
     stamp = now or datetime.now(timezone.utc).isoformat()
@@ -80,11 +87,11 @@ def record(*, missing=(), healthy=(), dead_urls=(), live_urls=(), now: str | Non
             state["repositories"].pop(key, None)
     for name in missing:
         if key := repository(f"https://github.com/{name}"):
-            state["repositories"][key] = stamp
+            state["repositories"].setdefault(key, stamp)
     for url in live_urls:
         state["urls"].pop(url_key(url), None)
     for url in dead_urls:
-        state["urls"][url_key(url)] = stamp
+        state["urls"].setdefault(url_key(url), stamp)
     if state == load():
         return
     STATE.parent.mkdir(parents=True, exist_ok=True)

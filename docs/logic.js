@@ -27,6 +27,7 @@ const state = {
   descOpen: new Set(),
   pocOpen: new Set(),
   advisoryOpen: new Set(),
+  sourcesOpen: new Set(),
   kevOnly: false,
   filters: {
     severity: new Set(FILTER_OPTIONS.severity.map(([value]) => value)),
@@ -43,6 +44,8 @@ let kev = {};
 let ratings = {};
 let metadata = {};
 let epss = {};
+// Original PoC URL to its confirmed Wayback Machine capture, from archives.json.
+let archives = {};
 let indexMeta = null;
 let dataEpoch = 0;
 const enrichmentNotices = new Set();
@@ -156,6 +159,172 @@ function plainLinkLabel(url) {
   }
 }
 
+/* ---- wayback machine --------------------------------------------------- */
+
+const WAYBACK = 'https://web.archive.org/web/';
+// A page snapshot: https on web.archive.org, a 14-digit UTC capture time and
+// the http(s) page captured. A save request or a history search is not one.
+const CAPTURE = /^https:\/\/web\.archive\.org\/web\/([0-9]{14})\/(https?:\/\/[^\x00-\x20\x7f"<>\\]+)$/;
+
+/** The capture a snapshot URL names, or null. Its time has to be a real one
+ *  from 1996 on, when the Wayback Machine began. build_pages.py reads it alike. */
+function waybackCapture(url) {
+  const match = typeof url === 'string' ? CAPTURE.exec(url) : null;
+  if (!match) return null;
+  const stamp = match[1];
+  const iso = stamp.replace(/^(\d{4})(\d{2})(\d{2})(\d{2})(\d{2})(\d{2})$/, '$1-$2-$3T$4:$5:$6.000Z');
+  const time = Date.parse(iso);
+  if (stamp < '1996' || Number.isNaN(time) || new Date(time).toISOString() !== iso) return null;
+  return { url, stamp, original: match[2] };
+}
+
+/** Lower-cased host of an http(s) link, without www. or a port. Empty for
+ *  anything else, a link carrying credentials included. */
+function linkHost(url) {
+  const match = /^https?:\/\/([^/?#@\x00-\x20\x7f\\]*)(?=[/?#]|$)/.exec(String(url || ''));
+  return match ? match[1].toLowerCase().replace(/:[0-9]*$/, '').replace(/^www\./, '') : '';
+}
+
+/** The page a link stands for. A snapshot published in place of a lost
+ *  original stands for that original. */
+function linkTarget(url) {
+  const capture = waybackCapture(url);
+  return capture ? capture.original : url;
+}
+
+/** The capture archives.json confirms for this exact link: a valid snapshot,
+ *  stamped as recorded, of a page on the link's own host. */
+function confirmedSnapshot(url) {
+  const record = archives[url];
+  const capture = record && typeof record === 'object' ? waybackCapture(record.url) : null;
+  if (!capture || capture.stamp !== record.timestamp) return null;
+  const host = linkHost(url);
+  return host && linkHost(capture.original) === host ? capture : null;
+}
+
+function captureDate(stamp) {
+  return `${stamp.slice(0, 4)}-${stamp.slice(4, 6)}-${stamp.slice(6, 8)} ${stamp.slice(8, 10)}:${stamp.slice(10, 12)} UTC`;
+}
+
+/** The accessible name of a link that opens a snapshot in place of its original. */
+function archivedName(label, capture) {
+  return capture
+    ? ` aria-label="${escapeHTML(`${label}, archived page snapshot captured ${captureDate(capture.stamp)}`)}"`
+    : '';
+}
+
+/** The Wayback Machine beside a PoC link: its confirmed snapshot, or a lookup
+ *  that claims nothing. A snapshot is one captured page, not a copy of the
+ *  whole source. A link that is itself a snapshot is stamped instead, and any
+ *  other link into the archive gets nothing. */
+function archiveLink(url, label) {
+  const capture = waybackCapture(url);
+  if (capture) {
+    return `<span class="wayback is-archived" title="Wayback Machine page snapshot captured ${captureDate(capture.stamp)}, ` +
+      'linked in place of the original" aria-hidden="true">ARCHIVED</span>';
+  }
+  const host = linkHost(url);
+  if (!host || /(?:^|\.)archive\.org$/.test(host)) return '';
+  const snapshot = confirmedSnapshot(url);
+  if (snapshot) {
+    const date = captureDate(snapshot.stamp);
+    return `<a class="wayback is-snapshot" href="${escapeHTML(snapshot.url)}" target="_blank" rel="nofollow noopener" ` +
+      `title="Wayback Machine page snapshot, captured ${date}" ` +
+      `aria-label="${escapeHTML(`snapshot of ${label} on the Wayback Machine, captured ${date}`)}">snapshot</a>`;
+  }
+  return `<a class="wayback is-lookup" href="${escapeHTML(WAYBACK + '*/' + url)}" target="_blank" rel="nofollow noopener" ` +
+    'title="Search the Wayback Machine for captures; none confirmed" ' +
+    `aria-label="${escapeHTML(`find archive of ${label} on the Wayback Machine`)}">find archive</a>`;
+}
+
+/* ---- saved source files ------------------------------------------------ */
+
+// archives.json may list, under a page, captures of files that page holds:
+// the raw bytes of one file at a pinned commit of the page's own GitHub
+// repository, or the JSON of the page's own HackerOne report. Nothing else is
+// that page's file. build_pages.py reads them alike.
+const RAW_FILE = /^https:\/\/raw\.githubusercontent\.com\/([^/?#]+)\/([^/?#]+)\/([0-9a-f]{40})\/([^?#]+)$/;
+const REPORT_PAGE = /^https?:\/\/[^/?#]*\/reports\/([0-9]+)\/?(?:[?#]|$)/;
+const REPORT_JSON = /^https:\/\/(?:www\.)?hackerone\.com\/reports\/([0-9]+)\.json$/;
+
+/** What follows a link's host: its path, query and fragment. */
+function linkPath(url) {
+  return url.replace(/^https?:\/\/[^/?#]*/, '');
+}
+
+/** The page a link stands for, whatever scheme, www. or port it carries. */
+function linkIdentity(url) {
+  const target = linkTarget(url);
+  const host = linkHost(target);
+  return host ? host + linkPath(target) : target;
+}
+
+/** The file a saved original is, when it belongs to the page at parent. */
+function sourceFile(parent, original) {
+  const repo = repoFromUrl(parent);
+  const raw = repo && RAW_FILE.exec(original);
+  if (raw) {
+    // A dot segment would resolve into another repository's files.
+    if (`${raw[1]}/${raw[2]}`.toLowerCase() !== `${repo.owner}/${repo.repo}`.toLowerCase() ||
+        raw[4].split('/').some(part => !part || /^(?:\.|%2e){1,2}$/i.test(part))) return null;
+    let name = raw[4];
+    try {
+      name = decodeURIComponent(name);
+    } catch (err) {
+      // A malformed escape is shown as written.
+    }
+    return { key: `${raw[3]}/${raw[4]}`, name, commit: raw[3] };
+  }
+  const report = linkHost(parent) === 'hackerone.com' ? REPORT_PAGE.exec(parent) : null;
+  const json = report && REPORT_JSON.exec(original);
+  return json && json[1] === report[1] ? { key: json[1], name: `${json[1]}.json`, commit: '' } : null;
+}
+
+/** The saved files archives.json confirms for this exact link: valid
+ *  captures, stamped as recorded, of files that belong to it. One capture per
+ *  file, the latest, in a stable order. */
+function savedFiles(url) {
+  const record = archives[url];
+  const files = record && typeof record === 'object' && Array.isArray(record.files) ? record.files : [];
+  const found = new Map();
+  for (const file of files) {
+    const capture = file && typeof file === 'object' ? waybackCapture(file.url) : null;
+    const original = capture && typeof file.original === 'string' ? file.original : '';
+    if (!original || capture.stamp !== file.timestamp || linkHost(original) !== linkHost(capture.original) ||
+        linkPath(original) !== linkPath(capture.original)) continue;
+    const source = sourceFile(url, original);
+    const kept = source && found.get(source.key);
+    if (source && (!kept || kept.capture.stamp < capture.stamp)) found.set(source.key, { ...source, original, capture });
+  }
+  return [...found.values()].sort((a, b) => (a.original < b.original ? -1 : a.original > b.original ? 1 : 0));
+}
+
+/** A link's saved files, disclosed beside its Wayback control. Each opens the
+ *  capture of one file's bytes, so none stands for the whole source and none
+ *  gets an archive control of its own. A snapshot in place of a lost original
+ *  discloses that original's files; a file listed in a row of its own is not
+ *  repeated. */
+function sourceFiles(url, label, listed = new Set()) {
+  const files = savedFiles(linkTarget(url)).filter(file => !listed.has(linkIdentity(file.original)));
+  if (!files.length) return '';
+  const count = `${files.length} file${files.length === 1 ? '' : 's'}`;
+  const title = files[0].commit
+    ? 'Wayback Machine captures of individual files at pinned commits, not a copy of the whole repository'
+    : 'Wayback Machine capture of the report JSON';
+  const links = files.map(file => {
+    const date = captureDate(file.capture.stamp);
+    const what = file.commit ? `${file.name} at commit ${file.commit.slice(0, 7)}` : `${file.name}, the report JSON`;
+    return `<a href="${escapeHTML(file.capture.url)}" target="_blank" rel="nofollow noopener" ` +
+      `title="${escapeHTML(`Wayback Machine capture of ${what}, ${date}`)}" ` +
+      `aria-label="${escapeHTML(`${what} of ${label}, Wayback Machine capture ${date}`)}">${escapeHTML(file.name)}</a>`;
+  }).join('');
+  // The count sizes the room the open list takes, so nothing beside it moves.
+  return `<details class="sources" style="--files:${files.length}" data-sources="${escapeHTML(url)}"` +
+    `${state.sourcesOpen.has(url) ? ' open' : ''}><summary title="${title}" ` +
+    `aria-label="${escapeHTML(`${count} saved from ${label}`)}">${count}</summary>` +
+    `<div class="sources-list">${links}</div></details>`;
+}
+
 /* ---- matching ---------------------------------------------------------- */
 
 function normalizeToSpaces(value) {
@@ -210,7 +379,8 @@ function leadBonus(index) {
 
 function pocText(entry) {
   if (entry._pocText === undefined) {
-    entry._pocText = entryLinks(entry).join(' ').toLowerCase();
+    // An archived source matches as its original would, not as web.archive.org.
+    entry._pocText = entryLinks(entry).map(linkTarget).join(' ').toLowerCase();
   }
   return entry._pocText;
 }
@@ -242,11 +412,12 @@ function identityText(entry) {
   if (entry._identityText === undefined) {
     const artifacts = new Set(POC_FIELDS.slice(1).flatMap(field => entry[field] || []));
     entry._identityText = entryLinks(entry).map(url => {
-      const repo = repoFromUrl(url);
+      const source = linkTarget(url);
+      const repo = repoFromUrl(source);
       if (!repo) return '';
       // Repository and artifact names identify the PoC; its owner and host
       // and GitHub's routing/ref segments stay in the lower URL tier.
-      const path = url.replace(/^https?:\/\/(?:www\.)?github\.com\/[^/]+\/[^/?#]+/i, '').split(/[?#]/)[0];
+      const path = source.replace(/^https?:\/\/(?:www\.)?github\.com\/[^/]+\/[^/?#]+/i, '').split(/[?#]/)[0];
       const artifact = /^\/(?:blob|tree)\/[^/]+\/(.+)/i.exec(path);
       const leaf = artifact ? artifact[1].replace(/\/$/, '').split('/').pop() : '';
       // A collection's repository and category folders describe the catalogue,
@@ -305,7 +476,7 @@ function scoreEntry(entry, matcher) {
 function countLinkHits(entry, matchers) {
   let hits = 0;
   for (const url of entryLinks(entry)) {
-    const text = url.toLowerCase();
+    const text = linkTarget(url).toLowerCase();
     if (matchers.every(m => matchAt(text, m) >= 0)) {
       hits += 1;
       if (hits >= 999) break;
@@ -358,7 +529,7 @@ function entrySources(entry) {
   for (const [source, field] of Object.entries(fields)) {
     if ((entry[field] || []).length) sources.add(source);
   }
-  for (const url of entry.poc || []) {
+  for (const url of (entry.poc || []).map(linkTarget)) {
     if (/^https?:\/\/(?:www\.)?github\.com\/(?:advisories|[^/]+\/[^/]+\/security\/advisories)\/GHSA-/i.test(url)) {
       sources.add('GHSA');
     } else if (repoFromUrl(url)) {
@@ -917,55 +1088,62 @@ function repositoryCells(url) {
     `<span class="poc-age" title="Repository last push${meta && meta[1] ? ': ' + escapeHTML(meta[1]) + ' UTC' : ' unavailable'}">${escapeHTML(age)}</span>`;
 }
 
-function pocRow(url, artifact = false) {
-  const curated = CURATED.find(source => url.includes(source.match));
-  if (curated) {
-    return '<div class="poc-row"><span class="poc-name">' +
-      `<span class="poc-tag is-${curated.tag.toLowerCase()}" title="${escapeHTML(curated.hint)}">${curated.tag}</span>` +
-      `<a href="${escapeHTML(url)}" target="_blank" rel="noopener">${escapeHTML(curated.label(url))}</a>` +
-      '</span>' + repositoryCells(url) + '</div>';
-  }
-  const parsed = repoFromUrl(url);
+function pocRow(url, artifact = false, listed = new Set()) {
+  // A snapshot published in place of a lost original is named, tagged and
+  // measured as that original, and its link opens the snapshot.
+  const capture = waybackCapture(url);
+  const target = capture ? capture.original : url;
   const href = escapeHTML(url);
+  const row = (name, label) => {
+    // Saved files share the Wayback control's cell, so the columns hold.
+    const files = sourceFiles(url, label, listed);
+    const archive = files ? `<div class="poc-archive">${archiveLink(url, label)}${files}</div>` : archiveLink(url, label);
+    return '<div class="poc-row"><span class="poc-name">' + name + '</span>' + archive + repositoryCells(target) + '</div>';
+  };
+  const curated = CURATED.find(source => target.includes(source.match));
+  if (curated) {
+    const label = curated.label(target);
+    return row(`<span class="poc-tag is-${curated.tag.toLowerCase()}" title="${escapeHTML(curated.hint)}">${curated.tag}</span>` +
+      `<a href="${href}"${archivedName(label, capture)} target="_blank" rel="noopener">${escapeHTML(label)}</a>`, label);
+  }
+  const parsed = repoFromUrl(target);
   // Gists and advisories do not inherit a project's repository metadata.
   if (!parsed) {
-    return '<div class="poc-row"><span class="poc-name">' +
-      `<a class="plain" href="${href}" target="_blank" rel="nofollow noopener">${escapeHTML(plainLinkLabel(url))}</a>` +
-      '</span>' + repositoryCells(url) + '</div>';
+    const label = plainLinkLabel(target);
+    return row(`<a class="plain" href="${href}"${archivedName(label, capture)} target="_blank" rel="nofollow noopener">` +
+      `${escapeHTML(label)}</a>`, label);
   }
   // Keep artifact identity while labelling stars and pushes as repository metadata.
-  const path = artifact ? artifactPath(url) : '';
+  const path = artifact ? artifactPath(target) : '';
   if (path) {
     const name = `${parsed.owner}/${parsed.repo}`;
     const source = COLLECTION_SOURCES[name.toLowerCase()] || { tag: parsed.owner.toUpperCase(), hint: name };
-    return '<div class="poc-row"><span class="poc-name">' +
-      `<span class="poc-tag is-${escapeHTML(source.tag.toLowerCase())}" title="${escapeHTML(source.hint)}">${escapeHTML(source.tag)}</span>` +
-      `<a href="${href}" target="_blank" rel="noopener">${escapeHTML(path)}</a>` +
-      '</span>' + repositoryCells(url) + '</div>';
+    return row(`<span class="poc-tag is-${escapeHTML(source.tag.toLowerCase())}" title="${escapeHTML(source.hint)}">${escapeHTML(source.tag)}</span>` +
+      `<a href="${href}"${archivedName(path, capture)} target="_blank" rel="noopener">${escapeHTML(path)}</a>`, path);
   }
-  return '<div class="poc-row">' +
-    `<span class="poc-name">${escapeHTML(parsed.owner)}<span class="poc-sep"> / </span>` +
-    `<a href="${href}" target="_blank" rel="nofollow noopener">${escapeHTML(parsed.repo)}</a></span>` +
-    repositoryCells(url) + '</div>';
+  return row(`${escapeHTML(parsed.owner)}<span class="poc-sep"> / </span>` +
+    `<a href="${href}"${archivedName(parsed.repo, capture)} target="_blank" rel="nofollow noopener">${escapeHTML(parsed.repo)}</a>`,
+    `${parsed.owner}/${parsed.repo}`);
 }
 
 /** Published links are already scoped to the CVE. Rank their repositories by
- *  stars regardless of naming, with unknown readings after measured zeroes. */
+ *  stars regardless of naming, with unknown readings after measured zeroes.
+ *  An archived source ranks where its original would. */
 function rankedLinks(entry) {
   if (entry._ranked) return entry._ranked;
   const scored = entryLinks(entry).map((url, index) => {
-    const parsed = repoFromUrl(url);
+    const target = linkTarget(url);
+    const parsed = repoFromUrl(target);
     const meta = parsed && repoMeta[(parsed.owner + '/' + parsed.repo).toLowerCase()];
     return {
       url,
+      key: target.toLowerCase(),
       index,
       stars: meta ? meta[0] : -1
     };
   });
-  scored.sort((a, b) => {
-    const left = a.url.toLowerCase(), right = b.url.toLowerCase();
-    return (b.stars - a.stars) || (left < right ? -1 : left > right ? 1 : 0) || (a.index - b.index);
-  });
+  scored.sort((a, b) =>
+    (b.stars - a.stars) || (a.key < b.key ? -1 : a.key > b.key ? 1 : 0) || (a.index - b.index));
   entry._ranked = scored.map(item => item.url);
   return entry._ranked;
 }
@@ -1023,6 +1201,7 @@ function resultRow(entry) {
   const links = rankedLinks(entry);
   const visible = all ? links : links.slice(0, POC_PREVIEW);
   const artifacts = new Set(POC_FIELDS.slice(1).flatMap(field => entry[field] || []));
+  const listed = new Set(links.map(linkIdentity));
   // Nothing to expand means no control: a line reading "all repositories
   // shown" under a list of three is chrome that answers a question nobody has.
   const moreButton = links.length > POC_PREVIEW
@@ -1095,7 +1274,7 @@ function resultRow(entry) {
     <p class="result-desc${open ? ' is-open' : ''}">${escapeHTML(entry.desc || '')}</p>
     <button type="button" class="expander" data-toggle-desc="${escapeHTML(id)}">${open ? '↑ collapse' : '↓ full description'}</button>
     <div class="poc-list">
-      ${visible.map(url => pocRow(url, artifacts.has(url))).join('')}
+      ${visible.map(url => pocRow(url, artifacts.has(url), listed)).join('')}
       ${moreButton}
     </div>
     ${advisoryHtml}
@@ -1166,8 +1345,9 @@ function renderResults(elapsed) {
 // newest-first value, still sent by cached pages.
 const TREND_LISTS = { LANDED: 'landed', TRENDING: 'items', RECENT: 'landed' };
 
-function trendRow(item, landed) {
-  const parsed = repoFromUrl(item.url);
+function trendRow(item, landed, listed = new Set()) {
+  const url = String(item.url || '');
+  const parsed = repoFromUrl(url);
   const repository = parsed ? (parsed.owner + '/' + parsed.repo).toLowerCase() : '';
   const stars = repository ? item.stars : null;
   const starCell = stars == null ? 'N/A' : `${formatStars(stars)} <span class="star">★</span>`;
@@ -1181,9 +1361,12 @@ function trendRow(item, landed) {
   const detail = item.page
     ? `<a class="trend-detail" href="${escapeHTML(item.page)}">${escapeHTML(item.cve)} details</a>`
     : '';
+  const label = String(name || url);
   return `<div class="trend-row"><span class="trend-stars${stars >= 500 ? ' is-popular' : ''}" title="${escapeHTML(title)}">${starCell}</span>` +
     trendAge(landed ? item.released : item.pushed) +
-    `<span class="trend-name-cell">${flagged}<a class="trend-name" href="${escapeHTML(item.url)}" target="_blank" rel="nofollow noopener">${escapeHTML(name)}</a>${detail}</span>` +
+    `<div class="trend-name-cell">${flagged}<a class="trend-name" href="${escapeHTML(item.url)}" target="_blank" rel="nofollow noopener"` +
+    `${archivedName(label, waybackCapture(url))}>${escapeHTML(name)}</a>` +
+    `<div class="trend-sub">${detail}${archiveLink(url, label)}${sourceFiles(url, label, listed)}</div></div>` +
     `<span class="trend-desc">${escapeHTML(item.desc || 'Description unavailable')}</span></div>`;
 }
 
@@ -1198,8 +1381,9 @@ function renderTrending() {
   const list = TREND_LISTS[state.mode];
   const landed = list === 'landed';
   const rows = (Array.isArray(indexMeta[list]) ? indexMeta[list] : []).slice(0, TREND_ROWS);
+  const listed = new Set(rows.map(item => linkIdentity(String(item.url || ''))));
   el.trendRows.innerHTML = rows.length
-    ? rows.map(item => trendRow(item, landed)).join('')
+    ? rows.map(item => trendRow(item, landed, listed)).join('')
     : '<div class="empty">No recent PoCs.</div>';
   if (el.trendDate) {
     el.trendDate.textContent = landed ? 'RELEASED' : 'UPDATED';
@@ -1403,8 +1587,9 @@ document.addEventListener('keydown', event => {
     return;
   }
   const active = document.activeElement;
+  // Space on a saved-files disclosure toggles it, as on a button.
   const editing = active && (active.isContentEditable
-    || ['INPUT', 'TEXTAREA', 'SELECT', 'BUTTON'].includes(active.tagName));
+    || ['INPUT', 'TEXTAREA', 'SELECT', 'BUTTON', 'SUMMARY'].includes(active.tagName));
   if (editing) return;
   // A lone slash is the shortcut, so it focuses without typing itself.
   if (event.key === '/') {
@@ -1456,6 +1641,17 @@ el.results.addEventListener('click', event => {
   renderResults(null);
 });
 
+// An open saved-files list stays open through the re-renders that late data
+// and other toggles cause. Toggle events do not bubble, so this listens early.
+function rememberSources(event) {
+  const box = event.target;
+  if (!box || typeof box.matches !== 'function' || !box.matches('details.sources')) return;
+  if (box.open) state.sourcesOpen.add(box.dataset.sources);
+  else state.sourcesOpen.delete(box.dataset.sources);
+}
+el.results.addEventListener('toggle', rememberSources, true);
+el.trendRows.addEventListener('toggle', rememberSources, true);
+
 async function loadJSON(url, options) {
   const response = await fetch(url, options);
   if (!response.ok) throw new Error(`${url} (${response.status})`);
@@ -1474,6 +1670,41 @@ function enrichmentUnavailable(kind, error) {
   }
   syncFilterControls();
   render();
+}
+
+// Snapshot links are display-only enrichment. They land whenever they arrive,
+// never hold up the index or reorder a result, and a failed or malformed
+// download keeps the snapshots already shown.
+function landArchives(request, epoch) {
+  request.then(data => {
+    if (dataEpoch !== epoch || !data || typeof data !== 'object' || Array.isArray(data)) return;
+    archives = data;
+    if (state.query.length < MIN_QUERY && !hasActiveFilters()) renderTrending();
+    else if (state.ready) renderResults(null);
+  }).catch(err => console.warn(`Archive snapshots unavailable: ${err.message}`));
+}
+
+/** Snapshots and saved files the build confirmed for the rows it published.
+ *  They stand until archives.json lands, so a row never trades its snapshot
+ *  for a lookup or loses its files. */
+function publishedSnapshots() {
+  const found = new Map();
+  const record = url => found.get(url) || found.set(url, {}).get(url);
+  for (const link of el.trendRows.querySelectorAll('.trend-row a.wayback.is-snapshot, .trend-row details.sources a')) {
+    const capture = waybackCapture(link.getAttribute('href'));
+    const sources = capture && link.closest('details.sources');
+    if (sources) {
+      // A saved file, filed under the original its row discloses it for.
+      const parent = sources.getAttribute('data-sources');
+      const saved = parent ? record(linkTarget(parent)) : null;
+      if (saved) (saved.files || (saved.files = [])).push({ original: capture.original, url: capture.url, timestamp: capture.stamp });
+      continue;
+    }
+    const row = capture && link.closest('.trend-row');
+    const name = row && row.querySelector('.trend-name');
+    if (name) Object.assign(record(name.getAttribute('href')), { url: capture.url, timestamp: capture.stamp });
+  }
+  return Object.fromEntries(found);
 }
 
 function paintRefreshTime(meta) {
@@ -1537,6 +1768,8 @@ async function refreshData(force = false) {
     paintHeroStats();
     paintRefreshTime(feed);
     render();
+    // Optional: until it lands, or if it fails, the previous snapshots stand.
+    landArchives(loadJSON(`/archives.json?v=${encodeURIComponent(feed.generated)}`, { cache: 'no-store' }), dataEpoch);
     return true;
   } catch (err) {
     console.warn(`Index refresh deferred: ${err.message}`);
@@ -1555,6 +1788,7 @@ document.addEventListener('visibilitychange', () => { if (!document.hidden) refr
 window.addEventListener?.('focus', () => { refreshData(); });
 
 (async () => {
+  archives = publishedSnapshots();
   readURLState();
   syncFilterControls();
   render();
@@ -1630,4 +1864,6 @@ window.addEventListener?.('focus', () => { refreshData(); });
     render();
   }
   loadAdvisories();
+  // One snapshot per linked PoC adds up, so it follows the index as well.
+  landArchives(loadJSON('/archives.json', { cache: 'no-cache' }), 0);
 })();

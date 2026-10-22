@@ -54,6 +54,19 @@ SOURCES = (
 NAMED_BY_LEAF = {"zan8in/afrog", "chaitin/xray", "helloexp/0day", "tzwlhack/vulnerability"}
 COLLECTION_ROOTS = {"google/security-research": "pocs/", "github/securitylab": "SecurityExploits/"}
 
+# As logic.js reads them. A page snapshot is https on web.archive.org, a 14-digit
+# UTC capture time and the http(s) page captured; a save request is not one.
+WAYBACK = "https://web.archive.org/web/"
+CAPTURE = re.compile(r'https://web\.archive\.org/web/([0-9]{14})/(https?://[^\x00-\x20\x7f"<>\\]+)')
+AUTHORITY = re.compile(r"https?://([^/?#@\x00-\x20\x7f\\]*)(?=[/?#]|\Z)")
+# A saved source file, as logic.js reads it: the raw bytes of one file at a
+# pinned commit of the page's own GitHub repository, or the JSON of the page's
+# own HackerOne report.
+RAW_FILE = re.compile(r"https://raw\.githubusercontent\.com/([^/?#]+)/([^/?#]+)/([0-9a-f]{40})/([^?#]+)")
+REPORT_PAGE = re.compile(r"https?://[^/?#]*/reports/([0-9]+)/?(?:[?#]|\Z)")
+REPORT_JSON = re.compile(r"https://(?:www\.)?hackerone\.com/reports/([0-9]+)\.json")
+DOT_SEGMENT = re.compile(r"(?:\.|%2e){1,2}", re.I)
+
 
 @lru_cache(maxsize=2)
 def asset_url(name: str) -> str:
@@ -65,6 +78,17 @@ def asset_url(name: str) -> str:
 def load(name: str) -> dict | list:
     with open(os.path.join(DOCS, name), encoding="utf-8") as handle:
         return json.load(handle)
+
+
+def load_optional(name: str) -> dict:
+    """An enrichment the pages render without. A missing file is empty; one that
+    is present but not an object stops the build like any other bad input."""
+    if not os.path.exists(os.path.join(DOCS, name)):
+        return {}
+    payload = load(name)
+    if not isinstance(payload, dict):
+        raise ValueError(f"Invalid {name}: expected a JSON object")
+    return payload
 
 
 def esc(value) -> str:
@@ -192,6 +216,171 @@ def artifact_label(url: str) -> str:
     return path[len(root):] if root and path.startswith(root) and len(path) > len(root) else path
 
 
+def wayback_capture(url: object) -> dict | None:
+    """The capture a snapshot URL names, as waybackCapture in logic.js reads it.
+    Its time has to be a real one from 1996 on, when the Wayback Machine began."""
+    match = CAPTURE.fullmatch(url) if isinstance(url, str) else None
+    if not match:
+        return None
+    stamp, original = match.groups()
+    try:
+        moment = datetime(int(stamp[:4]), int(stamp[4:6]), int(stamp[6:8]),
+                          int(stamp[8:10]), int(stamp[10:12]), int(stamp[12:]))
+    except ValueError:
+        return None
+    return {"url": url, "stamp": stamp, "original": original} if moment.year >= 1996 else None
+
+
+def link_host(url: str) -> str:
+    """Lower-cased host of an http(s) link, without www. or a port. Empty for
+    anything else, a link carrying credentials included."""
+    match = AUTHORITY.match(url)
+    return re.sub(r"^www\.", "", re.sub(r":[0-9]*\Z", "", match[1].lower())) if match else ""
+
+
+def confirmed_snapshot(url: str, archives: dict) -> dict | None:
+    """The capture archives.json confirms for this exact link: a valid snapshot,
+    stamped as recorded, of a page on the link's own host."""
+    record = archives.get(url)
+    capture = wayback_capture(record.get("url")) if isinstance(record, dict) else None
+    if not capture or capture["stamp"] != record.get("timestamp"):
+        return None
+    host = link_host(url)
+    return capture if host and link_host(capture["original"]) == host else None
+
+
+def capture_date(stamp: str) -> str:
+    return f"{stamp[:4]}-{stamp[4:6]}-{stamp[6:8]} {stamp[8:10]}:{stamp[10:12]} UTC"
+
+
+def archived_name(label: str, capture: dict | None) -> str:
+    """The accessible name of a link that opens a snapshot in place of its original."""
+    if not capture:
+        return ""
+    name = f"{label}, archived page snapshot captured {capture_date(capture['stamp'])}"
+    return f' aria-label="{esc(name)}"'
+
+
+def archive_link(url: str, label: str, archives: dict) -> str:
+    """The Wayback Machine beside a PoC link, drawn as archiveLink in logic.js
+    draws it: the confirmed snapshot, or a lookup that claims nothing. A link
+    that is itself a snapshot is stamped, and any other archive link gets nothing."""
+    capture = wayback_capture(url)
+    if capture:
+        return ('<span class="wayback is-archived" title="Wayback Machine page snapshot captured '
+                f'{capture_date(capture["stamp"])}, linked in place of the original" aria-hidden="true">ARCHIVED</span>')
+    host = link_host(url)
+    if not host or re.search(r"(?:^|\.)archive\.org\Z", host):
+        return ""
+    snapshot = confirmed_snapshot(url, archives)
+    if snapshot:
+        date = capture_date(snapshot["stamp"])
+        name = f"snapshot of {label} on the Wayback Machine, captured {date}"
+        return (f'<a class="wayback is-snapshot" href="{esc(snapshot["url"])}" target="_blank" rel="nofollow noopener" '
+                f'title="Wayback Machine page snapshot, captured {date}" aria-label="{esc(name)}">snapshot</a>')
+    name = f"find archive of {label} on the Wayback Machine"
+    return (f'<a class="wayback is-lookup" href="{esc(WAYBACK + "*/" + url)}" target="_blank" rel="nofollow noopener" '
+            f'title="Search the Wayback Machine for captures; none confirmed" aria-label="{esc(name)}">find archive</a>')
+
+
+def link_path(url: str) -> str:
+    """What follows a link's host: its path, query and fragment."""
+    return re.sub(r"\Ahttps?://[^/?#]*", "", url)
+
+
+def link_target(url: str) -> str:
+    """The page a link stands for. A snapshot published in place of a lost
+    original stands for that original."""
+    capture = wayback_capture(url)
+    return capture["original"] if capture else url
+
+
+def link_identity(url: str) -> str:
+    """The page a link stands for, whatever scheme, www. or port it carries."""
+    target = link_target(url)
+    host = link_host(target)
+    return host + link_path(target) if host else target
+
+
+def decoded(path: str) -> str:
+    """decodeURIComponent: a path with a malformed escape is shown as written."""
+    if re.search(r"%(?![0-9A-Fa-f]{2})", path):
+        return path
+    try:
+        return unquote(path, errors="strict")
+    except UnicodeDecodeError:
+        return path
+
+
+def source_file(parent: str, original: str) -> dict | None:
+    """The file a saved original is, when it belongs to the page at parent."""
+    repo = repo_of(parent)
+    raw = RAW_FILE.fullmatch(original) if repo else None
+    if raw:
+        owner, name, commit, path = raw.groups()
+        # A dot segment would resolve into another repository's files.
+        if (f"{owner}/{name}".lower() != repo
+                or any(not part or DOT_SEGMENT.fullmatch(part) for part in path.split("/"))):
+            return None
+        return {"key": f"{commit}/{path}", "name": decoded(path), "commit": commit}
+    report = REPORT_PAGE.match(parent) if link_host(parent) == "hackerone.com" else None
+    saved = REPORT_JSON.fullmatch(original) if report else None
+    return {"key": saved[1], "name": f"{saved[1]}.json", "commit": ""} if saved and saved[1] == report[1] else None
+
+
+def saved_files(url: str, archives: dict) -> list[dict]:
+    """The saved files archives.json confirms for this exact link, as savedFiles
+    in logic.js reads them: valid captures, stamped as recorded, of files that
+    belong to it. One capture per file, the latest, in a stable order."""
+    record = archives.get(url)
+    files = record.get("files") if isinstance(record, dict) else None
+    found: dict = {}
+    for file in files if isinstance(files, list) else ():
+        capture = wayback_capture(file.get("url")) if isinstance(file, dict) else None
+        original = file.get("original") if capture else None
+        if (not isinstance(original, str) or not original or capture["stamp"] != file.get("timestamp")
+                or link_host(original) != link_host(capture["original"])
+                or link_path(original) != link_path(capture["original"])):
+            continue
+        source = source_file(url, original)
+        kept = found.get(source["key"]) if source else None
+        if source and (not kept or kept["capture"]["stamp"] < capture["stamp"]):
+            found[source["key"]] = {**source, "original": original, "capture": capture}
+    return sorted(found.values(), key=lambda saved: saved["original"])
+
+
+def shown_files(url: str, archives: dict, listed: frozenset | set = frozenset()) -> list[dict]:
+    """The saved files a link discloses. A snapshot in place of a lost original
+    discloses that original's files; a file listed in a row of its own is not
+    repeated."""
+    return [saved for saved in saved_files(link_target(url), archives)
+            if link_identity(saved["original"]) not in listed]
+
+
+def source_files(url: str, label: str, archives: dict, listed: frozenset | set = frozenset()) -> str:
+    """A link's saved files, disclosed beside its Wayback control as sourceFiles
+    in logic.js discloses them. Each opens the capture of one file's bytes, so
+    none stands for the whole source and none gets an archive control of its own."""
+    files = shown_files(url, archives, listed)
+    if not files:
+        return ""
+    count = f"{len(files)} file{'' if len(files) == 1 else 's'}"
+    title = ("Wayback Machine captures of individual files at pinned commits, not a copy of the whole repository"
+             if files[0]["commit"] else "Wayback Machine capture of the report JSON")
+    links = []
+    for saved in files:
+        date = capture_date(saved["capture"]["stamp"])
+        what = (f"{saved['name']} at commit {saved['commit'][:7]}" if saved["commit"]
+                else f"{saved['name']}, the report JSON")
+        links.append(f'<a href="{esc(saved["capture"]["url"])}" target="_blank" rel="nofollow noopener" '
+                     f'title="{esc(f"Wayback Machine capture of {what}, {date}")}" '
+                     f'aria-label="{esc(f"{what} of {label}, Wayback Machine capture {date}")}">{esc(saved["name"])}</a>')
+    # The count sizes the room the open list takes, so nothing beside it moves.
+    return (f'<details class="sources" style="--files:{len(files)}" data-sources="{esc(url)}">'
+            f'<summary title="{title}" aria-label="{esc(f"{count} saved from {label}")}">{count}</summary>'
+            f'<div class="sources-list">{"".join(links)}</div></details>')
+
+
 def page_lastmod(entry: dict, data: dict) -> str:
     """Bootstrap date before a page has a published content fingerprint: the record's own."""
     stamps = (entry.get("modified") or "", entry.get("published") or "")
@@ -239,7 +428,7 @@ def tracked_state(key: str, payload: object, today: str, fallback: str, previous
 
 def content_state(entry: dict, data: dict, previous: dict) -> list[str]:
     """Track significant content: the record, every link, CVSS, advisories,
-    Nuclei and KEV.
+    Nuclei, KEV and the Wayback snapshots and saved files the page links.
 
     Daily EPSS fluctuations, star counts, repository pushes and site-wide totals
     are deliberately excluded; they are not a new exploit, assessment, or
@@ -249,6 +438,20 @@ def content_state(entry: dict, data: dict, previous: dict) -> list[str]:
     meta = data["meta"].get(cid) or {}
     payload = {"entry": entry, "cvss": meta.get("cvss"), "advisories": meta.get("advisories"),
                "nuclei": data["nuclei"].get(cid), "kev": data["kev"].get(cid)}
+    # Only what the page renders, and only on pages that link a snapshot or a
+    # saved file, so every other page keeps the fingerprint and date it was
+    # published with.
+    archives = data.get("archives") or {}
+    links = [url for field in ("poc", *(key for key, _, _ in SOURCES)) for url in entry.get(field) or []]
+    snapshots = {url: [capture["url"], capture["stamp"]] for url in links
+                 if (capture := confirmed_snapshot(url, archives))}
+    if snapshots:
+        payload["archives"] = snapshots
+    listed = frozenset(map(link_identity, links))
+    files = {url: [[saved["original"], saved["capture"]["url"], saved["capture"]["stamp"]] for saved in shown]
+             for url in links if (shown := shown_files(url, archives, listed))}
+    if files:
+        payload["files"] = files
 
     def legacy() -> dict:
         # Manifests published while pushes were fingerprinted still match, so they keep their dates.
@@ -299,7 +502,8 @@ def build_related(cves: list) -> dict:
     return related
 
 
-def link_rows(urls: list, repo_meta: dict, *, trusted: bool = False, collection: bool = False) -> str:
+def link_rows(urls: list, repo_meta: dict, *, trusted: bool = False, collection: bool = False,
+              archives: dict | None = None, listed: frozenset = frozenset()) -> str:
     """One row per source link.
 
     The repository list is crowd-sourced: anyone can publish a repository named
@@ -310,27 +514,43 @@ def link_rows(urls: list, repo_meta: dict, *, trusted: bool = False, collection:
 
     Stars and push dates describe the repository, including for file links.
     Artifact release and update dates are kept separate on the homepage.
+
+    Given an archive index, each PoC row also offers the Wayback Machine, and
+    discloses its saved files other than those in listed, which have rows of
+    their own. A snapshot published in place of a lost original is named,
+    ranked and measured as that original, and its link opens the snapshot.
     """
     rel = "noopener" if trusted else "nofollow noopener"
     rows = []
+
+    def target(url: str) -> tuple[str, dict | None]:
+        capture = wayback_capture(url) if archives is not None else None
+        return (capture["original"] if capture else url), capture
+
     def rank(url: str) -> tuple:
-        meta = repo_meta.get(repo_of(url) or "")
-        return -(meta[0] if meta else -1), url.lower()
+        source = target(url)[0]
+        meta = repo_meta.get(repo_of(source) or "")
+        return -(meta[0] if meta else -1), source.lower()
 
     for url in sorted(urls, key=rank):
-        label = url[len(GITHUB):] if url.startswith(GITHUB) else url
-        path = artifact_label(url) if trusted else ""
-        repository = repo_of(url)
+        source, capture = target(url)
+        label = source[len(GITHUB):] if source.startswith(GITHUB) else source
+        path = artifact_label(source) if trusted else ""
+        repository = repo_of(source)
         meta = repo_meta.get(repository or "")
         detail = (f"Repo stars {meta[0]}★ · pushed {esc(meta[1]) or 'N/A'}" if meta
                   else "Repo metadata unavailable" if repository else "")
         if path and collection:
-            repository = "/".join(urlsplit(url).path.strip("/").split("/")[:2])
+            repository = "/".join(urlsplit(source).path.strip("/").split("/")[:2])
             label, detail = path, f"{esc(repository)} · {detail}"
-        note = f"<span>{detail}</span>" if detail else ""
+        label = short(label, 90)
+        archive = archive_link(url, label, archives) if archives is not None else ""
+        note = " · ".join(part for part in (detail, archive) if part)
+        note = f"<span>{note}</span>" if note else ""
+        files = source_files(url, label, archives, listed) if archives is not None else ""
         rows.append(
-            f'<li><a href="{esc(url)}" rel="{rel}" target="_blank">'
-            f"{esc(short(label, 90))}</a>{note}</li>"
+            f'<li><a href="{esc(url)}" rel="{rel}" target="_blank"{archived_name(label, capture)}>'
+            f"{esc(label)}</a>{note}{files}</li>"
         )
     return "".join(rows)
 
@@ -446,19 +666,23 @@ def page(entry: dict, data: dict) -> str:
     if entry.get("modified"):
         facts.append(f"<dt>Updated</dt><dd>{esc(entry['modified'])}</dd>")
 
+    # Without an archive index every PoC still offers a Wayback lookup.
+    archives = data.get("archives") or {}
+    # Links with a row of their own here; no row's saved files repeat them.
+    rowed =frozenset(link_identity(link) for link in
+                      [*pocs, *(link for key, _, _ in SOURCES for link in entry.get(key) or [])])
     blocks = []
     if pocs:
         blocks.append(
             f"<h2>Proof-of-concept exploits ({len(pocs):,})</h2>"
-            f'<ul class="cve-links">{link_rows(pocs, data["repo_meta"])}</ul>'
+            f'<ul class="cve-links">{link_rows(pocs, data["repo_meta"], archives=archives, listed=rowed)}</ul>'
         )
     for key, heading, _ in SOURCES:
         urls = entry.get(key) or []
         if urls:
-            blocks.append(
-                f"<h2>{heading} ({len(urls)})</h2>"
-                f'<ul class="cve-links">{link_rows(urls, data["repo_meta"], trusted=True, collection=key == "collections")}</ul>'
-            )
+            listed_rows = link_rows(urls, data["repo_meta"], trusted=True, collection=key == "collections",
+                                    archives=archives, listed=rowed)
+            blocks.append(f'<h2>{heading} ({len(urls)})</h2><ul class="cve-links">{listed_rows}</ul>')
 
     siblings = "".join(
         f'<li><a href="/{other}">{other}</a></li>' for other in data["related"].get(cid, ())
@@ -736,13 +960,18 @@ def trend_age(value: object, now: datetime) -> str:
     return f'<time class="trend-age" datetime="{iso}" title="{title}">{label}</time>'
 
 
-def trend_rows(items: object, landed: bool, now: datetime | None = None) -> str:
+def trend_rows(items: object, landed: bool, now: datetime | None = None, archives: dict | None = None) -> str:
     """A front-page list as logic.js renders it, in feed order. Just landed is
-    dated by first release, Trending by latest artifact commit."""
+    dated by first release, Trending by latest artifact commit. Each row offers
+    its Wayback snapshot or a lookup, and its saved files."""
     now = now or datetime.now(timezone.utc)
+    archives = archives or {}
+    shown = (items if isinstance(items, list) else [])[:TREND_ROWS]
+    listed = frozenset(link_identity(str(item.get("url") or "")) for item in shown)
     rows = []
-    for item in (items if isinstance(items, list) else [])[:TREND_ROWS]:
-        repository = repo_of(str(item.get("url") or ""))
+    for item in shown:
+        url = str(item.get("url") or "")
+        repository = repo_of(url)
         stars = item.get("stars") if repository else None
         star_cell = "N/A" if stars is None else f'{star_label(stars)} <span class="star">★</span>'
         star_title = f"Repository stars: {repository}" if repository else "No GitHub repository"
@@ -756,17 +985,21 @@ def trend_rows(items: object, landed: bool, now: datetime | None = None) -> str:
         flagged = '<span class="trend-kev" title="CISA known exploited">KEV</span>' if item.get("kev") else ""
         detail = (f'<a class="trend-detail" href="{esc(item["page"])}">{esc(item.get("cve"))} details</a>'
                   if item.get("page") else "")
+        label = str(name or url)
         rows.append(
             f'<div class="trend-row"><span class="trend-stars{popular}" title="{esc(star_title)}">{star_cell}</span>'
             f'{trend_age(item.get("released" if landed else "pushed"), now)}'
-            f'<span class="trend-name-cell">{flagged}<a class="trend-name" href="{esc(item.get("url"))}" '
-            f'target="_blank" rel="nofollow noopener">{esc(name)}</a>{detail}</span>'
+            f'<div class="trend-name-cell">{flagged}<a class="trend-name" href="{esc(item.get("url"))}" '
+            f'target="_blank" rel="nofollow noopener"{archived_name(label, wayback_capture(url))}>{esc(name)}</a>'
+            f'<div class="trend-sub">{detail}{archive_link(url, label, archives)}'
+            f'{source_files(url, label, archives, listed)}</div></div>'
             f'<span class="trend-desc">{esc(item.get("desc") or "Description unavailable")}</span></div>'
         )
     return "".join(rows) or '<div class="empty">No recent PoCs.</div>'
 
 
-def homepage(cves: list, kev: dict, trending: dict, now: datetime | None = None) -> str:
+def homepage(cves: list, kev: dict, trending: dict, now: datetime | None = None,
+             archives: dict | None = None) -> str:
     """Publish the same content before JavaScript or a crawler render runs."""
     indexed = {entry["cve"] for entry in cves}
     if trending["with_pocs"] != len(indexed) or trending["total_cves"] < len(indexed):
@@ -792,7 +1025,7 @@ def homepage(cves: list, kev: dict, trending: dict, now: datetime | None = None)
         stylesheet_url=asset_url("style.css"), script_url=asset_url("logic.js"),
         sources_line=SOURCES_LINE, project_links=project_links(), website_schema=json_ld(website),
         total_cves=f"{trending['total_cves']:,}", with_pocs=f"{len(indexed):,}", kev=f"{len(kev):,}",
-        landed_rows=trend_rows(trending.get("landed"), True, now),
+        landed_rows=trend_rows(trending.get("landed"), True, now, archives),
         generated=esc(generated.strftime("%Y-%m-%d %H:%M UTC")),
         year_links=" ".join(f'<a href="/{esc(year)}">{esc(year)}</a>' for year in years),
     )
@@ -839,6 +1072,7 @@ def main() -> int:
         "kev": load("kev.json"),
         "nuclei": load("nuclei.json"),
         "repo_meta": load("repo_meta.json"),
+        "archives": load_optional("archives.json"),
         "today": datetime.now(timezone.utc).strftime("%Y-%m-%d"),
     }
     data["related"] = build_related(cves)
@@ -874,7 +1108,7 @@ def main() -> int:
         handle.write(not_found())
 
     with open(os.path.join(DOCS, "index.html"), "w", encoding="utf-8") as handle:
-        handle.write(homepage(cves, data["kev"], load("trending_poc.json")))
+        handle.write(homepage(cves, data["kev"], load("trending_poc.json"), archives=data["archives"]))
 
     related = sum(1 for cid in lastmod if data["related"].get(cid))
     print(f"Wrote {written:,} CVE pages and {len(hubs['pages']):,} hub pages into {DOCS} "

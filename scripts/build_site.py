@@ -396,6 +396,8 @@ def collect_links(block: str, *, blacklist: Optional[Collection[str]] = None) ->
 
 
 def build_cve_list(blacklist: Collection[str]) -> tuple[List[Dict[str, object]], int]:
+    import archive_pocs
+    archived = archive_pocs.archived_fallbacks(blacklist=blacklist, exclusions=load_source_exclusions())
     cve_entries = []
     dates = load_dates()
     metadata = load_metadata()
@@ -443,6 +445,13 @@ def build_cve_list(blacklist: Collection[str]) -> tuple[List[Dict[str, object]],
             if source_key(link) not in curated_keys:
                 poc_candidates.append(link)
         poc_entries = dedupe_source_links(poc_candidates, cve_id)
+        for field, url in archived.get(cve_id, []):
+            original = original_artifact(url)
+            if original in poc_entries or any(original in links for links in curated.values()):
+                continue
+            destination = curated.get(field, poc_entries)
+            if url not in destination:
+                destination.append(url)
 
         if not poc_entries and not any(curated.values()):
             continue
@@ -481,10 +490,16 @@ def add_observed_dates(cve_entries: list[dict], ledger: dict) -> None:
         stamps = [
             stamp for field in ["poc", *(field for _, field in CURATED)]
             for url in entry.get(field, [])
-            if (stamp := releases.timestamp((ledger.get(releases.key(entry["cve"], url)) or {}).get("seen")))
+            if (stamp := releases.timestamp((ledger.get(releases.key(entry["cve"], original_artifact(url)))
+                                            or ledger.get(releases.key(entry["cve"], url)) or {}).get("seen")))
         ]
         if stamps:
             entry["poc_observed"] = min(stamps).strftime("%Y-%m-%d")
+
+
+def original_artifact(url: str) -> str:
+    match = re.fullmatch(r'https://web\.archive\.org/web/\d{14}/(https?://.+)', url)
+    return match[1] if match else url
 
 
 def build_repo_meta(cve_entries: List[Dict[str, object]]) -> Dict[str, object]:
@@ -496,11 +511,11 @@ def build_repo_meta(cve_entries: List[Dict[str, object]]) -> Dict[str, object]:
     ):
         raise ValueError("Invalid repository metadata; refusing to publish missing star columns")
     linked = {
-        repo_from_url(url)
+        repo_from_url(original_artifact(url))
         for entry in cve_entries
         for field in ["poc", *(field for _, field in CURATED)]
         for url in entry.get(field, [])
-        if repo_from_url(url)
+        if repo_from_url(original_artifact(url))
     }
     return {name: value for name, value in stored.items() if name in linked}
 
@@ -685,6 +700,22 @@ def main() -> int:
     cve_payload, total_cves = build_cve_list(blacklist)
     add_observed_dates(cve_payload, ledger)
     write_json(CVE_OUTPUT, cve_payload)
+
+    import archive_pocs
+    archive_rows = archive_pocs.load_records()
+    allowed = {archive_pocs.identity(url) for entry in cve_payload
+               for field in ['poc', *(f for _, f in CURATED)] for url in entry.get(field, [])}
+    # Fallback entries point into Wayback; retain the original-to-capture map.
+    allowed.update(key for key, row in archive_rows.items()
+                   if archive_pocs.valid_snapshot(row) and archive_pocs.identity(row['snapshot']['url']) in allowed)
+    snapshots = archive_pocs.published_snapshots(archive_rows, allowed)
+    aliases = {archive_pocs.identity(url): value for url, value in snapshots.items()}
+    for entry in cve_payload:
+        for field in ['poc', *(field for _, field in CURATED)]:
+            for url in entry.get(field, []):
+                if value := aliases.get(archive_pocs.identity(url)):
+                    snapshots[url] = value
+    write_json(DOCS_DIR / 'archives.json', snapshots)
 
     repo_meta = build_repo_meta(cve_payload)
     write_json(REPO_META_OUTPUT, repo_meta)

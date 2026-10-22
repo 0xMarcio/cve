@@ -256,6 +256,7 @@ def record(ledger: dict[str, dict], cve: str, url: str, evidence: dict | None = 
     old = ledger.get(identity)
     row = copy.deepcopy(old) if old else {"cve": cve, "url": url, "basis": "unknown", "released": None}
     row.pop("gone", None)
+    row.pop("gone_reason", None)
     if not old:
         if import_mode:
             row["imported"] = True
@@ -431,7 +432,10 @@ def reconcile(ledger: dict[str, dict], pairs: list[tuple[str, str]], *, evidence
     if complete:
         for identity, row in result.items():
             if identity not in present:
-                row.setdefault("gone", observed_at)
+                if not row.get('gone'):
+                    import link_health
+                    row['gone_reason'] = 'unavailable' if link_health.unavailable(row['url']) else 'withdrawn'
+                    row['gone'] = observed_at
     resolve_copies(result, now=observed_at)
     mark_bulk(result)
     return result
@@ -450,13 +454,15 @@ def landed(ledger: dict[str, dict], *, now: str | None = None, days: int = 10) -
 
 
 def published_pairs(entries: list[dict] | None = None) -> list[tuple[str, str]]:
+    import archive_pocs
+    managed = {row['snapshot']['url'] for row in archive_pocs.load_records().values() if archive_pocs.valid_snapshot(row)}
     if entries is None:
         # Lazy import also lets the site builder consume this ledger.
         from build_site import build_cve_list, load_blacklist
         entries, _ = build_cve_list(load_blacklist())
     return sorted({(row["cve"], url) for row in entries
                    for field in ("poc", "nuclei", "edb", "msf", "vulhub", "collections")
-                   for url in row.get(field, [])})
+                   for url in row.get(field, []) if url not in managed})
 
 
 def qualifying_content(repository: str, cve: str, path: str, source: bytes, reviews: list[dict]) -> bool:
@@ -755,8 +761,12 @@ def record_collection_snapshot(previous: dict, current: dict, pairs: list[tuple[
         for identity in removed:
             if identity in published:
                 ledger[identity].pop("gone", None)
+                ledger[identity].pop("gone_reason", None)
             else:
-                ledger[identity].setdefault("gone", observed_at)
+                if not ledger[identity].get('gone'):
+                    import link_health
+                    ledger[identity]['gone_reason'] = 'unavailable' if link_health.unavailable(ledger[identity]['url']) else 'withdrawn'
+                    ledger[identity]['gone'] = observed_at
     resolve_copies(ledger, now=observed_at)
     mark_bulk(ledger)
     save_ledger(ledger, directory)
@@ -773,8 +783,18 @@ def main() -> int:
     parser.add_argument("--dry-run", action="store_true")
     args = parser.parse_args()
     entries = json.loads(args.input.read_text()) if args.input else None
+    if entries is None:
+        from build_site import build_cve_list, load_blacklist
+        entries, _ = build_cve_list(load_blacklist())
     evidence = json.loads(args.evidence.read_text()) if args.evidence else {}
     ledger = reconcile(load_ledger(args.directory), published_pairs(entries), evidence=evidence, import_mode=args.seed)
+    for entry in entries:
+        if int(entry['cve'].split('-')[1]) < 2026:
+            continue
+        for field in ('poc', 'nuclei', 'edb', 'msf', 'vulhub', 'collections'):
+            for url in entry.get(field, []):
+                if urlsplit(url).hostname != 'web.archive.org':
+                    ledger[key(entry['cve'], url)]['field'] = field
     if not args.dry_run:
         save_ledger(ledger, args.directory)
     print(f"releases: {len(ledger):,} pairs, {sum(bool(row.get('released')) for row in ledger.values()):,} dated")

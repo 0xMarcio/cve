@@ -77,8 +77,10 @@ const context = vm.createContext({
   location: { pathname: '/', search: '' },
   window: { matchMedia: () => ({ matches: false }) },
   setTimeout() {}, clearTimeout() {},
-  fetch: url => url === '/trending_poc.json'
-    ? Promise.resolve({ ok: true, json: async () => input.feed })
+  // With archives, an empty index lets the archive download that follows it run.
+  fetch: url => url === '/trending_poc.json' ? Promise.resolve({ ok: true, json: async () => input.feed })
+    : input.archives && url === '/CVE_list.json' ? Promise.resolve({ ok: true, json: async () => [] })
+    : input.archives && url === '/archives.json' ? Promise.resolve({ ok: true, json: async () => input.archives })
     : new Promise(() => {})
 });
 vm.runInContext(fs.readFileSync(input.script, 'utf8'), context);
@@ -100,12 +102,13 @@ setImmediate(() => {
 """
 
 
-def browser(feed: dict) -> dict:
-    """What logic.js shows once the feed arrives, then for each switch value."""
+def browser(feed: dict, archives: dict | None = None) -> dict:
+    """What logic.js shows once the feed, and any archive index, arrives, then
+    for each switch value."""
     node = shutil.which("node")
     if node is None:
         raise unittest.SkipTest("node renders the browser lists")
-    payload = {"script": str(ROOT / "docs" / "logic.js"), "feed": feed, "now": NOW.isoformat()}
+    payload = {"script": str(ROOT / "docs" / "logic.js"), "feed": feed, "now": NOW.isoformat(), "archives": archives}
     done = subprocess.run([node, "-e", HARNESS], input=json.dumps(payload), capture_output=True,
                           text=True, timeout=60)
     if done.returncode:
@@ -190,6 +193,64 @@ class HomepageListTests(unittest.TestCase):
         self.assertEqual(self.views["initial"]["disabled"], [False, False])
         self.assertEqual([self.views[mode]["pressed"] for mode in ("initial", "TRENDING", "RECENT")],
                          [["true", "false"], ["false", "true"], ["true", "false"]])
+
+    def test_wayback_snapshots_and_lookups_match_in_browser_and_prerender(self) -> None:
+        stamp = "20261006160000"
+        archives = {
+            SHARED: {"url": f"https://web.archive.org/web/{stamp}/{SHARED}", "timestamp": stamp},
+            # Recorded with another scheme, www. and port: still this page.
+            LANDED[2]["url"]: {"url": f"https://web.archive.org/web/{stamp}/http://exploit-db.com:80/exploits/50592",
+                               "timestamp": stamp},
+            # Another site's capture is not this link's snapshot.
+            KERNELCTF + "mitigation": {"url": f"https://web.archive.org/web/{stamp}/https://example.com/", "timestamp": stamp},
+        }
+        views = browser(FEED, archives)
+        landed = build_pages.trend_rows(LANDED, True, NOW, archives)
+        self.assertEqual(views["initial"]["rows"], as_browser(landed))
+        self.assertEqual(views["TRENDING"]["rows"], as_browser(build_pages.trend_rows(TRENDING, False, NOW, archives)))
+        self.assertIn(landed, build_pages.homepage(INDEXED, {}, FEED, NOW, archives))
+        self.assertEqual(landed.count('class="wayback is-snapshot"'), 2)
+        self.assertIn(f'<a class="wayback is-lookup" href="https://web.archive.org/web/*/{KERNELCTF}mitigation"', landed)
+        self.assertIn('aria-label="snapshot of CVE-2026-21589 on the Wayback Machine, captured 2026-10-06 16:00 UTC"', landed)
+        # Everything else in the rows reads as it does without archives.
+        self.assertEqual(cells(views["initial"]["rows"]), cells(self.views["LANDED"]["rows"]))
+
+    def test_saved_files_match_in_browser_and_prerender(self) -> None:
+        stamp, commit = "20261006160000", "0123456789abcdef0123456789abcdef01234567"
+        exploit = (f"https://raw.githubusercontent.com/google/security-research/{commit}/"
+                   "pocs/linux/kernelctf/CVE-2024-26642_mitigation/exploit.c")
+        poc = f"https://raw.githubusercontent.com/owner/cve-2026-21589/{commit}/poc.py"
+
+        def saved(original: str) -> dict:
+            return {"original": original, "url": f"https://web.archive.org/web/{stamp}/{original}", "timestamp": stamp}
+
+        archives = {
+            SHARED: {"url": f"https://web.archive.org/web/{stamp}/{SHARED}", "timestamp": stamp, "files": [saved(poc)]},
+            # Saved files while the page snapshot is pending.
+            KERNELCTF + "mitigation": {"files": [saved(exploit)]},
+            # Not this page's file.
+            LANDED[2]["url"]: {"files": [saved(poc)]},
+        }
+        views = browser(FEED, archives)
+        landed = build_pages.trend_rows(LANDED, True, NOW, archives)
+        trending = build_pages.trend_rows(TRENDING, False, NOW, archives)
+        self.assertEqual(views["initial"]["rows"], as_browser(landed))
+        self.assertEqual(views["TRENDING"]["rows"], as_browser(trending))
+        self.assertIn(landed, build_pages.homepage(INDEXED, {}, FEED, NOW, archives))
+        self.assertEqual((landed.count("<details "), trending.count("<details ")), (2, 1))
+        self.assertIn(
+            f'find archive</a><details class="sources" style="--files:1" data-sources="{KERNELCTF}mitigation">'
+            '<summary title="Wayback Machine captures of individual files at pinned commits, not a copy of the whole '
+            'repository" aria-label="1 file saved from CVE-2024-26642_mitigation">1 file</summary>'
+            f'<div class="sources-list"><a href="https://web.archive.org/web/{stamp}/{exploit}" target="_blank" '
+            'rel="nofollow noopener" title="Wayback Machine capture of pocs/linux/kernelctf/CVE-2024-26642_mitigation/'
+            'exploit.c at commit 0123456, 2026-10-06 16:00 UTC" aria-label="pocs/linux/kernelctf/CVE-2024-26642_mitigation/'
+            'exploit.c at commit 0123456 of CVE-2024-26642_mitigation, Wayback Machine capture 2026-10-06 16:00 UTC">'
+            'pocs/linux/kernelctf/CVE-2024-26642_mitigation/exploit.c</a></div></details></div></div>', landed)
+        self.assertIn(f'snapshot</a><details class="sources" style="--files:1" data-sources="{SHARED}">', trending)
+        # Everything else in the rows reads as it does without archives.
+        self.assertEqual(cells(views["initial"]["rows"]), cells(self.views["LANDED"]["rows"]))
+        self.assertEqual(cells(views["TRENDING"]["rows"]), cells(self.views["TRENDING"]["rows"]))
 
     def test_an_empty_list_shows_the_empty_state_in_both(self) -> None:
         empty = build_pages.trend_rows([], True)

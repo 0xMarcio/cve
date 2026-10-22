@@ -9,7 +9,8 @@ const { MessageChannel } = require('node:worker_threads');
 
 const script = fs.readFileSync(path.join(__dirname, '../docs/logic.js'), 'utf8');
 
-function startPage(t, { search = '', trending, kev = {}, repositories = {}, indexError = false, cvssError = false, entries }) {
+function startPage(t, { search = '', trending, kev = {}, repositories = {}, archives = {}, published = [],
+                        indexError = false, cvssError = false, archivesError = false, entries }) {
   const elements = new Map();
   const calls = [];
   const document = {
@@ -19,7 +20,9 @@ function startPage(t, { search = '', trending, kev = {}, repositories = {}, inde
       if (!elements.has(selector)) elements.set(selector, {
         value: '',
         innerHTML: selector === '[data-trend-rows]' ? '<a href="/CVE-2026-1234">Prerendered PoC</a>' : '',
-        addEventListener() {}, setAttribute() {}, querySelectorAll: () => []
+        addEventListener() {}, setAttribute() {},
+        // The snapshot links a prerendered homepage carries.
+        querySelectorAll: () => selector === '[data-trend-rows]' ? published : []
       });
       return elements.get(selector);
     }
@@ -33,9 +36,11 @@ function startPage(t, { search = '', trending, kev = {}, repositories = {}, inde
       calls.push(url);
       if (url === '/CVE_list.json' && indexError) throw new Error('Index unavailable');
       if (url === '/cvss.json' && cvssError) throw new Error('CVSS unavailable');
+      if (url === '/archives.json' && archivesError) throw new Error('Archive index unavailable');
       const data = url === '/trending_poc.json' ? await trending
         : url === '/kev.json' ? await kev
         : url === '/repo_meta.json' ? await repositories
+        : url === '/archives.json' ? await archives
         : url === '/CVE_list.json' ? entries || [{ cve: 'CVE-2026-1234', desc: 'widget', poc: ['https://github.com/owner/poc'] }]
           : {};
       return { ok: true, json: async () => data };
@@ -54,6 +59,13 @@ async function searchFixture(t, entries, options = {}) {
     return Array.from(vm.runInContext(`runSearch(query, ${scan})`, context), row => row.cve);
   };
 }
+
+// A source file saved at a pinned commit, as archives.json lists it under its page.
+const COMMIT = '0123456789abcdef0123456789abcdef01234567';
+const rawFile = (path, repository = 'owner/poc', commit = COMMIT) =>
+  `https://raw.githubusercontent.com/${repository}/${commit}/${path}`;
+const savedFile = (original, stamp = '20261022161013') =>
+  ({ original, url: `https://web.archive.org/web/${stamp}/${original}`, timestamp: stamp });
 
 test('repository name prefixes beat incidental prose without joining numbered filenames', async t => {
   const search = await searchFixture(t, [
@@ -364,6 +376,377 @@ test('curated artifact paths survive search rendering without duplicate reposito
   for (const url of variants) assert.ok(html.includes(`href="${url}"`));
   assert.doesNotMatch(html, /CREDIBLE ADVISORIES/);
   assert.equal(vm.runInContext(`normalizedLink(${JSON.stringify(variants[0])}) === normalizedLink(${JSON.stringify(base)})`, context), true);
+});
+
+test('PoC rows link a confirmed Wayback snapshot and otherwise offer a labelled lookup', async t => {
+  const archived = 'https://github.com/owner/archived-poc';
+  const other = 'https://www.exploit-db.com/exploits/50592';
+  const snapshot = `https://web.archive.org/web/20251021093000/${archived}`;
+  const entries = [{ cve: 'CVE-2026-1234', desc: 'widget', poc: [archived], edb: [other] }];
+  const { elements } = startPage(t, { search: '?q=widget', entries, trending: new Promise(() => {}),
+    archives: { [archived]: { url: snapshot, timestamp: '20251021093000' } } });
+  await new Promise(setImmediate);
+  const html = elements.get('[data-results]').innerHTML;
+  assert.ok(html.includes(`<a class="wayback is-snapshot" href="${snapshot}" target="_blank" rel="nofollow noopener" ` +
+    'title="Wayback Machine page snapshot, captured 2025-10-21 09:30 UTC" ' +
+    'aria-label="snapshot of owner/archived-poc on the Wayback Machine, captured 2025-10-21 09:30 UTC">snapshot</a>'));
+  assert.ok(html.includes(`<a class="wayback is-lookup" href="https://web.archive.org/web/*/${other}" target="_blank" rel="nofollow noopener" ` +
+    'title="Search the Wayback Machine for captures; none confirmed" ' +
+    'aria-label="find archive of exploit-db.com/50592 on the Wayback Machine">find archive</a>'));
+  assert.equal(html.match(/class="wayback /g).length, 2);
+  // The original stays the PoC link and the count is unchanged.
+  assert.ok(html.includes(`<a href="${archived}" target="_blank" rel="nofollow noopener">archived-poc</a>`));
+  assert.match(html, /2 linked PoCs/);
+  assert.doesNotMatch(html, /web\.archive\.org\/save/);
+});
+
+test('malformed or untrusted snapshot records fall back to a lookup and links are escaped', async t => {
+  const { context } = startPage(t, { trending: new Promise(() => {}) });
+  await new Promise(setImmediate);
+  const url = 'https://github.com/owner/poc';
+  const stamp = '20251021093000';
+  const snapshot = `https://web.archive.org/web/${stamp}/${url}`;
+  const untrusted = [
+    { url: `http://web.archive.org/web/${stamp}/${url}`, timestamp: stamp },
+    { url: `https://web.archive.org.example/web/${stamp}/${url}`, timestamp: stamp },
+    { url: `https://example.com/web.archive.org/web/${stamp}/${url}`, timestamp: stamp },
+    { url: `https://user@web.archive.org/web/${stamp}/${url}`, timestamp: stamp },
+    { url: `https://web.archive.org/save/${url}`, timestamp: stamp },
+    { url: `https://web.archive.org/web/*/${url}`, timestamp: stamp },
+    { url: `https://web.archive.org/web/${stamp}id_/${url}`, timestamp: stamp },
+    { url: `https://web.archive.org/web/2025102109300/${url}`, timestamp: '2025102109300' },
+    { url: `https://web.archive.org/web/20250230093000/${url}`, timestamp: '20250230093000' },
+    { url: `https://web.archive.org/web/20251021240000/${url}`, timestamp: '20251021240000' },
+    { url: `https://web.archive.org/web/19951021093000/${url}`, timestamp: '19951021093000' },
+    { url: snapshot, timestamp: '20251021093001' },
+    { url: snapshot, timestamp: Number(stamp) },
+    { url: snapshot },
+    { url: `https://web.archive.org/web/${stamp}/javascript:alert(1)`, timestamp: stamp },
+    { url: `https://web.archive.org/web/${stamp}/https://example.com/poc`, timestamp: stamp },
+    { url: `${snapshot}"><script>alert(1)</script>`, timestamp: stamp },
+    { url: `${snapshot} onmouseover=alert(1)`, timestamp: stamp },
+    snapshot, null, [snapshot, stamp]
+  ];
+  for (const record of untrusted) {
+    context.record = record;
+    const row = vm.runInContext(`archives = { ${JSON.stringify(url)}: record }; pocRow(${JSON.stringify(url)})`, context);
+    assert.ok(row.includes(`<a class="wayback is-lookup" href="https://web.archive.org/web/*/${url}"`), JSON.stringify(record));
+    assert.doesNotMatch(row, /is-snapshot|<script|onmouseover/);
+  }
+  // The Wayback Machine may record the scheme, www. or default port differently.
+  context.record = { url: `https://web.archive.org/web/${stamp}/http://www.github.com:80/owner/poc`, timestamp: stamp };
+  assert.match(vm.runInContext(`archives = { ${JSON.stringify(url)}: record }; pocRow(${JSON.stringify(url)})`, context),
+    /class="wayback is-snapshot"/);
+  const query = "https://example.com/exploit?id=1&name='x'";
+  context.record = { url: `https://web.archive.org/web/${stamp}/${query}`, timestamp: stamp };
+  const linked = vm.runInContext(`archives = { ${JSON.stringify(query)}: record }; archiveLink(${JSON.stringify(query)}, '<b>"label"</b>')`, context);
+  assert.ok(linked.includes(`href="https://web.archive.org/web/${stamp}/https://example.com/exploit?id=1&amp;name=&#39;x&#39;"`));
+  assert.ok(linked.includes('aria-label="snapshot of &lt;b&gt;&quot;label&quot;&lt;/b&gt; on the Wayback Machine, captured 2025-10-21 09:30 UTC"'));
+  const lookup = vm.runInContext(`archives = {}; archiveLink(${JSON.stringify(query)}, 'label')`, context);
+  assert.ok(lookup.includes('href="https://web.archive.org/web/*/https://example.com/exploit?id=1&amp;name=&#39;x&#39;"'));
+});
+
+test('an archived fallback stands in for its original without a second archive link', async t => {
+  const original = 'https://github.com/owner/php2shell-poc';
+  const fallback = `https://web.archive.org/web/20240101120000/${original}`;
+  const live = 'https://github.com/owner/live';
+  const entries = [
+    { cve: 'CVE-2026-1000', desc: 'Pending details', poc: [live, fallback] },
+    { cve: 'CVE-2026-2000', desc: 'A report mentions php2shell in passing.', poc: ['https://github.com/owner/unrelated'] }
+  ];
+  const { context, elements } = startPage(t, { search: '?q=php2shell', entries, trending: new Promise(() => {}),
+    repositories: { 'owner/php2shell-poc': [50, '2024-01-01'], 'owner/live': [10, '2026-10-01'] },
+    archives: { [original]: { url: fallback, timestamp: '20240101120000' } } });
+  while (!vm.runInContext('wordIndex.ready', context)) await new Promise(setImmediate);
+  await new Promise(setImmediate);
+  const search = (query, scan = false) => {
+    context.query = query;
+    return Array.from(vm.runInContext(`runSearch(query, ${scan})`, context), row => row.cve);
+  };
+  // Matched, filtered and ranked as the original would be, not as web.archive.org.
+  assert.deepEqual(search('php2shell'), ['CVE-2026-1000', 'CVE-2026-2000']);
+  assert.deepEqual(search('php2shell'), search('php2shell', true));
+  assert.deepEqual(search('archive'), []);
+  assert.deepEqual([...vm.runInContext('entrySources(dataset[0])', context)], ['GITHUB']);
+  assert.deepEqual(Array.from(vm.runInContext('rankedLinks(dataset[0])', context)), [fallback, live]);
+  const html = elements.get('[data-results]').innerHTML;
+  assert.match(html, /2 linked PoCs/);
+  assert.ok(html.includes(`owner<span class="poc-sep"> / </span><a href="${fallback}" ` +
+    'aria-label="php2shell-poc, archived page snapshot captured 2024-01-01 12:00 UTC" target="_blank" rel="nofollow noopener">php2shell-poc</a>'));
+  assert.ok(html.includes('<span class="wayback is-archived" title="Wayback Machine page snapshot captured 2024-01-01 12:00 UTC, ' +
+    'linked in place of the original" aria-hidden="true">ARCHIVED</span>'));
+  // The lost original is never linked, and the snapshot gets no archive link of its own.
+  assert.ok(!html.includes(`href="${original}"`));
+  assert.ok(!html.includes(`/web/*/${fallback}`));
+  assert.equal(html.match(/class="wayback is-lookup"/g).length, 2);
+  const template = 'https://github.com/projectdiscovery/nuclei-templates/blob/main/http/cves/2021/CVE-2021-44228.yaml';
+  assert.match(vm.runInContext(`pocRow('https://web.archive.org/web/20240101120000/${template}', true)`, context),
+    /<span class="poc-tag is-nuclei"[^>]*>NUCLEI<\/span><a href="https:\/\/web\.archive\.org\/web\/20240101120000\/https:[^"]+" aria-label="CVE-2021-44228\.yaml, archived page snapshot captured 2024-01-01 12:00 UTC"[^>]*>CVE-2021-44228\.yaml<\/a>/);
+  // Other archive links, readable or not, get no Wayback control at all.
+  for (const url of ['https://web.archive.org/web/2011/https://example.com/old', 'https://archive.org/details/exploit-kit']) {
+    assert.doesNotMatch(vm.runInContext(`pocRow(${JSON.stringify(url)})`, context), /class="wayback/);
+  }
+});
+
+test('saved files are disclosed beside a snapshot or a lookup without counting as PoCs', async t => {
+  const repo = 'https://github.com/owner/poc';
+  const pending = 'https://github.com/Owner/Other-PoC';
+  const report = 'https://hackerone.com/reports/123456';
+  const live = 'https://github.com/owner/live';
+  const page = `https://web.archive.org/web/20261022160913/${repo}`;
+  const newest = savedFile(rawFile('poc.py'));
+  const spaced = savedFile(rawFile('src/exploit%20one.py'));
+  const json = savedFile(`${report}.json`);
+  const entries = [{ cve: 'CVE-2026-1234', desc: 'widget', poc: [repo, pending, report, live] }];
+  const archives = {
+    // One capture per file, the latest, however often the record lists it.
+    [repo]: { url: page, timestamp: '20261022160913',
+      files: [spaced, savedFile(rawFile('poc.py'), '20261021120000'), newest, newest] },
+    // A page whose own snapshot is still pending.
+    [pending]: { files: [savedFile(rawFile('run.sh', 'owner/other-poc'))] },
+    [report]: { files: [json] },
+    // Each file is also listed under its own original, which is no row.
+    [newest.original]: { url: newest.url, timestamp: newest.timestamp }
+  };
+  const { elements } = startPage(t, { search: '?q=widget', entries, archives, trending: new Promise(() => {}),
+    repositories: { 'owner/live': [90, '2026-10-01'], 'owner/poc': [50, '2026-10-01'], 'owner/other-poc': [10, '2026-10-01'] } });
+  await new Promise(setImmediate);
+  const html = elements.get('[data-results]').innerHTML;
+  // Rows keep their star order and count, and each keeps one Wayback control.
+  const order = [live, repo, pending, report].map(url => html.indexOf(`href="${url}"`));
+  assert.ok(order[0] >= 0);
+  assert.deepEqual([...order].sort((a, b) => a - b), order);
+  assert.match(html, /4 linked PoCs/);
+  assert.equal(html.match(/class="wayback /g).length, 4);
+  assert.equal(html.match(/<details /g).length, 3);
+  assert.ok(html.includes(`<div class="poc-archive"><a class="wayback is-snapshot" href="${page}"`));
+  assert.ok(html.includes('snapshot</a><details class="sources" style="--files:2" data-sources="https://github.com/owner/poc">' +
+    '<summary title="Wayback Machine captures of individual files at pinned commits, not a copy of the whole repository" ' +
+    'aria-label="2 files saved from owner/poc">2 files</summary><div class="sources-list">' +
+    `<a href="${newest.url}" target="_blank" rel="nofollow noopener" ` +
+    'title="Wayback Machine capture of poc.py at commit 0123456, 2026-10-22 16:10 UTC" ' +
+    'aria-label="poc.py at commit 0123456 of owner/poc, Wayback Machine capture 2026-10-22 16:10 UTC">poc.py</a>' +
+    `<a href="${spaced.url}" target="_blank" rel="nofollow noopener" ` +
+    'title="Wayback Machine capture of src/exploit one.py at commit 0123456, 2026-10-22 16:10 UTC" ' +
+    'aria-label="src/exploit one.py at commit 0123456 of owner/poc, Wayback Machine capture 2026-10-22 16:10 UTC">' +
+    'src/exploit one.py</a></div></details></div>'));
+  assert.ok(!html.includes('20261021120000'));
+  assert.ok(html.includes(`find archive</a><details class="sources" style="--files:1" data-sources="${pending}">` +
+    '<summary title="Wayback Machine captures of individual files at pinned commits, not a copy of the whole repository" ' +
+    'aria-label="1 file saved from Owner/Other-PoC">1 file</summary>'));
+  assert.ok(html.includes(`find archive</a><details class="sources" style="--files:1" data-sources="${report}">` +
+    '<summary title="Wayback Machine capture of the report JSON" aria-label="1 file saved from hackerone.com/reports/123456">' +
+    `1 file</summary><div class="sources-list"><a href="${json.url}" target="_blank" rel="nofollow noopener" ` +
+    'title="Wayback Machine capture of 123456.json, the report JSON, 2026-10-22 16:10 UTC" ' +
+    'aria-label="123456.json, the report JSON of hackerone.com/reports/123456, Wayback Machine capture 2026-10-22 16:10 UTC">' +
+    '123456.json</a></div></details>'));
+  // No saved file or snapshot is looked up again.
+  assert.doesNotMatch(html, /\/web\/\*\/https:\/\/(?:web\.archive\.org|raw\.githubusercontent\.com|hackerone\.com\/reports\/123456\.json)/);
+});
+
+test('saved files must be captures of the linked page\'s own files', async t => {
+  const { context } = startPage(t, { trending: new Promise(() => {}) });
+  await new Promise(setImmediate);
+  const disclosed = (parent, files) => {
+    context.record = { files };
+    return vm.runInContext(`archives = { ${JSON.stringify(parent)}: record }; sourceFiles(${JSON.stringify(parent)}, 'label')`, context);
+  };
+  const repo = 'https://github.com/owner/poc';
+  const good = savedFile(rawFile('poc.py'));
+  const stamp = good.timestamp;
+  // GitHub names repositories without regard to case or a .git suffix.
+  for (const parent of [repo, 'https://github.com/Owner/POC.git', 'https://www.github.com/owner/poc/blob/main/README.md']) {
+    assert.match(disclosed(parent, [good]), /1 file<\/summary>/, parent);
+  }
+  for (const file of [
+    savedFile(rawFile('poc.py', 'owner/other')),
+    savedFile(rawFile('poc.py', 'other/poc')),
+    savedFile(rawFile('poc.py', 'owner/poc', 'main')),
+    savedFile(rawFile('poc.py', 'owner/poc', COMMIT.slice(1))),
+    savedFile(rawFile('poc.py', 'owner/poc', COMMIT.toUpperCase())),
+    // A dot segment would open another repository's file.
+    savedFile(rawFile(`../../other/poc/${COMMIT}/poc.py`)),
+    savedFile(rawFile('%2e%2E/poc.py')),
+    savedFile(rawFile('./poc.py')),
+    savedFile(rawFile('src//poc.py')),
+    savedFile(rawFile('poc.py?token=1')),
+    savedFile(rawFile('poc.py#L1')),
+    savedFile(`http://raw.githubusercontent.com/owner/poc/${COMMIT}/poc.py`),
+    savedFile(`https://raw.githubusercontent.com.example/owner/poc/${COMMIT}/poc.py`),
+    savedFile(`https://gist.githubusercontent.com/owner/poc/raw/${COMMIT}/poc.py`),
+    savedFile(`https://github.com/owner/poc/blob/${COMMIT}/poc.py`),
+    savedFile(`https://example.com/owner/poc/${COMMIT}/poc.py`),
+    savedFile('https://hackerone.com/reports/123456.json'),
+    // An archive link is never saved again.
+    savedFile(good.url),
+    { ...good, url: savedFile(rawFile('other.py')).url },
+    { ...good, url: `https://web.archive.org/web/${stamp}/https://example.com/owner/poc/${COMMIT}/poc.py` },
+    { ...good, timestamp: '20261022161014' },
+    { ...good, timestamp: Number(stamp) },
+    { ...good, url: `https://web.archive.org/web/${stamp}id_/${good.original}` },
+    { ...good, url: `https://web.archive.org/web/*/${good.original}` },
+    { ...good, url: `http://web.archive.org/web/${stamp}/${good.original}` },
+    { ...good, url: `https://web.archive.org/web/20250230093000/${good.original}`, timestamp: '20250230093000' },
+    { url: good.url, timestamp: stamp },
+    good.url, null, [good]
+  ]) {
+    assert.equal(disclosed(repo, [file]), '', JSON.stringify(file));
+  }
+  for (const files of [good, 'files', null, {}]) assert.equal(disclosed(repo, files), '', JSON.stringify(files));
+  // Advisories, gists, other hosts and files themselves hold no repository files.
+  for (const parent of ['https://github.com/owner/poc/security/advisories/GHSA-1234-5678-9abc', 'https://gist.github.com/owner/0123',
+    'https://example.com/owner/poc', good.original]) {
+    assert.equal(disclosed(parent, [good]), '', parent);
+  }
+  // A HackerOne report holds its own report JSON and nothing else.
+  const json = savedFile('https://hackerone.com/reports/123456.json');
+  for (const parent of ['https://hackerone.com/reports/123456', 'https://www.hackerone.com/reports/123456/',
+    'https://hackerone.com/reports/123456?subject=x']) {
+    assert.match(disclosed(parent, [json]), /1 file<\/summary>/, parent);
+  }
+  for (const [parent, file] of [
+    ['https://hackerone.com/reports/123456', savedFile('https://hackerone.com/reports/654321.json')],
+    ['https://hackerone.com/reports/123456', savedFile('https://hackerone.example/reports/123456.json')],
+    ['https://hackerone.com/reports/123456', savedFile('https://hackerone.com/reports/123456')],
+    ['https://hackerone.com/reports/123456', savedFile('https://hackerone.com/reports/123456.json?x=1')],
+    ['https://hackerone.com/reports/123456', good],
+    ['https://hackerone.com/reports/123456.json', json],
+    ['https://hackerone.com/bugs?report_id=123456', json],
+    ['https://example.com/reports/123456', json]
+  ]) {
+    assert.equal(disclosed(parent, [file]), '', `${parent} ${JSON.stringify(file)}`);
+  }
+});
+
+test('saved file names, links and labels are escaped', async t => {
+  const { context } = startPage(t, { trending: new Promise(() => {}) });
+  await new Promise(setImmediate);
+  const repo = 'https://github.com/owner/poc';
+  const odd = savedFile(rawFile("x%22%3E%3Cimg%20src%3Dx%20onerror%3Dalert(1)%3E/it's.py"));
+  context.record = { files: [odd, savedFile(rawFile('100%.py'))] };
+  const html = vm.runInContext(`archives = { ${JSON.stringify(repo)}: record }; sourceFiles(${JSON.stringify(repo)}, '<b>"label"</b>')`, context);
+  assert.ok(html.includes(`<a href="${odd.url.replace("'", '&#39;')}" target="_blank"`));
+  assert.ok(html.includes('aria-label="x&quot;&gt;&lt;img src=x onerror=alert(1)&gt;/it&#39;s.py at commit 0123456 of ' +
+    '&lt;b&gt;&quot;label&quot;&lt;/b&gt;, Wayback Machine capture 2026-10-22 16:10 UTC">' +
+    'x&quot;&gt;&lt;img src=x onerror=alert(1)&gt;/it&#39;s.py</a>'));
+  assert.ok(html.includes('aria-label="2 files saved from &lt;b&gt;&quot;label&quot;&lt;/b&gt;"'));
+  // A malformed escape is shown as written.
+  assert.ok(html.includes('>100%.py</a>'));
+  assert.doesNotMatch(html, /<img|<b>|"label"/);
+});
+
+test('an archived fallback discloses its original\'s saved files and no file repeats a row', async t => {
+  const original = 'https://github.com/owner/gone-poc';
+  const fallback = `https://web.archive.org/web/20240101120000/${original}`;
+  const exploit = savedFile(rawFile('exploit.c', 'owner/gone-poc'));
+  const repo = 'https://github.com/owner/poc';
+  const listed = savedFile(rawFile('poc.py'));
+  const helper = savedFile(rawFile('helper.py'));
+  const entries = [{ cve: 'CVE-2026-1000', desc: 'widget', poc: [fallback, repo, listed.original] }];
+  const archives = {
+    [original]: { url: fallback, timestamp: '20240101120000', files: [exploit] },
+    [repo]: { files: [listed, helper] },
+    [listed.original]: { url: listed.url, timestamp: listed.timestamp }
+  };
+  const { elements } = startPage(t, { search: '?q=widget', entries, archives, trending: new Promise(() => {}) });
+  await new Promise(setImmediate);
+  const html = elements.get('[data-results]').innerHTML;
+  assert.match(html, /3 linked PoCs/);
+  assert.ok(html.includes('<div class="poc-archive"><span class="wayback is-archived" title="Wayback Machine page snapshot captured ' +
+    '2024-01-01 12:00 UTC, linked in place of the original" aria-hidden="true">ARCHIVED</span>' +
+    `<details class="sources" style="--files:1" data-sources="${fallback}"><summary`));
+  assert.ok(html.includes(`<a href="${exploit.url}" target="_blank" rel="nofollow noopener" ` +
+    'title="Wayback Machine capture of exploit.c at commit 0123456, 2026-10-22 16:10 UTC" ' +
+    'aria-label="exploit.c at commit 0123456 of owner/gone-poc, Wayback Machine capture 2026-10-22 16:10 UTC">exploit.c</a>'));
+  // The lost original is never linked, and no capture is looked up again.
+  assert.ok(!html.includes(`href="${original}"`));
+  assert.doesNotMatch(html, /\/web\/\*\/https:\/\/(?:web\.archive\.org|raw\.githubusercontent\.com)/);
+  // poc.py has a row and a snapshot of its own, so its page discloses only helper.py.
+  assert.ok(html.includes('aria-label="1 file saved from owner/poc">1 file</summary>'));
+  assert.ok(html.includes(`<a href="${helper.url}"`));
+  assert.ok(html.includes(`<a class="wayback is-snapshot" href="${listed.url}"`));
+  assert.equal(html.split(`href="${listed.url}"`).length, 2);
+});
+
+test('an open saved-files list stays open while results re-render', async t => {
+  const repo = 'https://github.com/owner/poc';
+  const entries = [{ cve: 'CVE-2026-1234', desc: 'widget', poc: [repo] }];
+  const { context, elements } = startPage(t, { search: '?q=widget', entries, trending: new Promise(() => {}),
+    archives: { [repo]: { files: [savedFile(rawFile('poc.py'))] } } });
+  await new Promise(setImmediate);
+  const results = () => elements.get('[data-results]').innerHTML;
+  const toggle = (open, matches = true) => vm.runInContext('rememberSources({ target: { matches: () => ' + matches +
+    `, open: ${open}, dataset: { sources: ${JSON.stringify(repo)} } } }); renderResults(null);`, context);
+  assert.ok(results().includes(`data-sources="${repo}"><summary`));
+  toggle(true);
+  assert.ok(results().includes(`data-sources="${repo}" open><summary`));
+  // A toggle elsewhere changes nothing.
+  toggle(false, false);
+  assert.ok(results().includes(`data-sources="${repo}" open><summary`));
+  toggle(false);
+  assert.ok(results().includes(`data-sources="${repo}"><summary`));
+});
+
+test('late or failed archive data never blocks search, reorders results or drops snapshots', async t => {
+  let finishArchives;
+  const archives = new Promise(resolve => { finishArchives = resolve; });
+  const entries = ['CVE-2025-1234', 'CVE-2024-1234'].map(cve => ({ cve, desc: 'widget', poc: [`https://github.com/owner/${cve}`] }));
+  const { context, elements } = startPage(t, { search: '?q=widget', entries, archives, trending: new Promise(() => {}) });
+  await new Promise(setImmediate);
+  const results = () => elements.get('[data-results]').innerHTML;
+  const ids = () => [...results().matchAll(/class="result-id" href="\/([^"]+)"/g)].map(match => match[1]);
+  assert.deepEqual(ids(), ['CVE-2025-1234', 'CVE-2024-1234']);
+  assert.equal(results().match(/class="wayback is-lookup"/g).length, 2);
+  const status = elements.get('[data-status]').textContent;
+  const original = 'https://github.com/owner/CVE-2024-1234';
+  const snapshot = `https://web.archive.org/web/20251021093000/${original}`;
+  const saved = savedFile(rawFile('poc.py', 'owner/CVE-2024-1234'));
+  finishArchives({ [original]: { url: snapshot, timestamp: '20251021093000', files: [saved] } });
+  await new Promise(setImmediate);
+  assert.deepEqual(ids(), ['CVE-2025-1234', 'CVE-2024-1234']);
+  assert.ok(results().includes(`class="wayback is-snapshot" href="${snapshot}"`));
+  assert.ok(results().includes(`<a href="${saved.url}"`));
+  assert.equal(elements.get('[data-status]').textContent, status);
+  // A refresh whose archive download fails or is unusable keeps the snapshot and saved file shown.
+  for (const [at, failure] of ['error', 'malformed'].entries()) {
+    const feed = { generated: `2026-10-21T1${at}:00:00Z`, with_pocs: 2, total_cves: 2, items: [], landed: [] };
+    context.fetch = async url => {
+      const file = url.split('?')[0];
+      if (file === '/archives.json' && failure === 'error') throw new Error('Unavailable');
+      return { ok: true, json: async () => file === '/trending_poc.json' ? feed : file === '/CVE_list.json' ? entries
+        : file === '/archives.json' ? [] : {} };
+    };
+    assert.equal(await vm.runInContext('refreshData(true)', context), true);
+    await new Promise(setImmediate);
+    assert.deepEqual(ids(), ['CVE-2025-1234', 'CVE-2024-1234']);
+    assert.ok(results().includes(`class="wayback is-snapshot" href="${snapshot}"`), failure);
+    assert.ok(results().includes(`<a href="${saved.url}"`), failure);
+    assert.equal(elements.get('[data-notices]').hidden, true);
+  }
+});
+
+test('snapshots and saved files published with the homepage survive a failed archive download', async t => {
+  const original = 'https://github.com/owner/poc';
+  const snapshot = `https://web.archive.org/web/20251021093000/${original}`;
+  const file = savedFile(rawFile('poc.py'));
+  const name = { getAttribute: () => original };
+  const row = { querySelector: () => name };
+  const sources = { getAttribute: attribute => attribute === 'data-sources' ? original : null };
+  const published = [
+    { getAttribute: () => snapshot, closest: selector => selector === '.trend-row' ? row : null },
+    { getAttribute: () => file.url, closest: selector => selector === 'details.sources' ? sources : row }
+  ];
+  const feed = { generated: '2026-10-21T10:00:00Z', with_pocs: 1, total_cves: 1, items: [], landed: [
+    { cve: 'CVE-2026-1234', url: original, name: 'poc', stars: 1, released: '2026-10-21T09:00:00Z', page: '/CVE-2026-1234' }] };
+  const { elements, calls } = startPage(t, { trending: feed, published, archivesError: true });
+  await new Promise(setImmediate);
+  assert.ok(calls.includes('/archives.json'));
+  const rows = elements.get('[data-trend-rows]').innerHTML;
+  assert.ok(rows.includes('<div class="trend-sub"><a class="trend-detail" href="/CVE-2026-1234">CVE-2026-1234 details</a>' +
+    `<a class="wayback is-snapshot" href="${snapshot}"`));
+  assert.ok(rows.includes(`<details class="sources" style="--files:1" data-sources="${original}"><summary`));
+  assert.ok(rows.includes(`<a href="${file.url}"`));
+  assert.doesNotMatch(rows, /is-lookup/);
 });
 
 test('a stalled trending feed does not block a bookmarked search', async t => {

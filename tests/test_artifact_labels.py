@@ -87,10 +87,11 @@ process.stdout.write(JSON.stringify(markup));
 
 
 def page_blocks(entry: dict) -> dict[str, list[tuple[str, str, str]]]:
-    """(href, label, note) for each row under each counted heading of a CVE page."""
+    """(href, label, note) for each row under each counted heading of a CVE page,
+    read without the Wayback control each PoC row ends with."""
     data = {"cves": [entry], "meta": {}, "epss": {}, "kev": {}, "nuclei": {}, "repo_meta": REPO_META,
             "related": {}, "lastmod": {entry["cve"]: "2026-10-07"}}
-    markup = build_pages.page(entry, data)
+    markup = re.sub(r'(?: · )?<(a|span) class="wayback[^"]*"[^>]*>[^<]*</\1>', "", build_pages.page(entry, data))
     return {
         heading: [tuple(html.unescape(part) for part in row) for row in re.findall(
             r'<li><a href="([^"]*)"[^>]*>([^<]*)</a>(?:<span>([^<]*)</span>)?</li>', body)]

@@ -1,0 +1,149 @@
+name: Archive Public PoCs
+
+on:
+  workflow_dispatch:
+    inputs:
+      limit:
+        description: Maximum new targets in this batch
+        type: choice
+        default: '100'
+        options: ['100', '10', '3']
+      max_seconds:
+        description: Maximum worker time in seconds
+        type: choice
+        default: '2100'
+        options: ['2100', '300']
+  workflow_run:
+    workflows: ['Hot CVEs List']
+    types: [completed]
+  schedule:
+    - cron: '47 */6 * * *'
+
+permissions:
+  contents: write
+  actions: write
+
+# One owner of the Archive account, including manual backfill runs. The hourly
+# discovery workflow triggers incremental batches; cron is a recovery trigger.
+concurrency:
+  group: wayback-captures
+  cancel-in-progress: false
+
+jobs:
+  capture:
+    if: github.event_name != 'workflow_run' || github.event.workflow_run.head_branch == 'main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 55
+    permissions:
+      contents: read
+      actions: read
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          ref: main
+          persist-credentials: false
+      - uses: actions/setup-python@v7
+        with:
+          python-version: '3.13'
+      - name: Find the last durable worker checkpoint
+        id: previous
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh api "repos/$GITHUB_REPOSITORY/actions/artifacts?name=archive-checkpoints&per_page=100" \
+            --jq '[.artifacts[] | select(.expired == false)] | sort_by(.created_at) | last | if . == null then empty else "artifact=\(.id)\nrun=\(.workflow_run.id)" end' >> "$GITHUB_OUTPUT"
+      - name: Recover state even if the previous publish failed
+        if: steps.previous.outputs.artifact != ''
+        uses: actions/download-artifact@v7
+        with:
+          artifact-ids: ${{ steps.previous.outputs.artifact }}
+          github-token: ${{ github.token }}
+          run-id: ${{ steps.previous.outputs.run }}
+          path: /tmp/previous-archive-checkpoint
+          merge-multiple: true
+      - name: Merge the recovered checkpoint
+        if: steps.previous.outputs.artifact != ''
+        run: python3 scripts/archive_pocs.py --merge-from /tmp/previous-archive-checkpoint
+      - name: Resume 2026-onward captures within service limits
+        timeout-minutes: 42
+        env:
+          IA_ACCESS_KEY: ${{ secrets.IA_ACCESS_KEY }}
+          IA_SECRET_KEY: ${{ secrets.IA_SECRET_KEY }}
+          ARCHIVE_LIMIT: ${{ inputs.limit || '100' }}
+          ARCHIVE_SECONDS: ${{ inputs.max_seconds || '2100' }}
+        run: |
+          case "$ARCHIVE_LIMIT" in 3|10|100) ;; *) exit 1 ;; esac
+          case "$ARCHIVE_SECONDS" in 300|2100) ;; *) exit 1 ;; esac
+          python3 scripts/archive_pocs.py --capture --min-year 2026 --limit "$ARCHIVE_LIMIT" --max-seconds "$ARCHIVE_SECONDS"
+      - name: Preserve checkpoints even after interruption
+        if: always()
+        uses: actions/upload-artifact@v6
+        with:
+          name: archive-checkpoints
+          path: index/archives/
+          if-no-files-found: error
+          retention-days: 14
+          overwrite: true
+
+  publish:
+    if: always() && needs.capture.result != 'skipped'
+    needs: capture
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    # Network captures never hold the lock needed by hourly discovery.
+    concurrency:
+      group: repository-updates
+      queue: max
+      cancel-in-progress: false
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          ref: main
+      - uses: actions/setup-python@v7
+        with:
+          python-version: '3.13'
+      - uses: actions/download-artifact@v7
+        with:
+          name: archive-checkpoints
+          path: /tmp/archive-checkpoints
+      - name: Merge durable capture results into current data
+        id: snapshots
+        run: |
+          python3 -c 'import sys,json; sys.path.insert(0,"scripts"); import archive_pocs; print(json.dumps(archive_pocs.published_snapshots(),sort_keys=True))' > /tmp/archive-before.json
+          python3 scripts/archive_pocs.py --merge-from /tmp/archive-checkpoints
+          python3 scripts/archive_pocs.py --stats >> "$GITHUB_STEP_SUMMARY"
+          python3 -c 'import sys,json; sys.path.insert(0,"scripts"); import archive_pocs; print(json.dumps(archive_pocs.published_snapshots(),sort_keys=True))' > /tmp/archive-after.json
+          if ! cmp -s /tmp/archive-before.json /tmp/archive-after.json; then
+            echo 'changed=true' >> "$GITHUB_OUTPUT"
+          fi
+      - name: Refresh counts for preserved sources
+        if: steps.snapshots.outputs.changed == 'true'
+        run: |
+          python3 .github/hero.py
+          python3 .github/getTrending.py --counts-only
+      - name: Publish verified archive links
+        id: commit
+        run: |
+          git config user.name 'CVE-BOT'
+          git config user.email 'bot@pocindex.io'
+          git add --all -- index/archives/ README.md docs/hero.svg docs/social-card.svg docs/stats.json
+          if git diff --cached --quiet; then
+            echo 'No archive updates'
+            exit 0
+          fi
+          git commit -m "Preserve public PoC snapshots $(date -u +'%Y-%m-%d')"
+          for attempt in 1 2 3; do
+            if git push origin HEAD:main; then
+              echo 'pushed=true' >> "$GITHUB_OUTPUT"
+              exit 0
+            fi
+            echo "Push rejected; replaying archive updates (attempt $attempt)"
+            git fetch --unshallow origin main 2>/dev/null || git fetch origin main
+            git rebase FETCH_HEAD || { git rebase --abort; exit 1; }
+          done
+          exit 1
+      - name: Deploy archive links
+        if: steps.commit.outputs.pushed == 'true' && steps.snapshots.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run site.yml --ref main
