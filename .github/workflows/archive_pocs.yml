@@ -6,13 +6,13 @@ on:
       limit:
         description: Maximum new targets in this batch
         type: choice
-        default: '100'
-        options: ['100', '10', '3']
+        default: '200'
+        options: ['200', '100', '10', '3']
       max_seconds:
         description: Maximum worker time in seconds
         type: choice
-        default: '2100'
-        options: ['2100', '300']
+        default: '2400'
+        options: ['2400', '2100', '300']
   schedule:
     - cron: '47 */6 * * *'
 
@@ -20,14 +20,14 @@ permissions:
   contents: write
   actions: write
 
-concurrency:
-  group: wayback-captures
-  cancel-in-progress: false
-
 jobs:
   capture:
     runs-on: ubuntu-latest
-    timeout-minutes: 70
+    timeout-minutes: 80
+    concurrency:
+      group: wayback-captures
+      queue: max
+      cancel-in-progress: false
     permissions:
       contents: read
       actions: read
@@ -68,15 +68,15 @@ jobs:
       - name: Resume 2026-onward captures within service limits
         id: capture
         continue-on-error: true
-        timeout-minutes: 42
+        timeout-minutes: 45
         env:
           IA_ACCESS_KEY: ${{ secrets.IA_ACCESS_KEY }}
           IA_SECRET_KEY: ${{ secrets.IA_SECRET_KEY }}
-          ARCHIVE_LIMIT: ${{ inputs.limit || '100' }}
-          ARCHIVE_SECONDS: ${{ inputs.max_seconds || '2100' }}
+          ARCHIVE_LIMIT: ${{ inputs.limit || '200' }}
+          ARCHIVE_SECONDS: ${{ inputs.max_seconds || '2400' }}
         run: |
-          case "$ARCHIVE_LIMIT" in 3|10|100) ;; *) exit 1 ;; esac
-          case "$ARCHIVE_SECONDS" in 300|2100) ;; *) exit 1 ;; esac
+          case "$ARCHIVE_LIMIT" in 3|10|100|200) ;; *) exit 1 ;; esac
+          case "$ARCHIVE_SECONDS" in 300|2100|2400) ;; *) exit 1 ;; esac
           python3 -u scripts/archive_pocs.py --capture --min-year 2026 --limit "$ARCHIVE_LIMIT" --max-seconds "$ARCHIVE_SECONDS"
       - name: Find and verify existing captures across the 2026 backlog
         id: lookup

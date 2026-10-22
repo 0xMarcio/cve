@@ -106,6 +106,19 @@ class ArchiveTests(unittest.TestCase):
         self.client.lookup.assert_called_once_with(URL)
         self.assertEqual(self.rows[URL]['attempts'], 1)
 
+    def test_submission_budget_is_saved_before_the_network_request(self):
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory)
+            def interrupted(*args, **kwargs):
+                row = archive.load_records(path)[URL]
+                self.assertEqual(row['submissions']['count'], 1)
+                self.assertTrue(row['submitted_at'])
+                raise KeyboardInterrupt()
+            self.client.submit.side_effect = interrupted
+            with self.assertRaises(KeyboardInterrupt):
+                archive.process(URL, self.target, self.rows, self.client, capture=True, directory=path)
+            self.assertEqual(archive.load_records(path)[URL]['submissions']['count'], 1)
+
     def test_success_requires_replay_verification(self):
         archive.process(URL, self.target, self.rows, self.client, capture=True)
         snap = snapshot()
@@ -352,7 +365,7 @@ class ArchiveTests(unittest.TestCase):
     def test_capacity_uses_documented_millisecond_cache_buster(self):
         client = archive.Client('dummy', 'dummy')
         with patch.object(client, 'json', return_value={'available': 3}) as call, patch.object(archive.time, 'time', return_value=1234.5):
-            self.assertEqual(client.capacity(), 2)
+            self.assertEqual(client.capacity(), 3)
         call.assert_called_once_with(archive.API + '/status/user?_t=1234500', auth=True)
 
     def test_target_access_failure_does_not_masquerade_as_bad_credentials(self):
@@ -365,6 +378,94 @@ class ArchiveTests(unittest.TestCase):
         self.assertFalse(result.exception.fatal)
         self.assertEqual(str(result.exception), 'target-http-401')
 
+    def test_resumed_pending_jobs_can_be_polled_when_slots_are_full(self):
+        client = archive.Client('dummy', 'dummy')
+        with patch.object(client, 'account', return_value={'available': 0, 'processing': 3}):
+            self.assertEqual(client.capacity(pending=3), 3)
+            self.assertEqual(client.capacity(pending=1), 1)
+            with self.assertRaises(archive.ArchiveError):
+                client.capacity()
+
+    def test_source_captures_use_http_without_browser_behaviors(self):
+        client = archive.Client('dummy', 'dummy')
+        raw = 'https://raw.githubusercontent.com/owner/poc/' + 'a' * 40 + '/poc.py'
+        with patch.object(client, 'json', return_value={'job_id': '1'}) as send:
+            client.submit(raw)
+        payload = send.call_args.args[1]
+        self.assertEqual(payload['force_get'], '1')
+        self.assertEqual(payload['js_behavior_timeout'], '0')
+        self.assertEqual(payload['if_not_archived_within'], '36500d')
+
+    def test_file_backfill_gets_most_slots_without_starving_old_or_recent_pages(self):
+        targets = {f'file-{i}': {**self.target, 'parent': f'repo-{i}'} for i in range(200)}
+        targets.update({f'page-{i}': {**self.target, 'priority': f'2026-{i:04}'} for i in range(200)})
+        selected = archive.select_targets(targets, {}, capture=True)
+        self.assertEqual(sum(bool(targets[k].get('parent')) for k in selected[:100]), 80)
+        self.assertIn('page-0', selected[:10])
+        self.assertIn('page-199', selected[:10])
+        self.assertEqual(len(selected), len(targets))
+
+    def test_replay_backoff_keeps_completed_jobs_without_blocking_new_files(self):
+        self.client.replay_retry_after = archive.after(900)
+        self.rows[URL] = {**self.target, 'job_id': 'job-1', 'submitted_at': archive.now()}
+        self.client.status.return_value = {'status': 'success', 'timestamp': snapshot()['timestamp'], 'original_url': URL}
+        with patch.object(archive, 'verify_snapshot') as verify:
+            archive.process(URL, self.target, self.rows, self.client, capture=True)
+        verify.assert_not_called()
+        self.assertIn('candidate', self.rows[URL])
+        self.assertNotIn('job_id', self.rows[URL])
+        self.assertFalse(archive.valid_snapshot(self.rows[URL]))
+        target = {**self.target, 'original': URL + '-file', 'parent': URL}
+        archive.process(target['original'], target, self.rows, self.client, capture=True)
+        self.client.submit.assert_called_once_with(target['original'], retry=False)
+
+    def test_failures_on_independent_endpoints_do_not_trip_capture_breaker(self):
+        client = archive.Client()
+        for i in range(4):
+            client.operation = 'replay'
+            client.failure(str(i), archive.ArchiveError('replay-URLError'))
+        client.operation = 'capture'
+        self.assertEqual(client.failure('new', archive.ArchiveError('transport-TimeoutError')).cooldown, 0)
+
+    def test_lookup_respects_capture_throttle_before_replaying_candidates(self):
+        client = archive.Client()
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory)
+            retry = archive.after(600)
+            (path / 'control.json').write_text(json.dumps({'retry_after': retry, 'reason': 'http-429'}))
+            with patch.object(client, 'lookup', return_value=snapshot()), patch.object(archive, 'verify_snapshot') as verify:
+                archive.lookup_pages({URL: self.target}, self.rows, client, path, 1, 10)
+            verify.assert_not_called()
+            row = archive.load_records(path)[URL]
+            self.assertIn('candidate', row)
+            self.assertEqual(row['next_check_at'], retry)
+            self.assertFalse(archive.valid_snapshot(row))
+
+    def test_throttling_slows_submissions_across_restarts(self):
+        intervals = []
+        def process(key, target, rows, client, *, capture, directory=None):
+            rows[key] = {**target, 'status': 'retry'}
+            client.operation = 'capture'
+            intervals.append(client.interval)
+            raise archive.ArchiveError('http-429', cooldown=600)
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory)
+            control = path / 'control.json'
+            control.write_text(json.dumps({'retry_after': archive.after(-1), 'reason': 'http-429', 'capture_interval': 30}))
+            with patch.object(archive, 'inventory', return_value={URL: self.target}), \
+                    patch.object(archive, 'credentials', return_value=('dummy', 'dummy')), \
+                    patch.object(archive.Client, 'capacity', return_value=3) as capacity, \
+                    patch.object(archive, 'process', side_effect=process), \
+                    patch.object(sys, 'argv', ['archive_pocs', '--capture', '--directory', str(path), '--limit', '1']):
+                self.assertEqual(archive.main(), 0)
+                state = json.loads(control.read_text())
+                self.assertEqual(intervals, [30])
+                self.assertEqual(state['capture_interval'], 60)
+                self.assertGreater(state['retry_after'], archive.after(590))
+                capacity.reset_mock()
+                self.assertEqual(archive.main(), 0)
+                capacity.assert_not_called()
+
     def test_newer_negative_checkpoint_cannot_discard_a_verified_capture(self):
         with tempfile.TemporaryDirectory() as directory:
             source, destination = Path(directory) / 'source', Path(directory) / 'destination'
@@ -373,6 +474,18 @@ class ArchiveTests(unittest.TestCase):
             with patch.object(sys, 'argv', ['archive_pocs', '--directory', str(destination), '--merge-from', str(source)]):
                 archive.main()
             self.assertTrue(archive.valid_snapshot(archive.load_records(destination)[URL]))
+
+    def test_checkpoint_merge_keeps_slower_pacing_with_equal_cooldowns(self):
+        with tempfile.TemporaryDirectory() as directory:
+            source, destination = Path(directory) / 'source', Path(directory) / 'destination'
+            source.mkdir()
+            destination.mkdir()
+            state = {'retry_after': archive.after(300), 'reason': 'http-429'}
+            (source / 'control.json').write_text(json.dumps({**state, 'capture_interval': 60}))
+            (destination / 'control.json').write_text(json.dumps({**state, 'capture_interval': 30}))
+            with patch.object(sys, 'argv', ['archive_pocs', '--directory', str(destination), '--merge-from', str(source)]):
+                archive.main()
+            self.assertEqual(json.loads((destination / 'control.json').read_text())['capture_interval'], 60)
 
     def test_lookup_cooldown_does_not_block_pinned_source_submissions(self):
         self.client.lookup_retry_after = archive.after(300)
@@ -415,12 +528,13 @@ class ArchiveTests(unittest.TestCase):
                 self.client.lookup.side_effect = archive.ArchiveError('service-transport-failures', cooldown=900)
                 archive.lookup_pages({URL: self.target}, {}, self.client, Path(directory), 1, 10)
                 self.assertTrue((Path(directory) / 'lookup-control.json').exists())
-                self.assertEqual((Path(directory) / 'control.json').exists(), operation == 'replay')
+                self.assertFalse((Path(directory) / 'control.json').exists())
+                self.assertEqual((Path(directory) / 'replay-control.json').exists(), operation == 'replay')
 
     def test_capture_limit_exits_without_waiting_for_an_unrelated_host_cooldown(self):
         blocked = 'https://example.com/poc'
         targets = {u: {**self.target, 'original': u} for u in (URL, URL + '-other', blocked)}
-        def process(key, target, rows, client, *, capture):
+        def process(key, target, rows, client, *, capture, directory=None):
             rows[key] = {**target, 'status': 'not-found'}
         with tempfile.TemporaryDirectory() as directory:
             path = Path(directory)
@@ -438,7 +552,7 @@ class ArchiveTests(unittest.TestCase):
         pending = URL + '-pending'
         target = {**self.target, 'original': pending}
         visited = []
-        def process(key, target, rows, client, *, capture):
+        def process(key, target, rows, client, *, capture, directory=None):
             visited.append(key)
             if key == pending:
                 rows[key]['next_check_at'] = archive.after(3600)

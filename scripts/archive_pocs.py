@@ -211,13 +211,14 @@ def retry_delay(value: str, default: int = 300) -> int:
 
 
 class Client:
-    def __init__(self, access: str = '', secret: str = '', interval: float = 15):
+    def __init__(self, access: str = '', secret: str = '', interval: float = 10):
         self.auth = f'LOW {access}:{secret}' if access and secret else ''
         self.interval = max(10 if self.auth else 21, interval)
         self.last_submit = 0.0
         self.last_request = 0.0
         self.request_lock = threading.Lock()
         self.lookup_retry_after = ''
+        self.replay_retry_after = ''
         self.local = threading.local()
         self.failures = []
 
@@ -233,9 +234,11 @@ class Client:
         if str(problem).startswith(('transport-', 'replay-URLError', 'replay-TimeoutError')):
             with self.request_lock:
                 current = time.monotonic()
-                self.failures = [(t, k) for t, k in self.failures if current - t < 60]
-                self.failures.append((current, key))
-                if len(self.failures) >= 5 and len({k for _, k in self.failures}) >= 3:
+                self.failures = [(t, k, op) for t, k, op in self.failures if current - t < 60]
+                operation = self.operation if self.operation in {'availability', 'replay'} else 'capture'
+                self.failures.append((current, key, operation))
+                failures = [k for _, k, op in self.failures if op == operation]
+                if len(failures) >= 5 and len(set(failures)) >= 3:
                     return ArchiveError('service-transport-failures', cooldown=900)
         return problem
 
@@ -306,8 +309,11 @@ class Client:
         time.sleep(max(0, self.interval - (time.monotonic() - self.last_submit)))
         self.last_submit = time.monotonic()
         pinned = parse.urlsplit(url).hostname == 'raw.githubusercontent.com' and bool(re.search(r'/[0-9a-f]{40}/', url))
-        return self.json(API, {'url': parse.urldefrag(url).url, 'capture_all': '0', 'capture_outlinks': '0',
-                               'skip_first_archive': '1', 'if_not_archived_within': '1s' if retry else '36500d' if pinned else '30d'}, auth=True)
+        payload = {'url': parse.urldefrag(url).url, 'capture_all': '0', 'capture_outlinks': '0',
+                   'skip_first_archive': '1', 'if_not_archived_within': '1s' if retry else '36500d' if pinned else '30d'}
+        if pinned:
+            payload.update(force_get='1', js_behavior_timeout='0')
+        return self.json(API, payload, auth=True)
 
     def status(self, job: str) -> dict:
         if not re.fullmatch(r'[a-zA-Z0-9-]+', job):
@@ -320,7 +326,7 @@ class Client:
             raise ArchiveError('invalid-capacity-response', cooldown=300)
         return row
 
-    def capacity(self) -> int:
+    def capacity(self, pending: int = 0) -> int:
         row = self.account()
         for field in ('daily_captures', 'daily_status'):
             used, limit = row.get(field), row.get(field + '_limit')
@@ -329,9 +335,11 @@ class Client:
         available = row.get('available')
         if not isinstance(available, int) or available < 0:
             raise ArchiveError('invalid-capacity-response', cooldown=300)
-        if available == 0:
+        processing = row.get('processing', 0)
+        owned = min(pending, processing) if isinstance(processing, int) and processing > 0 else 0
+        if available == 0 and owned == 0:
             raise ArchiveError('no-capture-slots', cooldown=300)
-        return min(2, available)
+        return min(3, available + owned)
 
 
 def verify_snapshot(snap: dict, original: str, expected_blobs=(), repo_id=None, *, strict_blobs=False) -> bool:
@@ -504,7 +512,12 @@ def active_job(row: dict) -> bool:
     return bool(row.get('job_id') and row.get('submitted_at', '') > after(-3600))
 
 
-def verify_candidate(row: dict) -> None:
+def verify_candidate(row: dict, client: Client | None = None) -> None:
+    if client is not None:
+        client.operation = 'replay'
+        if isinstance(client.replay_retry_after, str) and client.replay_retry_after > now():
+            row.update(status='pending', next_check_at=client.replay_retry_after)
+            return
     snap = row['candidate']
     captured = snap['url'].split('/web/' + snap['timestamp'] + '/', 1)[1]
     moment = datetime.strptime(snap['timestamp'], '%Y%m%d%H%M%S').replace(tzinfo=timezone.utc)
@@ -547,7 +560,7 @@ def capture_failure(row: dict, reason: str) -> None:
         row['host_retry_after'] = after(60 if reason == 'error:too-many-requests' else 86400)
 
 
-def process(key: str, target: dict, rows: dict, client: Client, *, capture: bool) -> None:
+def process(key: str, target: dict, rows: dict, client: Client, *, capture: bool, directory: Path | None = None) -> None:
     row = rows.setdefault(key, {**target, 'attempts': 0})
     for field in ('not_before', 'repo_id', 'parent', 'parent_original', 'parents', 'expected_blobs', 'strict_blobs'):
         row.pop(field, None)
@@ -565,8 +578,7 @@ def process(key: str, target: dict, rows: dict, client: Client, *, capture: bool
     else:
         row.pop('unavailable_since', None)
     if row.get('candidate'):
-        client.operation = 'replay'
-        verify_candidate(row)
+        verify_candidate(row, client)
         return
     recover_job = False
     if row.get('job_id'):
@@ -588,8 +600,7 @@ def process(key: str, target: dict, rows: dict, client: Client, *, capture: bool
             except (ValueError, TypeError, KeyError):
                 row.update(error='invalid-capture-response', next_check_at=after(3600))
                 return
-            client.operation = 'replay'
-            verify_candidate(row)
+            verify_candidate(row, client)
             return  # Never resubmit a terminal job in the same run.
         if status.get('status') == 'error':
             row['next_check_at'] = after(3600)
@@ -608,8 +619,7 @@ def process(key: str, target: dict, rows: dict, client: Client, *, capture: bool
         row['lookup_checked_at'] = now()
         if snap:
             row['candidate'] = snap
-            client.operation = 'replay'
-            verify_candidate(row)
+            verify_candidate(row, client)
             return
     if not capture or unavailable:
         row['status'] = 'not-found'
@@ -627,6 +637,8 @@ def process(key: str, target: dict, rows: dict, client: Client, *, capture: bool
     row['next_check_at'] = after(min(7 * 86400, 3600 * 2 ** min(row['attempts'], 8)))
     budget['count'] += 1
     row['submitted_at'] = now()
+    if directory is not None:
+        save_records(rows, {key}, directory)
     try:
         response = client.submit(row['original'], retry=bool(row.get('bad_capture')))
     finally:
@@ -674,9 +686,10 @@ def select_targets(targets: dict, rows: dict, *, capture=False) -> list[str]:
     from itertools import zip_longest
     files = [key for group in zip_longest(*grouped.values()) for key in group if key is not None]
     result, seen = [], set()
-    # One recent page, one oldest/unseen page, then two source files per cycle.
+    # Alternate recent and old pages; reserve four slots per page for files.
     file_queue = iter(files)
-    for group in zip_longest(iter(recent), iter(fresh), file_queue, file_queue):
+    pages = iter(dict.fromkeys(key for group in zip_longest(recent, fresh) for key in group if key is not None))
+    for group in zip_longest(pages, file_queue, file_queue, file_queue, file_queue):
         for key in group:
             if key is not None and key not in seen:
                 result.append(key)
@@ -693,6 +706,10 @@ def lookup_pages(targets: dict, rows: dict, client: Client, directory: Path, lim
     deadline = time.monotonic() + seconds
     completed, stopped, fatal = 0, False, False
     control = directory / 'lookup-control.json'
+    for name in ('control.json', 'replay-control.json'):
+        replay_control = directory / name
+        if replay_control.exists():
+            client.replay_retry_after = max(client.replay_retry_after, json.loads(replay_control.read_text()).get('retry_after', ''))
     if control.exists() and json.loads(control.read_text()).get('retry_after', '') > now():
         print('Archive lookup cooldown is still active', flush=True)
         return 0
@@ -732,7 +749,13 @@ def lookup_pages(targets: dict, rows: dict, client: Client, directory: Path, lim
                     fatal |= problem.fatal
                     control.write_text(json.dumps({'retry_after': after(problem.cooldown or 300), 'reason': str(problem)}) + '\n')
                     if getattr(problem, 'operation', '') == 'replay':
-                        (directory / 'control.json').write_text(control.read_text())
+                        name = 'replay-control.json' if str(problem) == 'service-transport-failures' else 'control.json'
+                        destination = directory / name
+                        state = json.loads(destination.read_text()) if destination.exists() else {}
+                        state.update(retry_after=max(state.get('retry_after', ''), after(problem.cooldown or 300)), reason=str(problem))
+                        if str(problem) == 'replay-http-429':
+                            state['capture_interval'] = min(120, state.get('capture_interval', 10) * 2)
+                        destination.write_text(json.dumps(state) + '\n')
                     print(f'Archive lookup paused: {problem}', flush=True)
                 print(f'{completed}: {row["status"]} {row["original"]}', flush=True)
             if time.monotonic() >= deadline:
@@ -771,14 +794,17 @@ def main() -> int:
                 row['snapshot'] = old['snapshot']
             rows[key] = row
         save_records(rows, set(incoming), args.directory)
-        for name in ('control.json', 'lookup-control.json'):
+        for name in ('control.json', 'lookup-control.json', 'replay-control.json'):
             control = args.merge_from / name
             current = args.directory / name
             if control.exists():
                 incoming_control = json.loads(control.read_text())
                 existing = json.loads(current.read_text()) if current.exists() else {}
-                if incoming_control.get('retry_after', '') > existing.get('retry_after', ''):
-                    current.write_text(json.dumps(incoming_control) + '\n')
+                merged = dict(incoming_control if incoming_control.get('retry_after', '') > existing.get('retry_after', '') else existing)
+                if name == 'control.json' and ('capture_interval' in incoming_control or 'capture_interval' in existing):
+                    merged['capture_interval'] = max(incoming_control.get('capture_interval', 10), existing.get('capture_interval', 10))
+                if merged != existing:
+                    current.write_text(json.dumps(merged) + '\n')
         sources = args.merge_from / 'sources.json'
         if sources.exists():
             from archive_sources import save, repository_source
@@ -822,6 +848,9 @@ def main() -> int:
     lookup_control = args.directory / 'lookup-control.json'
     if lookup_control.exists():
         client.lookup_retry_after = json.loads(lookup_control.read_text()).get('retry_after', '')
+    replay_control = args.directory / 'replay-control.json'
+    if replay_control.exists():
+        client.replay_retry_after = json.loads(replay_control.read_text()).get('retry_after', '')
     if args.capture and not client.auth:
         parser.error('Authenticated captures require IA_ACCESS_KEY and IA_SECRET_KEY')
     submitted = max((row.get('submitted_at', '') for row in rows.values()), default='')
@@ -829,16 +858,24 @@ def main() -> int:
         elapsed = (datetime.now(timezone.utc) - datetime.fromisoformat(submitted.replace('Z', '+00:00'))).total_seconds()
         client.last_submit = time.monotonic() - max(0, elapsed)
     control = args.directory / 'control.json'
-    if control.exists() and json.loads(control.read_text()).get('retry_after', '') > now():
-        print('Archive service cooldown is still active')
-        return 0
+    state = {}
+    if control.exists():
+        state = json.loads(control.read_text())
+        if state.get('retry_after', '') > now():
+            print('Archive service cooldown is still active')
+            return 0
+        client.interval = max(client.interval, state.get('capture_interval', 30 if state.get('reason') in {'http-429', 'replay-http-429'} else 10))
+        if args.capture and state.get('capture_interval') != client.interval:
+            state['capture_interval'] = client.interval
+            control.write_text(json.dumps(state) + '\n')
     slots = 1
     if args.capture:
         try:
-            slots = client.capacity()
+            slots = client.capacity(sum(active_job(rows[key]) for key in targets if key in rows))
         except ArchiveError as exc:
             args.directory.mkdir(parents=True, exist_ok=True)
-            control.write_text(json.dumps({'retry_after': after(exc.cooldown or 300), 'reason': str(exc)}) + '\n')
+            state.update(retry_after=after(exc.cooldown or 300), reason=str(exc), capture_interval=client.interval)
+            control.write_text(json.dumps(state) + '\n')
             print(f'Archive service requested backoff: {exc}', flush=True)
             return 1 if exc.fatal else 0
     selected = select_targets(targets, rows, capture=args.capture)
@@ -872,7 +909,7 @@ def main() -> int:
             break
         attempts = rows.get(key, {}).get('attempts', 0)
         try:
-            process(key, targets[key], rows, client, capture=args.capture)
+            process(key, targets[key], rows, client, capture=args.capture, directory=args.directory)
         except ArchiveError as exc:
             exc = client.failure(key, exc)
             rows[key]['error'] = str(exc)
@@ -889,7 +926,15 @@ def main() -> int:
                     lookup_control.write_text(json.dumps({'retry_after': client.lookup_retry_after, 'reason': str(exc)}) + '\n')
                     print(f'Archive lookups paused; capture jobs can continue: {exc}', flush=True)
                     continue
-                control.write_text(json.dumps({'retry_after': rows[key]['next_check_at'], 'reason': str(exc)}) + '\n')
+                if client.operation == 'replay' and str(exc) == 'service-transport-failures':
+                    client.replay_retry_after = rows[key]['next_check_at']
+                    replay_control.write_text(json.dumps({'retry_after': client.replay_retry_after, 'reason': str(exc)}) + '\n')
+                    print(f'Archive verification paused; capture jobs can continue: {exc}', flush=True)
+                    continue
+                state.update(retry_after=rows[key]['next_check_at'], reason=str(exc), capture_interval=client.interval)
+                if str(exc) in {'http-429', 'replay-http-429'}:
+                    state['capture_interval'] = min(120, client.interval * 2)
+                control.write_text(json.dumps(state) + '\n')
                 print(f'Archive service requested backoff during {client.operation}: {exc}', flush=True)
                 break
             if str(exc) in {'response-too-large', 'unsupported-response-encoding', 'invalid-compressed-response'}:
