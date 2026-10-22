@@ -27700,3 +27700,5 @@ CVE-2026-109618 - https://github.com/EngOREOO/php2shell-CVE-2026-109618-CVE-2026
 CVE-2026-109618 - https://github.com/LightSpeedC/20261022-research-php-cve
 CVE-2026-109619 - https://github.com/EngOREOO/php2shell-CVE-2026-109618-CVE-2026-109619-PoC
 CVE-2026-109619 - https://github.com/LightSpeedC/20261022-research-php-cve
+CVE-2026-109618 - https://github.com/HORKimhab/CVE-2026-109618-619
+CVE-2026-109619 - https://github.com/HORKimhab/CVE-2026-109618-619
