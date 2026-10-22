@@ -1,9 +1,5 @@
 #!/usr/bin/env python3
-"""Discover immutable source files for already published 2026+ PoC links.
-
-This is an archive inventory, not a publication/classification override. Source
-is read and hashed, never executed. Partial scans resume from their checkpoint.
-"""
+"""Discover immutable source files for published PoC links."""
 from __future__ import annotations
 
 import argparse
@@ -140,9 +136,7 @@ def inspect(target: dict, old: dict, client: GitHub, *, file_limit=40) -> dict:
             row.update(error='source-hash-mismatch', complete=False)
             failed[path] = 'source-hash-mismatch'
             continue
-        # Explicit published file links (including Nuclei YAML and binary test
-        # cases) are already scoped artifacts. Root repositories need content
-        # evidence to keep setup scripts and empty placeholders out.
+        # Published file links have already passed artifact validation.
         explicit = len(parts) > 4 and parts[2] in {'blob', 'raw'}
         named = source_artifacts.identity_cves(path)
         scoped = set(target['cves']) & named if named else set(target['cves'])

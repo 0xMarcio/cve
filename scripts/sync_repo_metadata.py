@@ -200,9 +200,6 @@ def main() -> int:
         with open(summary, 'a', encoding='utf-8') as handle:
             handle.write(f'### Repository metadata\n\n{len(readings)} refreshed, {len(unavailable)} confirmed unavailable, '
                          f'{len(failed)} deferred with cached data retained.\n')
-    # Individual unavailable/ambiguous hosts are normal in a public corpus.
-    # Fail a service-wide outage, while durable per-target retries remain work
-    # for subsequent runs instead of making every hourly refresh look broken.
     return int(bool(failed) and not readings and not unavailable)
 
 

@@ -274,8 +274,6 @@ class Client:
         except (ValueError, EOFError):
             raise ArchiveError('invalid-response', cooldown=600) from None
         except (OSError, error.URLError, HTTPException) as exc:
-            # A lost connection is not an account-wide rate limit. Preserve the
-            # job and retry this target, while unrelated work keeps moving.
             cause = getattr(exc, 'reason', exc)
             raise ArchiveError('transport-' + type(cause).__name__) from None
 
@@ -427,9 +425,7 @@ def inventory(min_year: int = 2026) -> dict:
         if row['cve'] not in target['cves']:
             target['cves'].append(row['cve'])
         target['priority'] = max(target['priority'], row.get('seen') or row.get('released') or '')
-        # First observation is an upper bound, not proof the material did not
-        # exist earlier. Accept older captures unless publication evidence rules
-        # them out (verified history, repository creation or source date).
+        # First observation does not establish the publication date.
         released, _ = releases.date_release(row)
         earliest = releases.timestamp(released)
         if earliest:
@@ -437,8 +433,6 @@ def inventory(min_year: int = 2026) -> dict:
             target['not_before'] = min(target.get('not_before', bound), bound)
         if row.get('repo'):
             target['repo_id'] = str(row['repo'])
-        # Do not invent HackerOne .json URLs: the public report route does not
-        # establish public access to an authenticated API representation.
         # Pin actual code bytes when source inspection already identified a revision.
         sha = row.get('sha') if row.get('commit_verified') else None
         repo = link_health.repository(url)
@@ -520,8 +514,7 @@ def verify_candidate(row: dict) -> None:
             row.pop('candidate', None)
             row.update(error='invalid-capture-response', next_check_at=after(86400))
             return
-        # Keep the first preserved version: subsequent owner edits must not
-        # replace the research we captured when it was originally indexed.
+        # Retain the earliest verified capture.
         if not valid_snapshot(row):
             row['snapshot'] = snap
         else:
@@ -596,8 +589,6 @@ def process(key: str, target: dict, rows: dict, client: Client, *, capture: bool
             return
         recover_job = True
     row['next_check_at'] = after(3600)
-    # Find existing captures before spending a capture slot, including live
-    # repositories. Keep negative lookups separate from submission retries.
     needs_lookup = (not capture or unavailable or recover_job or
                     not row.get('parent') and not valid_snapshot(row) and row.get('lookup_checked_at', '') < after(-30 * 86400))
     lookup_blocked = isinstance(client.lookup_retry_after, str) and client.lookup_retry_after > now()
@@ -657,7 +648,6 @@ def credentials() -> tuple[str, str]:
 
 
 def select_targets(targets: dict, rows: dict, *, capture=False) -> list[str]:
-    """Reserve work for new discoveries, the old backlog and actual source files."""
     eligible = [key for key in targets if not rows.get(key, {}).get('job_id')
                 and not rows.get(key, {}).get('candidate')
                 and rows.get(key, {}).get('next_check_at', '') <= now()]
@@ -687,11 +677,7 @@ def select_targets(targets: dict, rows: dict, *, capture=False) -> list[str]:
 
 
 def lookup_pages(targets: dict, rows: dict, client: Client, directory: Path, limit: int, seconds: int) -> int:
-    """Inventory existing page captures independently of the slower save queue.
-
-    Four outstanding reads hide slow replays, with a shared one-request/second
-    API gate. Stop scheduling on a service limit and save every in-flight result.
-    """
+    """Look up page captures with bounded concurrency and request pacing."""
     pages = {k: r for k, r in targets.items() if not r.get('parent')
              and not valid_snapshot(rows.get(k, {}))
              and rows.get(k, {}).get('lookup_checked_at', '') < after(-30 * 86400)}
@@ -797,8 +783,7 @@ def main() -> int:
             save(current, merged)
         return 0
     targets = inventory(args.min_year)
-    # A new HEAD must not orphan already submitted captures of the previous
-    # revision. Finish them while their published parent is still eligible.
+    # Resume pending captures even when the source revision has changed.
     for key, row in rows.items():
         if key not in targets and (row.get('job_id') or row.get('candidate')) and row.get('parent') in targets:
             cves = sorted(set(row.get('cves', [])) & set(targets[row['parent']]['cves']))

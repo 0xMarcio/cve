@@ -20,8 +20,6 @@ permissions:
   contents: write
   actions: write
 
-# One owner of the Archive account, including manual backfill runs. The hourly
-# discovery workflow triggers incremental batches; cron is a recovery trigger.
 concurrency:
   group: wayback-captures
   cancel-in-progress: false
@@ -103,7 +101,6 @@ jobs:
     needs: capture
     runs-on: ubuntu-latest
     timeout-minutes: 10
-    # Network captures never hold the lock needed by hourly discovery.
     concurrency:
       group: repository-updates
       queue: max

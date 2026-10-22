@@ -17,8 +17,6 @@ from urllib import error, parse, request
 
 SEARCH_URL = "https://api.github.com/search/repositories"
 GRAPHQL_URL = "https://api.github.com/graphql"
-# Editing a README is not updating a proof of concept. Everything a repository
-# carries as paperwork is ignored when working out when its PoC last changed.
 PAPERWORK = re.compile(
     r"^(?:readme|licen[cs]e|copying|notice|authors|contributing|code_of_conduct"
     r"|security|changelog|history|\.git|\.editorconfig|\.pre-commit)",
@@ -29,33 +27,21 @@ YEARS = 5
 PER_YEAR = 20
 SEARCH_PAGE = 100
 SEARCH_LIMIT = 1000
-WINDOW_DAYS = 90   # a PoC nobody has touched this quarter is not "recent"
+WINDOW_DAYS = 90
 MIN_STARS = 2
-# A PoC published today has no stars yet, so the star floor hid exactly the
-# rows worth seeing first. This lane drops the floor and pays for it with a
-# short window and a hard cap.
 LANDED_DAYS = 10
 LANDED_ROWS = 10
-# Candidates are judged newest push first, one gate query at a time, until no
-# later push can place. The limit only matters when a flood of empty
-# placeholders keeps the rows from filling.
 LANDED_BATCH = 20
 LANDED_LIMIT = 200
 HISTORY_LIMIT = 40
 HISTORY_REMAINING = HISTORY_LIMIT
 HISTORY_RETRY_HOURS = 4
 NVD_API = "https://services.nvd.nist.gov/rest/json/cves/2.0?cveId="
-# NVD allows five requests per thirty seconds unauthenticated, and only a
-# couple of rows per run ever need one.
 NVD_LOOKUPS = 4
-# The hourly job hands the refresh a time budget. GitHub work stops this long
-# before it runs out: one request still in flight, the corpus parse behind the
-# landed rows, and the writes.
+# Reserve time for in-flight requests and atomic writes.
 FINISH_SECONDS = 90
-# releases.current_repository_evidence bounds each repository's history read.
 HISTORY_SECONDS = 45
-# EX_TEMPFAIL: the tables were written, but a lane kept last run's rows or
-# judged fewer candidates. The next hourly run tries it again.
+# EX_TEMPFAIL: partial results were published.
 PARTIAL_EXIT = 75
 DEADLINE: float | None = None
 INCOMPLETE: list[str] = []
@@ -76,7 +62,7 @@ README = os.path.join(ROOT, "README.md")
 TRENDING = os.path.join(ROOT, "index", "trending.json")
 KEV = os.path.join(ROOT, "index", "kev.json")
 STATS = os.path.join(ROOT, "docs", "stats.json")
-DESC_LIMIT = 110   # a table cell, not a paragraph
+DESC_LIMIT = 110
 FOLDED_AFTER = 2   # years past the newest two are collapsed behind a summary
 CVE_ID = re.compile(r"(?<![A-Z0-9])CVE[-_](\d{4})[-_](\d{4,})(?![A-Z0-9])", re.IGNORECASE)
 SEARCH_NOT_BEFORE = 0.0
@@ -88,7 +74,7 @@ KEV_MARK = f'<img src="{RAW}/kev.svg" alt="KEV" title="CISA known exploited" hei
 
 
 class OutOfTime(RuntimeError):
-    """The run's budget cannot cover the next piece of GitHub work."""
+    pass
 
 
 def time_left() -> float:
@@ -96,7 +82,6 @@ def time_left() -> float:
 
 
 def pause(seconds: float, what: str) -> None:
-    """Wait before a GitHub call, or stop if the budget runs out first."""
     seconds, left = max(0.0, seconds), time_left()
     if left <= seconds:
         raise OutOfTime(f"time budget spent before {what}" if left <= 0 else
@@ -105,13 +90,11 @@ def pause(seconds: float, what: str) -> None:
 
 
 def note(line: str) -> None:
-    """A line for the log that also belongs in the run's summary."""
     print(line)
     SUMMARY.append(line)
 
 
 def incomplete(lane: str, problem: BaseException | str, kept: str) -> None:
-    """Report a lane this run could not finish; the other lanes still publish."""
     if isinstance(problem, BaseException):
         if not isinstance(problem, OutOfTime):
             traceback.print_exception(problem)
@@ -272,8 +255,6 @@ def release_dates(repositories: list[dict], token: str, paths: dict[str, list[st
 
     def inspect(candidate):
         repo, url = candidate
-        # An inspection that might not finish in time waits for the next run
-        # like any other deferral, instead of holding the tables back.
         if time_left() < HISTORY_SECONDS:
             return repo, url, {"error": "History inspection deferred", "deferred": True}
         evidence = releases.current_repository_evidence(
@@ -298,11 +279,7 @@ def release_dates(repositories: list[dict], token: str, paths: dict[str, list[st
 
 def search_candidates(identifier: str, filters: str, *,
                       failures: list[str] | None = None) -> tuple[int, list[dict]]:
-    """Use the same discovery scope as the index, including README-only CVEs.
-
-    With a failures list, a search GitHub cannot answer is recorded there and
-    the other searches still contribute their candidates.
-    """
+    """Collect candidates; optionally retain successful queries after a failure."""
     found = {}
     queries = discovery_search_terms(identifier)
     aliases = {row["repository"] for row in load_reviews()
@@ -954,7 +931,6 @@ repository URL.
 
 
 def previous_items() -> list[dict]:
-    """The feed this run replaces, for any year it cannot refresh."""
     try:
         with open(TRENDING, encoding="utf-8") as handle:
             rows = json.load(handle)
@@ -964,14 +940,12 @@ def previous_items() -> list[dict]:
 
 
 def carried_rows(previous: list[dict], year: int, kev: set[str]) -> list[dict]:
-    """Last run's Trending rows for a year, minus links that died since."""
     import link_health
     from build_site import trending_score
     rows = []
     for item in previous:
         url = str(item.get("url") or "")
         if item.get("trending") and item.get("year") == year and url and not link_health.unavailable(url):
-            # The landed lane decides its own rows afresh every run.
             row = {key: value for key, value in item.items() if key != "landed"}
             row.update(kev=row.get("cve") in kev, score=trending_score(row))
             rows.append(row)
@@ -979,7 +953,6 @@ def carried_rows(previous: list[dict], year: int, kev: set[str]) -> list[dict]:
 
 
 def replace_file(path: str, text: str) -> None:
-    """Swap in a complete file, so a stopped run never leaves half a table."""
     with tempfile.NamedTemporaryFile("w", encoding="utf-8", dir=os.path.dirname(path),
                                      delete=False) as handle:
         handle.write(text)
@@ -991,7 +964,6 @@ def replace_file(path: str, text: str) -> None:
 
 
 def finish(seconds: float, budget: float | None) -> int:
-    """Close the log, and the Actions step summary, with what this run refreshed."""
     status = "incomplete" if INCOMPLETE else "complete"
     title = f"Trending refresh {status} in {seconds:.0f}s"
     if budget is not None:
@@ -1039,8 +1011,6 @@ def main(*, history_limit: int = HISTORY_LIMIT, retry_history: bool = False,
                 [str(r.get("full_name") or "") for r in repositories], token, paths
             )
         except Exception as problem:
-            # A search or gate query GitHub could not answer, or a spent budget,
-            # must not blank a year that published fine an hour ago.
             rows = carried_rows(previous, year, kev)
             incomplete(f"CVE-{year}", problem, f"kept {len(rows)} rows from the previous run")
         else:
@@ -1057,14 +1027,9 @@ def main(*, history_limit: int = HISTORY_LIMIT, retry_history: bool = False,
                  f"{len(repositories)} published in {time.monotonic() - started:.0f}s")
             rows = []
             for repo in repositories:
-                # The last commit that touched anything but paperwork. pushed_at counts
-                # a README tweak, which had the table claiming a year-old exploit was
-                # updated twenty-one hours ago.
                 pushed = repo["_shipped"]
                 cve = cve_of(repo)
                 url, artifact = artifact_link(repo)
-                # Same fallback the landed lane uses. These CVEs are old enough to
-                # be in the index already, so it costs nothing to ask.
                 summary = repository_summary(repo, cve)
                 rows.append({
                     "year": year,

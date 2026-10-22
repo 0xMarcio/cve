@@ -1,7 +1,5 @@
 name: Hot CVEs List
 
-# Fired every hour at :05 by pacemaker.yml. No cron here: GitHub's scheduler
-# creates cron runs hours late, which is the whole reason the pacemaker exists.
 on:
   workflow_dispatch:
 
@@ -17,13 +15,8 @@ concurrency:
 jobs:
   ScheduledRun:
     runs-on: ubuntu-latest
-    # Discovery, metadata and the trending refresh take about twenty minutes
-    # together. Trending is budgeted from whatever the earlier steps leave, so
-    # the publishing steps after it always keep their reserve.
     timeout-minutes: 30
     env:
-      # Print progress as it happens, so a slow or stopped step shows how far
-      # it got instead of an empty log.
       PYTHONUNBUFFERED: '1'
     steps:
       - name: Start the job clock
@@ -44,10 +37,6 @@ jobs:
         continue-on-error: true
         run: python3 scripts/update_cves.py --pending-only
 
-      # Every repository pushed in the last day that names a CVE of this year
-      # or last, with its README read and the classifier applied, so a PoC
-      # published this morning is on the site within the hour. The daily run
-      # keeps covering every year and the CVE record references.
       - name: Discover this year's PoCs pushed in the last day
         id: discovery
         continue-on-error: true
@@ -65,23 +54,17 @@ jobs:
       - name: Rebuild the trending PoC table
         id: trending
         continue-on-error: true
-        # Backstop only. A step timeout signals the shell and leaves Python
-        # running into the commit, so the budget below always ends it first.
         timeout-minutes: 15
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          # Whatever the job's 30 minutes still hold after 6 for ingest, release
-          # records, the banner and the push, and never more than 12. A full
-          # refresh has taken 8 to 10.
+          # Reserve six minutes for publishing.
           left=$(( ${JOB_STARTED:?} + 30 * 60 - 6 * 60 - $(date +%s) ))
           budget=$(( left < 12 * 60 ? left : 12 * 60 ))
           if [ "$budget" -lt 240 ]; then
             echo "::error title=Trending refresh skipped::Only ${left}s left before the publishing reserve; last hour's tables stay published"
             exit 1
           fi
-          # The script stops starting GitHub work in time to write within its
-          # budget. timeout only acts if that fails, and it kills Python itself.
           status=0
           timeout --kill-after=30 $(( budget + 60 )) \
             python3 .github/getTrending.py --budget-seconds "$budget" || status=$?
@@ -96,7 +79,6 @@ jobs:
       - name: Ingest the current candidates
         id: ingest
         continue-on-error: true
-        # A partial refresh still writes a whole table of gate-checked rows.
         if: steps.trending.outputs.written == 'true'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -107,9 +89,6 @@ jobs:
 
       - name: Redraw the banner and recount the index
         run: |
-          # Counts the corpus with the site build's own parser, so the banner can
-          # never disagree with the site, and drops the figures in docs/stats.json
-          # for the README badges to quote.
           python3 .github/hero.py
 
       - name: Refresh README counts
@@ -159,8 +138,7 @@ jobs:
           done
           exit 1
 
-      # Commits pushed with the workflow token raise no push event, so site.yml
-      # would otherwise wait for its daily schedule. Dispatching is exempt.
+      # GITHUB_TOKEN pushes do not trigger push workflows.
       - name: Rebuild and deploy the site
         if: steps.commit.outputs.pushed == 'true'
         env:
