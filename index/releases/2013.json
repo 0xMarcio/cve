@@ -1113,6 +1113,7 @@
 "CVE-2013-4474 https://www.exploit-db.com/exploits/38817":{"basis":"source","cve":"CVE-2013-4474","imported":true,"released":"2013-10-26","source":"2013-10-26","url":"https://www.exploit-db.com/exploits/38817"},
 "CVE-2013-4490 github:rapid7/metasploit-framework/blob/master/modules/exploits/multi/http/gitlab_shell_exec.rb?#":{"basis":"unknown","cve":"CVE-2013-4490","imported":true,"released":null,"url":"https://github.com/rapid7/metasploit-framework/blob/master/modules/exploits/multi/http/gitlab_shell_exec.rb"},
 "CVE-2013-4490 https://www.exploit-db.com/exploits/34362":{"basis":"source","cve":"CVE-2013-4490","imported":true,"released":"2014-08-19","source":"2014-08-19","url":"https://www.exploit-db.com/exploits/34362"},
+"CVE-2013-4547 github:2991823033/secure-api-lab?#":{"basis":"unknown","cve":"CVE-2013-4547","released":null,"seen":"2026-10-22T07:55:10Z","url":"https://github.com/2991823033/secure-api-lab"},
 "CVE-2013-4547 github:cyberharsh/nginx-cve-2013-4547?#":{"basis":"unknown","cve":"CVE-2013-4547","imported":true,"released":null,"url":"https://github.com/cyberharsh/Nginx-CVE-2013-4547"},
 "CVE-2013-4547 github:vulhub/vulhub/tree/master/nginx/CVE-2013-4547?#":{"basis":"unknown","cve":"CVE-2013-4547","imported":true,"released":null,"url":"https://github.com/vulhub/vulhub/tree/master/nginx/CVE-2013-4547"},
 "CVE-2013-4547 https://www.exploit-db.com/exploits/38846":{"basis":"source","cve":"CVE-2013-4547","imported":true,"released":"2013-11-19","source":"2013-11-19","url":"https://www.exploit-db.com/exploits/38846"},

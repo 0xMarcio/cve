@@ -2534,6 +2534,53 @@
       "skipped_paths": [],
       "status": "no_candidate_artifact"
     },
+    "tenable/poc": {
+      "artifacts": [
+        {
+          "bytes": 891,
+          "path": "SchneiderElectric/InduSoft/cve_2018_8840_indusoft_rce.py",
+          "sha256": "0f9d54a88819b9654ccf86bf2ff687213582272afc6af33c9a864298e181365b"
+        },
+        {
+          "bytes": 10639,
+          "path": "advantech/webaccess_scada/webaccess_832_cve-2018-15705.py",
+          "sha256": "bdec8799f67489aa7c4ed6935704e32e31a9edc7cbdba25addfda7dbe2ab612c"
+        },
+        {
+          "bytes": 3026,
+          "path": "flexera/flexnet_publisher/flexera_fnp_lmadmin_msg_282_dos_cve-2020-12080.py",
+          "sha256": "803ba481ae89186d3da009e03ee6626cfba557cac0d0a3b6e25f13824a283bbc"
+        },
+        {
+          "bytes": 6381,
+          "path": "gpon/nokia_a-l_i-240w-q/gpon_poc_cve-2019-3921.py",
+          "sha256": "3ab4904b495a017f38ee708dbe73bcf1ad4849d32b52743c9f7fd5738f0cd668"
+        }
+      ],
+      "cves": [
+        "CVE-2018-15705",
+        "CVE-2018-15707",
+        "CVE-2018-8840",
+        "CVE-2019-3921",
+        "CVE-2020-12080"
+      ],
+      "first_observed_at": "2026-10-22T07:51:18.061286+00:00",
+      "known_checked": [
+        "SchneiderElectric/InduSoft/cve_2018_8840_indusoft_rce.py",
+        "advantech/webaccess_scada/webaccess_832_cve-2018-15705.py",
+        "flexera/flexnet_publisher/flexera_fnp_lmadmin_msg_282_dos_cve-2020-12080.py",
+        "gpon/nokia_a-l_i-240w-q/gpon_poc_cve-2019-3921.py"
+      ],
+      "last_attempt_at": "2026-10-22T07:51:18.061286+00:00",
+      "last_checked_at": "2026-10-22T07:51:18.061286+00:00",
+      "review_set_sha256": "b706c8a2fd61576d5ba5a6548709428c03a03add2b63cfab41ef99d29fb3d0b4",
+      "revision": "2e059363445565bee52566cf34ebc7f5982e5610",
+      "revision_observed_at": "2026-10-22T07:51:18.061286+00:00",
+      "scan_complete": true,
+      "scan_limited": false,
+      "skipped_paths": [],
+      "status": "reviewed"
+    },
     "themalwareguardian/cve-2018-14847": {
       "artifacts": [
         {

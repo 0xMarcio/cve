@@ -4868,6 +4868,7 @@
 "CVE-2017-9841 github:jhonsonwannaa/cve-2017-9841-?#":{"basis":"unknown","cve":"CVE-2017-9841","imported":true,"released":null,"url":"https://github.com/Jhonsonwannaa/CVE-2017-9841-"},
 "CVE-2017-9841 github:k3ystr0k3r/cve-2017-9841-exploit?#":{"basis":"unknown","cve":"CVE-2017-9841","gone":"2026-10-10T10:18:28Z","imported":true,"released":null,"url":"https://github.com/K3ysTr0K3R/CVE-2017-9841-EXPLOIT"},
 "CVE-2017-9841 github:krisdewa/cve-2017-9841-phpunit-remote-code-execution-poc?#":{"basis":"unknown","cve":"CVE-2017-9841","imported":true,"released":null,"url":"https://github.com/krisdewa/CVE-2017-9841-PHPUnit-Remote-Code-Execution-PoC"},
+"CVE-2017-9841 github:lnlight05/information-security-work1?#":{"basis":"unknown","cve":"CVE-2017-9841","released":null,"seen":"2026-10-22T07:55:10Z","url":"https://github.com/lnlight05/Information-Security-Work1"},
 "CVE-2017-9841 github:madexploits/phpunit-exploit?#":{"basis":"unknown","cve":"CVE-2017-9841","imported":true,"released":null,"url":"https://github.com/MadExploits/PHPunit-Exploit"},
 "CVE-2017-9841 github:mariam-kabu/cybersec-labs?#":{"basis":"unknown","cve":"CVE-2017-9841","imported":true,"released":null,"url":"https://github.com/Mariam-kabu/cybersec-labs"},
 "CVE-2017-9841 github:marvinoon/p1bg3-exploitscan?#":{"basis":"unknown","cve":"CVE-2017-9841","imported":true,"released":null,"url":"https://github.com/marvinoon/P1BG3-ExploitScan"},
