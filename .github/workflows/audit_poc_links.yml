@@ -29,13 +29,15 @@ jobs:
         with:
           python-version: '3.13'
 
-      # 4,000 repositories and 3,000 reference links a day sweeps the whole
-      # index about weekly, in around half an hour. A sample found one link in
-      # eight pointing at a deleted repository under the old fortnightly sweep.
+      # The hourly sweep checks front-page repositories plus 2,000 older repos
+      # and 500 artifact URLs. This deeper scan also includes reference links,
+      # curated file paths and recovery checks for previously unavailable URLs.
       - name: Drop dead links and refresh repository metadata
+        id: link_audit
+        continue-on-error: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: python3 scripts/audit_poc_links.py --limit 4000 --references 3000
+        run: python3 scripts/audit_poc_links.py --limit 4000 --references 10000 --workers 32 --timeout 5
 
       - name: Verify the generated index
         run: python3 scripts/build_site.py --offline
@@ -56,10 +58,13 @@ jobs:
 
           git add --all -- \
             .github/link_audit_state.json \
+            index/link_health.json \
             index/github.txt \
             index/repo_meta.json \
             index/kev.json \
             index/references.txt \
+            index/reference_pocs.txt \
+            index/trending.json \
             README.md \
             docs/hero.svg \
             docs/social-card.svg \
@@ -93,3 +98,7 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: gh workflow run site.yml --ref main
+
+      - name: Report incomplete repository checks
+        if: always() && steps.link_audit.outcome == 'failure'
+        run: exit 1

@@ -45,7 +45,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: python3 scripts/update_cves.py --lookback-days 1 --years 2 --skip-cvelist
 
-      - name: Refresh repository stars and push dates
+      - name: Refresh repository metadata and remove confirmed dead links
         id: repository_metadata
         continue-on-error: true
         env:
@@ -88,6 +88,7 @@ jobs:
           git add --all -- \
             README.md \
             .github/repo_metadata_state.json \
+            index/link_health.json \
             index/repo_meta.json \
             index/metadata/ \
             index/trending.json \

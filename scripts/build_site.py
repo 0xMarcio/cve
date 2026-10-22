@@ -15,6 +15,7 @@ from typing import Collection, Dict, Iterable, List, Optional
 from urllib.parse import unquote, urlparse
 
 from update_cves import markdown_record_status
+import link_health
 
 ROOT = Path(__file__).resolve().parents[1]
 CVES = ROOT / "cves"
@@ -387,7 +388,7 @@ def collect_links(block: str, *, blacklist: Optional[Collection[str]] = None) ->
                 continue
         except ValueError:
             continue
-        if is_blacklisted(entry, blacklist):
+        if is_blacklisted(entry, blacklist) or link_health.unavailable(entry):
             continue
         if entry not in links:
             links.append(entry)
@@ -538,7 +539,8 @@ def build_metadata(cve_entries: List[Dict[str, object]]) -> Dict[str, object]:
         entry: Dict[str, object] = {}
         if value.get("cvss"):
             entry["cvss"] = value["cvss"]
-        advisories = dedupe_advisories(value.get("advisories", []), cve)
+        advisories = [row for row in dedupe_advisories(value.get("advisories", []), cve)
+                      if not link_health.unavailable(row[0])]
         if advisories:
             entry["advisories"] = advisories
         if entry:
@@ -593,6 +595,7 @@ def build_trending(blacklist: Collection[str]) -> List[Dict[str, object]]:
     return [
         row for row in rows
         if row.get("url") and not is_blacklisted(str(row["url"]), blacklist)
+        and not link_health.unavailable(str(row["url"]))
         and (row.get("cve"), repo_from_url(str(row["url"]))) not in load_source_exclusions()
     ]
 

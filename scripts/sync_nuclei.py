@@ -167,6 +167,9 @@ def section_bounds(text: str, header: str) -> tuple[int, int] | None:
 
 def apply_to_markdown(cve: str, url: str, dry_run: bool) -> str:
     """Add the template link to one CVE entry. Returns what happened."""
+    import link_health
+    if link_health.unavailable(url):
+        return "unchanged"
     path = CVES / cve.split("-")[1] / f"{cve}.md"
     if not path.exists():
         return "absent"

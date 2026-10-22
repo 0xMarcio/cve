@@ -14,6 +14,11 @@ from update_cves import GitHubClient
 
 
 class RepositoryMetadataTests(unittest.TestCase):
+    def setUp(self):
+        health = patch('link_health.load', return_value={'repositories': {}, 'urls': {}})
+        health.start()
+        self.addCleanup(health.stop)
+
     def test_priority_covers_missing_curated_and_frontpage_repositories(self):
         entries = [{"poc": ["https://github.com/owner/older", "https://github.com/owner/front"],
                     "collections": ["https://github.com/collection/new/blob/main/poc.py"],
@@ -82,7 +87,8 @@ class RepositoryMetadataTests(unittest.TestCase):
                                    build_trending=lambda blocked: [], build_landed=lambda *args: []), \
                     patch.object(metadata, 'survey', return_value=({}, set(), {'owner/a'})), \
                     patch.dict(metadata.os.environ, {'GITHUB_TOKEN': 'test'}), \
-                    patch.object(sys, 'argv', ['sync_repo_metadata', '--limit', '1']):
+                    patch.object(sys, 'argv', ['sync_repo_metadata', '--limit', '1', '--references', '0']), \
+                    patch('audit_poc_links.prune_unavailable'):
                 self.assertEqual(metadata.main(), 1)
             saved = json.loads(state.read_text())
             self.assertEqual(saved['cursor'], 'owner/a')

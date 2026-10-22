@@ -1,17 +1,17 @@
 from __future__ import annotations
 
-import io
 import json
 import sys
 import tempfile
 import unittest
 from pathlib import Path
-from unittest.mock import patch
+from unittest.mock import patch, MagicMock
 from urllib.error import HTTPError
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "scripts"))
 
 import audit_poc_links
+import link_health
 from update_cves import GitHubClient
 
 
@@ -33,6 +33,8 @@ class RepositorySurveyTests(unittest.TestCase):
     def repo(self, filename: str = "README.md") -> dict:
         return {
             "nameWithOwner": "owner/poc",
+            "isPrivate": False,
+            "visibility": "PUBLIC",
             "stargazerCount": 10,
             "pushedAt": "2026-10-06T12:00:00Z",
             "root": {"entries": [{"name": filename, "type": "blob"}]},
@@ -40,8 +42,10 @@ class RepositorySurveyTests(unittest.TestCase):
         }
 
     def survey(self, payload: dict, names: list[str] | None = None) -> tuple:
-        with patch.object(audit_poc_links, "http_json", return_value=payload):
-            return audit_poc_links.survey(GitHubClient("test-token"), names or ["owner/poc"])
+        with patch.object(audit_poc_links, "http_json", return_value=payload), \
+                patch.object(link_health, "check_url", return_value=False):
+            missing, metadata, _ = audit_poc_links.survey(GitHubClient("test-token"), names or ["owner/poc"])
+            return missing, metadata
 
     def test_preserves_repository_when_readme_lookup_fails(self) -> None:
         self.assertEqual(self.survey({
@@ -78,27 +82,26 @@ class RepositorySurveyTests(unittest.TestCase):
 
 
 class ReferenceAuditTests(unittest.TestCase):
-    def test_head_not_found_keeps_reference_when_get_succeeds(self) -> None:
+    def test_checks_get_instead_of_trusting_head_routes(self) -> None:
         url = "https://example.com/poc"
-        for code in (404, 410):
-            with self.subTest(code=code), patch.object(
-                audit_poc_links.request,
-                "urlopen",
-                side_effect=[HTTPError(url, code, "No HEAD route", {}, None), io.BytesIO(b"PoC")],
-            ) as fetch:
-                self.assertEqual(audit_poc_links.dead_references([url], workers=1, timeout=1), set())
-                self.assertEqual([call.args[0].method for call in fetch.call_args_list], ["HEAD", "GET"])
+        response = MagicMock()
+        response.__enter__.return_value.status = 206
+        with patch.object(link_health.request, "urlopen", return_value=response) as fetch:
+            self.assertEqual(audit_poc_links.dead_references([url], workers=1, timeout=1), set())
+            self.assertEqual(fetch.call_args.args[0].get_method(), "GET")
+            self.assertNotIn("Authorization", fetch.call_args.args[0].headers)
+            response.__enter__.return_value.read.assert_called_once_with(1)
 
     def test_get_confirms_reference_is_missing(self) -> None:
         url = "https://example.com/poc"
         for code in (404, 410):
             with self.subTest(code=code), patch.object(
-                audit_poc_links.request,
+                link_health.request,
                 "urlopen",
-                side_effect=[HTTPError(url, code, "Missing", {}, None), HTTPError(url, code, "Missing", {}, None)],
+                side_effect=HTTPError(url, code, "Missing", {}, None),
             ) as fetch:
                 self.assertEqual(audit_poc_links.dead_references([url], workers=1, timeout=1), {url})
-                self.assertEqual([call.args[0].method for call in fetch.call_args_list], ["HEAD", "GET"])
+                self.assertEqual([call.args[0].get_method() for call in fetch.call_args_list], ["GET"])
 
 
 class KevRefreshTests(unittest.TestCase):

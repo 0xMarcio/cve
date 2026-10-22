@@ -312,6 +312,7 @@ def just_landed(token: str, ledger: dict | None = None) -> list[dict]:
 
 
 def ledger_landed(ledger: dict, candidates: list[dict]) -> list[dict]:
+    import link_health
     from build_site import build_cve_list, build_landed, dedupe_source_links, source_key, CURATED, REPO_META
     entries, _ = build_cve_list(load_blacklist())
     published = {entry["cve"]: entry for entry in entries}
@@ -326,6 +327,8 @@ def ledger_landed(ledger: dict, candidates: list[dict]) -> list[dict]:
     for repo in candidates:
         cve = cve_of(repo)
         url = repo.get("_artifact_url") or repo["html_url"]
+        if link_health.unavailable(url):
+            continue
         entry = published.get(cve, {})
         curated = [link for _, field in CURATED for link in entry.get(field, [])
                    if source_key(link) == source_key(url)]
@@ -865,6 +868,7 @@ repository URL.
 
 
 def main(*, history_limit: int = HISTORY_LIMIT, retry_history: bool = False) -> int:
+    import link_health
     global HISTORY_REMAINING, HISTORY_RETRY_HOURS
     HISTORY_REMAINING = history_limit
     HISTORY_RETRY_HOURS = 0 if retry_history else 4
@@ -884,6 +888,7 @@ def main(*, history_limit: int = HISTORY_LIMIT, retry_history: bool = False) -> 
         searched = len(repositories)
         repositories, paths = qualifying_repositories(repositories, token)
         repositories = published_repositories(repositories)
+        repositories = [repo for repo in repositories if not link_health.unavailable(artifact_link(repo)[0])]
         observations.extend(repositories)
         release_dates(repositories, token, paths, ledger)
         shipped = code_pushed(

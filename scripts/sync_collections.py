@@ -293,6 +293,8 @@ def section_bounds(text: str) -> tuple[int, int, int] | None:
 
 
 def apply_links(cve: str, urls: list[str], *, dry_run: bool) -> str:
+    import link_health
+    urls = [url for url in urls if not link_health.unavailable(url)]
     path = CVES / cve.split("-")[1] / f"{cve}.md"
     if not path.exists():
         return "absent"

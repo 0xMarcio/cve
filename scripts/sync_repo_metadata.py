@@ -12,6 +12,7 @@ from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
 from update_cves import GITHUB_GRAPHQL_URL, GitHubClient, http_json, repository_is_nonpublic
+import link_health
 
 ROOT = Path(__file__).resolve().parents[1]
 METADATA = ROOT / "index" / "repo_meta.json"
@@ -124,26 +125,44 @@ def scope(entries: list[dict], stored: dict, frontpage: list[dict], cursor: str,
     names = sorted(linked)
     rotating = [name for name in names if name > cursor] + [name for name in names if name <= cursor]
     rotating = rotating[:limit] if limit else rotating
-    selected = ((linked - stored.keys()) | (priority & linked) | set(rotating)) - (deferred or set())
+    selected = ((linked - stored.keys()) | priority | set(rotating)
+                | set(link_health.load()["repositories"])) - (deferred or set())
+    # A transient failure must not hide a front-page check for up to 24 hours.
+    selected |= priority
     return sorted(selected), rotating[-1] if rotating else cursor
 
 
 def main() -> int:
     from build_site import build_cve_list, build_landed, build_trending, load_blacklist
+    from audit_poc_links import is_repository_url, prune_unavailable, slice_after, interleave_by_host
+    from build_site import CURATED
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--limit", type=int, default=2000, help="Older repositories per run; 0 refreshes all")
+    parser.add_argument("--references", type=int, default=500, help="Older artifact URLs per run; 0 skips them")
+    parser.add_argument("--retry-deferred", action="store_true", help="Also recheck repositories in retry cooldown")
     args = parser.parse_args()
-    if args.limit < 0:
-        parser.error("--limit must not be negative")
+    if args.limit < 0 or args.references < 0:
+        parser.error("Limits must not be negative")
     entries, _ = build_cve_list(load_blacklist())
     stored, state = load(METADATA), load(STATE)
     frontpage = build_trending(load_blacklist()) + build_landed(entries, stored, {})
     now = datetime.now(timezone.utc)
     retries = state.get("retries", {})
     deferred = {name for name, row in retries.items() if row.get("after", "") > now.isoformat()}
+    if args.retry_deferred:
+        deferred = set()
     names, cursor = scope(entries, stored, frontpage, state.get("cursor", ""), args.limit, deferred)
     client = GitHubClient(os.environ.get("GITHUB_TOKEN") or os.environ.get("GH_TOKEN") or "")
+    print(f"Checking public availability and metadata for {len(names)} repositories", flush=True)
     readings, unavailable, failed = survey(names, client)
+    # An API NOT_FOUND can reflect token permissions. Require the same public
+    # GET failure a visitor sees before withdrawing any existing public link.
+    public_urls = [f"https://github.com/{name}" for name in sorted(unavailable)]
+    confirmed, _ = link_health.survey_urls(public_urls)
+    missing = {link_health.repository(url) for url in confirmed}
+    failed |= unavailable - missing
+    unavailable = missing
+    link_health.record(missing=unavailable, healthy=readings)
     stored.update(readings)
     for name in unavailable:
         stored.pop(name, None)
@@ -154,8 +173,24 @@ def main() -> int:
         hours = 6 if name in unavailable else min(24, 2 ** min(attempts, 5))
         retries[name] = {"attempts": attempts, "after": (now + timedelta(hours=hours)).isoformat()}
     save(METADATA, stored)
+    reference_cursor = state.get("reference_cursor", "")
+    if args.references:
+        urls = sorted({url for entry in entries for field in ["poc", *(f for _, f in CURATED)]
+                       for url in entry.get(field, []) if not is_repository_url(url)
+                       and not link_health.unavailable(url)})
+        rotating = slice_after(urls, reference_cursor, args.references)
+        priority = {row["url"] for row in frontpage if row.get("url")
+                    and not is_repository_url(row["url"]) and not link_health.unavailable(row["url"])}
+        window = interleave_by_host(sorted(set(rotating) | priority))
+        dead, live = link_health.survey_urls(window, workers=16, timeout=5)
+        link_health.record(dead_urls=dead, live_urls=live)
+        reference_cursor = rotating[-1] if rotating else reference_cursor
+        print(f"Artifact URLs: {len(window)} checked, {len(dead)} confirmed dead, "
+              f"{len(window) - len(dead) - len(live)} inconclusive")
+    prune_unavailable()
     # Healthy work keeps moving even when one repository persistently fails.
-    save(STATE, {"cursor": cursor, "checked": now.isoformat(), "retries": retries})
+    save(STATE, {"cursor": cursor, "reference_cursor": reference_cursor,
+                 "checked": now.isoformat(), "retries": retries})
     print(f"Repository metadata: {len(names)} checked, {len(readings)} refreshed, "
           f"{len(unavailable)} unavailable, {len(failed)} deferred")
     return int(bool(failed))

@@ -6,13 +6,13 @@ from __future__ import annotations
 import argparse
 import json
 import os
+import re
 import sys
 import tempfile
 from concurrent.futures import ThreadPoolExecutor, as_completed
-from datetime import date
+from datetime import date, datetime, timezone
 from pathlib import Path
 from typing import Iterable
-from urllib import error, request
 from urllib.parse import urlsplit
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
@@ -20,11 +20,10 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 from update_cves import (
     readme_text,
     repo_is_bare,
+    repository_is_nonpublic,
     GITHUB_GRAPHQL_URL,
     kev_badge,
-    USER_AGENT,
     GitHubClient,
-    github_repo_from_url,
     http_json,
     is_blacklisted_repo,
     is_valid_cve,
@@ -32,6 +31,7 @@ from update_cves import (
     replace_section,
     section_links,
 )
+import link_health
 
 ROOT = Path(__file__).resolve().parents[1]
 CVES = ROOT / "cves"
@@ -50,6 +50,11 @@ REFERENCE_SECTION = "#### Reference"
 SECTION_EMPTY = {
     GITHUB_SECTION: "No PoCs found on GitHub currently.",
     REFERENCE_SECTION: "No PoCs from references.",
+    "#### Nuclei": "No PoCs from Nuclei.",
+    "#### ExploitDB": "No PoCs from ExploitDB.",
+    "#### Metasploit": "No PoCs from Metasploit.",
+    "#### Vulhub": "No PoCs from Vulhub.",
+    "#### Collections": "No PoCs from collections.",
 }
 GITHUB_EMPTY = "No PoCs found on GitHub currently."
 BATCH = 20
@@ -58,8 +63,8 @@ BATCH = 20
 def collect_repositories() -> tuple[dict[str, list[tuple[Path, str]]], set[str]]:
     """Map prunable links to their entries, and name every repository the site shows.
 
-    Only the GitHub section is prunable; a reference comes from the CVE record
-    itself, so it stays even when it rots. Both sections need star counts.
+    The GitHub section also has a content-quality check. Confirmed public
+    availability failures are pruned from every section by prune_unavailable.
     """
     prunable: dict[str, list[tuple[Path, str]]] = {}
     referenced: set[str] = set()
@@ -82,7 +87,7 @@ def collect_repositories() -> tuple[dict[str, list[tuple[Path, str]]], set[str]]
 
 
 REPO_FIELDS = (
-    "{ nameWithOwner stargazerCount pushedAt "
+    "{ nameWithOwner isPrivate visibility stargazerCount pushedAt "
     'readmeMd: object(expression: "HEAD:README.md") { ... on Blob { text } } '
     'readmeUpper: object(expression: "HEAD:README.MD") { ... on Blob { text } } '
     'readmeRst: object(expression: "HEAD:README.rst") { ... on Blob { text } } '
@@ -91,7 +96,7 @@ REPO_FIELDS = (
 )
 
 
-def survey(client: GitHubClient, names: list[str]) -> tuple[set[str], dict[str, list]]:
+def survey(client: GitHubClient, names: list[str]) -> tuple[set[str], dict[str, list], set[str]]:
     """Return the repositories to drop, and stars/last push for the rest.
 
     Dropped means GitHub reports NOT_FOUND, or the repository is bare: no code,
@@ -102,10 +107,11 @@ def survey(client: GitHubClient, names: list[str]) -> tuple[set[str], dict[str, 
     """
     batches = [names[index : index + BATCH] for index in range(0, len(names), BATCH)]
     missing: set[str] = set()
+    unavailable: set[str] = set()
     metadata: dict[str, list] = {}
     checked = 0
 
-    def check(batch: list[str]) -> tuple[set[str], dict[str, list]]:
+    def check(batch: list[str]) -> tuple[set[str], dict[str, list], set[str]]:
         aliases = " ".join(
             f"r{index}: repository(owner: {json.dumps(name.split('/', 1)[0])}, "
             f"name: {json.dumps(name.split('/', 1)[1])}) "
@@ -118,56 +124,60 @@ def survey(client: GitHubClient, names: list[str]) -> tuple[set[str], dict[str, 
             data={"query": "query { " + aliases + " rateLimit { remaining resetAt } }"},
         )
         gone: set[str] = set()
-        failed_aliases: set[str] = set()
-        for entry in payload.get("errors") or []:
-            path = entry.get("path") or []
-            if not path:
-                return set(), {}
-            alias = str(path[0])
-            failed_aliases.add(alias)
-            index = alias[1:]
-            if (
-                str(entry.get("type") or "") == "NOT_FOUND"
-                and len(path) == 1
-                and alias.startswith("r")
-                and index.isdigit()
-                and int(index) < len(batch)
-            ):
-                gone.add(batch[int(index)])
+        absent: set[str] = set()
+        errors = payload.get("errors") or []
+        if any(not entry.get("path") for entry in errors):
+            return set(), {}, set()
         found: dict[str, list] = {}
         data = payload.get("data") or {}
         for index, name in enumerate(batch):
             alias = f"r{index}"
             # A failed README or root lookup is not evidence of a bare repo.
-            if alias in failed_aliases:
+            problems = [entry for entry in errors if entry["path"][0] == alias]
+            if problems:
+                if (all(entry.get("type") == "NOT_FOUND" and len(entry["path"]) == 1
+                        for entry in problems)
+                        and link_health.check_url(f"https://github.com/{name}") is False):
+                    gone.add(name)
+                    absent.add(name)
                 continue
             repo = data.get(alias)
             if not repo:
                 continue
+            if repository_is_nonpublic(repo):
+                if link_health.check_url(f"https://github.com/{name}") is False:
+                    gone.add(name)
+                    absent.add(name)
+                continue
+            if repo.get("isPrivate") is not False or repo.get("visibility") != "PUBLIC":
+                continue
             if repo_is_bare(repo, readme_text(repo)):
                 gone.add(name)
+                continue
+            if type(repo.get("stargazerCount")) is not int or repo["stargazerCount"] < 0 or "pushedAt" not in repo:
                 continue
             pushed = str(repo.get("pushedAt") or "")[:10]
             found[name.lower()] = [
                 int(repo.get("stargazerCount") or 0),
                 pushed,
             ]
-        return gone, found
+        return gone, found, absent
 
     with ThreadPoolExecutor(max_workers=4) as executor:
         futures = {executor.submit(check, batch): batch for batch in batches}
         for future in as_completed(futures):
             batch = futures[future]
             try:
-                gone, found = future.result()
+                gone, found, absent = future.result()
                 missing |= gone
+                unavailable |= absent
                 metadata.update(found)
             except Exception as exc:
                 print(f"Kept {len(batch)} repositories after a failed check: {exc}", file=sys.stderr)
             checked += len(batch)
             if checked % 5000 < len(batch):
                 print(f"Checked {checked} of {len(names)} repositories")
-    return missing, metadata
+    return missing, metadata, unavailable
 
 
 def save_metadata(metadata: dict[str, list], alive: set[str], *, dry_run: bool) -> int:
@@ -222,22 +232,77 @@ def prune_inventory(dead_urls: set[str], *, dry_run: bool) -> int:
 
 
 def collect_references() -> dict[str, list[tuple[Path, str]]]:
-    """Every link that is not a GitHub repository, and where it appears."""
+    """Exact artifact/reference URLs, including files inside healthy repositories."""
     references: dict[str, list[tuple[Path, str]]] = {}
     for path in sorted(CVES.glob("[12][0-9][0-9][0-9]/CVE-*.md")):
         text = path.read_text(encoding="utf-8", errors="replace")
-        for header in (REFERENCE_SECTION, GITHUB_SECTION):
+        for header in SECTION_EMPTY:
             for url in section_links(text, header):
-                if not github_repo_from_url(url):
+                if not is_repository_url(url):
                     references.setdefault(url, []).append((path, header))
     return references
+
+
+def is_repository_url(url: str) -> bool:
+    try:
+        parsed = urlsplit(url)
+    except ValueError:
+        return False
+    return (parsed.hostname in {"github.com", "www.github.com"}
+            and bool(link_health.repository(url))
+            and len(parsed.path.strip("/").split("/")) == 2)
+
+
+def prune_unavailable(*, dry_run: bool = False) -> tuple[int, int]:
+    """Apply confirmed findings to every source, inventory and front-page cache."""
+    if not any(link_health.load().values()):
+        return 0, 0
+    changed = removed = 0
+    for path in sorted(CVES.glob("[12][0-9][0-9][0-9]/CVE-*.md")):
+        with path.open(encoding="utf-8", newline="") as handle:
+            original = text = handle.read()
+        for header, empty in SECTION_EMPTY.items():
+            links = section_links(text, header)
+            kept = [url for url in links if not link_health.unavailable(url)]
+            if len(kept) != len(links):
+                removed += len(links) - len(kept)
+                text, _ = replace_section(text, header, kept, empty)
+        if text != original:
+            changed += 1
+            if not dry_run:
+                with path.open("w", encoding="utf-8", newline="") as handle:
+                    handle.write(text)
+    for path in (GITHUB_LIST, REFERENCE_LIST, INDEX / "reference_pocs.txt"):
+        if path.exists():
+            lines = path.read_text(encoding="utf-8").splitlines()
+            kept = [line for line in lines if not link_health.unavailable(line.rsplit(" - ", 1)[-1].strip())]
+            if len(kept) != len(lines) and not dry_run:
+                path.write_text("\n".join(kept) + "\n", encoding="utf-8")
+    trending = INDEX / "trending.json"
+    if trending.exists():
+        rows = json.loads(trending.read_text(encoding="utf-8"))
+        kept = [row for row in rows if not link_health.unavailable(row.get("url") or "")]
+        if len(kept) != len(rows) and not dry_run:
+            trending.write_text(json.dumps(kept, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    readme = ROOT / "README.md"
+    if readme.exists():
+        lines = readme.read_text(encoding="utf-8").splitlines(keepends=True)
+        kept = [line for line in lines if not (line.startswith("|") and any(
+            link_health.unavailable(url) for url in re.findall(r"\]\((https?://[^\s)]+)\)", line)))]
+        if kept != lines and not dry_run:
+            readme.write_text("".join(kept), encoding="utf-8")
+    print(f"Confirmed unavailable links: {removed} removed from {changed} CVE entries")
+    return changed, removed
 
 
 def interleave_by_host(urls: list[str]) -> list[str]:
     """Round-robin the hosts so a slice does not hammer one server in a burst."""
     hosts: dict[str, list[str]] = {}
     for url in urls:
-        host = urlsplit(url).netloc.lower()
+        try:
+            host = urlsplit(url).netloc.lower()
+        except ValueError:
+            host = ""
         hosts.setdefault(host, []).append(url)
     queues = list(hosts.values())
     ordered: list[str] = []
@@ -251,38 +316,7 @@ def interleave_by_host(urls: list[str]) -> list[str]:
 
 def dead_references(urls: list[str], *, workers: int, timeout: int) -> set[str]:
     """URLs the web answers 404 or 410 for. Everything else keeps its link."""
-    dead: set[str] = set()
-    checked = 0
-
-    def check(url: str) -> tuple[str, bool]:
-        headers = {"User-Agent": USER_AGENT, "Accept": "*/*"}
-        for method in ("HEAD", "GET"):
-            try:
-                req = request.Request(url, method=method, headers=headers)
-                with request.urlopen(req, timeout=timeout) as response:
-                    if method == "GET":
-                        response.read(1)
-                    return url, False
-            except error.HTTPError as exc:
-                code = exc.code
-                exc.close()
-                # a server that dislikes HEAD is not a server without the page
-                if method == "GET" or code not in {403, 404, 405, 410, 501}:
-                    return url, code in {404, 410}
-            except Exception:
-                # a timeout or a refused connection keeps the link, and asking
-                # the same unreachable host a second time only doubles the wait
-                return url, False
-        return url, False
-
-    with ThreadPoolExecutor(max_workers=workers) as executor:
-        for url, gone in executor.map(check, urls):
-            if gone:
-                dead.add(url)
-            checked += 1
-            if checked % 2000 == 0:
-                print(f"Checked {checked} of {len(urls)} references")
-    return dead
+    return link_health.survey_urls(urls, workers=workers, timeout=timeout)[0]
 
 
 def prune_references(
@@ -461,7 +495,8 @@ def main() -> int:
     )
 
     state = load_state()
-    scope = slice_after(names, str(state.get("cursor") or ""), args.limit)
+    rotating = slice_after(names, str(state.get("cursor") or ""), args.limit)
+    scope = sorted(set(rotating) | set(link_health.load()["repositories"]))
     print(f"Checking {len(scope)} repositories starting after {state.get('cursor') or 'the beginning'}")
 
     token = os.environ.get("GITHUB_TOKEN") or os.environ.get("GH_TOKEN") or ""
@@ -469,20 +504,25 @@ def main() -> int:
         name for name in references
         if is_blacklisted_repo(name, load_blacklist())
     }
-    missing, metadata = survey(
+    missing, metadata, unavailable = survey(
         GitHubClient(token),
         [name for name in scope if name not in blocked],
     )
     print(f"{len(missing)} repositories no longer exist or hold nothing runnable")
+    if not args.dry_run:
+        link_health.record(missing=unavailable, healthy=metadata)
     if blocked:
         print(f"Pruning {len(blocked)} explicitly blacklisted repositories")
     missing |= blocked
+    deferred = set(scope) - missing - metadata.keys()
+    if deferred:
+        print(f"::warning::{len(deferred)} repository checks were inconclusive; existing links retained")
 
     entries, links, dead_urls = prune_entries(references, missing, dry_run=args.dry_run)
     inventory = prune_inventory(dead_urls, dry_run=args.dry_run)
     alive = {name.lower() for name in names if name not in missing}
     tracked = save_metadata(metadata, alive, dry_run=args.dry_run)
-    state["cursor"] = scope[-1] if scope else ""
+    state["cursor"] = rotating[-1] if rotating else ""
 
     print(f"Removed {links} links from {entries} entries | {inventory} inventory lines")
     print(f"Refreshed stars and last-push for {len(metadata)} repositories | {tracked} tracked")
@@ -492,20 +532,29 @@ def main() -> int:
         urls = sorted(references)
         window = slice_after(urls, str(state.get("reference_cursor") or ""),
                              0 if args.references < 0 else args.references)
-        print(f"Checking {len(window)} of {len(urls)} reference links")
-        gone = dead_references(
-            interleave_by_host(window), workers=args.workers, timeout=args.timeout
-        )
+        # Recovery gets a separate bounded rotation, so historical failures
+        # cannot consume the entire audit and starve the still-published URLs.
+        recovery = slice_after(sorted(link_health.load()["urls"]),
+                               str(state.get("recovery_cursor") or ""), 1000)
+        selected = sorted(set(window) | set(recovery))
+        print(f"Checking {len(selected)} of {len(urls)} artifact/reference links")
+        gone, live = link_health.survey_urls(
+            interleave_by_host(selected), workers=args.workers, timeout=args.timeout)
+        if not args.dry_run:
+            link_health.record(dead_urls=gone, live_urls=live)
         ref_links, ref_lines = prune_references(references, gone, dry_run=args.dry_run)
         state["reference_cursor"] = window[-1] if window else ""
+        state["recovery_cursor"] = recovery[-1] if recovery else ""
         print(f"Reference links returning 404 or 410: {len(gone)} | "
               f"removed {ref_links} links, {ref_lines} inventory lines")
 
+    prune_unavailable(dry_run=args.dry_run)
+    state["checked"] = datetime.now(timezone.utc).isoformat()
     save_state(state, dry_run=args.dry_run)
     print(f"KEV catalogue: {refresh_kev(dry_run=args.dry_run)} known-exploited CVEs")
     badged, unbadged = sync_kev_badges(dry_run=args.dry_run)
     print(f"KEV badges: {badged} written, {unbadged} withdrawn")
-    return 0
+    return int(bool(deferred))
 
 
 if __name__ == "__main__":

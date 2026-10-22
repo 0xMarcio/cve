@@ -148,11 +148,12 @@ def poc_link_key(url: str) -> str:
 
 
 def stable_unique_poc_links(values: Iterable[str]) -> list[str]:
+    import link_health
     seen: set[str] = set()
     result: list[str] = []
     for value in values:
         key = poc_link_key(value)
-        if value and key not in seen:
+        if value and key not in seen and not link_health.unavailable(value):
             seen.add(key)
             result.append(value)
     return result
@@ -1080,30 +1081,8 @@ def poc_references(
 
 
 def reference_url_is_live(url: str, timeout: int = 15) -> bool:
-    headers = {
-        "Accept": "*/*",
-        "Accept-Encoding": "identity",
-        "User-Agent": USER_AGENT,
-    }
-    for method in ("HEAD", "GET"):
-        request_headers = dict(headers)
-        if method == "GET":
-            request_headers["Range"] = "bytes=0-0"
-        req = request.Request(url, headers=request_headers, method=method)
-        try:
-            with request.urlopen(req, timeout=timeout) as response:
-                if method == "GET":
-                    response.read(1)
-                if int(response.status) < 400:
-                    return True
-        except error.HTTPError as exc:
-            code = exc.code
-            exc.close()
-            if method == "GET" and code in {404, 410}:
-                return False
-        except (error.URLError, TimeoutError, OSError):
-            pass
-    return True
+    import link_health
+    return link_health.check_url(url, timeout) is not False
 
 
 def filter_live_references(
@@ -1725,6 +1704,8 @@ def build_markdown(
     references: list[str],
     kev: dict[str, list] | None = None,
 ) -> str:
+    github_links = stable_unique_poc_links(github_links)
+    references = stable_unique_poc_links(references)
     description = "\n".join(
         line.expandtabs(4).rstrip() for line in details.description.strip().splitlines()
     )
@@ -1888,12 +1869,13 @@ def sync_markdown(
 
 
 def append_inventory(path: Path, mappings: dict[str, list[str]], *, dry_run: bool) -> int:
+    import link_health
     existing = set(path.read_text(encoding="utf-8").splitlines()) if path.exists() else set()
     additions = sorted(
         f"{cve_id} - {url}"
         for cve_id, urls in mappings.items()
         for url in urls
-        if url and f"{cve_id} - {url}" not in existing
+        if url and f"{cve_id} - {url}" not in existing and not link_health.unavailable(url)
     )
     if not additions or dry_run:
         return len(additions)
@@ -1913,6 +1895,7 @@ def reconcile_inventory(
     dry_run: bool,
 ) -> tuple[int, int]:
     """Make an inventory an exact view of its markdown section."""
+    import link_health
     expected = {
         f"{md_path.stem} - {url}"
         for md_path in CVES.glob("[12][0-9][0-9][0-9]/CVE-*.md")
@@ -1924,6 +1907,7 @@ def reconcile_inventory(
         for url in urls
         if url
     )
+    expected = {line for line in expected if not link_health.unavailable(line.split(" - ", 1)[1])}
     current_lines = path.read_text(encoding="utf-8").splitlines() if path.exists() else []
     current = set(current_lines)
     additions = len(expected - current)
