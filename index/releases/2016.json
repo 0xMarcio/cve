@@ -1300,6 +1300,7 @@
 "CVE-2016-3861 github:zeroshotkevin/cve-2016-3861?#":{"basis":"unknown","cve":"CVE-2016-3861","imported":true,"released":null,"url":"https://github.com/zeroshotkevin/CVE-2016-3861"},
 "CVE-2016-3861 github:zxkevn/cve-2016-3861?#":{"basis":"unknown","cve":"CVE-2016-3861","imported":true,"released":null,"url":"https://github.com/zxkevn/CVE-2016-3861"},
 "CVE-2016-3861 https://www.exploit-db.com/exploits/40354":{"basis":"source","cve":"CVE-2016-3861","imported":true,"released":"2016-09-08","source":"2016-09-08","url":"https://www.exploit-db.com/exploits/40354"},
+"CVE-2016-3942 github:advisories/ghsa-r87w-47m8-22w3?#":{"basis":"unknown","cve":"CVE-2016-3942","released":null,"seen":"2026-10-22T19:52:59Z","url":"https://github.com/advisories/GHSA-r87w-47m8-22w3"},
 "CVE-2016-3943 https://www.exploit-db.com/exploits/39671":{"basis":"source","cve":"CVE-2016-3943","imported":true,"released":"2016-04-06","source":"2016-04-06","url":"https://www.exploit-db.com/exploits/39671"},
 "CVE-2016-3944 https://duo.com/blog/out-of-box-exploitation-a-security-analysis-of-oem-updaters":{"basis":"unknown","cve":"CVE-2016-3944","imported":true,"released":null,"url":"https://duo.com/blog/out-of-box-exploitation-a-security-analysis-of-oem-updaters"},
 "CVE-2016-3952 https://devco.re/blog/2017/01/03/web2py-unserialize-code-execution-CVE-2016-3957":{"basis":"unknown","cve":"CVE-2016-3952","imported":true,"released":null,"url":"https://devco.re/blog/2017/01/03/web2py-unserialize-code-execution-CVE-2016-3957/"},
