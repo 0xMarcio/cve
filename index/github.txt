@@ -26390,7 +26390,6 @@ CVE-2026-78159 - https://github.com/abraxas/CVE-2026-78159
 CVE-2026-80844 - https://github.com/0xBlackash/CVE-2026-80844
 CVE-2026-81000 - https://github.com/0xBlackash/CVE-2026-81000
 CVE-2026-75816 - https://github.com/abraxas/CVE-2026-75816
-CVE-2025-55182 - https://github.com/mythicemissarymall/zuvmwbnt
 CVE-2025-58434 - https://github.com/arensballiu/Flowise-CVE-2025-58434-PasswordReset
 CVE-2025-59528 - https://github.com/arensballiu/Flowise-RCE-CVE-2025-59528
 CVE-2026-13447 - https://github.com/abraxas/CVE-2026-13447
@@ -28021,3 +28020,10 @@ CVE-2026-109619 - https://github.com/logesh-GIT001/php2shell
 CVE-2026-109619 - https://github.com/n4zgu1/php2shell-web
 CVE-2026-110264 - https://github.com/TahuCryptsi/poc-gitlab-onigmo-cve-2026-110264
 CVE-2026-64560 - https://github.com/TKgbUssr/PMX110-6.18.21-exploit
+CVE-2026-109618 - https://github.com/CorbanPendrak/php2shell
+CVE-2026-109618 - https://github.com/Officerwasu/php2shell
+CVE-2026-109618 - https://github.com/aimansam/php2shell-poc
+CVE-2026-109619 - https://github.com/CorbanPendrak/php2shell
+CVE-2026-109619 - https://github.com/FarhadHosen101/PHP2Shell-CVE-2026-109619
+CVE-2026-109619 - https://github.com/aimansam/php2shell-poc
+CVE-2026-109619 - https://github.com/Moriz82/php2shell-poc
