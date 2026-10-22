@@ -27979,3 +27979,6 @@ CVE-2026-109619 - https://github.com/78ResearchLab/PHP2Shell-Full-Chain-Exploit
 CVE-2026-109619 - https://github.com/Marciano-Morinigo/php2shell-CVE-2026-109618-CVE-2026-109619-PoC-Lab
 CVE-2026-109619 - https://github.com/aledus10/PHP2Shell-Lab
 CVE-2026-109618 - https://github.com/Marven11/PHP2Shell
+CVE-2026-109618 - https://github.com/LHeiakim/php2shell-full-poc
+CVE-2026-109619 - https://github.com/LHeiakim/php2shell-full-poc
+CVE-2026-86478 - https://github.com/LHeiakim/CVE-2026-86478-PoC
