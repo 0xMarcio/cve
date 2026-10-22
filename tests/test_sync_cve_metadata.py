@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import copy
+import gzip
 import io
 import json
 import sys
@@ -21,6 +22,35 @@ import update_cves
 CVE = "CVE-2026-12345"
 URL = "https://github.com/advisories/GHSA-abcd-efgh-2345"
 SCORE = ["3.1", 8.1, "HIGH", "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:N", "CNA", "CVE Program CNA"]
+
+
+class FeedDownloadTests(unittest.TestCase):
+    def setUp(self):
+        self.feed = [{"cve": {"id": CVE}}]
+        self.body = gzip.compress(json.dumps({"format": "NVD_CVE", "version": "2.0",
+                                              "vulnerabilities": self.feed}).encode())
+
+    def test_truncated_gzip_restarts_download_and_returns_complete_feed(self):
+        with patch.object(metadata.urllib.request, "urlopen", side_effect=[
+            io.BytesIO(self.body[:-8]), io.BytesIO(self.body)
+        ]) as fetch, patch.object(metadata.time, "sleep"), redirect_stdout(io.StringIO()):
+            self.assertEqual(metadata.load_feed("modified"), self.feed)
+        self.assertEqual(fetch.call_count, 2)
+
+    def test_repeated_truncation_fails_instead_of_publishing_partial_feed(self):
+        with patch.object(metadata.urllib.request, "urlopen", side_effect=[
+            io.BytesIO(self.body[:-8]) for _ in range(3)
+        ]) as fetch, patch.object(metadata.time, "sleep"), redirect_stdout(io.StringIO()):
+            with self.assertRaises(EOFError):
+                metadata.load_feed("modified")
+        self.assertEqual(fetch.call_count, 3)
+
+    def test_missing_feed_is_not_retried(self):
+        problem = metadata.urllib.error.HTTPError(metadata.feed_url("recent"), 404, "missing", {}, None)
+        with patch.object(metadata.urllib.request, "urlopen", side_effect=problem) as fetch:
+            with self.assertRaises(metadata.urllib.error.HTTPError):
+                metadata.load_feed("recent")
+        self.assertEqual(fetch.call_count, 1)
 
 
 class DiscoveryEnrichmentTests(unittest.TestCase):

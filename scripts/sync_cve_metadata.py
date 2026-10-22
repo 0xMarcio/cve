@@ -20,6 +20,7 @@ import time
 import urllib.error
 import urllib.parse
 import urllib.request
+import zlib
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
@@ -865,9 +866,20 @@ def feed_url(name: str) -> str:
 
 def load_feed(name: str) -> list[dict[str, Any]]:
     request = urllib.request.Request(feed_url(name), headers={"User-Agent": USER_AGENT})
-    with urllib.request.urlopen(request, timeout=900) as response:
-        with gzip.GzipFile(fileobj=response) as compressed:
-            payload = json.load(compressed)
+    for attempt in range(3):
+        try:
+            with urllib.request.urlopen(request, timeout=900) as response:
+                with gzip.GzipFile(fileobj=response) as compressed:
+                    payload = json.load(compressed)
+            break
+        except urllib.error.HTTPError as problem:
+            if problem.code < 500 or attempt == 2:
+                raise
+        except (OSError, EOFError, http.client.HTTPException, json.JSONDecodeError, zlib.error):
+            if attempt == 2:
+                raise
+        print(f"{name}: incomplete NVD download; retrying ({attempt + 2}/3)", flush=True)
+        time.sleep(2 ** attempt)
     if payload.get("format") != "NVD_CVE" or payload.get("version") != "2.0":
         raise RuntimeError(f"{name}: unexpected NVD feed format")
     vulnerabilities = payload.get("vulnerabilities")
