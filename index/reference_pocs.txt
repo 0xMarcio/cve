@@ -645,7 +645,6 @@ CVE-2006-0961 - https://www.exploit-db.com/exploits/1562
 CVE-2006-0962 - https://www.exploit-db.com/exploits/1543
 CVE-2006-0973 - http://www.securityfocus.com/archive/1/430870/100/0/threaded
 CVE-2006-0973 - https://www.exploit-db.com/exploits/1525
-CVE-2006-0992 - http://metasploit.blogspot.com/2006/04/exploit-development-groupwise_14.html
 CVE-2006-0992 - https://www.exploit-db.com/exploits/1679
 CVE-2006-1001 - https://www.exploit-db.com/exploits/1526
 CVE-2006-1010 - http://aluigi.altervista.org/poc/crossfirebof.zip
@@ -756,13 +755,9 @@ CVE-2006-2019 - https://www.exploit-db.com/exploits/1715
 CVE-2006-2022 - http://www.securityfocus.com/archive/1/432002/100/0/threaded
 CVE-2006-2034 - http://www.securityfocus.com/archive/1/431793/100/0/threaded
 CVE-2006-2046 - https://www.exploit-db.com/exploits/4264
-CVE-2006-2055 - http://ingehenriksen.blogspot.com/2006/04/office-2003-file-attachment-exploit.html
 CVE-2006-2055 - http://www.securityfocus.com/archive/1/432009/100/0/threaded
-CVE-2006-2056 - http://ingehenriksen.blogspot.com/2006/04/office-2003-file-attachment-exploit.html
 CVE-2006-2056 - http://www.securityfocus.com/archive/1/432009/100/0/threaded
-CVE-2006-2057 - http://ingehenriksen.blogspot.com/2006/04/office-2003-file-attachment-exploit.html
 CVE-2006-2057 - http://www.securityfocus.com/archive/1/432009/100/0/threaded
-CVE-2006-2058 - http://ingehenriksen.blogspot.com/2006/04/office-2003-file-attachment-exploit.html
 CVE-2006-2058 - http://www.securityfocus.com/archive/1/432009/100/0/threaded
 CVE-2006-2059 - http://www.securityfocus.com/archive/1/432451/100/0/threaded
 CVE-2006-2081 - http://www.securityfocus.com/archive/1/431353/100/0/threaded
@@ -10449,7 +10444,6 @@ CVE-2013-6275 - http://www.exploit-db.com/exploits/29274
 CVE-2013-6282 - https://www.exploit-db.com/exploits/40975/
 CVE-2013-6283 - http://www.exploit-db.com/exploits/27700
 CVE-2013-6341 - http://www.exploit-db.com/exploits/30013
-CVE-2013-6343 - http://infosec42.blogspot.com/2014/01/exploit-asus-rt-n56u-remote-root-shell.html
 CVE-2013-6343 - http://www.exploit-db.com/exploits/31033
 CVE-2013-6364 - http://www.exploit-db.com/exploits/29519
 CVE-2013-6366 - http://www.exploit-db.com/exploits/28962/

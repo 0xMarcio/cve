@@ -87522,7 +87522,6 @@ CVE-2006-0766 - http://www.securityfocus.com/archive/1/425078/100/0/threaded
 CVE-2006-0864 - http://www.securityfocus.com/archive/1/425788/100/0/threaded
 CVE-2006-0959 - http://www.securityfocus.com/archive/1/426653/100/0/threaded
 CVE-2006-0973 - http://www.securityfocus.com/archive/1/430870/100/0/threaded
-CVE-2006-0992 - http://metasploit.blogspot.com/2006/04/exploit-development-groupwise_14.html
 CVE-2006-1010 - http://aluigi.altervista.org/poc/crossfirebof.zip
 CVE-2006-1043 - http://www.securityfocus.com/archive/1/426830/100/0/threaded
 CVE-2006-1110 - http://www.securityfocus.com/archive/1/426650/100/0/threaded
@@ -87561,13 +87560,9 @@ CVE-2006-1995 - http://downloads.securityfocus.com/vulnerabilities/exploits/1764
 CVE-2006-2004 - http://www.securityfocus.com/archive/1/431868/100/0/threaded
 CVE-2006-2022 - http://www.securityfocus.com/archive/1/432002/100/0/threaded
 CVE-2006-2034 - http://www.securityfocus.com/archive/1/431793/100/0/threaded
-CVE-2006-2055 - http://ingehenriksen.blogspot.com/2006/04/office-2003-file-attachment-exploit.html
 CVE-2006-2055 - http://www.securityfocus.com/archive/1/432009/100/0/threaded
-CVE-2006-2056 - http://ingehenriksen.blogspot.com/2006/04/office-2003-file-attachment-exploit.html
 CVE-2006-2056 - http://www.securityfocus.com/archive/1/432009/100/0/threaded
-CVE-2006-2057 - http://ingehenriksen.blogspot.com/2006/04/office-2003-file-attachment-exploit.html
 CVE-2006-2057 - http://www.securityfocus.com/archive/1/432009/100/0/threaded
-CVE-2006-2058 - http://ingehenriksen.blogspot.com/2006/04/office-2003-file-attachment-exploit.html
 CVE-2006-2058 - http://www.securityfocus.com/archive/1/432009/100/0/threaded
 CVE-2006-2059 - http://www.securityfocus.com/archive/1/432451/100/0/threaded
 CVE-2006-2081 - http://www.securityfocus.com/archive/1/431353/100/0/threaded
@@ -90119,7 +90114,6 @@ CVE-2013-6129 - http://www.vbulletin.com/forum/forum/vbulletin-announcements/vbu
 CVE-2013-6194 - http://www.exploit-db.com/exploits/31181
 CVE-2013-6221 - http://www.exploit-db.com/exploits/33891
 CVE-2013-6341 - http://www.exploit-db.com/exploits/30013
-CVE-2013-6343 - http://infosec42.blogspot.com/2014/01/exploit-asus-rt-n56u-remote-root-shell.html
 CVE-2013-6343 - http://www.exploit-db.com/exploits/31033
 CVE-2013-6366 - http://www.exploit-db.com/exploits/28962/
 CVE-2013-6719 - http://www.exploit-db.com/exploits/32546
