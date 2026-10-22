@@ -607,7 +607,7 @@
 "CVE-2005-1381 https://www.exploit-db.com/exploits/25563":{"basis":"source","cve":"CVE-2005-1381","imported":true,"released":"2005-04-28","source":"2005-04-28","url":"https://www.exploit-db.com/exploits/25563"},
 "CVE-2005-1382 https://www.exploit-db.com/exploits/25561":{"basis":"source","cve":"CVE-2005-1382","imported":true,"released":"2005-04-28","source":"2005-04-28","url":"https://www.exploit-db.com/exploits/25561"},
 "CVE-2005-1383 https://www.exploit-db.com/exploits/25559":{"basis":"source","cve":"CVE-2005-1383","imported":true,"released":"2005-04-28","source":"2005-04-28","url":"https://www.exploit-db.com/exploits/25559"},
-"CVE-2005-1384 http://pridels0.blogspot.com/2006/03/phpcoin-poc.html":{"basis":"unknown","cve":"CVE-2005-1384","imported":true,"released":null,"url":"http://pridels0.blogspot.com/2006/03/phpcoin-poc.html"},
+"CVE-2005-1384 http://pridels0.blogspot.com/2006/03/phpcoin-poc.html":{"basis":"unknown","cve":"CVE-2005-1384","gone":"2026-10-22T18:20:41Z","gone_reason":"unavailable","imported":true,"released":null,"url":"http://pridels0.blogspot.com/2006/03/phpcoin-poc.html"},
 "CVE-2005-1384 https://www.exploit-db.com/exploits/25568":{"basis":"source","cve":"CVE-2005-1384","imported":true,"released":"2005-04-28","source":"2005-04-28","url":"https://www.exploit-db.com/exploits/25568"},
 "CVE-2005-1384 https://www.exploit-db.com/exploits/25569":{"basis":"source","cve":"CVE-2005-1384","imported":true,"released":"2005-04-28","source":"2005-04-28","url":"https://www.exploit-db.com/exploits/25569"},
 "CVE-2005-1393 http://www.digitalmunition.com/DMA%5B2005-0425a%5D.txt":{"basis":"unknown","cve":"CVE-2005-1393","imported":true,"released":null,"url":"http://www.digitalmunition.com/DMA%5B2005-0425a%5D.txt"},
