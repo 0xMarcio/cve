@@ -28028,3 +28028,5 @@ CVE-2026-109619 - https://github.com/FarhadHosen101/PHP2Shell-CVE-2026-109619
 CVE-2026-109619 - https://github.com/aimansam/php2shell-poc
 CVE-2026-109619 - https://github.com/Moriz82/php2shell-poc
 CVE-2026-109618 - https://github.com/MorFix/php-rce-exploitation
+CVE-2026-109618 - https://github.com/dipsh0v/php2shell-emudhra-hunting
+CVE-2026-109619 - https://github.com/dipsh0v/php2shell-emudhra-hunting

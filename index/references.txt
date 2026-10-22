@@ -89011,9 +89011,6 @@ CVE-2010-1924 - http://www.exploit-db.com/exploits/12545
 CVE-2010-1925 - http://www.exploit-db.com/exploits/12552
 CVE-2010-1978 - http://www.exploit-db.com/exploits/12063
 CVE-2010-1982 - http://www.exploit-db.com/exploits/12121
-CVE-2010-1986 - http://www.exploit-db.com/exploits/12678
-CVE-2010-1987 - http://www.exploit-db.com/exploits/12678
-CVE-2010-1988 - http://www.exploit-db.com/exploits/12678
 CVE-2010-20007 - https://raw.githubusercontent.com/rapid7/metasploit-framework/master/modules/exploits/windows/ftp/seagull_list_reply.rb
 CVE-2010-20007 - https://web.archive.org/web/20111016194057/https://www.corelan.be/index.php/2010/10/12/death-of-an-ftp-client/
 CVE-2010-20010 - https://raw.githubusercontent.com/rapid7/metasploit-framework/master/modules/exploits/windows/fileformat/foxit_title_bof.rb
@@ -89430,7 +89427,6 @@ CVE-2010-4990 - http://www.exploit-db.com/exploits/14210
 CVE-2010-4991 - http://www.exploit-db.com/exploits/14211
 CVE-2010-4992 - http://www.exploit-db.com/exploits/14265
 CVE-2010-4993 - http://www.exploit-db.com/exploits/14187
-CVE-2010-4994 - http://www.exploit-db.com/exploits/14246
 CVE-2010-4995 - http://www.exploit-db.com/exploits/14250
 CVE-2010-4996 - http://www.exploit-db.com/exploits/14204
 CVE-2010-4997 - http://www.exploit-db.com/exploits/14084
