@@ -55,6 +55,8 @@ jobs:
       - name: Rebuild the trending PoC table
         id: trending
         continue-on-error: true
+        # Leave time to publish discoveries if this optional refresh stalls.
+        timeout-minutes: 4
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: python3 .github/getTrending.py
