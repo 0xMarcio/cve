@@ -1,1 +1,1 @@
-{"retry_after": "2026-10-22T21:35:49Z", "reason": "service-transport-failures"}
+{"retry_after": "2026-10-22T22:00:54Z", "reason": "http-429", "capture_interval": 30}
