@@ -383,6 +383,10 @@ def verify_snapshot(snap: dict, original: str, expected_blobs=(), repo_id=None, 
                 return False
         snap['verified_at'] = now()
         return True
+    except ArchiveError as exc:
+        if str(exc) in {'response-too-large', 'unsupported-response-encoding', 'invalid-compressed-response'}:
+            return False
+        raise
     except error.HTTPError as exc:
         status = exc.code
         retry = exc.headers.get('Retry-After', '')

@@ -503,6 +503,21 @@ class ArchiveTests(unittest.TestCase):
                 with self.assertRaisesRegex(archive.ArchiveError, 'invalid-compressed-response'):
                     archive.response_bytes(response, 1000)
 
+    def test_corrupt_replay_is_replaced_instead_of_reusing_the_failed_capture(self):
+        snap = snapshot()
+        response = io.BytesIO(gzip.compress(b'poc')[:-8])
+        response.headers = {'Content-Encoding': 'gzip'}
+        response.status = 200
+        response.url = snap['url'].replace(snap['timestamp'] + '/', snap['timestamp'] + 'id_/')
+        opener = MagicMock()
+        opener.open.return_value = response
+        row = {**self.target, 'candidate': snap}
+        with patch.object(archive.request, 'build_opener', return_value=opener):
+            archive.verify_candidate(row)
+        self.assertTrue(row['bad_capture'])
+        self.assertNotIn('candidate', row)
+        self.assertFalse(archive.valid_snapshot(row))
+
 
 if __name__ == '__main__':
     unittest.main()
