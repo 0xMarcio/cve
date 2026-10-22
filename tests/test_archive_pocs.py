@@ -7,7 +7,7 @@ import json
 import sys
 import tempfile
 import unittest
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from unittest.mock import MagicMock, patch
 from urllib.error import HTTPError
@@ -137,6 +137,13 @@ class ArchiveTests(unittest.TestCase):
             archive.process(URL, self.target, self.rows, self.client, capture=True)
         self.assertNotIn('job_id', self.rows[URL])
         self.client.submit.assert_called_once()
+
+    def test_expired_job_cannot_resubmit_when_capture_slots_are_full(self):
+        self.rows[URL] = {**self.target, 'job_id': 'old', 'submitted_at': archive.after(-7200)}
+        archive.process(URL, self.target, self.rows, self.client, capture=True, allow_submit=False)
+        self.client.submit.assert_not_called()
+        self.assertEqual(self.rows[URL]['status'], 'queued')
+        self.assertNotIn('job_id', self.rows[URL])
 
     def test_refresh_error_keeps_previous_good_capture(self):
         old = snapshot(stamp='20260101000000')
@@ -405,6 +412,63 @@ class ArchiveTests(unittest.TestCase):
         self.assertIn('page-199', selected[:10])
         self.assertEqual(len(selected), len(targets))
 
+    def test_verified_immutable_files_do_not_consume_recapture_slots(self):
+        raw = 'https://raw.githubusercontent.com/owner/poc/' + 'a' * 40 + '/poc.py'
+        target = {**self.target, 'original': raw, 'parent': URL}
+        rows = {raw: {**target, 'snapshot': snapshot(raw), 'next_check_at': archive.after(-1)}}
+        self.assertEqual(archive.select_targets({raw: target, URL: self.target}, rows, capture=True), [URL])
+        self.assertIn(raw, archive.select_targets({raw: target}, rows))
+
+    def test_file_queue_balances_recent_and_old_repos_and_preserves_path_rank(self):
+        targets = {
+            'a-readme': {**self.target, 'parent': 'old', 'priority': '2026-01', 'rank': 1},
+            'b-poc': {**self.target, 'parent': 'old', 'priority': '2026-01', 'rank': 0},
+            'c-poc': {**self.target, 'parent': 'new', 'priority': '2026-10', 'rank': 0},
+        }
+        self.assertEqual(archive.select_targets(targets, {}, capture=True), ['c-poc', 'b-poc', 'a-readme'])
+
+    def test_short_cooldown_resumes_within_the_same_batch(self):
+        clock, visited = [0.0], []
+        base = datetime.now(timezone.utc).replace(microsecond=0)
+        def process(key, target, rows, client, **kwargs):
+            visited.append(clock[0])
+            rows[key] = {**target, 'status': 'not-found'}
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory)
+            (path / 'control.json').write_text(json.dumps({'retry_after': (base + timedelta(seconds=5)).strftime('%Y-%m-%dT%H:%M:%SZ')}))
+            with patch.object(archive, 'inventory', return_value={URL: self.target}), \
+                    patch.object(archive, 'credentials', return_value=('dummy', 'dummy')), \
+                    patch.object(archive.Client, 'capacity', return_value=3), \
+                    patch.object(archive, 'process', side_effect=process), \
+                    patch.object(archive, 'now', side_effect=lambda: (base + timedelta(seconds=clock[0])).strftime('%Y-%m-%dT%H:%M:%SZ')), \
+                    patch.object(archive.time, 'monotonic', side_effect=lambda: clock[0]), \
+                    patch.object(archive.time, 'sleep', side_effect=lambda seconds: clock.__setitem__(0, clock[0] + seconds)), \
+                    patch.object(sys, 'argv', ['archive_pocs', '--capture', '--directory', str(path), '--limit', '1', '--max-seconds', '20']):
+                self.assertEqual(archive.main(), 0)
+            self.assertEqual(visited, [5])
+
+    def test_batch_stops_submitting_while_pending_jobs_drain(self):
+        clock, visited = [0.0], []
+        def process(key, target, rows, client, *, allow_submit, **kwargs):
+            visited.append((key, allow_submit))
+            if len(visited) == 1:
+                rows[key] = {**target, 'job_id': 'job-1', 'submitted_at': archive.now(), 'status': 'pending'}
+                clock[0] = 15
+            else:
+                rows[key] = {**target, 'status': 'available', 'snapshot': snapshot(target['original'])}
+        with tempfile.TemporaryDirectory() as directory:
+            targets = {k: {**self.target, 'original': k} for k in (URL, URL + '-other')}
+            with patch.object(archive, 'inventory', return_value=targets), \
+                    patch.object(archive, 'credentials', return_value=('dummy', 'dummy')), \
+                    patch.object(archive.Client, 'capacity', return_value=3), \
+                    patch.object(archive, 'process', side_effect=process), \
+                    patch.object(archive.time, 'monotonic', side_effect=lambda: clock[0]), \
+                    patch.object(sys, 'argv', ['archive_pocs', '--capture', '--directory', directory, '--max-seconds', '20']):
+                self.assertEqual(archive.main(), 0)
+        self.assertEqual(len(visited), 2)
+        self.assertEqual(visited[0], (visited[1][0], True))
+        self.assertFalse(visited[1][1])
+
     def test_replay_backoff_keeps_completed_jobs_without_blocking_new_files(self):
         self.client.replay_retry_after = archive.after(900)
         self.rows[URL] = {**self.target, 'job_id': 'job-1', 'submitted_at': archive.now()}
@@ -443,7 +507,7 @@ class ArchiveTests(unittest.TestCase):
 
     def test_throttling_slows_submissions_across_restarts(self):
         intervals = []
-        def process(key, target, rows, client, *, capture, directory=None):
+        def process(key, target, rows, client, *, capture, directory=None, allow_submit=True):
             rows[key] = {**target, 'status': 'retry'}
             client.operation = 'capture'
             intervals.append(client.interval)
@@ -456,7 +520,7 @@ class ArchiveTests(unittest.TestCase):
                     patch.object(archive, 'credentials', return_value=('dummy', 'dummy')), \
                     patch.object(archive.Client, 'capacity', return_value=3) as capacity, \
                     patch.object(archive, 'process', side_effect=process), \
-                    patch.object(sys, 'argv', ['archive_pocs', '--capture', '--directory', str(path), '--limit', '1']):
+                    patch.object(sys, 'argv', ['archive_pocs', '--capture', '--directory', str(path), '--limit', '1', '--max-seconds', '2']):
                 self.assertEqual(archive.main(), 0)
                 state = json.loads(control.read_text())
                 self.assertEqual(intervals, [30])
@@ -486,6 +550,43 @@ class ArchiveTests(unittest.TestCase):
             with patch.object(sys, 'argv', ['archive_pocs', '--directory', str(destination), '--merge-from', str(source)]):
                 archive.main()
             self.assertEqual(json.loads((destination / 'control.json').read_text())['capture_interval'], 60)
+
+    def test_checkpoint_merge_keeps_newer_healthy_pacing(self):
+        with tempfile.TemporaryDirectory() as directory:
+            source, destination = Path(directory) / 'source', Path(directory) / 'destination'
+            source.mkdir()
+            destination.mkdir()
+            state = {'retry_after': archive.after(300), 'reason': 'http-429'}
+            (source / 'control.json').write_text(json.dumps({**state, 'capture_interval': 45, 'pacing_updated_at': '2026-10-22T00:00:00Z'}))
+            (destination / 'control.json').write_text(json.dumps({**state, 'capture_interval': 60, 'pacing_updated_at': '2026-10-21T00:00:00Z'}))
+            with patch.object(sys, 'argv', ['archive_pocs', '--directory', str(destination), '--merge-from', str(source)]):
+                archive.main()
+            merged = json.loads((destination / 'control.json').read_text())
+            self.assertEqual(merged['capture_interval'], 45)
+            self.assertEqual(merged['retry_after'], state['retry_after'])
+
+    def test_healthy_captures_gradually_restore_pacing_without_reusing_credit(self):
+        intervals = []
+        def process(key, target, rows, client, **kwargs):
+            intervals.append(client.interval)
+            rows[key] = {**target, 'status': 'not-found'}
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory)
+            rows = {URL + str(i): {**self.target, 'original': URL + str(i), 'parent': URL,
+                                   'submitted_at': archive.after(-300), 'status': 'available', 'snapshot': snapshot(URL + str(i))}
+                    for i in range(10)}
+            archive.save_records(rows, set(rows), path)
+            control = path / 'control.json'
+            control.write_text(json.dumps({'retry_after': archive.after(-600), 'reason': 'http-429', 'capture_interval': 60}))
+            with patch.object(archive, 'inventory', return_value={URL: self.target}), \
+                    patch.object(archive, 'credentials', return_value=('dummy', 'dummy')), \
+                    patch.object(archive.Client, 'capacity', return_value=3), \
+                    patch.object(archive, 'process', side_effect=process), \
+                    patch.object(sys, 'argv', ['archive_pocs', '--capture', '--directory', str(path), '--limit', '1', '--max-seconds', '20']):
+                archive.main()
+                archive.main()
+            self.assertEqual(intervals, [45, 45])
+            self.assertEqual(json.loads(control.read_text())['capture_interval'], 45)
 
     def test_lookup_cooldown_does_not_block_pinned_source_submissions(self):
         self.client.lookup_retry_after = archive.after(300)
@@ -534,7 +635,7 @@ class ArchiveTests(unittest.TestCase):
     def test_capture_limit_exits_without_waiting_for_an_unrelated_host_cooldown(self):
         blocked = 'https://example.com/poc'
         targets = {u: {**self.target, 'original': u} for u in (URL, URL + '-other', blocked)}
-        def process(key, target, rows, client, *, capture, directory=None):
+        def process(key, target, rows, client, *, capture, directory=None, allow_submit=True):
             rows[key] = {**target, 'status': 'not-found'}
         with tempfile.TemporaryDirectory() as directory:
             path = Path(directory)
@@ -552,7 +653,7 @@ class ArchiveTests(unittest.TestCase):
         pending = URL + '-pending'
         target = {**self.target, 'original': pending}
         visited = []
-        def process(key, target, rows, client, *, capture, directory=None):
+        def process(key, target, rows, client, *, capture, directory=None, allow_submit=True):
             visited.append(key)
             if key == pending:
                 rows[key]['next_check_at'] = archive.after(3600)

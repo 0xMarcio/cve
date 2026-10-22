@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import argparse
+import copy
 import hashlib
 import gzip
 import ipaddress
@@ -28,6 +29,7 @@ DIRECTORY = ROOT / 'index' / 'archives'
 API = 'https://web.archive.org/save'
 AVAILABILITY = 'https://archive.org/wayback/available'
 AGENT = 'pocindex/1.0 (+https://pocindex.io)'
+CAPTURE_INTERVAL = 30
 REPLAY_LOCK = threading.Lock()
 LAST_REPLAY = 0.0
 
@@ -55,6 +57,11 @@ def public_url(url: str) -> bool:
 
 def identity(url: str) -> str:
     return link_health.url_key(url)
+
+
+def pinned_file(url: str) -> bool:
+    parsed = parse.urlsplit(url)
+    return parsed.hostname == 'raw.githubusercontent.com' and bool(re.fullmatch(r'/[^/]+/[^/]+/[0-9a-f]{40}/.+', parsed.path))
 
 
 def snapshot_url(url: str, stamp: str) -> str:
@@ -211,9 +218,9 @@ def retry_delay(value: str, default: int = 300) -> int:
 
 
 class Client:
-    def __init__(self, access: str = '', secret: str = '', interval: float = 10):
+    def __init__(self, access: str = '', secret: str = '', interval: float = CAPTURE_INTERVAL):
         self.auth = f'LOW {access}:{secret}' if access and secret else ''
-        self.interval = max(10 if self.auth else 21, interval)
+        self.interval = max(CAPTURE_INTERVAL if self.auth else 21, interval)
         self.last_submit = 0.0
         self.last_request = 0.0
         self.request_lock = threading.Lock()
@@ -308,7 +315,7 @@ class Client:
     def submit(self, url: str, *, retry: bool = False) -> dict:
         time.sleep(max(0, self.interval - (time.monotonic() - self.last_submit)))
         self.last_submit = time.monotonic()
-        pinned = parse.urlsplit(url).hostname == 'raw.githubusercontent.com' and bool(re.search(r'/[0-9a-f]{40}/', url))
+        pinned = pinned_file(url)
         payload = {'url': parse.urldefrag(url).url, 'capture_all': '0', 'capture_outlinks': '0',
                    'skip_first_archive': '1', 'if_not_archived_within': '1s' if retry else '36500d' if pinned else '30d'}
         if pinned:
@@ -478,7 +485,7 @@ def inventory(min_year: int = 2026) -> dict:
         repo, revision = manifest.get('repository', ''), manifest.get('revision', '')
         if repo != link_health.repository(target['original']) or not re.fullmatch(r'[0-9a-f]{40}', revision):
             continue
-        for entry in manifest.get('files', []):
+        for rank, entry in enumerate(manifest.get('files', [])):
             path, oid = entry.get('path', ''), entry.get('oid', '')
             revision = entry.get('revision') or manifest.get('revision', '')
             if (not path or any(p in {'', '.', '..'} for p in path.split('/'))
@@ -490,7 +497,7 @@ def inventory(min_year: int = 2026) -> dict:
                 continue
             item = {'original': raw, 'cves': cves, 'priority': target['priority'],
                                      'parent': parent, 'parent_original': target['original'], 'expected_blobs': [oid],
-                                     'strict_blobs': True}
+                                     'strict_blobs': True, 'rank': rank}
             previous = result.get(identity(raw), {})
             parents = dict(previous.get('parents', {}))
             if previous.get('parent'):
@@ -560,7 +567,8 @@ def capture_failure(row: dict, reason: str) -> None:
         row['host_retry_after'] = after(60 if reason == 'error:too-many-requests' else 86400)
 
 
-def process(key: str, target: dict, rows: dict, client: Client, *, capture: bool, directory: Path | None = None) -> None:
+def process(key: str, target: dict, rows: dict, client: Client, *, capture: bool,
+            directory: Path | None = None, allow_submit: bool = True) -> None:
     row = rows.setdefault(key, {**target, 'attempts': 0})
     for field in ('not_before', 'repo_id', 'parent', 'parent_original', 'parents', 'expected_blobs', 'strict_blobs'):
         row.pop(field, None)
@@ -626,6 +634,9 @@ def process(key: str, target: dict, rows: dict, client: Client, *, capture: bool
         if not unavailable:
             row['next_check_at'] = ''  # A negative lookup is ready for capture now.
         return
+    if not allow_submit:
+        row.update(status='queued', next_check_at='')
+        return
     day = now()[:10]
     budget = row.setdefault('submissions', {'date': day, 'count': 0})
     if budget['date'] != day:
@@ -677,14 +688,18 @@ def select_targets(targets: dict, rows: dict, *, capture=False) -> list[str]:
                    bool(rows.get(k, {}).get(checked)), targets[k]['priority'], k))
     recent = sorted(pages, key=lambda k: (not valid_snapshot(rows.get(k, {})),
                     not bool(rows.get(k, {}).get(checked)), targets[k]['priority'], k), reverse=True)
-    files = sorted((k for k in eligible if targets[k].get('parent')),
+    files = sorted((k for k in eligible if targets[k].get('parent')
+                    and not (capture and pinned_file(targets[k]['original']) and valid_snapshot(rows.get(k, {})))),
                    key=lambda k: (valid_snapshot(rows.get(k, {})), bool(rows.get(k, {}).get('submitted_at')),
-                                  rows.get(k, {}).get('checked_at', ''), k))
+                                  rows.get(k, {}).get('checked_at', ''), targets[k].get('rank', 0), k))
     grouped = defaultdict(list)
     for key in files:
         grouped[targets[key]['parent']].append(key)
     from itertools import zip_longest
-    files = [key for group in zip_longest(*grouped.values()) for key in group if key is not None]
+    parents = list(grouped)
+    recent_parents = sorted(parents, key=lambda parent: max(targets[k]['priority'] for k in grouped[parent]), reverse=True)
+    parents = list(dict.fromkeys(p for pair in zip_longest(recent_parents, parents) for p in pair if p is not None))
+    files = [key for group in zip_longest(*(grouped[parent] for parent in parents)) for key in group if key is not None]
     result, seen = [], set()
     # Alternate recent and old pages; reserve four slots per page for files.
     file_queue = iter(files)
@@ -716,7 +731,7 @@ def lookup_pages(targets: dict, rows: dict, client: Client, directory: Path, lim
 
     def read(key):
         # Only the coordinator writes the shared records/shards.
-        local = {key: dict(rows.get(key, {}))} if key in rows else {}
+        local = {key: copy.deepcopy(rows[key])} if key in rows else {}
         problem = None
         try:
             process(key, targets[key], local, client, capture=False)
@@ -753,8 +768,6 @@ def lookup_pages(targets: dict, rows: dict, client: Client, directory: Path, lim
                         destination = directory / name
                         state = json.loads(destination.read_text()) if destination.exists() else {}
                         state.update(retry_after=max(state.get('retry_after', ''), after(problem.cooldown or 300)), reason=str(problem))
-                        if str(problem) == 'replay-http-429':
-                            state['capture_interval'] = min(120, state.get('capture_interval', 10) * 2)
                         destination.write_text(json.dumps(state) + '\n')
                     print(f'Archive lookup paused: {problem}', flush=True)
                 print(f'{completed}: {row["status"]} {row["original"]}', flush=True)
@@ -802,7 +815,15 @@ def main() -> int:
                 existing = json.loads(current.read_text()) if current.exists() else {}
                 merged = dict(incoming_control if incoming_control.get('retry_after', '') > existing.get('retry_after', '') else existing)
                 if name == 'control.json' and ('capture_interval' in incoming_control or 'capture_interval' in existing):
-                    merged['capture_interval'] = max(incoming_control.get('capture_interval', 10), existing.get('capture_interval', 10))
+                    old_pacing = existing.get('pacing_updated_at', '')
+                    new_pacing = incoming_control.get('pacing_updated_at', '')
+                    if old_pacing != new_pacing:
+                        latest = incoming_control if new_pacing > old_pacing else existing
+                        merged['capture_interval'] = max(CAPTURE_INTERVAL, latest.get('capture_interval', CAPTURE_INTERVAL))
+                        merged['pacing_updated_at'] = latest['pacing_updated_at']
+                    else:
+                        merged['capture_interval'] = max(CAPTURE_INTERVAL, incoming_control.get('capture_interval', CAPTURE_INTERVAL),
+                                                         existing.get('capture_interval', CAPTURE_INTERVAL))
                 if merged != existing:
                     current.write_text(json.dumps(merged) + '\n')
         sources = args.merge_from / 'sources.json'
@@ -862,33 +883,50 @@ def main() -> int:
     if control.exists():
         state = json.loads(control.read_text())
         if state.get('retry_after', '') > now():
-            print('Archive service cooldown is still active')
-            return 0
-        client.interval = max(client.interval, state.get('capture_interval', 30 if state.get('reason') in {'http-429', 'replay-http-429'} else 10))
+            print(f'Waiting for archive cooldown until {state["retry_after"]}', flush=True)
+        client.interval = max(client.interval, state.get('capture_interval', CAPTURE_INTERVAL))
+        since = max(state.get('retry_after', ''), state.get('pacing_updated_at', ''))
+        healthy = sum(bool(r.get('parent')) and valid_snapshot(r) and r.get('status') == 'available'
+                      and r.get('submitted_at', '') > since for r in rows.values())
+        if args.capture and healthy >= 10 and client.interval > CAPTURE_INTERVAL:
+            client.interval = max(CAPTURE_INTERVAL, client.interval - 15)
+            state['pacing_updated_at'] = now()
         if args.capture and state.get('capture_interval') != client.interval:
             state['capture_interval'] = client.interval
             control.write_text(json.dumps(state) + '\n')
-    slots = 1
-    if args.capture:
-        try:
-            slots = client.capacity(sum(active_job(rows[key]) for key in targets if key in rows))
-        except ArchiveError as exc:
-            args.directory.mkdir(parents=True, exist_ok=True)
-            state.update(retry_after=after(exc.cooldown or 300), reason=str(exc), capture_interval=client.interval)
-            control.write_text(json.dumps(state) + '\n')
-            print(f'Archive service requested backoff: {exc}', flush=True)
-            return 1 if exc.fatal else 0
+    slots = None if args.capture else 1
     selected = select_targets(targets, rows, capture=args.capture)
     start = time.monotonic()
+    capture_deadline = start + args.max_seconds - min(120, args.max_seconds / 2)
     completed = 0
     last_was_new = False
     while time.monotonic() - start < args.max_seconds:
+        remaining = args.max_seconds - (time.monotonic() - start)
+        if state.get('retry_after', '') > now():
+            if state['retry_after'] >= after(remaining):
+                print('Archive cooldown extends past this batch deadline', flush=True)
+                break
+            time.sleep(min(5, remaining))
+            continue
+        if slots is None:
+            try:
+                slots = client.capacity(sum(active_job(rows[key]) for key in targets if key in rows))
+            except ArchiveError as exc:
+                args.directory.mkdir(parents=True, exist_ok=True)
+                state.update(retry_after=after(exc.cooldown or 300), reason=str(exc), capture_interval=client.interval)
+                control.write_text(json.dumps(state) + '\n')
+                print(f'Archive service requested backoff: {exc}', flush=True)
+                if exc.fatal:
+                    return 1
+                continue
         hosts = {parse.urlsplit(r['original']).hostname for r in rows.values() if r.get('host_retry_after', '') > now()}
         available = next((key for key in selected if parse.urlsplit(targets[key]['original']).hostname not in hosts), None)
         pending = [key for key in targets if rows.get(key, {}).get('job_id') or rows.get(key, {}).get('candidate')]
         due = [key for key in pending if rows[key].get('next_check_at', '') <= now()
                or rows[key].get('job_id') and not active_job(rows[key])]
-        room = sum(active_job(rows[k]) for k in pending) < slots
+        submit_wait = max(0, client.interval - (time.monotonic() - client.last_submit)) if client.last_submit else 0
+        room = (sum(active_job(rows[k]) for k in pending) < slots
+                and (not args.capture or time.monotonic() + submit_wait < capture_deadline))
         if due and (last_was_new or available is None or completed >= args.limit or not room):
             key = min(due, key=lambda k: (not active_job(rows[k]), rows[k].get('next_check_at', '')))
             last_was_new = False
@@ -909,7 +947,9 @@ def main() -> int:
             break
         attempts = rows.get(key, {}).get('attempts', 0)
         try:
-            process(key, targets[key], rows, client, capture=args.capture, directory=args.directory)
+            process(key, targets[key], rows, client, capture=args.capture, directory=args.directory, allow_submit=room)
+            if rows[key].get('status') == 'queued' and key not in selected:
+                selected.append(key)
         except ArchiveError as exc:
             exc = client.failure(key, exc)
             rows[key]['error'] = str(exc)
@@ -932,11 +972,14 @@ def main() -> int:
                     print(f'Archive verification paused; capture jobs can continue: {exc}', flush=True)
                     continue
                 state.update(retry_after=rows[key]['next_check_at'], reason=str(exc), capture_interval=client.interval)
-                if str(exc) in {'http-429', 'replay-http-429'}:
+                if str(exc) == 'http-429' and client.operation == 'capture':
                     state['capture_interval'] = min(120, client.interval * 2)
+                    state['pacing_updated_at'] = now()
                 control.write_text(json.dumps(state) + '\n')
+                client.interval = state['capture_interval']
+                slots = None if args.capture else 1
                 print(f'Archive service requested backoff during {client.operation}: {exc}', flush=True)
-                break
+                continue
             if str(exc) in {'response-too-large', 'unsupported-response-encoding', 'invalid-compressed-response'}:
                 rows[key].pop('candidate', None)
                 rows[key].pop('verify_attempts', None)
