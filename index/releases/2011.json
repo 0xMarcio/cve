@@ -1383,7 +1383,7 @@
 "CVE-2011-5074 https://www.exploit-db.com/exploits/18444":{"basis":"source","cve":"CVE-2011-5074","imported":true,"released":"2012-02-01","source":"2012-02-01","url":"https://www.exploit-db.com/exploits/18444"},
 "CVE-2011-5075 http://www.exploit-db.com/exploits/18132":{"basis":"source","cve":"CVE-2011-5075","imported":true,"released":"2011-11-19","source":"2011-11-19","url":"http://www.exploit-db.com/exploits/18132/"},
 "CVE-2011-5075 https://www.exploit-db.com/exploits/18132":{"basis":"source","cve":"CVE-2011-5075","imported":true,"released":"2011-11-19","source":"2011-11-19","url":"https://www.exploit-db.com/exploits/18132"},
-"CVE-2011-5083 http://www.exploit-db.com/exploits/18529":{"basis":"unknown","cve":"CVE-2011-5083","imported":true,"released":null,"url":"http://www.exploit-db.com/exploits/18529"},
+"CVE-2011-5083 http://www.exploit-db.com/exploits/18529":{"basis":"unknown","cve":"CVE-2011-5083","gone":"2026-10-22T23:19:40Z","gone_reason":"unavailable","imported":true,"released":null,"url":"http://www.exploit-db.com/exploits/18529"},
 "CVE-2011-5099 https://www.exploit-db.com/exploits/37101":{"basis":"source","cve":"CVE-2011-5099","imported":true,"released":"2012-04-23","source":"2012-04-23","url":"https://www.exploit-db.com/exploits/37101"},
 "CVE-2011-5103 http://www.exploit-db.com/exploits/18156":{"basis":"source","cve":"CVE-2011-5103","imported":true,"released":"2011-11-25","source":"2011-11-25","url":"http://www.exploit-db.com/exploits/18156"},
 "CVE-2011-5103 https://www.exploit-db.com/exploits/18156":{"basis":"source","cve":"CVE-2011-5103","imported":true,"released":"2011-11-25","source":"2011-11-25","url":"https://www.exploit-db.com/exploits/18156"},

@@ -89472,7 +89472,6 @@ CVE-2010-5061 - http://www.exploit-db.com/exploits/11665
 CVE-2010-5062 - http://www.exploit-db.com/exploits/11671
 CVE-2010-5081 - http://www.exploit-db.com/exploits/14373
 CVE-2010-5081 - http://www.exploit-db.com/exploits/18113
-CVE-2010-5086 - http://www.exploit-db.com/exploits/18530
 CVE-2010-5099 - http://www.exploit-db.com/exploits/15856
 CVE-2010-5193 - http://www.exploit-db.com/exploits/15668
 CVE-2010-5193 - http://www.exploit-db.com/exploits/18123
@@ -89651,7 +89650,6 @@ CVE-2011-5044 - http://www.exploit-db.com/exploits/18201
 CVE-2011-5046 - http://www.exploit-db.com/exploits/18275
 CVE-2011-5049 - http://www.exploit-db.com/exploits/18269
 CVE-2011-5052 - http://www.exploit-db.com/exploits/18283
-CVE-2011-5083 - http://www.exploit-db.com/exploits/18529
 CVE-2011-5103 - http://www.exploit-db.com/exploits/18156
 CVE-2011-5112 - http://www.exploit-db.com/exploits/18058
 CVE-2011-5113 - http://www.exploit-db.com/exploits/18042
@@ -89760,7 +89758,6 @@ CVE-2012-1124 - http://www.exploit-db.com/exploits/18549
 CVE-2012-1189 - http://www.exploit-db.com/exploits/18471
 CVE-2012-1203 - http://www.exploit-db.com/exploits/18498/
 CVE-2012-1220 - http://www.exploit-db.com/exploits/18464
-CVE-2012-1227 - http://www.exploit-db.com/exploits/18474
 CVE-2012-1297 - http://www.exploit-db.com/exploits/18527
 CVE-2012-1308 - http://www.exploit-db.com/exploits/18499
 CVE-2012-1414 - http://www.exploit-db.com/exploits/18502
@@ -89773,7 +89770,6 @@ CVE-2012-1597 - http://share.ez.no/community-project/security-advisories/ezsa-20
 CVE-2012-1613 - http://www.exploit-db.com/exploits/18680
 CVE-2012-1614 - http://www.exploit-db.com/exploits/18680
 CVE-2012-1775 - http://www.exploit-db.com/exploits/18825
-CVE-2012-1778 - http://www.exploit-db.com/exploits/18525
 CVE-2012-1790 - http://www.exploit-db.com/exploits/18523
 CVE-2012-1803 - http://www.exploit-db.com/exploits/18779
 CVE-2012-1901 - http://www.exploit-db.com/exploits/18609
@@ -89853,9 +89849,7 @@ CVE-2012-4746 - http://www.exploit-db.com/exploits/18722
 CVE-2012-4759 - http://archives.neohapsis.com/archives/fulldisclosure/2012-08/0293.html
 CVE-2012-4864 - http://www.exploit-db.com/exploits/18637
 CVE-2012-4865 - http://www.exploit-db.com/exploits/18636
-CVE-2012-4867 - http://www.exploit-db.com/exploits/18635
 CVE-2012-4869 - http://www.exploit-db.com/exploits/18659
-CVE-2012-4873 - http://www.exploit-db.com/exploits/18627
 CVE-2012-4891 - http://www.exploit-db.com/exploits/35933
 CVE-2012-4927 - http://www.exploit-db.com/exploits/18508
 CVE-2012-4991 - http://www.exploit-db.com/exploits/23324/

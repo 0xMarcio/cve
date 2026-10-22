@@ -3047,7 +3047,7 @@
 "CVE-2010-5081 https://www.exploit-db.com/exploits/18113":{"basis":"source","cve":"CVE-2010-5081","imported":true,"released":"2011-11-14","source":"2011-11-14","url":"https://www.exploit-db.com/exploits/18113"},
 "CVE-2010-5083 http://www.exploit-db.com/exploits/14589":{"basis":"source","cve":"CVE-2010-5083","imported":true,"released":"2010-08-09","source":"2010-08-09","url":"http://www.exploit-db.com/exploits/14589"},
 "CVE-2010-5083 https://www.exploit-db.com/exploits/14589":{"basis":"source","cve":"CVE-2010-5083","imported":true,"released":"2010-08-09","source":"2010-08-09","url":"https://www.exploit-db.com/exploits/14589"},
-"CVE-2010-5086 http://www.exploit-db.com/exploits/18530":{"basis":"unknown","cve":"CVE-2010-5086","imported":true,"released":null,"url":"http://www.exploit-db.com/exploits/18530"},
+"CVE-2010-5086 http://www.exploit-db.com/exploits/18530":{"basis":"unknown","cve":"CVE-2010-5086","gone":"2026-10-22T23:19:40Z","gone_reason":"unavailable","imported":true,"released":null,"url":"http://www.exploit-db.com/exploits/18530"},
 "CVE-2010-5096 https://www.exploit-db.com/exploits/35140":{"basis":"source","cve":"CVE-2010-5096","imported":true,"released":"2010-12-23","source":"2010-12-23","url":"https://www.exploit-db.com/exploits/35140"},
 "CVE-2010-5096 https://www.exploit-db.com/exploits/35141":{"basis":"source","cve":"CVE-2010-5096","imported":true,"released":"2010-12-23","source":"2010-12-23","url":"https://www.exploit-db.com/exploits/35141"},
 "CVE-2010-5099 http://www.exploit-db.com/exploits/15856":{"basis":"source","cve":"CVE-2010-5099","imported":true,"released":"2010-12-29","source":"2010-12-29","url":"http://www.exploit-db.com/exploits/15856"},

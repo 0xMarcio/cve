@@ -9074,7 +9074,6 @@ CVE-2010-5062 - http://www.exploit-db.com/exploits/11671
 CVE-2010-5081 - http://www.exploit-db.com/exploits/14373
 CVE-2010-5081 - http://www.exploit-db.com/exploits/18113
 CVE-2010-5083 - http://www.exploit-db.com/exploits/14589
-CVE-2010-5086 - http://www.exploit-db.com/exploits/18530
 CVE-2010-5099 - http://www.exploit-db.com/exploits/15856
 CVE-2010-5193 - http://www.exploit-db.com/exploits/15668
 CVE-2010-5193 - http://www.exploit-db.com/exploits/18123
@@ -9454,7 +9453,6 @@ CVE-2011-5046 - http://www.exploit-db.com/exploits/18275
 CVE-2011-5049 - http://www.exploit-db.com/exploits/18269
 CVE-2011-5052 - http://www.exploit-db.com/exploits/18283
 CVE-2011-5075 - http://www.exploit-db.com/exploits/18132/
-CVE-2011-5083 - http://www.exploit-db.com/exploits/18529
 CVE-2011-5103 - http://www.exploit-db.com/exploits/18156
 CVE-2011-5109 - http://www.exploit-db.com/exploits/18127
 CVE-2011-5110 - http://www.exploit-db.com/exploits/18129
@@ -9719,7 +9717,6 @@ CVE-2012-1189 - http://www.exploit-db.com/exploits/18471
 CVE-2012-1203 - http://www.exploit-db.com/exploits/18498/
 CVE-2012-1220 - http://www.exploit-db.com/exploits/18464
 CVE-2012-1226 - http://www.exploit-db.com/exploits/18480
-CVE-2012-1227 - http://www.exploit-db.com/exploits/18474
 CVE-2012-1258 - http://www.exploit-db.com/exploits/18750
 CVE-2012-1259 - http://www.exploit-db.com/exploits/18750
 CVE-2012-1260 - http://www.exploit-db.com/exploits/18750
@@ -9751,7 +9748,6 @@ CVE-2012-1671 - http://www.exploit-db.com/exploits/18701
 CVE-2012-1672 - http://www.exploit-db.com/exploits/18702/
 CVE-2012-1673 - http://www.exploit-db.com/exploits/18700/
 CVE-2012-1775 - http://www.exploit-db.com/exploits/18825
-CVE-2012-1778 - http://www.exploit-db.com/exploits/18525
 CVE-2012-1783 - http://www.exploit-db.com/exploits/18524
 CVE-2012-1790 - http://www.exploit-db.com/exploits/18523
 CVE-2012-1803 - http://www.exploit-db.com/exploits/18779
@@ -9900,12 +9896,10 @@ CVE-2012-4746 - http://www.exploit-db.com/exploits/18722
 CVE-2012-4759 - http://archives.neohapsis.com/archives/fulldisclosure/2012-08/0293.html
 CVE-2012-4864 - http://www.exploit-db.com/exploits/18637
 CVE-2012-4865 - http://www.exploit-db.com/exploits/18636
-CVE-2012-4867 - http://www.exploit-db.com/exploits/18635
 CVE-2012-4868 - http://exploitsdownload.com/exploit/na/kunena-20-sql-injection
 CVE-2012-4869 - http://www.exploit-db.com/exploits/18649
 CVE-2012-4869 - http://www.exploit-db.com/exploits/18659
 CVE-2012-4870 - http://www.exploit-db.com/exploits/18649
-CVE-2012-4873 - http://www.exploit-db.com/exploits/18627
 CVE-2012-4876 - http://www.exploit-db.com/exploits/18675
 CVE-2012-4886 - http://www.exploit-db.com/exploits/25140
 CVE-2012-4891 - http://www.exploit-db.com/exploits/35933
