@@ -158,7 +158,7 @@ def main() -> int:
     # An API NOT_FOUND can reflect token permissions. Require the same public
     # GET failure a visitor sees before withdrawing any existing public link.
     public_urls = [f"https://github.com/{name}" for name in sorted(unavailable)]
-    confirmed, _ = link_health.survey_urls(public_urls)
+    confirmed, _ = link_health.survey_urls(public_urls, workers=2)
     missing = {link_health.repository(url) for url in confirmed}
     failed |= unavailable - missing
     unavailable = missing

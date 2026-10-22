@@ -1,4 +1,6 @@
 {
-  "cursor": "chu1337/cve-2017-1000117",
-  "reference_cursor": "https://blogs.gentoo.org/ago/2017/09/06/heap-based-buffer-overflow-in-opj_write_bytes_le-cio-c-incomplete-fix-for-cve-2017-14152/"
+  "checked": "2026-10-22T11:22:40.803806+00:00",
+  "cursor": "foundtl/rg-ew3000gx",
+  "recovery_cursor": "http://elegerov.blogspot.com/2006/10/here-is-lame-proof-of-concept-code-for.html",
+  "reference_cursor": "https://bugzilla.mozilla.org/show_bug.cgi?id=1501152"
 }
