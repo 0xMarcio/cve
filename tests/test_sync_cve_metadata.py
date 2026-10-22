@@ -97,18 +97,52 @@ class FeedDownloadTests(unittest.TestCase):
                 self.assertEqual(metadata.load_feed("modified", cache_dir=cache), rows)
             self.assertEqual((cache / "nvd-modified.json.gz").read_bytes(), newer)
 
-    def test_mismatched_resumed_response_is_rejected(self):
+    def test_mismatched_resumed_response_restarts_without_using_its_bytes(self):
         offset = len(self.body) - 8
         for span, etag in [(f"bytes 0-{len(self.body)-1}/{len(self.body)}", '"v1"'),
                            (f"bytes {offset}-{len(self.body)-1}/{len(self.body)}", '"v2"')]:
             responses = [
                 self.response(self.body[:offset], {"Content-Length": str(len(self.body)), "ETag": '"v1"'}),
                 self.response(self.body[offset:], {"Content-Range": span, "ETag": etag}, 206),
+                self.response(self.body, {}),
             ]
-            with patch.object(metadata.urllib.request, "urlopen", side_effect=responses), \
+            with patch.object(metadata.urllib.request, "urlopen", side_effect=responses) as fetch, \
                     patch.object(metadata.time, "sleep"), redirect_stdout(io.StringIO()):
-                with self.assertRaises(RuntimeError):
-                    metadata.load_feed("modified")
+                self.assertEqual(metadata.load_feed("modified"), self.feed)
+            self.assertIsNone(fetch.call_args_list[2].args[0].get_header("Range"))
+
+    def test_range_not_satisfiable_restarts_but_other_client_errors_do_not(self):
+        for code in (416, 401, 403, 404):
+            responses = [
+                self.response(self.body[:-8], {"Content-Length": str(len(self.body)), "ETag": '"v1"'}),
+                metadata.urllib.error.HTTPError(metadata.feed_url("modified"), code, "rejected", {}, None),
+                self.response(self.body, {}),
+            ]
+            with patch.object(metadata.urllib.request, "urlopen", side_effect=responses) as fetch, \
+                    patch.object(metadata.time, "sleep"), redirect_stdout(io.StringIO()):
+                if code == 416:
+                    self.assertEqual(metadata.load_feed("modified"), self.feed)
+                    self.assertIsNone(fetch.call_args_list[2].args[0].get_header("Range"))
+                else:
+                    with self.assertRaises(metadata.urllib.error.HTTPError):
+                        metadata.load_feed("modified")
+                    self.assertEqual(fetch.call_count, 2)
+
+    def test_corrupt_resumed_gzip_restarts_before_caching(self):
+        offset = len(self.body) - 8
+        trailer = bytes([self.body[offset] ^ 1]) + self.body[offset + 1:]
+        responses = [
+            self.response(self.body[:offset], {"Content-Length": str(len(self.body)), "ETag": '"v1"'}),
+            self.response(trailer, {"Content-Range": f"bytes {offset}-{len(self.body)-1}/{len(self.body)}", "ETag": '"v1"'}, 206),
+            self.response(self.body, {}),
+        ]
+        with tempfile.TemporaryDirectory() as directory:
+            cache = Path(directory)
+            with patch.object(metadata.urllib.request, "urlopen", side_effect=responses) as fetch, \
+                    patch.object(metadata.time, "sleep"), redirect_stdout(io.StringIO()):
+                self.assertEqual(metadata.load_feed("modified", cache_dir=cache), self.feed)
+            self.assertEqual((cache / "nvd-modified.json.gz").read_bytes(), self.body)
+            self.assertIsNone(fetch.call_args_list[2].args[0].get_header("Range"))
 
     def test_partial_feed_without_strong_validator_restarts(self):
         for etag in (None, 'W/"v1"'):

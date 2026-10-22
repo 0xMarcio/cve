@@ -881,10 +881,14 @@ def load_feed(name: str, *, cache_dir: Path | None = None) -> list[dict[str, Any
                 if getattr(response, "status", 200) == 206:
                     span = re.fullmatch(r"bytes (\d+)-(\d+)/(\d+)", response_headers.get("Content-Range", ""))
                     if not span or not data or not etag or response_etag != etag:
-                        raise RuntimeError(f"{name}: invalid resumed NVD response")
+                        data.clear()
+                        etag = None
+                        raise http.client.HTTPException(f"{name}: invalid resumed NVD response")
                     start, end, total = map(int, span.groups())
                     if start != len(data) or end != total - 1:
-                        raise RuntimeError(f"{name}: mismatched NVD byte range")
+                        data.clear()
+                        etag = None
+                        raise http.client.HTTPException(f"{name}: mismatched NVD byte range")
                 else:
                     data.clear()
                     etag = response_etag if response_etag and not response_etag.startswith("W/") else None
@@ -901,12 +905,17 @@ def load_feed(name: str, *, cache_dir: Path | None = None) -> list[dict[str, Any
                 raise
             break
         except urllib.error.HTTPError as problem:
-            if problem.code < 500 or attempt == 2:
+            if attempt == 2:
+                raise
+            if problem.code == 416 and request.has_header("Range"):
+                data.clear()
+                etag = None
+            elif problem.code < 500:
                 raise
         except (OSError, EOFError, http.client.HTTPException, json.JSONDecodeError, zlib.error):
             if attempt == 2:
                 raise
-        print(f"{name}: incomplete NVD download; retrying ({attempt + 2}/3, {len(data)} bytes retained)", flush=True)
+        print(f"{name}: incomplete NVD download; retrying ({attempt + 2}/3, {len(data) if etag else 0} bytes retained)", flush=True)
         time.sleep(2 ** attempt)
     if payload.get("format") != "NVD_CVE" or payload.get("version") != "2.0":
         raise RuntimeError(f"{name}: unexpected NVD feed format")
