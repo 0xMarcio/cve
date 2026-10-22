@@ -27554,7 +27554,6 @@ CVE-2026-109619 - https://github.com/santihabib/CVE-2026-109619
 CVE-2026-75045 - https://github.com/LHeiakim/CVE-2026-75045-PoC
 CVE-2023-46604 - https://github.com/Theocyg/CVE-2023-46604
 CVE-2026-105482 - https://github.com/CaterMaoZi/CVE-2026-105482-POC
-CVE-2026-109618 - https://github.com/BillReyor/php2shell
 CVE-2026-109618 - https://github.com/Ghxstsec/PHP2SHELL-POC
 CVE-2026-109618 - https://github.com/ZabirAsnawi/testofPOC
 CVE-2026-109618 - https://github.com/alvaroguzmancode/CVE-2026-109618
@@ -28000,3 +27999,12 @@ CVE-2026-109619 - https://github.com/kuyrathdaro/php2shell
 CVE-2026-109619 - https://github.com/maxprog-svg/PHP2Shell-CVE-2026-109618-CVE-2026-109619
 CVE-2026-109619 - https://github.com/moorwald/mautic4-legacy
 CVE-2026-109619 - https://github.com/pax-k/Php2Shell-POC
+CVE-2026-109618 - https://github.com/Certbn/PHP2Shell-CVE-2026-109618-CVE-2026-109619-
+CVE-2026-109618 - https://github.com/louzaonet/php2shell_hunt_ispconfig
+CVE-2026-109618 - https://github.com/seguridadentrerios/CVE-2026-109618-CVE-2026-109619
+CVE-2026-109619 - https://github.com/Certbn/PHP2Shell-CVE-2026-109618-CVE-2026-109619-
+CVE-2026-109619 - https://github.com/louzaonet/php2shell_hunt_ispconfig
+CVE-2026-109619 - https://github.com/seguridadentrerios/CVE-2026-109618-CVE-2026-109619
+CVE-2026-110264 - https://github.com/bigbluewhale111/Partial-CVE-2026-110264-Reproduce
+CVE-2026-109618 - https://github.com/agtt/php2shell-education
+CVE-2026-109618 - https://github.com/dexteon/php2shell-poc
