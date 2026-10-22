@@ -217,7 +217,9 @@ class Client:
         payload = None if data is None else parse.urlencode(data).encode()
         req = request.Request(url, data=payload, headers=headers)
         try:
-            with request.build_opener(NoRedirect).open(req, timeout=30) as response:
+            # Busy-host captures can be queued before SPN returns a job ID.
+            # Allow that delay without issuing duplicate submission requests.
+            with request.build_opener(NoRedirect).open(req, timeout=90) as response:
                 value = json.loads(response_bytes(response, 1_000_000))
             if not isinstance(value, dict):
                 raise ArchiveError('invalid-response', cooldown=600)
