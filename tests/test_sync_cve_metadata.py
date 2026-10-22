@@ -16,6 +16,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "scripts"))
 
 import build_site
 import sync_cve_metadata as metadata
+import sync_reference_pocs as references
 import update_cves
 
 
@@ -28,7 +29,32 @@ class FeedDownloadTests(unittest.TestCase):
     def setUp(self):
         self.feed = [{"cve": {"id": CVE}}]
         self.body = gzip.compress(json.dumps({"format": "NVD_CVE", "version": "2.0",
-                                              "vulnerabilities": self.feed}).encode())
+                                              "totalResults": 1, "vulnerabilities": self.feed}).encode())
+
+    def test_cached_feed_is_reused_by_reference_discovery_without_network(self):
+        url = "https://gist.github.com/researcher/1fe3fe58dd275edb77dcbe890fce2f2c"
+        rows = [{"cve": {"id": CVE, "references": [{"url": url, "tags": ["Exploit"]}]}}]
+        body = gzip.compress(json.dumps({"format": "NVD_CVE", "version": "2.0",
+                                        "totalResults": 1, "vulnerabilities": rows}).encode())
+        with tempfile.TemporaryDirectory() as directory:
+            cache = Path(directory)
+            with patch.object(metadata.urllib.request, "urlopen", return_value=io.BytesIO(body)) as fetch:
+                self.assertEqual(metadata.load_feed("modified", cache_dir=cache), rows)
+            fetch.assert_called_once()
+            with patch.object(references.Budget, "read", side_effect=AssertionError("duplicate download")):
+                self.assertEqual(references.load_feeds(cache), {CVE: [url]})
+
+    def test_incomplete_feed_does_not_replace_cached_feed(self):
+        body = gzip.compress(json.dumps({"format": "NVD_CVE", "version": "2.0",
+                                        "totalResults": 2, "vulnerabilities": self.feed}).encode())
+        with tempfile.TemporaryDirectory() as directory:
+            cache = Path(directory)
+            path = cache / "nvd-modified.json.gz"
+            path.write_bytes(self.body)
+            with patch.object(metadata.urllib.request, "urlopen", return_value=io.BytesIO(body)):
+                with self.assertRaisesRegex(RuntimeError, "incomplete NVD"):
+                    metadata.load_feed("modified", cache_dir=cache)
+            self.assertEqual(path.read_bytes(), self.body)
 
     def test_truncated_gzip_restarts_download_and_returns_complete_feed(self):
         with patch.object(metadata.urllib.request, "urlopen", side_effect=[
@@ -165,7 +191,7 @@ class AdvisoryLifecycleTests(unittest.TestCase):
 
 def run_sync(entries: dict, feed: list, *, full: bool = False, dry_run: bool = True, fallback: bool = True) -> dict:
     with patch.object(metadata, "parse_args", return_value=Namespace(
-        full=full, github_full=False, dry_run=dry_run, year=[] if full else [2026]
+        full=full, github_full=False, dry_run=dry_run, year=[] if full else [2026], feed_cache_dir=None
     )), patch.object(metadata, "sync_github_cache", return_value={}), patch.object(
         metadata, "sync_github_pocs"
     ), patch.object(metadata, "local_cves", return_value=set(entries)), patch.object(

@@ -41,9 +41,9 @@ jobs:
           GITHUB_TOKEN: ${{ github.token }}
         run: |
           if [ "${{ github.event.schedule }}" = "10 3 * * 0" ] || [ "${{ inputs.full }}" = "true" ]; then
-            python3 scripts/sync_cve_metadata.py --full
+            python3 scripts/sync_cve_metadata.py --full --feed-cache-dir "$RUNNER_TEMP/nvd-feeds"
           else
-            python3 scripts/sync_cve_metadata.py
+            python3 scripts/sync_cve_metadata.py --feed-cache-dir "$RUNNER_TEMP/nvd-feeds"
           fi
 
       - name: Refresh CISA known-exploited status
@@ -53,9 +53,7 @@ jobs:
         id: references
         continue-on-error: true
         timeout-minutes: 5
-        env:
-          GITHUB_TOKEN: ${{ github.token }}
-        run: python3 scripts/sync_reference_pocs.py --limit 40
+        run: python3 scripts/sync_reference_pocs.py --feed-dir "$RUNNER_TEMP/nvd-feeds" --limit 40
 
       - name: Verify the generated index
         run: |

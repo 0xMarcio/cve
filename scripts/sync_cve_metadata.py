@@ -864,7 +864,7 @@ def feed_url(name: str) -> str:
     return f"{FEED_ROOT}/nvdcve-2.0-{name}.json.gz"
 
 
-def load_feed(name: str) -> list[dict[str, Any]]:
+def load_feed(name: str, *, cache_dir: Path | None = None) -> list[dict[str, Any]]:
     request = urllib.request.Request(feed_url(name), headers={"User-Agent": USER_AGENT})
     for attempt in range(3):
         try:
@@ -883,8 +883,15 @@ def load_feed(name: str) -> list[dict[str, Any]]:
     if payload.get("format") != "NVD_CVE" or payload.get("version") != "2.0":
         raise RuntimeError(f"{name}: unexpected NVD feed format")
     vulnerabilities = payload.get("vulnerabilities")
-    if not isinstance(vulnerabilities, list):
-        raise RuntimeError(f"{name}: NVD feed has no vulnerability list")
+    if not isinstance(vulnerabilities, list) or payload.get("totalResults") != len(vulnerabilities):
+        raise RuntimeError(f"{name}: incomplete NVD vulnerability list")
+    if cache_dir is not None:
+        cache_dir.mkdir(parents=True, exist_ok=True)
+        path = cache_dir / f"nvd-{name}.json.gz"
+        temporary = path.with_suffix(".tmp")
+        with gzip.open(temporary, "wt", encoding="utf-8") as handle:
+            json.dump(payload, handle, separators=(",", ":"))
+        temporary.replace(path)
     return vulnerabilities
 
 
@@ -963,6 +970,7 @@ def parse_args() -> argparse.Namespace:
         help="rebuild the reviewed GitHub advisory cache without a full NVD sync",
     )
     parser.add_argument("--year", action="append", type=int, default=[], help="process one NVD feed year")
+    parser.add_argument("--feed-cache-dir", type=Path, help="Save validated feeds for the reference refresh")
     parser.add_argument("--dry-run", action="store_true", help="report without writing files")
     args = parser.parse_args()
     if args.full and args.year:
@@ -991,7 +999,7 @@ def main() -> int:
     seen: set[str] = set()
     processed = 0
     for name in feed_names:
-        vulnerabilities = load_feed(name)
+        vulnerabilities = load_feed(name, cache_dir=None if args.dry_run else args.feed_cache_dir)
         matched = 0
         for wrapper in vulnerabilities:
             cve = wrapper.get("cve") if isinstance(wrapper, dict) else None
