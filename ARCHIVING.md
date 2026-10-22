@@ -6,8 +6,8 @@ forget the opportunity to recover an older snapshot. Blacklisted repositories
 and excluded CVE/repository associations stay excluded.
 
 `Archive Public PoCs` runs after hourly discovery, with a six-hour recovery
-schedule and manual dispatch. Each batch processes at most 100 URLs or 35 minutes,
-whichever comes first. New discoveries, including retries, take priority over
+schedule and manual dispatch. Each batch takes up to 100 URLs from the queue and resumes pending captures,
+within a 35-minute worker budget. New discoveries, including retries, take priority over
 older URLs and 30-day refreshes of already preserved pages.
 The same queue drains the initial backfill and handles future discoveries.
 Manual dispatch also offers 3- or 10-target batches and a five-minute budget for
