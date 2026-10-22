@@ -315,6 +315,7 @@ class ArchiveTests(unittest.TestCase):
             for body in (b'', b'<title>404 Not Found</title>', b'<title>Sign in to GitHub</title>'):
                 response.read.return_value = body
                 self.assertFalse(archive.verify_snapshot(copy.deepcopy(snap), URL))
+                self.assertFalse(archive.verify_snapshot(copy.deepcopy(snap), 'https://raw.githubusercontent.com/owner/poc/' + 'a' * 40 + '/poc.py'))
             response.read.return_value = b'<title>PoC for CVE-2026-4044</title><article>research</article>'
             self.assertTrue(archive.verify_snapshot(snap, URL))
             self.assertFalse(archive.verify_snapshot(snap, 'https://hackerone.com/reports/1234'))

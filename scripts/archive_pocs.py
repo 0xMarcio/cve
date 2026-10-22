@@ -288,11 +288,15 @@ def verify_snapshot(snap: dict, original: str, expected_blobs=(), repo_id=None) 
         if not body:
             return False
         raw = parse.urlsplit(original).hostname == 'raw.githubusercontent.com'
+        verified_raw = False
         if raw and expected_blobs and len(body) >= 256:
             digest = hashlib.sha1(b'blob ' + str(len(body)).encode() + b'\0' + body).hexdigest()
             if digest not in expected_blobs:
                 return False
-        if not raw and ('html' in mime or body.lstrip().startswith(b'<!DOCTYPE html')):
+            verified_raw = True
+        if not verified_raw and body.strip() in {b'404: Not Found', b'Not Found', b'Access Denied'}:
+            return False
+        if not verified_raw and ('html' in mime or body.lstrip().lower().startswith(b'<!doctype html')):
             text = body.decode('utf-8', errors='replace')
             if repo_id and parse.urlsplit(original).hostname in {'github.com', 'www.github.com'}:
                 found = re.search(r'<meta\s+name="octolytics-dimension-repository_id"\s+content="(\d+)"', text)
@@ -518,7 +522,12 @@ def process(key: str, target: dict, rows: dict, client: Client, *, capture: bool
         return
     budget['count'] += 1
     row['submitted_at'] = now()
-    response = client.submit(row['original'], retry=bool(row.get('bad_capture')))
+    try:
+        response = client.submit(row['original'], retry=bool(row.get('bad_capture')))
+    finally:
+        # submit() may first wait for its pacing slot. Persist the completion
+        # time so a restarted worker cannot underestimate the last request.
+        row['submitted_at'] = now()
     job = response.get('job_id')
     if job and re.fullmatch(r'[a-zA-Z0-9-]+', str(job)):
         row.update(job_id=job, status='pending', next_check_at=after(10))
