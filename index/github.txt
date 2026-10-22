@@ -17422,7 +17422,6 @@ CVE-2025-26240 - https://github.com/Habuon/CVE-2025-26240
 CVE-2025-26318 - https://github.com/Frozenka/CVE-2025-26318
 CVE-2025-26319 - https://github.com/dorattias/CVE-2025-26319
 CVE-2025-26319 - https://github.com/redpack-kr/CVE-2025-26319
-CVE-2025-26326 - https://github.com/azurejoga/CVE-2025-26326
 CVE-2025-26399 - https://github.com/rxerium/CVE-2025-26399
 CVE-2025-26417 - https://github.com/uthrasri/CVE-2025-26417
 CVE-2025-26443 - https://github.com/Pazhanivelmani/ManagedProvisioning-A10_r33_CVE-2025-26443
@@ -19010,7 +19009,6 @@ CVE-2026-23744 - https://github.com/MrR0b0t19/CVE-2026-23744-PoC
 CVE-2026-23744 - https://github.com/SrGinebras/CVE-2026-23744-RCE-for-MCPjam-inspector-v1.4.2
 CVE-2026-23744 - https://github.com/afifudinmtop/MCPJam-Inspector-1.4.2-Remote-Code-Execution-CVE-2026-23744
 CVE-2026-23744 - https://github.com/alisster00/CVE-2026-23744-RCE
-CVE-2026-23744 - https://github.com/avivyap/CVE-2026-23744
 CVE-2026-23744 - https://github.com/boroeurnprach/CVE-2026-23744-PoC
 CVE-2026-23744 - https://github.com/ctzisme/CVE-2026-23744
 CVE-2026-23744 - https://github.com/d3vn0mi/CVE-2026-23744-POC
@@ -19076,7 +19074,6 @@ CVE-2026-24061 - https://github.com/SeptembersEND/CVE--2026-24061
 CVE-2026-24061 - https://github.com/TryA9ain/CVE-2026-24061
 CVE-2026-24061 - https://github.com/X-croot/CVE-2026-24061_POC
 CVE-2026-24061 - https://github.com/androidteacher/CVE-2026-24061-PoC-Telnetd
-CVE-2026-24061 - https://github.com/anxs3c/CVE-2026-24061-GNU-InetUtils-telnetd
 CVE-2026-24061 - https://github.com/balgan/CVE-2026-24061
 CVE-2026-24061 - https://github.com/canpilayda/inetutils-telnetd-cve-2026-24061
 CVE-2026-24061 - https://github.com/dotelpenguin/telnetd_CVE-2026-24061_tester
@@ -20426,7 +20423,6 @@ CVE-2026-48907 - https://github.com/ywh-jfellus/CVE-2026-48907
 CVE-2026-48908 - https://github.com/0xBlackash/CVE-2026-48908
 CVE-2026-48908 - https://github.com/Jenderal92/CVE-2026-48908
 CVE-2026-48908 - https://github.com/bayu06802/CVE-2026-48908
-CVE-2026-48908 - https://github.com/cazzysoci/cve-2026-48908
 CVE-2026-48908 - https://github.com/gagaltotal/CVE-2026-48908-SP-Page-Builder-Joomla
 CVE-2026-48908 - https://github.com/papageo75/CVE-2026-48908-PoC
 CVE-2026-48909 - https://github.com/Is4yev/CVE-2026-48909
@@ -21136,7 +21132,6 @@ CVE-2026-49468 - https://github.com/josephbrito/LiteLLM-Unauthenticated-Command-
 CVE-2026-53163 - https://github.com/BailinT/GKI_KernelSU_SUSFS-hwid
 CVE-2026-53163 - https://github.com/Te-River/SukiSU_SUSFS-Kernel
 CVE-2026-53163 - https://github.com/qianmingzi7-coder/tb322fc-r2-kernel-public-build
-CVE-2026-53787 - https://github.com/ChrisSEC2014/amasty-chekout-POC-rce
 CVE-2026-55040 - https://github.com/maxprog-svg/CVE-2026-55040-Mass-Exploit
 CVE-2026-56290 - https://github.com/MRCUKIL/com_pagebuilderck
 CVE-2026-56705 - https://github.com/ChiefYoru/Exploit-CVE-2026-56705
@@ -25896,7 +25891,6 @@ CVE-2017-5754 - https://github.com/rios0rios0/speculative-execution
 CVE-2017-7269 - https://github.com/Mr-xn/Penetration_Testing_POC
 CVE-2019-2215 - https://github.com/Beltzac/le1-root
 CVE-2019-3568 - https://github.com/bevijaygupta/Vapor
-CVE-2020-25213 - https://github.com/aprnx/wp-file-manager-poc-chain
 CVE-2021-36260 - https://github.com/kwekre/poc
 CVE-2021-44228 - https://github.com/kwekre/poc
 CVE-2024-55591 - https://github.com/uLl0a/cve-2024-55591-poc
@@ -26305,9 +26299,7 @@ CVE-2026-46331 - https://github.com/theendofabbys/pedit-cow
 CVE-2025-24813 - https://github.com/e5dfdd568a75282b712b6d93a7a18e12/CVE-2025-24813
 CVE-2026-59550 - https://github.com/FLX-0x00/CVE-2026-59550
 CVE-2026-65343 - https://github.com/hidayat-tanjung/CVE-2026-65343-e7eb2ed
-CVE-2025-68158 - https://github.com/amc40/browser-interaction-mcp-poc
 CVE-2026-17633 - https://github.com/Oscar-Collado/langflow-CVE-2026-17633-PoC
-CVE-2026-41425 - https://github.com/amc40/browser-interaction-mcp-poc
 CVE-2026-43499 - https://github.com/kurtulusakyuz/IonStack_S21
 CVE-2026-32996 - https://github.com/suce0155/CVE-2026-32996
 CVE-2026-65013 - https://github.com/isaca0315/CVE-2026-65013-BOLA-IDOR
@@ -27489,7 +27481,6 @@ CVE-2025-31324 - https://github.com/CyberGramps007/CYB-403
 CVE-2026-105484 - https://github.com/xiaobai718-ab/CVE-2026-105484
 CVE-2026-31431 - https://github.com/toxy4ny/copy-fail-exploit-on-c-redteam
 CVE-2026-64560 - https://github.com/Yunnijian/OnePlus16-Jailbreak
-CVE-2026-102578 - https://github.com/caveeroo/CVE-2026-102578
 CVE-2026-93300 - https://github.com/Datxzzz/CVE-2026-93300
 CVE-2026-106173 - https://github.com/horizon3ai/CVE-2026-106173
 CVE-2026-85312 - https://github.com/oscerd/CVE-2026-85312
@@ -27585,7 +27576,6 @@ CVE-2025-63353 - https://github.com/code-fanatic/fiberhome-password-calculator
 CVE-2025-66491 - https://github.com/bilusss/tls-vuln-poc
 CVE-2025-69413 - https://github.com/fuad00/CVE-2025-69413-PoC
 CVE-2026-109618 - https://github.com/AvaterXXX/CVE-2026-109618-CVE-2026-109619-
-CVE-2026-109618 - https://github.com/Bazskillz/php2shell_PoC
 CVE-2026-109618 - https://github.com/EkaterinaMarchetti/php2shell-assessment-global
 CVE-2026-109618 - https://github.com/JungleCache/PHP2Shell-CVE-2026-109618
 CVE-2026-109618 - https://github.com/Nayrae/CVE-2026-109618
@@ -27599,7 +27589,6 @@ CVE-2026-109618 - https://github.com/jaiswalakshansh/Reversing-Vulnerabilities
 CVE-2026-109618 - https://github.com/jf0x3f/php2shell-pocs
 CVE-2026-109618 - https://github.com/syrex1013/php2shell
 CVE-2026-109618 - https://github.com/zhaoboy9692/CVE-2026-109618_
-CVE-2026-109619 - https://github.com/Bazskillz/php2shell_PoC
 CVE-2026-109619 - https://github.com/EkaterinaMarchetti/php2shell-assessment-global
 CVE-2026-109619 - https://github.com/baka9moe/php2shell-exploit
 CVE-2026-109619 - https://github.com/grupooruss/php2shell-assessment-global

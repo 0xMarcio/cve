@@ -1,4 +1,4 @@
 {
-  "cursor": "advisories/GHSA-rh9c-rqvg-f7pr",
-  "reference_cursor": "http://www.morningstarsecurity.com/advisories/MORNINGSTAR-2009-02-CuteNews.txt"
+  "cursor": "chu1337/cve-2017-1000117",
+  "reference_cursor": "https://blogs.gentoo.org/ago/2017/09/06/heap-based-buffer-overflow-in-opj_write_bytes_le-cio-c-incomplete-fix-for-cve-2017-14152/"
 }

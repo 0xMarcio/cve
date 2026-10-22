@@ -53588,7 +53588,6 @@ CVE-2021-28127 - https://advisories.stormshield.eu
 CVE-2021-28127 - https://advisories.stormshield.eu/2021-006
 CVE-2021-28128 - https://github.com/strapi/strapi/releases
 CVE-2021-28128 - https://www.syss.de/fileadmin/dokumente/Publikationen/Advisories/SYSS-2021-008.txt
-CVE-2021-28132 - https://abuyv.com/cve/lucy-file-upload-RCE
 CVE-2021-28133 - http://packetstormsecurity.com/files/161897/Zoom-5.4.3-54779.1115-5.5.4-13142.0301-Information-Disclosure.html
 CVE-2021-28133 - http://seclists.org/fulldisclosure/2021/Mar/48
 CVE-2021-28133 - https://thehackernews.com/2021/03/new-zoom-screen-sharing-bug-lets-other.html
@@ -77576,7 +77575,6 @@ CVE-2024-46434 - https://reddassolutions.com/blog/tenda_w18e_security_research
 CVE-2024-46435 - https://reddassolutions.com/blog/tenda_w18e_security_research
 CVE-2024-46436 - https://reddassolutions.com/blog/tenda_w18e_security_research
 CVE-2024-46437 - https://reddassolutions.com/blog/tenda_w18e_security_research
-CVE-2024-46455 - https://binarysouljour.me/cve-2024-46455
 CVE-2024-46475 - https://blog.csdn.net/qq_45744104/article/details/141903463
 CVE-2024-46486 - https://yuhehe88.github.io/2024/09/04/TL-WDR5620-Gigabit-Edition-v2-3/
 CVE-2024-46494 - https://h40vv3n.github.io/2024/09/05/typecho-xss/
@@ -91483,7 +91481,6 @@ CVE-2017-15123 - https://hacked0x90.wordpress.com/2019/07/17/cve-2017-15123-expl
 CVE-2017-16666 - http://www.rapid7.com/db/modules/exploit/linux/http/xplico_exec
 CVE-2017-16923 - https://github.com/Iolop/Poc/tree/master/Router/Tenda
 CVE-2017-16936 - https://github.com/Iolop/Poc/tree/master/Router/Tenda
-CVE-2017-17721 - https://0day.today/exploit/29277
 CVE-2017-20175 - https://github.com/DaSchTour/matomo-mediawiki-extension/pull/17
 CVE-2017-20185 - https://github.com/fuzzymannerz/swmp/pull/12
 CVE-2017-20198 - https://raw.githubusercontent.com/rapid7/metasploit-framework/master/modules/exploits/linux/http/dcos_marathon.rb
@@ -91621,14 +91618,8 @@ CVE-2018-17132 - https://github.com/panghusec/exploit/issues/4
 CVE-2018-17133 - https://github.com/panghusec/exploit/issues/6
 CVE-2018-17134 - https://github.com/panghusec/exploit/issues/7
 CVE-2018-17984 - https://0x09al.github.io/security/ispconfig/exploit/vulnerability/2018/08/20/bug-or-backdoor-ispconfig-rce.html
-CVE-2018-18207 - https://0day.today/exploit/description/31282
-CVE-2018-18208 - https://0day.today/exploit/description/31282
-CVE-2018-18322 - https://0day.today/exploit/31304
-CVE-2018-18323 - https://0day.today/exploit/31304
-CVE-2018-18324 - https://0day.today/exploit/31304
 CVE-2018-18603 - https://github.com/sandboxescape/360-3.5.0.1033-Sandbox-Escape-Exploit/
 CVE-2018-18748 - https://github.com/sandboxescape/Sandboxie-5.26-Sandbox-Escape-Exploit/blob/2632a5f7409e52b2e020f5d4467fa019f9095e73/README.doc
-CVE-2018-18922 - https://0day.today/exploit/31658
 CVE-2018-18959 - https://github.com/epistemophilia/CVEs/blob/master/Epson-WorkForce-WF2861/CVE-2018-18959/poc-cve-2018-18959.py
 CVE-2018-18960 - https://github.com/epistemophilia/CVEs/blob/master/Epson-WorkForce-WF2861/CVE-2018-18960/poc-cve-2018-18960.py
 CVE-2018-19232 - https://github.com/epistemophilia/CVEs/blob/master/Epson-WorkForce-WF2861/CVE-2018-19232/poc-cve-2018-19232.py
@@ -91966,9 +91957,7 @@ CVE-2018-25437 - https://www.exploit-db.com/exploits/45896
 CVE-2018-2879 - https://github.com/MostafaSoliman/Oracle-OAM-Padding-Oracle-CVE-2018-2879-Exploit
 CVE-2018-4878 - https://www.trendmicro.com/vinfo/us/security/news/vulnerabilities-and-exploits/north-korean-hackers-allegedly-exploit-adobe-flash-player-vulnerability-cve-2018-4878-against-south-korean-targets
 CVE-2018-6383 - https://github.com/Hacker5preme/Exploits/tree/main/CVE-2018-6383-Exploit
-CVE-2018-6391 - https://0day.today/exploit/29659
 CVE-2018-6867 - https://github.com/WlX-33/PoC-for-CVE/blob/main/CVE-2018-6867/Alibaba%20Clone%20Script%201.0.2%20Cross%20Site%20Scripting.txt
-CVE-2018-7567 - https://0day.today/exploit/29938
 CVE-2018-8023 - https://lists.apache.org/thread.html/9b9d3f6bd09f3ebd2284b82077033bdc71da550a1c4c010c2494acc3%40%3Cdev.mesos.apache.org%3E
 CVE-2018-8727 - https://www.exploit-db.com/exploits/44907
 CVE-2019-0235 - https://lists.apache.org/thread.html/r392206f7cd131f0fc3f7c60a767ced93ced00411d55c1777c219c956%40%3Cnotifications.ofbiz.apache.org%3E
@@ -91980,7 +91969,6 @@ CVE-2019-1000018 - https://github.com/WlX-33/PoC-for-CVE/blob/main/CVE-2021-3321
 CVE-2019-1003000 - http://www.rapid7.com/db/modules/exploit/multi/http/jenkins_metaprogramming
 CVE-2019-1003001 - http://www.rapid7.com/db/modules/exploit/multi/http/jenkins_metaprogramming
 CVE-2019-1003002 - http://www.rapid7.com/db/modules/exploit/multi/http/jenkins_metaprogramming
-CVE-2019-1010207 - https://0day.today/exploit/31255
 CVE-2019-10149 - http://www.openwall.com/lists/oss-security/2019/06/05/2
 CVE-2019-10149 - http://www.openwall.com/lists/oss-security/2019/06/05/3
 CVE-2019-10149 - http://www.openwall.com/lists/oss-security/2019/06/05/4
@@ -92010,7 +91998,6 @@ CVE-2019-16702 - https://github.com/purpl3-f0x/exploit-dev/blob/master/nojs_inte
 CVE-2019-16759 - https://arstechnica.com/information-technology/2019/09/public-exploit-code-spawns-mass-attacks-against-high-severity-vbulletin-bug/
 CVE-2019-19208 - https://github.com/Hacker5preme/Exploits/tree/main/CVE-2019-19208-Exploit
 CVE-2019-19497 - https://github.com/Dmitriy-area51/Exploit/blob/master/CVE-2019-19497/README.md
-CVE-2019-25065 - https://0day.today/exploit/33544
 CVE-2019-25070 - https://github.com/wolfcms/wolfcms/issues/683
 CVE-2019-25102 - https://github.com/ariabuckles/simple-markdown/pull/73
 CVE-2019-25226 - https://cxsecurity.com/issue/WLB-2019100012
@@ -92579,7 +92566,6 @@ CVE-2020-0674 - https://github.com/maxpl0it/CVE-2020-0674-Exploit
 CVE-2020-10385 - https://www.getastra.com/blog/911/plugin-exploit/stored-xss-vulnerability-found-in-wpforms-plugin/
 CVE-2020-10813 - https://www.povonsec.com/ftpdmin-denial-of-service-exploit/
 CVE-2020-13162 - http://seclists.org/fulldisclosure/2020/Sep/15
-CVE-2020-13426 - https://0day.today/exploit/34496
 CVE-2020-15038 - https://www.getastra.com/blog/911/plugin-exploit/stored-xss-coming-soon-page-maintenance-mode-plugin/
 CVE-2020-15363 - https://github.com/vladvector/vladvector.github.io/blob/master/exploit/2020-06-17-nexos-real-estate-wordpress-theme-v1-7.txt
 CVE-2020-15364 - https://github.com/vladvector/vladvector.github.io/blob/master/exploit/2020-06-17-nexos-real-estate-wordpress-theme-v1-7.txt
@@ -93075,7 +93061,6 @@ CVE-2021-4315 - https://github.com/NYUCCL/psiTurk/pull/517
 CVE-2021-4327 - https://devcraft.io/2021/02/11/serenityos-writing-a-full-chain-exploit.html
 CVE-2021-4406 - https://csirt.divd.nl/CVE-2021-4406
 CVE-2021-44249 - https://doctorzorka.github.io/Exploits/exploit-1.html
-CVE-2021-4432 - https://0day.today/exploit/description/36412
 CVE-2021-4449 - https://sploitus.com/exploit?id=WPEX-ID:07259A61-8BA9-4DD0-8D52-CC1DF389C0AD
 CVE-2021-4461 - https://github.com/chaitin/xray/blob/f90cf321bc4d294bbf6625a9c4853f3bfdf0a384/pocs/seeyon-oa-cookie-leak.yml
 CVE-2021-4461 - https://github.com/projectdiscovery/nuclei-templates/blob/1ca6b8e6fe225cbd46dcb893dcaee01447afa8c0/http/misconfiguration/seeyon-unauth.yaml#L20
@@ -94876,7 +94861,6 @@ CVE-2024-0231 - https://hackerone.com/reports/2299337
 CVE-2024-0247 - https://drive.google.com/file/d/13xhOZ3Zg-XoviVC744PPDorTxYbLUgbv/view?usp=sharing
 CVE-2024-0260 - https://mega.nz/file/yEsSwK6D#--ygVt0NtzhZdqVxvjaPLCYfnIeBSyf76KaRozOxfVo
 CVE-2024-0262 - https://mega.nz/file/zEsxyIYQ#re6pHT-2OGX9SNk1OpygDCQYu1RpBiOrQ_2QS6beRos
-CVE-2024-0263 - https://0day.today/exploit/description/39212
 CVE-2024-0265 - https://vuldb.com/?id.249821
 CVE-2024-0266 - https://drive.google.com/file/d/1U60z1xzBzJjalbmwBmPD5NjJ4pPaDevF/view?usp=sharing
 CVE-2024-0267 - https://github.com/E1CHO/cve_hub/blob/main/Hospital%20Managment%20System/Hospital%20Managment%20System%20-%20vuln%201.pdf
@@ -95003,7 +94987,6 @@ CVE-2024-0651 - https://drive.google.com/file/d/1J3YaxX9RYZ_41-AYdwrCAPMT-YTqILK
 CVE-2024-0652 - https://drive.google.com/file/d/1YHm4WtiYjbxNAd3FKo85qcdHfn1VJYEl/view?usp=sharing
 CVE-2024-0654 - https://github.com/bayuncao/vul-cve-4/blob/main/picture/1071705290840_.pic_hd.jpg
 CVE-2024-0655 - https://github.com/red0-ZhaoSi/CVE/blob/main/novel-plus/sql/sql_1.md
-CVE-2024-0693 - https://0day.today/exploit/description/39218
 CVE-2024-0712 - https://github.com/GTA12138/vul/blob/main/smart%20s150/2024-1-9%20smart%20s150%20101508.md
 CVE-2024-0716 - https://github.com/GTA12138/vul/blob/main/smart%20s150/s150%20Download%20any%20file/smart%20s150%20download%20any%20file.md
 CVE-2024-0717 - https://github.com/999zzzzz/D-Link
@@ -95015,7 +94998,6 @@ CVE-2024-0728 - https://github.com/mi2acle/forucmsvuln/blob/master/LFI.md
 CVE-2024-0729 - https://github.com/mi2acle/forucmsvuln/blob/master/LFI.md
 CVE-2024-0730 - https://torada.notion.site/SQL-injection-at-course_ajax-php-485d8cca5f8c43dfb1f76c7336a4a45e
 CVE-2024-0735 - https://blog.csdn.net/DMZNX/article/details/135683738
-CVE-2024-0736 - https://0day.today/exploit/39249
 CVE-2024-0738 - https://github.com/biantaibao/mldong_RCE/blob/main/RCE.md
 CVE-2024-0771 - https://youtu.be/eecN5mC0avU
 CVE-2024-0774 - https://youtu.be/f_4eHkISrZg
