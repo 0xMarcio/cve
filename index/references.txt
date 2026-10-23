@@ -60419,7 +60419,6 @@ CVE-2022-27456 - https://jira.mariadb.org/browse/MDEV-28093
 CVE-2022-27457 - https://jira.mariadb.org/browse/MDEV-28098
 CVE-2022-27458 - https://jira.mariadb.org/browse/MDEV-28099
 CVE-2022-2747 - https://vuldb.com/?id.206015
-CVE-2022-27474 - https://github.com/Mount4in/Mount4in.github.io/blob/master/poc.py
 CVE-2022-2748 - https://vuldb.com/?id.206016
 CVE-2022-27480 - http://packetstormsecurity.com/files/166743/Siemens-A8000-CP-8050-CP-8031-SICAM-WEB-Missing-File-Download-Missing-Authentication.html
 CVE-2022-27480 - http://seclists.org/fulldisclosure/2022/Apr/20
@@ -66098,13 +66097,11 @@ CVE-2023-1585 - https://support.norton.com/sp/static/external/tools/security-adv
 CVE-2023-1586 - https://support.norton.com/sp/static/external/tools/security-advisories.html
 CVE-2023-1587 - https://support.norton.com/sp/static/external/tools/security-advisories.html
 CVE-2023-1590 - https://blog.csdn.net/weixin_43864034/article/details/129730106
-CVE-2023-1594 - https://github.com/OYyunshen/Poc/blob/main/Novel-PlusV3.6.2Sqli.pdf
 CVE-2023-1594 - https://vuldb.com/?id.223662
 CVE-2023-1596 - https://wpscan.com/vulnerability/cada9be9-522a-4ce8-847d-c8fff2ddcc07
 CVE-2023-1597 - https://wpscan.com/vulnerability/4eafe111-8874-4560-83ff-394abe7a803b
 CVE-2023-1603 - https://devolutions.net/security/advisories/DEVO-2023-0008
 CVE-2023-1605 - https://huntr.dev/bounties/9dddcf5b-7dd4-46cc-abf9-172dce20bab2
-CVE-2023-1606 - https://github.com/OYyunshen/Poc/blob/main/Novel-PlusSqli1.pdf
 CVE-2023-1614 - https://wpscan.com/vulnerability/56abd1e2-0ea9-47f7-9a1b-2093ac15d39c
 CVE-2023-1616 - https://vuldb.com/?id.223800
 CVE-2023-1621 - https://gitlab.com/gitlab-org/gitlab/-/issues/399774
@@ -69182,7 +69179,6 @@ CVE-2023-36158 - https://github.com/unknown00759/CVE-2023-36158/blob/main/CVE-20
 CVE-2023-36159 - https://cyberredteam.tech/posts/cve-2023-36159/
 CVE-2023-36162 - https://github.com/779789571/zzcms/blob/main/README.md
 CVE-2023-36163 - http://packetstormsecurity.com/files/173366/BuildaGate5-Cross-Site-Scripting.html
-CVE-2023-36183 - https://github.com/OpenImageIO/oiio/issues/3871
 CVE-2023-36184 - https://medium.com/@Beosin_com/critical-vulnerability-in-move-vm-can-cause-total-network-shutdown-and-potential-hard-fork-in-sui-49d0d942801c
 CVE-2023-3620 - https://huntr.dev/bounties/a0fd0671-f051-4d41-8928-9b19819084c9
 CVE-2023-36210 - https://www.exploit-db.com/exploits/51499
@@ -70262,9 +70258,7 @@ CVE-2023-42282 - https://www.bleepingcomputer.com/news/security/dev-rejects-cve-
 CVE-2023-42283 - https://github.com/andreysanyuk/CVE-2023-42283
 CVE-2023-42284 - https://github.com/andreysanyuk/CVE-2023-42284
 CVE-2023-42286 - https://github.com/Nacl122/CVEReport/blob/main/CVE-2023-42286/CVE-2023-42286.md
-CVE-2023-42295 - https://github.com/OpenImageIO/oiio/issues/3947
 CVE-2023-42298 - https://github.com/gpac/gpac/issues/2567
-CVE-2023-42299 - https://github.com/OpenImageIO/oiio/issues/3840
 CVE-2023-42320 - https://github.com/aixiao0621/Tenda/blob/main/AC10/0.md
 CVE-2023-42361 - https://gccybermonks.com/posts/pdfjira/
 CVE-2023-42362 - https://github.com/Mr-n0b3dy/CVE-2023-42362
@@ -73609,7 +73603,6 @@ CVE-2024-22551 - https://packetstormsecurity.com/files/176314/WhatACart-2.0.7-Cr
 CVE-2024-22562 - https://github.com/matthiaskramm/swftools/issues/210
 CVE-2024-22563 - https://github.com/openvswitch/ovs-issues/issues/315
 CVE-2024-22568 - https://github.com/kayo-zjq/myc/blob/main/1.md
-CVE-2024-22569 - https://github.com/Num-Nine/CVE/issues/12
 CVE-2024-22591 - https://github.com/ysuzhangbin/cms2/blob/main/1.md
 CVE-2024-22592 - https://github.com/ysuzhangbin/cms2/blob/main/2.md
 CVE-2024-22593 - https://github.com/ysuzhangbin/cms2/blob/main/3.md
@@ -93000,7 +92993,6 @@ CVE-2023-2773 - https://gitee.com/zyz0103/system-vul/blob/master/Bus%20Dispatch%
 CVE-2023-2774 - https://github.com/mrwwrrhh/Bus_Dispatch_and_Information_System/blob/main/Bus%20Dispatch%20and%20Information%20System%20in%20view_branch%20%20has%20Sql%20injection%20vulnerabilities.pdf
 CVE-2023-2775 - https://github.com/mrwwrrhh/Bus_Dispatch_and_Information_System/blob/main/Bus%20Dispatch%20and%20Information%20System%20in%20login_info%20has%20Sql%20injection%20vulnerabilities.pdf
 CVE-2023-2790 - https://drive.google.com/file/d/1RITXRvKele5aW42YFk0JeQHCq2B63lUj/view?usp=share_link
-CVE-2023-2799 - https://github.com/Peanut886/Vulnerability/blob/main/imgs/2023-Guangzhou%20Xiezhong%20Software%20Technology%20Co.%2C%20LTD/2023-04-10(2).jpg
 CVE-2023-2814 - https://github.com/jiy2020/bugReport/blob/main/XSS.md
 CVE-2023-2815 - https://github.com/raozhir/CVERequest/blob/main/SQL.md
 CVE-2023-2822 - https://medium.com/@cyberninja717/685bb1675dfb
@@ -93232,7 +93224,6 @@ CVE-2023-4986 - https://drive.google.com/file/d/1V_O95QddCGdZzYGgx7tkMOYQ5i_alv6
 CVE-2023-5009 - https://hackerone.com/reports/2147126
 CVE-2023-5013 - https://github.com/Jacky-Y/vuls/blob/main/vul3.md
 CVE-2023-5014 - https://github.com/TheCyberDiver/Public-Disclosures-CVE-/blob/main/Food-Ordering-Website%20SQLi.md
-CVE-2023-5015 - https://github.com/Num-Nine/CVE/issues/3
 CVE-2023-5027 - https://github.com/LianghaoW/CveHub/blob/main/Simple-Membership-System%20club_validator.php%20has%20Sqlinjection.pdf
 CVE-2023-5028 - https://github.com/pinglan123/-/wiki/%E4%B8%AD%E5%9B%BD%E8%81%94%E9%80%9A%E5%AE%B6%E7%94%A8%E7%BD%91%E5%85%B3
 CVE-2023-5034 - https://uploaddeimagens.com.br/imagens/bLNdiUE
@@ -98801,7 +98792,6 @@ CVE-2025-7924 - https://drive.google.com/file/d/1vrvOnw662FZ7CIfhr5EnXPLRqwTRkJq
 CVE-2025-7925 - https://drive.google.com/file/d/1CnrQn_-nSWLCUXJrwgrDFyI5D5MOzD-n/view
 CVE-2025-7926 - https://drive.google.com/file/d/1SHG0BMHHfc-6XDm43_zYVrcZEYiUvdP9/view
 CVE-2025-7927 - https://github.com/LagonGit/ReportCVE/issues/5#issue-3245176689
-CVE-2025-7932 - https://github.com/Patr1ck-S/Patr1ck-S.github.io/blob/main/D-Link%20DIR%E2%80%91817L%20has%20a%20remote%20arbitrary%20command%20execution%20vulnerability%20in%20ssdpcgi(1).md
 CVE-2025-7938 - https://github.com/Bemcliu/cve-reports/blob/main/cve-02-%E8%9B%8B%E7%B3%95%E5%95%86%E5%9F%8EJPA%E7%89%88-Privilege%20Escalation/readme.md
 CVE-2025-7940 - https://github.com/KMov-g/androidapps/blob/main/com.house.auscat.md#video-proof-of-concept
 CVE-2025-7941 - https://drive.google.com/file/d/19C2IWKR38Qqw7RLNn1nWzvWv4GszgPnU/view

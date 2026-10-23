@@ -18074,7 +18074,6 @@ CVE-2022-27095 - https://www.exploit-db.com/exploits/50815
 CVE-2022-27135 - https://github.com/verf1sh/Poc/blob/master/pic_ppm.png
 CVE-2022-27135 - https://github.com/verf1sh/Poc/blob/master/poc_ppm
 CVE-2022-27432 - https://www.exploit-db.com/exploits/50831
-CVE-2022-27474 - https://github.com/Mount4in/Mount4in.github.io/blob/master/poc.py
 CVE-2022-27952 - https://github.com/payloadcms/payload
 CVE-2022-28132 - https://www.exploit-db.com/exploits/50939
 CVE-2022-2834 - https://wpscan.com/vulnerability/468d5fc7-04c6-4354-b134-85ebb25b37ae
@@ -19284,10 +19283,8 @@ CVE-2023-1572 - https://github.com/yangyanglo/ForCVE/blob/main/2023-0x03.md
 CVE-2023-1573 - https://github.com/yangyanglo/ForCVE/blob/main/2023-0x04.md
 CVE-2023-1589 - https://blog.csdn.net/weixin_43864034/article/details/129729911
 CVE-2023-1590 - https://blog.csdn.net/weixin_43864034/article/details/129730106
-CVE-2023-1594 - https://github.com/OYyunshen/Poc/blob/main/Novel-PlusV3.6.2Sqli.pdf
 CVE-2023-1596 - https://wpscan.com/vulnerability/cada9be9-522a-4ce8-847d-c8fff2ddcc07
 CVE-2023-1597 - https://wpscan.com/vulnerability/4eafe111-8874-4560-83ff-394abe7a803b
-CVE-2023-1606 - https://github.com/OYyunshen/Poc/blob/main/Novel-PlusSqli1.pdf
 CVE-2023-1608 - https://github.com/crmeb/crmeb_java/issues/11
 CVE-2023-1609 - https://github.com/crmeb/crmeb_java/issues/12
 CVE-2023-1610 - https://github.com/getrebuild/rebuild/issues/597
@@ -19677,7 +19674,6 @@ CVE-2023-2789 - https://github.com/DaisyPo/fuzzing-vulncollect/files/11343936/po
 CVE-2023-2790 - https://drive.google.com/file/d/1RITXRvKele5aW42YFk0JeQHCq2B63lUj/view?usp=share_link
 CVE-2023-2795 - https://wpscan.com/vulnerability/2d6ecd21-3dd4-423d-80e7-277c45080a9f
 CVE-2023-2796 - https://wpscan.com/vulnerability/e9ef793c-e5a3-4c55-beee-56b0909f7a0d
-CVE-2023-2799 - https://github.com/Peanut886/Vulnerability/blob/main/imgs/2023-Guangzhou%20Xiezhong%20Software%20Technology%20Co.%2C%20LTD/2023-04-10(2).jpg
 CVE-2023-2802 - https://wpscan.com/vulnerability/c5cc136a-2fa6-44ff-b5b5-26d367937df9
 CVE-2023-2803 - https://wpscan.com/vulnerability/ec640d47-bb22-478d-9668-1dab72f12f8d
 CVE-2023-2805 - https://wpscan.com/vulnerability/bdb75c8c-87e2-4358-ad3b-f4236e9a43c0
@@ -20270,7 +20266,6 @@ CVE-2023-5006 - https://wpscan.com/vulnerability/d29bcc1c-241b-4867-a0c8-4ae5f9d
 CVE-2023-5009 - https://hackerone.com/reports/2147126
 CVE-2023-5013 - https://github.com/Jacky-Y/vuls/blob/main/vul3.md
 CVE-2023-5014 - https://github.com/TheCyberDiver/Public-Disclosures-CVE-/blob/main/Food-Ordering-Website%20SQLi.md
-CVE-2023-5015 - https://github.com/Num-Nine/CVE/issues/3
 CVE-2023-5023 - https://github.com/RCEraser/cve/blob/main/sql_inject_3.md
 CVE-2023-5027 - https://github.com/LianghaoW/CveHub/blob/main/Simple-Membership-System%20club_validator.php%20has%20Sqlinjection.pdf
 CVE-2023-5028 - https://github.com/pinglan123/-/wiki/%E4%B8%AD%E5%9B%BD%E8%81%94%E9%80%9A%E5%AE%B6%E7%94%A8%E7%BD%91%E5%85%B3
@@ -29957,7 +29952,6 @@ CVE-2025-7924 - https://drive.google.com/file/d/1vrvOnw662FZ7CIfhr5EnXPLRqwTRkJq
 CVE-2025-7925 - https://drive.google.com/file/d/1CnrQn_-nSWLCUXJrwgrDFyI5D5MOzD-n/view
 CVE-2025-7926 - https://drive.google.com/file/d/1SHG0BMHHfc-6XDm43_zYVrcZEYiUvdP9/view
 CVE-2025-7927 - https://github.com/LagonGit/ReportCVE/issues/5#issue-3245176689
-CVE-2025-7932 - https://github.com/Patr1ck-S/Patr1ck-S.github.io/blob/main/D-Link%20DIR%E2%80%91817L%20has%20a%20remote%20arbitrary%20command%20execution%20vulnerability%20in%20ssdpcgi(1).md
 CVE-2025-7934 - https://gitee.com/fuyang_lipengjun/platform/issues/ICLILS
 CVE-2025-7935 - https://gitee.com/fuyang_lipengjun/platform/issues/ICLIKX
 CVE-2025-7936 - https://gitee.com/fuyang_lipengjun/platform/issues/ICLIK1
