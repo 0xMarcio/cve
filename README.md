@@ -1,8 +1,8 @@
 <div align="center">
 
-<a href="https://pocindex.io/"><img src="https://raw.githubusercontent.com/0xMarcio/pocindex/main/docs/hero.svg?v=175282-83973-1241" alt="PoC Index" width="100%"></a>
+<a href="https://pocindex.io/"><img src="https://raw.githubusercontent.com/0xMarcio/pocindex/main/docs/hero.svg?v=175282-83968-1241" alt="PoC Index" width="100%"></a>
 
-[![last sync](https://img.shields.io/badge/last%20sync-23%20Oct%202026%2011%3A12%20UTC-2f81f7?style=flat-square&labelColor=161b22)](https://github.com/0xMarcio/pocindex/commits/main)&nbsp;[![CI](https://img.shields.io/github/actions/workflow/status/0xMarcio/pocindex/hot_cves.yml?style=flat-square&label=CI&color=2f81f7&labelColor=161b22&_=202610231112)](https://github.com/0xMarcio/pocindex/actions/workflows/hot_cves.yml)&nbsp;[![CVEs with PoCs](https://img.shields.io/badge/CVEs%20with%20PoCs-83%2C973-2f81f7?style=flat-square&labelColor=161b22)](https://pocindex.io/)&nbsp;[![known exploited](https://img.shields.io/badge/known%20exploited-1%2C241-f85149?style=flat-square&labelColor=161b22)](https://pocindex.io/)&nbsp;[![stars](https://img.shields.io/github/stars/0xMarcio/pocindex?style=flat-square&label=stars&color=e3b341&labelColor=161b22&_=202610231112)](https://github.com/0xMarcio/pocindex/stargazers)
+[![last sync](https://img.shields.io/badge/last%20sync-23%20Oct%202026%2012%3A11%20UTC-2f81f7?style=flat-square&labelColor=161b22)](https://github.com/0xMarcio/pocindex/commits/main)&nbsp;[![CI](https://img.shields.io/github/actions/workflow/status/0xMarcio/pocindex/hot_cves.yml?style=flat-square&label=CI&color=2f81f7&labelColor=161b22&_=202610231211)](https://github.com/0xMarcio/pocindex/actions/workflows/hot_cves.yml)&nbsp;[![CVEs with PoCs](https://img.shields.io/badge/CVEs%20with%20PoCs-83%2C968-2f81f7?style=flat-square&labelColor=161b22)](https://pocindex.io/)&nbsp;[![known exploited](https://img.shields.io/badge/known%20exploited-1%2C241-f85149?style=flat-square&labelColor=161b22)](https://pocindex.io/)&nbsp;[![stars](https://img.shields.io/github/stars/0xMarcio/pocindex?style=flat-square&label=stars&color=e3b341&labelColor=161b22&_=202610231211)](https://github.com/0xMarcio/pocindex/stargazers)
 
 <a href="https://pocindex.io/"><img src="https://raw.githubusercontent.com/0xMarcio/pocindex/8dec6181e823d641132e0ee8a52a1612c2b5dd37/docs/search.svg" alt="Search PoC Index" width="100%"></a>
 
@@ -14,50 +14,50 @@
 
 | Repo stars | Released | PoC | Description |
 | --- | --- | --- | --- |
-| 1⭐ | 1h ago | [php2shell](https://github.com/agrresore/php2shell) | PHP2Shell proof of concept for CVE-2026-109618 and CVE-2026-109619, with Docker labs and build-specific… |
-| 0⭐ | 1h ago | [CVE-2026-112403](https://github.com/al4n4n/CVE-2026-112403) | CVE-2026-112403: Pillow heap buffer overflow in ImagingJpegDecode via lossless JPEG thumbnail. One POST, 100%… |
-| 0⭐ | 1h ago | [php2shell](https://github.com/4nuxd/php2shell) | PHP uses longjmp() for out-of-memory (OOM) errors to exit the current context and abort handling of the… |
-| 0⭐ | 2h ago | [php2shell-cve-2026-109618](https://github.com/Chr1s-T/php2shell-cve-2026-109618) | PHP2Shell (CVE-2026-109618/109619): mod_php pre-auth heap-corruption RCE - working PoC, non-destructive… |
-| 0⭐ | 2h ago | [CVE-2026-8933](https://github.com/yifengchen-cc/CVE-2026-8933) | A local privilege escalation vulnerability exists in snap-confine, a set-capabilities core component used… |
-| 0⭐ | 2h ago | <img src="https://raw.githubusercontent.com/0xMarcio/pocindex/main/docs/kev.svg" alt="KEV" title="CISA known exploited" height="14"> [CVE-2026-31431](https://github.com/StackOverflowExcept1on/CVE-2026-31431) | Copy Fail exploit for Ubuntu 20.04 with legacy Python versions, including script to hide Copy Fail. |
-| 0⭐ | 2h ago | [CVE-2026-109619](https://github.com/EQSTLab/CVE-2026-109619) | PHP2Shell |
-| 0⭐ | 3h ago | [CVE-2026-109618](https://github.com/tuanhoma/CVE-2026-109618) | PHP uses longjmp() for out-of-memory (OOM) errors to exit the current context and abort handling of the… |
-| 0⭐ | 4h ago | <img src="https://raw.githubusercontent.com/0xMarcio/pocindex/main/docs/kev.svg" alt="KEV" title="CISA known exploited" height="14"> [cve-2019-2215-skyworth](https://github.com/xushihushuo-art/cve-2019-2215-skyworth) | Temproot for Skyworth 65G60 / Coocaa 9S60 (Android 8.0, kernel 4.9.44) via CVE-2019-2215 - port notes for the… |
-| 0⭐ | 5h ago | [php2shell](https://github.com/LeisureLinux/php2shell) | Two PHP session CVEs (CVE-2026-109618, CVE-2026-109619) - reproducible exploits: pure-HTTP ASLR bypass and… |
+| 0⭐ | 52m ago | [php2shell-nginx-fpm-full-rce](https://github.com/VABISMO/php2shell-nginx-fpm-full-rce) | Complete auto exploit for NGINX PHP-FPM CVE-2026-109618 / CVE-2026-109619 |
+| 0⭐ | 1h ago | [php2shell_lab](https://github.com/D1se0/php2shell_lab) | PHP uses longjmp() for out-of-memory (OOM) errors to exit the current context and abort handling of the… |
+| 1⭐ | 2h ago | [php2shell](https://github.com/agrresore/php2shell) | PHP2Shell proof of concept for CVE-2026-109618 and CVE-2026-109619, with Docker labs and build-specific… |
+| 0⭐ | 2h ago | [CVE-2026-112403](https://github.com/al4n4n/CVE-2026-112403) | CVE-2026-112403: Pillow heap buffer overflow in ImagingJpegDecode via lossless JPEG thumbnail. One POST, 100%… |
+| 0⭐ | 2h ago | [php2shell](https://github.com/4nuxd/php2shell) | PHP uses longjmp() for out-of-memory (OOM) errors to exit the current context and abort handling of the… |
+| 1⭐ | 3h ago | [php2shell-cve-2026-109618](https://github.com/Chr1s-T/php2shell-cve-2026-109618) | PHP2Shell (CVE-2026-109618/109619): mod_php pre-auth heap-corruption RCE - working PoC, non-destructive… |
+| 0⭐ | 3h ago | [CVE-2026-8933](https://github.com/yifengchen-cc/CVE-2026-8933) | A local privilege escalation vulnerability exists in snap-confine, a set-capabilities core component used… |
+| 0⭐ | 3h ago | <img src="https://raw.githubusercontent.com/0xMarcio/pocindex/main/docs/kev.svg" alt="KEV" title="CISA known exploited" height="14"> [CVE-2026-31431](https://github.com/StackOverflowExcept1on/CVE-2026-31431) | Copy Fail exploit for Ubuntu 20.04 with legacy Python versions, including script to hide Copy Fail. |
+| 0⭐ | 3h ago | [CVE-2026-109619](https://github.com/EQSTLab/CVE-2026-109619) | PHP2Shell |
+| 0⭐ | 4h ago | [CVE-2026-109618](https://github.com/tuanhoma/CVE-2026-109618) | PHP uses longjmp() for out-of-memory (OOM) errors to exit the current context and abort handling of the… |
 
 ## Trending in 2026
 
 | Repo stars | Updated | Repository | Description |
 | --- | --- | --- | --- |
-| 1038⭐ | 18h ago | [php2shell-bypass-aslr-exp](https://github.com/9bie/php2shell-bypass-aslr-exp/blob/4586f5cc120c82fd468b17469202bac629810ad9/exploit.py) | A php2shell exploit that requires no modifications to the official version, and does not require… |
 | 476⭐ | 1d ago | [CVE-2026-9830](https://github.com/opaxial/CVE-2026-9830) | CVE-2026-9830 Proof of Concept |
 | 564⭐ | 2d ago | <img src="https://raw.githubusercontent.com/0xMarcio/pocindex/main/docs/kev.svg" alt="KEV" title="CISA known exploited" height="14"> [wp2shell-PoC](https://github.com/gichirimaku/wp2shell-PoC) | CVE-2026-63030 + CVE-2026-60137 exploit RCE chain. |
 | 533⭐ | 2d ago | <img src="https://raw.githubusercontent.com/0xMarcio/pocindex/main/docs/kev.svg" alt="KEV" title="CISA known exploited" height="14"> [CVE-2026-41940-PoC](https://github.com/sakidekin/CVE-2026-41940-PoC) | cPanel & WHM Authentication Bypass via CVE-2026-41940 explotation |
 | 120⭐ | 1d ago | [php2shell](https://github.com/syrex1013/php2shell) | CVE-2026-109618/109619 PoC - PHP session.upload_progress heap use-after-free (CVSS 9.2) |
 | 103⭐ | 2d ago | [php-cve-2026-10961x-lab-poc](https://github.com/dinosn/php-cve-2026-10961x-lab-poc/blob/eb8558b04a1bbbd85d2b3a7a64780ab17cccc951/scripts/reproduce.py) | PHP CVE-2026-109618/109619 - self-contained unauthenticated RCE on stock PHP 8.5.11 (in-band PS(id)→cookie… |
 | 63⭐ | 1d ago | [PHP2Shell-Full-Chain-Exploit](https://github.com/78ResearchLab/PHP2Shell-Full-Chain-Exploit) | PHP uses longjmp() for out-of-memory (OOM) errors to exit the current context and abort handling of the… |
-| 53⭐ | 16h ago | [actual-php2shell](https://github.com/cookiengineer/actual-php2shell) | :robot: NO, There is an easy way to exploit this vulnerability! (vibecoded to prove a point) |
-| 36⭐ | 1h ago | [portal-root-kiosk-satellite](https://github.com/jxlarrea/portal-root-kiosk-satellite) | Root and provisioning for Meta Portal devices for optimal use with Kiosk Satellite. |
+| 55⭐ | 17h ago | [actual-php2shell](https://github.com/cookiengineer/actual-php2shell) | :robot: NO, There is an easy way to exploit this vulnerability! (vibecoded to prove a point) |
+| 36⭐ | 2h ago | [portal-root-kiosk-satellite](https://github.com/jxlarrea/portal-root-kiosk-satellite) | Root and provisioning for Meta Portal devices for optimal use with Kiosk Satellite. |
 | 804⭐ | 72d ago | <img src="https://raw.githubusercontent.com/0xMarcio/pocindex/main/docs/kev.svg" alt="KEV" title="CISA known exploited" height="14"> [wp2shell-poc](https://github.com/Icex0/wp2shell-poc) | wp2shell (CVE-2026-63030 & CVE-2026-60137) - full RCE chain |
 | 459⭐ | 45d ago | [Root-My-Pixel](https://github.com/alex193a/Root-My-Pixel) | Jailbreak supported Google Pixel phones with CVE-2026-43499 |
 | 87⭐ | 4d ago | [root-my-s24](https://github.com/NanoTurtle1145/root-my-s24) | Using CVE-2026-43499 to root your Galaxy S24 Series(SM-S92X0 ,(China / Hong Kong SAR / Taiwan)) |
 | 44⭐ | 1d ago | [CVE-2026-109618-poc](https://github.com/enactive-systems/CVE-2026-109618-poc) | PHP uses longjmp() for out-of-memory (OOM) errors to exit the current context and abort handling of the… |
 | 96⭐ | 10d ago | [IonStack-S22U](https://github.com/sarabpal-dev/IonStack-S22U) | CVE-2026-43499 full exploit chain for Samsung Galaxy S22 Ultra (Android 5.10 kernel) |
+| 31⭐ | 18h ago | [cve-2026-109618-php2shell](https://github.com/godylockz/cve-2026-109618-php2shell) | Proof of concept for CVE-2026-109618/CVE-2026-109619: PHP2Shell |
 | 31⭐ | 1d ago | [php-rce](https://github.com/david-alvarez-rosa/php-rce) | Exploits for CVE-2026-109618 / CVE-2026-109619 to achieve RCE on PHP targets |
-| 16⭐ | 1h ago | [Reversing-Vulnerabilities](https://github.com/jaiswalakshansh/Reversing-Vulnerabilities) | Reversing Vulnerabilities for Fun |
-| 30⭐ | 17h ago | [cve-2026-109618-php2shell](https://github.com/godylockz/cve-2026-109618-php2shell) | Proof of concept for CVE-2026-109618/CVE-2026-109619: PHP2Shell |
+| 16⭐ | 2h ago | [Reversing-Vulnerabilities](https://github.com/jaiswalakshansh/Reversing-Vulnerabilities) | Reversing Vulnerabilities for Fun |
 | 337⭐ | 87d ago | [CVE-2026-54121](https://github.com/aniqfakhrul/CVE-2026-54121) | Certighost POC |
 | 60⭐ | 7d ago | [GhostSam](https://github.com/snothin/GhostSam) | Samsung temp root tool (until reboot) - Ghostlock / dirtyfrag exploit chains + manager app. |
-| 24⭐ | 1d ago | [php2shell-Lab](https://github.com/kuwoo/php2shell-Lab) | 🐘 php2shell（CVE-2026-109618 / CVE-2026-109619）复现靶场 - session.upload_progress 文件名注入 + LFI → RCE，Docker… |
+| 25⭐ | 1d ago | [php2shell-Lab](https://github.com/kuwoo/php2shell-Lab) | 🐘 php2shell（CVE-2026-109618 / CVE-2026-109619）复现靶场 - session.upload_progress 文件名注入 + LFI → RCE，Docker… |
+| 223⭐ | 69d ago | [ResetNightmare](https://github.com/Semperis-Community/ResetNightmare) | POC tool for ResetNightmare (CVE-2026-27912) |
 
 ## Trending in 2025
 
 | Repo stars | Updated | Repository | Description |
 | --- | --- | --- | --- |
-| 132⭐ | 13h ago | [samsung-tv-root](https://github.com/chris-ritsen/samsung-tv-root) | Samsung QN90B and QN90F root |
+| 135⭐ | 57m ago | [samsung-tv-root](https://github.com/chris-ritsen/samsung-tv-root) | Samsung QN90B and QN90F root |
 | 139⭐ | 30d ago | [unisoc-su](https://github.com/Skorpion96/unisoc-su) | A method for CVE-2025-31710 and to connect to cmd_skt to obtain a root shell on unisoc unpatched models |
 | 245⭐ | 52d ago | [BitUnlocker](https://github.com/garatc/BitUnlocker) | Downgrade attack for CVE-2025-48804 |
-| 29⭐ | 40d ago | [Douglas-Guidebook](https://github.com/douglasmun/Douglas-Guidebook) | Douglas Mun's Technical Guidebooks |
+| 29⭐ | 41d ago | [Douglas-Guidebook](https://github.com/douglasmun/Douglas-Guidebook) | Douglas Mun's Technical Guidebooks |
 | 22⭐ | 73d ago | [CVE-2025-7771](https://github.com/enessakircolak/CVE-2025-7771) | ThrottleStop.sys Arbitrary Physical Memory R/W |
 | 7⭐ | 16d ago | <img src="https://raw.githubusercontent.com/0xMarcio/pocindex/main/docs/kev.svg" alt="KEV" title="CISA known exploited" height="14"> [ABrake27](https://github.com/vvirei333/ABrake27) | iOS 27 kernelcache RE: SEP dispatch map, AMFI diff, Ghidra workflow |
 | 5⭐ | 10d ago | <img src="https://raw.githubusercontent.com/0xMarcio/pocindex/main/docs/kev.svg" alt="KEV" title="CISA known exploited" height="14"> [CVE-2025-8110](https://github.com/Ghxstsec/CVE-2025-8110) | Improper Symbolic link handling in the PutContents API in Gogs allows Local Execution of Code. |
@@ -91,7 +91,7 @@
 
 | Repo stars | Updated | Repository | Description |
 | --- | --- | --- | --- |
-| 155⭐ | 5d ago | <img src="https://raw.githubusercontent.com/0xMarcio/pocindex/main/docs/kev.svg" alt="KEV" title="CISA known exploited" height="14"> [Trigon](https://github.com/alfiecg24/Trigon) | Deterministic kernel exploit based on CVE-2023-32434. |
+| 155⭐ | 6d ago | <img src="https://raw.githubusercontent.com/0xMarcio/pocindex/main/docs/kev.svg" alt="KEV" title="CISA known exploited" height="14"> [Trigon](https://github.com/alfiecg24/Trigon) | Deterministic kernel exploit based on CVE-2023-32434. |
 | 7⭐ | 18d ago | <img src="https://raw.githubusercontent.com/0xMarcio/pocindex/main/docs/kev.svg" alt="KEV" title="CISA known exploited" height="14"> [picohaxx](https://github.com/264312431/picohaxx) | A kernel exploit for Pico 4 devices based on cve-2023-33107. |
 | 3⭐ | 80d ago | [mouseserver-exploit](https://github.com/lypd0/mouseserver-exploit) | Mobile Mouse 3.6.0.4 - Remote Code Execution - CVE-2023-31902 |
 | 3⭐ | 88d ago | [CVE-2023-52076-PoC](https://github.com/Groppoxx/CVE-2023-52076-PoC) | PoC exploit for CVE-2023-52076 - zip-slip path traversal in Atril/Xreader (MATE/Cinnamon) enabling arbitrary… |

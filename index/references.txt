@@ -79724,8 +79724,6 @@ CVE-2025-3122 - https://github.com/WebAssembly/wabt/issues/2565#issue-2927572319
 CVE-2025-3123 - https://github.com/WonderCMS/wondercms/issues/330
 CVE-2025-3123 - https://github.com/WonderCMS/wondercms/issues/330#issue-2940381112
 CVE-2025-3123 - https://github.com/WonderCMS/wondercms/issues/330#issuecomment-2745347770
-CVE-2025-3137 - https://github.com/ARPANET-cybersecurity/vuldb/issues/2
-CVE-2025-3138 - https://github.com/ARPANET-cybersecurity/vuldb/issues/3
 CVE-2025-3144 - https://gitee.com/mindspore/mindspore/issues/IBVKM8
 CVE-2025-3145 - https://gitee.com/mindspore/mindspore/issues/IBVKM8
 CVE-2025-3146 - https://github.com/nabiland/cve/issues/1
@@ -80260,8 +80258,6 @@ CVE-2025-4176 - https://github.com/bluechips-zhao/myCVE/issues/5
 CVE-2025-4178 - https://github.com/ShenxiuSec/cve-proofs/blob/main/POC-20250418-02.md
 CVE-2025-4190 - https://wpscan.com/vulnerability/e525ece5-6e03-4aee-bf5b-6ae0b961f027/
 CVE-2025-4191 - https://github.com/ideal-valli/myCVE/issues/3
-CVE-2025-4192 - https://github.com/ARPANET-cybersecurity/vuldb/issues/4
-CVE-2025-4193 - https://github.com/ARPANET-cybersecurity/vuldb/issues/5
 CVE-2025-4213 - https://github.com/LoovvvE18/CVE/issues/1
 CVE-2025-4214 - https://github.com/LoovvvE18/CVE/issues/2
 CVE-2025-4215 - https://github.com/gorhill/uBlock/commit/eaedaf5b10d2f7857c6b77fbf7d4a80681d4d46c
@@ -83049,7 +83045,6 @@ CVE-2026-13486 - https://github.com/lffaker/cybersec/issues/5
 CVE-2026-13487 - https://github.com/lffaker/cybersec/issues/4
 CVE-2026-13489 - https://github.com/78/xiaozhi-esp32/issues/2020
 CVE-2026-13491 - https://github.com/78/xiaozhi-esp32/issues/2022
-CVE-2026-13493 - https://github.com/AIDC-AI/ComfyUI-Copilot/issues/149
 CVE-2026-13495 - https://github.com/ltranquility/vuln_submit/issues/16
 CVE-2026-13496 - https://github.com/ltranquility/vuln_submit/issues/18
 CVE-2026-13497 - https://github.com/ltranquility/vuln_submit/issues/19
@@ -83306,7 +83301,6 @@ CVE-2026-14733 - https://github.com/cyberdrinclk/scve/issues/1
 CVE-2026-14735 - https://medium.com/@avdzav10/sql-injection-leading-to-arbitrary-file-read-in-smart-parking-system-php-2cd5b084f9e1
 CVE-2026-14738 - https://github.com/exo-explore/exo/issues/2151
 CVE-2026-14742 - https://github.com/langchain-ai/langgraph/issues/8009
-CVE-2026-14748 - https://github.com/AIAnytime/Awesome-MCP-Server/issues/35
 CVE-2026-14749 - https://github.com/mjperpinosa/stumasy/issues/5
 CVE-2026-14750 - https://github.com/mjperpinosa/stumasy/issues/6
 CVE-2026-14751 - https://github.com/mjperpinosa/stumasy/issues/7
@@ -96444,7 +96438,6 @@ CVE-2025-13790 - https://github.com/Xzzz111/exps/blob/main/archives/Scada-LTS-CS
 CVE-2025-13791 - https://github.com/Xzzz111/exps/blob/main/archives/Scada-LTS-ZipSlip-1/report.md#proof-of-concept
 CVE-2025-13792 - https://www.youtube.com/watch?v=hU8YbFc6KpI
 CVE-2025-13793 - https://github.com/dream357/report/blob/main/ecommerce-website.docx
-CVE-2025-13795 - https://github.com/Al1ce258/MY-CVE-REPORTS/blob/main/school-management-system.md
 CVE-2025-13797 - https://www.notion.so/2a60c75766a88027a6aec07b378332a8
 CVE-2025-13798 - https://www.notion.so/2a60c75766a8805a8973d2ff6a6bcb26
 CVE-2025-13799 - https://www.notion.so/2a60c75766a8801e8e4bdd3be8072d9d
@@ -97760,7 +97753,6 @@ CVE-2025-4183 - https://fitoxs.com/exploit/exploit-d8578edf8458ce06fbc5bb76a58c5
 CVE-2025-4184 - https://fitoxs.com/exploit/exploit-81dc9bdb52d04dc20036dbd8313ed055.txt
 CVE-2025-4185 - https://flowus.cn/share/6bd8ca39-bad2-4567-b0e1-9407991ad943?code=G8A6P3
 CVE-2025-4186 - https://flowus.cn/share/0f982f99-ecd5-4e35-88f0-c27093743385?code=G8A6P3
-CVE-2025-4195 - https://github.com/ARPANET-cybersecurity/vuldb/issues/6
 CVE-2025-4196 - https://github.com/zhxu147/CVE/blob/main/hcpms_birthing.php_sqli.pdf
 CVE-2025-4197 - https://github.com/zhxu147/CVE/blob/main/hcpms_edit_xpatient.php_sqli.pdf
 CVE-2025-4218 - https://github.com/handrew/browserpilot/issues/20#issue-2999815850
@@ -109741,7 +109733,6 @@ CVE-2025-31161 - https://www.vicarius.io/vsociety/posts/cve-2025-31161-detect-cr
 CVE-2025-31161 - https://www.vicarius.io/vsociety/posts/cve-2025-31161-mitigate-crushftp-vulnerability
 CVE-2025-31191 - https://www.microsoft.com/en-us/security/blog/2025/05/01/analyzing-cve-2025-31191-a-macos-security-scoped-bookmarks-based-sandbox-escape/
 CVE-2025-3134 - https://vuldb.com/?id.303039
-CVE-2025-3136 - https://github.com/ARPANET-cybersecurity/vuldb/issues/2
 CVE-2025-31363 - https://mattermost.com/security-updates
 CVE-2025-31477 - https://github.com/tauri-apps/plugins-workspace/security/advisories/GHSA-c9pr-q8gx-3mgp
 CVE-2025-31482 - https://github.com/FreshRSS/FreshRSS/security/advisories/GHSA-vpmc-3fv2-jmgp

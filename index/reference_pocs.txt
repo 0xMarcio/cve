@@ -26407,7 +26407,6 @@ CVE-2025-13790 - https://github.com/Xzzz111/exps/blob/main/archives/Scada-LTS-CS
 CVE-2025-13791 - https://github.com/Xzzz111/exps/blob/main/archives/Scada-LTS-ZipSlip-1/report.md#proof-of-concept
 CVE-2025-13792 - https://www.youtube.com/watch?v=hU8YbFc6KpI
 CVE-2025-13793 - https://github.com/dream357/report/blob/main/ecommerce-website.docx
-CVE-2025-13795 - https://github.com/Al1ce258/MY-CVE-REPORTS/blob/main/school-management-system.md
 CVE-2025-13797 - https://www.notion.so/2a60c75766a88027a6aec07b378332a8
 CVE-2025-13798 - https://www.notion.so/2a60c75766a8805a8973d2ff6a6bcb26
 CVE-2025-13799 - https://www.notion.so/2a60c75766a8801e8e4bdd3be8072d9d
@@ -27557,8 +27556,6 @@ CVE-2025-31277 - https://cloud.google.com/blog/topics/threat-intelligence/darksw
 CVE-2025-31324 - https://onapsis.com/blog/active-exploitation-of-sap-vulnerability-cve-2025-31324/
 CVE-2025-3135 - https://www.yuque.com/yuqueyonghuveuwuh/aveeid/yvtgf3ynsi949ve3?singleDoc
 CVE-2025-3136 - https://github.com/pytorch/pytorch/issues/149821#issue-2940838975
-CVE-2025-3137 - https://github.com/ARPANET-cybersecurity/vuldb/issues/2
-CVE-2025-3138 - https://github.com/ARPANET-cybersecurity/vuldb/issues/3
 CVE-2025-3139 - https://github.com/LxxxtSec/CVE/blob/main/CVE-Lxxxt.md
 CVE-2025-3140 - https://github.com/Lena-lyy/SQL/blob/main/SQL1.md
 CVE-2025-3141 - https://github.com/Lena-lyy/SQL/blob/main/SQL2.md
@@ -28312,9 +28309,6 @@ CVE-2025-4185 - https://flowus.cn/share/6bd8ca39-bad2-4567-b0e1-9407991ad943?cod
 CVE-2025-4186 - https://flowus.cn/share/0f982f99-ecd5-4e35-88f0-c27093743385?code=G8A6P3
 CVE-2025-4190 - https://wpscan.com/vulnerability/e525ece5-6e03-4aee-bf5b-6ae0b961f027/
 CVE-2025-4191 - https://github.com/ideal-valli/myCVE/issues/3
-CVE-2025-4192 - https://github.com/ARPANET-cybersecurity/vuldb/issues/4
-CVE-2025-4193 - https://github.com/ARPANET-cybersecurity/vuldb/issues/5
-CVE-2025-4195 - https://github.com/ARPANET-cybersecurity/vuldb/issues/6
 CVE-2025-4196 - https://github.com/zhxu147/CVE/blob/main/hcpms_birthing.php_sqli.pdf
 CVE-2025-4197 - https://github.com/zhxu147/CVE/blob/main/hcpms_edit_xpatient.php_sqli.pdf
 CVE-2025-4213 - https://github.com/LoovvvE18/CVE/issues/1
@@ -31589,7 +31583,6 @@ CVE-2026-13486 - https://github.com/lffaker/cybersec/issues/5
 CVE-2026-13487 - https://github.com/lffaker/cybersec/issues/4
 CVE-2026-13489 - https://github.com/78/xiaozhi-esp32/issues/2020
 CVE-2026-13491 - https://github.com/78/xiaozhi-esp32/issues/2022
-CVE-2026-13493 - https://github.com/AIDC-AI/ComfyUI-Copilot/issues/149
 CVE-2026-13495 - https://github.com/ltranquility/vuln_submit/issues/16
 CVE-2026-13496 - https://github.com/ltranquility/vuln_submit/issues/18
 CVE-2026-13497 - https://github.com/ltranquility/vuln_submit/issues/19
@@ -31890,7 +31883,6 @@ CVE-2026-14743 - https://github.com/6Justdododo6/CVE/issues/22
 CVE-2026-14744 - https://github.com/6Justdododo6/CVE/issues/23
 CVE-2026-14745 - https://github.com/6Justdododo6/CVE/issues/24
 CVE-2026-14746 - https://github.com/6Justdododo6/CVE/issues/25
-CVE-2026-14748 - https://github.com/AIAnytime/Awesome-MCP-Server/issues/35
 CVE-2026-14749 - https://github.com/mjperpinosa/stumasy/issues/5
 CVE-2026-14750 - https://github.com/mjperpinosa/stumasy/issues/6
 CVE-2026-14751 - https://github.com/mjperpinosa/stumasy/issues/7
