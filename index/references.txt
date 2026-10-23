@@ -40324,7 +40324,6 @@ CVE-2019-12169 - http://packetstormsecurity.com/files/158246/ATutor-2.2.4-Direct
 CVE-2019-12169 - https://github.com/fuzzlove/ATutor-2.2.4-Language-Exploit
 CVE-2019-12170 - http://packetstormsecurity.com/files/153869/ATutor-2.2.4-Backup-Remote-Command-Execution.html
 CVE-2019-12170 - https://github.com/fuzzlove/ATutor-Instructor-Backup-Arbitrary-File
-CVE-2019-12171 - https://drive.google.com/open?id=1msz6pb08crPC0VT7s_Z_KTsKm9CbLJEXNsmRwzoNLy8
 CVE-2019-12172 - https://github.com/typora/typora-issues/issues/2166
 CVE-2019-12173 - https://github.com/MacDownApp/macdown/issues/1050
 CVE-2019-12177 - https://posts.specterops.io/razer-synapse-3-elevation-of-privilege-6d2802bd0585
@@ -84225,7 +84224,6 @@ CVE-2026-19926 - https://bugs.launchpad.net/evergreen/+bug/2147196/+attachment/5
 CVE-2026-19927 - https://gist.github.com/nedlir/4eefb532d29cbb9a7091266fc1cbd55c
 CVE-2026-19928 - https://gist.github.com/nedlir/2bc3a6e5bd4d67b863223e1bfc2e4390
 CVE-2026-19929 - https://gist.github.com/nedlir/220a30213b5a5c6bc26d1000012c6a4d
-CVE-2026-19930 - https://drive.google.com/file/d/1tI3kUdqocvdQwQtqOi5zCFmTMm6eA3sF/view
 CVE-2026-19932 - https://github.com/DefaultFuction/Notice-System-Managent/issues/1
 CVE-2026-19933 - https://github.com/DefaultFuction/Customer-Relationship-Management-In-C-Project/issues/1
 CVE-2026-19934 - https://github.com/ltranquility/submit_vuln/issues/19
@@ -86495,7 +86493,6 @@ CVE-2026-8189 - https://github.com/wudipjq/my_vuln/blob/main/Wavlink/vuln_2/2.md
 CVE-2026-8190 - https://github.com/wudipjq/my_vuln/blob/main/Wavlink/vuln_3/3.md
 CVE-2026-8191 - https://github.com/wudipjq/my_vuln/blob/main/Wavlink/vuln_4/4.md
 CVE-2026-8192 - https://github.com/wudipjq/my_vuln/blob/main/Wavlink/vuln_5/5.md
-CVE-2026-8193 - https://drive.google.com/file/d/1zC8gMYeIfZi3CsK6RXBQINU_mllXH_6n/view?usp=drive_link
 CVE-2026-8195 - https://github.com/xpp3901/CVE_APPLY/blob/main/V-006_SVG_Stored_XSS/README.md
 CVE-2026-8196 - https://github.com/xpp3901/CVE_APPLY/tree/main/V-009_mLogin_Captcha_Bypass
 CVE-2026-8207 - https://projectblack.io/blog/gibbon-v30-authenticated-sql-injection-and-rce/#sql-injectiongetting-warmed-up
@@ -102717,7 +102714,6 @@ CVE-2019-12086 - https://medium.com/%40cowtowncoder/on-jackson-cves-dont-panic-h
 CVE-2019-12091 - https://support.netskope.com/hc/en-us/articles/360014589894-Netskope-Client
 CVE-2019-12099 - https://github.com/php-fusion/PHP-Fusion/commit/943432028b9e674433bb3f2a128b2477134110e6
 CVE-2019-12147 - https://blog.appsecco.com
-CVE-2019-12174 - https://drive.google.com/open?id=1TwbjmE45gnWeYpFyH8kDU63P7u4IdPd2
 CVE-2019-12210 - https://github.com/Yubico/pam-u2f/commit/18b1914e32b74ff52000f10e97067e841e5fff62
 CVE-2019-12591 - https://kb.netgear.com/000060977/Security-Advisory-for-Post-Authentication-Command-Injection-on-Insight-Cloud-PSV-2018-0366
 CVE-2019-12735 - https://github.com/neovim/neovim/pull/10082

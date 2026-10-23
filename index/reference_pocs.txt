@@ -32928,7 +32928,6 @@ CVE-2026-19926 - https://bugs.launchpad.net/evergreen/+bug/2147196/+attachment/5
 CVE-2026-19927 - https://gist.github.com/nedlir/4eefb532d29cbb9a7091266fc1cbd55c
 CVE-2026-19928 - https://gist.github.com/nedlir/2bc3a6e5bd4d67b863223e1bfc2e4390
 CVE-2026-19929 - https://gist.github.com/nedlir/220a30213b5a5c6bc26d1000012c6a4d
-CVE-2026-19930 - https://drive.google.com/file/d/1tI3kUdqocvdQwQtqOi5zCFmTMm6eA3sF/view
 CVE-2026-19932 - https://github.com/DefaultFuction/Notice-System-Managent/issues/1
 CVE-2026-19933 - https://github.com/DefaultFuction/Customer-Relationship-Management-In-C-Project/issues/1
 CVE-2026-19934 - https://github.com/ltranquility/submit_vuln/issues/19
@@ -35687,7 +35686,6 @@ CVE-2026-8189 - https://github.com/wudipjq/my_vuln/blob/main/Wavlink/vuln_2/2.md
 CVE-2026-8190 - https://github.com/wudipjq/my_vuln/blob/main/Wavlink/vuln_3/3.md
 CVE-2026-8191 - https://github.com/wudipjq/my_vuln/blob/main/Wavlink/vuln_4/4.md
 CVE-2026-8192 - https://github.com/wudipjq/my_vuln/blob/main/Wavlink/vuln_5/5.md
-CVE-2026-8193 - https://drive.google.com/file/d/1zC8gMYeIfZi3CsK6RXBQINU_mllXH_6n/view?usp=drive_link
 CVE-2026-81934 - https://github.com/v12-security/pocs/tree/main/redis/server_ssl
 CVE-2026-8195 - https://github.com/xpp3901/CVE_APPLY/blob/main/V-006_SVG_Stored_XSS/README.md
 CVE-2026-8196 - https://github.com/xpp3901/CVE_APPLY/tree/main/V-009_mLogin_Captcha_Bypass
