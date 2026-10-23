@@ -32396,15 +32396,7 @@ CVE-2017-6529 - https://www.exploit-db.com/exploits/41578/
 CVE-2017-6530 - https://www.tarlogic.com/advisories/Televes_CoaxData_Gateway_en.txt
 CVE-2017-6531 - https://www.tarlogic.com/advisories/Televes_CoaxData_Gateway_en.txt
 CVE-2017-6532 - https://www.tarlogic.com/advisories/Televes_CoaxData_Gateway_en.txt
-CVE-2017-6533 - https://github.com/WPO-Foundation/webpagetest/issues/833
-CVE-2017-6534 - https://github.com/WPO-Foundation/webpagetest/issues/835
-CVE-2017-6535 - https://github.com/WPO-Foundation/webpagetest/issues/832
-CVE-2017-6536 - https://github.com/WPO-Foundation/webpagetest/issues/838
-CVE-2017-6537 - https://github.com/WPO-Foundation/webpagetest/issues/837
 CVE-2017-6538 - https://github.com/WPO-Foundation/webpagetest/issues/836
-CVE-2017-6539 - https://github.com/WPO-Foundation/webpagetest/issues/831
-CVE-2017-6540 - https://github.com/WPO-Foundation/webpagetest/issues/830
-CVE-2017-6541 - https://github.com/WPO-Foundation/webpagetest/issues/834
 CVE-2017-6542 - http://www.chiark.greenend.org.uk/~sgtatham/putty/wishlist/vuln-agent-fwd-overflow.html
 CVE-2017-6542 - https://www.exploit-db.com/exploits/42137/
 CVE-2017-6547 - https://bierbaumer.net/security/asuswrt/#cross-site-scripting-xss
@@ -44535,7 +44527,6 @@ CVE-2019-9110 - https://gist.github.com/redeye5/470708bd27ed115b29d0434255b9f7a0
 CVE-2019-9110 - https://github.com/wuzhicms/wuzhicms/issues/170
 CVE-2019-9113 - https://github.com/libming/libming/issues/171
 CVE-2019-9114 - https://github.com/libming/libming/issues/170
-CVE-2019-9124 - https://github.com/WhooAmii/whooamii.github.io/blob/master/2018/DIR-878/blankpassword.md
 CVE-2019-9143 - https://github.com/Exiv2/exiv2/issues/711
 CVE-2019-9143 - https://research.loginsoft.com/bugs/uncontrolled-recursion-loop-in-exiv2imageprinttiffstructure-exiv2-0-27/
 CVE-2019-9144 - https://github.com/Exiv2/exiv2/issues/712
@@ -78061,7 +78052,6 @@ CVE-2024-7692 - https://wpscan.com/vulnerability/5e9f98ef-5a44-4a0c-b9cd-ce750be
 CVE-2024-7704 - https://github.com/Dreamy-elfland/240731
 CVE-2024-7705 - https://github.com/DeepMountains/Mirage/blob/main/CVE12-1.md
 CVE-2024-7706 - https://github.com/DeepMountains/Mirage/blob/main/CVE12-2.md
-CVE-2024-7707 - https://github.com/VodkaVortex/IoT/blob/main/formSafeEmailFilter.md
 CVE-2024-7713 - https://wpscan.com/vulnerability/061eab97-4a84-4738-a1e8-ef9a1261ff73/
 CVE-2024-7714 - https://wpscan.com/vulnerability/04447c76-a61b-4091-a510-c76fc8ca5664/
 CVE-2024-7716 - https://wpscan.com/vulnerability/cfa67c43-6f09-43f5-9fbe-32a98a82f548/
@@ -78755,7 +78745,6 @@ CVE-2025-10665 - https://github.com/qi-wm/cve/issues/1
 CVE-2025-10667 - https://github.com/S77code/CVE1/issues/1
 CVE-2025-10668 - https://github.com/S77code/CVE1/issues/3
 CVE-2025-10670 - https://github.com/yihaofuweng/cve/issues/25
-CVE-2025-10672 - https://github.com/SwayZGl1tZyyy/n-days/blob/main/AIBattery-Charge-Limiter/README.md#proof-of-concept
 CVE-2025-10673 - https://github.com/windhxy/CVE-my/issues/1
 CVE-2025-10674 - https://www.cnblogs.com/aibot/p/19063429
 CVE-2025-10675 - https://www.cnblogs.com/aibot/p/19063430
@@ -78846,7 +78835,6 @@ CVE-2025-10840 - https://github.com/xiaoliyu-1/Pet-grooming-management-print-pay
 CVE-2025-10843 - https://github.com/xingrenlvke/cve/issues/10
 CVE-2025-10854 - https://research.jfrog.com/vulnerabilities/txtai-arbitrary-file-write-jfsa-2025-001471363/
 CVE-2025-10894 - https://www.wiz.io/blog/s1ngularity-supply-chain-attack
-CVE-2025-10906 - https://github.com/SwayZGl1tZyyy/n-days/blob/main/Endurance/README.md#proof-of-concept
 CVE-2025-10909 - https://hackmd.io/@noka/B1qwCyR9ll
 CVE-2025-10909 - https://hackmd.io/@noka/B1qwCyR9ll#%E2%9E%A4-Payload
 CVE-2025-10942 - https://github.com/lin-3-start/lin-cve/blob/main/H3C%2BMagic%2BB3/H3C%20routers%20Buffer%20overflow.md#poc
@@ -80461,7 +80449,6 @@ CVE-2025-4697 - https://github.com/lwecho/myCVE/issues/2
 CVE-2025-4702 - https://github.com/baixiaobai001/myCVE/issues/1
 CVE-2025-4703 - https://github.com/baixiaobai001/myCVE/issues/2
 CVE-2025-4704 - https://github.com/baixiaobai001/myCVE/issues/3
-CVE-2025-4706 - https://github.com/Welhelm666/666/issues/2
 CVE-2025-4707 - https://github.com/lanxia0/CVE/issues/1
 CVE-2025-4708 - https://github.com/lanxia0/CVE/issues/2
 CVE-2025-4709 - https://github.com/lanxia0/CVE/issues/3
@@ -82088,7 +82075,6 @@ CVE-2025-9469 - https://github.com/zhuyi-hz/cve/issues/14
 CVE-2025-9470 - https://github.com/zhuyi-hz/cve/issues/13
 CVE-2025-9471 - https://github.com/zhuyi-hz/cve/issues/12
 CVE-2025-9472 - https://github.com/zhuyi-hz/cve/issues/11
-CVE-2025-9474 - https://github.com/SwayZGl1tZyyy/n-days/blob/main/mihomo-party/README.md#proof-of-concept-1
 CVE-2025-9475 - https://github.com/lrjbsyh/CVE_Hunter/issues/4
 CVE-2025-9475 - https://github.com/lrjbsyh/CVE_Hunter/issues/4#issue-3320892747
 CVE-2025-9476 - https://github.com/lrjbsyh/CVE_Hunter/issues/5
@@ -82324,8 +82310,6 @@ CVE-2025-9805 - https://github.com/simstudioai/sim/issues/1128
 CVE-2025-9805 - https://github.com/simstudioai/sim/issues/1128#issue-3349260976
 CVE-2025-9805 - https://github.com/simstudioai/sim/issues/1128#issuecomment-3226867869
 CVE-2025-9814 - https://github.com/dad-zm/myCVE/issues/3
-CVE-2025-9815 - https://github.com/SwayZGl1tZyyy/n-days/blob/main/batteryKid/README.md
-CVE-2025-9815 - https://github.com/SwayZGl1tZyyy/n-days/blob/main/batteryKid/README.md#proof-of-concepts
 CVE-2025-9829 - https://github.com/dad-zm/myCVE/issues/4
 CVE-2025-9830 - https://github.com/xiaoxinkaishi/cve/issues/1
 CVE-2025-9831 - https://github.com/xiaoxinkaishi/cve/issues/2
@@ -82429,7 +82413,6 @@ CVE-2026-10124 - https://gitee.com/Fengyi-Wang/CVE/issues/IJ9FFG
 CVE-2026-10125 - https://lavender-bicycle-a5a.notion.site/EDIMAX-BR6478ACV2-formPPPoESetup-34b53a41781f80a1b029cb5ca5570afa?source=copy_link
 CVE-2026-10126 - https://lavender-bicycle-a5a.notion.site/EDIMAX-BR6478ACV2-formQoS-34b53a41781f804e9ddfe771c426d9b2?source=copy_link
 CVE-2026-10127 - https://lavender-bicycle-a5a.notion.site/EDIMAX-BR6478ACV2-formStaDrvSetup-34b53a41781f80ce9e66dbf60c71b960?source=copy_link
-CVE-2026-10152 - https://github.com/TaleLin/lin-cms-spring-boot/issues/336
 CVE-2026-10153 - https://gitee.com/westboy/CicadasCMS/issues/IJKWOH
 CVE-2026-10156 - https://github.com/open5gs/open5gs/issues/4480
 CVE-2026-10157 - https://github.com/open5gs/open5gs/issues/4393
@@ -85950,7 +85933,6 @@ CVE-2026-7217 - https://github.com/Deepractice/PromptX/issues/571
 CVE-2026-7218 - https://github.com/xiaohaiyang-ai/TOTOLINK-N300RT-Buffer-Overflow
 CVE-2026-7219 - https://github.com/xiaohaiyang-ai/IoT-Vulnerability-Research/tree/main/Vendors/TOTOLINK/N300RT/formIpQoS-Bof
 CVE-2026-7220 - https://github.com/jackwrichards/FastlyMCP/issues/3
-CVE-2026-7221 - https://github.com/TencentCloudBase/CloudBase-MCP/issues/509
 CVE-2026-7222 - https://github.com/Xmyronn/Stored-Cross-Site-Scripting-XSS-in-Coaching-Management-System.git
 CVE-2026-7223 - https://github.com/BigSweetPotatoStudio/HyperChat/issues/142
 CVE-2026-7224 - https://github.com/fernando-mengali/vulndb-submissions/blob/main/01-vul-SQLI.md
@@ -93076,7 +93058,6 @@ CVE-2023-3800 - https://github.com/wolf-leo/EasyAdmin8/issues/1
 CVE-2023-3803 - https://github.com/GUIqizsq/cve/blob/main/upload_2.md
 CVE-2023-3805 - https://github.com/GUIqizsq/cve/blob/main/login.md
 CVE-2023-3807 - https://github.com/E1CHO/cve_hub/blob/main/Beauty%20Salon%20Management%20System%20-%20vuln%202.pdf
-CVE-2023-3826 - https://github.com/Wkingxc/CVE/blob/master/ibos_OA.md
 CVE-2023-3852 - https://github.com/OpenRapid/rapidcms/issues/1
 CVE-2023-38545 - https://github.com/dbrugman/CVE-2023-38545-POC
 CVE-2023-3871 - https://github.com/nagenanhai/cve/blob/main/1.pdf
@@ -93161,7 +93142,6 @@ CVE-2023-4532 - https://hackerone.com/reports/2084199
 CVE-2023-4534 - https://l6x.notion.site/PoC-9f23bb9757374f82981de81604500d98?pvs=4
 CVE-2023-4544 - https://github.com/jo1995hn/cve/blob/main/s856.md
 CVE-2023-4546 - https://github.com/hutianshuai/CVE/blob/main/information_disclosure.md
-CVE-2023-4555 - https://github.com/TheCyberDiver/Public-Disclosures-CVE-/blob/main/Inventory-Management-System-XSS.md
 CVE-2023-4556 - https://blog.csdn.net/weixin_43864034/article/details/132508000
 CVE-2023-4557 - https://github.com/ZhangXiaoDan1/cve_hub/blob/main/Free%20and%20Open%20Source%20inventory%20management%20system%20-%20vuln%204.pdf
 CVE-2023-4558 - https://github.com/TheCyberDiver/Public-Disclosures-CVE-/blob/main/Inventory%20Management%20System%20SQLi%20staff_data.md
@@ -95584,7 +95564,6 @@ CVE-2025-11123 - https://github.com/noahze01/IoT-vulnerable/blob/main/Tenda/AC18
 CVE-2025-11124 - https://github.com/asd1238525/cve/blob/main/xss4.md#poc
 CVE-2025-11125 - https://github.com/Lianhaorui/Report/blob/main/xss.docx
 CVE-2025-11127 - https://wpscan.com/vulnerability/6432bd1a-6e44-4a3f-890b-df2bd877d626/
-CVE-2025-11130 - https://github.com/SwayZGl1tZyyy/n-days/blob/main/pptp-vpn/README.md
 CVE-2025-11134 - https://github.com/blackcloud411/Cudy_vuln/blob/main/CUDY_TR1200_XSS_Report.docx
 CVE-2025-11135 - https://asciinema.org/a/kTWHQMM7n6QH98gGCW3e7T9xT
 CVE-2025-11136 - https://github.com/electroN1chahaha/YifangCMS-V2.0.0-Remote-Code-Execution-RCE-/issues/1
@@ -98847,7 +98826,6 @@ CVE-2025-8743 - https://github.com/marcelomulder/CVE/blob/main/Scada-LTS/Cross-S
 CVE-2025-8750 - https://github.com/N1n3b9S/cve/issues/13#issue-3266856872
 CVE-2025-8752 - https://gitee.com/wangzhixuan/spring-shiro-training/issues/ICP2ME
 CVE-2025-8755 - https://github.com/N1n3b9S/cve/issues/14#issue-3269039303
-CVE-2025-8756 - https://github.com/TDuckCloud/tduck-platform/issues/28#issue-3269885235
 CVE-2025-8757 - https://www.notion.so/23e54a1113e780569260e231993bdf61
 CVE-2025-8758 - https://www.notion.so/23e54a1113e78009adc9d909b254812b
 CVE-2025-8759 - https://www.notion.so/23f54a1113e7801e944ec65a2f7c5448
@@ -102483,10 +102461,6 @@ CVE-2019-11211 - http://www.tibco.com/services/support/advisories
 CVE-2019-11212 - http://www.tibco.com/services/support/advisories
 CVE-2019-11228 - https://github.com/go-gitea/gitea/releases/tag/v1.8.0-rc3
 CVE-2019-11229 - https://github.com/go-gitea/gitea/releases/tag/v1.8.0-rc3
-CVE-2019-11319 - https://github.com/TeamSeri0us/pocs/blob/master/iot/motorola.pdf
-CVE-2019-11320 - https://github.com/TeamSeri0us/pocs/blob/master/iot/motorola.pdf
-CVE-2019-11321 - https://github.com/TeamSeri0us/pocs/blob/master/iot/motorola.pdf
-CVE-2019-11322 - https://github.com/TeamSeri0us/pocs/blob/master/iot/motorola.pdf
 CVE-2019-11350 - https://github.com/binary1985/VulnerabilityDisclosure/blob/master/CloudBees%20Jenkins%20Operations%20Center%20Password%20Disclosure
 CVE-2019-11350 - https://raw.githubusercontent.com/binary1985/VulnerabilityDisclosure/master/CloudBees%20Jenkins%20Operations%20Center%20Password%20Disclosure
 CVE-2019-11354 - http://gamasutra.com/view/news/340907/A_nowfixed_Origin_vulnerability_potentially_opened_the_client_to_hackers.php
@@ -110602,7 +110576,6 @@ CVE-2025-9234 - https://github.com/marcelomulder/CVE/blob/main/Scada-LTS/CVE-202
 CVE-2025-9306 - https://vuldb.com/?id.320911
 CVE-2025-9375 - https://github.com/martinblech/xmltodict/issues/377#issuecomment-3255691923
 CVE-2025-9404 - https://github.com/CVE-Hunters/CVE/blob/main/Scada-LTS/Stored%20XSS%20endpoint%20pointHierarchySLTS%20parameter%20title.md
-CVE-2025-9474 - https://github.com/SwayZGl1tZyyy/n-days/blob/main/mihomo-party/README.md
 CVE-2025-9481 - https://github.com/wudipjq/my_vuln/blob/main/Linksys/vuln_35/35.md
 CVE-2025-9575 - https://github.com/wudipjq/my_vuln/blob/main/Linksys/vuln_13/13.md
 CVE-2025-9677 - https://github.com/KMov-g/androidapps/blob/main/com.duige.hzw.multilingual.md

@@ -19980,7 +19980,6 @@ CVE-2023-3804 - https://github.com/yueying638/cve/blob/main/upload.md
 CVE-2023-3805 - https://github.com/GUIqizsq/cve/blob/main/login.md
 CVE-2023-3807 - https://github.com/E1CHO/cve_hub/blob/main/Beauty%20Salon%20Management%20System%20-%20vuln%202.pdf
 CVE-2023-3814 - https://wpscan.com/vulnerability/ca954ec6-6ebd-4d72-a323-570474e2e339
-CVE-2023-3826 - https://github.com/Wkingxc/CVE/blob/master/ibos_OA.md
 CVE-2023-3836 - https://github.com/qiuhuihk/cve/blob/main/upload.md
 CVE-2023-3852 - https://github.com/OpenRapid/rapidcms/issues/1
 CVE-2023-38545 - https://github.com/dbrugman/CVE-2023-38545-POC
@@ -20158,7 +20157,6 @@ CVE-2023-4545 - https://github.com/siyu15/cve/blob/main/sql.md
 CVE-2023-4546 - https://github.com/hutianshuai/CVE/blob/main/information_disclosure.md
 CVE-2023-4549 - https://wpscan.com/vulnerability/8aebead0-0eab-4d4e-8ceb-8fea0760374f
 CVE-2023-45540 - https://github.com/soundarkutty/HTML-Injection/blob/main/POC.md
-CVE-2023-4555 - https://github.com/TheCyberDiver/Public-Disclosures-CVE-/blob/main/Inventory-Management-System-XSS.md
 CVE-2023-4556 - https://blog.csdn.net/weixin_43864034/article/details/132508000
 CVE-2023-4557 - https://github.com/ZhangXiaoDan1/cve_hub/blob/main/Free%20and%20Open%20Source%20inventory%20management%20system%20-%20vuln%204.pdf
 CVE-2023-4558 - https://github.com/TheCyberDiver/Public-Disclosures-CVE-/blob/main/Inventory%20Management%20System%20SQLi%20staff_data.md
@@ -24354,7 +24352,6 @@ CVE-2024-7692 - https://wpscan.com/vulnerability/5e9f98ef-5a44-4a0c-b9cd-ce750be
 CVE-2024-7704 - https://github.com/Dreamy-elfland/240731
 CVE-2024-7705 - https://github.com/DeepMountains/Mirage/blob/main/CVE12-1.md
 CVE-2024-7706 - https://github.com/DeepMountains/Mirage/blob/main/CVE12-2.md
-CVE-2024-7707 - https://github.com/VodkaVortex/IoT/blob/main/formSafeEmailFilter.md
 CVE-2024-7713 - https://wpscan.com/vulnerability/061eab97-4a84-4738-a1e8-ef9a1261ff73/
 CVE-2024-7714 - https://wpscan.com/vulnerability/04447c76-a61b-4091-a510-c76fc8ca5664/
 CVE-2024-7716 - https://wpscan.com/vulnerability/cfa67c43-6f09-43f5-9fbe-32a98a82f548/
@@ -25341,7 +25338,6 @@ CVE-2025-10667 - https://github.com/S77code/CVE1/issues/1
 CVE-2025-10668 - https://github.com/S77code/CVE1/issues/3
 CVE-2025-10669 - https://github.com/mikecole-mg/security_findings/blob/main/airsonic-advanced/airsonic-rce.md
 CVE-2025-10670 - https://github.com/yihaofuweng/cve/issues/25
-CVE-2025-10672 - https://github.com/SwayZGl1tZyyy/n-days/blob/main/AIBattery-Charge-Limiter/README.md#proof-of-concept
 CVE-2025-10673 - https://github.com/windhxy/CVE-my/issues/1
 CVE-2025-10674 - https://www.cnblogs.com/aibot/p/19063429
 CVE-2025-10675 - https://www.cnblogs.com/aibot/p/19063430
@@ -25460,7 +25456,6 @@ CVE-2025-10857 - https://www.yuque.com/yuqueyonghuexlgkz/zepczx/un2cmghguhg4aogn
 CVE-2025-10873 - https://wpscan.com/vulnerability/2eb133db-e1c5-409e-94f8-b71edca5db16/
 CVE-2025-10874 - https://wpscan.com/vulnerability/171ba43f-55b6-471d-af0a-be553baf639a/
 CVE-2025-10903 - https://hackerone.com/reports/3292470
-CVE-2025-10906 - https://github.com/SwayZGl1tZyyy/n-days/blob/main/Endurance/README.md#proof-of-concept
 CVE-2025-10909 - https://karinagante.github.io/cve-2025-10909/#proof-of-concept-poc
 CVE-2025-10915 - https://wpscan.com/vulnerability/dab3a804-9027-4b4a-b61c-61b562045bc4/
 CVE-2025-10916 - https://wpscan.com/vulnerability/81c23998-1abb-495f-890a-79624a4cab9a/
@@ -25603,7 +25598,6 @@ CVE-2025-11124 - https://github.com/asd1238525/cve/blob/main/xss4.md#poc
 CVE-2025-11125 - https://github.com/Lianhaorui/Report/blob/main/xss.docx
 CVE-2025-11127 - https://wpscan.com/vulnerability/6432bd1a-6e44-4a3f-890b-df2bd877d626/
 CVE-2025-1113 - https://gitee.com/taisan/tarzan-cms/issues/IBHZ0J
-CVE-2025-11130 - https://github.com/SwayZGl1tZyyy/n-days/blob/main/pptp-vpn/README.md
 CVE-2025-11134 - https://github.com/blackcloud411/Cudy_vuln/blob/main/CUDY_TR1200_XSS_Report.docx
 CVE-2025-11135 - https://asciinema.org/a/kTWHQMM7n6QH98gGCW3e7T9xT
 CVE-2025-11136 - https://github.com/electroN1chahaha/YifangCMS-V2.0.0-Remote-Code-Execution-RCE-/issues/1
@@ -28469,7 +28463,6 @@ CVE-2025-4702 - https://github.com/baixiaobai001/myCVE/issues/1
 CVE-2025-4703 - https://github.com/baixiaobai001/myCVE/issues/2
 CVE-2025-4704 - https://github.com/baixiaobai001/myCVE/issues/3
 CVE-2025-4705 - https://github.com/baixiaobai001/myCVE/issues/4
-CVE-2025-4706 - https://github.com/Welhelm666/666/issues/2
 CVE-2025-4707 - https://github.com/lanxia0/CVE/issues/1
 CVE-2025-4708 - https://github.com/lanxia0/CVE/issues/2
 CVE-2025-4709 - https://github.com/lanxia0/CVE/issues/3
@@ -30183,7 +30176,6 @@ CVE-2025-8751 - https://news.fmisec.com/self-html-injection-in-total-webshield-c
 CVE-2025-8752 - https://gitee.com/wangzhixuan/spring-shiro-training/issues/ICP2ME
 CVE-2025-8753 - https://github.com/linlinjava/litemall/issues/564#issue-3267670352
 CVE-2025-8755 - https://github.com/N1n3b9S/cve/issues/14#issue-3269039303
-CVE-2025-8756 - https://github.com/TDuckCloud/tduck-platform/issues/28#issue-3269885235
 CVE-2025-8757 - https://www.notion.so/23e54a1113e780569260e231993bdf61
 CVE-2025-8758 - https://www.notion.so/23e54a1113e78009adc9d909b254812b
 CVE-2025-8759 - https://www.notion.so/23f54a1113e7801e944ec65a2f7c5448
@@ -30477,7 +30469,6 @@ CVE-2025-9469 - https://github.com/zhuyi-hz/cve/issues/14
 CVE-2025-9470 - https://github.com/zhuyi-hz/cve/issues/13
 CVE-2025-9471 - https://github.com/zhuyi-hz/cve/issues/12
 CVE-2025-9472 - https://github.com/zhuyi-hz/cve/issues/11
-CVE-2025-9474 - https://github.com/SwayZGl1tZyyy/n-days/blob/main/mihomo-party/README.md#proof-of-concept-1
 CVE-2025-9475 - https://github.com/lrjbsyh/CVE_Hunter/issues/4#issue-3320892747
 CVE-2025-9476 - https://github.com/lrjbsyh/CVE_Hunter/issues/5#issue-3322736605
 CVE-2025-9481 - https://github.com/wudipjq/my_vuln/blob/main/Linksys/vuln_35/35.md#poc
@@ -30668,7 +30659,6 @@ CVE-2025-9800 - https://github.com/simstudioai/sim/issues/958#issue-3320696271
 CVE-2025-9801 - https://github.com/simstudioai/sim/issues/959#issue-3320697951
 CVE-2025-9805 - https://github.com/simstudioai/sim/issues/1128#issue-3349260976
 CVE-2025-9814 - https://github.com/dad-zm/myCVE/issues/3
-CVE-2025-9815 - https://github.com/SwayZGl1tZyyy/n-days/blob/main/batteryKid/README.md#proof-of-concepts
 CVE-2025-9825 - https://hackerone.com/reports/3319800
 CVE-2025-9828 - https://github.com/IOTRes/IOT_Firmware_Update/blob/main/Tenda/CP6.md
 CVE-2025-9829 - https://github.com/dad-zm/myCVE/issues/4
@@ -30810,7 +30800,6 @@ CVE-2026-10124 - https://gitee.com/Fengyi-Wang/CVE/issues/IJ9FFG
 CVE-2026-10125 - https://lavender-bicycle-a5a.notion.site/EDIMAX-BR6478ACV2-formPPPoESetup-34b53a41781f80a1b029cb5ca5570afa?source=copy_link
 CVE-2026-10126 - https://lavender-bicycle-a5a.notion.site/EDIMAX-BR6478ACV2-formQoS-34b53a41781f804e9ddfe771c426d9b2?source=copy_link
 CVE-2026-10127 - https://lavender-bicycle-a5a.notion.site/EDIMAX-BR6478ACV2-formStaDrvSetup-34b53a41781f80ce9e66dbf60c71b960?source=copy_link
-CVE-2026-10152 - https://github.com/TaleLin/lin-cms-spring-boot/issues/336
 CVE-2026-10153 - https://gitee.com/westboy/CicadasCMS/issues/IJKWOH
 CVE-2026-10155 - https://github.com/kevin57545/CVE/blob/main/README.md
 CVE-2026-10156 - https://github.com/open5gs/open5gs/issues/4480
@@ -34960,7 +34949,6 @@ CVE-2026-7217 - https://github.com/Deepractice/PromptX/issues/571
 CVE-2026-7218 - https://github.com/xiaohaiyang-ai/TOTOLINK-N300RT-Buffer-Overflow
 CVE-2026-7219 - https://github.com/xiaohaiyang-ai/IoT-Vulnerability-Research/tree/main/Vendors/TOTOLINK/N300RT/formIpQoS-Bof
 CVE-2026-7220 - https://github.com/jackwrichards/FastlyMCP/issues/3
-CVE-2026-7221 - https://github.com/TencentCloudBase/CloudBase-MCP/issues/509
 CVE-2026-7222 - https://github.com/Xmyronn/Stored-Cross-Site-Scripting-XSS-in-Coaching-Management-System.git
 CVE-2026-7223 - https://github.com/BigSweetPotatoStudio/HyperChat/issues/142
 CVE-2026-7224 - https://github.com/fernando-mengali/vulndb-submissions/blob/main/01-vul-SQLI.md
