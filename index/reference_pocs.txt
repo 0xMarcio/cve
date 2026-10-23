@@ -23821,7 +23821,6 @@ CVE-2024-5983 - https://github.com/LiuYongXiang-git/cve/issues/2
 CVE-2024-5984 - https://github.com/LiuYongXiang-git/cve/issues/3
 CVE-2024-5985 - https://github.com/CveSecLook/cve/issues/45
 CVE-2024-6007 - https://github.com/SecureF1sh/findings/blob/main/ns_sqli.md
-CVE-2024-6008 - https://github.com/1902zdq/cve/issues/1
 CVE-2024-6009 - https://github.com/AutoZhou1/cve/issues/1
 CVE-2024-6013 - https://github.com/gabriel202212/cve/issues/1
 CVE-2024-6014 - https://github.com/gabriel202212/cve/issues/2
@@ -26255,7 +26254,6 @@ CVE-2025-13244 - https://github.com/asd1238525/cve/blob/main/xss6.md
 CVE-2025-13245 - https://github.com/asd1238525/cve/blob/main/xss7.md
 CVE-2025-13246 - https://github.com/shsuishang/modulithshop/issues/1
 CVE-2025-13247 - https://github.com/L-Bitter/CVE/issues/3
-CVE-2025-13248 - https://github.com/2H-K/mycve/issues/2
 CVE-2025-13249 - https://github.com/rooboot501/my-project/blob/main/jiousi.md
 CVE-2025-13250 - https://github.com/Xzzz111/exps/blob/main/archives/datax-web-broken-access-control-1/report.md
 CVE-2025-13251 - https://github.com/Xzzz111/exps/blob/main/archives/datax-web-sql-injection-1/report.md
@@ -26441,11 +26439,6 @@ CVE-2025-13929 - https://hackerone.com/reports/3441004
 CVE-2025-13948 - https://gist.github.com/H2u8s/a51ac1fe38d62746d1425b70ff49420c
 CVE-2025-13949 - https://github.com/yzlala1147/cve/issues/1
 CVE-2025-13958 - https://wpscan.com/vulnerability/0d4bb338-f0d0-4b57-8664-1b8cba7cbe52/
-CVE-2025-14004 - https://github.com/24-2021/vul/blob/main/xunruicms-email_test-SSRF/xunruicms-email_test-SSRF.md
-CVE-2025-14005 - https://github.com/24-2021/vul/blob/main/xunruicms-Basic%20Settings-XSS/xunruicms-Basic%20Settings-XSS.md
-CVE-2025-14006 - https://github.com/24-2021/vul/blob/main/xunruicms-Data%20Validation-XSS/xunruicms-Data%20Validation-XSS.md
-CVE-2025-14007 - https://github.com/24-2021/vul/blob/main/xunruicms-site_domain%2Bmobile_demo-URL%20redirection%20causing%20remote%20XSS/xunruicms-site_domain%2Bmobile_demo-URL%20redirection%20causing%20remote%20XSS.md
-CVE-2025-14008 - https://github.com/24-2021/vul/blob/main/xunruicms-test_site_domain-SSRF/xunruicms-test_site_domain-SSRF.md
 CVE-2025-1401 - https://wpscan.com/vulnerability/072620a2-76db-49d2-aae5-1170c409f7e7/
 CVE-2025-14015 - https://github.com/HungryGoogle/log_attack/blob/main/index2/2.md
 CVE-2025-14016 - https://github.com/Hwwg/cve/issues/17
@@ -28382,11 +28375,8 @@ CVE-2025-4300 - https://github.com/6BXK6/cve/issues/1
 CVE-2025-4301 - https://github.com/6BXK6/cve/issues/2
 CVE-2025-4302 - https://wpscan.com/vulnerability/19f67d6e-4ffe-4126-ac42-fb23c5017a3e
 CVE-2025-4303 - https://github.com/eneover/myCVE/issues/1
-CVE-2025-4304 - https://github.com/3507998897/myCVE/issues/3
 CVE-2025-4305 - https://github.com/caigo8/CVE-md/blob/main/%E8%9A%82%E8%9A%81%E6%88%90%E7%BB%A9%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F/%E4%BB%BB%E6%84%8F%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0RCE.md
 CVE-2025-4306 - https://github.com/xiguala123/myCVE/issues/3
-CVE-2025-4307 - https://github.com/3507998897/myCVE/issues/4
-CVE-2025-4308 - https://github.com/3507998897/myCVE/issues/5
 CVE-2025-4310 - https://github.com/ZhaoxuepengS/CVE-vul/issues/1
 CVE-2025-4311 - https://github.com/ZhaoxuepengS/CVE-vul/issues/2
 CVE-2025-4312 - https://github.com/Samsamue1/CVE/issues/1
@@ -28429,8 +28419,6 @@ CVE-2025-44531 - https://github.com/yangting111/BLE_TEST/blob/main/result/PoC/Re
 CVE-2025-4455 - https://gist.github.com/shellkraft/d7db265b53115d52a4ca5bffe5e9c6e4
 CVE-2025-44557 - https://github.com/yangting111/BLE_TEST/blob/main/result/PoC/Cypress/Auth_bypass.md
 CVE-2025-44559 - https://github.com/yangting111/BLE_TEST/blob/main/result/PoC/Realtek/Cross-layer_Interaction_Deadlock.md
-CVE-2025-4456 - https://github.com/3507998897/myCVE/issues/7
-CVE-2025-4457 - https://github.com/3507998897/myCVE/issues/8
 CVE-2025-4458 - https://github.com/ABC-YOLO/cve/blob/main/cve2.md
 CVE-2025-4459 - https://github.com/ABC-YOLO/cve/blob/main/cve3.md
 CVE-2025-4460 - https://github.com/fizz-is-on-the-way/Iot_vuls/tree/main/N150RT/XSS_Url_filering
@@ -28779,7 +28767,6 @@ CVE-2025-5109 - https://fitoxs.com/exploit/exploit-0420d1a7d4e6b45cf1f0b87c2d580
 CVE-2025-5110 - https://fitoxs.com/exploit/exploit-325e5cf47259d3b511d301c84b53946fd1b78226df7291d441103ef5295f216e.txt
 CVE-2025-5111 - https://fitoxs.com/exploit/exploit-b08607fc683b518b37423881e5ee902fdb2a7c04ac57f7ff725df240e171f5e3.txt
 CVE-2025-5112 - https://fitoxs.com/exploit/exploit-47929b46e253abc8390610b6ad91d5dc9f2d64a755e6fdb51d5f8f92e37947e2.txt
-CVE-2025-5114 - https://github.com/3em0/cve_repo/blob/main/zentaopms/Phar%20Bypass%20Vulnerability%20in%20ZenTao.md#exploitation
 CVE-2025-5119 - https://github.com/404heihei/CVE/issues/5
 CVE-2025-5121 - https://hackerone.com/reports/3153908
 CVE-2025-5124 - https://github.com/zeke2997/CVE_request_Sony#3-poc
@@ -28965,10 +28952,7 @@ CVE-2025-54966 - https://www.baesystems.com/en-us/product/geospatial-exploitatio
 CVE-2025-54967 - https://www.baesystems.com/en-us/product/geospatial-exploitation-products
 CVE-2025-54968 - https://www.baesystems.com/en-us/product/geospatial-exploitation-products
 CVE-2025-54969 - https://www.baesystems.com/en-us/product/geospatial-exploitation-products
-CVE-2025-5497 - https://github.com/3em0/cve_repo/blob/main/phpwcms/phar%20vulnerability%20in%20phpwcms.md
 CVE-2025-54970 - https://www.baesystems.com/en-us/product/geospatial-exploitation-products
-CVE-2025-5498 - https://github.com/3em0/cve_repo/blob/main/phpwcms/cnt21.readform.inc.php%23is_file.md
-CVE-2025-5499 - https://github.com/3em0/cve_repo/blob/main/phpwcms/image_resized%23getimagesize.md
 CVE-2025-5500 - https://github.com/KMov-g/androidapps/blob/main/com.xiaoxun.xunoversea.mibrofit.md#steps-to-reproduce
 CVE-2025-5501 - https://github.com/user-attachments/files/20362183/AMF.crash.due.to.pathswitchrequest.zip
 CVE-2025-5502 - https://github.com/Yhuanhuan01/TOTOlink/blob/main/TOTOlink-x15.md#poc1-code-injection
@@ -29458,7 +29442,6 @@ CVE-2025-6470 - https://github.com/W2-l0mechan1c/cve/issues/1
 CVE-2025-6471 - https://github.com/ganzhi-qcy/cve/issues/11
 CVE-2025-6472 - https://github.com/ganzhi-qcy/cve/issues/10
 CVE-2025-6473 - https://github.com/tuooo/CVE/issues/17
-CVE-2025-6474 - https://github.com/1609624781/cve/issues/1
 CVE-2025-6475 - https://github.com/RaulPazemecxas/PoCVulDb/blob/main/README8.md
 CVE-2025-6476 - https://github.com/alc9700jmo/CVE/issues/15
 CVE-2025-6477 - https://github.com/RaulPazemecxas/PoCVulDb/blob/main/README9.md
@@ -34805,11 +34788,6 @@ CVE-2026-65711 - https://gist.github.com/sermikr0/16bcbc799dc33d39d5714db9bbcbdb
 CVE-2026-6572 - https://vulnplus-note.wetolink.com/share/PLCI4v0BWaF8
 CVE-2026-6573 - https://vulnplus-note.wetolink.com/share/1QZ4NE0oTRIc
 CVE-2026-6574 - https://vulnplus-note.wetolink.com/share/VhoNkMja5u7A
-CVE-2026-6576 - https://github.com/3em0/cve_repo/blob/main/DjangoBlog/Vuln-1-WeChat-Bot-RCE.md
-CVE-2026-6577 - https://github.com/3em0/cve_repo/blob/main/DjangoBlog/Vuln-2-Unauthenticated-GPS-Data-Injection.md
-CVE-2026-6578 - https://github.com/3em0/cve_repo/blob/main/DjangoBlog/Vuln-3-Hardcoded-Django-SECRET_KEY.md
-CVE-2026-6579 - https://github.com/3em0/cve_repo/blob/main/DjangoBlog/Vuln-4-Unauthenticated-Cache-Purge.md
-CVE-2026-6580 - https://github.com/3em0/cve_repo/blob/main/DjangoBlog/Vuln-5-Hardcoded-Amap-API-Key.md
 CVE-2026-6581 - https://github.com/hmKunlun/H3Cc/blob/main/h3c.md
 CVE-2026-6582 - https://gist.github.com/YLChen-007/f38b32a9cd0c9722e04a716ca4dbf9d5
 CVE-2026-6583 - https://gist.github.com/YLChen-007/ba28ac92d9fd011d40560dbf2bac39ce
@@ -34852,9 +34830,6 @@ CVE-2026-66050 - https://github.com/cduram/NotCVE-2026-0009
 CVE-2026-6606 - https://gist.github.com/YLChen-007/4e589eec07446726612dc416a7d80820
 CVE-2026-6607 - https://gist.github.com/YLChen-007/87216a2d97a882d619e11dc67cd473b5
 CVE-2026-6608 - https://gist.github.com/YLChen-007/e45039d23e698222d887ee09735d9d36
-CVE-2026-6609 - https://github.com/3em0/cve_repo/blob/main/DjangoBlog/Vuln-6-OAuth-Email-Binding-IDOR.md
-CVE-2026-6610 - https://github.com/3em0/cve_repo/blob/main/DjangoBlog/Vuln-12-DEBUG-Enabled-Hardcoded-DB-Creds.md
-CVE-2026-6611 - https://github.com/3em0/cve_repo/blob/main/DjangoBlog/Vuln-11-Weak-File-Upload-Auth.md
 CVE-2026-6612 - https://gist.github.com/YLChen-007/d033e9d4d23e0832b9ede71dc545ac9a
 CVE-2026-6613 - https://gist.github.com/YLChen-007/1d87985b274ce22c4294726d7758df8e
 CVE-2026-6614 - https://gist.github.com/YLChen-007/ac40da2253c7364d043c0dfe3275190b
@@ -35585,10 +35560,6 @@ CVE-2026-7842 - https://wpscan.com/vulnerability/210303c4-0964-4a01-ac8e-13d7c7f
 CVE-2026-78430 - https://github.com/sworddut/mcp-ffmpeg-helper/issues/6
 CVE-2026-78434 - https://github.com/faveosuite/faveo-helpdesk/issues/8346
 CVE-2026-78435 - https://github.com/faveosuite/faveo-helpdesk/issues/8343
-CVE-2026-7844 - https://github.com/3em0/cve_repo/blob/main/Langchain-Chatchat/Vuln-4-Missing-Auth-File-Endpoints.md
-CVE-2026-7845 - https://github.com/3em0/cve_repo/blob/main/Langchain-Chatchat/Vuln-1-tobytes-Hash-Collision.md
-CVE-2026-7846 - https://github.com/3em0/cve_repo/blob/main/Langchain-Chatchat/Vuln-2-Silent-File-Overwrite.md
-CVE-2026-7847 - https://github.com/3em0/cve_repo/blob/main/Langchain-Chatchat/Vuln-3-Predictable-File-ID.md
 CVE-2026-7850 - https://wpscan.com/vulnerability/30f408dd-4b9a-438c-8dc4-c6daafe237fe/
 CVE-2026-7851 - https://github.com/draw-ctf/report/blob/main/DI-8100/yyxz_dlink_asp_overflow.md
 CVE-2026-7853 - https://github.com/draw-ctf/report/blob/main/DI-8100/auto_reboot_asp_overflow.md
