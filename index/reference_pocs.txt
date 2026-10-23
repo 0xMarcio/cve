@@ -26576,7 +26576,6 @@ CVE-2025-14572 - https://github.com/alc9700jmo/CVE/issues/21
 CVE-2025-14578 - https://github.com/ltranquility/CVE/issues/23
 CVE-2025-14579 - https://wpscan.com/vulnerability/1ff8ea2b-6513-4d5c-b7ea-9ab39c9ea9c6/
 CVE-2025-14582 - https://github.com/CHENCHOUCHOU/vuln/issues/2
-CVE-2025-14583 - https://github.com/CHENCHOUCHOU/vuln/issues/1
 CVE-2025-14584 - https://github.com/Wegetmore/CVE/issues/1
 CVE-2025-14585 - https://github.com/Ggeee3/CVE/issues/1
 CVE-2025-14586 - https://github.com/awigwu76/TOTOLINK_X5000R/blob/main/1.md
@@ -28386,7 +28385,6 @@ CVE-2025-4329 - https://github.com/Q16G/cve_detail/blob/main/74cms/fileRead.md
 CVE-2025-4331 - https://github.com/cybersharmaji/Online-Student-Clearance-System/blob/main/sql_injection_time.md
 CVE-2025-4332 - https://github.com/ctf2868/pjwww/issues/1
 CVE-2025-4333 - https://github.com/Hao-Ni/CVE/issues/1
-CVE-2025-4340 - https://github.com/CH13hh/tmp_store_cc/blob/main/tt/1.md
 CVE-2025-4341 - https://github.com/CH13hh/tmp_store_cc/blob/main/DIR-880L/1.md
 CVE-2025-43510 - https://cloud.google.com/blog/topics/threat-intelligence/darksword-ios-exploit-chain/
 CVE-2025-4352 - https://github.com/eeeeeekkkkkkkk/POC/blob/main/%E9%BB%84%E9%87%91%E9%80%9A%E4%BA%8C%E7%BA%A7%E7%B3%BB%E7%BB%9F%E4%B8%89%E4%BB%A3%E7%AE%A1%E7%90%86%E7%AB%AF%E7%B3%BB%E7%BB%9FtcEntrFlowSelect%E6%8E%A5%E5%8F%A3%E5%AD%98%E5%9C%A8SQL%E6%B3%A8%E5%85%A5.md
@@ -28443,7 +28441,6 @@ CVE-2025-4491 - https://github.com/wyl091256/CVE/issues/11
 CVE-2025-4492 - https://github.com/wyl091256/CVE/issues/12
 CVE-2025-4494 - https://github.com/JAdmin-JAVA/JAdmin/issues/1#issue-3012501470
 CVE-2025-4495 - https://github.com/JAdmin-JAVA/JAdmin/issues/2#issue-3012512653
-CVE-2025-4496 - https://github.com/CH13hh/tmp_store_cc/blob/main/tt/ta/1.md
 CVE-2025-4497 - https://github.com/zzzxc643/cve/blob/main/Banking_System.md
 CVE-2025-4498 - https://github.com/zzzxc643/cve/blob/main/Bus%20Management%20System.md
 CVE-2025-4499 - https://github.com/zzzxc643/cve/blob/main/Hospital%20Management%20System.md
@@ -28537,11 +28534,6 @@ CVE-2025-4724 - https://github.com/Lena-lyy/SQL/issues/1
 CVE-2025-4725 - https://github.com/Lena-lyy/SQL/issues/2
 CVE-2025-4726 - https://github.com/Lena-lyy/SQL/issues/3
 CVE-2025-4728 - https://github.com/Lena-lyy/SQL/issues/4
-CVE-2025-4729 - https://github.com/CH13hh/tmp_store_cc/blob/main/tt/ta/2.md
-CVE-2025-4730 - https://github.com/CH13hh/tmp_store_cc/blob/main/tt/ta/3.md
-CVE-2025-4731 - https://github.com/CH13hh/tmp_store_cc/blob/main/tt/ta/4.md
-CVE-2025-4732 - https://github.com/CH13hh/tmp_store_cc/blob/main/tt/ta/6.md
-CVE-2025-4733 - https://github.com/CH13hh/tmp_store_cc/blob/main/tt/ta/7.md
 CVE-2025-4734 - https://github.com/2319797429/CVE/issues/1
 CVE-2025-4735 - https://github.com/2319797429/CVE/issues/2
 CVE-2025-4736 - https://github.com/bleakTS/myCVE/issues/4
@@ -28597,17 +28589,9 @@ CVE-2025-4817 - https://github.com/Xiaoyi-ing/CVE/issues/9
 CVE-2025-4818 - https://github.com/Xiaoyi-ing/CVE/issues/10
 CVE-2025-4819 - https://github.com/chujianxin0101/vuln/issues/4
 CVE-2025-4823 - https://github.com/CH13hh/tmp_store_cc/blob/main/toto/1.md
-CVE-2025-4824 - https://github.com/CH13hh/tmp_store_cc/blob/main/toto/2.md
-CVE-2025-4825 - https://github.com/CH13hh/tmp_store_cc/blob/main/toto/4.md
-CVE-2025-4826 - https://github.com/CH13hh/tmp_store_cc/blob/main/toto/5.md
-CVE-2025-4827 - https://github.com/CH13hh/tmp_store_cc/blob/main/toto/6.md
-CVE-2025-4829 - https://github.com/CH13hh/tmp_store_cc/blob/main/toto/7.md
-CVE-2025-4830 - https://github.com/CH13hh/tmp_store_cc/blob/main/toto/8.md
-CVE-2025-4831 - https://github.com/CH13hh/tmp_store_cc/blob/main/toto/9.md
 CVE-2025-4832 - https://github.com/CH13hh/tmp_store_cc/blob/main/toto/10.md
 CVE-2025-4833 - https://github.com/CH13hh/tmp_store_cc/blob/main/toto/11.md
 CVE-2025-4834 - https://github.com/CH13hh/tmp_store_cc/blob/main/toto/12.md
-CVE-2025-4835 - https://github.com/CH13hh/tmp_store_cc/blob/main/toto/13.md
 CVE-2025-4836 - https://github.com/Aiyakami/CVE-1/issues/1
 CVE-2025-4837 - https://github.com/hhhanxx/attack/issues/7
 CVE-2025-4838 - https://github.com/ShenxiuSec/cve-proofs/blob/main/POC-20250510-01.md
@@ -28621,9 +28605,6 @@ CVE-2025-4845 - https://fitoxs.com/exploit/exploit-9e4402fce85658d445174b5c4f8df
 CVE-2025-4846 - https://fitoxs.com/exploit/exploit-e7cb64fdddd4ab031f57007e733602f76b425cd10f6f4859f27767c3657c0a49.txt
 CVE-2025-4847 - https://fitoxs.com/exploit/exploit-6f163f955398f8c30e5a268549120ae07caea315e65a6af636072064b431c94f.txt
 CVE-2025-4848 - https://fitoxs.com/exploit/exploit-3f3419055fcb21a0a640dd7b8d10d4167188d325652b9242eb38079a76d0bf57.txt
-CVE-2025-4849 - https://github.com/CH13hh/tmp_store_cc/blob/main/tt/ta/m1.md
-CVE-2025-4850 - https://github.com/CH13hh/tmp_store_cc/blob/main/tt/ta/m2.md
-CVE-2025-4851 - https://github.com/CH13hh/tmp_store_cc/blob/main/tt/ta/m3.md
 CVE-2025-4852 - https://github.com/fizz-is-on-the-way/Iot_vuls/tree/main/A3002RU_V2/XSS_VPN
 CVE-2025-4858 - https://github.com/fizz-is-on-the-way/Iot_vuls/tree/main/DAP-2695/XSS_ARP_Spoofing_Prevention
 CVE-2025-4859 - https://github.com/fizz-is-on-the-way/Iot_vuls/tree/main/DAP-2695/XSS_MAC_Bypass
@@ -28903,7 +28884,6 @@ CVE-2025-5404 - https://github.com/rllvusgnzm98/Report/blob/main/blogbook/BlogBo
 CVE-2025-5405 - https://github.com/rllvusgnzm98/Report/blob/main/blogbook/BlogBook%20post.php%20Stored%20Cross-Site%20Scripting%20(XSS)%20in%20Comment%20Functionality%20Leading%20to%20Admin%20and%20User%20Account%20Takeover.md
 CVE-2025-5406 - https://github.com/rllvusgnzm98/Report/blob/main/blogbook/BlogBook%20posts.php%20add_post%20post_image%20Parameter%20Unrestricted%20Upload.md
 CVE-2025-5407 - https://github.com/rllvusgnzm98/Report/blob/main/blogbook/BlogBook%20Stored%20XSS%20in%20User%20Registration%20via%20fullname%20Parameter%20Leading%20to%20Admin%20Account%20Takeover.md
-CVE-2025-5408 - https://github.com/CH13hh/tmp_store_cc/blob/main/wavlink/1.md
 CVE-2025-5409 - https://github.com/Stolichnayer/mist-ce-account-takeover
 CVE-2025-5410 - https://github.com/Stolichnayer/mist-ce-csrf
 CVE-2025-5411 - https://github.com/Stolichnayer/mist-ce-xss
@@ -29651,9 +29631,6 @@ CVE-2025-6925 - https://github.com/ShenxiuSec/cve-proofs/blob/main/POC-20250620-
 CVE-2025-6931 - http://cdn2.v50to.cc/dlink/DCS-7517_B1_FW_v2.02.01/report_1.pdf
 CVE-2025-6932 - http://cdn2.v50to.cc/dlink/DCS-7517_B1_FW_v2.02.01/report_2.pdf
 CVE-2025-6935 - https://github.com/dragonghost2025/cve/issues/9
-CVE-2025-6936 - https://github.com/Catcheryp/CVE/issues/2
-CVE-2025-6937 - https://github.com/Catcheryp/CVE/issues/3
-CVE-2025-6938 - https://github.com/Catcheryp/CVE/issues/4
 CVE-2025-6939 - https://github.com/awindog/cve/blob/main/688/30.md
 CVE-2025-6940 - https://github.com/awindog/cve/blob/main/688/27.md#poc
 CVE-2025-6945 - https://hackerone.com/reports/3173458
@@ -29784,7 +29761,6 @@ CVE-2025-7178 - https://github.com/kn1g78/cve/blob/main/food.md
 CVE-2025-7179 - https://github.com/kobeforever26/cve/issues/1
 CVE-2025-7180 - https://github.com/kn1g78/cve/blob/main/staff1/staff1.md
 CVE-2025-7181 - https://github.com/kn1g78/cve/blob/main/staff2/staff2.md
-CVE-2025-7182 - https://github.com/Catcheryp/CVE/issues/5
 CVE-2025-7183 - https://github.com/To-LingJing/CVE-Issues/issues/3
 CVE-2025-7184 - https://github.com/HeDunSec/cve/issues/2
 CVE-2025-7185 - https://github.com/HeDunSec/cve/issues/1
@@ -30175,7 +30151,6 @@ CVE-2025-8344 - https://github.com/openviglet/shio/issues/1029#issue-3239422554
 CVE-2025-8346 - https://github.com/CVE-Hunters/CVE/blob/main/i-educar/CVE-2025-8346.md
 CVE-2025-8347 - https://github.com/qiantx/cve/blob/main/CVE2.md
 CVE-2025-8348 - https://github.com/qiantx/cve/blob/main/cve3.md
-CVE-2025-8365 - https://github.com/CVE-Hunters/CVE/blob/main/i-educar/Stored%20Cross-Site%20Scripting%20XSS%20in%20atendidos_cad.php%20via%20nome%2C%20nome_social%2C%20and%20email%20Parameters.md
 CVE-2025-8366 - https://github.com/marcelomulder/CVE/blob/main/i-educar/Reflected%20XSS%20educar_servidor_lst.php%20parameters%20nome%20and%20matricula_servidor.md
 CVE-2025-8367 - https://github.com/marcelomulder/CVE/blob/main/i-educar/Reflected%20XSS%20funcionario_vinculo_lst.php%20parameter%20nome.md
 CVE-2025-8368 - https://github.com/marcelomulder/CVE/blob/main/i-educar/Reflected%20XSS%20intranet.pesquisa_pessoa_lst.php_parameters_campo_busca_and_cpf.md
@@ -30226,7 +30201,6 @@ CVE-2025-8506 - https://github.com/Bemcliu/cve-reports/blob/main/cve-07-wx-shop-
 CVE-2025-8507 - https://github.com/marcelomulder/CVE/blob/main/i-educar/Reflected%20XXS%20educar_funcao_lst.md
 CVE-2025-8508 - https://github.com/marcelomulder/CVE/blob/main/i-educar/Stored%20XSS%20educar_avaliacao_desempenho_cad.php%20parameters%20titulo_avaliacao%20and%20descricao.md
 CVE-2025-8509 - https://github.com/marcelomulder/CVE/blob/main/i-educar/Stored%20XSS%20educar_servidor_cad.php%20parameter%20matricula.md
-CVE-2025-8510 - https://github.com/CVE-Hunters/CVE/blob/main/i-educar/Reflected%20Cross-Site%20Scripting%20(XSS)%20in%20educar_matricula_lst.php%20via%20ref_cod_aluno%20Parameter.md
 CVE-2025-8511 - https://github.com/marcelomulder/CVE/blob/main/i-diario/Stored%20XSS%20endpoint%20diario-de-observacoes.(ID)%20in%20'Observa%C3%A7%C3%B5es-Descri%C3%A7%C3%A3o'%20parameter.md
 CVE-2025-8512 - https://github.com/KMov-g/androidapps/blob/main/hk.com.tvb.bigbigshop.md
 CVE-2025-8513 - https://github.com/KMov-g/androidapps/blob/main/com.caixin.news.md
@@ -30484,7 +30458,6 @@ CVE-2025-9134 - https://github.com/KMov-g/androidapps/blob/main/com.aftership.Af
 CVE-2025-9135 - https://github.com/KMov-g/androidapps/blob/main/de.hafas.android.vvt.md#steps-to-reproduce
 CVE-2025-9137 - https://karinagante.github.io/cve-2025-9137/#proof-of-concept-poc
 CVE-2025-9138 - https://karinagante.github.io/cve-2025-9138/#proof-of-concept-poc
-CVE-2025-9139 - https://github.com/CVE-Hunters/CVE/blob/main/Scada-LTS/%20CVE-2025-9139.md
 CVE-2025-9139 - https://github.com/CVE-Hunters/CVE/blob/main/Scada-LTS/Sensitive%20User%20Information%20Disclosure%20via%20WatchListDwr.init.dwr%20Endpoint.md#proof-of-concept-poc
 CVE-2025-9140 - https://www.exploit-db.com/exploits/52420
 CVE-2025-9140 - https://www.notion.so/SQL2-2459bb66b0a5802ba8e9ca5bc775fc7d?source=copy_link
@@ -33929,7 +33902,6 @@ CVE-2026-4319 - https://github.com/6Justdododo6/CVE/issues/14
 CVE-2026-4332 - https://hackerone.com/reports/3600345
 CVE-2026-4338 - https://wpscan.com/vulnerability/50f68395-72fc-4f99-8e6d-6aa90cc640b5/
 CVE-2026-4354 - https://github.com/i-Corner/cve/issues/41
-CVE-2026-4355 - https://github.com/CVE-Hunters/CVE/blob/main/i-educar/XSS_educar_matricula_reclassificar_cad.php.md
 CVE-2026-4356 - https://github.com/sulvant/Security/issues/2
 CVE-2026-43633 - https://mercuryiss.com.au/hestiacp-unauthenticated-rce-ip-spoofing-cve-2026-43633-cve-2026-43634
 CVE-2026-43634 - https://mercuryiss.com.au/hestiacp-unauthenticated-rce-ip-spoofing-cve-2026-43633-cve-2026-43634

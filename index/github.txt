@@ -28079,3 +28079,8 @@ CVE-2026-111497 - https://github.com/hafizhrf/node-exploit-poc
 CVE-2026-112900 - https://github.com/techupdate24/python-pillow-rce-cve-2026-112900
 CVE-2026-64718 - https://github.com/rooootdev/n-days
 CVE-2026-98260 - https://github.com/quyicheng03-boop/CVE-2026-98260-nezha-android
+CVE-2026-109618 - https://github.com/vm32/php2shell
+CVE-2026-109618 - https://github.com/zake1god/php2shell
+CVE-2026-109619 - https://github.com/vm32/php2shell
+CVE-2026-109619 - https://github.com/zake1god/php2shell
+CVE-2026-111497 - https://github.com/veritas1209/Node2shell
