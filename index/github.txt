@@ -28097,3 +28097,11 @@ CVE-2026-115560 - https://github.com/prnjlksingh/php-cve-2026-115560-demo
 CVE-2026-43499 - https://github.com/k-o-n-t-o-r/ghostlock-sm-g990b
 CVE-2026-76183 - https://github.com/Ethen1212/tomcat-CVE-2026-76183
 CVE-2026-115560 - https://github.com/sykeops/CVE-2026-115560
+CVE-2026-109618 - https://github.com/DarynOngera/solid-palm-tree
+CVE-2026-109618 - https://github.com/joser14/PHP2SHELL-POC
+CVE-2026-109618 - https://github.com/vux06/PHP2SHELL-POC
+CVE-2026-109619 - https://github.com/DarynOngera/solid-palm-tree
+CVE-2026-109619 - https://github.com/joser14/PHP2SHELL-POC
+CVE-2026-109619 - https://github.com/vux06/PHP2SHELL-POC
+CVE-2026-110264 - https://github.com/lesterlam/onigmo-cve-2026-110264
+CVE-2026-76504 - https://github.com/maxprog-svg/CVE-2026-76504-Cisco

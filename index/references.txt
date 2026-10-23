@@ -36693,7 +36693,6 @@ CVE-2018-18903 - https://srcincite.io/blog/2018/10/02/old-school-pwning-with-new
 CVE-2018-18909 - https://github.com/yaniswang/xhEditor/issues/37
 CVE-2018-18912 - https://github.com/notkisi/CVE-s/blob/master/CVE-2018-18912.py
 CVE-2018-18915 - https://github.com/Exiv2/exiv2/issues/511
-CVE-2018-18919 - https://github.com/JaxsonWang/WP-Editor.md/issues/275
 CVE-2018-18920 - https://www.reddit.com/r/ethereum/comments/9vkk2g/netta_labs_claim_to_have_found_a_vulnerability_in/e9d3wyx/
 CVE-2018-18921 - https://medium.com/bugbountywriteup/cve-2018-18921-php-server-monitor-3-3-1-cross-site-request-forgery-a73e8dae563
 CVE-2018-18922 - https://medium.com/@javierolmedo/cve-2018-18922-ticketly-1-0-privilege-escalation-add-admin-4d1b3696f367
@@ -70955,9 +70954,7 @@ CVE-2023-46864 - https://github.com/Peppermint-Lab/peppermint/issues/171
 CVE-2023-46865 - https://github.com/asylumdx/Crater-CVE-2023-46865-RCE
 CVE-2023-46865 - https://github.com/crater-invoice/crater/issues/1267
 CVE-2023-46865 - https://notes.netbytesec.com/2023/11/post-auth-rce-in-crater-invoice.html
-CVE-2023-46866 - https://github.com/InternationalColorConsortium/DemoIccMAX/issues/54
 CVE-2023-46866 - https://github.com/InternationalColorConsortium/DemoIccMAX/pull/53
-CVE-2023-46867 - https://github.com/InternationalColorConsortium/DemoIccMAX/issues/54
 CVE-2023-46867 - https://github.com/InternationalColorConsortium/DemoIccMAX/pull/53
 CVE-2023-4687 - https://wpscan.com/vulnerability/31596fc5-4203-40c4-9b0a-e8a37faafddd
 CVE-2023-46871 - https://gist.github.com/ReturnHere/d0899bb03b8f5e8fae118f2b76888486
@@ -71018,7 +71015,6 @@ CVE-2023-4720 - https://huntr.dev/bounties/1dc2954c-8497-49fa-b2af-113e1e9381ad
 CVE-2023-4721 - https://huntr.dev/bounties/f457dc62-3cff-47bd-8fd2-1cb2b4a832fc
 CVE-2023-4722 - https://huntr.dev/bounties/ddfdb41d-e708-4fec-afe5-68ff1f88f830
 CVE-2023-4724 - https://wpscan.com/vulnerability/48820f1d-45cb-4f1f-990d-d132bfc5536f
-CVE-2023-47249 - https://github.com/InternationalColorConsortium/DemoIccMAX/issues/54
 CVE-2023-4725 - https://wpscan.com/vulnerability/e9b9a594-c960-4692-823e-23fc60cca7e7
 CVE-2023-47250 - http://packetstormsecurity.com/files/175949/m-privacy-TightGate-Pro-Code-Execution-Insecure-Permissions.html
 CVE-2023-47250 - http://seclists.org/fulldisclosure/2023/Nov/13
@@ -98192,7 +98188,6 @@ CVE-2025-5676 - https://github.com/hyx123123/cve/issues/2
 CVE-2025-5677 - https://github.com/hyx123123/cve/issues/1
 CVE-2025-5685 - https://github.com/xubeining/Cve_report/blob/main/A%20remote%20code%20execution%20vulnerability%20in%20the%20router%20CH22%20V1.0.0.1%20manufactured%20by%20Shenzhen%20Jixiangtengda%20Technology%20Co.%2C%20Ltd1.md
 CVE-2025-5695 - https://github.com/YZS17/CVE/blob/main/Command%20injection%20vulnerability%20in%20subscribe_to_delta()%20in%20FLIR%20AX8.md
-CVE-2025-5696 - https://github.com/K-mxredo/MXdocument/blob/K-mxredo-blob/%E9%BB%84%E9%87%91%E9%80%9Astorageworkrent-ChangeCheckInfoPage.htm.md
 CVE-2025-5697 - https://github.com/K-mxredo/MXdocument/blob/K-mxredo-blob/%E9%BB%84%E9%87%91%E9%80%9Astorageworkrent-tcCustDeferPosiQuery.md
 CVE-2025-5698 - https://github.com/K-mxredo/MXdocument/blob/K-mxredo-blob/%E9%BB%84%E9%87%91%E9%80%9Asysframework-logSelect.htm.md
 CVE-2025-5704 - https://github.com/kingmamalv/cve/issues/2
@@ -98337,9 +98332,6 @@ CVE-2025-6111 - https://lavender-bicycle-a5a.notion.site/Tenda-FH1205-fromVirtua
 CVE-2025-6112 - https://lavender-bicycle-a5a.notion.site/Tenda-FH1205-fromadvsetlanip-20b53a41781f80bf850ff39f88ad7f2b?source=copy_link
 CVE-2025-6113 - https://lavender-bicycle-a5a.notion.site/Tenda-FH1203-fromadvsetlanip-20b53a41781f8070bc65ffadd1ed6bf1?source=copy_link
 CVE-2025-61152 - https://github.com/javiermorales36/PoC-for-python-jose-alg-none-JWT-bypass-vulnerability/blob/main/CVE-2025-61152_Security_Advisory.md
-CVE-2025-6116 - https://github.com/K-mxredo/MXdocument/blob/K-mxredo-blob/%E5%81%9C%E8%BD%A6%E5%9C%BA%E7%B3%BB%E7%BB%9FIntraFieldVehicle-Search.md
-CVE-2025-6117 - https://github.com/K-mxredo/MXdocument/blob/K-mxredo-blob/%E5%81%9C%E8%BD%A6%E5%9C%BA%E7%B3%BB%E7%BB%9FReservations-Search.md
-CVE-2025-6118 - https://github.com/K-mxredo/MXdocument/blob/K-mxredo-blob/%E5%81%9C%E8%BD%A6%E5%9C%BA%E7%B3%BB%E7%BB%9Fvehicle-search.md
 CVE-2025-6119 - https://github.com/user-attachments/files/20604791/reproduce_2.tar.gz
 CVE-2025-6120 - https://github.com/user-attachments/files/20605340/read_meshes_reproduce.tar.gz
 CVE-2025-61235 - https://github.com/stuxve/poc-dataphone-crafted-packet
