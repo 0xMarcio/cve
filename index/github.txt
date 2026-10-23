@@ -28031,3 +28031,5 @@ CVE-2026-109618 - https://github.com/MorFix/php-rce-exploitation
 CVE-2026-109618 - https://github.com/dipsh0v/php2shell-emudhra-hunting
 CVE-2026-109619 - https://github.com/dipsh0v/php2shell-emudhra-hunting
 CVE-2026-109618 - https://github.com/jarohull-ai/jfp-edge-radar
+CVE-2026-109618 - https://github.com/tuwiliyt/cve-2026-109618
+CVE-2026-57845 - https://github.com/SaiTeja-Erukude/CVE-2026-57845-hf-datasets-rce

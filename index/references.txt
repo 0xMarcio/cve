@@ -88256,7 +88256,6 @@ CVE-2009-2164 - http://www.securityfocus.com/archive/1/504136/100/0/threaded
 CVE-2009-2218 - http://www.exploit-db.com/exploits/9008
 CVE-2009-2219 - http://www.exploit-db.com/exploits/9008
 CVE-2009-2220 - http://www.exploit-db.com/exploits/9012
-CVE-2009-2224 - http://www.exploit-db.com/exploits/9013
 CVE-2009-2227 - http://www.exploit-db.com/exploits/9002
 CVE-2009-2228 - http://www.exploit-db.com/exploits/8997
 CVE-2009-2229 - http://www.exploit-db.com/exploits/8997

@@ -1231,7 +1231,7 @@
 "CVE-2009-2220 https://www.exploit-db.com/exploits/9012":{"basis":"source","cve":"CVE-2009-2220","imported":true,"released":"2009-06-24","source":"2009-06-24","url":"https://www.exploit-db.com/exploits/9012"},
 "CVE-2009-2223 http://www.exploit-db.com/exploits/9015":{"basis":"source","cve":"CVE-2009-2223","imported":true,"released":"2009-06-24","source":"2009-06-24","url":"http://www.exploit-db.com/exploits/9015"},
 "CVE-2009-2223 https://www.exploit-db.com/exploits/9015":{"basis":"source","cve":"CVE-2009-2223","imported":true,"released":"2009-06-24","source":"2009-06-24","url":"https://www.exploit-db.com/exploits/9015"},
-"CVE-2009-2224 http://www.exploit-db.com/exploits/9013":{"basis":"unknown","cve":"CVE-2009-2224","imported":true,"released":null,"url":"http://www.exploit-db.com/exploits/9013"},
+"CVE-2009-2224 http://www.exploit-db.com/exploits/9013":{"basis":"unknown","cve":"CVE-2009-2224","gone":"2026-10-23T01:19:36Z","gone_reason":"unavailable","imported":true,"released":null,"url":"http://www.exploit-db.com/exploits/9013"},
 "CVE-2009-2227 github:rapid7/metasploit-framework/blob/master/modules/exploits/windows/misc/bopup_comm.rb?#":{"basis":"unknown","cve":"CVE-2009-2227","imported":true,"released":null,"url":"https://github.com/rapid7/metasploit-framework/blob/master/modules/exploits/windows/misc/bopup_comm.rb"},
 "CVE-2009-2227 http://www.exploit-db.com/exploits/9002":{"basis":"source","cve":"CVE-2009-2227","imported":true,"released":"2009-06-22","source":"2009-06-22","url":"http://www.exploit-db.com/exploits/9002"},
 "CVE-2009-2227 https://www.exploit-db.com/exploits/16445":{"basis":"source","cve":"CVE-2009-2227","imported":true,"released":"2010-05-09","source":"2010-05-09","url":"https://www.exploit-db.com/exploits/16445"},
