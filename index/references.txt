@@ -55996,7 +55996,6 @@ CVE-2021-41471 - https://github.com/nu11secur1ty/CVE-nu11secur1ty/tree/main/vend
 CVE-2021-41472 - https://github.com/nu11secur1ty/CVE-nu11secur1ty/tree/main/vendors/razormist
 CVE-2021-41487 - https://www.exploit-db.com/exploits/48528
 CVE-2021-41492 - https://github.com/nu11secur1ty/CVE-mitre/tree/main/CVE-2021-41492
-CVE-2021-41497 - https://github.com/RaRe-Technologies/bounter/issues/47
 CVE-2021-41506 - https://github.com/Snawoot/hisilicon-dvr-telnet
 CVE-2021-41506 - https://github.com/tothi/hs-dvr-telnet
 CVE-2021-41506 - https://habr.com/en/post/486856/
@@ -80597,8 +80596,6 @@ CVE-2025-48549 - https://android.googlesource.com/platform/frameworks/av/+/37e7f
 CVE-2025-48561 - https://android.googlesource.com/platform/frameworks/native/+/20465375a1d0cb71cdb891235a9f8a3fba31dbf6
 CVE-2025-4859 - https://github.com/fizz-is-on-the-way/Iot_vuls/tree/main/DAP-2695/XSS_MAC_Bypass
 CVE-2025-4860 - https://github.com/fizz-is-on-the-way/Iot_vuls/tree/main/DAP-2695/XSS_Static_Pool_Settings
-CVE-2025-4861 - https://github.com/Schatten-42/MyCVE/issues/1
-CVE-2025-4862 - https://github.com/Schatten-42/MyCVE/issues/4
 CVE-2025-4863 - https://github.com/kuppamjohari/advaya-gems-sql-injection-poc/blob/main/GEMS_POC.py
 CVE-2025-4868 - https://github.com/ShenxiuSec/cve-proofs/blob/main/POC-20250512-01.md
 CVE-2025-4869 - https://github.com/wuquwuquwuqu/CVE/issues/1
@@ -80607,14 +80604,12 @@ CVE-2025-48705 - https://www.syss.de/fileadmin/dokumente/Publikationen/Advisorie
 CVE-2025-48706 - https://www.syss.de/fileadmin/dokumente/Publikationen/Advisories/SYSS-2025-028.txt
 CVE-2025-48707 - https://advisories.stormshield.eu/2025-003/
 CVE-2025-4872 - https://github.com/Blu3B3ard/PoC-FreeFloat-FTP-Server-1.0/blob/main/exploit.txt
-CVE-2025-4873 - https://github.com/Schatten-42/MyCVE/issues/6
 CVE-2025-4875 - https://github.com/arpcyber040/CVE/issues/2
 CVE-2025-48751 - https://github.com/tickbh/ProcessLock/issues/1
 CVE-2025-48753 - https://github.com/obsidiandynamics/anode/issues/1
 CVE-2025-48754 - https://github.com/FractalFir/memory_pages/issues/1
 CVE-2025-48755 - https://github.com/blyssprivacy/sdk/issues/36
 CVE-2025-48756 - https://github.com/maboroshinokiseki/scsir/issues/4
-CVE-2025-4880 - https://github.com/Schatten-42/MyCVE/issues/8
 CVE-2025-4881 - https://github.com/Cherish-Ink/CVE/issues/1
 CVE-2025-4882 - https://github.com/Cherish-Ink/CVE/issues/2
 CVE-2025-48827 - https://karmainsecurity.com/dont-call-that-protected-method-vbulletin-rce
@@ -80880,9 +80875,6 @@ CVE-2025-52456 - https://talosintelligence.com/vulnerability_reports/TALOS-2025-
 CVE-2025-5246 - https://github.com/snkercyber/CVE/issues/5
 CVE-2025-52461 - https://talosintelligence.com/vulnerability_reports/TALOS-2025-2238
 CVE-2025-5248 - https://github.com/zzb1388/zzb1/issues/8
-CVE-2025-5250 - https://github.com/Schatten-42/MyCVE/issues/10
-CVE-2025-5251 - https://github.com/Schatten-42/MyCVE/issues/11
-CVE-2025-5252 - https://github.com/Schatten-42/MyCVE/issues/12
 CVE-2025-52688 - https://jro.sg/CVEs/CVE-2025-52688/
 CVE-2025-52689 - https://blog.uhg.sg/article/24.html
 CVE-2025-52690 - https://jro.sg/CVEs/CVE-2025-52690/
@@ -81017,7 +81009,6 @@ CVE-2025-55444 - https://gist.github.com/Anudeepkadambala/88c6065f1de1597be96e50
 CVE-2025-55444 - https://github.com/Anudeepkadambala/CVE-Reports/security/advisories/GHSA-r4mf-mr9h-f27m
 CVE-2025-55472 - https://cyberducky.medium.com/blind-sql-injection-found-in-tirreno-security-analytics-cbd791cec1c0
 CVE-2025-55474 - https://medium.com/@cyberducky/how-i-found-a-stored-xss-in-markdown-rendering-e73cfc3cd93a
-CVE-2025-55476 - https://github.com/ShaneIsrael/fireshare/issues/311
 CVE-2025-55483 - https://github.com/SolitaryGrass/IoT_vuln/blob/main/tenda/AC6/AC6V2.0RTL_V15.03.06.23/formSetMacFilterCfg/poc.md
 CVE-2025-55495 - https://github.com/SolitaryGrass/IoT_vuln/blob/main/tenda/AC6/AC6V2.0RTL_V15.03.06.23/fromSetIpMacBind/poc.md
 CVE-2025-55498 - https://github.com/SolitaryGrass/IoT_vuln/blob/main/tenda/AC6/AC6V2.0RTL_V15.03.06.23/fromSetSysTime/poc.md
@@ -81303,7 +81294,6 @@ CVE-2025-6341 - https://github.com/tuooo/CVE/issues/15
 CVE-2025-6342 - https://github.com/ltranquility/CVE/issues/7
 CVE-2025-6343 - https://github.com/ltranquility/CVE/issues/6
 CVE-2025-6344 - https://github.com/ltranquility/CVE/issues/5
-CVE-2025-6345 - https://github.com/RaulPazemecxas/PoCVulDb/blob/main/README4.md
 CVE-2025-6347 - https://gist.github.com/0xCaptainFahim/8bb9021dcea33863eaf0279aaca2671c
 CVE-2025-6353 - https://github.com/asd1238525/cve/blob/main/xss2.md
 CVE-2025-6353 - https://github.com/asd1238525/cve/blob/main/xss2.md#poc
@@ -81365,9 +81355,7 @@ CVE-2025-6467 - https://github.com/Kristin5634487/cve/issues/2
 CVE-2025-6469 - https://github.com/W2-l0mechan1c/cve/issues/2
 CVE-2025-6470 - https://github.com/W2-l0mechan1c/cve/issues/1
 CVE-2025-6473 - https://github.com/tuooo/CVE/issues/17
-CVE-2025-6475 - https://github.com/RaulPazemecxas/PoCVulDb/blob/main/README8.md
 CVE-2025-6476 - https://github.com/alc9700jmo/CVE/issues/15
-CVE-2025-6477 - https://github.com/RaulPazemecxas/PoCVulDb/blob/main/README9.md
 CVE-2025-6479 - https://github.com/rom4j/cve/issues/1
 CVE-2025-6480 - https://github.com/rom4j/cve/issues/2
 CVE-2025-6481 - https://github.com/rom4j/cve/issues/3
@@ -81440,11 +81428,6 @@ CVE-2025-6668 - https://github.com/lijingze-eng/cve/issues/1
 CVE-2025-6669 - https://github.com/gooaclok819/sublinkX/issues/68
 CVE-2025-6669 - https://github.com/gooaclok819/sublinkX/issues/68#issuecomment-2957290524
 CVE-2025-6694 - https://github.com/RaulPazemecxas/PoCVulDb
-CVE-2025-6695 - https://github.com/RaulPazemecxas/PoCVulDb/blob/main/README2.md
-CVE-2025-6696 - https://github.com/RaulPazemecxas/PoCVulDb/blob/main/README3.md
-CVE-2025-6697 - https://github.com/RaulPazemecxas/PoCVulDb/blob/main/README5.md
-CVE-2025-6698 - https://github.com/RaulPazemecxas/PoCVulDb/blob/main/README6.md
-CVE-2025-6699 - https://github.com/RaulPazemecxas/PoCVulDb/blob/main/README7.md
 CVE-2025-6700 - https://github.com/ShenxiuSec/cve-proofs/blob/main/POC-20250616-01/report.md
 CVE-2025-6715 - https://wpscan.com/vulnerability/357aba51-b65e-4691-864b-fef1c78a9362/
 CVE-2025-6731 - https://github.com/ShenxiuSec/cve-proofs/blob/main/POC-20250616-03.md#steps-to-reproduce
@@ -81518,11 +81501,6 @@ CVE-2025-7095 - https://drive.google.com/file/d/1qnWarYsTSc5_sV6o8ULv0LBvGfKKXPx
 CVE-2025-7096 - https://drive.google.com/file/d/1qnWarYsTSc5_sV6o8ULv0LBvGfKKXPxn/view?usp=sharing
 CVE-2025-7097 - https://drive.google.com/file/d/1qnWarYsTSc5_sV6o8ULv0LBvGfKKXPxn/view?usp=sharing
 CVE-2025-7098 - https://drive.google.com/file/d/1qnWarYsTSc5_sV6o8ULv0LBvGfKKXPxn/view?usp=sharing
-CVE-2025-7109 - https://github.com/RaulPazemecxas/PoCVulDb/blob/main/README11.md
-CVE-2025-7110 - https://github.com/RaulPazemecxas/PoCVulDb/blob/main/README12.md
-CVE-2025-7111 - https://github.com/RaulPazemecxas/PoCVulDb/blob/main/README13.md
-CVE-2025-7112 - https://github.com/RaulPazemecxas/PoCVulDb/blob/main/README14.md
-CVE-2025-7113 - https://github.com/RaulPazemecxas/PoCVulDb/blob/main/README15.md
 CVE-2025-7177 - https://github.com/y2xsec324/cve/issues/10
 CVE-2025-7190 - https://github.com/y2xsec324/cve/issues/11
 CVE-2025-7202 - https://www.toreon.com/flashing-your-lights-cve-2025-7202/
@@ -81550,12 +81528,6 @@ CVE-2025-7751 - https://github.com/zzb1388/cve/issues/24
 CVE-2025-7752 - https://github.com/zzb1388/cve/issues/23
 CVE-2025-7753 - https://github.com/zzb1388/cve/issues/22
 CVE-2025-7808 - https://wpscan.com/vulnerability/fa199423-6526-47f6-bab5-9f6dff0f236a/
-CVE-2025-7866 - https://github.com/RaulPazemecxas/PoCVulDb/blob/main/README16.md
-CVE-2025-7867 - https://github.com/RaulPazemecxas/PoCVulDb/blob/main/README17.md
-CVE-2025-7868 - https://github.com/RaulPazemecxas/PoCVulDb/blob/main/README18.md
-CVE-2025-7869 - https://github.com/RaulPazemecxas/PoCVulDb/blob/main/README19.md
-CVE-2025-7881 - https://github.com/RaulPazemecxas/PoCVulDb/blob/main/README20.md
-CVE-2025-7882 - https://github.com/RaulPazemecxas/PoCVulDb/blob/main/README21.md
 CVE-2025-7894 - https://www.cnblogs.com/aibot/p/18982747
 CVE-2025-7934 - https://gitee.com/fuyang_lipengjun/platform/issues/ICLILS
 CVE-2025-7935 - https://gitee.com/fuyang_lipengjun/platform/issues/ICLIKX
@@ -82792,9 +82764,6 @@ CVE-2026-11882 - https://wpscan.com/vulnerability/23e0eb03-ec19-4cec-8127-cb6c2c
 CVE-2026-11883 - https://wpscan.com/vulnerability/f718390c-1d7c-4048-bce6-a3170998e828/
 CVE-2026-11887 - https://wpscan.com/vulnerability/ed203765-0482-4d55-b36f-cdab11ed3cf0/
 CVE-2026-1192 - https://www.yuque.com/yuqueyonghuexlgkz/zepczx/keenhf9u2bnw5o6g
-CVE-2026-1193 - https://github.com/SourByte05/MineAdmin-Vulnerability/issues/6
-CVE-2026-1194 - https://github.com/SourByte05/MineAdmin-Vulnerability/issues/5
-CVE-2026-1195 - https://github.com/SourByte05/MineAdmin-Vulnerability/issues/4
 CVE-2026-1196 - https://github.com/SourByte05/MineAdmin-Vulnerability/issues/3
 CVE-2026-11961 - https://wpscan.com/vulnerability/2ffab574-8626-472e-b6e4-09bcbaa62349/
 CVE-2026-11962 - https://wpscan.com/vulnerability/88390679-80c5-439f-89d1-2f46aff8cfdb/
@@ -82802,7 +82771,6 @@ CVE-2026-11963 - https://wpscan.com/vulnerability/a34a916a-983e-48a5-8f10-99214e
 CVE-2026-11964 - https://wpscan.com/vulnerability/faf55649-8f76-4abf-a6b9-0d0774e22d29/
 CVE-2026-11965 - https://wpscan.com/vulnerability/49f4c59e-5931-405d-8518-244531bbc889/
 CVE-2026-11966 - https://wpscan.com/vulnerability/8e3be064-b3b7-4d68-960b-8c850c3e6f77/
-CVE-2026-1197 - https://github.com/SourByte05/MineAdmin-Vulnerability/issues/2
 CVE-2026-11974 - https://wpscan.com/vulnerability/7b6aea5d-2e2e-4920-9776-b15841ba1f26/
 CVE-2026-11976 - https://wpscan.com/vulnerability/d1250410-b919-4a90-8cf2-04031f9e5e2b/
 CVE-2026-11998 - https://codepen.io/herodevs/pen/JobQdmz/5b3896f56fab66f20cd25e698cf3faa8
@@ -95132,7 +95100,6 @@ CVE-2024-8410 - https://github.com/peritocibernetico/ABCD_Vulnerabilities
 CVE-2024-8411 - https://github.com/peritocibernetico/ABCD_Vulnerabilities
 CVE-2024-8414 - https://drive.google.com/file/d/1LMkTt5gbVXnRB9m9o2MdgB1S0fsSAvGL/view
 CVE-2024-8415 - https://github.com/Niu-zida/cve/blob/main/sql.md
-CVE-2024-8416 - https://github.com/SherlockMA0/cve/blob/main/sql2.md
 CVE-2024-8460 - https://github.com/leetsun/IoT-Vuls/tree/main/Dlink-dns320/1
 CVE-2024-8461 - https://github.com/leetsun/IoT-Vuls/tree/main/Dlink-dns320/4
 CVE-2024-8517 - https://thinkloveshare.com/hacking/spip_preauth_rce_2024_part_2_a_big_upload/
@@ -97843,7 +97810,6 @@ CVE-2025-4865 - https://github.com/swws141/CVE/issues/2
 CVE-2025-4866 - https://github.com/weibocom/rill-flow/issues/102#issue-2933822293
 CVE-2025-4867 - https://github.com/xubeining/Cve_report/blob/main/Notification%20of%20Denial%20of%20Service%20Vulnerability%20in%20Tenda%20A15%20Router%20(Version%20V15.13.07.13)%20by%20Shenzhen%20Jixiang%20Tenda%20Technology.md
 CVE-2025-4871 - https://github.com/Blu3B3ard/PoC-Pacman-FTP-Server-2.0.7/blob/main/exploit.txt
-CVE-2025-4874 - https://github.com/Schatten-42/MyCVE/issues/7
 CVE-2025-4885 - https://github.com/arpcyber555/CVE/issues/2
 CVE-2025-4888 - https://github.com/zzzxc643/cve/blob/main/Pharmacy_Management_System.md
 CVE-2025-4889 - https://github.com/zzzxc643/cve/blob/main/Tourism-Management-System.md
@@ -97976,7 +97942,6 @@ CVE-2025-5244 - https://sourceware.org/bugzilla/attachment.cgi?id=16010
 CVE-2025-5245 - https://sourceware.org/bugzilla/attachment.cgi?id=16004
 CVE-2025-52465 - https://research.checkpoint.com/2025/cve-2025-24054-ntlm-exploit-in-the-wild
 CVE-2025-5247 - https://github.com/A7cc/cve/issues/5
-CVE-2025-5249 - https://github.com/Schatten-42/MyCVE/issues/9
 CVE-2025-52689 - https://github.com/UltimateHG/CVE-2025-52689-PoC
 CVE-2025-52923 - https://github.com/r00t7oo2jm/cVetest/blob/main/sangf0r-poc.pdf
 CVE-2025-5295 - https://fitoxs.com/exploit/exploit-4f6236b59b5119d64718e994b0f3d63a755e7cb5a496e3846b92dfb960f1a80a.txt
