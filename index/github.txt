@@ -26406,7 +26406,6 @@ CVE-2017-14689 - https://github.com/nhaixb-bit/stdu-djvu-oobread
 CVE-2023-21554 - https://github.com/TheArtist54/CVE-2023-21554-PoC
 CVE-2024-37054 - https://github.com/ClearLotus-git/CVE-2024-37054-PoC
 CVE-2025-39964 - https://github.com/suominen/CVE-2025-39964
-CVE-2021-43798 - https://github.com/elsanose01/CVE-2021-43798-Grafana-path-traversal-tester
 CVE-2022-0847 - https://github.com/MingqiZhang7710/cve-2022-0847-poc-dockerimage
 CVE-2026-65647 - https://github.com/boomerangBS/CVE-2026-65647-PoC
 CVE-2026-36213 - https://github.com/g17hubH4ck/CVE-2026-36213-poc
@@ -28045,3 +28044,7 @@ CVE-2026-109619 - https://github.com/Kyros0324/CVE2026
 CVE-2026-109619 - https://github.com/umair-aziz025/PHP2Shell
 CVE-2026-71362 - https://github.com/mahumadad/cve-2026-71362-magento-ato
 CVE-2026-31158 - https://github.com/Hardik007007/CVE-2026-31158-Boolean-Based-SQL-Injection-in-CRM-Login
+CVE-2026-109618 - https://github.com/EQSTLab/CVE-2026-109618
+CVE-2026-109618 - https://github.com/LeisureLinux/php2shell
+CVE-2026-109619 - https://github.com/LeisureLinux/php2shell
+CVE-2026-86476 - https://github.com/0xSemizzz/CVE-2026-86476
