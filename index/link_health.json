@@ -506,6 +506,7 @@
     "sakura-501/opencats-0.9.7-vulnerabilities": "2026-10-22T11:21:15.778812+00:00",
     "saladesituacao/i3geo": "2026-10-22T11:21:15.778812+00:00",
     "security-breachlock/cve-2018-16629": "2026-10-22T11:21:15.778812+00:00",
+    "segfaultx01/php2shell-pocjavali": "2026-10-23T20:14:17.914090+00:00",
     "sentinal920/wpanel4-authenticated-rce": "2026-10-22T11:21:15.778812+00:00",
     "shadoweb/wdja": "2026-10-22T11:21:15.778812+00:00",
     "shallowdream888/vulnerabilityreport": "2026-10-22T11:21:15.778812+00:00",
@@ -823,8 +824,14 @@
     "https://github.com/lena-lyy/cve/blob/main/Goo/4.md": "2026-10-23T19:13:20.338753+00:00",
     "https://github.com/lena-lyy/cve/blob/main/Goo/5.md": "2026-10-23T19:13:20.338753+00:00",
     "https://github.com/lena-lyy/cve/blob/main/Goo/6.md": "2026-10-23T19:13:20.338753+00:00",
+    "https://github.com/liusir5211314/-sir/issues/1": "2026-10-23T20:14:34.020431+00:00",
+    "https://github.com/liusir5211314/-sir/issues/2": "2026-10-23T20:14:34.020431+00:00",
+    "https://github.com/liusir5211314/-sir/issues/3": "2026-10-23T20:14:34.020431+00:00",
     "https://github.com/ltx-god/mycve/blob/main/Acrel_Co_Ltd.md": "2026-10-23T19:13:20.338753+00:00",
     "https://github.com/ltx-god/mycve/blob/main/Textpatterncms_en.md": "2026-10-23T19:13:20.338753+00:00",
+    "https://github.com/lxxxtsec/cve/blob/main/CVE-Lxxxt.md": "2026-10-23T20:14:34.020431+00:00",
+    "https://github.com/lxxxtsec/cve/blob/main/CVE-Product_Management_System.md": "2026-10-23T20:14:34.020431+00:00",
+    "https://github.com/lxxxtsec/cve/blob/main/CVE_1.md": "2026-10-23T20:14:34.020431+00:00",
     "https://hackerone.com/reports/4093475": "2026-10-22T15:59:24.726913+00:00"
   }
 }

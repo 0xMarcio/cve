@@ -28105,4 +28105,7 @@ CVE-2026-109619 - https://github.com/joser14/PHP2SHELL-POC
 CVE-2026-109619 - https://github.com/vux06/PHP2SHELL-POC
 CVE-2026-110264 - https://github.com/lesterlam/onigmo-cve-2026-110264
 CVE-2026-76504 - https://github.com/maxprog-svg/CVE-2026-76504-Cisco
-CVE-2026-109618 - https://github.com/segfaultx01/php2shell-pocJavali
+CVE-2026-109618 - https://github.com/Nguemoue/project2026_20261023_php_rce_guard
+CVE-2026-114509 - https://github.com/hakaioffsec/CVE-2026-114509-PoC
+CVE-2026-115560 - https://github.com/saiedatef/PHP2SHELL
+CVE-2026-109618 - https://github.com/youseef34/info_stealer

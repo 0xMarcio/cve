@@ -78520,8 +78520,6 @@ CVE-2025-0534 - https://github.com/onupset/CVE/issues/3
 CVE-2025-0540 - https://github.com/magic2353112890/cve/issues/1
 CVE-2025-0541 - https://github.com/nbeisss/CVE/issues/1
 CVE-2025-0561 - https://github.com/yunhai666/cve/issues/1
-CVE-2025-0562 - https://github.com/LiuSir5211314/-sir/issues/1
-CVE-2025-0563 - https://github.com/LiuSir5211314/-sir/issues/2
 CVE-2025-0592 - https://www.first.org/cvss/calculator/3.1
 CVE-2025-0593 - https://www.first.org/cvss/calculator/3.1
 CVE-2025-0611 - https://issues.chromium.org/issues/386143468
@@ -95357,7 +95355,6 @@ CVE-2025-0549 - https://hackerone.com/reports/2927555
 CVE-2025-0555 - https://hackerone.com/reports/2939833
 CVE-2025-0559 - https://github.com/KhukuriRimal/Vulnerabilities/blob/main/CampCodes%20-%20School%20Management%20Software%20-%20Cross%20Site%20Scripting.pdf
 CVE-2025-0560 - https://github.com/KhukuriRimal/Vulnerabilities/blob/main/CampCodes%20-%20School%20Management%20Software%20-%20Stored%20Cross%20Site%20Scripting.pdf
-CVE-2025-0564 - https://github.com/LiuSir5211314/-sir/issues/3
 CVE-2025-0566 - https://pan.baidu.com/s/1DBDf27oCTIMkW-PSZwg02Q?pwd=tara
 CVE-2025-0575 - https://drive.google.com/file/d/1kIXsZoD1FFps0bXQ1pbrfoo76Wy1pL7s/view?usp=drivesdk
 CVE-2025-0579 - https://gist.github.com/mcdruid/3c9fc9bd4e882cee21f8a37998f56fce
@@ -97312,17 +97309,14 @@ CVE-2025-31277 - https://cloud.google.com/blog/topics/threat-intelligence/darksw
 CVE-2025-31324 - https://onapsis.com/blog/active-exploitation-of-sap-vulnerability-cve-2025-31324/
 CVE-2025-3135 - https://www.yuque.com/yuqueyonghuveuwuh/aveeid/yvtgf3ynsi949ve3?singleDoc
 CVE-2025-3136 - https://github.com/pytorch/pytorch/issues/149821#issue-2940838975
-CVE-2025-3139 - https://github.com/LxxxtSec/CVE/blob/main/CVE-Lxxxt.md
 CVE-2025-3140 - https://github.com/Lena-lyy/SQL/blob/main/SQL1.md
 CVE-2025-3141 - https://github.com/Lena-lyy/SQL/blob/main/SQL2.md
 CVE-2025-3142 - https://github.com/Lena-lyy/SQL/blob/main/SQL3.md
 CVE-2025-3143 - https://github.com/Lena-lyy/SQL/blob/main/SQL5.md
 CVE-2025-3146 - https://www.exploit-db.com/exploits/50235
-CVE-2025-3148 - https://github.com/LxxxtSec/CVE/blob/main/CVE-Product_Management_System.md
 CVE-2025-3149 - https://gitee.com/nwtmd5/cve/issues/IBVLXL
 CVE-2025-3150 - https://gitee.com/nwtmd5/cve/issues/IBVLYH
 CVE-2025-3152 - https://github.com/dtwin88/cve-md/blob/main/ThinkOX1.0/ThinkOX1.0.md
-CVE-2025-3161 - https://github.com/LxxxtSec/CVE/blob/main/CVE_1.md#vulnerability-proof-supplement-remote-code-execution-rce
 CVE-2025-3162 - https://github.com/InternLM/lmdeploy/issues/3255#issue-2918985270
 CVE-2025-3163 - https://github.com/InternLM/lmdeploy/issues/3254#issue-2918865448
 CVE-2025-3177 - https://github.com/chujianxin0101/vuln/issues/2
