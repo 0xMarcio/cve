@@ -116048,7 +116048,6 @@ CVE-2022-24631 - http://seclists.org/fulldisclosure/2023/Feb/12
 CVE-2022-24632 - http://seclists.org/fulldisclosure/2023/Feb/12
 CVE-2022-25636 - https://www.openwall.com/lists/oss-security/2022/02/21/2
 CVE-2022-33171 - https://seclists.org/fulldisclosure/2022/Jun/51
-CVE-2022-36254 - https://gist.github.com/ziyishen97/c464b459df73c4cef241e7ec774b7cf6
 CVE-2022-36446 - https://gist.github.com/emirpolatt/cf19d6c0128fa3e25ebb47e09243919b
 CVE-2023-0830 - https://gist.github.com/xbz0n/674af0e802efaaafe90d2f67464c2690
 CVE-2023-36338 - https://gist.github.com/nguyenkhanhthuan/5294a28bb111f11da4b1f4f1bddf88c8

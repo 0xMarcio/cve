@@ -28063,3 +28063,4 @@ CVE-2026-109619 - https://github.com/4nuxd/php2shell
 CVE-2026-109619 - https://github.com/Im-umit/php2shell
 CVE-2026-109619 - https://github.com/agrresore/php2shell
 CVE-2026-112403 - https://github.com/al4n4n/CVE-2026-112403
+CVE-2026-109618 - https://github.com/Ethen1212/php2shell-CVE-2026-109618
