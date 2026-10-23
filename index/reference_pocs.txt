@@ -19258,7 +19258,6 @@ CVE-2023-1492 - https://drive.google.com/file/d/1G_Szy4kCrZU-whGbVcxpdE1yKf5Vxqq
 CVE-2023-1493 - https://drive.google.com/file/d/109wWkX5FbYrKKqQBXBC1_uLyi02Y7sqF/view
 CVE-2023-1494 - https://gitee.com/cui-yiwei/cve-number/blob/master/images/IBOS%20oa%20v4.5.5.md/1.md
 CVE-2023-1495 - https://github.com/getrebuild/rebuild/issues/594
-CVE-2023-1497 - https://github.com/Decemberus/BugHub/blob/main/simple%20and%20beautiful%20shopping%20cart%20system%20uploaderm.php%20has%20a%20file%20upload%20vulnerability.pdf
 CVE-2023-1498 - https://github.com/Decemberus/BugHub/blob/main/Responsive%20Hotel%20Site%20System%20Has%20Sql%20injection%20vulnerabilities.pdf
 CVE-2023-1499 - https://github.com/Fchen-xcu/Vulnerability-Set/blob/main/SIMPLE%20ART%20GALLERY%20system%20reach_city%20has%20Sql%20injection%20vulnerabilities.pdf
 CVE-2023-1500 - https://github.com/Decemberus/BugHub/blob/main/SIMPLE%20ART%20GALLERY%20system%20has%20%20Cross%20site%20scripting%20vulnerabilities.pdf
@@ -23909,7 +23908,6 @@ CVE-2024-6241 - https://gitee.com/pear-admin/Pear-Admin-Boot/issues/IA5IPQ
 CVE-2024-6243 - https://wpscan.com/vulnerability/f4097877-ba19-4738-a994-9593b9a5a635/
 CVE-2024-6244 - https://wpscan.com/vulnerability/73ba55a5-6cff-40fc-9686-30c50f060732/
 CVE-2024-6252 - https://fushuling.com/index.php/2024/06/13/test2/
-CVE-2024-6253 - https://github.com/Desenchanted/cve/issues/1
 CVE-2024-6266 - https://gitee.com/pear-admin/Pear-Admin-Boot/issues/IA5K2M
 CVE-2024-6267 - https://docs.google.com/document/d/1upC4101Ob9UW7fGC_valsEa45Q5xuBgcKZhs1Q-WoBM/edit?usp=sharing
 CVE-2024-6268 - https://powerful-bulb-c36.notion.site/SQL-injection-to-authorization-bypass-af95fa2c72b84b4297e3d61c17cd7cdb?pvs=4
@@ -31367,7 +31365,6 @@ CVE-2026-12198 - https://github.com/whuHouYF/microweber-vuldb-disclosure-2026/bl
 CVE-2026-12200 - https://nathan2.com/posts/tinyweb/
 CVE-2026-12201 - https://nathan2.com/posts/iobit/
 CVE-2026-12202 - https://karinagante.github.io/cve-2026-12202/#proof-of-concept-poc
-CVE-2026-12203 - https://github.com/Dave-gilmore-aus/security-advisories/blob/main/AI-Trader-Unauthenticated%20Sensitive%20Data%20Exposure%20in%20Research%20Export%20(CVE-Pending).md
 CVE-2026-12204 - https://github.com/yunyan05/MYCVE/tree/main/ShopXO/V6.7.1-Unauthenticated-Crontab-Trigger
 CVE-2026-12206 - https://github.com/natanmorette-thoropass/thoropass-vuln-research-program/tree/main/2026/SQL%20Injection%20in%20grit42%20Data%20Table%20Entity%20Endpoint
 CVE-2026-12207 - https://github.com/onyxglitch/Medkey-EHR-IDOR-PoC
@@ -34810,9 +34807,6 @@ CVE-2026-6626 - https://github.com/NicolasPauferro/studiesofnosqli
 CVE-2026-6628 - https://github.com/NicolasPauferro/studiessqli
 CVE-2026-6629 - https://my.feishu.cn/docx/JttndUaPLoR88HxI1alcz1uencf?from=from_copylink
 CVE-2026-6633 - https://github.com/shiyifei999-ux/cve/issues/1
-CVE-2026-6634 - https://github.com/Dave-gilmore-aus/security-advisories/blob/main/usememos-security-advisory
-CVE-2026-6635 - https://github.com/Dave-gilmore-aus/security-advisories/blob/main/rowbat-advisory
-CVE-2026-6636 - https://github.com/Dave-gilmore-aus/security-advisories/blob/main/convert-advisory
 CVE-2026-66373 - https://github.com/berabuddies/redis-poc
 CVE-2026-6648 - https://tcn60zf28jhk.feishu.cn/wiki/FHHMwcwCliOd0Bke3XkcEz3Enuc?from=from_copylink
 CVE-2026-6649 - https://tcn60zf28jhk.feishu.cn/wiki/VYIcwwH4uiWZMgkX0SecopTgnQd?from=from_copylink
@@ -35238,7 +35232,6 @@ CVE-2026-75778 - https://github.com/niaoniaollll/cve/issues/5
 CVE-2026-7578 - https://github.com/qingyun985/Cyber-Security/issues/1
 CVE-2026-75783 - https://github.com/meishigana/CVE/blob/main/team15_20260702/01_wlc100p-netifd/poc/poc-netifd-overflow.py
 CVE-2026-75784 - https://github.com/meishigana/CVE/blob/main/team15_20260702/02_wlc100-nginx/poc/poc-nginx-overflow.py
-CVE-2026-7579 - https://github.com/Dave-gilmore-aus/security-advisories/blob/main/AstrBot-Security-Advisory
 CVE-2026-75796 - https://wpscan.com/vulnerability/919da0c7-7643-4903-9454-2fb66353f5cb/
 CVE-2026-75797 - https://wpscan.com/vulnerability/1048b130-9263-4780-b886-656a891de85a/
 CVE-2026-75798 - https://wpscan.com/vulnerability/a77168df-61b8-40df-95f5-e19cf6540ce5/

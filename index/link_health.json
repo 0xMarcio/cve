@@ -764,6 +764,14 @@
     "https://github.com/cve-hunters/cve/blob/main/i-educar/Reflected%20Cross-Site%20Scripting%20(XSS)%20in%20educar_matricula_lst.php%20via%20ref_cod_aluno%20Parameter.md": "2026-10-23T14:14:02.215874+00:00",
     "https://github.com/cve-hunters/cve/blob/main/i-educar/Stored%20Cross-Site%20Scripting%20XSS%20in%20atendidos_cad.php%20via%20nome%2C%20nome_social%2C%20and%20email%20Parameters.md": "2026-10-23T14:14:02.215874+00:00",
     "https://github.com/cve-hunters/cve/blob/main/i-educar/XSS_educar_matricula_reclassificar_cad.php.md": "2026-10-23T14:14:02.215874+00:00",
+    "https://github.com/dave-gilmore-aus/security-advisories/blob/main/AI-Trader-Unauthenticated%20Sensitive%20Data%20Exposure%20in%20Research%20Export%20(CVE-Pending).md": "2026-10-23T15:12:51.402403+00:00",
+    "https://github.com/dave-gilmore-aus/security-advisories/blob/main/AstrBot-Security-Advisory": "2026-10-23T15:12:51.402403+00:00",
+    "https://github.com/dave-gilmore-aus/security-advisories/blob/main/convert-advisory": "2026-10-23T15:12:51.402403+00:00",
+    "https://github.com/dave-gilmore-aus/security-advisories/blob/main/rowbat-advisory": "2026-10-23T15:12:51.402403+00:00",
+    "https://github.com/dave-gilmore-aus/security-advisories/blob/main/usememos-security-advisory": "2026-10-23T15:12:51.402403+00:00",
+    "https://github.com/decemberus/bughub/blob/main/simple%20and%20beautiful%20shopping%20cart%20system%20uploaderm.php%20has%20a%20file%20upload%20vulnerability.pdf": "2026-10-23T15:12:51.402403+00:00",
+    "https://github.com/desenchanted/cve/issues/1": "2026-10-23T15:12:51.402403+00:00",
+    "https://github.com/drakkar-software/octobot/issues/1966": "2026-10-23T15:12:51.402403+00:00",
     "https://hackerone.com/reports/4093475": "2026-10-22T15:59:24.726913+00:00"
   }
 }

@@ -55014,7 +55014,6 @@ CVE-2021-36706 - https://www.ayrx.me/prolink-prc2402m-multiple-vulnerabilities/#
 CVE-2021-36707 - https://www.ayrx.me/prolink-prc2402m-multiple-vulnerabilities/#ledonoff-command-injection
 CVE-2021-36708 - https://www.ayrx.me/prolink-prc2402m-multiple-vulnerabilities/#sysinit-password-reset
 CVE-2021-36711 - http://packetstormsecurity.com/files/167780/OctoBot-WebInterface-0.4.3-Remote-Code-Execution.html
-CVE-2021-36711 - https://github.com/Drakkar-Software/OctoBot/issues/1966
 CVE-2021-36711 - https://packetstormsecurity.com/files/167721/Sashimi-Evil-OctoBot-Tentacle.html
 CVE-2021-36713 - https://gist.github.com/walhajri/711af9b62f6fb25e66a5d9a490deab98
 CVE-2021-3674 - https://gist.github.com/netspooky/61101e191afee95feda7dbd2f6b061c4
@@ -82863,7 +82862,6 @@ CVE-2026-12198 - https://github.com/whuHouYF/microweber-vuldb-disclosure-2026/bl
 CVE-2026-12200 - https://nathan2.com/posts/tinyweb/
 CVE-2026-12201 - https://nathan2.com/posts/iobit/
 CVE-2026-12202 - https://karinagante.github.io/cve-2026-12202/#proof-of-concept-poc
-CVE-2026-12203 - https://github.com/Dave-gilmore-aus/security-advisories/blob/main/AI-Trader-Unauthenticated%20Sensitive%20Data%20Exposure%20in%20Research%20Export%20(CVE-Pending).md
 CVE-2026-12204 - https://github.com/yunyan05/MYCVE/tree/main/ShopXO/V6.7.1-Unauthenticated-Crontab-Trigger
 CVE-2026-12206 - https://github.com/natanmorette-thoropass/thoropass-vuln-research-program/tree/main/2026/SQL%20Injection%20in%20grit42%20Data%20Table%20Entity%20Endpoint
 CVE-2026-12207 - https://github.com/onyxglitch/Medkey-EHR-IDOR-PoC
@@ -85788,9 +85786,6 @@ CVE-2026-6624 - https://github.com/4m3rr0r/PoCVulDb/issues/16
 CVE-2026-6625 - https://github.com/ccccccctiiiiiiii-lab/public_exp/issues/3
 CVE-2026-6626 - https://github.com/NicolasPauferro/studiesofnosqli
 CVE-2026-6628 - https://github.com/NicolasPauferro/studiessqli
-CVE-2026-6634 - https://github.com/Dave-gilmore-aus/security-advisories/blob/main/usememos-security-advisory
-CVE-2026-6635 - https://github.com/Dave-gilmore-aus/security-advisories/blob/main/rowbat-advisory
-CVE-2026-6636 - https://github.com/Dave-gilmore-aus/security-advisories/blob/main/convert-advisory
 CVE-2026-66373 - https://github.com/berabuddies/redis-poc
 CVE-2026-6650 - https://github.com/qingyun985/Cyber-Security/issues/3
 CVE-2026-6652 - https://medium.com/@pkhuyar/the-danger-of-php-eval-a23410187ca2
@@ -86171,7 +86166,6 @@ CVE-2026-7555 - https://github.com/nidieaaa/test/issues/9
 CVE-2026-75773 - https://github.com/karakeep-app/karakeep/issues/2919
 CVE-2026-75774 - https://github.com/karakeep-app/karakeep/issues/2920
 CVE-2026-7578 - https://github.com/qingyun985/Cyber-Security/issues/1
-CVE-2026-7579 - https://github.com/Dave-gilmore-aus/security-advisories/blob/main/AstrBot-Security-Advisory
 CVE-2026-75796 - https://wpscan.com/vulnerability/919da0c7-7643-4903-9454-2fb66353f5cb/
 CVE-2026-75797 - https://wpscan.com/vulnerability/1048b130-9263-4780-b886-656a891de85a/
 CVE-2026-75798 - https://wpscan.com/vulnerability/a77168df-61b8-40df-95f5-e19cf6540ce5/
@@ -92813,7 +92807,6 @@ CVE-2023-1491 - https://drive.google.com/file/d/1-h-6ijBvucNU-dYglWW5n4l2ys-MDAF
 CVE-2023-1492 - https://drive.google.com/file/d/1G_Szy4kCrZU-whGbVcxpdE1yKf5Vxqq3/view
 CVE-2023-1493 - https://drive.google.com/file/d/109wWkX5FbYrKKqQBXBC1_uLyi02Y7sqF/view
 CVE-2023-1495 - https://github.com/getrebuild/rebuild/issues/594
-CVE-2023-1497 - https://github.com/Decemberus/BugHub/blob/main/simple%20and%20beautiful%20shopping%20cart%20system%20uploaderm.php%20has%20a%20file%20upload%20vulnerability.pdf
 CVE-2023-1498 - https://github.com/Decemberus/BugHub/blob/main/Responsive%20Hotel%20Site%20System%20Has%20Sql%20injection%20vulnerabilities.pdf
 CVE-2023-1499 - https://github.com/Fchen-xcu/Vulnerability-Set/blob/main/SIMPLE%20ART%20GALLERY%20system%20reach_city%20has%20Sql%20injection%20vulnerabilities.pdf
 CVE-2023-1500 - https://github.com/Decemberus/BugHub/blob/main/SIMPLE%20ART%20GALLERY%20system%20has%20%20Cross%20site%20scripting%20vulnerabilities.pdf
@@ -94986,7 +94979,6 @@ CVE-2024-6216 - https://github.com/jadu101/CVE/blob/main/SourceCodester_Food_Ord
 CVE-2024-6217 - https://github.com/jadu101/CVE/blob/main/SourceCodester_Food_Ordering_Management_System_user_router_Sqli.md
 CVE-2024-6228 - https://wpscan.com/vulnerability/6382bfea-6265-4f4b-b26e-4219d9ed78aa/
 CVE-2024-6241 - https://gitee.com/pear-admin/Pear-Admin-Boot/issues/IA5IPQ
-CVE-2024-6253 - https://github.com/Desenchanted/cve/issues/1
 CVE-2024-6266 - https://gitee.com/pear-admin/Pear-Admin-Boot/issues/IA5K2M
 CVE-2024-6268 - https://powerful-bulb-c36.notion.site/SQL-injection-to-authorization-bypass-af95fa2c72b84b4297e3d61c17cd7cdb?pvs=4
 CVE-2024-6269 - https://github.com/charliecatsec/cve1/issues/1
