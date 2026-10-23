@@ -18638,7 +18638,6 @@ CVE-2026-15409 - https://github.com/remmons-r7/rapid7-CVE-2026-15409
 CVE-2026-15430 - https://github.com/BlackSnufkin/AxHunter
 CVE-2026-1550 - https://github.com/rsecroot/CVE-2026-1550
 CVE-2026-1555 - https://github.com/Nxploited/CVE-2026-1555
-CVE-2026-1555 - https://github.com/willygailo/WG-CVE-2026-1555-Linux
 CVE-2026-15580 - https://github.com/Am-I-Being-Pwned/Passportal-exploit-demo
 CVE-2026-15583 - https://github.com/codeb0ssx/CVE-2026-15583-PoC
 CVE-2026-15598 - https://github.com/IamDremig/CVE-2026-15598
@@ -19856,7 +19855,6 @@ CVE-2026-3891 - https://github.com/VeronnX666/CVE-2026-3891
 CVE-2026-3891 - https://github.com/joshuavanderpoll/CVE-2026-3891
 CVE-2026-3891 - https://github.com/m4sh-wacker/CVE-2026-3891-Pix-for-WooCommerce-Plugin-Exploit
 CVE-2026-3891 - https://github.com/shinthink/CVE-2026-3891
-CVE-2026-3891 - https://github.com/willygailo/CVE-2026-3891-Linux
 CVE-2026-38945 - https://github.com/Wise-Security/CVE-2026-38945
 CVE-2026-39047 - https://github.com/AzhariRamadhan/CVE-2026-39047
 CVE-2026-39047 - https://github.com/J4ck3LSyN-Gen2/CVE-2026-39047
@@ -20015,7 +20013,6 @@ CVE-2026-41940 - https://github.com/rdyprtmx/poc-cve-2026-41940
 CVE-2026-41940 - https://github.com/realawaisakbar/CVE-2026-41940-Exploit-PoC
 CVE-2026-41940 - https://github.com/senyx122/CVE-2026-41940
 CVE-2026-41940 - https://github.com/tfawnies/CVE-2026-41940-next
-CVE-2026-41940 - https://github.com/willygailo/CVE-2026-41940-Linux
 CVE-2026-41940 - https://github.com/xxconi/CVE-2026-41940
 CVE-2026-41940 - https://github.com/zedxod/CVE-2026-41940-POC
 CVE-2026-42048 - https://github.com/EQSTLab/CVE-2026-42048
@@ -27443,7 +27440,6 @@ CVE-2026-106173 - https://github.com/0xBlackash/CVE-2026-106173
 CVE-2026-105810 - https://github.com/M0ud4/CVE-2026-105810
 CVE-2026-112071 - https://github.com/yuwkaaa/CVE-2026-112071
 CVE-2026-113468 - https://github.com/yuwkaaa/CVE-2026-113468
-CVE-2026-23744 - https://github.com/wvverez/CVE-2026-23744
 CVE-2026-87690 - https://github.com/h00die/CVE-2026-87690-POC
 CVE-2025-8110 - https://github.com/kur0bai/CVE-2025-8110
 CVE-2026-64638 - https://github.com/alisalive/xss2shell
@@ -28090,3 +28086,9 @@ CVE-2026-109618 - https://github.com/spade-kk/php2shell-exploit
 CVE-2026-109619 - https://github.com/hardsoftsecurity/php2shell_research
 CVE-2026-109619 - https://github.com/louzaonet/php2shell_hunt
 CVE-2026-109619 - https://github.com/spade-kk/php2shell-exploit
+CVE-2026-109618 - https://github.com/Ghost-Bx1/POC-CVE-2026-109618-CVE-2026-109619-CVE-2024-4577
+CVE-2026-109618 - https://github.com/Noshadi-sec/cve-2026-109618-109619-poc
+CVE-2026-109618 - https://github.com/aiuser888-bot/php-7.3.33-cve-2026-109618-109619
+CVE-2026-109619 - https://github.com/Ghost-Bx1/POC-CVE-2026-109618-CVE-2026-109619-CVE-2024-4577
+CVE-2026-111497 - https://github.com/gh0st-nemesis/node2shell-poc
+CVE-2026-16723 - https://github.com/Ethen1212/fastjson-CVE-2026-16723

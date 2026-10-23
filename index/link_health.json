@@ -577,6 +577,9 @@
     "whoami-xiaoyu/cve": "2026-10-22T11:24:56.108442+00:00",
     "willchen0011/cve": "2026-10-22T11:24:56.108442+00:00",
     "william-xin/cves": "2026-10-22T11:24:56.108442+00:00",
+    "willygailo/cve-2026-3891-linux": "2026-10-23T16:12:30.497413+00:00",
+    "willygailo/cve-2026-41940-linux": "2026-10-23T16:12:30.497413+00:00",
+    "willygailo/wg-cve-2026-1555-linux": "2026-10-23T16:12:30.497413+00:00",
     "winmt/my-vuls": "2026-10-22T11:24:56.108442+00:00",
     "wizardy0ga/cve_2012-2982": "2026-10-22T11:24:56.108442+00:00",
     "wizardy0ga/thm-steel_mountain-cve-2014-6287": "2026-10-22T11:24:56.108442+00:00",
@@ -587,6 +590,7 @@
     "wswokao/testrouter": "2026-10-22T11:24:56.108442+00:00",
     "wswokao/wswoako.github.io": "2026-10-22T11:24:56.108442+00:00",
     "wtebwaa/poc-simpletweet": "2026-10-22T11:24:56.108442+00:00",
+    "wvverez/cve-2026-23744": "2026-10-23T16:12:30.497413+00:00",
     "wy876/poc": "2026-10-22T11:24:56.108442+00:00",
     "xavlimsg/vulnerability-research": "2026-10-22T11:24:56.108442+00:00",
     "xiaobor123/tenda-vul-i22": "2026-10-22T11:24:56.108442+00:00",
@@ -628,6 +632,7 @@
     "yan-124/yan": "2026-10-22T11:24:56.108442+00:00",
     "yanoo1222/cve-2026-98260-android": "2026-10-22T11:24:56.108442+00:00",
     "yaphetszz/cve": "2026-10-22T11:24:56.108442+00:00",
+    "ydnd/cve": "2026-10-23T16:12:30.497413+00:00",
     "yesec/-doctor-s-appointment-system": "2026-10-22T11:24:56.108442+00:00",
     "yesec/free-hospital-management-system-for-small-practices": "2026-10-22T11:24:56.108442+00:00",
     "yesec/inventory-management-system": "2026-10-22T11:24:56.108442+00:00",
@@ -772,6 +777,12 @@
     "https://github.com/decemberus/bughub/blob/main/simple%20and%20beautiful%20shopping%20cart%20system%20uploaderm.php%20has%20a%20file%20upload%20vulnerability.pdf": "2026-10-23T15:12:51.402403+00:00",
     "https://github.com/desenchanted/cve/issues/1": "2026-10-23T15:12:51.402403+00:00",
     "https://github.com/drakkar-software/octobot/issues/1966": "2026-10-23T15:12:51.402403+00:00",
+    "https://github.com/en0t5/vul/blob/main/zzcms-msg-xss.md": "2026-10-23T16:12:45.903074+00:00",
+    "https://github.com/en0t5/vul/blob/main/zzcms/zzcms-add_list-sql-inject.md": "2026-10-23T16:12:45.903074+00:00",
+    "https://github.com/en0t5/vul/blob/main/zzcms/zzcsm-sql-inject.md": "2026-10-23T16:12:45.903074+00:00",
+    "https://github.com/fc04db/vul/blob/main/ukefu_upload.md": "2026-10-23T16:12:45.903074+00:00",
+    "https://github.com/firmrec/iot-vulns/blob/main/tp-link/postPlcJson/report.md": "2026-10-23T16:12:45.903074+00:00",
+    "https://github.com/fizz-l/vulnerability-report/blob/main/Unauthorized%20access%20to%20execute%20the%20telnet%20command.md": "2026-10-23T16:12:45.903074+00:00",
     "https://hackerone.com/reports/4093475": "2026-10-22T15:59:24.726913+00:00"
   }
 }

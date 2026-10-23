@@ -21670,7 +21670,6 @@ CVE-2024-11125 - https://github.com/Zeynalxan/zero-day/blob/main/GetSimpleCMS-CV
 CVE-2024-11127 - https://github.com/ljllll123/cve/blob/main/sql-1.md
 CVE-2024-11129 - https://hackerone.com/reports/2717400
 CVE-2024-1113 - https://note.zhaoj.in/share/hPSx8li8LFfJ
-CVE-2024-11130 - https://github.com/En0t5/vul/blob/main/zzcms-msg-xss.md
 CVE-2024-1114 - https://note.zhaoj.in/share/9wv48TygKRxo
 CVE-2024-11140 - https://wpscan.com/vulnerability/b3448dff-a839-45aa-8d5a-d359e50ab7fd/
 CVE-2024-11141 - https://wpscan.com/vulnerability/6fe3544b-fb86-43e4-9771-6e9343f9f835/
@@ -21696,7 +21695,6 @@ CVE-2024-11238 - https://github.com/CoinIsMoney/TempGuide/blob/main/LL-exp-02.pd
 CVE-2024-11239 - https://github.com/CoinIsMoney/TempGuide/blob/main/LL-exp-03.pdf
 CVE-2024-11240 - https://docs.google.com/document/d/1_kk14QhqJuqMGzAD_SUlOSvCGwYdeF4gI8m7mVTPBAQ/edit?usp=sharing
 CVE-2024-11241 - https://github.com/Anti-Entropy-Zhurong/cve/blob/main/sql-1.md
-CVE-2024-11242 - https://github.com/En0t5/vul/blob/main/zzcms/zzcms-add_list-sql-inject.md
 CVE-2024-11243 - https://github.com/sh3rl0ckpggp/0day/blob/main/code-projects_online-shop_CrossSiteScripting.md
 CVE-2024-11244 - https://github.com/zsx020121/cve/blob/main/sql.md
 CVE-2024-11245 - https://github.com/WEFNNTT/cve/blob/main/sql.md
@@ -25033,7 +25031,6 @@ CVE-2025-0561 - https://github.com/yunhai666/cve/issues/1
 CVE-2025-0562 - https://github.com/LiuSir5211314/-sir/issues/1
 CVE-2025-0563 - https://github.com/LiuSir5211314/-sir/issues/2
 CVE-2025-0564 - https://github.com/LiuSir5211314/-sir/issues/3
-CVE-2025-0565 - https://github.com/En0t5/vul/blob/main/zzcms/zzcsm-sql-inject.md
 CVE-2025-0566 - https://pan.baidu.com/s/1DBDf27oCTIMkW-PSZwg02Q?pwd=tara
 CVE-2025-0575 - https://drive.google.com/file/d/1kIXsZoD1FFps0bXQ1pbrfoo76Wy1pL7s/view?usp=drivesdk
 CVE-2025-0579 - https://gist.github.com/mcdruid/3c9fc9bd4e882cee21f8a37998f56fce
@@ -27284,8 +27281,6 @@ CVE-2025-2390 - https://github.com/intercpt/XSS1/blob/main/SQL8.md
 CVE-2025-2391 - https://github.com/intercpt/XSS1/blob/main/SQL10.md
 CVE-2025-2392 - https://github.com/intercpt/XSS1/blob/main/SQL11.md
 CVE-2025-2393 - https://github.com/intercpt/XSS1/blob/main/SQL12.md
-CVE-2025-2397 - https://github.com/Fizz-L/Vulnerability-report/blob/main/Unauthorized%20access%20to%20execute%20the%20telnet%20command.md
-CVE-2025-2398 - https://github.com/Fizz-L/Vulnerability-report/blob/main/Unauthorized%20access%20to%20execute%20the%20telnet%20command.md
 CVE-2025-24054 - https://www.exploit-db.com/exploits/52478
 CVE-2025-24054 - https://www.exploit-db.com/exploits/52480
 CVE-2025-2408 - https://hackerone.com/reports/3027775
@@ -27366,7 +27361,6 @@ CVE-2025-2623 - https://github.com/IceFoxH/VULN/issues/10
 CVE-2025-2624 - https://github.com/IceFoxH/VULN/issues/11
 CVE-2025-2625 - https://github.com/IceFoxH/VULN/issues/12
 CVE-2025-2626 - https://github.com/Hefei-Coffee/cve/issues/16
-CVE-2025-2628 - https://github.com/ydnd/cve/issues/3
 CVE-2025-2637 - https://github.com/H3rmesk1t/vulnerability-paper/blob/main/jizhiCMS-1.7.0-Incorrect%20Access%20Control.md
 CVE-2025-2638 - https://github.com/H3rmesk1t/vulnerability-paper/blob/main/jizhiCMS-1.7.0-Incorrect%20Access%20Control2.md
 CVE-2025-2639 - https://github.com/H3rmesk1t/vulnerability-paper/blob/main/jizhiCMS-1.7.0-Incorrect%20Access%20Control3.md
@@ -27377,13 +27371,7 @@ CVE-2025-2652 - https://github.com/happytraveller-alone/cve/blob/main/dir.md
 CVE-2025-2653 - https://www.yuque.com/yuqueyonghuveuwuh/aveeid/nvg6rd3qw1ww83yo?singleDoc
 CVE-2025-2654 - https://github.com/Colorado-all/cve/blob/main/AC%20Repair%20and%20Services%20System%20using/SQL-4.md
 CVE-2025-2655 - https://github.com/Colorado-all/cve/blob/main/AC%20Repair%20and%20Services%20System%20using/SQL-8.md
-CVE-2025-2656 - https://github.com/ydnd/cve/issues/4
-CVE-2025-2657 - https://github.com/ydnd/cve/issues/5
 CVE-2025-2658 - https://github.com/zyb26252/CVE/issues/1
-CVE-2025-2659 - https://github.com/ydnd/cve/issues/7
-CVE-2025-2660 - https://github.com/ydnd/cve/issues/8
-CVE-2025-2661 - https://github.com/ydnd/cve/issues/9
-CVE-2025-2662 - https://github.com/ydnd/cve/issues/10
 CVE-2025-2664 - https://github.com/emano888/CodeZips-Hospital-Management-System/blob/main/SQL_Injection_in_Hospital_Management_System.md
 CVE-2025-2665 - https://github.com/i-Corner/cve/issues/1
 CVE-2025-2671 - https://www.jianshu.com/p/f8ca5e3cd889
@@ -27535,9 +27523,6 @@ CVE-2025-3036 - https://github.com/yzk2356911358/StudentServlet-JSP/issues/2#iss
 CVE-2025-3037 - https://github.com/yzk2356911358/StudentServlet-JSP/issues/3#issue-2937762896
 CVE-2025-3038 - https://github.com/nabiland/cve/blob/main/cve.md
 CVE-2025-3039 - https://github.com/xuzhuojia22/cve/blob/main/cvexuzhoujia.md
-CVE-2025-3040 - https://github.com/ydnd/cve/issues/11
-CVE-2025-3041 - https://github.com/ydnd/cve/issues/12
-CVE-2025-3042 - https://github.com/ydnd/cve/issues/13
 CVE-2025-3043 - https://github.com/GuoMinJim/PersonManage/issues/7#issue-2939940887
 CVE-2025-3045 - https://github.com/byxs0x0/SQL/blob/main/SQL2.md
 CVE-2025-3111 - https://hackerone.com/reports/3045424
@@ -28333,7 +28318,6 @@ CVE-2025-4254 - https://fitoxs.com/exploit/exploit-e4fd898014889301fef4607c9a264
 CVE-2025-4255 - https://fitoxs.com/exploit/exploit-52a33c7f018ae348f748582eae6aa7d38b2b5f1f3dc5d3b6793772e1f8223eb0.txt
 CVE-2025-4256 - https://github.com/seacms-net/CMS/issues/25#issue-3007083568
 CVE-2025-4257 - https://github.com/seacms-net/CMS/issues/26#issue-3007084603
-CVE-2025-4258 - https://github.com/Fc04dB/VUL/blob/main/ukefu_upload.md
 CVE-2025-4259 - https://github.com/yaklang/IRifyScanResult/blob/main/newbee-mall/arbitrary-file-upload-in-uploadController.md
 CVE-2025-4260 - https://github.com/Serein123y/vulnerability/blob/main/vul.md
 CVE-2025-4261 - https://github.com/GAIR-NLP/factool/issues/50#issue-3007905464
@@ -39015,3 +38999,4 @@ CVE-2026-94262 - https://wpscan.com/vulnerability/3634e73f-df12-4d84-8bf6-c098ef
 CVE-2026-94264 - https://wpscan.com/vulnerability/4475b8a6-0d25-49b2-b973-5e19b8958595/
 CVE-2026-94267 - https://wpscan.com/vulnerability/9c8f45c1-cd85-4a9c-be77-88801d8143ce/
 CVE-2026-94268 - https://wpscan.com/vulnerability/eccfab3c-e7cc-4623-9c20-4cd6c32f8422/
+CVE-2026-57845 - https://github.com/SaiTeja-Erukude/CVE-2026-57845-hf-datasets-rce

@@ -68442,8 +68442,6 @@ CVE-2023-31698 - https://github.com/bludit/bludit/issues/1369#issuecomment-94080
 CVE-2023-31698 - https://github.com/bludit/bludit/issues/1509
 CVE-2023-31699 - https://github.com/ChurchCRM/CRM/issues/6471
 CVE-2023-3170 - https://wpscan.com/vulnerability/e95ff3c6-283b-4e5e-bea0-1f1375da08da
-CVE-2023-31700 - https://github.com/FirmRec/IoT-Vulns/blob/main/tp-link/postPlcJson/report.md
-CVE-2023-31701 - https://github.com/FirmRec/IoT-Vulns/blob/main/tp-link/postPlcJson/report.md
 CVE-2023-31702 - http://packetstormsecurity.com/files/172545/eScan-Management-Console-14.0.1400.2281-SQL-Injection.html
 CVE-2023-31703 - http://packetstormsecurity.com/files/172540/eScan-Management-Console-14.0.1400.2281-Cross-Site-Scripting.html
 CVE-2023-31705 - https://github.com/d34dun1c02n/CVE-2023-31705
@@ -79335,7 +79333,6 @@ CVE-2025-2626 - https://github.com/Hefei-Coffee/cve/issues/16
 CVE-2025-26260 - https://github.com/ahmetak4n/vulnerability-playground/tree/main/vulnerability-research/CVE-2025-26260
 CVE-2025-26260 - https://github.com/plentico/plenti/security/advisories/GHSA-mj4v-hp69-27x5
 CVE-2025-26278 - https://gist.github.com/tariqhawis/ad92d5e683f3a5d83e0629955ff42ad7
-CVE-2025-2628 - https://github.com/ydnd/cve/issues/3
 CVE-2025-26304 - https://github.com/libming/libming/issues/323
 CVE-2025-26305 - https://github.com/libming/libming/issues/322
 CVE-2025-26306 - https://github.com/libming/libming/issues/324
@@ -79352,10 +79349,7 @@ CVE-2025-26411 - https://r.sec-consult.com/wattsense
 CVE-2025-26412 - https://r.sec-consult.com/simcom
 CVE-2025-26429 - https://android.googlesource.com/platform/frameworks/base/+/0f3c01c326b6966590c652adec5baa61351756e4
 CVE-2025-26466 - https://www.qualys.com/2025/02/18/openssh-mitm-dos.txt
-CVE-2025-2656 - https://github.com/ydnd/cve/issues/4
 CVE-2025-2658 - https://github.com/zyb26252/CVE/issues/1
-CVE-2025-2659 - https://github.com/ydnd/cve/issues/7
-CVE-2025-2660 - https://github.com/ydnd/cve/issues/8
 CVE-2025-26603 - https://github.com/vim/vim/security/advisories/GHSA-63p5-mwg2-787v
 CVE-2025-26605 - https://github.com/LabRedesCefetRJ/WeGIA/security/advisories/GHSA-6gv7-4j8g-cvgp
 CVE-2025-26606 - https://github.com/LabRedesCefetRJ/WeGIA/security/advisories/GHSA-rxjr-cw9q-cwwg
@@ -79696,9 +79690,6 @@ CVE-2025-30366 - https://github.com/LabRedesCefetRJ/WeGIA/security/advisories/GH
 CVE-2025-30370 - https://github.com/jupyterlab/jupyterlab-git/security/advisories/GHSA-cj5w-8mjf-r5f8
 CVE-2025-3038 - https://github.com/nabiland/cve/blob/main/cve.md
 CVE-2025-3039 - https://github.com/xuzhuojia22/cve/blob/main/cvexuzhoujia.md
-CVE-2025-3040 - https://github.com/ydnd/cve/issues/11
-CVE-2025-3041 - https://github.com/ydnd/cve/issues/12
-CVE-2025-3042 - https://github.com/ydnd/cve/issues/13
 CVE-2025-3052 - https://www.binarly.io/advisories/brly-dva-2025-001
 CVE-2025-3067 - https://issues.chromium.org/issues/376491759
 CVE-2025-3068 - https://issues.chromium.org/issues/401823929
@@ -93907,7 +93898,6 @@ CVE-2024-11124 - https://github.com/TimGeyssens/UIOMatic/pull/227#issuecomment-2
 CVE-2024-11125 - https://github.com/Zeynalxan/zero-day/blob/main/GetSimpleCMS-CVE.md
 CVE-2024-11127 - https://github.com/ljllll123/cve/blob/main/sql-1.md
 CVE-2024-11129 - https://hackerone.com/reports/2717400
-CVE-2024-11130 - https://github.com/En0t5/vul/blob/main/zzcms-msg-xss.md
 CVE-2024-11175 - https://gitee.com/sanluan/PublicCMS/issues/IB2BUV
 CVE-2024-11207 - https://gist.github.com/0xArthurSouza/68295d8fa20f18161945260fcdf842a2
 CVE-2024-11209 - https://gist.github.com/0xArthurSouza/281e8ea8a797abc8371a8ced31dc5562
@@ -93919,7 +93909,6 @@ CVE-2024-11237 - https://github.com/Zephkek/TP-Thumper/blob/main/poc.c
 CVE-2024-11238 - https://github.com/CoinIsMoney/TempGuide/blob/main/LL-exp-02.pdf
 CVE-2024-11239 - https://github.com/CoinIsMoney/TempGuide/blob/main/LL-exp-03.pdf
 CVE-2024-11241 - https://github.com/Anti-Entropy-Zhurong/cve/blob/main/sql-1.md
-CVE-2024-11242 - https://github.com/En0t5/vul/blob/main/zzcms/zzcms-add_list-sql-inject.md
 CVE-2024-11243 - https://github.com/sh3rl0ckpggp/0day/blob/main/code-projects_online-shop_CrossSiteScripting.md
 CVE-2024-11244 - https://github.com/zsx020121/cve/blob/main/sql.md
 CVE-2024-11245 - https://github.com/WEFNNTT/cve/blob/main/sql.md
@@ -95397,7 +95386,6 @@ CVE-2025-0555 - https://hackerone.com/reports/2939833
 CVE-2025-0559 - https://github.com/KhukuriRimal/Vulnerabilities/blob/main/CampCodes%20-%20School%20Management%20Software%20-%20Cross%20Site%20Scripting.pdf
 CVE-2025-0560 - https://github.com/KhukuriRimal/Vulnerabilities/blob/main/CampCodes%20-%20School%20Management%20Software%20-%20Stored%20Cross%20Site%20Scripting.pdf
 CVE-2025-0564 - https://github.com/LiuSir5211314/-sir/issues/3
-CVE-2025-0565 - https://github.com/En0t5/vul/blob/main/zzcms/zzcsm-sql-inject.md
 CVE-2025-0566 - https://pan.baidu.com/s/1DBDf27oCTIMkW-PSZwg02Q?pwd=tara
 CVE-2025-0575 - https://drive.google.com/file/d/1kIXsZoD1FFps0bXQ1pbrfoo76Wy1pL7s/view?usp=drivesdk
 CVE-2025-0579 - https://gist.github.com/mcdruid/3c9fc9bd4e882cee21f8a37998f56fce
@@ -97188,8 +97176,6 @@ CVE-2025-2381 - https://github.com/aionman/cve/issues/4
 CVE-2025-2384 - https://github.com/yiijiayan/cve/blob/main/sql-cve.md
 CVE-2025-2388 - https://github.com/K-mxredo/MXdocument/wiki
 CVE-2025-2390 - https://github.com/intercpt/XSS1/blob/main/SQL8.md
-CVE-2025-2397 - https://github.com/Fizz-L/Vulnerability-report/blob/main/Unauthorized%20access%20to%20execute%20the%20telnet%20command.md
-CVE-2025-2398 - https://github.com/Fizz-L/Vulnerability-report/blob/main/Unauthorized%20access%20to%20execute%20the%20telnet%20command.md
 CVE-2025-24054 - https://www.exploit-db.com/exploits/52478
 CVE-2025-24054 - https://www.exploit-db.com/exploits/52480
 CVE-2025-2408 - https://hackerone.com/reports/3027775
@@ -97253,9 +97239,6 @@ CVE-2025-2652 - https://github.com/happytraveller-alone/cve/blob/main/dir.md
 CVE-2025-2653 - https://www.yuque.com/yuqueyonghuveuwuh/aveeid/nvg6rd3qw1ww83yo?singleDoc
 CVE-2025-2654 - https://github.com/Colorado-all/cve/blob/main/AC%20Repair%20and%20Services%20System%20using/SQL-4.md
 CVE-2025-2655 - https://github.com/Colorado-all/cve/blob/main/AC%20Repair%20and%20Services%20System%20using/SQL-8.md
-CVE-2025-2657 - https://github.com/ydnd/cve/issues/5
-CVE-2025-2661 - https://github.com/ydnd/cve/issues/9
-CVE-2025-2662 - https://github.com/ydnd/cve/issues/10
 CVE-2025-2664 - https://github.com/emano888/CodeZips-Hospital-Management-System/blob/main/SQL_Injection_in_Hospital_Management_System.md
 CVE-2025-2665 - https://github.com/i-Corner/cve/issues/1
 CVE-2025-2671 - https://www.jianshu.com/p/f8ca5e3cd889
@@ -97757,7 +97740,6 @@ CVE-2025-4252 - https://fitoxs.com/exploit/exploit-65b1721b02d84e0c79b6cd3c2473d
 CVE-2025-4253 - https://fitoxs.com/exploit/exploit-6a5b279ed51b35667909c1b56d4d85d71d41bc6e73d4fbbf3de2b1f59ebd6d08.txt
 CVE-2025-4254 - https://fitoxs.com/exploit/exploit-e4fd898014889301fef4607c9a2641c3db234bb5a057a22952bfb70e70b4c279.txt
 CVE-2025-4255 - https://fitoxs.com/exploit/exploit-52a33c7f018ae348f748582eae6aa7d38b2b5f1f3dc5d3b6793772e1f8223eb0.txt
-CVE-2025-4258 - https://github.com/Fc04dB/VUL/blob/main/ukefu_upload.md
 CVE-2025-4259 - https://github.com/yaklang/IRifyScanResult/blob/main/newbee-mall/arbitrary-file-upload-in-uploadController.md
 CVE-2025-4260 - https://github.com/Serein123y/vulnerability/blob/main/vul.md
 CVE-2025-4261 - https://github.com/GAIR-NLP/factool/issues/50#issue-3007905464
@@ -117397,3 +117379,4 @@ CVE-2026-94262 - https://wpscan.com/vulnerability/3634e73f-df12-4d84-8bf6-c098ef
 CVE-2026-94264 - https://wpscan.com/vulnerability/4475b8a6-0d25-49b2-b973-5e19b8958595/
 CVE-2026-94267 - https://wpscan.com/vulnerability/9c8f45c1-cd85-4a9c-be77-88801d8143ce/
 CVE-2026-94268 - https://wpscan.com/vulnerability/eccfab3c-e7cc-4623-9c20-4cd6c32f8422/
+CVE-2026-57845 - https://github.com/SaiTeja-Erukude/CVE-2026-57845-hf-datasets-rce
