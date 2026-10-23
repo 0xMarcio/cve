@@ -85317,7 +85317,6 @@ CVE-2026-5326 - https://medium.com/@hemantrajbhati5555/insecure-direct-object-re
 CVE-2026-5327 - https://github.com/user-attachments/files/25822878/fast-filesystem-mcp_bug.pdf
 CVE-2026-5328 - https://github.com/shsuishang/modulithshop/issues/3#issue-4081835434
 CVE-2026-5330 - https://github.com/zy606/Vulnerability-Report/tree/main/Gaatitrack-Unauth-Delete
-CVE-2026-5331 - https://drive.google.com/file/d/1YemSW2Tn0LKzY3mPosMzElQeHs8P3LMt/view?usp=sharing
 CVE-2026-5332 - https://github.com/ltranquility/vuln_submit/issues/1
 CVE-2026-5333 - https://github.com/DefaultFuction/Content-Management-System/issues/1#issue-4082558620
 CVE-2026-5334 - https://github.com/yuji0903/silver-guide/issues/15
@@ -86503,7 +86502,6 @@ CVE-2026-8207 - https://projectblack.io/blog/gibbon-v30-authenticated-sql-inject
 CVE-2026-8208 - https://projectblack.io/blog/gibbon-v30-authenticated-sql-injection-and-rce/#local-file-inclusionthe-next-shiny-new-thing
 CVE-2026-8209 - https://projectblack.io/blog/gibbon-v30-authenticated-sql-injection-and-rce/#denial-of-service-via-path-traversal
 CVE-2026-82090 - https://github.com/FUNFACTOR1/pocket-android-xss-0click-cve
-CVE-2026-8210 - https://drive.google.com/file/d/19wRsehbhotZXgE1TjenFtS3w-zRtp-PW/view?usp=sharing
 CVE-2026-82111 - https://github.com/iswalle/getnote-mcp/issues/10
 CVE-2026-8222 - https://github.com/open5gs/open5gs/issues/4437
 CVE-2026-8223 - https://github.com/open5gs/open5gs/issues/4438
