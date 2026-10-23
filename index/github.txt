@@ -21673,7 +21673,6 @@ CVE-2023-31059 - https://github.com/mbanyamer/CVE-2023-31059-Repetier-Server-1.4
 CVE-2023-31753 - https://github.com/KIL0BYT3X/CVE-2023-31753
 CVE-2023-31902 - https://github.com/arbaaz29/mobile-mouse
 CVE-2023-31902 - https://github.com/lypd0/mouseserver-exploit
-CVE-2023-32233 - https://github.com/BurnSkyup/CVE-2023-32233-reproduction
 CVE-2023-32233 - https://github.com/ChristopherPatrickKuntz/bifrost-infrastructure-disclosure
 CVE-2023-32233 - https://github.com/Destawell/gemini-2.5-pro-nf-tables-red-teaming
 CVE-2023-32243 - https://github.com/GMJayy/wp-cve-poc
@@ -28040,3 +28039,8 @@ CVE-2026-109619 - https://github.com/an-lle/php2shell
 CVE-2026-109619 - https://github.com/renyang-create/php2shell-repro
 CVE-2026-111497 - https://github.com/duytien241/nodejs-CVE-2026-111497
 CVE-2026-53264 - https://github.com/b1nhack/CVE-2026-53264
+CVE-2026-109618 - https://github.com/Kyros0324/CVE2026
+CVE-2026-109618 - https://github.com/umair-aziz025/PHP2Shell
+CVE-2026-109619 - https://github.com/Kyros0324/CVE2026
+CVE-2026-109619 - https://github.com/umair-aziz025/PHP2Shell
+CVE-2026-71362 - https://github.com/mahumadad/cve-2026-71362-magento-ato
