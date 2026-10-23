@@ -21008,7 +21008,6 @@ CVE-2026-9086 - https://github.com/Saku0512/CVE-2026-9086-poc
 CVE-2026-9090 - https://github.com/George0Papasotiriou/CVE-2026-9090-Modbus-TCP-Write-to-Read-Only-Coils-via-Function-Code-Spoofing
 CVE-2026-9090 - https://github.com/Kimdir01/CVE-2026-9090-poc
 CVE-2026-9147 - https://github.com/SaiTeja-Erukude/CVE-2026-9147-uproot-rce
-CVE-2026-9158 - https://github.com/Klaurx/CVE_2026_9158
 CVE-2026-9198 - https://github.com/0xgh057r3c0n/CVE-2026-9198
 CVE-2026-9198 - https://github.com/CuteeCat/CVE-2026-9198
 CVE-2026-9198 - https://github.com/Procjevt/CVE-2026-9198
@@ -21935,7 +21934,6 @@ CVE-2024-12886 - https://github.com/dannyEndorTest/ollama
 CVE-2024-13513 - https://github.com/0axz-tools/CVE-2024-13513.py
 CVE-2024-13918 - https://github.com/kwdlab/2603-KAWAKATSU.Ryota
 CVE-2024-13985 - https://github.com/CrimsonfiedOfficial/CVE-2024-13985
-CVE-2024-14027 - https://github.com/lcfr-eth/CVE-2024-14027_slop
 CVE-2024-1698 - https://github.com/Dhananjayasj/CVE-2024-1698-NotificationX-WordPress-Plugin-SQL-Injection-to-Admin-Credential-Extraction
 CVE-2024-1708 - https://github.com/razureink/cve-2024-1708-connectwise_rce_reproduction
 CVE-2024-1709 - https://github.com/razureink/cve-2024-1708-connectwise_rce_reproduction
@@ -28044,7 +28042,6 @@ CVE-2026-109619 - https://github.com/Kyros0324/CVE2026
 CVE-2026-109619 - https://github.com/umair-aziz025/PHP2Shell
 CVE-2026-71362 - https://github.com/mahumadad/cve-2026-71362-magento-ato
 CVE-2026-31158 - https://github.com/Hardik007007/CVE-2026-31158-Boolean-Based-SQL-Injection-in-CRM-Login
-CVE-2026-109618 - https://github.com/EQSTLab/CVE-2026-109618
 CVE-2026-109618 - https://github.com/LeisureLinux/php2shell
 CVE-2026-109619 - https://github.com/LeisureLinux/php2shell
 CVE-2026-86476 - https://github.com/0xSemizzz/CVE-2026-86476
@@ -28056,3 +28053,8 @@ CVE-2019-0205 - https://github.com/cgarrot/echo-dot-3-doebrite-research
 CVE-2022-32250 - https://github.com/Akki-74/NEXUS
 CVE-2024-30084 - https://github.com/m01000xd/CVE-2024-30084
 CVE-2026-109618 - https://github.com/tuanhoma/CVE-2026-109618
+CVE-2026-109618 - https://github.com/Chr1s-T/php2shell-cve-2026-109618
+CVE-2026-109619 - https://github.com/EQSTLab/CVE-2026-109619
+CVE-2026-110264 - https://github.com/jaiswalakshansh/Reversing-Vulnerabilities
+CVE-2026-31431 - https://github.com/StackOverflowExcept1on/CVE-2026-31431
+CVE-2026-8933 - https://github.com/yifengchen-cc/CVE-2026-8933
