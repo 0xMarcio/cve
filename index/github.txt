@@ -28044,3 +28044,4 @@ CVE-2026-109618 - https://github.com/umair-aziz025/PHP2Shell
 CVE-2026-109619 - https://github.com/Kyros0324/CVE2026
 CVE-2026-109619 - https://github.com/umair-aziz025/PHP2Shell
 CVE-2026-71362 - https://github.com/mahumadad/cve-2026-71362-magento-ato
+CVE-2026-31158 - https://github.com/Hardik007007/CVE-2026-31158-Boolean-Based-SQL-Injection-in-CRM-Login
