@@ -28050,3 +28050,8 @@ CVE-2026-109619 - https://github.com/LeisureLinux/php2shell
 CVE-2026-86476 - https://github.com/0xSemizzz/CVE-2026-86476
 CVE-2026-109618 - https://github.com/MorphingYU/CVE-2026-109618
 CVE-2019-2215 - https://github.com/xushihushuo-art/cve-2019-2215-skyworth
+CVE-2009-3699 - https://github.com/peter17/exploitdb-json
+CVE-2018-20062 - https://github.com/Dyp2005/hdu-is-work1
+CVE-2019-0205 - https://github.com/cgarrot/echo-dot-3-doebrite-research
+CVE-2022-32250 - https://github.com/Akki-74/NEXUS
+CVE-2024-30084 - https://github.com/m01000xd/CVE-2024-30084
