@@ -19607,7 +19607,6 @@ CVE-2023-2635 - https://wpscan.com/vulnerability/81b89613-18d0-4c13-84e3-9e2e180
 CVE-2023-2636 - https://wpscan.com/vulnerability/6a3bfd88-1251-4d40-b26f-62950a3ce0b5
 CVE-2023-2641 - https://github.com/csbsong/bug_report/blob/main/SQLi-1.md
 CVE-2023-2642 - https://github.com/sushanburanxisha/cve/blob/main/SQLi-1.md
-CVE-2023-2643 - https://github.com/GZRsecurity/cve/blob/main/SQLi.md
 CVE-2023-2647 - https://github.com/sunyixuan1228/cve/blob/main/weaver%20exec.md
 CVE-2023-2648 - https://github.com/sunyixuan1228/cve/blob/main/weaver.md
 CVE-2023-2649 - https://github.com/xinzhihen06/ac23tenda/blob/main/tendaAC23.md
@@ -19983,12 +19982,7 @@ CVE-2023-3802 - https://github.com/GUIqizsq/cve/blob/main/upload_1.md
 CVE-2023-3803 - https://github.com/GUIqizsq/cve/blob/main/upload_2.md
 CVE-2023-3804 - https://github.com/yueying638/cve/blob/main/upload.md
 CVE-2023-3805 - https://github.com/GUIqizsq/cve/blob/main/login.md
-CVE-2023-3806 - https://github.com/GZRsecurity/Cve-System/blob/main/House%20Rental%20and%20Property%20Listing%20System%20register.php%20has%20%20File%20Upload(RCE)%20Vulnerability.pdf
 CVE-2023-3807 - https://github.com/E1CHO/cve_hub/blob/main/Beauty%20Salon%20Management%20System%20-%20vuln%202.pdf
-CVE-2023-3808 - https://github.com/GZRsecurity/Cve-System/blob/main/Hospital%20Management%20System%20patientforgotpassword.php%20has%20Sqlinjection.pdf
-CVE-2023-3809 - https://github.com/GZRsecurity/Cve-System/blob/main/Hospital%20Management%20System%20patient.php%20has%20Sqlinjection.pdf
-CVE-2023-3810 - https://github.com/GZRsecurity/Cve-System/blob/main/Hospital%20Management%20System%20patientappointment.php%20has%20Sqlinjection.pdf
-CVE-2023-3811 - https://github.com/GZRsecurity/Cve-System/blob/main/Hospital%20Management%20System%20patientprofile.php%20has%20Sqlinjection.pdf
 CVE-2023-3814 - https://wpscan.com/vulnerability/ca954ec6-6ebd-4d72-a323-570474e2e339
 CVE-2023-3826 - https://github.com/Wkingxc/CVE/blob/master/ibos_OA.md
 CVE-2023-3836 - https://github.com/qiuhuihk/cve/blob/main/upload.md
@@ -28061,7 +28055,6 @@ CVE-2025-3592 - https://github.com/buluorifu/Vulnerability-recurrence/blob/main/
 CVE-2025-3593 - https://github.com/buluorifu/Vulnerability-recurrence/blob/main/Refer/My-Blog-layui-fileUpload.md
 CVE-2025-3597 - https://wpscan.com/vulnerability/8bf5e107-6397-4946-aaee-bf61d3e2dffd/
 CVE-2025-3601 - https://hackerone.com/reports/3050155
-CVE-2025-3612 - https://github.com/HexC0d3/graphlytic-xss-exploits/blob/main/reflected_xss.md
 CVE-2025-3613 - https://github.com/HexC0d3/graphlytic-xss-exploits/blob/main/stored_xss.md
 CVE-2025-3649 - https://wpscan.com/vulnerability/37fb7f3b-1766-4c2c-9b78-f77f15a04476/
 CVE-2025-3650 - https://wpscan.com/vulnerability/5afdd448-0f7e-409e-a47b-8e5c5b707639/
@@ -30456,16 +30449,6 @@ CVE-2025-9155 - https://github.com/HjsCS/CVE/issues/2
 CVE-2025-9156 - https://github.com/kangsf1989/2025/issues/1
 CVE-2025-9157 - https://drive.google.com/file/d/1_aONM_TOF96JbnYviPyZhVk-7HObtX8H/view?usp=sharing
 CVE-2025-9165 - https://drive.google.com/file/d/1FWhmkzksH8-qU0ZM6seBzGNB3aPnX3G8/view?usp=sharing
-CVE-2025-9167 - https://github.com/Gabrielmouraofc/PoC_Vuldb/blob/main/%F0%9F%95%B5%EF%B8%8F%E2%80%8D%E2%99%82%EF%B8%8F%20PoC%20-%20Stored%20XSS%201.md
-CVE-2025-9167 - https://github.com/Gabrielmouraofc/PoC_Vuldb/blob/main/%F0%9F%95%B5%EF%B8%8F%E2%80%8D%E2%99%82%EF%B8%8F%20PoC%20-%20Stored%20XSS%201.md#-exploitation-steps
-CVE-2025-9168 - https://github.com/Gabrielmouraofc/PoC_Vuldb/blob/main/%F0%9F%93%84POC%20Stored%20XSS%202.md
-CVE-2025-9168 - https://github.com/Gabrielmouraofc/PoC_Vuldb/blob/main/%F0%9F%93%84POC%20Stored%20XSS%202.md#-exploitation-steps
-CVE-2025-9169 - https://github.com/Gabrielmouraofc/PoC_Vuldb/blob/main/%F0%9F%93%84PoC%20-%20Stored%20XSS%203.md
-CVE-2025-9169 - https://github.com/Gabrielmouraofc/PoC_Vuldb/blob/main/%F0%9F%93%84PoC%20-%20Stored%20XSS%203.md#-exploitation-steps
-CVE-2025-9170 - https://github.com/Gabrielmouraofc/PoC_Vuldb/blob/main/%F0%9F%93%84PoC%20-Stored%20XSS%204.md
-CVE-2025-9170 - https://github.com/Gabrielmouraofc/PoC_Vuldb/blob/main/%F0%9F%93%84PoC%20-Stored%20XSS%204.md#-exploitation-steps
-CVE-2025-9171 - https://github.com/Gabrielmouraofc/PoC_Vuldb/blob/main/%F0%9F%95%B5%EF%B8%8F%E2%80%8D%E2%99%82%EF%B8%8F%20PoC%20%E2%80%93%20Stored%20XSS%205.md
-CVE-2025-9171 - https://github.com/Gabrielmouraofc/PoC_Vuldb/blob/main/%F0%9F%95%B5%EF%B8%8F%E2%80%8D%E2%99%82%EF%B8%8F%20PoC%20%E2%80%93%20Stored%20XSS%205.md#-exploitation-steps
 CVE-2025-9171 - https://vuldb.com/?submit.630639
 CVE-2025-9174 - https://magnificent-dill-351.notion.site/Command-Execution-in-shc-4-0-3-249c693918ed8040abe3e636c7f18c96
 CVE-2025-9175 - https://magnificent-dill-351.notion.site/Stack-Overflow-in-shc-4-0-3-249c693918ed804b8c44ee11eb0af087
@@ -36711,7 +36694,6 @@ CVE-2026-90706 - https://gist.github.com/H3rmesk1t/f2d1f9115192b7af18699a8214a5b
 CVE-2026-90708 - https://github.com/dddwmr/CVE/blob/main/YOT%20III%20cookie%20auto-login%20SQL%20injection%20enables%20forged%20administrator%20sessions%20.md
 CVE-2026-90709 - https://github.com/dddwmr/CVE/blob/main/YOT%20III%20modsys%3Aconsole%20admin%20eval%20of%20POST%20text%20leads%20to%20remote%20code%20execution.md
 CVE-2026-90710 - https://gitee.com/taisan/tarzan-cms/issues/IK768M
-CVE-2026-90712 - https://github.com/Gitlawb/openclaude/issues/2101
 CVE-2026-90713 - https://gist.github.com/Yunzez/4b08ec3568a8cbfb120062e2558382b8
 CVE-2026-90714 - https://github.com/marcobambini/gravity/issues/448
 CVE-2026-90715 - https://github.com/marcobambini/gravity/issues/447
