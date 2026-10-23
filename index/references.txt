@@ -76630,7 +76630,6 @@ CVE-2024-4289 - https://wpscan.com/vulnerability/072785de-0ce5-42a4-a3fd-4eb1d1a
 CVE-2024-4290 - https://wpscan.com/vulnerability/a9a10d0f-d8f2-4f3e-92bf-94fc08416d87/
 CVE-2024-42900 - https://g03m0n.github.io/posts/cve-2024-42900/
 CVE-2024-42906 - https://github.com/Alkatraz97/CVEs/blob/main/CVE-2024-42906.md
-CVE-2024-4291 - https://github.com/L1ziang/Vulnerability/blob/main/formAddMacfilterRule.md
 CVE-2024-42918 - https://packetstormsecurity.com
 CVE-2024-4293 - https://github.com/Sospiro014/zday1/blob/main/doctor_appointment_management_system_xss.md
 CVE-2024-4294 - https://github.com/Sospiro014/zday1/blob/main/doctor_appointment_management_system_idor.md
@@ -78516,7 +78515,6 @@ CVE-2025-0460 - https://gist.github.com/mcdruid/28124198128022a1c2b4060f74d99cd6
 CVE-2025-0466 - https://wpscan.com/vulnerability/53ab86dc-1195-4ba0-8eda-6a0d7b45c45f/
 CVE-2025-0522 - https://wpscan.com/vulnerability/4c2eed5a-f4d8-457d-a403-7eaced36c491/
 CVE-2025-0527 - https://github.com/Curious-L/-/issues/4
-CVE-2025-0531 - https://github.com/LamentXU123/cve/blob/main/sql_injection2.md
 CVE-2025-0533 - https://github.com/onupset/CVE/issues/2
 CVE-2025-0534 - https://github.com/onupset/CVE/issues/3
 CVE-2025-0540 - https://github.com/magic2353112890/cve/issues/1
@@ -78547,7 +78545,6 @@ CVE-2025-0806 - https://github.com/1337g/CVE-2025-X/blob/main/xss-1_27.md
 CVE-2025-0846 - https://github.com/onupset/CVE/issues/4
 CVE-2025-0847 - https://github.com/onupset/CVE/issues/5
 CVE-2025-0867 - https://www.first.org/cvss/calculator/3.1
-CVE-2025-0882 - https://github.com/LamentXU123/cve/blob/main/sql_injection3.md
 CVE-2025-0943 - https://github.com/magic2353112890/cve/issues/7
 CVE-2025-0944 - https://github.com/magic2353112890/cve/issues/7
 CVE-2025-0945 - https://github.com/magic2353112890/cve/issues/7
@@ -85034,7 +85031,6 @@ CVE-2026-4532 - https://github.com/ahmadmarz10-hub/CVEsMarz/blob/main/Simple%20F
 CVE-2026-4533 - https://github.com/ahmadmarz10-hub/CVEsMarz/blob/main/SQL%20Injection%20(Time-Based%20Blind)Simple%20Food%20Ordering%20System%20in%20PHP.md?plain=1
 CVE-2026-4534 - https://github.com/Litengzheng/vul_db/blob/main/FH451/vul_41/README.md
 CVE-2026-4535 - https://github.com/Litengzheng/vul_db/blob/main/FH451/vul_42/README.md
-CVE-2026-4536 - https://github.com/LTX-GOD/Mycve/blob/main/Acrel_Co_Ltd.md
 CVE-2026-4537 - https://github.com/qazmn/my_cve/blob/main/cudy_cve/Cudy_TR1200_Command_Injection.md
 CVE-2026-4538 - https://github.com/pytorch/pytorch/pull/176791
 CVE-2026-4539 - https://github.com/pygments/pygments/issues/3058
@@ -85270,7 +85266,6 @@ CVE-2026-5336 - https://wpscan.com/vulnerability/3b3ab347-a8bd-4baa-8eba-c45a8a7
 CVE-2026-5337 - https://wpscan.com/vulnerability/3e28aa78-3227-474a-b1db-1f5ea2c42d14/
 CVE-2026-5338 - https://github.com/ZZ2266/.github.io/tree/main/Tenda%20G103/action_set_system_settings
 CVE-2026-5339 - https://github.com/ZZ2266/.github.io/tree/main/Tenda%20G103/authLoid
-CVE-2026-5344 - https://github.com/LTX-GOD/Mycve/blob/main/Textpatterncms_en.md
 CVE-2026-5346 - https://github.com/wing3e/public_exp/issues/11
 CVE-2026-5349 - https://github.com/panda666-888/vuls/blob/main/trendnet/tew-657brm/add_apcdb.md
 CVE-2026-5350 - https://github.com/panda666-888/vuls/blob/main/trendnet/tew-657brm/update_pcdb.md
@@ -85634,7 +85629,6 @@ CVE-2026-6198 - https://github.com/Litengzheng/vuldb_new/blob/main/F456/vul_115/
 CVE-2026-6199 - https://github.com/Litengzheng/vuldb_new/blob/main/F456/vul_116/README.md
 CVE-2026-6200 - https://github.com/Litengzheng/vuldb_new/blob/main/F456/vul_117/README.md
 CVE-2026-6201 - https://github.com/Xmyronn/CodeAstro-Online-Job-Portal-IDOR.git
-CVE-2026-6202 - https://github.com/Learner636/CVE-smbmit/issues/6
 CVE-2026-6204 - https://projectblack.io/blog/librenms-authenticated-rce-and-xss/#binary-path-rce-poc
 CVE-2026-6220 - https://github.com/ccccccctiiiiiiii-lab/public_exp/issues/1
 CVE-2026-62239 - https://github.com/Dao-AILab/flash-attention/issues/2637
@@ -93965,7 +93959,6 @@ CVE-2024-11998 - https://github.com/jaychou8023/cve/blob/main/sql1.md
 CVE-2024-12000 - https://github.com/jaychou8023/cve/blob/main/xss3.md
 CVE-2024-12001 - https://github.com/jaychou8023/cve/blob/main/xss4.md
 CVE-2024-12002 - https://github.com/Kalvin2077/tenda-fh-cve
-CVE-2024-12007 - https://github.com/LamentXU123/cve/blob/main/cve-l.md
 CVE-2024-12093 - https://hackerone.com/reports/2851261
 CVE-2024-1211 - https://hackerone.com/reports/2323594
 CVE-2024-12138 - https://github.com/Sp1d3rL1/horilla-RCE
@@ -93978,7 +93971,6 @@ CVE-2024-12188 - https://github.com/SkGoing/CVE-repo_00/issues/4
 CVE-2024-12228 - https://github.com/PunyHunter/CVE/issues/2
 CVE-2024-12229 - https://github.com/qiyes233/CVE/issues/1
 CVE-2024-12231 - https://github.com/SkGoing/CVE-repo_00/issues/3
-CVE-2024-12232 - https://github.com/LamentXU123/cve/blob/main/xss3.md
 CVE-2024-12233 - https://github.com/LamentXU123/cve/blob/main/RCE1.md
 CVE-2024-12235 - https://github.com/sweatxi/rce/blob/main/AgileBPM_vertical_overreach.md
 CVE-2024-12244 - https://hackerone.com/reports/2862754
@@ -98210,11 +98202,6 @@ CVE-2025-5728 - https://github.com/mysq13/CVE/issues/4
 CVE-2025-5729 - https://github.com/Thiasap/HCPMS_PHP_vulns/blob/main/sql%20injection%20in%20birthing_record.php.pdf
 CVE-2025-5732 - https://github.com/tuooo/CVE/issues/3
 CVE-2025-5734 - https://github.com/byxs0x0/cve2/blob/main/cvee/1.md
-CVE-2025-5735 - https://github.com/Lena-lyy/cve/blob/main/Goo/2.md
-CVE-2025-5736 - https://github.com/Lena-lyy/cve/blob/main/Goo/3.md
-CVE-2025-5737 - https://github.com/Lena-lyy/cve/blob/main/Goo/4.md
-CVE-2025-5738 - https://github.com/Lena-lyy/cve/blob/main/Goo/5.md
-CVE-2025-5739 - https://github.com/Lena-lyy/cve/blob/main/Goo/6.md
 CVE-2025-57392 - https://github.com/meisterlos/BenimPOS-POC
 CVE-2025-5755 - https://github.com/mysq13/CVE/issues/5
 CVE-2025-5756 - https://github.com/Darlingzero2/cve/issues/1
@@ -98227,9 +98214,6 @@ CVE-2025-5777 - https://doublepulsar.com/citrixbleed-2-exploitation-started-mid-
 CVE-2025-5778 - https://github.com/ubfbuz3/cve/issues/18
 CVE-2025-5779 - https://github.com/Thiasap/HCPMS_PHP_vulns/blob/main/sql%20injection%20in%20birthing.php.pdf
 CVE-2025-5780 - https://github.com/Thiasap/HCPMS_PHP_vulns/blob/main/sql%20injection%20in%20view_dental.php.pdf
-CVE-2025-5785 - https://github.com/Lena-lyy/cve/blob/main/7.md
-CVE-2025-5786 - https://github.com/Lena-lyy/cve/blob/main/8.md
-CVE-2025-5787 - https://github.com/Lena-lyy/cve/blob/main/9.md
 CVE-2025-5788 - https://github.com/awindog/cve/blob/main/10.md
 CVE-2025-5792 - https://github.com/byxs0x0/cve2/blob/main/1.md
 CVE-2025-5793 - https://github.com/byxs0x0/cve2/blob/main/2.md
@@ -98265,7 +98249,6 @@ CVE-2025-5875 - https://locrian-lightning-dc7.notion.site/TL-IPC544EP-W4-1f98e5e
 CVE-2025-5876 - https://github.com/zeke2997/cve_request_LuckyTechnologyLtd
 CVE-2025-5877 - https://gist.github.com/mcdruid/e78694d754f44884830898be082fcbaa#steps-to-reproduce
 CVE-2025-5879 - https://github.com/Aiyakami/CVE-1/issues/7
-CVE-2025-5881 - https://github.com/LamentXU123/cve/blob/main/sql4.md
 CVE-2025-5884 - https://drive.google.com/file/d/1A0JEnmnUGNjGsizRu99uz2ynqQ3v9ZKB/view
 CVE-2025-5885 - https://drive.google.com/file/d/1pECiiSWdB_ERzzGrc--WY63IzZxR6i6L/view
 CVE-2025-5887 - https://github.com/Aiyakami/CVE-1/issues/4
@@ -98612,10 +98595,6 @@ CVE-2025-7181 - https://github.com/kn1g78/cve/blob/main/staff2/staff2.md
 CVE-2025-7183 - https://github.com/To-LingJing/CVE-Issues/issues/3
 CVE-2025-7184 - https://github.com/HeDunSec/cve/issues/2
 CVE-2025-7185 - https://github.com/HeDunSec/cve/issues/1
-CVE-2025-7186 - https://github.com/LamentXU123/cve/blob/main/sql_fetch_chat.md
-CVE-2025-7187 - https://github.com/LamentXU123/cve/blob/main/sql_fetch_member.md
-CVE-2025-7188 - https://github.com/LamentXU123/cve/blob/main/sql_addmember.md
-CVE-2025-7189 - https://github.com/LamentXU123/cve/blob/main/sql_send_message.md
 CVE-2025-7191 - https://github.com/yihaofuweng/cve/issues/11
 CVE-2025-7193 - https://github.com/Sp1d3rL1/CVE/issues/7
 CVE-2025-7194 - https://github.com/BigMancer/CVE/issues/1
@@ -98682,7 +98661,6 @@ CVE-2025-7506 - https://github.com/zezhifu1/cve_report/blob/main/FH451/fromNatli
 CVE-2025-7508 - https://github.com/chipower777/cve/issues/1
 CVE-2025-7509 - https://github.com/chipower777/cve/issues/2
 CVE-2025-7510 - https://github.com/chipower777/cve/issues/3
-CVE-2025-7511 - https://github.com/LamentXU123/cve/blob/main/sql_update_account.md
 CVE-2025-7512 - https://github.com/haoyv147/cve/issues/3
 CVE-2025-7513 - https://github.com/haoyv147/cve/issues/2
 CVE-2025-7514 - https://github.com/haoyv147/cve/issues/1
@@ -98863,7 +98841,6 @@ CVE-2025-8161 - https://gitee.com/deerwms/deer-wms-2/issues/ICLQQG
 CVE-2025-8165 - https://github.com/ljfhhh/cve2/blob/main/cve-sql.pdf
 CVE-2025-8168 - https://github.com/InfiniteLin/Lin-s-CVEdb/blob/main/DIR-513/formSetWanL2TP.md
 CVE-2025-8169 - https://github.com/InfiniteLin/Lin-s-CVEdb/blob/main/DIR-513/formSetWanPPPoE.md
-CVE-2025-8175 - https://github.com/Kriswu1337/CVE/blob/main/DI_8400%20Null%20pointer%20dereference%20vulnerability.md
 CVE-2025-8176 - https://gitlab.com/libtiff/libtiff/-/issues/707
 CVE-2025-8178 - https://www.yuque.com/ba1ma0-an29k/nnxoap/qkixf5578145igdt
 CVE-2025-8182 - https://www.notion.so/23a54a1113e7802abfabf1275a555f48
