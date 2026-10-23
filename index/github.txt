@@ -3802,7 +3802,6 @@ CVE-2018-4878 - https://github.com/FlatL1neAPT/Post-exploitation
 CVE-2018-4878 - https://github.com/HuanWoWeiLan/SoftwareSystemSecurity-2019
 CVE-2018-4878 - https://github.com/KathodeN/CVE-2018-4878
 CVE-2018-4878 - https://github.com/lvyoshino/CVE-2018-4878
-CVE-2018-4878 - https://github.com/mdsecactivebreach/CVE-2018-4878
 CVE-2018-4878 - https://github.com/nao-sec/ektotal
 CVE-2018-4878 - https://github.com/SyFi/CVE-2018-4878
 CVE-2018-4878 - https://github.com/vysecurity/CVE-2018-4878
@@ -12954,7 +12953,6 @@ CVE-2023-26256 - https://github.com/csdcsdcsdcsdcsd/CVE-2023-26256
 CVE-2023-26256 - https://github.com/jcad123/CVE-2023-26256
 CVE-2023-26256 - https://github.com/qs119/CVE-2023-26256
 CVE-2023-26256 - https://github.com/xhs-d/CVE-2023-26256
-CVE-2023-26258 - https://github.com/mdsecactivebreach/CVE-2023-26258-ArcServe
 CVE-2023-26262 - https://github.com/istern/CVE-2023-26262
 CVE-2023-26269 - https://github.com/mbadanoiu/CVE-2023-26269
 CVE-2023-26326 - https://github.com/mesudmammad1/CVE-2023-26326_Buddyform_exploit
@@ -28058,3 +28056,10 @@ CVE-2026-109619 - https://github.com/EQSTLab/CVE-2026-109619
 CVE-2026-110264 - https://github.com/jaiswalakshansh/Reversing-Vulnerabilities
 CVE-2026-31431 - https://github.com/StackOverflowExcept1on/CVE-2026-31431
 CVE-2026-8933 - https://github.com/yifengchen-cc/CVE-2026-8933
+CVE-2026-109618 - https://github.com/4nuxd/php2shell
+CVE-2026-109618 - https://github.com/Im-umit/php2shell
+CVE-2026-109618 - https://github.com/agrresore/php2shell
+CVE-2026-109619 - https://github.com/4nuxd/php2shell
+CVE-2026-109619 - https://github.com/Im-umit/php2shell
+CVE-2026-109619 - https://github.com/agrresore/php2shell
+CVE-2026-112403 - https://github.com/al4n4n/CVE-2026-112403

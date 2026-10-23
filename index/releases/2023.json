@@ -2607,7 +2607,7 @@
 "CVE-2023-26256 github:qs119/cve-2023-26256?#":{"basis":"unknown","cve":"CVE-2023-26256","imported":true,"released":null,"url":"https://github.com/qs119/CVE-2023-26256"},
 "CVE-2023-26256 github:xhs-d/cve-2023-26256?#":{"basis":"unknown","cve":"CVE-2023-26256","imported":true,"released":null,"url":"https://github.com/xhs-d/CVE-2023-26256"},
 "CVE-2023-26256 github:zan8in/afrog/blob/main/pocs/afrog-pocs/CVE/2023/CVE-2023-26256.yaml?#":{"basis":"unknown","cve":"CVE-2023-26256","imported":true,"released":null,"url":"https://github.com/zan8in/afrog/blob/main/pocs/afrog-pocs/CVE/2023/CVE-2023-26256.yaml"},
-"CVE-2023-26258 github:mdsecactivebreach/cve-2023-26258-arcserve?#":{"basis":"unknown","cve":"CVE-2023-26258","imported":true,"released":null,"url":"https://github.com/mdsecactivebreach/CVE-2023-26258-ArcServe"},
+"CVE-2023-26258 github:mdsecactivebreach/cve-2023-26258-arcserve?#":{"basis":"unknown","cve":"CVE-2023-26258","gone":"2026-10-23T10:19:31Z","gone_reason":"unavailable","imported":true,"released":null,"url":"https://github.com/mdsecactivebreach/CVE-2023-26258-ArcServe"},
 "CVE-2023-26258 github:projectdiscovery/nuclei-templates/blob/main/http/cves/2023/CVE-2023-26258.yaml?#":{"basis":"unknown","cve":"CVE-2023-26258","imported":true,"released":null,"url":"https://github.com/projectdiscovery/nuclei-templates/blob/main/http/cves/2023/CVE-2023-26258.yaml"},
 "CVE-2023-26262 github:istern/cve-2023-26262?#":{"basis":"unknown","cve":"CVE-2023-26262","imported":true,"released":null,"url":"https://github.com/istern/CVE-2023-26262"},
 "CVE-2023-26269 github:mbadanoiu/cve-2023-26269?#":{"basis":"unknown","cve":"CVE-2023-26269","imported":true,"released":null,"url":"https://github.com/mbadanoiu/CVE-2023-26269"},

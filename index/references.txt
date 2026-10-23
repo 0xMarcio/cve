@@ -84626,7 +84626,6 @@ CVE-2026-31842 - https://github.com/tinyproxy/tinyproxy/issues/604
 CVE-2026-3192 - https://github.com/Danimlzg/chia-rpc-auth-bypass.git
 CVE-2026-3193 - https://github.com/Danimlzg/chia-rpc-auth-bypass.git
 CVE-2026-3194 - https://github.com/Danimlzg/chia-rpc-auth-bypass.git
-CVE-2026-3209 - https://gist.github.com/henrrrychau/0457bef6776d0c99688f9cf55cdf55f7
 CVE-2026-3220 - https://wpscan.com/vulnerability/3ceabf11-23cd-4c38-ba14-014348b0ff2d/
 CVE-2026-3254 - https://hackerone.com/reports/3572752
 CVE-2026-3262 - https://github.com/Ghufran2/CVE-Asp.Net-Core-Inventory-Order-Management-System-Advisories/blob/main/Asp.Net-Core-Inventory-Order-Management-System%20Privilege%20Escalation%20via%20Client-Side%20Redirect%20Bypass.md
@@ -85470,7 +85469,6 @@ CVE-2026-58058 - https://github.com/bikini/exploitarium/tree/main/nmap-ipv6-extl
 CVE-2026-5806 - https://github.com/ahmadmarz10-hub/CVEsMarz/blob/main/Stored%20Cross-Site%20Scripting%20(XSS)%20in%20Easy%20Blog%20Site%20PHP%20postTitle%20Parameter.md
 CVE-2026-5810 - https://github.com/meifukun/Web-Security-PoCs/blob/main/Inventory-System/XSS-Delete-id.md
 CVE-2026-5811 - https://github.com/meifukun/Web-Security-PoCs/blob/main/Online-Food-Ordering-System/BusinessLogic-Product-NegativePrice.md
-CVE-2026-58116 - https://gist.github.com/henrrrychau/08d76ec672f42136bbc1449c4f2973f8
 CVE-2026-5812 - https://github.com/meifukun/Web-Security-PoCs/blob/main/Pharmacy-Product-Management-System/Logic-AddSales-NegativeQty.md
 CVE-2026-58126 - https://gist.github.com/VAMorales/6dc232729cdd517fa30d581fbcd98d8f
 CVE-2026-58127 - https://gist.github.com/VAMorales/dc679ecab30b7045fa07bf3249a034d8
