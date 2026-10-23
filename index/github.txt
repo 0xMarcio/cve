@@ -9597,7 +9597,6 @@ CVE-2021-43778 - https://github.com/AK-blank/CVE-2021-43778
 CVE-2021-43789 - https://github.com/numanturle/CVE-2021-43789
 CVE-2021-43798 - https://github.com/0xSAZZAD/Grafana-CVE-2021-43798
 CVE-2021-43798 - https://github.com/A-D-Team/grafanaExp
-CVE-2021-43798 - https://github.com/abuyazeen/CVE-2021-43798-Grafana-path-traversal-tester
 CVE-2021-43798 - https://github.com/asaotomo/CVE-2021-43798-Grafana-Exp
 CVE-2021-43798 - https://github.com/aymenbouferroum/CVE-2021-43798_exploit
 CVE-2021-43798 - https://github.com/BJLIYANLIANG/CVE-2021-43798-Grafana-File-Read
@@ -26533,7 +26532,6 @@ CVE-2025-7771 - https://github.com/yulisec/CVE-2025-7771
 CVE-2026-90817 - https://github.com/yulisec/CVE-2026-90817
 CVE-2020-10257 - https://github.com/Darkcast/CVE-2020-10257
 CVE-2020-14645 - https://github.com/jlvsjp/Weblogic_CVE-2020-14645
-CVE-2023-32233 - https://github.com/adeadukagi/CVE-2023-32233-reproduction
 CVE-2026-50369 - https://github.com/Mofarthim/CVE-2026-50369
 CVE-2026-78306 - https://github.com/FEEDBEEF/Dji_ble_vuln
 CVE-2026-31431 - https://github.com/clementnuss/copyfail-cve-exploits
@@ -27989,7 +27987,6 @@ CVE-2026-109618 - https://github.com/pax-k/Php2Shell-POC
 CVE-2026-109618 - https://github.com/zhaoboy9692/CVE-2026-109618
 CVE-2026-109619 - https://github.com/JoasASantos/php2shell-exploit
 CVE-2026-109619 - https://github.com/RuanSerraAzul/CVE-2026-109619-POC
-CVE-2026-109619 - https://github.com/bigb0x/php2shell-poc
 CVE-2026-109619 - https://github.com/cookiengineer/actual-php2shell
 CVE-2026-109619 - https://github.com/emphereio/php-eol-backports
 CVE-2026-109619 - https://github.com/hemal-maniar/php2shell-poc
@@ -28033,3 +28030,6 @@ CVE-2026-109619 - https://github.com/dipsh0v/php2shell-emudhra-hunting
 CVE-2026-109618 - https://github.com/jarohull-ai/jfp-edge-radar
 CVE-2026-109618 - https://github.com/tuwiliyt/cve-2026-109618
 CVE-2026-57845 - https://github.com/SaiTeja-Erukude/CVE-2026-57845-hf-datasets-rce
+CVE-2026-109619 - https://github.com/mazdel/php2shell-poc
+CVE-2026-109715 - https://github.com/Scyrix-LLC/CVE-2026-109715
+CVE-2026-34717 - https://github.com/quanlevan1207/cve-2026-34717-exploit

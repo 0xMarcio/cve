@@ -7484,7 +7484,7 @@
 "CVE-2021-43798 github:0xf3d0rq/cve-2021-43798?#":{"basis":"unknown","cve":"CVE-2021-43798","imported":true,"released":null,"url":"https://github.com/0xf3d0rq/CVE-2021-43798"},
 "CVE-2021-43798 github:0xsazzad/grafana-cve-2021-43798?#":{"basis":"unknown","cve":"CVE-2021-43798","imported":true,"released":null,"url":"https://github.com/0xSAZZAD/Grafana-CVE-2021-43798"},
 "CVE-2021-43798 github:a-d-team/grafanaexp?#":{"basis":"unknown","cve":"CVE-2021-43798","imported":true,"released":null,"url":"https://github.com/A-D-Team/grafanaExp"},
-"CVE-2021-43798 github:abuyazeen/cve-2021-43798-grafana-path-traversal-tester?#":{"basis":"unknown","cve":"CVE-2021-43798","imported":true,"released":null,"url":"https://github.com/abuyazeen/CVE-2021-43798-Grafana-path-traversal-tester"},
+"CVE-2021-43798 github:abuyazeen/cve-2021-43798-grafana-path-traversal-tester?#":{"basis":"unknown","cve":"CVE-2021-43798","gone":"2026-10-23T02:19:29Z","gone_reason":"unavailable","imported":true,"released":null,"url":"https://github.com/abuyazeen/CVE-2021-43798-Grafana-path-traversal-tester"},
 "CVE-2021-43798 github:asaotomo/cve-2021-43798-grafana-exp?#":{"basis":"unknown","cve":"CVE-2021-43798","imported":true,"released":null,"url":"https://github.com/asaotomo/CVE-2021-43798-Grafana-Exp"},
 "CVE-2021-43798 github:asbawy/graftraverse-cve-2021-43798?#":{"basis":"unknown","cve":"CVE-2021-43798","imported":true,"released":null,"url":"https://github.com/Asbawy/GrafTraverse-CVE-2021-43798"},
 "CVE-2021-43798 github:aymenbouferroum/cve-2021-43798_exploit?#":{"basis":"unknown","cve":"CVE-2021-43798","imported":true,"released":null,"url":"https://github.com/aymenbouferroum/CVE-2021-43798_exploit"},
