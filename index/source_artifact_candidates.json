@@ -140,21 +140,59 @@
       "status": "reviewed"
     },
     "9bie/php2shell-bypass-aslr-exp": {
-      "artifacts": [],
+      "artifacts": [
+        {
+          "bytes": 10993,
+          "path": "exploit.py",
+          "sha256": "6ae6c19893378ef6db6acf59183a6b4477824e3501fc90ac04f50a60c072efee"
+        },
+        {
+          "bytes": 25711,
+          "path": "archive/legacy-8m/exploit.py",
+          "sha256": "95a078fee4b6c03beda898cad78ebc431279acbd1f6ece4d43a5b4d13815340d"
+        },
+        {
+          "bytes": 287,
+          "path": "pure/pwn_pure.py",
+          "sha256": "e8a855f411308a57a137534b55a77d305b35fd3aa95d937edeaa6fadba05477b"
+        },
+        {
+          "bytes": 2959,
+          "path": "pure/run_pure.sh",
+          "sha256": "15cb87d209424af3a0c83300db54193c933774bebad0f766ff2f0a3411502922"
+        },
+        {
+          "bytes": 758,
+          "path": "tools/dyn_payload.php",
+          "sha256": "9c6d92c03051a033a5c762c1688330c008c9789c4b5621ebd8d43051455ea40a"
+        },
+        {
+          "bytes": 3352,
+          "path": "tools/pure_poc.py",
+          "sha256": "33de4d192aa81e1b7b7604b09585ab93e5a01f55a183ce89bfe22f12f2c2280f"
+        },
+        {
+          "bytes": 4310,
+          "path": "tools/sup_poc.py",
+          "sha256": "ef5a98d9eca5de3be9f167f0a5cd9d0e83017032389a7df0b4f847e01f05ecbc"
+        }
+      ],
       "cves": [
         "CVE-2026-109619"
       ],
       "first_observed_at": "2026-10-21T15:32:49.232707+00:00",
-      "known_checked": [],
-      "last_attempt_at": "2026-10-22T19:30:38.515485+00:00",
-      "last_checked_at": "2026-10-22T19:30:38.515485+00:00",
+      "known_checked": [
+        "exploit.py"
+      ],
+      "last_attempt_at": "2026-10-23T13:19:20.994163+00:00",
+      "last_checked_at": "2026-10-23T13:19:20.994163+00:00",
       "review_set_sha256": "7ce67943312d63cce1b499e0600c14e54bcb769f762ccdbc78937c345a4d7e5a",
-      "revision": "8047dff65571946d62ce8629b2e260f4631f1181",
-      "revision_observed_at": "2026-10-23T12:16:54.164376+00:00",
-      "scan_complete": false,
-      "scan_limited": true,
+      "revision": "8710c81ec7c9fa58bfc2916f393f5dcaec4280b4",
+      "revision_observed_at": "2026-10-23T13:19:20.994163+00:00",
+      "scan_complete": true,
+      "scan_limited": false,
       "skipped_paths": [],
-      "status": "budget_deferred"
+      "status": "needs_review"
     },
     "aayushbankar/cve-2026-28576": {
       "artifacts": [

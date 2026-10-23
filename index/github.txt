@@ -28069,3 +28069,13 @@ CVE-2026-109618 - https://github.com/D1se0/php2shell_lab
 CVE-2026-109618 - https://github.com/skydwn/CVE-2026-109618
 CVE-2026-109619 - https://github.com/9hb/php2shell-poc
 CVE-2026-109619 - https://github.com/VABISMO/php2shell-nginx-fpm-full-rce
+CVE-2026-109618 - https://github.com/debjit604/PHP2Shell-CVE-2026-109618-CVE-2026-109619
+CVE-2026-109618 - https://github.com/xPloits3c/PHP2Shell-CVE-2026-109618-CVE-2026-109619-PoC
+CVE-2026-109619 - https://github.com/debjit604/PHP2Shell-CVE-2026-109618-CVE-2026-109619
+CVE-2026-109619 - https://github.com/fellipgomes/br-php2shell
+CVE-2026-109619 - https://github.com/xPloits3c/PHP2Shell-CVE-2026-109618-CVE-2026-109619-PoC
+CVE-2026-110447 - https://github.com/sstrobl-osm/php2shell-tools
+CVE-2026-111497 - https://github.com/hafizhrf/node-exploit-poc
+CVE-2026-112900 - https://github.com/techupdate24/python-pillow-rce-cve-2026-112900
+CVE-2026-64718 - https://github.com/rooootdev/n-days
+CVE-2026-98260 - https://github.com/quyicheng03-boop/CVE-2026-98260-nezha-android
