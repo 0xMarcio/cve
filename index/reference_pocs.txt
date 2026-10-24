@@ -30771,8 +30771,6 @@ CVE-2026-10650 - https://github.com/biniamf/pocs/blob/main/libwebsockets_sshd-pa
 CVE-2026-10650 - https://github.com/biniamf/pocs/tree/main/libwebsockets_sshd-parse-ic-unbounded-alloc
 CVE-2026-1066 - https://github.com/DReazer/CV3/blob/main/Krce.md
 CVE-2026-10661 - https://github.com/ahujasid/blender-mcp/issues/202
-CVE-2026-10662 - https://github.com/ahujasid/blender-mcp/issues/203
-CVE-2026-10688 - https://github.com/ahujasid/blender-mcp/issues/201
 CVE-2026-1069 - https://hackerone.com/reports/3483687
 CVE-2026-10690 - https://github.com/wonderwhy-er/DesktopCommanderMCP/issues/410
 CVE-2026-10691 - https://github.com/wonderwhy-er/DesktopCommanderMCP/issues/375
@@ -34444,7 +34442,6 @@ CVE-2026-6597 - https://gist.github.com/chenhouser2025/b93261c6e651f14800a4f2e43
 CVE-2026-6598 - https://gist.github.com/chenhouser2025/77adb3486c06c635ae4b09a3eaf90213
 CVE-2026-6599 - https://gist.github.com/chenhouser2025/a909c47316b7a0948ee68c109ab747a3
 CVE-2026-6600 - https://gist.github.com/chenhouser2025/935aa5d4556264ba408059eec0960b1a
-CVE-2026-66004 - https://github.com/ahujasid/blender-mcp/issues/257
 CVE-2026-66005 - https://github.com/janhq/jan/issues/8453
 CVE-2026-66006 - https://github.com/treeverse/lakeFS/issues/10465
 CVE-2026-66007 - https://github.com/huggingface/datasets/issues/8324

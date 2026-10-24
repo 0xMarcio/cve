@@ -19970,7 +19970,6 @@ CVE-2026-41551 - https://github.com/selecthch/CVE-2026-41551
 CVE-2026-41567 - https://github.com/berdav/CVE-2026-41567
 CVE-2026-41651 - https://github.com/0xBlackash/CVE-2026-41651
 CVE-2026-41651 - https://github.com/0xDVRK/CVE-2026-41651
-CVE-2026-41651 - https://github.com/0xdeadbeefnetwork/Pack2TheRoot
 CVE-2026-41651 - https://github.com/CipherCloak/CVE-2026-41651
 CVE-2026-41651 - https://github.com/Vozec/CVE-2026-41651
 CVE-2026-41651 - https://github.com/baph00met/CVE-2026-41651
@@ -24403,7 +24402,6 @@ CVE-2026-46243 - https://github.com/manizada/CIFSwitch
 CVE-2026-4631 - https://github.com/ExDev994/CVE-2026-4631-cockpit-RCE
 CVE-2026-46316 - https://github.com/V4bel/ITScape
 CVE-2026-46331 - https://github.com/V0IDNETWORK/CVE-2026-46331
-CVE-2026-46333 - https://github.com/0xdeadbeefnetwork/ssh-keysign-pwn
 CVE-2026-46394 - https://github.com/shreyas-challa/CVE-2026-46394-haxcms-git-command-injection
 CVE-2026-46395 - https://github.com/shreyas-challa/CVE-2026-46395-haxcms-hmac-key-leak
 CVE-2026-46640 - https://github.com/vladko312/extras
@@ -27588,7 +27586,6 @@ CVE-2026-109618 - https://github.com/kernelkill/PoC_f5_php2shell.sh
 CVE-2026-109618 - https://github.com/zenzue/CVE-2026-109618_19
 CVE-2026-109619 - https://github.com/LordX404/php2shell-exploit
 CVE-2026-109619 - https://github.com/kernelkill/PoC_f5_php2shell.sh
-CVE-2026-63030 - https://github.com/0xdeadbeefnetwork/PHP-HEAP-ASLR
 CVE-2026-109618 - https://github.com/1Nightlovel/CVE-2026-109618
 CVE-2026-109618 - https://github.com/cozybear-dev/cve-2026-109618
 CVE-2026-109618 - https://github.com/cseelhoff-ms/php2shell-hunting-pack
@@ -28124,4 +28121,7 @@ CVE-2026-88772 - https://github.com/completetech-security/netscaler-cve-2026-887
 CVE-2026-110264 - https://github.com/googlesky/CVE-2026-110264
 CVE-2026-115560 - https://github.com/googlesky/CVE-2026-115560
 CVE-2026-43499 - https://github.com/tusharpandey13/ghostlock-somalia
-CVE-2017-18349 - https://github.com/Xiangmin-Li/My-POC-CVE
+CVE-2025-29927 - https://github.com/herraristotle/gobypass403
+CVE-2026-115449 - https://github.com/ManifoldOps/manifold-operations
+CVE-2026-43499 - https://github.com/BH3GEI/honor-aap-an00-root-skill
+CVE-2026-59774 - https://github.com/Ly0kha/CVE-2026-59774

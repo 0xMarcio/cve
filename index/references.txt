@@ -47036,7 +47036,6 @@ CVE-2020-20589 - https://github.com/liufee/cms/issues/45
 CVE-2020-20595 - https://github.com/lock-upme/OPMS/issues/25
 CVE-2020-20597 - https://github.com/xuhuisheng/lemon/issues/198
 CVE-2020-20598 - https://github.com/xuhuisheng/lemon/issues/199
-CVE-2020-20600 - https://github.com/alixiaowei/cve_test/issues/2
 CVE-2020-20640 - https://www.jianshu.com/p/219755c047a1
 CVE-2020-20642 - https://github.com/eyoucms/eyoucms/issues/5
 CVE-2020-20670 - https://github.com/yilezhu/Czar.Cms/issues/6
@@ -47087,7 +47086,6 @@ CVE-2020-21050 - https://github.com/saitoha/libsixel/issues/75
 CVE-2020-21058 - https://github.com/typora/typora-issues/issues/2959
 CVE-2020-21060 - https://github.com/gaozhifeng/PHPMyWind/issues/10
 CVE-2020-21066 - https://github.com/axiomatic-systems/Bento4/issues/408
-CVE-2020-21120 - https://github.com/alixiaowei/cve_test/issues/3
 CVE-2020-21126 - https://github.com/Echox1/metinfo_csrf/issues/1
 CVE-2020-21130 - https://github.com/hisiphp/hisiphp/issues/7
 CVE-2020-21139 - https://github.com/Ryan0lb/EC-cloud-e-commerce-system-CVE-application/blob/master/README.md
@@ -79071,7 +79069,6 @@ CVE-2025-2622 - https://gitee.com/aizuda/snail-job/issues/IBSQ24
 CVE-2025-26241 - https://members.backbox.org/osticket-sql-injection-bypass/
 CVE-2025-26258 - https://github.com/oye-ujjwal/CVEs/blob/main/Employee%20Management%20System%20App/CVE-2025-26258
 CVE-2025-2626 - https://github.com/Hefei-Coffee/cve/issues/16
-CVE-2025-26260 - https://github.com/ahmetak4n/vulnerability-playground/tree/main/vulnerability-research/CVE-2025-26260
 CVE-2025-26260 - https://github.com/plentico/plenti/security/advisories/GHSA-mj4v-hp69-27x5
 CVE-2025-26278 - https://gist.github.com/tariqhawis/ad92d5e683f3a5d83e0629955ff42ad7
 CVE-2025-26304 - https://github.com/libming/libming/issues/323
@@ -82313,8 +82310,6 @@ CVE-2026-1063 - https://github.com/AnalogyC0de/public_exp/blob/main/archives/Bas
 CVE-2026-1064 - https://github.com/AnalogyC0de/public_exp/blob/main/archives/Bastillion/report2.md
 CVE-2026-1066 - https://github.com/DReazer/CV3/blob/main/Krce.md
 CVE-2026-10661 - https://github.com/ahujasid/blender-mcp/issues/202
-CVE-2026-10662 - https://github.com/ahujasid/blender-mcp/issues/203
-CVE-2026-10688 - https://github.com/ahujasid/blender-mcp/issues/201
 CVE-2026-1069 - https://hackerone.com/reports/3483687
 CVE-2026-10690 - https://github.com/wonderwhy-er/DesktopCommanderMCP/issues/410
 CVE-2026-10691 - https://github.com/wonderwhy-er/DesktopCommanderMCP/issues/375
@@ -85429,7 +85424,6 @@ CVE-2026-6592 - https://gist.github.com/YLChen-007/50f0cdc5e3f7b737ce99c783e487c
 CVE-2026-65920 - https://github.com/huggingface/diffusers/issues/14175
 CVE-2026-6593 - https://gist.github.com/YLChen-007/1d91fabb465284d7a974746f7e6cc5cc
 CVE-2026-6594 - https://github.com/sudo-secure/security-research/blob/main/brikcss-merge/prototype-pollution/PoC.md
-CVE-2026-66004 - https://github.com/ahujasid/blender-mcp/issues/257
 CVE-2026-66005 - https://github.com/janhq/jan/issues/8453
 CVE-2026-66006 - https://github.com/treeverse/lakeFS/issues/10465
 CVE-2026-66007 - https://github.com/huggingface/datasets/issues/8324
