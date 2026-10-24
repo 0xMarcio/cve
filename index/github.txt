@@ -28122,3 +28122,6 @@ CVE-2026-88771 - https://github.com/CompleteTech-LLC/netscaler-cve-2026-88771-ch
 CVE-2026-88772 - https://github.com/CompleteTech-LLC/netscaler-cve-2026-88772-check
 CVE-2026-109618 - https://github.com/segfaultx01/php2shell-pocJavali
 CVE-2017-18349 - https://github.com/Xiangmin-Li/my-poc-cve
+CVE-2026-39987 - https://github.com/lunacysoft/CVE-2026-39987-POC-Marimo
+CVE-2026-88771 - https://github.com/completetech-security/netscaler-cve-2026-88771-check
+CVE-2026-88772 - https://github.com/completetech-security/netscaler-cve-2026-88772-check
