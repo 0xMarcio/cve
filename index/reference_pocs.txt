@@ -28807,8 +28807,6 @@ CVE-2025-5664 - https://fitoxs.com/exploit/exploit-e18bb6a8ab3c9991cf4de291efced
 CVE-2025-5665 - https://fitoxs.com/exploit/exploit-e4f6f2a0b9cd918ca9c6dbdb1098d674b121997846a06f423d0023084f7cf3df.txt
 CVE-2025-5666 - https://fitoxs.com/exploit/exploit-8d9aefc49c178ba5c5d3f5464ff43e8e981c28b95c2cf867d3e20c17f4b9f994.txt
 CVE-2025-5667 - https://fitoxs.com/exploit/exploit-28d5c2bfb3678b7195e43efb6617f46439a1b1cb7e36b7891094a8ad7f8193dc.txt
-CVE-2025-5671 - https://github.com/byxs0x0/cve2/blob/main/530/1.md
-CVE-2025-5672 - https://github.com/byxs0x0/cve2/blob/main/530/2.md
 CVE-2025-5674 - https://github.com/yuyuchenchen/vuln-pdf/blob/main/0603CVE.pdf
 CVE-2025-5675 - https://github.com/modestHonK/cve/issues/1
 CVE-2025-5676 - https://github.com/hyx123123/cve/issues/2
@@ -28838,7 +28836,6 @@ CVE-2025-5728 - https://github.com/mysq13/CVE/issues/4
 CVE-2025-5729 - https://github.com/Thiasap/HCPMS_PHP_vulns/blob/main/sql%20injection%20in%20birthing_record.php.pdf
 CVE-2025-5730 - https://wpscan.com/vulnerability/e1e7f423-f981-413c-a99a-e5927fc1cd0c/
 CVE-2025-5732 - https://github.com/tuooo/CVE/issues/3
-CVE-2025-5734 - https://github.com/byxs0x0/cve2/blob/main/cvee/1.md
 CVE-2025-57392 - https://github.com/meisterlos/BenimPOS-POC
 CVE-2025-5755 - https://github.com/mysq13/CVE/issues/5
 CVE-2025-5756 - https://github.com/Darlingzero2/cve/issues/1

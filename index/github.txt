@@ -28024,9 +28024,7 @@ CVE-2026-109619 - https://github.com/an-lle/php2shell
 CVE-2026-109619 - https://github.com/renyang-create/php2shell-repro
 CVE-2026-111497 - https://github.com/duytien241/nodejs-CVE-2026-111497
 CVE-2026-53264 - https://github.com/b1nhack/CVE-2026-53264
-CVE-2026-109618 - https://github.com/Kyros0324/CVE2026
 CVE-2026-109618 - https://github.com/umair-aziz025/PHP2Shell
-CVE-2026-109619 - https://github.com/Kyros0324/CVE2026
 CVE-2026-109619 - https://github.com/umair-aziz025/PHP2Shell
 CVE-2026-71362 - https://github.com/mahumadad/cve-2026-71362-magento-ato
 CVE-2026-31158 - https://github.com/Hardik007007/CVE-2026-31158-Boolean-Based-SQL-Injection-in-CRM-Login
@@ -28125,3 +28123,6 @@ CVE-2025-29927 - https://github.com/herraristotle/gobypass403
 CVE-2026-115449 - https://github.com/ManifoldOps/manifold-operations
 CVE-2026-43499 - https://github.com/BH3GEI/honor-aap-an00-root-skill
 CVE-2026-59774 - https://github.com/Ly0kha/CVE-2026-59774
+CVE-2026-109618 - https://github.com/AKiileX/php2shell-stx-research-pub
+CVE-2026-109619 - https://github.com/AKiileX/php2shell-stx-research-pub
+CVE-2026-110922 - https://github.com/VABISMO/chrome2shell
