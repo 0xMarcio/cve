@@ -4353,7 +4353,7 @@
 "CVE-2017-8386 github:vulhub/vulhub/tree/master/git/CVE-2017-8386?#":{"basis":"unknown","cve":"CVE-2017-8386","imported":true,"released":null,"url":"https://github.com/vulhub/vulhub/tree/master/git/CVE-2017-8386"},
 "CVE-2017-8400 github:matthiaskramm/swftools/issues/13?#":{"basis":"unknown","cve":"CVE-2017-8400","imported":true,"released":null,"url":"https://github.com/matthiaskramm/swftools/issues/13"},
 "CVE-2017-8401 github:matthiaskramm/swftools/issues/14?#":{"basis":"unknown","cve":"CVE-2017-8401","imported":true,"released":null,"url":"https://github.com/matthiaskramm/swftools/issues/14"},
-"CVE-2017-8418 github:bbatsov/rubocop/issues/4336?#":{"basis":"unknown","cve":"CVE-2017-8418","imported":true,"released":null,"url":"https://github.com/bbatsov/rubocop/issues/4336"},
+"CVE-2017-8418 github:bbatsov/rubocop/issues/4336?#":{"basis":"unknown","cve":"CVE-2017-8418","gone":"2026-10-24T08:43:23Z","gone_reason":"unavailable","imported":true,"released":null,"url":"https://github.com/bbatsov/rubocop/issues/4336"},
 "CVE-2017-8418 http://www.openwall.com/lists/oss-security/2017/05/01/14":{"basis":"unknown","cve":"CVE-2017-8418","imported":true,"released":null,"url":"http://www.openwall.com/lists/oss-security/2017/05/01/14"},
 "CVE-2017-8419 https://sourceforge.net/p/lame/bugs/458":{"basis":"unknown","cve":"CVE-2017-8419","imported":true,"released":null,"url":"https://sourceforge.net/p/lame/bugs/458/"},
 "CVE-2017-8422 github:stealth/plasmapulsar?#":{"basis":"unknown","cve":"CVE-2017-8422","imported":true,"released":null,"url":"https://github.com/stealth/plasmapulsar"},

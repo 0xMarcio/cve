@@ -1,6 +1,6 @@
 {
-  "checked": "2026-10-23T08:55:13.449313+00:00",
-  "cursor": "jbaines-r7/through_the_wire",
+  "checked": "2026-10-24T08:42:01.722164+00:00",
+  "cursor": "mdusmandasthaheer/cve-2025-32433",
   "recovery_cursor": "http://elegerov.blogspot.com/2006/10/here-is-lame-proof-of-concept-code-for.html",
-  "reference_cursor": "https://github.com/LabRedesCefetRJ/WeGIA/security/advisories/GHSA-5x5w-5c99-vr8h"
+  "reference_cursor": "https://github.com/efekaanakkar/CVE-2024-30998/blob/main/PHPGurukul-Men-Salon-Management-System-2.0.md"
 }

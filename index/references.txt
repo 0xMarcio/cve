@@ -18637,7 +18637,6 @@ CVE-2013-4346 - https://github.com/simplegeo/python-oauth2/issues/129
 CVE-2013-4353 - http://www-01.ibm.com/support/docview.wss?uid=isg400001841
 CVE-2013-4378 - http://seclists.org/oss-sec/2013/q3/679
 CVE-2013-4447 - http://packetstormsecurity.com/files/123660/Drupal-Simplenews-6.x-7.x-Cross-Site-Scripting.html
-CVE-2013-4465 - https://github.com/SimpleMachines/SMF2.1/issues/701
 CVE-2013-4472 - http://seclists.org/oss-sec/2013/q4/181
 CVE-2013-4472 - http://seclists.org/oss-sec/2013/q4/183
 CVE-2013-4473 - http://www.openwall.com/lists/oss-security/2013/10/29/1
@@ -24837,7 +24836,6 @@ CVE-2015-6787 - https://www.exploit-db.com/exploits/39163/
 CVE-2015-6787 - https://www.exploit-db.com/exploits/39165/
 CVE-2015-6805 - https://wpvulndb.com/vulnerabilities/8154
 CVE-2015-6805 - https://www.exploit-db.com/exploits/37907/
-CVE-2015-6809 - https://github.com/bedita/bedita/issues/623
 CVE-2015-6809 - https://www.exploit-db.com/exploits/38051/
 CVE-2015-6810 - https://www.exploit-db.com/exploits/37989/
 CVE-2015-6811 - http://packetstormsecurity.com/files/133378/Cyberoam-CR500iNG-XP-10.6.2-MR-1-Blind-SQL-Injection.html
@@ -25525,7 +25523,6 @@ CVE-2015-8873 - https://bugs.php.net/bug.php?id=69793
 CVE-2015-8924 - https://github.com/libarchive/libarchive/issues/515
 CVE-2015-8925 - https://github.com/libarchive/libarchive/issues/516
 CVE-2015-8935 - https://hackerone.com/reports/145392
-CVE-2015-8947 - https://github.com/behdad/harfbuzz/commit/f96664974774bfeb237a7274f512f64aaafb201e
 CVE-2015-8953 - http://www.openwall.com/lists/oss-security/2016/08/23/9
 CVE-2015-8960 - https://kcitls.org
 CVE-2015-8968 - https://hackerone.com/reports/104465
@@ -26615,7 +26612,6 @@ CVE-2016-2039 - https://github.com/phpmyadmin/phpmyadmin/commit/f20970d32c3dfdf8
 CVE-2016-2046 - http://packetstormsecurity.com/files/135709/Sophos-UTM-9-Cross-Site-Scripting.html
 CVE-2016-2046 - http://seclists.org/fulldisclosure/2016/Feb/60
 CVE-2016-2046 - http://www.halock.com/blog/cve-2016-2046-cross-site-scripting-sophos-utm-9/
-CVE-2016-2052 - https://github.com/behdad/harfbuzz/commit/63ef0b41dc48d6112d1918c1b1de9de8ea90adb5
 CVE-2016-2054 - http://packetstormsecurity.com/files/135758/Xymon-4.3.x-Buffer-Overflow-Code-Execution-Information-Disclosure.html
 CVE-2016-2055 - http://packetstormsecurity.com/files/135758/Xymon-4.3.x-Buffer-Overflow-Code-Execution-Information-Disclosure.html
 CVE-2016-2056 - http://packetstormsecurity.com/files/135758/Xymon-4.3.x-Buffer-Overflow-Code-Execution-Information-Disclosure.html
@@ -28517,9 +28513,7 @@ CVE-2017-0402 - https://android.googlesource.com/platform/frameworks/av/+/c66c43
 CVE-2017-0402 - https://android.googlesource.com/platform/hardware/qcom/audio/+/d72ea85c78a1a68bf99fd5804ad9784b4102fe57
 CVE-2017-0411 - https://www.exploit-db.com/exploits/41354/
 CVE-2017-0412 - https://www.exploit-db.com/exploits/41355/
-CVE-2017-0478 - https://github.com/JiounDai/CVE-2017-0478
 CVE-2017-0510 - https://alephsecurity.com/2017/03/08/nexus9-fiq-debugger/
-CVE-2017-0541 - https://github.com/JiounDai/CVE-2017-0541
 CVE-2017-0551 - https://android.googlesource.com/platform/external/libavc/+/8b5fd8f24eba5dd19ab2f80ea11a9125aa882ae2
 CVE-2017-0561 - https://www.exploit-db.com/exploits/41805/
 CVE-2017-0561 - https://www.exploit-db.com/exploits/41806/
@@ -32352,7 +32346,6 @@ CVE-2017-6370 - https://github.com/faizzaidi/TYPO3-v7.6.15-Unencrypted-Login-Req
 CVE-2017-6371 - http://packetstormsecurity.com/files/141396/Synchronet-BBS-3.16c-For-Windows-Denial-Of-Service.html
 CVE-2017-6371 - https://www.exploit-db.com/exploits/41475/
 CVE-2017-6390 - https://github.com/soruly/whatanime.ga/issues/8
-CVE-2017-6392 - https://github.com/kaltura/server/issues/5303
 CVE-2017-6393 - https://github.com/NagVis/nagvis/issues/91
 CVE-2017-6394 - https://github.com/openemr/openemr/issues/498
 CVE-2017-6395 - https://github.com/jacobwb/hashover-next/issues/152
@@ -32926,7 +32919,6 @@ CVE-2017-8415 - http://packetstormsecurity.com/files/153226/Dlink-DCS-1130-Comma
 CVE-2017-8416 - http://packetstormsecurity.com/files/153226/Dlink-DCS-1130-Command-Injection-CSRF-Stack-Overflow.html
 CVE-2017-8417 - http://packetstormsecurity.com/files/153226/Dlink-DCS-1130-Command-Injection-CSRF-Stack-Overflow.html
 CVE-2017-8418 - http://www.openwall.com/lists/oss-security/2017/05/01/14
-CVE-2017-8418 - https://github.com/bbatsov/rubocop/issues/4336
 CVE-2017-8419 - https://sourceforge.net/p/lame/bugs/458/
 CVE-2017-8422 - http://www.openwall.com/lists/oss-security/2017/05/10/3
 CVE-2017-8422 - https://www.exploit-db.com/exploits/42053/
@@ -35014,7 +35006,6 @@ CVE-2018-13052 - https://www.youtube.com/watch?v=xYRbXBPubaw
 CVE-2018-1306 - https://www.exploit-db.com/exploits/45396/
 CVE-2018-13060 - https://sysdream.com/news/lab/
 CVE-2018-13063 - https://sysdream.com/news/lab/
-CVE-2018-13065 - https://github.com/SpiderLabs/ModSecurity/issues/1829
 CVE-2018-13065 - https://hackings8n.blogspot.com/2018/07/cve-2018-13065-modsecurity-300-has-xss.html
 CVE-2018-13066 - https://github.com/libming/libming/issues/146
 CVE-2018-13067 - https://whitehatck01.blogspot.com/2018/06/opencart-v3-0-3-0-user-changes-password.html
@@ -35715,9 +35706,7 @@ CVE-2018-15903 - https://seclists.org/fulldisclosure/2018/Oct/12
 CVE-2018-15906 - http://packetstormsecurity.com/files/151473/SolarWinds-Serv-U-FTP-15.1.6-Privilege-Escalation.html
 CVE-2018-15906 - http://seclists.org/fulldisclosure/2019/Feb/4
 CVE-2018-15912 - https://lists.manjaro.org/pipermail/manjaro-security/2018-August/000785.html
-CVE-2018-15917 - https://github.com/bbalet/jorani/issues/254
 CVE-2018-15917 - https://www.exploit-db.com/exploits/45338/
-CVE-2018-15918 - https://github.com/bbalet/jorani/issues/254
 CVE-2018-15918 - https://www.exploit-db.com/exploits/45340/
 CVE-2018-15919 - http://seclists.org/oss-sec/2018/q3/180
 CVE-2018-15961 - https://www.exploit-db.com/exploits/45979/
@@ -44497,7 +44486,6 @@ CVE-2019-9053 - http://packetstormsecurity.com/files/152356/CMS-Made-Simple-SQL-
 CVE-2019-9053 - https://www.exploit-db.com/exploits/46635/
 CVE-2019-9055 - http://packetstormsecurity.com/files/155322/CMS-Made-Simple-2.2.8-Remote-Code-Execution.html
 CVE-2019-9062 - https://hackingvila.wordpress.com/2019/02/19/php-scripts-mall-online-food-ordering-script-has-cross-site-request-forgery-csrf-php-script-mall/
-CVE-2019-9081 - https://github.com/Laworigin/Laworigin.github.io/blob/master/2019/02/21/laravelv5-7%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96rce/index.html
 CVE-2019-9082 - http://packetstormsecurity.com/files/157218/ThinkPHP-5.0.23-Remote-Code-Execution.html
 CVE-2019-9082 - https://github.com/xiayulei/open_source_bms/issues/33
 CVE-2019-9082 - https://www.exploit-db.com/exploits/46488/
@@ -73986,7 +73974,6 @@ CVE-2024-25167 - https://github.com/biantaibao/eblog_xss/blob/main/report.md
 CVE-2024-25168 - https://github.com/biantaibao/snow_SQL/blob/main/report.md
 CVE-2024-25169 - https://github.com/shenhav12/CVE-2024-25169-Mezzanine-v6.0.0
 CVE-2024-25170 - https://github.com/shenhav12/CVE-2024-25170-Mezzanine-v6.0.0
-CVE-2024-25180 - https://github.com/joaoviictorti/My-CVES/blob/main/CVE-2024-25180/README.md
 CVE-2024-25180 - https://security.snyk.io/vuln/SNYK-JS-PDFMAKE-6347243
 CVE-2024-25197 - https://github.com/ros-planning/navigation2/issues/3940
 CVE-2024-25200 - https://github.com/espruino/Espruino/issues/2457
@@ -74044,7 +74031,6 @@ CVE-2024-25316 - https://github.com/tubakvgc/CVEs/blob/main/Hotel%20Managment%20
 CVE-2024-25318 - https://github.com/tubakvgc/CVEs/blob/main/Hotel%20Managment%20System/Hotel%20Managment%20System%20-%20SQL%20Injection-3.md
 CVE-2024-25320 - https://github.com/cqliuke/cve/blob/main/sql.md
 CVE-2024-25327 - https://packetstormsecurity.com/files/177500/FullCourt-Enterprise-8.2-Cross-Site-Scripting.html
-CVE-2024-25343 - https://github.com/ShravanSinghRathore/Tenda-N300-F3-Router/wiki/Password-Policy-Bypass-Vulnerability-CVE%E2%80%902024%E2%80%9025343
 CVE-2024-25344 - https://packetstormsecurity.com/files/177224/ITFlow-Cross-Site-Request-Forgery.html
 CVE-2024-25350 - https://github.com/0xQRx/VulnerabilityResearch/blob/master/2024/ZooManagementSystem-SQL_Injection_Edit_Ticket.md
 CVE-2024-25351 - https://github.com/0xQRx/VulnerabilityResearch/blob/master/2024/ZooManagementSystem-SQL_Injection_Change_Image.md
@@ -74383,7 +74369,6 @@ CVE-2024-27527 - https://github.com/wasm3/wasm3/issues/464
 CVE-2024-27528 - https://github.com/wasm3/wasm3/issues/463
 CVE-2024-27529 - https://github.com/wasm3/wasm3/issues/462
 CVE-2024-27530 - https://github.com/wasm3/wasm3/issues/458
-CVE-2024-27532 - https://github.com/bytecodealliance/wasm-micro-runtime/issues/3130
 CVE-2024-2754 - https://github.com/wkeyi0x1/vul-report/issues/4
 CVE-2024-27558 - https://github.com/kilooooo/cms/blob/main/2.md
 CVE-2024-27559 - https://github.com/kilooooo/cms/blob/main/1.md
@@ -74541,10 +74526,6 @@ CVE-2024-28322 - https://github.com/Sospiro014/zday1/blob/main/event-managment.m
 CVE-2024-28322 - https://packetstormsecurity.com/files/177841/Event-Management-1.0-SQL-Injection.html
 CVE-2024-28323 - https://packetstormsecurity.com/files/177168/User-Registration-And-Login-And-User-Management-System-3.1-SQL-Injection.html
 CVE-2024-28323 - https://sospiro014.github.io/User-Registration-And-Login-And-User-Management-System-3.1-SQL-Injection
-CVE-2024-28325 - https://github.com/ShravanSinghRathore/ASUS-RT-N300-B1/wiki/Credentials-Stored-in-Cleartext-CVE%E2%80%902024%E2%80%9028325
-CVE-2024-28326 - https://github.com/ShravanSinghRathore/ASUS-RT-N300-B1/wiki/Privilege-Escalation-CVE%E2%80%902024%E2%80%9028326
-CVE-2024-28327 - https://github.com/ShravanSinghRathore/ASUS-RT-N300-B1/wiki/Insecure-Credential-Storage-CVE%E2%80%902024%E2%80%9028327
-CVE-2024-28328 - https://github.com/ShravanSinghRathore/ASUS-RT-N300-B1/wiki/CSV-Injection-CVE%E2%80%902024%E2%80%9028328
 CVE-2024-28335 - https://packetstormsecurity.com/files/177708/Lektor-Static-CMS-3.3.10-Arbitrary-File-Upload-Remote-Code-Execution.html
 CVE-2024-28338 - https://github.com/funny-mud-peee/IoT-vuls/blob/main/TOTOLINK%20A8000RU/TOTOlink%20A8000RU%20login%20bypass.md
 CVE-2024-28344 - https://securitycafe.ro/2024/03/21/cve-2024-28344-cve-2024-28345-in-sipwise-c5/
@@ -74862,7 +74843,6 @@ CVE-2024-3089 - https://vuldb.com/?submit.306963
 CVE-2024-30891 - https://github.com/Lantern-r/IoT-vuln/blob/main/Tenda/AC18/formexeCommand.md
 CVE-2024-30915 - https://github.com/OpenDDS/OpenDDS/issues/4527
 CVE-2024-3093 - https://wpscan.com/vulnerability/7c87fcd2-6ffd-4285-bbf5-36efea70b620/
-CVE-2024-30938 - https://github.com/lampSEC/semcms/blob/main/semcms.md
 CVE-2024-30939 - https://medium.com/%40deepsahu1/yealink-ip-phone-account-take-over-9bf9e7b847c0?source=friends_link&sk=b0d664dd5b3aad5b758e4934aca997ad
 CVE-2024-30939 - https://medium.com/@deepsahu1/yealink-ip-phone-account-take-over-9bf9e7b847c0?source=friends_link&sk=b0d664dd5b3aad5b758e4934aca997ad
 CVE-2024-3094 - http://www.openwall.com/lists/oss-security/2024/04/16/5
@@ -75147,9 +75127,6 @@ CVE-2024-33345 - https://github.com/n0wstr/IOTVuln/tree/main/DIR-823g/UploadFirm
 CVE-2024-33350 - https://github.com/majic-banana/vulnerability/blob/main/POC/taocms-3.0.2%20Arbitrary%20File%20Writing%20Vulnerability.md
 CVE-2024-33365 - https://github.com/johnathanhuutri/CVE_report/blob/master/CVE-2024-33365/README.md
 CVE-2024-33371 - https://gitee.com/zchuanwen/cve/issues/I9HQRY
-CVE-2024-33373 - https://github.com/ShravanSinghRathore/Security-Advisory-Multiple-Vulnerabilities-in-LB-link-BL-W1210M-Router/wiki/Password-Policy-Bypass--%7C--Inconsistent-Password-Policy-(CVE%E2%80%902024%E2%80%9033373)
-CVE-2024-33374 - https://github.com/ShravanSinghRathore/Security-Advisory-Multiple-Vulnerabilities-in-LB-link-BL-W1210M-Router/wiki/Incorrect-Access-Control-(CVE%E2%80%902024%E2%80%9033374)
-CVE-2024-33377 - https://github.com/ShravanSinghRathore/Security-Advisory-Multiple-Vulnerabilities-in-LB-link-BL-W1210M-Router/wiki/Clickjacking-(CVE%E2%80%902024%E2%80%9033377)
 CVE-2024-33383 - https://juvl1ne.github.io/2024/04/18/novel-plus-vulnerability/
 CVE-2024-33398 - https://github.com/HouqiyuA/k8s-rbac-poc
 CVE-2024-33401 - https://gitee.com/zchuanwen/cve123/issues/I9I18D
@@ -75298,8 +75275,6 @@ CVE-2024-34231 - https://github.com/Amrita2000/CVES/blob/main/CVE-2024-34231.md
 CVE-2024-34235 - https://cellularsecurity.org/ransacked
 CVE-2024-34246 - https://github.com/wasm3/wasm3/issues/484
 CVE-2024-34249 - https://github.com/wasm3/wasm3/issues/485
-CVE-2024-34250 - https://github.com/bytecodealliance/wasm-micro-runtime/issues/3346
-CVE-2024-34251 - https://github.com/bytecodealliance/wasm-micro-runtime/issues/3347
 CVE-2024-34252 - https://github.com/wasm3/wasm3/issues/483
 CVE-2024-34257 - https://github.com/ZackSecurity/VulnerReport/blob/cve/totolink/EX1800T/1.md
 CVE-2024-34273 - https://github.com/chrisandoryan/vuln-advisory/blob/main/nJwt/CVE-2024-34273.md
@@ -82168,7 +82143,6 @@ CVE-2026-0829 - https://wpscan.com/vulnerability/57d62cea-cfb8-4421-a209-e64a015
 CVE-2026-0842 - https://github.com/davidrxchester/smart-sketcher-upload/blob/main/smartsketch-upload.py
 CVE-2026-0843 - http://101.200.76.102:38765/qwertyuiop/qwsdfvbnm/1/vuldb/JJJshop/EnglishVers%E4%B8%89%E5%8B%BE%E7%82%B9%E9%A4%90%E7%B3%BB%E7%BB%9FPHP%E7%89%88%E5%AD%98%E5%9C%A8product.category.indexSQL%E6%B3%A8%E5%85%A5%E6%BC%8F%E6%B4%9E.pdf
 CVE-2026-0851 - https://github.com/tuo159515/sql-injection/issues/2
-CVE-2026-0852 - https://github.com/Learner636/CVE-smbmit/issues/2
 CVE-2026-0929 - https://wpscan.com/vulnerability/c0f17d83-6199-4676-90ec-4fba1e7fcf0f/
 CVE-2026-0934 - https://hackerone.com/reports/3508760
 CVE-2026-0958 - https://hackerone.com/reports/3463363
@@ -82536,7 +82510,6 @@ CVE-2026-11882 - https://wpscan.com/vulnerability/23e0eb03-ec19-4cec-8127-cb6c2c
 CVE-2026-11883 - https://wpscan.com/vulnerability/f718390c-1d7c-4048-bce6-a3170998e828/
 CVE-2026-11887 - https://wpscan.com/vulnerability/ed203765-0482-4d55-b36f-cdab11ed3cf0/
 CVE-2026-1192 - https://www.yuque.com/yuqueyonghuexlgkz/zepczx/keenhf9u2bnw5o6g
-CVE-2026-1196 - https://github.com/SourByte05/MineAdmin-Vulnerability/issues/3
 CVE-2026-11961 - https://wpscan.com/vulnerability/2ffab574-8626-472e-b6e4-09bcbaa62349/
 CVE-2026-11962 - https://wpscan.com/vulnerability/88390679-80c5-439f-89d1-2f46aff8cfdb/
 CVE-2026-11963 - https://wpscan.com/vulnerability/a34a916a-983e-48a5-8f10-99214ee3b613/
@@ -85091,7 +85064,6 @@ CVE-2026-5647 - https://github.com/Jacky159/Pub_0323/issues/1
 CVE-2026-5649 - https://github.com/ahmadmarz10-hub/CVEsMarz/blob/main/SQL%20Injection%20in%20Online%20Application%20System%20for%20Admission%20PHP%20detid%20Parameter.md
 CVE-2026-5650 - https://github.com/ahmadmarz10-hub/CVEsMarz/blob/main/Sensitive%20Information%20Disclosure%20in%20Online%20Application%20System%20for%20Admission%20PHP%20Exposed%20Database%20Backup.md
 CVE-2026-5659 - https://github.com/dhabaleshwar/Open-Source-Vulnerabilities/blob/main/dartie_code_exec.md
-CVE-2026-5660 - https://github.com/Learner636/CVE-smbmit/issues/4
 CVE-2026-5661 - https://github.com/user-attachments/files/25581199/amfcfg.yaml
 CVE-2026-5665 - https://github.com/ahmadmarz10-hub/CVEsMarz/blob/main/SQL%20Injection%20in%20Online%20FIR%20System%20PHP%20email%20Parameter.md
 CVE-2026-5666 - https://github.com/ahmadmarz10-hub/CVEsMarz/blob/main/Sensitive%20Information%20Disclosure%20in%20Online%20FIR%20System%20PHP%20Exposed%20Database%20Backup.md
@@ -86619,7 +86591,6 @@ CVE-2026-82550 - https://github.com/magma/magma/issues/16023
 CVE-2026-82551 - https://github.com/magma/magma/issues/16021
 CVE-2026-82552 - https://github.com/magma/magma/issues/16019
 CVE-2026-82553 - https://github.com/sambitraj/STUDENT-MANAGEMENT-SYSTEM/issues/6
-CVE-2026-82555 - https://github.com/b1uerry/cves/blob/main/TOTOLINK/N600R/TOTOLINK_N600R_predictable-token/poc.py
 CVE-2026-82556 - https://codeberg.org/forgejo/forgejo/issues/13433
 CVE-2026-82587 - https://github.com/open5gs/open5gs/issues/4398
 CVE-2026-82589 - https://github.com/open5gs/open5gs/issues/4396
@@ -93628,7 +93599,6 @@ CVE-2024-11493 - https://github.com/Hebing123/cve/issues/70
 CVE-2024-11587 - https://github.com/Hebing123/cve/issues/75
 CVE-2024-11589 - https://github.com/kevin27392/cve/issues/1
 CVE-2024-11590 - https://github.com/1ighttack/CVE/issues/1
-CVE-2024-11618 - https://github.com/br484/br484.github.io/blob/main/archives/WEB/CVE%20-%20IPC%20Unigy%20-%20ingles.md
 CVE-2024-11630 - https://github.com/I3eg1nner/iot-vuln/blob/main/E-lins/Hard-Coded%20Credential%20Vulnerability%20in%20E-Lins%20Routers.md
 CVE-2024-11631 - https://github.com/sil3n/cve/issues/1
 CVE-2024-11632 - https://github.com/sil3n/cve/issues/2
@@ -97555,7 +97525,6 @@ CVE-2025-5003 - https://github.com/huangyi234/CVE/issues/4
 CVE-2025-5004 - https://github.com/huangyi234/CVE/issues/8
 CVE-2025-5005 - https://github.com/jackyliu666/dingtalk
 CVE-2025-5006 - https://github.com/Zhaozhizhi/CVE/issues/3
-CVE-2025-5007 - https://github.com/b1d0ws/CVEs/blob/main/CVE-2025-XXXX.md
 CVE-2025-5013 - https://gitee.com/Hk_Cms/HkCms/issues/IBZ2G7
 CVE-2025-5029 - https://wx.mail.qq.com/s?k=nFbp0U0gSX0QVechIO
 CVE-2025-5030 - https://github.com/Ackites/KillWxapkg/issues/85#issue-3052039180
@@ -97632,7 +97601,6 @@ CVE-2025-5201 - https://github.com/user-attachments/files/20209125/line-832-repr
 CVE-2025-5202 - https://github.com/user-attachments/files/20209236/reproducer.zip
 CVE-2025-5203 - https://github.com/user-attachments/files/20209469/reproducer.zip
 CVE-2025-5204 - https://github.com/user-attachments/files/20209911/ParseSkinLump-reproducer.zip
-CVE-2025-5206 - https://github.com/be2398/aaa/issues/4
 CVE-2025-5207 - https://github.com/RS7325/cve/issues/1
 CVE-2025-5208 - https://github.com/snkercyber/CVE/issues/4
 CVE-2025-5211 - https://github.com/ting-06a/myCVE/issues/2
@@ -99071,7 +99039,6 @@ CVE-2026-3708 - https://github.com/Owen-YuanW/CVE/issues/2
 CVE-2026-3709 - https://github.com/Owen-YuanW/CVE/issues/3
 CVE-2026-3710 - https://github.com/Owen-YuanW/CVE/issues/4
 CVE-2026-3711 - https://github.com/Owen-YuanW/CVE/issues/5
-CVE-2026-3713 - https://github.com/biniamf/pocs/tree/main/pnm2png
 CVE-2026-3723 - https://github.com/Owen-YuanW/CVE/issues/6
 CVE-2026-3730 - https://github.com/yihaofuweng/cve/issues/62
 CVE-2026-3735 - https://github.com/6Justdododo6/CVE/issues/10
@@ -100685,7 +100652,6 @@ CVE-2015-8931 - https://blog.fuzzing-project.org/47-Many-invalid-memory-access-i
 CVE-2015-8932 - https://blog.fuzzing-project.org/47-Many-invalid-memory-access-issues-in-libarchive.html
 CVE-2015-8933 - https://blog.fuzzing-project.org/47-Many-invalid-memory-access-issues-in-libarchive.html
 CVE-2015-8934 - https://blog.fuzzing-project.org/47-Many-invalid-memory-access-issues-in-libarchive.html
-CVE-2015-8947 - https://github.com/behdad/harfbuzz/issues/139#issuecomment-146984679
 CVE-2015-8949 - https://github.com/perl5-dbi/DBD-mysql/pull/45
 CVE-2015-8953 - https://github.com/torvalds/linux/commit/ab79efab0a0ba01a74df782eb7fa44b044dae8b5
 CVE-2015-9096 - https://github.com/rubysec/ruby-advisory-db/issues/215
@@ -102411,7 +102377,6 @@ CVE-2019-15514 - https://docs.google.com/document/d/e/2PACX-1vRx2wO2kj0axlQtv2CD
 CVE-2019-1552 - https://cert-portal.siemens.com/productcert/pdf/ssa-412672.pdf
 CVE-2019-1552 - https://git.openssl.org/gitweb/?p=openssl.git;a=commitdiff;h=b15a19c148384e73338aa7c5b12652138e35ed28
 CVE-2019-15524 - https://www.cszcms.com
-CVE-2019-15574 - https://github.com/marcomoa/gesior-aac/pull/11
 CVE-2019-15608 - https://github.com/yarnpkg/yarn/commit/0474b8c66a8ea298f5e4dedc67b2de464297ad1c
 CVE-2019-15724 - https://gitlab.com/gitlab-org/gitlab-ce/issues/60888
 CVE-2019-15743 - https://www.kryptowire.com/android-firmware-2019/
@@ -103375,7 +103340,6 @@ CVE-2021-29256 - https://developer.arm.com/support/arm-security-updates/mali-gpu
 CVE-2021-29258 - https://blog.envoyproxy.io
 CVE-2021-29261 - https://github.com/sveltejs/language-tools/releases/tag/extensions-104.8.0
 CVE-2021-29263 - https://blog.jetbrains.com/blog/2021/05/07/jetbrains-security-bulletin-q1-2021/
-CVE-2021-29297 - https://github.com/boofish/GE_Proficy_Machine_Edition_vul/blob/main/vul1/vul1_steps.pdf
 CVE-2021-29395 - https://Ardent-Security.com
 CVE-2021-29396 - https://Ardent-Security.com
 CVE-2021-29397 - https://Ardent-Security.com
@@ -106537,7 +106501,6 @@ CVE-2024-25420 - https://www.hackthebox.com/blog/openfire-cves-explained-CVE-202
 CVE-2024-25420 - https://www.igniterealtime.org/projects/openfire/
 CVE-2024-25421 - https://www.hackthebox.com/blog/openfire-cves-explained-CVE-2024-25420-CVE-2024-25421
 CVE-2024-25421 - https://www.igniterealtime.org/projects/openfire/
-CVE-2024-25431 - https://github.com/bytecodealliance/wasm-micro-runtime/issues/3122
 CVE-2024-25506 - https://medium.com/@proflamyt/cve-2024-25506-425ba3212fb6
 CVE-2024-25551 - https://medium.com/%40jose.inaciot/my-first-cve-cve-2024-25551-f91787c05ae9
 CVE-2024-25551 - https://medium.com/@jose.inaciot/my-first-cve-cve-2024-25551-f91787c05ae9
@@ -106843,7 +106806,6 @@ CVE-2024-33215 - https://palm-vertebra-fe9.notion.site/fromAddressNat_mitInterfa
 CVE-2024-33217 - https://palm-vertebra-fe9.notion.site/fromAddressNat_page-e9c05fb00f89482fa340d21bbda30642
 CVE-2024-3323 - https://community.tibco.com/advisories/tibco-security-advisory-april-9-2024-tibco-jasperreports-server-cve-2024-3323-r209/
 CVE-2024-33270 - https://addons.prestashop.com/en/additional-information-product-tab/21373-customer-file-upload-attach-file-on-productcart-pages.html
-CVE-2024-33375 - https://github.com/ShravanSinghRathore/Security-Advisory-Multiple-Vulnerabilities-in-LB-link-BL-W1210M-Router/wiki/Credentials-Stored-in-Cleartext--%7C--Unencrypted-Credentials-(CVE%E2%80%902024%E2%80%9033375)
 CVE-2024-33439 - https://gist.github.com/QuartzDust/848acfddff02c881eb86dd302e859e80
 CVE-2024-33453 - https://github.com/Ant1sec-ops/CVE-2024-33453
 CVE-2024-33469 - https://github.com/blackbeard666/security-research/tree/main/CVE-2024-33469
@@ -107614,7 +107576,6 @@ CVE-2024-48463 - https://gist.github.com/opcod3r/ab69f36d52367df7ffac32a597dff31
 CVE-2024-48465 - https://github.com/4459gif/zo/blob/main/index.html
 CVE-2024-48509 - https://medium.com/@ChadSecurity/the-cve-2024-48509-vulnerability-overview-df58a6be6864
 CVE-2024-48514 - https://github.com/marcoris/CVEs/tree/master/CVE-2024-48514
-CVE-2024-48569 - https://github.com/MarioTesoro/CVE-2024-48569
 CVE-2024-48570 - https://github.com/Luc1f3r066/Client-Management-System-v1.0-
 CVE-2024-48579 - https://github.com/baineoli/CVE/blob/main/2024/house%20rental%20management%20system%20-%20SQL%20Injection%20%28Admin%20Login%29.md
 CVE-2024-48579 - https://github.com/baineoli/CVE/blob/main/2024/house%20rental%20management%20system%20-%20SQL%20Injection%20(Admin%20Login).md
@@ -108999,7 +108960,6 @@ CVE-2025-2571 - https://mattermost.com/security-updates
 CVE-2025-25723 - https://github.com/gpac/gpac/issues/3089
 CVE-2025-25724 - https://github.com/Ekkosun/pocs/blob/main/bsdtarbug
 CVE-2025-25774 - https://github.com/guoweifk/BugReport/blob/main/Open5GS%20AMF%20Denial%20of%20Service%20via%20GMM%20State%20Handling%20in%20Handover
-CVE-2025-25818 - https://github.com/Ka7arotto/emlog/blob/main/xss.md
 CVE-2025-2582 - https://vuldb.com/?submit.511999
 CVE-2025-2583 - https://vuldb.com/?submit.512001
 CVE-2025-2588 - https://github.com/hercules-team/augeas/issues/852

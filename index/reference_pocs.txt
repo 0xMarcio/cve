@@ -21725,7 +21725,6 @@ CVE-2024-11592 - https://github.com/Hacker0xone/CVE/issues/15
 CVE-2024-11605 - https://wpscan.com/vulnerability/91c5ee70-2ff5-46cd-a0f5-54987fc2e060/
 CVE-2024-11606 - https://wpscan.com/vulnerability/76ae8f5b-2d0e-4bf5-9ae3-f76cd52dea8d/
 CVE-2024-11607 - https://wpscan.com/vulnerability/132b5193-156b-40b8-b5c7-08646e1f6866/
-CVE-2024-11618 - https://github.com/br484/br484.github.io/blob/main/archives/WEB/CVE%20-%20IPC%20Unigy%20-%20ingles.md
 CVE-2024-11630 - https://github.com/I3eg1nner/iot-vuln/blob/main/E-lins/Hard-Coded%20Credential%20Vulnerability%20in%20E-Lins%20Routers.md
 CVE-2024-11631 - https://github.com/sil3n/cve/issues/1
 CVE-2024-11632 - https://github.com/sil3n/cve/issues/2
@@ -28467,7 +28466,6 @@ CVE-2025-5003 - https://github.com/huangyi234/CVE/issues/4
 CVE-2025-5004 - https://github.com/huangyi234/CVE/issues/8
 CVE-2025-5005 - https://github.com/jackyliu666/dingtalk
 CVE-2025-5006 - https://github.com/Zhaozhizhi/CVE/issues/3
-CVE-2025-5007 - https://github.com/b1d0ws/CVEs/blob/main/CVE-2025-XXXX.md
 CVE-2025-5008 - https://github.com/hhhanxx/attack/issues/18
 CVE-2025-5013 - https://gitee.com/Hk_Cms/HkCms/issues/IBZ2G7
 CVE-2025-50251 - https://www.exploit-db.com/exploits/52211
@@ -28565,7 +28563,6 @@ CVE-2025-5202 - https://github.com/user-attachments/files/20209236/reproducer.zi
 CVE-2025-5203 - https://github.com/user-attachments/files/20209469/reproducer.zip
 CVE-2025-5204 - https://github.com/user-attachments/files/20209911/ParseSkinLump-reproducer.zip
 CVE-2025-5205 - https://github.com/Jackie1732/CVE/issues/1
-CVE-2025-5206 - https://github.com/be2398/aaa/issues/4
 CVE-2025-5207 - https://github.com/RS7325/cve/issues/1
 CVE-2025-5208 - https://github.com/snkercyber/CVE/issues/4
 CVE-2025-5209 - https://wpscan.com/vulnerability/8b51dc46-62c8-45b5-96ce-fb774b430388/
@@ -30569,7 +30566,6 @@ CVE-2026-0842 - https://github.com/davidrxchester/smart-sketcher-upload/blob/mai
 CVE-2026-0843 - http://101.200.76.102:38765/qwertyuiop/qwsdfvbnm/1/vuldb/JJJshop/EnglishVers%E4%B8%89%E5%8B%BE%E7%82%B9%E9%A4%90%E7%B3%BB%E7%BB%9FPHP%E7%89%88%E5%AD%98%E5%9C%A8product.category.indexSQL%E6%B3%A8%E5%85%A5%E6%BC%8F%E6%B4%9E.pdf
 CVE-2026-0850 - https://github.com/xkalami-Tta0/CVE/blob/main/Intern%20Membership%20Management%20System/Intern%20Membership%20Management%20System%20delete_activity.php%20sql%20injection.md
 CVE-2026-0851 - https://github.com/tuo159515/sql-injection/issues/2
-CVE-2026-0852 - https://github.com/Learner636/CVE-smbmit/issues/2
 CVE-2026-0929 - https://wpscan.com/vulnerability/c0f17d83-6199-4676-90ec-4fba1e7fcf0f/
 CVE-2026-0934 - https://hackerone.com/reports/3508760
 CVE-2026-0958 - https://hackerone.com/reports/3463363
@@ -31021,7 +31017,6 @@ CVE-2026-11882 - https://wpscan.com/vulnerability/23e0eb03-ec19-4cec-8127-cb6c2c
 CVE-2026-11883 - https://wpscan.com/vulnerability/f718390c-1d7c-4048-bce6-a3170998e828/
 CVE-2026-11887 - https://wpscan.com/vulnerability/ed203765-0482-4d55-b36f-cdab11ed3cf0/
 CVE-2026-1192 - https://www.yuque.com/yuqueyonghuexlgkz/zepczx/keenhf9u2bnw5o6g
-CVE-2026-1196 - https://github.com/SourByte05/MineAdmin-Vulnerability/issues/3
 CVE-2026-11961 - https://wpscan.com/vulnerability/2ffab574-8626-472e-b6e4-09bcbaa62349/
 CVE-2026-11962 - https://wpscan.com/vulnerability/88390679-80c5-439f-89d1-2f46aff8cfdb/
 CVE-2026-11963 - https://wpscan.com/vulnerability/a34a916a-983e-48a5-8f10-99214ee3b613/
@@ -33281,7 +33276,6 @@ CVE-2026-3708 - https://github.com/Owen-YuanW/CVE/issues/2
 CVE-2026-3709 - https://github.com/Owen-YuanW/CVE/issues/3
 CVE-2026-3710 - https://github.com/Owen-YuanW/CVE/issues/4
 CVE-2026-3711 - https://github.com/Owen-YuanW/CVE/issues/5
-CVE-2026-3713 - https://github.com/biniamf/pocs/tree/main/pnm2png
 CVE-2026-3715 - https://github.com/Litengzheng/vul_db/blob/main/WL-WN579X3-C/vul_17/README.md
 CVE-2026-3716 - https://github.com/Litengzheng/vul_db/blob/main/WL-WN579X3-C/vul_18/README.md
 CVE-2026-3720 - https://www.notion.so/SmartAdmin-Stored-Cross-Site-Scripting-XSS-in-Notice-module-310ea92a3c41806ebcf0e5f82bf222da
@@ -34046,7 +34040,6 @@ CVE-2026-5648 - https://github.com/yao536/cve/issues/2
 CVE-2026-5649 - https://github.com/ahmadmarz10-hub/CVEsMarz/blob/main/SQL%20Injection%20in%20Online%20Application%20System%20for%20Admission%20PHP%20detid%20Parameter.md
 CVE-2026-5650 - https://github.com/ahmadmarz10-hub/CVEsMarz/blob/main/Sensitive%20Information%20Disclosure%20in%20Online%20Application%20System%20for%20Admission%20PHP%20Exposed%20Database%20Backup.md
 CVE-2026-5659 - https://github.com/dhabaleshwar/Open-Source-Vulnerabilities/blob/main/dartie_code_exec.md
-CVE-2026-5660 - https://github.com/Learner636/CVE-smbmit/issues/4
 CVE-2026-5661 - https://github.com/user-attachments/files/25581199/amfcfg.yaml
 CVE-2026-5665 - https://github.com/ahmadmarz10-hub/CVEsMarz/blob/main/SQL%20Injection%20in%20Online%20FIR%20System%20PHP%20email%20Parameter.md
 CVE-2026-5666 - https://github.com/ahmadmarz10-hub/CVEsMarz/blob/main/Sensitive%20Information%20Disclosure%20in%20Online%20FIR%20System%20PHP%20Exposed%20Database%20Backup.md
@@ -35356,7 +35349,6 @@ CVE-2026-82550 - https://github.com/magma/magma/issues/16023
 CVE-2026-82551 - https://github.com/magma/magma/issues/16021
 CVE-2026-82552 - https://github.com/magma/magma/issues/16019
 CVE-2026-82553 - https://github.com/sambitraj/STUDENT-MANAGEMENT-SYSTEM/issues/6
-CVE-2026-82555 - https://github.com/b1uerry/cves/blob/main/TOTOLINK/N600R/TOTOLINK_N600R_predictable-token/poc.py
 CVE-2026-82556 - https://codeberg.org/forgejo/forgejo/issues/13433
 CVE-2026-8256 - https://olografix.org/acme/_poc/ERP_Online-POC1.gif
 CVE-2026-8257 - https://github.com/HackC0der/CVE-Repos/blob/main/wasm-binaryen/Assertion_Failure_isRef_wasm_Type_getHeapType_commit_3ef8d19
