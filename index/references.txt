@@ -30272,7 +30272,6 @@ CVE-2017-16107 - https://github.com/JacksonGL/NPM-Vuln-PoC/blob/master/directory
 CVE-2017-16108 - https://github.com/JacksonGL/NPM-Vuln-PoC/tree/master/directory-traversal/static-html-server
 CVE-2017-16109 - https://github.com/JacksonGL/NPM-Vuln-PoC/tree/master/directory-traversal/easyquick
 CVE-2017-16110 - https://github.com/JacksonGL/NPM-Vuln-PoC/blob/master/directory-traversal/weather.swlyons
-CVE-2017-16114 - https://github.com/chjj/marked/issues/937
 CVE-2017-16120 - https://github.com/JacksonGL/NPM-Vuln-PoC/tree/master/directory-traversal/liyujing
 CVE-2017-16121 - https://github.com/JacksonGL/NPM-Vuln-PoC/tree/master/directory-traversal/datachannel-client
 CVE-2017-16122 - https://github.com/JacksonGL/NPM-Vuln-PoC/tree/master/directory-traversal/cuciuci
@@ -59714,7 +59713,6 @@ CVE-2022-25095 - https://www.exploit-db.com/exploits/50730
 CVE-2022-25096 - https://github.com/nu11secur1ty/CVE-nu11secur1ty/tree/main/vendors/oretnom23/2022/Home-Owners-Collection-Management
 CVE-2022-25096 - https://www.exploit-db.com/exploits/50732
 CVE-2022-25104 - https://github.com/ttimot24/HorizontCMS/issues/43
-CVE-2022-25106 - https://github.com/chunklhit/cve/blob/master/dlink/DIR859/BufferOverflow.md
 CVE-2022-25108 - https://www.foxit.com/support/security-bulletins.html
 CVE-2022-25114 - https://github.com/nu11secur1ty/CVE-nu11secur1ty/tree/main/vendors/PuneethReddyHC/event-management-1.0
 CVE-2022-25115 - https://github.com/nu11secur1ty/CVE-nu11secur1ty/tree/main/vendors/oretnom23/2022/Home-Owners-Collection-Management
@@ -77809,7 +77807,6 @@ CVE-2024-7667 - https://github.com/BFS-Lab/BFSDV/blob/main/Sourcecodester%20Onli
 CVE-2024-7668 - https://github.com/BFS-Lab/BFSDV/blob/main/Sourcecodester%20Online%20Catering%20Reservation%20System%20SQL%20Injection-6.md
 CVE-2024-7669 - https://github.com/BFS-Lab/BFSDV/blob/main/Sourcecodester%20Online%20Catering%20Reservation%20System%20SQL%20Injection-7.md
 CVE-2024-7676 - https://github.com/BFS-Lab/BFSDV/blob/main/Sourcecodester%20Online%20Catering%20Reservation%20System%20SQL%20Injection-8.md
-CVE-2024-7680 - https://github.com/chenzg22/cve/issues/1
 CVE-2024-7681 - https://github.com/space-security/cve/issues/6
 CVE-2024-7682 - https://github.com/space-security/cve/issues/7
 CVE-2024-7687 - https://wpscan.com/vulnerability/b861f18a-40ae-4989-a8e4-37df1771ae23/

@@ -24171,7 +24171,6 @@ CVE-2024-7669 - https://github.com/BFS-Lab/BFSDV/blob/main/Sourcecodester%20Onli
 CVE-2024-7676 - https://github.com/BFS-Lab/BFSDV/blob/main/Sourcecodester%20Online%20Catering%20Reservation%20System%20SQL%20Injection-8.md
 CVE-2024-7677 - https://github.com/BFS-Lab/BFSDV/blob/main/Sourcecodester%20Online%20Catering%20Reservation%20System%20XSS-1.md
 CVE-2024-7678 - https://github.com/BFS-Lab/BFSDV/blob/main/Sourcecodester%20Online%20Catering%20Reservation%20System%20XSS-2.md
-CVE-2024-7680 - https://github.com/chenzg22/cve/issues/1
 CVE-2024-7681 - https://github.com/space-security/cve/issues/6
 CVE-2024-7682 - https://github.com/space-security/cve/issues/7
 CVE-2024-7683 - https://github.com/samwbs/kortexcve/blob/main/xss_addcase_stage/xss_addcase_stage.md

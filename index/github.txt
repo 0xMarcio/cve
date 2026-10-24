@@ -28126,3 +28126,6 @@ CVE-2026-59774 - https://github.com/Ly0kha/CVE-2026-59774
 CVE-2026-109618 - https://github.com/AKiileX/php2shell-stx-research-pub
 CVE-2026-109619 - https://github.com/AKiileX/php2shell-stx-research-pub
 CVE-2026-110922 - https://github.com/VABISMO/chrome2shell
+CVE-2026-111497 - https://github.com/s1ko/poc-cve-2026-111497
+CVE-2026-114509 - https://github.com/ArioVeisa/cve-2026-114509-laravel-tokenguard
+CVE-2026-115560 - https://github.com/slabbdev/php-cve-2026-115560-kit
