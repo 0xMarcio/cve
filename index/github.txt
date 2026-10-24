@@ -27540,13 +27540,11 @@ CVE-2026-75045 - https://github.com/LHeiakim/CVE-2026-75045-PoC
 CVE-2023-46604 - https://github.com/Theocyg/CVE-2023-46604
 CVE-2026-105482 - https://github.com/CaterMaoZi/CVE-2026-105482-POC
 CVE-2026-109618 - https://github.com/Ghxstsec/PHP2SHELL-POC
-CVE-2026-109618 - https://github.com/ZabirAsnawi/testofPOC
 CVE-2026-109618 - https://github.com/alvaroguzmancode/CVE-2026-109618
 CVE-2026-109618 - https://github.com/anmolksachan/php2shell-nuclei
 CVE-2026-109618 - https://github.com/hirokidaichi/php56-cve-2026-backport-experiment
 CVE-2026-109618 - https://github.com/lzz0403/CVE-2026-109618-PHP2Shell-poc
 CVE-2026-109618 - https://github.com/scallydima/php2shell-poc
-CVE-2026-109619 - https://github.com/ZabirAsnawi/testofPOC
 CVE-2026-109619 - https://github.com/hirokidaichi/php56-cve-2026-backport-experiment
 CVE-2026-109619 - https://github.com/scallydima/php2shell-poc
 CVE-2026-111497 - https://github.com/CaterMaoZi/CVE-2026-111497-POC
@@ -28065,10 +28063,8 @@ CVE-2026-109618 - https://github.com/skydwn/CVE-2026-109618
 CVE-2026-109619 - https://github.com/9hb/php2shell-poc
 CVE-2026-109619 - https://github.com/VABISMO/php2shell-nginx-fpm-full-rce
 CVE-2026-109618 - https://github.com/debjit604/PHP2Shell-CVE-2026-109618-CVE-2026-109619
-CVE-2026-109618 - https://github.com/xPloits3c/PHP2Shell-CVE-2026-109618-CVE-2026-109619-PoC
 CVE-2026-109619 - https://github.com/debjit604/PHP2Shell-CVE-2026-109618-CVE-2026-109619
 CVE-2026-109619 - https://github.com/fellipgomes/br-php2shell
-CVE-2026-109619 - https://github.com/xPloits3c/PHP2Shell-CVE-2026-109618-CVE-2026-109619-PoC
 CVE-2026-110447 - https://github.com/sstrobl-osm/php2shell-tools
 CVE-2026-111497 - https://github.com/hafizhrf/node-exploit-poc
 CVE-2026-112900 - https://github.com/techupdate24/python-pillow-rce-cve-2026-112900
@@ -28125,3 +28121,7 @@ CVE-2017-18349 - https://github.com/Xiangmin-Li/my-poc-cve
 CVE-2026-39987 - https://github.com/lunacysoft/CVE-2026-39987-POC-Marimo
 CVE-2026-88771 - https://github.com/completetech-security/netscaler-cve-2026-88771-check
 CVE-2026-88772 - https://github.com/completetech-security/netscaler-cve-2026-88772-check
+CVE-2026-110264 - https://github.com/googlesky/CVE-2026-110264
+CVE-2026-115560 - https://github.com/googlesky/CVE-2026-115560
+CVE-2026-43499 - https://github.com/tusharpandey13/ghostlock-somalia
+CVE-2017-18349 - https://github.com/Xiangmin-Li/My-POC-CVE
