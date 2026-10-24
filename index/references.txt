@@ -32491,7 +32491,6 @@ CVE-2017-6896 - https://packetstormsecurity.com/files/141693/digisol-escalate.tx
 CVE-2017-6896 - https://www.exploit-db.com/exploits/41633/
 CVE-2017-6906 - https://github.com/Xtraball/SiberianCMS/issues/217
 CVE-2017-6907 - https://github.com/Overv/Open.GL/issues/56
-CVE-2017-6908 - https://github.com/concrete5/concrete5-legacy/issues/1948
 CVE-2017-6909 - https://github.com/shish/shimmie2/issues/597
 CVE-2017-6911 - http://packetstormsecurity.com/files/141651/USB-Pratirodh-Insecure-Password-Storage.html
 CVE-2017-6914 - https://github.com/bigtreecms/BigTree-CMS/files/843734/BigTree.-.Multiple.Issue.of.CSRF.that.could.Illegally.Few.Data.Changes.v02.pdf
@@ -34179,9 +34178,7 @@ CVE-2018-10974 - https://github.com/anhkgg/poc/tree/master/2345%20security%20gua
 CVE-2018-10975 - https://github.com/anhkgg/poc/tree/master/2345%20security%20guard/2345BdPcSafe.sys-x64-0x00222104
 CVE-2018-10976 - https://github.com/anhkgg/poc/tree/master/2345%20security%20guard/2345BdPcSafe.sys-x64-0x00222050
 CVE-2018-10977 - https://github.com/anhkgg/poc/tree/master/2345%20security%20guard/2345BdPcSafe.sys-x64-0x002220E4
-CVE-2018-1098 - https://github.com/coreos/etcd/issues/9353
 CVE-2018-10989 - https://medium.com/@AkshaySharmaUS/comcast-arris-touchstone-gateway-devices-are-vulnerable-heres-the-disclosure-7d603aa9342c
-CVE-2018-1099 - https://github.com/coreos/etcd/issues/9353
 CVE-2018-10990 - https://medium.com/@AkshaySharmaUS/comcast-arris-touchstone-gateway-devices-are-vulnerable-heres-the-disclosure-7d603aa9342c
 CVE-2018-10997 - https://gist.github.com/dmblbc/14a77036a9562407194c3cf3ee3f265e
 CVE-2018-10998 - https://github.com/Exiv2/exiv2/issues/303
@@ -35562,7 +35559,6 @@ CVE-2018-15557 - http://seclists.org/fulldisclosure/2019/Jun/2
 CVE-2018-15560 - https://github.com/Legrandin/pycryptodome/issues/198
 CVE-2018-15562 - http://packetstormsecurity.com/files/149109/CMS-ISWEB-3.5.3-Cross-Site-Scripting.html
 CVE-2018-15563 - https://cxsecurity.com/issue/WLB-2018090261
-CVE-2018-15565 - https://github.com/daveismyname/simple-cms/issues/3
 CVE-2018-15568 - https://github.com/fmsdwifull/tp5cms/issues/3
 CVE-2018-15571 - https://www.exploit-db.com/exploits/45206/
 CVE-2018-15573 - http://seclists.org/fulldisclosure/2021/Dec/18
@@ -44240,7 +44236,6 @@ CVE-2019-7552 - https://securityhitlist.blogspot.com/2019/02/cve-2019-7552-php-s
 CVE-2019-7553 - https://securityhitlist.blogspot.com/2019/02/cve-2019-7553-stores-xss-in-php-scripts.html
 CVE-2019-7554 - https://securityhitlist.blogspot.com/2019/02/cve-2019-7554-reflected-xss-in-api.html
 CVE-2019-7564 - http://packetstormsecurity.com/files/151595/Coship-Wireless-Router-4.0.0.x-5.0.0.x-Authentication-Bypass.html
-CVE-2019-7566 - https://github.com/cskaza/cszcms/issues/17
 CVE-2019-7568 - https://github.com/baijiacms/baijiacmsV4/issues/2
 CVE-2019-7569 - https://github.com/millken/doyocms/issues/1
 CVE-2019-7570 - https://blog.csdn.net/yangfan0502/article/details/86189065
@@ -53093,7 +53088,6 @@ CVE-2021-26764 - https://packetstormsecurity.com/files/161237/Student-Record-Sys
 CVE-2021-26764 - https://phpgurukul.com/
 CVE-2021-26765 - https://packetstormsecurity.com/files/161237/Student-Record-System-4.0-SQL-Injection.html
 CVE-2021-26765 - https://phpgurukul.com/
-CVE-2021-26776 - https://github.com/cskaza/cszcms/issues/29
 CVE-2021-26787 - http://genesys.com
 CVE-2021-26787 - https://medium.com/@reliable_lait_mouse_975/cross-site-scripting-vulnerability-within-genesys-workforce-management-version-8-5-214-20-a68500cf5e18
 CVE-2021-26795 - http://packetstormsecurity.com/files/164961/Talariax-sendQuick-Alertplus-Server-Admin-4.3-SQL-Injection.html
@@ -54054,7 +54048,6 @@ CVE-2021-32162 - https://github.com/Mesh3l911/CVE-2021-32162
 CVE-2021-32172 - http://packetstormsecurity.com/files/164445/Maian-Cart-3.8-Remote-Code-Execution.html
 CVE-2021-32172 - https://github.com/DreyAnd/maian-cart-rce
 CVE-2021-32238 - https://www.zeroscience.mk/en/vulnerabilities/ZSL-2021-5651.php
-CVE-2021-3224 - https://github.com/cskaza/cszcms/issues/28
 CVE-2021-32256 - https://bugs.launchpad.net/ubuntu/+source/binutils/+bug/1927070
 CVE-2021-32263 - https://github.com/brackeen/ok-file-formats/issues/13
 CVE-2021-32265 - https://github.com/axiomatic-systems/Bento4/issues/545
@@ -55022,7 +55015,6 @@ CVE-2021-3708 - https://github.com/HadiMed/firmware-analysis/blob/main/DSL-2750U
 CVE-2021-3708 - https://github.com/HadiMed/firmware-analysis/blob/main/DSL-2750U%20(firmware%20version%201.6)/README.md
 CVE-2021-3709 - https://bugs.launchpad.net/ubuntu/+source/apport/+bug/1934308
 CVE-2021-3710 - https://bugs.launchpad.net/ubuntu/+source/apport/+bug/1933832
-CVE-2021-37144 - https://github.com/cskaza/cszcms/issues/32
 CVE-2021-37145 - https://support.polycom.com/content/support.html
 CVE-2021-3715 - https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=ef299cc3fa1a9e1288665a9fdc8bff55629fd359
 CVE-2021-37152 - https://support.sonatype.com
@@ -55963,11 +55955,6 @@ CVE-2021-41456 - https://github.com/gpac/gpac/issues/1911
 CVE-2021-41458 - https://github.com/gpac/gpac/issues/1910
 CVE-2021-41459 - https://github.com/gpac/gpac/issues/1912
 CVE-2021-4146 - https://huntr.dev/bounties/47b37054-cafe-4f48-8b40-c86efc7fb760
-CVE-2021-41461 - https://github.com/concrete5/concrete5-legacy/issues/2006
-CVE-2021-41462 - https://github.com/concrete5/concrete5-legacy/issues/2006
-CVE-2021-41463 - https://github.com/concrete5/concrete5-legacy/issues/2006
-CVE-2021-41464 - https://github.com/concrete5/concrete5-legacy/issues/2006
-CVE-2021-41465 - https://github.com/concrete5/concrete5-legacy/issues/2006
 CVE-2021-41471 - https://github.com/nu11secur1ty/CVE-nu11secur1ty/tree/main/vendors/janobe/CVE-nu11-12-09162021
 CVE-2021-41472 - https://github.com/nu11secur1ty/CVE-nu11secur1ty/tree/main/vendors/razormist
 CVE-2021-41487 - https://www.exploit-db.com/exploits/48528
@@ -56580,7 +56567,6 @@ CVE-2021-43683 - https://github.com/HaschekSolutions/pictshare/issues/133
 CVE-2021-43691 - https://github.com/toocool/tripexpress/issues/40
 CVE-2021-43700 - https://github.com/gongwalker/ApiManager/issues/26
 CVE-2021-43701 - http://packetstormsecurity.com/files/166535/CSZ-CMS-1.2.9-SQL-Injection.html
-CVE-2021-43701 - https://github.com/cskaza/cszcms/issues/31
 CVE-2021-43701 - https://www.exploit-db.com/exploits/50846
 CVE-2021-43702 - https://www.kroll.com/en/insights/publications/cyber/cve-2021-43702-from-discovery-to-patch
 CVE-2021-43708 - https://medium.com/@way2goraj/bypass-data-classification-labelling-tool-aa037ff86dee
@@ -70915,7 +70901,6 @@ CVE-2023-46857 - https://census-labs.com/news/2023/11/08/weak-svg-asset-filterin
 CVE-2023-46858 - https://packetstormsecurity.com/files/175277/Moodle-4.3-Cross-Site-Scripting.html
 CVE-2023-46864 - https://github.com/Peppermint-Lab/peppermint/issues/171
 CVE-2023-46865 - https://github.com/asylumdx/Crater-CVE-2023-46865-RCE
-CVE-2023-46865 - https://github.com/crater-invoice/crater/issues/1267
 CVE-2023-46865 - https://notes.netbytesec.com/2023/11/post-auth-rce-in-crater-invoice.html
 CVE-2023-46866 - https://github.com/InternationalColorConsortium/DemoIccMAX/pull/53
 CVE-2023-46867 - https://github.com/InternationalColorConsortium/DemoIccMAX/pull/53
@@ -74032,7 +74017,6 @@ CVE-2024-25351 - https://github.com/0xQRx/VulnerabilityResearch/blob/master/2024
 CVE-2024-25354 - https://gist.github.com/6en6ar/c3b11b4058b8e2bc54717408d451fb79
 CVE-2024-25366 - https://github.com/mz-automation/libiec61850/issues/492
 CVE-2024-25369 - https://github.com/liyako/vulnerability/blob/main/POC/FUEL%20CMS%20Reflected%20Cross-Site%20Scripting%20(XSS).md
-CVE-2024-25373 - https://github.com/cvdyfbwa/IoT-Tenda-Router/blob/main/sub_49B384.md
 CVE-2024-2538 - https://gist.github.com/Xib3rR4dAr/b1eec00e844932c6f2f30a63024b404e
 CVE-2024-25385 - https://github.com/hanxuer/crashes/blob/main/flvmeta/01/readme.md
 CVE-2024-25385 - https://github.com/noirotm/flvmeta/issues/23
@@ -74527,7 +74511,6 @@ CVE-2024-28344 - https://securitycafe.ro/2024/03/21/cve-2024-28344-cve-2024-2834
 CVE-2024-28345 - https://securitycafe.ro/2024/03/21/cve-2024-28344-cve-2024-28345-in-sipwise-c5/
 CVE-2024-2836 - https://wpscan.com/vulnerability/36f95b19-af74-4c56-9848-8ff270af4723/
 CVE-2024-2837 - https://wpscan.com/vulnerability/91058c48-f262-4fcc-9390-472d59d61115/
-CVE-2024-28383 - https://github.com/cvdyfbwa/IoT-Tenda-Router/blob/main/sub_431CF0.md
 CVE-2024-28397 - https://github.com/Marven11/CVE-2024-28397-js2py-Sandbox-Escape
 CVE-2024-28417 - https://gitee.com/shavchen214/pwn/issues/I94VFH
 CVE-2024-28418 - https://gitee.com/shavchen214/pwn/issues/I94VI3
@@ -80003,7 +79986,6 @@ CVE-2025-4313 - https://github.com/Samsamue1/CVE/issues/2
 CVE-2025-4316 - https://devolutions.net/security/advisories/DEVO-2025-0007/
 CVE-2025-4328 - https://github.com/ShenxiuSec/cve-proofs/blob/main/POC-20250423-01.md
 CVE-2025-4331 - https://github.com/cybersharmaji/Online-Student-Clearance-System/blob/main/sql_injection_time.md
-CVE-2025-4332 - https://github.com/ctf2868/pjwww/issues/1
 CVE-2025-4336 - https://github.com/d0n601/CVE-2025-4336
 CVE-2025-4336 - https://ryankozak.com/posts/cve-2025-4336
 CVE-2025-4352 - https://github.com/eeeeeekkkkkkkk/POC/blob/main/%E9%BB%84%E9%87%91%E9%80%9A%E4%BA%8C%E7%BA%A7%E7%B3%BB%E7%BB%9F%E4%B8%89%E4%BB%A3%E7%AE%A1%E7%90%86%E7%AB%AF%E7%B3%BB%E7%BB%9FtcEntrFlowSelect%E6%8E%A5%E5%8F%A3%E5%AD%98%E5%9C%A8SQL%E6%B3%A8%E5%85%A5.md
@@ -95350,7 +95332,6 @@ CVE-2025-11351 - https://github.com/zhicat/C/issues/1
 CVE-2025-11352 - https://github.com/zhicat/C/issues/29
 CVE-2025-11353 - https://github.com/zhicat/C/issues/30
 CVE-2025-11354 - https://github.com/zhicat/C/issues/31
-CVE-2025-11355 - https://github.com/cymiao1978/cve/blob/main/10.md#poc
 CVE-2025-11356 - https://github.com/cymiao1978/cve/blob/main/12.md
 CVE-2025-11357 - https://github.com/QuJun1/cve/issues/1
 CVE-2025-11358 - https://github.com/QuJun1/cve/issues/2

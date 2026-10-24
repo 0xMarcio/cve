@@ -25511,7 +25511,6 @@ CVE-2025-11351 - https://github.com/zhicat/C/issues/1
 CVE-2025-11352 - https://github.com/zhicat/C/issues/29
 CVE-2025-11353 - https://github.com/zhicat/C/issues/30
 CVE-2025-11354 - https://github.com/zhicat/C/issues/31
-CVE-2025-11355 - https://github.com/cymiao1978/cve/blob/main/10.md#poc
 CVE-2025-11356 - https://github.com/cymiao1978/cve/blob/main/12.md
 CVE-2025-11357 - https://github.com/QuJun1/cve/issues/1
 CVE-2025-11358 - https://github.com/QuJun1/cve/issues/2
@@ -28155,7 +28154,6 @@ CVE-2025-4327 - https://github.com/bdkuzma/vuln/issues/8
 CVE-2025-4328 - https://github.com/ShenxiuSec/cve-proofs/blob/main/POC-20250423-01.md
 CVE-2025-4329 - https://github.com/Q16G/cve_detail/blob/main/74cms/fileRead.md
 CVE-2025-4331 - https://github.com/cybersharmaji/Online-Student-Clearance-System/blob/main/sql_injection_time.md
-CVE-2025-4332 - https://github.com/ctf2868/pjwww/issues/1
 CVE-2025-4333 - https://github.com/Hao-Ni/CVE/issues/1
 CVE-2025-4341 - https://github.com/CH13hh/tmp_store_cc/blob/main/DIR-880L/1.md
 CVE-2025-43510 - https://cloud.google.com/blog/topics/threat-intelligence/darksword-ios-exploit-chain/

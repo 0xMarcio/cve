@@ -9601,7 +9601,6 @@ CVE-2021-43798 - https://github.com/aymenbouferroum/CVE-2021-43798_exploit
 CVE-2021-43798 - https://github.com/BJLIYANLIANG/CVE-2021-43798-Grafana-File-Read
 CVE-2021-43798 - https://github.com/Bouquets-ai/CVE-2021-43798
 CVE-2021-43798 - https://github.com/culprits/Grafana_POC-CVE-2021-43798
-CVE-2021-43798 - https://github.com/davidr-io/Grafana-8.3-Directory-Traversal
 CVE-2021-43798 - https://github.com/fanygit/Grafana-CVE-2021-43798Exp
 CVE-2021-43798 - https://github.com/FAOG99/GrafanaDirectoryScanner
 CVE-2021-43798 - https://github.com/G01d3nW01f/CVE-2021-43798
@@ -25565,7 +25564,6 @@ CVE-2021-43798 - https://github.com/Asbawy/GrafTraverse-CVE-2021-43798
 CVE-2021-43798 - https://github.com/Okymi-X/CVE-2021-43798
 CVE-2021-43798 - https://github.com/Shoxake17/CVE-2021-43798
 CVE-2021-43798 - https://github.com/baktistr/cve-2021-43798-enum
-CVE-2021-43798 - https://github.com/davidrxchester/Grafana-8.3-Directory-Traversal
 CVE-2021-44026 - https://github.com/shanglyu/roundcube-cve-2021-44026
 CVE-2021-44228 - https://github.com/0xBlackash/CVE-2021-44228
 CVE-2021-44228 - https://github.com/Codepumpking/log4shell-poc
@@ -28129,3 +28127,6 @@ CVE-2026-110922 - https://github.com/VABISMO/chrome2shell
 CVE-2026-111497 - https://github.com/s1ko/poc-cve-2026-111497
 CVE-2026-114509 - https://github.com/ArioVeisa/cve-2026-114509-laravel-tokenguard
 CVE-2026-115560 - https://github.com/slabbdev/php-cve-2026-115560-kit
+CVE-2026-109618 - https://github.com/syrex1013/php-json-encode-uaf
+CVE-2026-109618 - https://github.com/zr0n/php2shell
+CVE-2026-109619 - https://github.com/zr0n/php2shell
