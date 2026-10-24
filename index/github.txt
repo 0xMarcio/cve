@@ -28116,3 +28116,4 @@ CVE-2026-54668 - https://github.com/KernelEditor/CVE-2026-54668
 CVE-2026-94293 - https://github.com/KernelEditor/CVE-2026-94293
 CVE-2025-32440 - https://github.com/jstjep00/CVE-2025-32440-netalertx-auth-bypass
 CVE-2026-68136 - https://github.com/KernelEditor/CVE-2026-68136
+CVE-2026-102785 - https://github.com/antid00t/CVE-2026-102785
