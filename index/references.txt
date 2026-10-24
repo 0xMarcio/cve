@@ -85034,7 +85034,6 @@ CVE-2026-5532 - https://github.com/August829/CVEP/issues/19
 CVE-2026-5533 - https://github.com/August829/CVEP/issues/20
 CVE-2026-5535 - https://github.com/AnalogyC0de/public_exp/issues/25
 CVE-2026-5537 - https://github.com/zy606/Vulnerability-Report/tree/main/CourseSEL-SQLi
-CVE-2026-5549 - https://github.com/somanyerrors/tenda-ac10v4-vulnerabilities/blob/main/findings/CRITICAL-05-exposed-rsa-private-key.md
 CVE-2026-5553 - https://github.com/Wzl731/test/issues/3
 CVE-2026-5554 - https://github.com/Wzl731/test/issues/4
 CVE-2026-5555 - https://github.com/Wzl731/test/issues/5

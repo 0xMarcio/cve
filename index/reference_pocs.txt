@@ -33962,7 +33962,6 @@ CVE-2026-5537 - https://github.com/zy606/Vulnerability-Report/tree/main/CourseSE
 CVE-2026-5543 - https://github.com/f1rstb100d/CVE/issues/4
 CVE-2026-5544 - https://github.com/jinxjinxboom/cve/issues/1
 CVE-2026-5546 - https://github.com/whatyourname12345/CVE/tree/main/OLMS
-CVE-2026-5549 - https://github.com/somanyerrors/tenda-ac10v4-vulnerabilities/blob/main/findings/CRITICAL-05-exposed-rsa-private-key.md
 CVE-2026-5551 - https://github.com/jasonwong666/cve/issues/1
 CVE-2026-5552 - https://github.com/f1rstb100d/CVE/issues/10
 CVE-2026-5553 - https://github.com/Wzl731/test/issues/3
