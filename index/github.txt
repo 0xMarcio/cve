@@ -26371,7 +26371,6 @@ CVE-2026-8726 - https://github.com/Shentao83/news-8.6.0-cve-2026-8726-backport
 CVE-2026-81330 - https://github.com/mdubbrin/Earwig
 CVE-2026-43499 - https://github.com/anksgls-sj/-Help-vivo-Y200i-5.10.218-GKI-CVE-2026-43499-stack-reclaim-reaches-0x300-need-0x318
 CVE-2017-12636 - https://github.com/Darabium/couchdb-exploit
-CVE-2024-28157 - https://github.com/Jayesh-Dev21/PoC_CVE-2024-28157
 CVE-2026-64638 - https://github.com/HackfutSecRoot/click2shell
 CVE-2024-30804 - https://github.com/Geozstevenzz/CVE-2024-30804
 CVE-2026-75157 - https://github.com/licitrasimone/cve-2026-75157-poc
@@ -28098,10 +28097,8 @@ CVE-2026-43499 - https://github.com/k-o-n-t-o-r/ghostlock-sm-g990b
 CVE-2026-76183 - https://github.com/Ethen1212/tomcat-CVE-2026-76183
 CVE-2026-115560 - https://github.com/sykeops/CVE-2026-115560
 CVE-2026-109618 - https://github.com/DarynOngera/solid-palm-tree
-CVE-2026-109618 - https://github.com/joser14/PHP2SHELL-POC
 CVE-2026-109618 - https://github.com/vux06/PHP2SHELL-POC
 CVE-2026-109619 - https://github.com/DarynOngera/solid-palm-tree
-CVE-2026-109619 - https://github.com/joser14/PHP2SHELL-POC
 CVE-2026-109619 - https://github.com/vux06/PHP2SHELL-POC
 CVE-2026-110264 - https://github.com/lesterlam/onigmo-cve-2026-110264
 CVE-2026-76504 - https://github.com/maxprog-svg/CVE-2026-76504-Cisco
@@ -28117,3 +28114,5 @@ CVE-2026-111497 - https://github.com/Ghost-Bx1/Node2Shell-CVE-2026-111497
 CVE-2026-48842 - https://github.com/br33z3/Roundcube-webmail-1.6.11-SQLi-PoC
 CVE-2026-54668 - https://github.com/KernelEditor/CVE-2026-54668
 CVE-2026-94293 - https://github.com/KernelEditor/CVE-2026-94293
+CVE-2025-32440 - https://github.com/jstjep00/CVE-2025-32440-netalertx-auth-bypass
+CVE-2026-68136 - https://github.com/KernelEditor/CVE-2026-68136

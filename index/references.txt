@@ -68687,8 +68687,6 @@ CVE-2023-33486 - https://github.com/Kazamayc/vuln/tree/main/TOTOLINK/X5000R/3
 CVE-2023-33487 - https://github.com/Kazamayc/vuln/tree/main/TOTOLINK/X5000R/4
 CVE-2023-33518 - https://github.com/emoncms/emoncms/issues/1856
 CVE-2023-33534 - https://rodelllemit.medium.com/cve-2023-33534-account-takeover-through-csrf-vulnerability-461de6f1b696
-CVE-2023-33537 - https://github.com/a101e-IoTvul/iotvul/blob/main/tp-link/1/TL-WR940N_TL-WR841N_TL-WR740N_userRpm_FixMapCfgRpm.md
-CVE-2023-33538 - https://github.com/a101e-IoTvul/iotvul/blob/main/tp-link/3/TL-WR940N_TL-WR841N_userRpm_WlanNetworkRpm_Command_Injection.md
 CVE-2023-33538 - https://web.archive.org/web/20230609111043/https://github.com/a101e-IoTvul/iotvul/blob/main/tp-link/3/TL-WR940N_TL-WR841N_userRpm_WlanNetworkRpm_Command_Injection.md
 CVE-2023-33544 - https://github.com/hawtio/hawtio/issues/2832
 CVE-2023-33546 - https://github.com/janino-compiler/janino/issues/201
@@ -69203,10 +69201,7 @@ CVE-2023-36346 - https://www.youtube.com/watch?v=bbbA-q1syrA
 CVE-2023-36347 - https://www.youtube.com/watch?v=7qaIeE2cyO4
 CVE-2023-36348 - http://packetstormsecurity.com/files/173278/POS-Codekop-2.0-Shell-Upload.html
 CVE-2023-36348 - https://www.youtube.com/watch?v=Ge0zqY0sGiQ
-CVE-2023-36354 - https://github.com/a101e-IoTvul/iotvul/blob/main/tp-link/7/TL-WR940N_TL-WR841N_TL-WR740N_TL-WR941ND_userRpm_AccessCtrlTimeSchedRpm.md
 CVE-2023-36355 - http://packetstormsecurity.com/files/173294/TP-Link-TL-WR940N-4-Buffer-Overflow.html
-CVE-2023-36357 - https://github.com/a101e-IoTvul/iotvul/blob/main/tp-link/5/TL-WR941ND_TL-WR940N_TL-WR841N_userRpm_LocalManageControlRpm.md
-CVE-2023-36359 - https://github.com/a101e-IoTvul/iotvul/blob/main/tp-link/8/TP-Link%20TL-WR940N%20TL-WR841N%20TL-WR941ND%20wireless%20router%20userRpmQoSRuleListRpm%20buffer%20read%20out-of-bounds%20vulnerability.md
 CVE-2023-36375 - https://packetstormsecurity.com
 CVE-2023-36376 - https://packetstormsecurity.com
 CVE-2023-3638 - https://www.cisa.gov/news-events/ics-advisories/icsa-23-199-05
@@ -82113,12 +82108,6 @@ CVE-2025-9579 - https://github.com/lin-3-start/lin-cve/blob/main/B-Link%20X26%20
 CVE-2025-9579 - https://github.com/lin-3-start/lin-cve/blob/main/B-Link%20X26%20V1.2.8-1/B-Link%20X26%20V1.2.8.md#3-poc
 CVE-2025-9580 - https://github.com/lin-3-start/lin-cve/blob/main/B-Link%20X26%20V1.2.8-2/B-Link%20X26%20V1.2.8.md
 CVE-2025-9580 - https://github.com/lin-3-start/lin-cve/blob/main/B-Link%20X26%20V1.2.8-2/B-Link%20X26%20V1.2.8.md#3poc
-CVE-2025-9581 - https://github.com/ZZ2266/.github.io/tree/main/COMFAST/N1V2/multi_pppoe
-CVE-2025-9582 - https://github.com/ZZ2266/.github.io/tree/main/COMFAST/N1V2/ntp_timezone
-CVE-2025-9583 - https://github.com/ZZ2266/.github.io/tree/main/COMFAST/N1V2/ping_config
-CVE-2025-9584 - https://github.com/ZZ2266/.github.io/blob/main/COMFAST/N1V2/update_interface_png/readme.md
-CVE-2025-9585 - https://github.com/ZZ2266/.github.io/blob/main/COMFAST/N1V2/wifilith_delete_pic_file/readme.md
-CVE-2025-9586 - https://github.com/ZZ2266/.github.io/blob/main/COMFAST/N1V2/wireless_device_dissoc/readme.md
 CVE-2025-9589 - https://github.com/ZZ2266/.github.io/tree/main/Cudy
 CVE-2025-9589 - https://github.com/ZZ2266/.github.io/tree/main/Cudy#steps-to-reproduce
 CVE-2025-9590 - https://github.com/Lee0568/pocccc/blob/main/poc.md
@@ -97519,7 +97508,6 @@ CVE-2025-3728 - https://github.com/eeeee-vul/CVE/issues/3
 CVE-2025-3730 - https://github.com/pytorch/pytorch/issues/150835#issue-2979082232
 CVE-2025-3762 - https://fitoxs.com/exploit/exploit-8d31b9e55c1c3d8f2cbf62e3e218f50b.txt
 CVE-2025-3763 - https://github.com/eeeee-vul/CVE/issues/4
-CVE-2025-3785 - https://github.com/ZOKEYE/CVE/blob/main/D-link.md
 CVE-2025-3786 - https://github.com/CH13hh/cve/tree/AC15WifiExtraSet
 CVE-2025-3788 - https://github.com/caigo8/CVE-md/blob/main/JSite/XSS1.md
 CVE-2025-3789 - https://github.com/caigo8/CVE-md/blob/main/JSite/XSS3.md
@@ -97850,8 +97838,6 @@ CVE-2025-5111 - https://fitoxs.com/exploit/exploit-b08607fc683b518b37423881e5ee9
 CVE-2025-5112 - https://fitoxs.com/exploit/exploit-47929b46e253abc8390610b6ad91d5dc9f2d64a755e6fdb51d5f8f92e37947e2.txt
 CVE-2025-5121 - https://hackerone.com/reports/3153908
 CVE-2025-5124 - https://github.com/zeke2997/CVE_request_Sony#3-poc
-CVE-2025-5126 - https://github.com/YZS17/CVE/blob/main/Remote%20Command%20Injection%20in%20parameter%20%24hour.md
-CVE-2025-5127 - https://github.com/YZS17/CVE/blob/main/XSS%20vulnerability%20in%20FLIR%20AX8.md
 CVE-2025-5128 - https://www.websecurityinsights.my.id/2025/05/script-and-tools-real-estate-management.html
 CVE-2025-5129 - https://drive.google.com/file/d/1_zGvKXIFLdh5RtxauvNYSa52YONJmY9q/view
 CVE-2025-5130 - https://github.com/bdkuzma/vuln/issues/9
@@ -97862,7 +97848,6 @@ CVE-2025-5134 - https://github.com/bdkuzma/vuln/issues/13
 CVE-2025-5135 - https://github.com/bdkuzma/vuln/issues/14
 CVE-2025-5136 - https://github.com/bdkuzma/vuln/issues/15
 CVE-2025-5137 - https://github.com/CyberPunk-Infernity/Advisory/issues/2
-CVE-2025-5138 - https://github.com/YZS17/CVE/blob/main/PDF%20XSS%20vulnerability%20in%20file%20upload%20function%20of%20%20Bitwarden.md
 CVE-2025-5140 - https://wx.mail.qq.com/s?k=i0-p-2N4MHcFOeM00E
 CVE-2025-5145 - https://github.com/Exploo0Osion/netcore_unauth
 CVE-2025-5146 - https://github.com/Exploo0Osion/netcore_command_injection_2
@@ -97976,12 +97961,6 @@ CVE-2025-5426 - https://github.com/Cyber-Wo0dy/report/blob/main/juzawebcms/3.4.2
 CVE-2025-5427 - https://github.com/Cyber-Wo0dy/report/blob/main/juzawebcms/3.4.2/juzawebcms_unprivileged_user_acess_modify_permalinks.md
 CVE-2025-5428 - https://github.com/Cyber-Wo0dy/report/blob/main/juzawebcms/3.4.2/juzawebcms_unprivileged_user_list_delete_logs.md
 CVE-2025-5429 - https://github.com/Cyber-Wo0dy/report/blob/main/juzawebcms/3.4.2/juzawebcms_unprivileged_user_list_install_plugins.md
-CVE-2025-5430 - https://github.com/YZS17/CVE/blob/main/SQL/SQLi%20in%20AssamLook%20CMS-v1.0.md
-CVE-2025-5431 - https://github.com/YZS17/CVE/blob/main/SQL/SQLi%20in%20AssamLook%20CMS-v1.0.md
-CVE-2025-5432 - https://github.com/YZS17/CVE/blob/main/SQL/SQLi%20in%20AssamLook%20CMS-v1.0.md
-CVE-2025-5433 - https://github.com/YZS17/CVE/blob/main/SQL/SQLi%20in%20fengoffice_3.5.1.5.md
-CVE-2025-5434 - https://github.com/YZS17/CVE/blob/main/SQL/SQLi%20in%20Aem%20Solutions%20CMS%20v1.0.md
-CVE-2025-5435 - https://github.com/YZS17/CVE/blob/main/SQL/SQLi%20in%20Marwal%20Infotech%20v1.0.md
 CVE-2025-5436 - https://github.com/DefaultCh40s/RE016/blob/main/re016.py
 CVE-2025-5437 - https://github.com/DefaultCh40s/RE016/blob/main/re016.py
 CVE-2025-5438 - https://github.com/wudipjq/my_vuln/blob/main/Linksys/vuln_1/1.md
@@ -98108,14 +98087,10 @@ CVE-2025-5675 - https://github.com/modestHonK/cve/issues/1
 CVE-2025-5676 - https://github.com/hyx123123/cve/issues/2
 CVE-2025-5677 - https://github.com/hyx123123/cve/issues/1
 CVE-2025-5685 - https://github.com/xubeining/Cve_report/blob/main/A%20remote%20code%20execution%20vulnerability%20in%20the%20router%20CH22%20V1.0.0.1%20manufactured%20by%20Shenzhen%20Jixiangtengda%20Technology%20Co.%2C%20Ltd1.md
-CVE-2025-5695 - https://github.com/YZS17/CVE/blob/main/Command%20injection%20vulnerability%20in%20subscribe_to_delta()%20in%20FLIR%20AX8.md
 CVE-2025-5697 - https://github.com/K-mxredo/MXdocument/blob/K-mxredo-blob/%E9%BB%84%E9%87%91%E9%80%9Astorageworkrent-tcCustDeferPosiQuery.md
 CVE-2025-5698 - https://github.com/K-mxredo/MXdocument/blob/K-mxredo-blob/%E9%BB%84%E9%87%91%E9%80%9Asysframework-logSelect.htm.md
 CVE-2025-5704 - https://github.com/kingmamalv/cve/issues/2
 CVE-2025-5705 - https://github.com/kingmamalv/cve/issues/3
-CVE-2025-5708 - https://github.com/YanHanQihomework/cve/issues/1
-CVE-2025-5709 - https://github.com/YanHanQihomework/cve/issues/2
-CVE-2025-5710 - https://github.com/YanHanQihomework/cve/issues/3
 CVE-2025-5711 - https://github.com/kingmamalv/cve/issues/4
 CVE-2025-5713 - https://github.com/lfparizzi/CVE-SolucoesCoop#stored-xss
 CVE-2025-5714 - https://github.com/lfparizzi/CVE-SolucoesCoop?tab=readme-ov-file#path-traversal-and-forced-navigation-abuse
@@ -99297,9 +99272,6 @@ CVE-2026-2897 - https://github.com/I4m6da/CVE/issues/4#issue-3890421022
 CVE-2026-2898 - https://github.com/I4m6da/CVE/issues/5#issue-3890444166
 CVE-2026-2912 - https://github.com/tiancesec/CVE/issues/25
 CVE-2026-2930 - https://github.com/master-abc/cve/issues/40
-CVE-2026-2932 - https://github.com/ZZCTD/CVE/issues/3
-CVE-2026-2933 - https://github.com/ZZCTD/CVE/issues/4
-CVE-2026-2934 - https://github.com/ZZCTD/CVE/issues/5
 CVE-2026-2935 - https://github.com/alc9700jmo/CVE/issues/23
 CVE-2026-2943 - https://github.com/duckpigdog/CVE/blob/main/XSS%E2%80%94%E2%80%94SapneshNaik_Student-Management-System.md
 CVE-2026-2944 - https://github.com/CVE-Hunter-Leo/CVE/issues/9
@@ -99355,9 +99327,6 @@ CVE-2026-3723 - https://github.com/Owen-YuanW/CVE/issues/6
 CVE-2026-3730 - https://github.com/yihaofuweng/cve/issues/62
 CVE-2026-3735 - https://github.com/6Justdododo6/CVE/issues/10
 CVE-2026-3736 - https://github.com/6Justdododo6/CVE/issues/12
-CVE-2026-3741 - https://github.com/ZZCTD/CVE/issues/6
-CVE-2026-3742 - https://github.com/ZZCTD/CVE/issues/7
-CVE-2026-3743 - https://github.com/ZZCTD/CVE/issues/8
 CVE-2026-3747 - https://github.com/1873454331sss/CVE/issues/1
 CVE-2026-3798 - https://github.com/jinhao118/cve/blob/main/ComFast%20CF-AC100-V2.6.0.8_1.md
 CVE-2026-3814 - https://github.com/whoami648/cve/blob/main/vul/9.md
@@ -109668,8 +109637,6 @@ CVE-2025-4128 - https://mattermost.com/security-updates
 CVE-2025-41395 - https://mattermost.com/security-updates
 CVE-2025-41423 - https://mattermost.com/security-updates
 CVE-2025-4192 - https://github.com/XuepengZhao-insp/vuldb/issues/4
-CVE-2025-4193 - https://github.com/XuepengZhao-insp/vuldb/issues/5
-CVE-2025-4195 - https://github.com/XuepengZhao-insp/vuldb/issues/6
 CVE-2025-4215 - https://vuldb.com/?id.307194
 CVE-2025-4269 - https://github.com/at0de/my_vulns/blob/main/TOTOLINK/A720R/clearDiagnosisLog.md
 CVE-2025-4288 - https://vuldb.com/?submit.561625
